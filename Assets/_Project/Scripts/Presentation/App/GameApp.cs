@@ -8,7 +8,7 @@ using UnityEngine.SceneManagement;
 namespace ApoGirl.Presentation.App
 {
     /// <summary>앱 전역 서비스 보관소 (가벼운 서비스 로케이터). 게임 세션 하나만 둔다.</summary>
-    public static class AppContext
+    public static class GameApp
     {
         public const string TitleScene = "Title";
         public const string HubScene = "Hub";

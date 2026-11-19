@@ -16,18 +16,18 @@ namespace ApoGirl.Tests.PlayMode
         public IEnumerator BootTitleHub_RunOneWeek_NoErrors()
         {
             SceneManager.LoadScene("Boot");
-            yield return WaitForScene(AppContext.TitleScene);
-            Assert.IsNotNull(AppContext.Session, "Boot가 세션을 만들어야 함");
+            yield return WaitForScene(GameApp.TitleScene);
+            Assert.IsNotNull(GameApp.Session, "Boot가 세션을 만들어야 함");
 
             var title = Object.FindFirstObjectByType<UIDocument>();
             Assert.IsNotNull(title.rootVisualElement.Q<Button>(className: "title-button"));
 
-            AppContext.Session.NewGame(12345);
-            AppContext.GoTo(AppContext.HubScene);
-            yield return WaitForScene(AppContext.HubScene);
+            GameApp.Session.NewGame(12345);
+            GameApp.GoTo(GameApp.HubScene);
+            yield return WaitForScene(GameApp.HubScene);
             yield return null;
 
-            var session = AppContext.Session;
+            var session = GameApp.Session;
             session.SetSlot(0, "ACT_EDU_HUMANITIES");
             session.SetSlot(2, "ACT_EXP_DAY_SCHOOL");
             session.BeginWeek();

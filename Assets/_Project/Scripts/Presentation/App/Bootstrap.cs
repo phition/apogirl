@@ -11,8 +11,8 @@ namespace ApoGirl.Presentation.App
 
         private void Start()
         {
-            AppContext.Initialize(_database);
-            AppContext.GoTo(AppContext.TitleScene);
+            GameApp.Initialize(_database);
+            GameApp.GoTo(GameApp.TitleScene);
         }
     }
 }

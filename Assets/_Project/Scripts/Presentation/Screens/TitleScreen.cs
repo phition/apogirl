@@ -22,7 +22,7 @@ namespace ApoGirl.Presentation.Screens
 
         private void OnEnable()
         {
-            _session = AppContext.EnsureSession(_fallbackDatabase);
+            _session = GameApp.EnsureSession(_fallbackDatabase);
             var root = GetComponent<UIDocument>().rootVisualElement;
             KoreanFont.Apply(root);
             root.Q<Label>("title-label").text = Loc.T("title.game");
@@ -39,7 +39,7 @@ namespace ApoGirl.Presentation.Screens
             Add(Loc.T("title.new_game"), () =>
             {
                 _session.NewGame(Environment.TickCount);
-                AppContext.GoTo(AppContext.HubScene);
+                GameApp.GoTo(GameApp.HubScene);
             });
 
             var canContinue = _session.HasSave(SaveService.AutoSlot);
@@ -69,7 +69,7 @@ namespace ApoGirl.Presentation.Screens
             try
             {
                 _session.Load(slot);
-                AppContext.GoTo(AppContext.HubScene);
+                GameApp.GoTo(GameApp.HubScene);
             }
             catch (Exception exception)
             {

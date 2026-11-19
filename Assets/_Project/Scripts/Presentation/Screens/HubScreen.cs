@@ -44,7 +44,7 @@ namespace ApoGirl.Presentation.Screens
 
         private void OnEnable()
         {
-            _session = AppContext.EnsureSession(_fallbackDatabase);
+            _session = GameApp.EnsureSession(_fallbackDatabase);
             if (!_session.HasGame)
             {
                 _session.NewGame(System.Environment.TickCount);
@@ -280,7 +280,7 @@ namespace ApoGirl.Presentation.Screens
                 Loc.T("end." + state.Status),
                 Loc.F("end.body", state.Calendar.Week),
                 false,
-                (Loc.T("end.to_title"), () => AppContext.GoTo(AppContext.TitleScene)));
+                (Loc.T("end.to_title"), () => GameApp.GoTo(GameApp.TitleScene)));
         }
 
         // ── 저장·메뉴·프리셋 ──
@@ -317,7 +317,7 @@ namespace ApoGirl.Presentation.Screens
                 "",
                 false,
                 (Loc.F("menu.font_size", Loc.T("font." + FontClasses[_fontIndex])), CycleFontSize),
-                (Loc.T("menu.to_title"), () => AppContext.GoTo(AppContext.TitleScene)),
+                (Loc.T("menu.to_title"), () => GameApp.GoTo(GameApp.TitleScene)),
                 (Loc.T("common.close"), _card.Hide));
         }
 
