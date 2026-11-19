@@ -182,6 +182,31 @@ namespace ApoGirl.Tests.EditMode
             Debug.Log(report.ToString());
             Assert.IsEmpty(failures.ToString(), failures.ToString());
         }
+
+        /// <summary>M6-3: 3막(39주)까지. 혼합·탐험 전략은 3막 평가에 도달하고, 선생님 재감염이 일어나야 한다 (Temp/ApoGirlAct3Balance.txt).</summary>
+        [Test]
+        public void Act3_Strategies_ReachThirdReview()
+        {
+            var report = new StringBuilder();
+            var failures = new StringBuilder();
+            foreach (var strategy in new[] { Strategy.Expedition, Strategy.Mixed })
+            {
+                foreach (var seed in new[] { 11, 22, 33 })
+                {
+                    report.Append(Run(strategy, seed, out var state, 39));
+                    report.AppendLine($"  end cause: {state.EndCause} hp {state.Player.Vitals.Hp} infection {state.Player.Vitals.Infection} teacher {state.Teacher.InfectionProgress} rescue {state.Flags.Contains("RESCUE_ANNOUNCED")}");
+                    if (state.Status != GameStatus.Playing) failures.AppendLine($"{strategy}/{seed}: 3막을 버티지 못함 ({state.EndCause}, {state.Calendar.Week}주)");
+                    if (!state.Events.Records.ContainsKey("EVT_A3_REVIEW")) failures.AppendLine($"{strategy}/{seed}: 3막 평가 미도달");
+                    if (!state.Teacher.Reinfected) failures.AppendLine($"{strategy}/{seed}: 선생님 재감염 미발생");
+                    if (!state.Flags.Contains("RESCUE_ANNOUNCED")) failures.AppendLine($"{strategy}/{seed}: 구조 공지 미발생");
+                }
+            }
+
+            Directory.CreateDirectory("Temp");
+            File.WriteAllText("Temp/ApoGirlAct3Balance.txt", report.ToString());
+            Debug.Log(report.ToString());
+            Assert.IsEmpty(failures.ToString(), failures.ToString());
+        }
     }
 
     internal static class EffectHelpers

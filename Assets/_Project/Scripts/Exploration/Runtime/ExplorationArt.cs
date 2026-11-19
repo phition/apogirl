@@ -90,7 +90,8 @@ namespace ApoGirl.Exploration.Runtime
         public static string InteriorWall(string templateId)
         {
             if (templateId.Contains("RESTROOM") || templateId.Contains("SUBWAY")) return "wall_restroom";
-            if (templateId.Contains("HOUSE")) return "wall_office";
+            if (templateId.Contains("HOUSE") || templateId.Contains("POLICE")) return "wall_office";
+            if (templateId.Contains("MART")) return "wall_store";
             if (templateId.Contains("OFFICE") && !templateId.Contains("STORE")) return "wall_office";
             if (templateId.Contains("CLASSROOM")) return "wall_classroom";
             if (templateId.Contains("STORE")) return "wall_store";
@@ -106,6 +107,8 @@ namespace ApoGirl.Exploration.Runtime
             if (locationId.Contains("PHARMACY")) return "wall_pharmacy";
             if (locationId.Contains("RESIDENTIAL")) return "wall_room_outside";
             if (locationId.Contains("SUBWAY")) return "wall_restroom";
+            if (locationId.Contains("MART")) return "wall_store";
+            if (locationId.Contains("POLICE")) return "wall_corridor";
             return "wall_corridor";
         }
 

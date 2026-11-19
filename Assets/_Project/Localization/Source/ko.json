@@ -661,7 +661,36 @@
     "enc.BYSTANDER.prompt": "승강장 옆 사무실 구석에 교복 차림의 여자아이가 웅크리고 있다. 고개를 든 얼굴을 보는 순간 숨이 멎었다. 같은 중학교, 그 무리 옆에 늘 서 있던 아이.",
     "enc.BYSTANDER.take": "\"…일어나. 같이 가.\"",
     "enc.BYSTANDER.supply": "물과 먹을 것만 두고 나온다",
-    "enc.BYSTANDER.walk_away": "아무 말 없이 돌아선다"
+    "enc.BYSTANDER.walk_away": "아무 말 없이 돌아선다",
+    "diary.a3_autumn": "은행잎이 운동장을 덮었다. 냄새가 지독하다. 그래도 예쁘다.",
+    "diary.a3_rescue": "구조대가 온다. 52주째. 손가락으로 몇 번이나 세었다. 그리고 선생님 얼굴을 봤다.",
+    "diary.a3_face": "그 애를 다시 봤다. 생각보다 작았다. 나는 생각보다 크지 않았다. 그래도 도망치지 않았다.",
+    "diary.a3_reinfected": "선생님이 기침을 한다. 밤새. 나는 아무것도 할 수 없다는 게 제일 무섭다.",
+    "diary.a3_cure": "정수장. 연구동. 라디오에서 들은 단어들을 노트에 적고 또 적었다.",
+    "tc.a3_rescue": "22주. 계획을 세우자. 구조대가 왔을 때 네가 건강하게 옥상에 서 있도록.",
+    "tc.a3_cure": "…무리하지 마라. 나 때문에 네가 다치면, 그게 제일 아프다.",
+    "tc.a3_distance": "괜찮다. 네가 옳아. 나는 문 너머에서도 수업할 수 있어.",
+    "review.a3": "가을이 지나갔다. 너는 그 애를 다시 마주했고, 구조 소식을 들었고… 나는 너에게 무거운 짐을 하나 더 얹었다. 미안하다. 그리고 고맙다.",
+    "review.a3_cure": "너는 나를 살리겠다고 했지. 선생으로서 말리고 싶다. 사람으로서는… 고맙다. 정말로.",
+    "review.a3_distance": "문 너머에서 하는 평가다. 네가 거리를 둔 건 옳은 선택이야. 살아남는 법을 배운 거다. 그걸로 됐다.",
+    "line.m_rescue": "라디오로 구조 소식을 들었다.",
+    "line.m_face": "마트에서 그 애를 다시 마주했다.",
+    "line.m_mart_ally": "마트의 어른들과 손을 잡았다.",
+    "line.m_reinfected": "선생님의 기침이 시작된 밤을 기억한다.",
+    "line.m_wanderer": "지나가던 유랑자와 빵을 나눴다.",
+    "line.m_act3": "초겨울의 대습격을 넘겼다.",
+    "location.LOC_MART": "새벽마트 · 물류창고",
+    "location.LOC_POLICE": "새벽동 파출소",
+    "npc.NPC_WANDERER": "유랑자",
+    "enc.MART_GROUP.prompt": "사무실 문을 열자 어른 셋이 동시에 이쪽을 돌아봤다. 손에 각목. 가운데 남자가 손을 들어 다른 둘을 말렸다. \"학생이네. 혼자야?\"",
+    "enc.MART_GROUP.talk": "\"학교에서 왔어요. 이야기 좀 해요.\"",
+    "enc.MART_GROUP.back_off": "천천히 뒷걸음질 쳐 나온다",
+    "enc.RINGLEADER.prompt": "창고 사무실 안, 담요를 두른 여자아이가 통조림을 세고 있다. 고개를 든 얼굴. 최하린이었다. 손이 저절로 주먹을 쥐었다.",
+    "enc.RINGLEADER.face": "도망치지 않고 그 앞에 선다",
+    "enc.RINGLEADER.leave": "문을 닫고 돌아선다 (지금은 아니다)",
+    "enc.POLICE_REPORT.prompt": "2층 책상 위에 서류철이 펼쳐져 있다. '긴급 출입 통제 협조 요청 — 새벽정수장 연구동'. 날짜는 사태 닷새 전.",
+    "enc.POLICE_REPORT.take": "서류철을 챙긴다",
+    "enc.POLICE_REPORT.leave": "그대로 둔다"
   },
   "Actions": {
     "ACT_REST_DAY.name": "낮잠",
@@ -731,7 +760,15 @@
     "ACT_EXP_NIGHT_SUBWAY.name": "지하철역 밤 탐험",
     "ACT_EXP_NIGHT_SUBWAY.short": "깨어난 것들이 흩어진다. 터널 쪽 길이 열린다.",
     "ACT_DAILY_TUTOR_DOHYEON.name": "도현 가르치기",
-    "ACT_DAILY_TUTOR_DOHYEON.short": "도현에게 수학과 국어를 봐 준다. 가르치는 법을 배운다."
+    "ACT_DAILY_TUTOR_DOHYEON.short": "도현에게 수학과 국어를 봐 준다. 가르치는 법을 배운다.",
+    "ACT_EXP_DAY_MART.name": "마트 낮 탐험",
+    "ACT_EXP_DAY_MART.short": "푸드코트에 큰 무리가 잠들어 있다. 대량 물자, 어른 무리.",
+    "ACT_EXP_NIGHT_MART.name": "마트 밤 탐험",
+    "ACT_EXP_NIGHT_MART.short": "무리가 흩어진다. 창고 깊은 곳까지 갈 수 있다.",
+    "ACT_EXP_DAY_POLICE.name": "파출소 낮 탐험",
+    "ACT_EXP_DAY_POLICE.short": "작고 조용하다. 무기고는 잠겨 있다.",
+    "ACT_EXP_NIGHT_POLICE.name": "파출소 밤 탐험",
+    "ACT_EXP_NIGHT_POLICE.short": "무기고 문을 딸 수 있다. 시선형 위협 주의."
   },
   "Items": {
     "ITEM_CANNED_FOOD.name": "통조림",
@@ -758,6 +795,8 @@
     "ITEM_TOOL_FLASHLIGHT.name": "손전등",
     "ITEM_TOOL_CROWBAR.name": "쇠지렛대",
     "ITEM_ARMOR_GUARD.name": "체육 보호대",
-    "ITEM_ARMOR_PADDING.name": "두꺼운 패딩"
+    "ITEM_ARMOR_PADDING.name": "두꺼운 패딩",
+    "ITEM_ARMOR_RIOT.name": "진압 조끼",
+    "ITEM_WEAPON_BATON.name": "경찰 삼단봉"
   }
 }

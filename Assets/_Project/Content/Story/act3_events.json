@@ -1,0 +1,1927 @@
+{
+  "Events": [
+    {
+      "Id": "EVT_A3_OPENING",
+      "Kind": "Night",
+      "Priority": 100,
+      "Condition": {
+        "WeekMin": 27,
+        "Phase": "Night",
+        "FlagsNone": [
+          "A3_STARTED"
+        ]
+      },
+      "OnShow": {
+        "SetFlags": [
+          "A3_STARTED",
+          "DJ_CONTACT"
+        ]
+      },
+      "Choices": [
+        {
+          "Id": "ANSWER",
+          "Effect": {
+            "Hidden": [
+              {
+                "Hidden": "Hope",
+                "Amount": 5
+              }
+            ],
+            "Stats": [
+              {
+                "Stat": "Leadership",
+                "Amount": 1
+              }
+            ]
+          }
+        },
+        {
+          "Id": "LISTEN_ONLY",
+          "Effect": {
+            "Vitals": [
+              {
+                "Vital": "Stress",
+                "Amount": -5
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "Id": "EVT_A3_MART_UNLOCK",
+      "Kind": "Night",
+      "Priority": 60,
+      "Condition": {
+        "WeekMin": 28,
+        "Phase": "Night",
+        "FlagsAll": [
+          "DJ_CONTACT"
+        ],
+        "FlagsNone": [
+          "LOC_MART"
+        ]
+      },
+      "OnShow": {
+        "SetFlags": [
+          "LOC_MART"
+        ]
+      }
+    },
+    {
+      "Id": "EVT_A3_POLICE_UNLOCK",
+      "Kind": "Story",
+      "Priority": 55,
+      "Condition": {
+        "WeekMin": 29,
+        "FlagsAll": [
+          "A3_STARTED"
+        ],
+        "FlagsNone": [
+          "LOC_POLICE"
+        ],
+        "ActionCategories": [
+          "Expedition"
+        ]
+      },
+      "OnShow": {
+        "SetFlags": [
+          "LOC_POLICE"
+        ]
+      }
+    },
+    {
+      "Id": "EVT_A3_RESCUE_ANNOUNCE",
+      "Kind": "Night",
+      "Priority": 100,
+      "Condition": {
+        "WeekMin": 30,
+        "Phase": "Night",
+        "FlagsNone": [
+          "RESCUE_ANNOUNCED"
+        ]
+      },
+      "OnShow": {
+        "SetFlags": [
+          "RESCUE_ANNOUNCED",
+          "OTHER_SURVIVOR_SIGNAL"
+        ],
+        "Hidden": [
+          {
+            "Hidden": "Hope",
+            "Amount": 8
+          }
+        ]
+      },
+      "Choices": [
+        {
+          "Id": "CHEER",
+          "Effect": {
+            "Vitals": [
+              {
+                "Vital": "Stress",
+                "Amount": -10
+              }
+            ],
+            "Npcs": [
+              {
+                "NpcId": "NPC_TEACHER",
+                "Affinity": 2
+              }
+            ]
+          }
+        },
+        {
+          "Id": "LOOK_TEACHER",
+          "Effect": {
+            "Hidden": [
+              {
+                "Hidden": "SelfAwareness",
+                "Amount": 3
+              }
+            ],
+            "AddClues": [
+              "CURE_RESCUE_RULE"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "Id": "EVT_A3_MART_GROUP",
+      "Kind": "Story",
+      "Priority": 85,
+      "Condition": {
+        "FlagsAll": [
+          "MART_GROUP_MET"
+        ],
+        "ActionIds": [
+          "ACT_EXP_DAY_MART",
+          "ACT_EXP_NIGHT_MART"
+        ]
+      },
+      "Choices": [
+        {
+          "Id": "TRADE",
+          "Effect": {
+            "Resources": [
+              {
+                "Resource": "Medicine",
+                "Amount": -2
+              },
+              {
+                "Resource": "Food",
+                "Amount": 10
+              }
+            ],
+            "SetFlags": [
+              "MART_TRADE"
+            ]
+          }
+        },
+        {
+          "Id": "ALLY",
+          "Effect": {
+            "SetFlags": [
+              "MART_ALLY"
+            ],
+            "Threat": -8,
+            "Defense": 4,
+            "Stats": [
+              {
+                "Stat": "Leadership",
+                "Amount": 2
+              }
+            ],
+            "Hidden": [
+              {
+                "Hidden": "Humanity",
+                "Amount": 3
+              }
+            ]
+          }
+        },
+        {
+          "Id": "REFUSE",
+          "Effect": {
+            "Hidden": [
+              {
+                "Hidden": "Isolation",
+                "Amount": 3
+              }
+            ],
+            "Threat": 4
+          }
+        }
+      ]
+    },
+    {
+      "Id": "EVT_A3_RINGLEADER",
+      "Kind": "Story",
+      "Priority": 92,
+      "Condition": {
+        "FlagsAll": [
+          "RINGLEADER_MET"
+        ],
+        "ActionIds": [
+          "ACT_EXP_DAY_MART",
+          "ACT_EXP_NIGHT_MART"
+        ]
+      },
+      "OnShow": {
+        "Vitals": [
+          {
+            "Vital": "Stress",
+            "Amount": 6
+          }
+        ]
+      },
+      "Choices": [
+        {
+          "Id": "FORGIVE",
+          "Effect": {
+            "SetFlags": [
+              "BULLY_FORGAVE"
+            ],
+            "Hidden": [
+              {
+                "Hidden": "TraumaRecovery",
+                "Amount": 10
+              },
+              {
+                "Hidden": "SelfAwareness",
+                "Amount": 4
+              }
+            ],
+            "Vitals": [
+              {
+                "Vital": "Stress",
+                "Amount": -6
+              }
+            ]
+          }
+        },
+        {
+          "Id": "SEPARATE",
+          "Effect": {
+            "SetFlags": [
+              "BULLY_SEPARATED"
+            ],
+            "Hidden": [
+              {
+                "Hidden": "TraumaRecovery",
+                "Amount": 8
+              },
+              {
+                "Hidden": "SelfAwareness",
+                "Amount": 6
+              }
+            ]
+          }
+        },
+        {
+          "Id": "RESCUE",
+          "Effect": {
+            "SetFlags": [
+              "BULLY_RESCUED"
+            ],
+            "Npcs": [
+              {
+                "NpcId": "NPC_RINGLEADER",
+                "SetStatus": "Joined",
+                "Affinity": -10
+              }
+            ],
+            "Hidden": [
+              {
+                "Hidden": "Humanity",
+                "Amount": 8
+              },
+              {
+                "Hidden": "TraumaRecovery",
+                "Amount": 4
+              }
+            ],
+            "Vitals": [
+              {
+                "Vital": "Stress",
+                "Amount": 8
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "Id": "EVT_A3_RINGLEADER_NIGHT",
+      "Kind": "Night",
+      "Priority": 50,
+      "Condition": {
+        "Phase": "Night",
+        "FlagsAll": [
+          "BULLY_RESCUED"
+        ],
+        "FlagsNone": [
+          "RINGLEADER_NIGHT"
+        ]
+      },
+      "OnShow": {
+        "SetFlags": [
+          "RINGLEADER_NIGHT"
+        ]
+      },
+      "Choices": [
+        {
+          "Id": "RULES",
+          "Effect": {
+            "Stats": [
+              {
+                "Stat": "Leadership",
+                "Amount": 2
+              }
+            ],
+            "Npcs": [
+              {
+                "NpcId": "NPC_RINGLEADER",
+                "Trust": 4
+              }
+            ]
+          }
+        },
+        {
+          "Id": "DISTANCE",
+          "Effect": {
+            "Hidden": [
+              {
+                "Hidden": "SelfAwareness",
+                "Amount": 2
+              }
+            ]
+          }
+        },
+        {
+          "Id": "TALK",
+          "Effect": {
+            "Hidden": [
+              {
+                "Hidden": "TraumaRecovery",
+                "Amount": 4
+              }
+            ],
+            "Npcs": [
+              {
+                "NpcId": "NPC_RINGLEADER",
+                "Affinity": 5
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "Id": "EVT_A3_POLICE",
+      "Kind": "Story",
+      "Priority": 70,
+      "Condition": {
+        "FlagsAll": [
+          "POLICE_REPORT_TAKEN"
+        ],
+        "ActionIds": [
+          "ACT_EXP_DAY_POLICE",
+          "ACT_EXP_NIGHT_POLICE"
+        ]
+      },
+      "OnShow": {
+        "Npcs": [
+          {
+            "NpcId": "NPC_TEACHER",
+            "Trust": 1
+          }
+        ]
+      }
+    },
+    {
+      "Id": "EVT_A3_ARMORY",
+      "Kind": "Story",
+      "Priority": 65,
+      "Condition": {
+        "ActionIds": [
+          "ACT_EXP_NIGHT_POLICE"
+        ],
+        "FlagsNone": [
+          "ARMORY_FOUND"
+        ]
+      },
+      "OnShow": {
+        "SetFlags": [
+          "ARMORY_FOUND"
+        ],
+        "Items": [
+          {
+            "ItemId": "ITEM_ARMOR_RIOT",
+            "Count": 1
+          },
+          {
+            "ItemId": "ITEM_WEAPON_BATON",
+            "Count": 1
+          }
+        ],
+        "Defense": 3
+      }
+    },
+    {
+      "Id": "EVT_A3_WANDERER_1",
+      "Kind": "Story",
+      "Priority": 45,
+      "Condition": {
+        "WeekMin": 28,
+        "Phase": "Day",
+        "FlagsNone": [
+          "WANDERER_MET"
+        ]
+      },
+      "OnShow": {
+        "SetFlags": [
+          "WANDERER_MET"
+        ]
+      },
+      "Choices": [
+        {
+          "Id": "SHARE",
+          "Effect": {
+            "Resources": [
+              {
+                "Resource": "Food",
+                "Amount": -3
+              }
+            ],
+            "SetFlags": [
+              "WANDERER_SHARED"
+            ],
+            "Hidden": [
+              {
+                "Hidden": "Humanity",
+                "Amount": 4
+              }
+            ]
+          }
+        },
+        {
+          "Id": "REFUSE",
+          "Effect": {
+            "SetFlags": [
+              "WANDERER_REFUSED"
+            ],
+            "Hidden": [
+              {
+                "Hidden": "Isolation",
+                "Amount": 2
+              }
+            ]
+          }
+        },
+        {
+          "Id": "SHELTER",
+          "Effect": {
+            "Resources": [
+              {
+                "Resource": "Food",
+                "Amount": -2
+              }
+            ],
+            "SetFlags": [
+              "WANDERER_SHELTERED"
+            ],
+            "Hidden": [
+              {
+                "Hidden": "Humanity",
+                "Amount": 6
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "Id": "EVT_A3_WANDERER_2",
+      "Kind": "Story",
+      "Priority": 45,
+      "Condition": {
+        "WeekMin": 32,
+        "FlagsAll": [
+          "WANDERER_MET"
+        ],
+        "FlagsNone": [
+          "WANDERER_RETURN"
+        ]
+      },
+      "OnShow": {
+        "SetFlags": [
+          "WANDERER_RETURN"
+        ]
+      },
+      "Choices": [
+        {
+          "Id": "HELP_GIFT",
+          "Condition": {
+            "FlagsAny": [
+              "WANDERER_SHARED",
+              "WANDERER_SHELTERED"
+            ]
+          },
+          "Effect": {
+            "Items": [
+              {
+                "ItemId": "ITEM_MEDKIT",
+                "Count": 1
+              }
+            ],
+            "Resources": [
+              {
+                "Resource": "Materials",
+                "Amount": 4
+              }
+            ],
+            "AddClues": [
+              "CURE_WANDERER_MAP"
+            ]
+          }
+        },
+        {
+          "Id": "THEFT",
+          "Condition": {
+            "FlagsAll": [
+              "WANDERER_REFUSED"
+            ]
+          },
+          "Effect": {
+            "Resources": [
+              {
+                "Resource": "Food",
+                "Amount": -6
+              },
+              {
+                "Resource": "Water",
+                "Amount": -4
+              }
+            ],
+            "Threat": 4
+          }
+        }
+      ]
+    },
+    {
+      "Id": "EVT_A3_FLU",
+      "Kind": "Story",
+      "Priority": 75,
+      "Condition": {
+        "WeekMin": 33,
+        "WeekMax": 35,
+        "FlagsNone": [
+          "A3_FLU"
+        ]
+      },
+      "OnShow": {
+        "SetFlags": [
+          "A3_FLU"
+        ],
+        "Vitals": [
+          {
+            "Vital": "Hp",
+            "Amount": -10
+          },
+          {
+            "Vital": "Fatigue",
+            "Amount": 15
+          }
+        ]
+      },
+      "Choices": [
+        {
+          "Id": "MEDICINE",
+          "Effect": {
+            "Resources": [
+              {
+                "Resource": "Medicine",
+                "Amount": -3
+              }
+            ],
+            "Vitals": [
+              {
+                "Vital": "Hp",
+                "Amount": 8
+              }
+            ],
+            "Hidden": [
+              {
+                "Hidden": "Humanity",
+                "Amount": 2
+              }
+            ]
+          }
+        },
+        {
+          "Id": "QUARANTINE",
+          "Effect": {
+            "Vitals": [
+              {
+                "Vital": "Stress",
+                "Amount": 6
+              }
+            ],
+            "Hidden": [
+              {
+                "Hidden": "Isolation",
+                "Amount": 2
+              }
+            ]
+          }
+        },
+        {
+          "Id": "NURSE_CARE",
+          "Condition": {
+            "NpcStatuses": [
+              {
+                "NpcId": "NPC_NURSE",
+                "Status": "Joined"
+              }
+            ]
+          },
+          "Effect": {
+            "Vitals": [
+              {
+                "Vital": "Hp",
+                "Amount": 6
+              },
+              {
+                "Vital": "Fatigue",
+                "Amount": -8
+              }
+            ],
+            "Npcs": [
+              {
+                "NpcId": "NPC_NURSE",
+                "Affinity": 3
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "Id": "EVT_A3_REINFECTION_EARLY",
+      "Kind": "Night",
+      "Priority": 96,
+      "DialogueNode": "EVT_A3_REINFECTION",
+      "Condition": {
+        "WeekMin": 33,
+        "WeekMax": 35,
+        "Phase": "Night",
+        "FlagsNone": [
+          "TEACHER_REINFECTED"
+        ],
+        "AnyChecks": [
+          {
+            "Kind": "Weather",
+            "Key": "Cold",
+            "Op": "Equal",
+            "Value": 1
+          },
+          {
+            "Kind": "Resource",
+            "Key": "Food",
+            "Op": "LessOrEqual",
+            "Value": 5
+          },
+          {
+            "Kind": "Vital",
+            "Key": "Hp",
+            "Op": "LessOrEqual",
+            "Value": 50
+          }
+        ]
+      },
+      "OnShow": {
+        "SetFlags": [
+          "REINFECTION_EARLY"
+        ]
+      },
+      "Choices": [
+        {
+          "Id": "SEEK_CURE",
+          "Effect": {
+            "TeacherReinfect": true,
+            "SetFlags": [
+              "CURE_ROUTE"
+            ],
+            "Hidden": [
+              {
+                "Hidden": "Hope",
+                "Amount": 4
+              }
+            ],
+            "Stats": [
+              {
+                "Stat": "Willpower",
+                "Amount": 2
+              }
+            ]
+          }
+        },
+        {
+          "Id": "CARE",
+          "Effect": {
+            "TeacherReinfect": true,
+            "SetFlags": [
+              "CARE_ROUTE"
+            ],
+            "Npcs": [
+              {
+                "NpcId": "NPC_TEACHER",
+                "Affinity": 4
+              }
+            ],
+            "Hidden": [
+              {
+                "Hidden": "Humanity",
+                "Amount": 3
+              }
+            ]
+          }
+        },
+        {
+          "Id": "DISTANCE",
+          "Effect": {
+            "TeacherReinfect": true,
+            "SetFlags": [
+              "DISTANCE_ROUTE"
+            ],
+            "Hidden": [
+              {
+                "Hidden": "Isolation",
+                "Amount": 6
+              },
+              {
+                "Hidden": "TraumaRecovery",
+                "Amount": -4
+              }
+            ],
+            "Vitals": [
+              {
+                "Vital": "Stress",
+                "Amount": -4
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "Id": "EVT_A3_REINFECTION",
+      "Kind": "Night",
+      "Priority": 95,
+      "Condition": {
+        "WeekMin": 36,
+        "Phase": "Night",
+        "FlagsNone": [
+          "TEACHER_REINFECTED"
+        ]
+      },
+      "Choices": [
+        {
+          "Id": "SEEK_CURE",
+          "Effect": {
+            "TeacherReinfect": true,
+            "SetFlags": [
+              "CURE_ROUTE"
+            ],
+            "Hidden": [
+              {
+                "Hidden": "Hope",
+                "Amount": 4
+              }
+            ],
+            "Stats": [
+              {
+                "Stat": "Willpower",
+                "Amount": 2
+              }
+            ]
+          }
+        },
+        {
+          "Id": "CARE",
+          "Effect": {
+            "TeacherReinfect": true,
+            "SetFlags": [
+              "CARE_ROUTE"
+            ],
+            "Npcs": [
+              {
+                "NpcId": "NPC_TEACHER",
+                "Affinity": 4
+              }
+            ],
+            "Hidden": [
+              {
+                "Hidden": "Humanity",
+                "Amount": 3
+              }
+            ]
+          }
+        },
+        {
+          "Id": "DISTANCE",
+          "Effect": {
+            "TeacherReinfect": true,
+            "SetFlags": [
+              "DISTANCE_ROUTE"
+            ],
+            "Hidden": [
+              {
+                "Hidden": "Isolation",
+                "Amount": 6
+              },
+              {
+                "Hidden": "TraumaRecovery",
+                "Amount": -4
+              }
+            ],
+            "Vitals": [
+              {
+                "Vital": "Stress",
+                "Amount": -4
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "Id": "EVT_A3_TEACHER_CONFESS",
+      "Kind": "Night",
+      "Priority": 70,
+      "Condition": {
+        "Phase": "Night",
+        "FlagsAll": [
+          "TEACHER_REINFECTED"
+        ],
+        "FlagsNone": [
+          "TEACHER_CONFESSED"
+        ]
+      },
+      "OnShow": {
+        "SetFlags": [
+          "TEACHER_CONFESSED"
+        ],
+        "AddClues": [
+          "CURE_TEACHER_SYMPTOM_2"
+        ]
+      },
+      "Choices": [
+        {
+          "Id": "PROMISE",
+          "Effect": {
+            "Hidden": [
+              {
+                "Hidden": "Hope",
+                "Amount": 4
+              }
+            ],
+            "Stats": [
+              {
+                "Stat": "Willpower",
+                "Amount": 1
+              }
+            ]
+          }
+        },
+        {
+          "Id": "HOLD_HAND",
+          "Effect": {
+            "Npcs": [
+              {
+                "NpcId": "NPC_TEACHER",
+                "Affinity": 4
+              }
+            ],
+            "Hidden": [
+              {
+                "Hidden": "TraumaRecovery",
+                "Amount": 3
+              }
+            ]
+          }
+        },
+        {
+          "Id": "ANGRY",
+          "Effect": {
+            "Vitals": [
+              {
+                "Vital": "Stress",
+                "Amount": -4
+              }
+            ],
+            "Hidden": [
+              {
+                "Hidden": "SelfAwareness",
+                "Amount": 3
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "Id": "EVT_A3_NURSE_DIAGNOSIS",
+      "Kind": "Story",
+      "Priority": 60,
+      "Condition": {
+        "FlagsAll": [
+          "TEACHER_REINFECTED"
+        ],
+        "FlagsNone": [
+          "NURSE_DIAGNOSIS"
+        ],
+        "NpcStatuses": [
+          {
+            "NpcId": "NPC_NURSE",
+            "Status": "Joined"
+          }
+        ]
+      },
+      "OnShow": {
+        "SetFlags": [
+          "NURSE_DIAGNOSIS"
+        ],
+        "AddClues": [
+          "CURE_NURSE_LOG_2"
+        ],
+        "Npcs": [
+          {
+            "NpcId": "NPC_TEACHER",
+            "Trust": 2
+          }
+        ]
+      }
+    },
+    {
+      "Id": "EVT_A3_DJ_RESEARCH",
+      "Kind": "Night",
+      "Priority": 55,
+      "Condition": {
+        "Phase": "Night",
+        "FlagsAll": [
+          "TEACHER_REINFECTED",
+          "DJ_CONTACT"
+        ],
+        "FlagsNone": [
+          "WATERWORKS_RUMOR"
+        ]
+      },
+      "OnShow": {
+        "SetFlags": [
+          "WATERWORKS_RUMOR"
+        ],
+        "AddClues": [
+          "CURE_DJ_RUMOR",
+          "TRUTH_DJ_INTERVIEW"
+        ]
+      },
+      "Choices": [
+        {
+          "Id": "ASK_MORE",
+          "Effect": {
+            "Stats": [
+              {
+                "Stat": "Intellect",
+                "Amount": 1
+              }
+            ],
+            "Hidden": [
+              {
+                "Hidden": "Hope",
+                "Amount": 3
+              }
+            ]
+          }
+        },
+        {
+          "Id": "WRITE_DOWN",
+          "Effect": {
+            "Hidden": [
+              {
+                "Hidden": "SelfAwareness",
+                "Amount": 2
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "Id": "EVT_A3_DJ_SHOW",
+      "Kind": "Night",
+      "Priority": 20,
+      "Once": false,
+      "CooldownWeeks": 3,
+      "Condition": {
+        "WeekMin": 28,
+        "Phase": "Night",
+        "FlagsAll": [
+          "DJ_CONTACT",
+          "POWER_RESTORED"
+        ],
+        "ActionIds": [
+          "ACT_SCOUT_RADIO",
+          "ACT_NIGHT_TALK",
+          "ACT_REST_NIGHT"
+        ]
+      },
+      "OnShow": {
+        "Hidden": [
+          {
+            "Hidden": "Hope",
+            "Amount": 2
+          }
+        ],
+        "Vitals": [
+          {
+            "Vital": "Stress",
+            "Amount": -4
+          }
+        ]
+      }
+    },
+    {
+      "Id": "EVT_A3_FINALE",
+      "Kind": "Story",
+      "Priority": 100,
+      "Condition": {
+        "WeekMin": 39,
+        "WeekMax": 39,
+        "Days": [
+          6
+        ],
+        "Phase": "Night"
+      },
+      "OnShow": {
+        "RaidStrength": 85,
+        "SetFlags": [
+          "ACT3_FINALE"
+        ]
+      }
+    },
+    {
+      "Id": "EVT_A3_REVIEW",
+      "Kind": "Story",
+      "Priority": 100,
+      "ReviewAct": 3,
+      "ReviewFromWeek": 27,
+      "Condition": {
+        "WeekMin": 39,
+        "WeekMax": 39,
+        "Days": [
+          7
+        ],
+        "Phase": "Night"
+      },
+      "OnShow": {
+        "SetFlags": [
+          "ACT3_DONE"
+        ]
+      }
+    },
+    {
+      "Id": "EVT_DH_07_SHELTER",
+      "Kind": "Night",
+      "Priority": 45,
+      "Condition": {
+        "WeekMin": 31,
+        "Phase": "Night",
+        "FlagsAll": [
+          "DJ_CONTACT"
+        ],
+        "FlagsNone": [
+          "DH_SHELTER_NEWS"
+        ],
+        "NpcStatuses": [
+          {
+            "NpcId": "NPC_DOHYEON",
+            "Status": "Joined"
+          }
+        ]
+      },
+      "OnShow": {
+        "SetFlags": [
+          "DH_SHELTER_NEWS"
+        ]
+      },
+      "Choices": [
+        {
+          "Id": "HOPE",
+          "Effect": {
+            "Npcs": [
+              {
+                "NpcId": "NPC_DOHYEON",
+                "Affinity": 3
+              }
+            ],
+            "Hidden": [
+              {
+                "Hidden": "Hope",
+                "Amount": 3
+              }
+            ]
+          }
+        },
+        {
+          "Id": "HONEST",
+          "Effect": {
+            "Npcs": [
+              {
+                "NpcId": "NPC_DOHYEON",
+                "Trust": 4
+              }
+            ],
+            "Hidden": [
+              {
+                "Hidden": "SelfAwareness",
+                "Amount": 2
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "Id": "EVT_BY_02_CHOICE",
+      "Kind": "Night",
+      "Priority": 45,
+      "Condition": {
+        "Phase": "Night",
+        "FlagsAll": [
+          "RINGLEADER_MET"
+        ],
+        "FlagsNone": [
+          "BY_CHOICE"
+        ],
+        "NpcStatuses": [
+          {
+            "NpcId": "NPC_BYSTANDER",
+            "Status": "Joined"
+          }
+        ]
+      },
+      "OnShow": {
+        "SetFlags": [
+          "BY_CHOICE"
+        ]
+      },
+      "Choices": [
+        {
+          "Id": "THANK",
+          "Effect": {
+            "Npcs": [
+              {
+                "NpcId": "NPC_BYSTANDER",
+                "Affinity": 6,
+                "Trust": 4
+              }
+            ],
+            "Hidden": [
+              {
+                "Hidden": "TraumaRecovery",
+                "Amount": 3
+              }
+            ]
+          }
+        },
+        {
+          "Id": "NOTHING",
+          "Effect": {
+            "Hidden": [
+              {
+                "Hidden": "SelfAwareness",
+                "Amount": 2
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "Id": "EVT_CAL_CHUSEOK",
+      "Kind": "Calendar",
+      "Priority": 55,
+      "Condition": {
+        "Month": 10,
+        "DayOfMonth": 6
+      },
+      "Choices": [
+        {
+          "Id": "FEAST",
+          "Effect": {
+            "Resources": [
+              {
+                "Resource": "Food",
+                "Amount": -4
+              }
+            ],
+            "Hidden": [
+              {
+                "Hidden": "Hope",
+                "Amount": 5
+              }
+            ],
+            "Vitals": [
+              {
+                "Vital": "Stress",
+                "Amount": -8
+              }
+            ],
+            "Npcs": [
+              {
+                "NpcId": "NPC_TEACHER",
+                "Affinity": 3
+              }
+            ]
+          }
+        },
+        {
+          "Id": "MOON",
+          "Effect": {
+            "Hidden": [
+              {
+                "Hidden": "Hope",
+                "Amount": 3
+              },
+              {
+                "Hidden": "SelfAwareness",
+                "Amount": 2
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "Id": "EVT_CAL_SCHOOL_FESTIVAL",
+      "Kind": "Calendar",
+      "Priority": 55,
+      "Condition": {
+        "Month": 10,
+        "DayOfMonth": 24,
+        "Phase": "Day"
+      },
+      "Choices": [
+        {
+          "Id": "STAGE",
+          "Effect": {
+            "Stats": [
+              {
+                "Stat": "Empathy",
+                "Amount": 1
+              },
+              {
+                "Stat": "Leadership",
+                "Amount": 1
+              }
+            ],
+            "Hidden": [
+              {
+                "Hidden": "Hope",
+                "Amount": 4
+              }
+            ],
+            "Vitals": [
+              {
+                "Vital": "Stress",
+                "Amount": -6
+              }
+            ]
+          }
+        },
+        {
+          "Id": "POSTER",
+          "Effect": {
+            "Stats": [
+              {
+                "Stat": "Craft",
+                "Amount": 1
+              }
+            ],
+            "Hidden": [
+              {
+                "Hidden": "SelfAwareness",
+                "Amount": 2
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "Id": "EVT_CAL_SUNEUNG",
+      "Kind": "Calendar",
+      "Priority": 60,
+      "Condition": {
+        "Month": 11,
+        "DayOfMonth": 13,
+        "Phase": "Day"
+      },
+      "Choices": [
+        {
+          "Id": "TICKET",
+          "Effect": {
+            "Hidden": [
+              {
+                "Hidden": "Hope",
+                "Amount": 2
+              },
+              {
+                "Hidden": "SelfAwareness",
+                "Amount": 3
+              }
+            ]
+          }
+        },
+        {
+          "Id": "SOLVE",
+          "Effect": {
+            "Stats": [
+              {
+                "Stat": "Intellect",
+                "Amount": 2
+              }
+            ],
+            "Vitals": [
+              {
+                "Vital": "Stress",
+                "Amount": 3
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "Id": "EVT_TALK_09",
+      "Kind": "Night",
+      "Priority": 22,
+      "Condition": {
+        "ActionIds": [
+          "ACT_NIGHT_TALK"
+        ],
+        "FlagsAll": [
+          "A3_STARTED"
+        ],
+        "FlagsNone": [
+          "TALK_09"
+        ]
+      },
+      "OnShow": {
+        "SetFlags": [
+          "TALK_09"
+        ]
+      },
+      "Choices": [
+        {
+          "Id": "DREAM",
+          "Effect": {
+            "Hidden": [
+              {
+                "Hidden": "SelfAwareness",
+                "Amount": 3
+              },
+              {
+                "Hidden": "Hope",
+                "Amount": 2
+              }
+            ]
+          }
+        },
+        {
+          "Id": "DONT_KNOW",
+          "Effect": {
+            "Hidden": [
+              {
+                "Hidden": "SelfAwareness",
+                "Amount": 1
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "Id": "EVT_TALK_10",
+      "Kind": "Night",
+      "Priority": 22,
+      "Condition": {
+        "WeekMin": 32,
+        "ActionIds": [
+          "ACT_NIGHT_TALK"
+        ],
+        "FlagsAll": [
+          "TALK_09"
+        ],
+        "FlagsNone": [
+          "TALK_10"
+        ]
+      },
+      "OnShow": {
+        "SetFlags": [
+          "TALK_10"
+        ],
+        "EndingTags": [
+          {
+            "Tag": "TAG_TEACHING",
+            "Amount": 1
+          }
+        ]
+      },
+      "Choices": [
+        {
+          "Id": "TEACH_ME",
+          "Effect": {
+            "Stats": [
+              {
+                "Stat": "Empathy",
+                "Amount": 1
+              }
+            ],
+            "Npcs": [
+              {
+                "NpcId": "NPC_TEACHER",
+                "Affinity": 2
+              }
+            ]
+          }
+        },
+        {
+          "Id": "LISTEN",
+          "Effect": {
+            "Hidden": [
+              {
+                "Hidden": "Hope",
+                "Amount": 2
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "Id": "EVT_TALK_11",
+      "Kind": "Night",
+      "Priority": 23,
+      "Condition": {
+        "ActionIds": [
+          "ACT_NIGHT_TALK",
+          "ACT_CARE_TEACHER"
+        ],
+        "FlagsAll": [
+          "TEACHER_REINFECTED"
+        ],
+        "FlagsNone": [
+          "TALK_11"
+        ]
+      },
+      "OnShow": {
+        "SetFlags": [
+          "TALK_11",
+          "LAST_LESSONS_PLANNED"
+        ]
+      },
+      "Choices": [
+        {
+          "Id": "WRITE_PLAN",
+          "Effect": {
+            "Stats": [
+              {
+                "Stat": "Intellect",
+                "Amount": 1
+              }
+            ],
+            "Hidden": [
+              {
+                "Hidden": "Hope",
+                "Amount": 2
+              }
+            ]
+          }
+        },
+        {
+          "Id": "NOT_LAST",
+          "Effect": {
+            "Hidden": [
+              {
+                "Hidden": "TraumaRecovery",
+                "Amount": -2
+              }
+            ],
+            "Npcs": [
+              {
+                "NpcId": "NPC_TEACHER",
+                "Affinity": 2
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "Id": "EVT_RND_A3_LEAVES",
+      "Kind": "Random",
+      "Priority": 0,
+      "Once": false,
+      "CooldownWeeks": 5,
+      "Weight": 1,
+      "Condition": {
+        "Phase": "Day",
+        "Seasons": [
+          "Autumn"
+        ]
+      },
+      "Choices": [
+        {
+          "Id": "RAKE",
+          "Effect": {
+            "Vitals": [
+              {
+                "Vital": "Stress",
+                "Amount": -5
+              }
+            ],
+            "Resources": [
+              {
+                "Resource": "Fuel",
+                "Amount": 2
+              }
+            ]
+          }
+        },
+        {
+          "Id": "WATCH",
+          "Effect": {
+            "Hidden": [
+              {
+                "Hidden": "Hope",
+                "Amount": 2
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "Id": "EVT_RND_A3_COLD_NIGHT",
+      "Kind": "Random",
+      "Priority": 0,
+      "Once": false,
+      "CooldownWeeks": 4,
+      "Weight": 1.2,
+      "Condition": {
+        "Phase": "Night",
+        "WeekMin": 34
+      },
+      "Choices": [
+        {
+          "Id": "SHARE_BLANKET",
+          "Effect": {
+            "Hidden": [
+              {
+                "Hidden": "Humanity",
+                "Amount": 2
+              }
+            ],
+            "Vitals": [
+              {
+                "Vital": "Fatigue",
+                "Amount": 4
+              }
+            ]
+          }
+        },
+        {
+          "Id": "FIRE",
+          "Effect": {
+            "Resources": [
+              {
+                "Resource": "Fuel",
+                "Amount": -1
+              }
+            ],
+            "Vitals": [
+              {
+                "Vital": "Stress",
+                "Amount": -4
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "Id": "EVT_RND_A3_REQUEST",
+      "Kind": "Random",
+      "Priority": 0,
+      "Once": false,
+      "CooldownWeeks": 5,
+      "Weight": 1,
+      "Condition": {
+        "Phase": "Night",
+        "FlagsAll": [
+          "DJ_CONTACT"
+        ]
+      },
+      "Choices": [
+        {
+          "Id": "REQUEST",
+          "Effect": {
+            "Hidden": [
+              {
+                "Hidden": "Hope",
+                "Amount": 3
+              }
+            ],
+            "Vitals": [
+              {
+                "Vital": "Stress",
+                "Amount": -5
+              }
+            ]
+          }
+        },
+        {
+          "Id": "SKIP",
+          "Effect": {
+            "Resources": [
+              {
+                "Resource": "Power",
+                "Amount": 1
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "Id": "EVT_RND_A3_TRACKS",
+      "Kind": "Crisis",
+      "Priority": 0,
+      "Once": false,
+      "CooldownWeeks": 6,
+      "Weight": 1,
+      "Condition": {
+        "WeekMin": 30
+      },
+      "OnShow": {
+        "Threat": 5
+      },
+      "Choices": [
+        {
+          "Id": "PATROL",
+          "Effect": {
+            "Vitals": [
+              {
+                "Vital": "Fatigue",
+                "Amount": 8
+              }
+            ],
+            "Defense": 3
+          }
+        },
+        {
+          "Id": "IGNORE",
+          "Effect": {
+            "Threat": 3
+          }
+        }
+      ]
+    }
+  ],
+  "Npcs": [
+    {
+      "Id": "NPC_WANDERER",
+      "DefaultRole": "",
+      "StartAffinity": 0,
+      "StartTrust": 0
+    }
+  ],
+  "Lines": [
+    {
+      "Id": "DIARY_A3_AUTUMN",
+      "Kind": "Diary",
+      "Priority": 12,
+      "TextKey": "diary.a3_autumn",
+      "Condition": {
+        "WeekMin": 27,
+        "WeekMax": 39
+      }
+    },
+    {
+      "Id": "DIARY_A3_RESCUE",
+      "Kind": "Diary",
+      "Priority": 40,
+      "TextKey": "diary.a3_rescue",
+      "Condition": {
+        "WeekMin": 27,
+        "WeekMax": 39,
+        "FlagsAll": [
+          "RESCUE_ANNOUNCED"
+        ],
+        "FlagsNone": [
+          "TEACHER_REINFECTED"
+        ]
+      }
+    },
+    {
+      "Id": "DIARY_A3_FACE",
+      "Kind": "Diary",
+      "Priority": 42,
+      "TextKey": "diary.a3_face",
+      "Condition": {
+        "WeekMin": 27,
+        "WeekMax": 39,
+        "FlagsAny": [
+          "BULLY_FORGAVE",
+          "BULLY_SEPARATED",
+          "BULLY_RESCUED"
+        ]
+      }
+    },
+    {
+      "Id": "DIARY_A3_REINFECTED",
+      "Kind": "Diary",
+      "Priority": 60,
+      "TextKey": "diary.a3_reinfected",
+      "Condition": {
+        "WeekMin": 27,
+        "WeekMax": 39,
+        "FlagsAll": [
+          "TEACHER_REINFECTED"
+        ]
+      }
+    },
+    {
+      "Id": "DIARY_A3_CURE",
+      "Kind": "Diary",
+      "Priority": 62,
+      "TextKey": "diary.a3_cure",
+      "Condition": {
+        "WeekMin": 27,
+        "WeekMax": 39,
+        "FlagsAll": [
+          "CURE_ROUTE",
+          "WATERWORKS_RUMOR"
+        ]
+      }
+    },
+    {
+      "Id": "TC_A3_RESCUE",
+      "Kind": "TeacherComment",
+      "Priority": 38,
+      "TextKey": "tc.a3_rescue",
+      "Condition": {
+        "WeekMin": 27,
+        "WeekMax": 39,
+        "FlagsAll": [
+          "RESCUE_ANNOUNCED"
+        ],
+        "FlagsNone": [
+          "TEACHER_REINFECTED"
+        ]
+      }
+    },
+    {
+      "Id": "TC_A3_CURE",
+      "Kind": "TeacherComment",
+      "Priority": 68,
+      "TextKey": "tc.a3_cure",
+      "Condition": {
+        "WeekMin": 27,
+        "WeekMax": 39,
+        "FlagsAll": [
+          "CURE_ROUTE"
+        ]
+      }
+    },
+    {
+      "Id": "TC_A3_DISTANCE",
+      "Kind": "TeacherComment",
+      "Priority": 68,
+      "TextKey": "tc.a3_distance",
+      "Condition": {
+        "WeekMin": 27,
+        "WeekMax": 39,
+        "FlagsAll": [
+          "DISTANCE_ROUTE"
+        ]
+      }
+    },
+    {
+      "Id": "REVIEW_A3",
+      "Kind": "ActReview",
+      "Priority": 10,
+      "TextKey": "review.a3",
+      "Condition": {
+        "FlagsAll": [
+          "ACT3_DONE"
+        ]
+      }
+    },
+    {
+      "Id": "REVIEW_A3_CURE",
+      "Kind": "ActReview",
+      "Priority": 20,
+      "TextKey": "review.a3_cure",
+      "Condition": {
+        "FlagsAll": [
+          "ACT3_DONE",
+          "CURE_ROUTE"
+        ]
+      }
+    },
+    {
+      "Id": "REVIEW_A3_DISTANCE",
+      "Kind": "ActReview",
+      "Priority": 20,
+      "TextKey": "review.a3_distance",
+      "Condition": {
+        "FlagsAll": [
+          "ACT3_DONE",
+          "DISTANCE_ROUTE"
+        ]
+      }
+    },
+    {
+      "Id": "M_RESCUE",
+      "Kind": "EndingMoment",
+      "Priority": 0,
+      "TextKey": "line.m_rescue",
+      "Condition": {
+        "FlagsAll": [
+          "RESCUE_ANNOUNCED"
+        ]
+      }
+    },
+    {
+      "Id": "M_FACE",
+      "Kind": "EndingMoment",
+      "Priority": 0,
+      "TextKey": "line.m_face",
+      "Condition": {
+        "FlagsAll": [
+          "RINGLEADER_MET"
+        ]
+      }
+    },
+    {
+      "Id": "M_MART_ALLY",
+      "Kind": "EndingMoment",
+      "Priority": 0,
+      "TextKey": "line.m_mart_ally",
+      "Condition": {
+        "FlagsAll": [
+          "MART_ALLY"
+        ]
+      }
+    },
+    {
+      "Id": "M_REINFECTED",
+      "Kind": "EndingMoment",
+      "Priority": 0,
+      "TextKey": "line.m_reinfected",
+      "Condition": {
+        "FlagsAll": [
+          "TEACHER_REINFECTED"
+        ]
+      }
+    },
+    {
+      "Id": "M_WANDERER",
+      "Kind": "EndingMoment",
+      "Priority": 0,
+      "TextKey": "line.m_wanderer",
+      "Condition": {
+        "FlagsAny": [
+          "WANDERER_SHARED",
+          "WANDERER_SHELTERED"
+        ]
+      }
+    },
+    {
+      "Id": "M_ACT3",
+      "Kind": "EndingMoment",
+      "Priority": 0,
+      "TextKey": "line.m_act3",
+      "Condition": {
+        "FlagsAll": [
+          "ACT3_DONE"
+        ]
+      }
+    }
+  ]
+}

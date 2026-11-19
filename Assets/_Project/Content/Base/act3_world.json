@@ -1,0 +1,299 @@
+{
+  "Actions": [
+    {
+      "Id": "ACT_EXP_DAY_MART",
+      "Category": "Expedition",
+      "SlotTag": "DayOnly",
+      "ExpeditionTime": "Day",
+      "LocationId": "LOC_MART",
+      "Unlock": {
+        "FlagsAll": [
+          "LOC_MART"
+        ]
+      }
+    },
+    {
+      "Id": "ACT_EXP_NIGHT_MART",
+      "Category": "Expedition",
+      "SlotTag": "NightOnly",
+      "ExpeditionTime": "Night",
+      "LocationId": "LOC_MART",
+      "Unlock": {
+        "FlagsAll": [
+          "LOC_MART",
+          "NIGHT_RUNS"
+        ]
+      }
+    },
+    {
+      "Id": "ACT_EXP_DAY_POLICE",
+      "Category": "Expedition",
+      "SlotTag": "DayOnly",
+      "ExpeditionTime": "Day",
+      "LocationId": "LOC_POLICE",
+      "Unlock": {
+        "FlagsAll": [
+          "LOC_POLICE"
+        ]
+      }
+    },
+    {
+      "Id": "ACT_EXP_NIGHT_POLICE",
+      "Category": "Expedition",
+      "SlotTag": "NightOnly",
+      "ExpeditionTime": "Night",
+      "LocationId": "LOC_POLICE",
+      "Unlock": {
+        "FlagsAll": [
+          "LOC_POLICE",
+          "NIGHT_RUNS"
+        ]
+      }
+    }
+  ],
+  "Items": [
+    {
+      "Id": "ITEM_ARMOR_RIOT",
+      "Width": 2,
+      "Height": 2,
+      "Weight": 2.0,
+      "Noise": 0.2,
+      "Value": 7,
+      "Grade": "Rare",
+      "Slot": "Armor",
+      "DamageReduction": 0.3
+    },
+    {
+      "Id": "ITEM_WEAPON_BATON",
+      "Height": 2,
+      "Weight": 0.6,
+      "Noise": 0.1,
+      "Value": 6,
+      "Grade": "Rare",
+      "Slot": "Weapon",
+      "MaxDurability": 16,
+      "WeaponPower": 2,
+      "AttackNoise": 4,
+      "AttackCooldown": 0.8,
+      "StunSeconds": 2.0
+    }
+  ],
+  "ExpeditionModels": [
+    {
+      "Id": "LOC_MART",
+      "Day": {
+        "Resources": [
+          {
+            "Resource": "Food",
+            "Min": 10,
+            "Max": 16
+          },
+          {
+            "Resource": "Water",
+            "Min": 6,
+            "Max": 10
+          },
+          {
+            "Resource": "Materials",
+            "Min": 1,
+            "Max": 3
+          }
+        ],
+        "BaseDownChance": 0.1,
+        "Fatigue": 18,
+        "StressMin": 10,
+        "StressMax": 16,
+        "ConscienceMax": 3
+      },
+      "Night": {
+        "Resources": [
+          {
+            "Resource": "Food",
+            "Min": 12,
+            "Max": 18
+          },
+          {
+            "Resource": "Water",
+            "Min": 6,
+            "Max": 10
+          },
+          {
+            "Resource": "Fuel",
+            "Min": 1,
+            "Max": 3
+          },
+          {
+            "Resource": "Medicine",
+            "Min": 0,
+            "Max": 2
+          }
+        ],
+        "BaseDownChance": 0.17,
+        "Fatigue": 22,
+        "StressMin": 16,
+        "StressMax": 20,
+        "DawnReturnChance": 0.25
+      }
+    },
+    {
+      "Id": "LOC_POLICE",
+      "Day": {
+        "Resources": [
+          {
+            "Resource": "Materials",
+            "Min": 2,
+            "Max": 4
+          },
+          {
+            "Resource": "Medicine",
+            "Min": 0,
+            "Max": 2
+          }
+        ],
+        "BaseDownChance": 0.09,
+        "Fatigue": 15,
+        "StressMin": 9,
+        "StressMax": 14,
+        "ConscienceMax": 1
+      },
+      "Night": {
+        "Resources": [
+          {
+            "Resource": "Materials",
+            "Min": 3,
+            "Max": 5
+          },
+          {
+            "Resource": "Medicine",
+            "Min": 1,
+            "Max": 2
+          },
+          {
+            "Resource": "Fuel",
+            "Min": 0,
+            "Max": 2
+          }
+        ],
+        "BaseDownChance": 0.14,
+        "Fatigue": 19,
+        "StressMin": 14,
+        "StressMax": 18,
+        "DawnReturnChance": 0.2
+      }
+    }
+  ],
+  "LootTables": [
+    {
+      "Id": "LOOT_MART_SHELF",
+      "MinRolls": 1,
+      "MaxRolls": 3,
+      "EmptyChance": 0.2,
+      "Entries": [
+        {
+          "ItemId": "ITEM_CANNED_FOOD",
+          "Weight": 5
+        },
+        {
+          "ItemId": "ITEM_INSTANT_NOODLE",
+          "Weight": 5
+        },
+        {
+          "ItemId": "ITEM_WATER_BOTTLE",
+          "Weight": 4
+        },
+        {
+          "ItemId": "ITEM_SNACK",
+          "Weight": 3
+        },
+        {
+          "ItemId": "ITEM_VITAMIN",
+          "Weight": 1
+        },
+        {
+          "ItemId": "ITEM_LIGHTER",
+          "Weight": 1
+        }
+      ]
+    },
+    {
+      "Id": "LOOT_MART_WAREHOUSE",
+      "MinRolls": 2,
+      "MaxRolls": 3,
+      "EmptyChance": 0.05,
+      "Entries": [
+        {
+          "ItemId": "ITEM_CANNED_FOOD",
+          "Weight": 6
+        },
+        {
+          "ItemId": "ITEM_WATER_BOTTLE",
+          "Weight": 5
+        },
+        {
+          "ItemId": "ITEM_INSTANT_NOODLE",
+          "Weight": 4
+        },
+        {
+          "ItemId": "ITEM_BAG_HIKING",
+          "Weight": 1
+        },
+        {
+          "ItemId": "ITEM_DUCT_TAPE",
+          "Weight": 2
+        }
+      ]
+    },
+    {
+      "Id": "LOOT_POLICE_OFFICE",
+      "MinRolls": 1,
+      "MaxRolls": 2,
+      "EmptyChance": 0.2,
+      "Entries": [
+        {
+          "ItemId": "ITEM_BATTERY",
+          "Weight": 3
+        },
+        {
+          "ItemId": "ITEM_BANDAGE",
+          "Weight": 2
+        },
+        {
+          "ItemId": "ITEM_TOOL_FLASHLIGHT",
+          "Weight": 2
+        },
+        {
+          "ItemId": "ITEM_DUCT_TAPE",
+          "Weight": 1
+        },
+        {
+          "ItemId": "ITEM_PAINKILLER",
+          "Weight": 1
+        }
+      ]
+    },
+    {
+      "Id": "LOOT_POLICE_ARMORY",
+      "MinRolls": 1,
+      "MaxRolls": 2,
+      "EmptyChance": 0.0,
+      "Entries": [
+        {
+          "ItemId": "ITEM_WEAPON_BATON",
+          "Weight": 3
+        },
+        {
+          "ItemId": "ITEM_ARMOR_RIOT",
+          "Weight": 2
+        },
+        {
+          "ItemId": "ITEM_TOOL_CROWBAR",
+          "Weight": 1
+        },
+        {
+          "ItemId": "ITEM_MEDKIT",
+          "Weight": 1
+        }
+      ]
+    }
+  ]
+}

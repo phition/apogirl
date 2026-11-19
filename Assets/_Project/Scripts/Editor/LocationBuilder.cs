@@ -9,7 +9,7 @@ namespace ApoGirl.EditorTools
     /// <summary>
     /// 탐험 지역 레이아웃 생성기 (메뉴 ApoGirl/Content/Build Locations). 건물 단면은 코드로 짓고 결과를 LocationAsset으로 저장한다.
     /// 수치·배치를 바꾸려면 이 파일을 고친 뒤 메뉴를 다시 실행한다 (에셋은 생성물).
-    /// 지역 목록: 튜토리얼(체육관 창고 → 본관 창고), 학교 교실동, 편의점, 약국·의원, 주택가(M6), 지하철역(M6).
+    /// 지역 목록: 튜토리얼(체육관 창고 → 본관 창고), 학교 교실동, 편의점, 약국·의원, 주택가(M6), 지하철역(M6), 마트·물류창고(M6), 파출소(M6).
     /// </summary>
     public static class LocationBuilder
     {
@@ -26,6 +26,8 @@ namespace ApoGirl.EditorTools
                 Save("LOC_PHARMACY", Pharmacy()),
                 Save("LOC_RESIDENTIAL", Residential()),
                 Save("LOC_SUBWAY", Subway()),
+                Save("LOC_MART", Mart()),
+                Save("LOC_POLICE", Police()),
             };
 
             var database = AssetDatabase.LoadAssetAtPath<DefinitionDatabaseAsset>(ContentPipeline.DatabasePath);
@@ -495,6 +497,169 @@ namespace ApoGirl.EditorTools
                     },
                     ForceableRooms = { "ROOM_SUBWAY_OFFICE_1" },
                     Encounters = { broadcast },
+                },
+            };
+        }
+
+        // ── 마트·물류창고 (문서 6.3.8): 1층 매장 푸드코트 휴면 군집 사이 대량 물자, 2층 창고·사무실. 어른 무리·주동자 ──
+
+        private static LocationDef Mart()
+        {
+            var layout = new BuildingLayoutDef { Floors = 2, FloorHeight = 4f, CorridorLength = 110f };
+            layout.RoomTemplates.Add(new RoomTemplateDef
+            {
+                Id = "ROOM_MART_WAREHOUSE", Width = 20f, DefaultLootTableId = "LOOT_MART_WAREHOUSE",
+                DoorXs = new List<float> { 1.2f, 18.8f },
+                Containers =
+                {
+                    C("PALLET_1", ContainerKind.Box, 0, 3.8f), C("PALLET_2", ContainerKind.Box, 0, 6.6f), C("PALLET_3", ContainerKind.Box, 0, 9.4f),
+                    C("PALLET_4", ContainerKind.Box, 0, 12.2f), C("COLD_STORE", ContainerKind.Fridge, 0, 15f, "LOOT_STORE_FRIDGE"), C("TOOL_RACK", ContainerKind.Cabinet, 0, 17.4f, "LOOT_SUBWAY_OFFICE"),
+                },
+            });
+            layout.RoomTemplates.Add(new RoomTemplateDef
+            {
+                Id = "ROOM_MART_OFFICE", Width = 12f, DefaultLootTableId = "LOOT_STORE_OFFICE",
+                DoorXs = new List<float> { 1.2f },
+                Windows = new List<WindowDef> { new WindowDef(3f, 3f) },
+                Containers = { C("OFFICE_DESK", ContainerKind.Desk, 0, 4f), C("OFFICE_SAFE", ContainerKind.Cabinet, 0, 7f), C("OFFICE_LOCKER", ContainerKind.Locker, 0, 10f) },
+            });
+
+            Stairs(layout, 104f);
+            Room(layout, "ROOM_MART_OFFICE_1", "ROOM_MART_OFFICE", 0, 90f, 1);
+            Room(layout, "ROOM_MART_WAREHOUSE_1", "ROOM_MART_WAREHOUSE", 1, 20f, 1);
+            Room(layout, "ROOM_MART_WAREHOUSE_2", "ROOM_MART_WAREHOUSE", 1, 50f, 2);
+            Room(layout, "ROOM_MART_OFFICE_2", "ROOM_MART_OFFICE", 1, 80f, 2);
+            for (var i = 0; i < 10; i++)
+            {
+                layout.Containers.Add(C($"C_MART_SHELF_{i + 1}", ContainerKind.Box, 0, 8f + i * 3.2f, i % 3 == 0 ? "LOOT_MART_SHELF" : "LOOT_STORE_SHELF"));
+            }
+
+            layout.Containers.Add(C("C_MART_FOODCOURT_A", ContainerKind.Fridge, 0, 52f, "LOOT_STORE_FRIDGE"));
+            layout.Containers.Add(C("C_MART_FOODCOURT_B", ContainerKind.Box, 0, 60f, "LOOT_MART_SHELF"));
+            layout.Containers.Add(C("C_MART_CHECKOUT", ContainerKind.Desk, 0, 74f, "LOOT_STORE_COUNTER"));
+            layout.Exits.Add(new ExitDef { Kind = ExitKind.Main, Floor = 0, X = 3f });
+            layout.Exits.Add(new ExitDef { Kind = ExitKind.Alternate, Floor = 1, X = 108f, StartsLocked = true });
+
+            // 어른 무리의 대표 (협상), 주동자 (직면)
+            var group = new EncounterDef
+            {
+                Id = "MART_GROUP", Floor = 0, RoomId = "ROOM_MART_OFFICE_1", X = 6f,
+                FlagsAll = { "A3_STARTED" }, FlagsNone = { "MART_GROUP_MET" },
+                PromptKey = "enc.MART_GROUP.prompt",
+                Choices =
+                {
+                    new EncounterChoiceDef { Id = "TALK", TextKey = "enc.MART_GROUP.talk", SetFlags = { "MART_GROUP_MET" } },
+                    new EncounterChoiceDef { Id = "BACK_OFF", TextKey = "enc.MART_GROUP.back_off", Removes = false },
+                },
+            };
+            var ringleader = new EncounterDef
+            {
+                Id = "RINGLEADER", Floor = 1, RoomId = "ROOM_MART_OFFICE_2", X = 7f,
+                FlagsAll = { "MART_GROUP_MET" }, FlagsNone = { "RINGLEADER_MET" },
+                PromptKey = "enc.RINGLEADER.prompt",
+                Choices =
+                {
+                    new EncounterChoiceDef { Id = "FACE", TextKey = "enc.RINGLEADER.face", SetFlags = { "RINGLEADER_MET" }, StressDelta = 12 },
+                    new EncounterChoiceDef { Id = "LEAVE", TextKey = "enc.RINGLEADER.leave", Removes = false, StressDelta = 6 },
+                },
+            };
+
+            return new LocationDef
+            {
+                Layout = layout, DayRunSeconds = 480f, NightRunSeconds = 420f, DefaultLootTableId = "LOOT_MART_SHELF",
+                DayVariant = new LocationVariantDef
+                {
+                    Spawns =
+                    {
+                        Crowd("ENEMY_WANDERER", 0, "", 56f, 9, 5f),
+                        Crowd("ENEMY_LISTENER", 0, "", 64f, 2, 1.5f),
+                        Crowd("ENEMY_WANDERER", 1, "ROOM_MART_WAREHOUSE_2", 9f, 3, 2f),
+                        Walk("ENEMY_WANDERER", 0, "", 24f, 1, 0f),
+                        Walk("ENEMY_WANDERER", 1, "", 66f, 1, 0f),
+                    },
+                    LockedRooms = { "ROOM_MART_WAREHOUSE_1" },
+                    Encounters = { group, ringleader },
+                },
+                NightVariant = new LocationVariantDef
+                {
+                    Spawns =
+                    {
+                        Walk("ENEMY_WANDERER", 0, "", 40f, 4, 12f),
+                        Walk("ENEMY_WATCHER", 0, "", 70f, 1, 0f),
+                        Walk("ENEMY_WANDERER", 1, "", 40f, 3, 10f),
+                        Walk("ENEMY_LISTENER", 1, "", 76f, 2, 4f),
+                    },
+                    ForceableRooms = { "ROOM_MART_WAREHOUSE_1" },
+                },
+            };
+        }
+
+        // ── 파출소 (문서 6.3.8, 밤 선호): 무기고·사건 기록. 총기는 두지 않는다 ──
+
+        private static LocationDef Police()
+        {
+            var layout = new BuildingLayoutDef { Floors = 2, FloorHeight = 4f, CorridorLength = 52f };
+            layout.RoomTemplates.Add(new RoomTemplateDef
+            {
+                Id = "ROOM_POLICE_OFFICE", Width = 16f, DefaultLootTableId = "LOOT_POLICE_OFFICE",
+                DoorXs = new List<float> { 1.2f },
+                Windows = new List<WindowDef> { new WindowDef(3f, 3.4f), new WindowDef(9f, 3.4f) },
+                Containers = { C("DESK_A", ContainerKind.Desk, 0, 4f), C("DESK_B", ContainerKind.Desk, 0, 7f), C("FILES", ContainerKind.Cabinet, 0, 11f), C("LOCKER", ContainerKind.Locker, 0, 14f) },
+            });
+            layout.RoomTemplates.Add(new RoomTemplateDef
+            {
+                Id = "ROOM_POLICE_ARMORY", Width = 10f, DefaultLootTableId = "LOOT_POLICE_ARMORY",
+                DoorXs = new List<float> { 1.2f },
+                Containers = { C("RACK_A", ContainerKind.Locker, 0, 3.6f), C("RACK_B", ContainerKind.Locker, 0, 6f), C("CRATE", ContainerKind.Box, 0, 8.4f) },
+            });
+            layout.RoomTemplates.Add(new RoomTemplateDef
+            {
+                Id = "ROOM_POLICE_CELL", Width = 10f, DefaultLootTableId = "LOOT_HOUSE_ROOM",
+                DoorXs = new List<float> { 1.2f },
+                Containers = { C("BUNK", ContainerKind.Box, 0, 5f) },
+            });
+
+            Stairs(layout, 4f);
+            Room(layout, "ROOM_POLICE_OFFICE_1", "ROOM_POLICE_OFFICE", 0, 16f, 1);
+            Room(layout, "ROOM_POLICE_CELL_1", "ROOM_POLICE_CELL", 0, 36f, 1);
+            Room(layout, "ROOM_POLICE_ARMORY_1", "ROOM_POLICE_ARMORY", 1, 14f, 1);
+            Room(layout, "ROOM_POLICE_OFFICE_2", "ROOM_POLICE_OFFICE", 1, 30f, 2);
+            layout.Containers.Add(C("C_POLICE_FRONT_DESK", ContainerKind.Desk, 0, 10f, "LOOT_POLICE_OFFICE"));
+            layout.Exits.Add(new ExitDef { Kind = ExitKind.Main, Floor = 0, X = 49f });
+            layout.Exits.Add(new ExitDef { Kind = ExitKind.Alternate, Floor = 1, X = 50f, StartsLocked = true });
+
+            var report = new EncounterDef
+            {
+                Id = "POLICE_REPORT", Floor = 1, RoomId = "ROOM_POLICE_OFFICE_2", X = 8f,
+                FlagsNone = { "POLICE_REPORT_TAKEN" },
+                PromptKey = "enc.POLICE_REPORT.prompt",
+                Choices =
+                {
+                    new EncounterChoiceDef { Id = "TAKE", TextKey = "enc.POLICE_REPORT.take", SetFlags = { "POLICE_REPORT_TAKEN" }, AddClues = { "TRUTH_POLICE_REPORT" } },
+                    new EncounterChoiceDef { Id = "LEAVE", TextKey = "enc.POLICE_REPORT.leave", Removes = false },
+                },
+            };
+
+            return new LocationDef
+            {
+                Layout = layout, DayRunSeconds = 330f, NightRunSeconds = 330f, DefaultLootTableId = "LOOT_POLICE_OFFICE",
+                DayVariant = new LocationVariantDef
+                {
+                    Spawns =
+                    {
+                        Crowd("ENEMY_WANDERER", 0, "", 26f, 4, 2.5f),
+                        Crowd("ENEMY_WANDERER", 1, "ROOM_POLICE_OFFICE_2", 8f, 3, 2f),
+                        Crowd("ENEMY_LISTENER", 0, "ROOM_POLICE_CELL_1", 5f, 1, 0f),
+                        Walk("ENEMY_WANDERER", 1, "", 40f, 1, 0f),
+                    },
+                    LockedRooms = { "ROOM_POLICE_ARMORY_1" },
+                    Encounters = { report },
+                },
+                NightVariant = new LocationVariantDef
+                {
+                    Spawns = { Walk("ENEMY_WANDERER", 0, "", 28f, 3, 8f), Walk("ENEMY_WATCHER", 1, "", 36f, 1, 0f), Walk("ENEMY_WANDERER", 1, "", 20f, 2, 5f) },
+                    ForceableRooms = { "ROOM_POLICE_ARMORY_1" },
+                    Encounters = { report },
                 },
             };
         }
