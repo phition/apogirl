@@ -82,7 +82,7 @@ namespace ApoGirl.Exploration.Runtime
             room.Root = root.gameObject;
 
             var h = _layout.FloorHeight;
-            Rect(root, "Void", new Vector2(-30f, -20f), new Vector2(room.Width + 60f, 40f), new Color(0.05f, 0.05f, 0.06f), -12);
+            Rect(root, "Void", new Vector2(-30f, -20f), new Vector2(room.Width + 60f, 40f), new Color(0.05f, 0.05f, 0.06f), -7);
             ExplorationArt.Tiled(root, "Interior", ExplorationArt.InteriorWall(room.Template.Id), new Vector2(0f, 0.15f), new Vector2(room.Width, h - 0.3f), -5,
                 RoomColors[colorIndex % RoomColors.Length]);
             if (room.Template.Id.Contains("CLASSROOM"))
@@ -103,7 +103,8 @@ namespace ApoGirl.Exploration.Runtime
             // 복도 쪽 창문: 너머로 복도의 실루엣이 보인다
             foreach (var window in room.Template.Windows)
             {
-                ExplorationArt.Stretched(root, "Window", "prop_window", new Vector2(window.X, WindowBottom), new Vector2(window.Width, WindowHeight), -4, WindowColor);
+                // 복도 쪽 벽(앞면)의 창: 반투명 유리라 뒤 벽의 칠판 앞에 겹쳐 그린다
+                ExplorationArt.Stretched(root, "Window", "prop_window", new Vector2(window.X, WindowBottom), new Vector2(window.Width, WindowHeight), -2, WindowColor);
             }
         }
 
