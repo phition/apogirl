@@ -1,0 +1,60 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b11a58205ec3474ca216360e9fa74a8, type: 3}
+  m_Name: Items Shared Data
+  m_EditorClassIdentifier: Unity.Localization::UnityEngine.Localization.Tables.SharedTableData
+  m_TableCollectionName: Items
+  m_TableCollectionNameGuidString: 509e52be7a5354c44908ab7101028d12
+  m_Entries:
+  - m_Id: 657735680
+    m_Key: ITEM_CANNED_FOOD.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 716455936
+    m_Key: ITEM_SNACK.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 716455937
+    m_Key: ITEM_WATER_BOTTLE.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 716455938
+    m_Key: ITEM_BANDAGE.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 716455939
+    m_Key: ITEM_PAINKILLER.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 716455940
+    m_Key: ITEM_SCRAP.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 716455941
+    m_Key: ITEM_BATTERY.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 716455942
+    m_Key: ITEM_TEXTBOOK.name
+    m_Metadata:
+      m_Items: []
+  m_Metadata:
+    m_Items: []
+  m_KeyGenerator:
+    rid: 5926415382932619503
+  references:
+    version: 2
+    RefIds:
+    - rid: 5926415382932619503
+      type: {class: DistributedUIDGenerator, ns: UnityEngine.Localization.Tables, asm: Unity.Localization}
+      data:
+        m_CustomEpoch: 1795055042834

@@ -635,6 +635,194 @@ MonoBehaviour:
     m_Key: debug.force_ok
     m_Metadata:
       m_Items: []
+  - m_Id: 12156153380864
+    m_Key: result.expedition_Extracted
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12156220489728
+    m_Key: result.expedition_Stranded
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12156220489729
+    m_Key: result.expedition_Down
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12156220489730
+    m_Key: result.items
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12156220489731
+    m_Key: debug.expedition_mode
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12156220489732
+    m_Key: exp.backpack
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12156220489733
+    m_Key: exp.controls
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12156220489734
+    m_Key: exp.take_all
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12156220489735
+    m_Key: exp.time_day
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12156220489736
+    m_Key: exp.time_night
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12156220489737
+    m_Key: exp.floor
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12156220489738
+    m_Key: exp.vitals
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12156220489739
+    m_Key: exp.weight
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12156220489740
+    m_Key: exp.prompt_search
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12156220489741
+    m_Key: exp.prompt_open
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12156220489742
+    m_Key: exp.prompt_empty
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12156220489743
+    m_Key: exp.prompt_up
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12156220489744
+    m_Key: exp.prompt_down
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12156220489745
+    m_Key: exp.prompt_exit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12156220489746
+    m_Key: exp.prompt_exit_locked
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12156220489747
+    m_Key: exp.exit_locked
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12156220489748
+    m_Key: exp.backpack_full
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12156220489749
+    m_Key: exp.container_empty
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12156220489750
+    m_Key: exp.status.Extracted
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12156220489751
+    m_Key: exp.status.Stranded
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12156220489752
+    m_Key: exp.status.Down
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12156220489753
+    m_Key: clock.Morning
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12156220489754
+    m_Key: clock.Afternoon
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12156220489755
+    m_Key: clock.Dusk
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12156220489756
+    m_Key: clock.Evening
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12156220489757
+    m_Key: clock.Midnight
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12156220489758
+    m_Key: clock.Dawn
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12156220489759
+    m_Key: location.LOC_SCHOOL_INTERIOR
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12156220489760
+    m_Key: container.Locker
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12156220489761
+    m_Key: container.Desk
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12156220489762
+    m_Key: container.Cabinet
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12156220489763
+    m_Key: container.Fridge
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12156220489764
+    m_Key: container.Box
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12156220489765
+    m_Key: room.ROOM_1F_ENTRANCE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12156220489766
+    m_Key: room.ROOM_1F_HALL
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12156220489767
+    m_Key: room.ROOM_1F_CLASS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12156220489768
+    m_Key: room.ROOM_2F_CLASS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12156220489769
+    m_Key: room.ROOM_2F_HALL
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12156220489770
+    m_Key: room.ROOM_2F_RESTROOM
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12156220489771
+    m_Key: room.ROOM_3F_CLASS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12156220489772
+    m_Key: room.ROOM_3F_HALL
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12156220489773
+    m_Key: room.ROOM_3F_ROOF_STAIRS
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
