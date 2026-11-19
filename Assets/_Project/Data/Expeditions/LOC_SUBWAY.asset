@@ -24,8 +24,11 @@ MonoBehaviour:
         Min: 1
         Max: 2
       - Resource: 0
-        Min: 2
-        Max: 5
+        Min: 3
+        Max: 6
+      - Resource: 1
+        Min: 1
+        Max: 3
       BaseDownChance: 0.09
       Fatigue: 17
       StressMin: 10

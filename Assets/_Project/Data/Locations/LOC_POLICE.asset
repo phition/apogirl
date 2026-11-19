@@ -1,0 +1,256 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f481e505b008c204ba7d5b19f247582d, type: 3}
+  m_Name: LOC_POLICE
+  m_EditorClassIdentifier: ApoGirl.Data::ApoGirl.Data.LocationAsset
+  _id: LOC_POLICE
+  _definition:
+    Id: LOC_POLICE
+    Layout:
+      Floors: 2
+      FloorHeight: 4
+      CorridorLength: 52
+      Connectors:
+      - Kind: 0
+        Floor: 0
+        X: 4
+        TargetFloor: 1
+      - Kind: 0
+        Floor: 1
+        X: 2.6
+        TargetFloor: 0
+      Doors:
+      - RoomId: ROOM_POLICE_OFFICE_1
+        TemplateId: ROOM_POLICE_OFFICE
+        Floor: 0
+        X: 16
+        Number: 1
+        LootTableId: 
+      - RoomId: ROOM_POLICE_CELL_1
+        TemplateId: ROOM_POLICE_CELL
+        Floor: 0
+        X: 36
+        Number: 1
+        LootTableId: 
+      - RoomId: ROOM_POLICE_ARMORY_1
+        TemplateId: ROOM_POLICE_ARMORY
+        Floor: 1
+        X: 14
+        Number: 1
+        LootTableId: 
+      - RoomId: ROOM_POLICE_OFFICE_2
+        TemplateId: ROOM_POLICE_OFFICE
+        Floor: 1
+        X: 30
+        Number: 2
+        LootTableId: 
+      RoomTemplates:
+      - Id: ROOM_POLICE_OFFICE
+        Width: 16
+        DoorXs:
+        - 1.2
+        Windows:
+        - X: 3
+          Width: 3.4
+        - X: 9
+          Width: 3.4
+        Containers:
+        - Id: DESK_A
+          Kind: 1
+          Floor: 0
+          X: 4
+          SearchSeconds: 2
+          LootTableId: 
+        - Id: DESK_B
+          Kind: 1
+          Floor: 0
+          X: 7
+          SearchSeconds: 2
+          LootTableId: 
+        - Id: FILES
+          Kind: 2
+          Floor: 0
+          X: 11
+          SearchSeconds: 3.5
+          LootTableId: 
+        - Id: LOCKER
+          Kind: 0
+          Floor: 0
+          X: 14
+          SearchSeconds: 3
+          LootTableId: 
+        DefaultLootTableId: LOOT_POLICE_OFFICE
+      - Id: ROOM_POLICE_ARMORY
+        Width: 10
+        DoorXs:
+        - 1.2
+        Windows: []
+        Containers:
+        - Id: RACK_A
+          Kind: 0
+          Floor: 0
+          X: 3.6
+          SearchSeconds: 3
+          LootTableId: 
+        - Id: RACK_B
+          Kind: 0
+          Floor: 0
+          X: 6
+          SearchSeconds: 3
+          LootTableId: 
+        - Id: CRATE
+          Kind: 4
+          Floor: 0
+          X: 8.4
+          SearchSeconds: 2.5
+          LootTableId: 
+        DefaultLootTableId: LOOT_POLICE_ARMORY
+      - Id: ROOM_POLICE_CELL
+        Width: 10
+        DoorXs:
+        - 1.2
+        Windows: []
+        Containers:
+        - Id: BUNK
+          Kind: 4
+          Floor: 0
+          X: 5
+          SearchSeconds: 2.5
+          LootTableId: 
+        DefaultLootTableId: LOOT_HOUSE_ROOM
+      Containers:
+      - Id: C_POLICE_FRONT_DESK
+        Kind: 1
+        Floor: 0
+        X: 10
+        SearchSeconds: 2
+        LootTableId: LOOT_POLICE_OFFICE
+      Exits:
+      - Kind: 0
+        Floor: 0
+        X: 49
+        StartsLocked: 0
+      - Kind: 1
+        Floor: 1
+        X: 50
+        StartsLocked: 1
+    DayRunSeconds: 330
+    NightRunSeconds: 330
+    DefaultLootTableId: LOOT_POLICE_OFFICE
+    DayVariant:
+      Spawns:
+      - EnemyId: ENEMY_WANDERER
+        Floor: 0
+        RoomId: 
+        X: 26
+        Count: 4
+        Spread: 2.5
+        Dormant: 1
+      - EnemyId: ENEMY_WANDERER
+        Floor: 1
+        RoomId: ROOM_POLICE_OFFICE_2
+        X: 8
+        Count: 3
+        Spread: 2
+        Dormant: 1
+      - EnemyId: ENEMY_LISTENER
+        Floor: 0
+        RoomId: ROOM_POLICE_CELL_1
+        X: 5
+        Count: 1
+        Spread: 0
+        Dormant: 1
+      - EnemyId: ENEMY_WANDERER
+        Floor: 1
+        RoomId: 
+        X: 40
+        Count: 1
+        Spread: 0
+        Dormant: 0
+      LockedRooms:
+      - ROOM_POLICE_ARMORY_1
+      ForceableRooms: []
+      Encounters:
+      - Id: POLICE_REPORT
+        Floor: 1
+        RoomId: ROOM_POLICE_OFFICE_2
+        X: 8
+        FlagsAll: []
+        FlagsNone:
+        - POLICE_REPORT_TAKEN
+        PromptKey: enc.POLICE_REPORT.prompt
+        Choices:
+        - Id: TAKE
+          TextKey: enc.POLICE_REPORT.take
+          SetFlags:
+          - POLICE_REPORT_TAKEN
+          AddClues:
+          - TRUTH_POLICE_REPORT
+          StressDelta: 0
+          Removes: 1
+        - Id: LEAVE
+          TextKey: enc.POLICE_REPORT.leave
+          SetFlags: []
+          AddClues: []
+          StressDelta: 0
+          Removes: 0
+    NightVariant:
+      Spawns:
+      - EnemyId: ENEMY_WANDERER
+        Floor: 0
+        RoomId: 
+        X: 28
+        Count: 3
+        Spread: 8
+        Dormant: 0
+      - EnemyId: ENEMY_WATCHER
+        Floor: 1
+        RoomId: 
+        X: 36
+        Count: 1
+        Spread: 0
+        Dormant: 0
+      - EnemyId: ENEMY_WANDERER
+        Floor: 1
+        RoomId: 
+        X: 20
+        Count: 2
+        Spread: 5
+        Dormant: 0
+      LockedRooms: []
+      ForceableRooms:
+      - ROOM_POLICE_ARMORY_1
+      Encounters:
+      - Id: POLICE_REPORT
+        Floor: 1
+        RoomId: ROOM_POLICE_OFFICE_2
+        X: 8
+        FlagsAll: []
+        FlagsNone:
+        - POLICE_REPORT_TAKEN
+        PromptKey: enc.POLICE_REPORT.prompt
+        Choices:
+        - Id: TAKE
+          TextKey: enc.POLICE_REPORT.take
+          SetFlags:
+          - POLICE_REPORT_TAKEN
+          AddClues:
+          - TRUTH_POLICE_REPORT
+          StressDelta: 0
+          Removes: 1
+        - Id: LEAVE
+          TextKey: enc.POLICE_REPORT.leave
+          SetFlags: []
+          AddClues: []
+          StressDelta: 0
+          Removes: 0
+    Tutorial: 0

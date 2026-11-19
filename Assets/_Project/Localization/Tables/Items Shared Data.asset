@@ -115,6 +115,14 @@ MonoBehaviour:
     m_Key: ITEM_ARMOR_PADDING.name
     m_Metadata:
       m_Items: []
+  - m_Id: 165932977897472
+    m_Key: ITEM_ARMOR_RIOT.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 165933040812032
+    m_Key: ITEM_WEAPON_BATON.name
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

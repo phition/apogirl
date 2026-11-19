@@ -1,0 +1,55 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67cfa2deefdc3d0419af6750ddd3f25d, type: 3}
+  m_Name: LOC_POLICE
+  m_EditorClassIdentifier: ApoGirl.Data::ApoGirl.Data.ExpeditionModelAsset
+  _id: LOC_POLICE
+  _definition:
+    Id: LOC_POLICE
+    Day:
+      Resources:
+      - Resource: 5
+        Min: 2
+        Max: 4
+      - Resource: 2
+        Min: 0
+        Max: 2
+      BaseDownChance: 0.09
+      Fatigue: 15
+      StressMin: 9
+      StressMax: 14
+      ConscienceMax: 1
+      DawnReturnChance: 0
+      HpLossOnDown: 30
+      StressOnDown: 30
+    Night:
+      Resources:
+      - Resource: 5
+        Min: 3
+        Max: 5
+      - Resource: 2
+        Min: 1
+        Max: 2
+      - Resource: 3
+        Min: 0
+        Max: 2
+      BaseDownChance: 0.14
+      Fatigue: 19
+      StressMin: 14
+      StressMax: 18
+      ConscienceMax: 0
+      DawnReturnChance: 0.2
+      HpLossOnDown: 30
+      StressOnDown: 30
+    AgilityDownReduction: 0.001
+    SleepDebtDownIncrease: 0.03
+    ConsecutiveDownIncrease: 0.1

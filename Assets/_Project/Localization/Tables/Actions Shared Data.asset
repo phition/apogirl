@@ -287,6 +287,38 @@ MonoBehaviour:
     m_Key: ACT_DAILY_TUTOR_DOHYEON.short
     m_Metadata:
       m_Items: []
+  - m_Id: 178087429160960
+    m_Key: ACT_EXP_DAY_MART.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 178087487881216
+    m_Key: ACT_EXP_DAY_MART.short
+    m_Metadata:
+      m_Items: []
+  - m_Id: 178087487881217
+    m_Key: ACT_EXP_NIGHT_MART.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 178087487881218
+    m_Key: ACT_EXP_NIGHT_MART.short
+    m_Metadata:
+      m_Items: []
+  - m_Id: 178087487881219
+    m_Key: ACT_EXP_DAY_POLICE.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 178087487881220
+    m_Key: ACT_EXP_DAY_POLICE.short
+    m_Metadata:
+      m_Items: []
+  - m_Id: 178087487881221
+    m_Key: ACT_EXP_NIGHT_POLICE.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 178087487881222
+    m_Key: ACT_EXP_NIGHT_POLICE.short
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
