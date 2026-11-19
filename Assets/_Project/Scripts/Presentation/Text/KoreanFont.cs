@@ -70,7 +70,7 @@ namespace ApoGirl.Presentation.Text
             }
 
             var definition = FontDefinition.FromSDFFont(_font);
-            element.Query<TextElement>().ForEach(t => t.style.unityFontDefinition = definition);
+            element.Query<UnityEngine.UIElements.TextElement>().ForEach(t => t.style.unityFontDefinition = definition);
             element.Query(className: "unity-text-element").ForEach(t => t.style.unityFontDefinition = definition);
         }
     }
