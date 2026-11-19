@@ -104,7 +104,7 @@ namespace ApoGirl.Exploration.Runtime
             locationId ??= string.Empty;
             if (locationId.Contains("STORE")) return "wall_store";
             if (locationId.Contains("PHARMACY")) return "wall_pharmacy";
-            if (locationId.Contains("RESIDENTIAL")) return "wall_brick";
+            if (locationId.Contains("RESIDENTIAL")) return "wall_room_outside";
             if (locationId.Contains("SUBWAY")) return "wall_restroom";
             return "wall_corridor";
         }
