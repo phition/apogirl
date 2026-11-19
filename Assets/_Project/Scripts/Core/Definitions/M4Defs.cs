@@ -112,6 +112,9 @@ namespace ApoGirl.Core.Definitions
 
         /// <summary>"1년의 기록"의 주요 장면: 조건을 만족하는 줄 전부.</summary>
         EndingMoment,
+
+        /// <summary>M6: 막 평가 카드의 선생님 한마디 (가장 높은 우선순위 하나).</summary>
+        ActReview,
     }
 
     /// <summary>조건으로 고르는 한 줄 (가장 높은 Priority 중 첫 번째). 문장은 UI 키 TextKey.</summary>

@@ -49,6 +49,19 @@ namespace ApoGirl.Presentation.Screens
                 lines.Add(Loc.T("prep.night_debt"));
             }
 
+            // M6: 날씨, 정찰 정보 (출정 한 번에 소모)
+            var weather = _session.State.Base.Weather;
+            if (weather != WeatherType.Clear)
+            {
+                lines.Add(Loc.F("prep.weather", Loc.T("weather." + weather), Loc.T("weather." + weather + ".desc")));
+            }
+
+            if (ScoutRules.IsScouted(_session.State, request.LocationId) && db.TryGetLocation(request.LocationId, out var location))
+            {
+                var variant = day ? location.DayVariant : location.NightVariant;
+                lines.Add(Loc.F("prep.scouted", variant.LockedRooms.Count, variant.ForceableRooms.Count, variant.Encounters.Count));
+            }
+
             lines.Add(Loc.T("prep.loss_warning"));
             _card.Show(Loc.T("prep.title"), string.Join("\n", lines), false,
                 (Loc.T("prep.depart"), () =>

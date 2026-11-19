@@ -372,6 +372,44 @@ namespace ApoGirl.Presentation.Screens
                 var first = choices.FirstOrDefault(c => c.Enabled);
                 Choose(first?.Id ?? "");
             }
+
+            // M6: 막 평가 카드 (그 막의 능력치 그래프 + 선생님 한마디)
+            if (ev.ReviewAct > 0 && !_session.IsEnded)
+            {
+                var closed = false;
+                ShowReviewCard(ev, () => closed = true);
+                while (!closed)
+                {
+                    yield return null;
+                }
+            }
+        }
+
+        private void ShowReviewCard(ApoGirl.Core.Definitions.EventDef ev, System.Action onClosed)
+        {
+            var state = _session.State;
+            var top = StatGraph.TopGain(state, ev.ReviewFromWeek);
+            var lines = new List<string> { Loc.F("review.weeks", ev.ReviewFromWeek, state.Calendar.Week) };
+            if (top.Gain > 0)
+            {
+                lines.Add(Loc.F("review.growth", UiText.Stat(top.Stat), top.Gain));
+            }
+
+            var line = ApoGirl.Core.Rules.LineRules.Pick(state, _session.Definitions, ApoGirl.Core.Definitions.LineKind.ActReview,
+                ApoGirl.Core.Events.EventContext.FromCalendar(state));
+            if (line != null)
+            {
+                lines.Add("");
+                lines.Add(StoryText.Format(Loc.T(line.TextKey), state));
+            }
+
+            _card.Show(Loc.F("review.title", ev.ReviewAct), string.Join("\n", lines), true, (Loc.T("common.ok"), () =>
+            {
+                _card.Hide();
+                onClosed();
+            }));
+            _card.Extra.Add(new StatGraph(state, ev.ReviewFromWeek, 160f));
+            KoreanFont.ApplyDeep(_card.Extra);
         }
 
         /// <summary>Yarn 노드가 없는 이벤트: 문자열 테이블(event.{ID}.title/body, 선택지 TextKey)로 카드 표시.</summary>
@@ -470,6 +508,11 @@ namespace ApoGirl.Presentation.Screens
             if (outcome.Expedition != null)
             {
                 lines.Add(Loc.T("result.expedition_" + outcome.Expedition.Status));
+                if (outcome.Bite != null)
+                {
+                    lines.Add(Loc.T(outcome.Bite.Treated ? "result.bite_treated" : "result.bite"));
+                }
+
                 if (outcome.Expedition.Loot.Count > 0)
                 {
                     lines.Add(Loc.F("result.items", string.Join("  ", outcome.Expedition.Loot.Select(i => Loc.Item(i.ItemId) + " ×" + i.Count))));

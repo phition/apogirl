@@ -57,6 +57,20 @@
       "Color": "#1E2026"
     },
     {
+      "Id": "ENDING_BAD_INFECTION",
+      "Category": "Bad",
+      "Priority": 0,
+      "EndCauses": [
+        "END_CAUSE_INFECTION"
+      ],
+      "CutKeys": [
+        "ending.ENDING_BAD_INFECTION.cut1",
+        "ending.ENDING_BAD_INFECTION.cut2",
+        "ending.ENDING_BAD_INFECTION.cut3"
+      ],
+      "Color": "#22262A"
+    },
+    {
       "Id": "ENDING_BAD_WOUNDS",
       "Category": "Bad",
       "Priority": 0,

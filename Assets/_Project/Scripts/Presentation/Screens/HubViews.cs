@@ -65,7 +65,19 @@ namespace ApoGirl.Presentation.Screens
             _blackout = new Label(Loc.T("hub.blackout"));
             _blackout.AddToClassList("blackout");
             container.Add(_blackout);
+
+            _weather = new Label();
+            _weather.AddToClassList("resource");
+            container.Add(_weather);
+
+            _rescue = new Label();
+            _rescue.AddToClassList("resource");
+            _rescue.AddToClassList("rescue-countdown");
+            container.Add(_rescue);
         }
+
+        private readonly Label _weather;
+        private readonly Label _rescue;
 
         public void Refresh()
         {
@@ -88,6 +100,14 @@ namespace ApoGirl.Presentation.Screens
             _defense.EnableInClassList("danger", state.Base.Threat > state.Base.Defense + 15);
 
             _blackout.EnableInClassList("hidden", !state.Base.IsBlackout());
+
+            // M6: 날씨, 구조 카운트다운 (라디오 공지 이후)
+            var weather = state.Base.Weather;
+            _weather.text = Loc.F("hub.weather", Loc.T("weather." + weather));
+            _weather.tooltip = weather == WeatherType.Clear ? "" : Loc.T("weather." + weather + ".desc");
+            var announced = state.Flags.Contains("RESCUE_ANNOUNCED");
+            _rescue.EnableInClassList("hidden", !announced);
+            _rescue.text = Loc.F("hub.rescue", Math.Max(0, CalendarState.TotalWeeks - calendar.Week));
         }
     }
 
@@ -127,6 +147,9 @@ namespace ApoGirl.Presentation.Screens
                 _vitals[vital] = bar;
             }
 
+            _symptom = Row(panel);
+            _symptom.AddToClassList("danger");
+
             panel.Add(_debtSection);
             _sleepDebt = Row(_debtSection);
             _conscience = Row(_debtSection);
@@ -152,6 +175,38 @@ namespace ApoGirl.Presentation.Screens
             _baseSection.Add(Header("status.base"));
             _baseInfo = Row(_baseSection);
             _baseInfo.style.whiteSpace = WhiteSpace.Normal;
+            _baseSection.Add(_companions);
+        }
+
+        private readonly Label _symptom;
+        private readonly VisualElement _companions = new VisualElement();
+
+        /// <summary>합류한 동료: 누르면 역할이 차례로 바뀐다 (계획 단계에서만).</summary>
+        private void RefreshCompanions(GameState state)
+        {
+            _companions.Clear();
+            var roles = _session.Definitions.Extras.Roles;
+            foreach (var pair in state.Npcs.Where(n => n.Value.Status == NpcStatus.Joined))
+            {
+                var npcId = pair.Key;
+                var npc = pair.Value;
+                var roleName = string.IsNullOrEmpty(npc.Role) ? Loc.T("role.none") : Loc.T("role." + npc.Role);
+                var button = new Button(() =>
+                {
+                    if (roles.Count == 0) return;
+                    var index = roles.FindIndex(r => r.Id == npc.Role);
+                    var next = index + 1 >= roles.Count ? "" : roles[index + 1].Id;
+                    _session.SetNpcRole(npcId, next);
+                })
+                {
+                    text = Loc.F("status.npc", Loc.T("npc." + npcId), npc.Affinity) + " · " + roleName,
+                    tooltip = string.IsNullOrEmpty(npc.Role) ? Loc.T("status.role_hint") : Loc.T("role." + npc.Role + ".desc"),
+                };
+                button.AddToClassList("small-button");
+                button.AddToClassList("companion-button");
+                button.SetEnabled(_session.IsPlanning && roles.Count > 0);
+                _companions.Add(button);
+            }
         }
 
         public void Refresh()
@@ -175,12 +230,20 @@ namespace ApoGirl.Presentation.Screens
 
             var facilities = state.Base.Facilities.Where(f => f.Value > 0).Select(f => Loc.T("facility." + f.Key)).ToList();
             var people = new List<string> { Loc.F("status.teacher", state.Teacher.Affinity, Loc.T("mobility." + Math.Min(state.Teacher.MobilityStage, 2))) };
-            foreach (var npc in state.Npcs.Where(n => n.Value.Status == NpcStatus.Joined))
+            var stage = InfectionRules.TeacherStage(state, balance);
+            if (stage > 0)
             {
-                people.Add(Loc.F("status.npc", Loc.T("npc." + npc.Key), npc.Value.Affinity));
+                people.Add(Loc.T("teacher.stage." + Math.Min(stage, 4)));
             }
 
             _baseInfo.text = Loc.F("status.facilities", facilities.Count > 0 ? string.Join(", ", facilities) : "-") + "\n" + string.Join("\n", people);
+
+            // M6: 증상 (감염도 숫자는 숨긴다, 문서 5.3)
+            var symptom = InfectionRules.SymptomLevel(state);
+            _symptom.text = Loc.T("symptom." + symptom);
+            _symptom.EnableInClassList("hidden", symptom == 0);
+
+            RefreshCompanions(state);
 
             _sleepDebt.text = Loc.T("status.sleep_debt") + "  " + Pips(player.SleepDebt, balance.SleepDebtMax);
             _sleepDebt.EnableInClassList("danger", player.SleepDebt >= 3);

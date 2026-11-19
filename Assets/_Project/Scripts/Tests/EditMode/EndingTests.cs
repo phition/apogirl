@@ -288,7 +288,7 @@ namespace ApoGirl.Tests.EditMode
         {
             var db = ShippedDb();
             Assert.GreaterOrEqual(db.Extras.Endings.Count, 15, "문서 8.2 엔딩 전부");
-            foreach (var cause in new[] { WeekRunner.EndCauseExpedition, WeekRunner.EndCauseRaid, WeekRunner.EndCauseStarvation, WeekRunner.EndCauseCollapse, WeekRunner.EndCauseHpZero })
+            foreach (var cause in new[] { WeekRunner.EndCauseExpedition, WeekRunner.EndCauseRaid, WeekRunner.EndCauseStarvation, WeekRunner.EndCauseCollapse, WeekRunner.EndCauseInfection, WeekRunner.EndCauseHpZero })
             {
                 var state = NewGameFactory.Create(db.Balance, 1);
                 state.Status = GameStatus.GameOver;

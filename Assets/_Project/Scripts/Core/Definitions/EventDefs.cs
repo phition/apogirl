@@ -54,6 +54,12 @@ namespace ApoGirl.Core.Definitions
         /// <summary>비어 있으면 선택 없이 "계속"으로 끝나는 서술 이벤트.</summary>
         public List<EventChoiceDef> Choices = new List<EventChoiceDef>();
 
+        /// <summary>M6: 막 평가 이벤트면 막 번호 (끝나면 평가 카드), 아니면 0.</summary>
+        public int ReviewAct;
+
+        /// <summary>막 평가 카드의 그래프가 시작하는 주.</summary>
+        public int ReviewFromWeek = 1;
+
         public bool IsRandom => Kind == EventKind.Random || Kind == EventKind.Crisis;
 
         public string Node => string.IsNullOrEmpty(DialogueNode) ? Id : DialogueNode;

@@ -19,11 +19,16 @@
     { "Id": "PT_P", "Modifiers": [ { "Kind": "GreatSuccessBonus", "Value": 0.05 } ] }
   ],
   "Facilities": [
-    { "Id": "STORAGE", "MaxLevel": 1 },
-    { "Id": "CLASSROOM", "MaxLevel": 1 },
-    { "Id": "INFIRMARY", "MaxLevel": 1 },
-    { "Id": "ROOFTOP", "MaxLevel": 1 },
-    { "Id": "BROADCAST", "MaxLevel": 1 }
+    {"Id": "STORAGE", "MaxLevel": 1},
+    {"Id": "CLASSROOM", "MaxLevel": 1},
+    {"Id": "INFIRMARY", "MaxLevel": 1, "Modifiers": [{"Kind": "InfectionResist", "Value": 1}, {"Kind": "TeacherCare", "Value": 1}]},
+    {"Id": "ROOFTOP", "MaxLevel": 1},
+    {"Id": "BROADCAST", "MaxLevel": 1},
+    {"Id": "CAFETERIA", "MaxLevel": 1, "Modifiers": [{"Kind": "FoodSaving", "Value": 1}]},
+    {"Id": "LIBRARY", "MaxLevel": 1, "Modifiers": [{"Kind": "EducationGain", "Value": 0.15}]},
+    {"Id": "SCIENCE", "MaxLevel": 1, "Modifiers": [{"Kind": "CheckBonus", "Key": "Engineering", "Value": 0.1}, {"Kind": "CheckBonus", "Key": "Medicine", "Value": 0.1}]},
+    {"Id": "GYM", "MaxLevel": 1, "Modifiers": [{"Kind": "CheckBonus", "Key": "SelfDefense", "Value": 0.1}, {"Kind": "RaidGuard", "Value": 4}]},
+    {"Id": "STAFFROOM", "MaxLevel": 1, "Modifiers": [{"Kind": "CheckBonus", "Key": "Humanities", "Value": 0.1}]}
   ],
   "Npcs": [
     { "Id": "NPC_DOHYEON", "DefaultRole": "student" }

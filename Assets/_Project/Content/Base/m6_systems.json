@@ -1,0 +1,559 @@
+{
+  "Actions": [
+    {
+      "Id": "ACT_TREAT_INFECTION",
+      "Category": "Survival",
+      "FatigueCost": 4,
+      "StressCost": 2,
+      "HasCheck": true,
+      "Check": {
+        "BaseRate": 0.45,
+        "StatWeights": [
+          {
+            "Stat": "Intellect",
+            "Weight": 0.003
+          }
+        ],
+        "UsesProficiency": true,
+        "Proficiency": "Medicine",
+        "ProficiencyWeight": 0.08
+      },
+      "ResourceCosts": [
+        {
+          "Resource": "Medicine",
+          "Amount": 2
+        }
+      ],
+      "HasProficiency": true,
+      "Proficiency": "Medicine",
+      "ProficiencyXp": 1,
+      "OnSuccess": {
+        "Vitals": [
+          {
+            "Vital": "Infection",
+            "Amount": -15
+          }
+        ]
+      },
+      "OnGreatSuccess": {
+        "Vitals": [
+          {
+            "Vital": "Infection",
+            "Amount": -25
+          }
+        ]
+      },
+      "OnFailure": {
+        "Vitals": [
+          {
+            "Vital": "Infection",
+            "Amount": -5
+          }
+        ]
+      },
+      "Unlock": {
+        "Checks": [
+          {
+            "Kind": "Vital",
+            "Key": "Infection",
+            "Op": "GreaterOrEqual",
+            "Value": 1
+          }
+        ]
+      }
+    },
+    {
+      "Id": "ACT_CARE_TEACHER",
+      "Category": "Daily",
+      "SlotTag": "NightOnly",
+      "FatigueCost": 3,
+      "StressCost": 3,
+      "ResourceCosts": [
+        {
+          "Resource": "Medicine",
+          "Amount": 1
+        }
+      ],
+      "HasProficiency": true,
+      "Proficiency": "Medicine",
+      "ProficiencyXp": 1,
+      "OnSuccess": {
+        "TeacherInfection": -4,
+        "Npcs": [
+          {
+            "NpcId": "NPC_TEACHER",
+            "Affinity": 1
+          }
+        ],
+        "Hidden": [
+          {
+            "Hidden": "Humanity",
+            "Amount": 1
+          }
+        ]
+      },
+      "Unlock": {
+        "FlagsAll": [
+          "TEACHER_REINFECTED"
+        ]
+      }
+    },
+    {
+      "Id": "ACT_SCOUT_RADIO",
+      "Category": "Survival",
+      "SlotTag": "NightOnly",
+      "FatigueCost": 4,
+      "StressCost": 1,
+      "ResourceCosts": [
+        {
+          "Resource": "Power",
+          "Amount": 1
+        }
+      ],
+      "HasProficiency": true,
+      "Proficiency": "Engineering",
+      "ProficiencyXp": 1,
+      "OnSuccess": {
+        "SetFlags": [
+          "SCOUT_LOC_SCHOOL_INTERIOR",
+          "SCOUT_LOC_STORE",
+          "SCOUT_LOC_PHARMACY"
+        ]
+      },
+      "Unlock": {
+        "FlagsAll": [
+          "POWER_RESTORED"
+        ],
+        "Checks": [
+          {
+            "Kind": "Facility",
+            "Key": "BROADCAST",
+            "Op": "GreaterOrEqual",
+            "Value": 1
+          }
+        ]
+      }
+    }
+  ],
+  "Roles": [
+    {
+      "Id": "GUARD",
+      "Modifiers": [
+        {
+          "Kind": "RaidGuard",
+          "Value": 6
+        }
+      ]
+    },
+    {
+      "Id": "COOK",
+      "Modifiers": [
+        {
+          "Kind": "FoodSaving",
+          "Value": 1
+        }
+      ]
+    },
+    {
+      "Id": "MEDIC",
+      "Modifiers": [
+        {
+          "Kind": "InfectionResist",
+          "Value": 1
+        },
+        {
+          "Kind": "TeacherCare",
+          "Value": 1
+        }
+      ]
+    },
+    {
+      "Id": "TUTOR",
+      "Modifiers": [
+        {
+          "Kind": "EducationGain",
+          "Value": 0.08
+        }
+      ]
+    }
+  ],
+  "Lines": [
+    {
+      "Id": "DIARY_FEVER",
+      "Kind": "Diary",
+      "Priority": 70,
+      "TextKey": "diary.fever",
+      "Condition": {
+        "Checks": [
+          {
+            "Kind": "Vital",
+            "Key": "Infection",
+            "Op": "GreaterOrEqual",
+            "Value": 25
+          }
+        ]
+      }
+    },
+    {
+      "Id": "DIARY_COUGH",
+      "Kind": "Diary",
+      "Priority": 72,
+      "TextKey": "diary.cough",
+      "Condition": {
+        "Checks": [
+          {
+            "Kind": "Vital",
+            "Key": "Infection",
+            "Op": "GreaterOrEqual",
+            "Value": 50
+          }
+        ]
+      }
+    },
+    {
+      "Id": "DIARY_TREMOR",
+      "Kind": "Diary",
+      "Priority": 74,
+      "TextKey": "diary.tremor",
+      "Condition": {
+        "Checks": [
+          {
+            "Kind": "Vital",
+            "Key": "Infection",
+            "Op": "GreaterOrEqual",
+            "Value": 75
+          }
+        ]
+      }
+    },
+    {
+      "Id": "TC_FEVER",
+      "Kind": "TeacherComment",
+      "Priority": 70,
+      "TextKey": "tc.fever",
+      "Condition": {
+        "Checks": [
+          {
+            "Kind": "Vital",
+            "Key": "Infection",
+            "Op": "GreaterOrEqual",
+            "Value": 25
+          }
+        ]
+      }
+    },
+    {
+      "Id": "TC_TREMOR",
+      "Kind": "TeacherComment",
+      "Priority": 74,
+      "TextKey": "tc.tremor",
+      "Condition": {
+        "Checks": [
+          {
+            "Kind": "Vital",
+            "Key": "Infection",
+            "Op": "GreaterOrEqual",
+            "Value": 75
+          }
+        ]
+      }
+    },
+    {
+      "Id": "TC_TEACHER_1",
+      "Kind": "TeacherComment",
+      "Priority": 65,
+      "TextKey": "tc.teacher_ill_1",
+      "Condition": {
+        "Checks": [
+          {
+            "Kind": "TeacherStage",
+            "Op": "GreaterOrEqual",
+            "Value": 1
+          }
+        ]
+      }
+    },
+    {
+      "Id": "TC_TEACHER_2",
+      "Kind": "TeacherComment",
+      "Priority": 66,
+      "TextKey": "tc.teacher_ill_2",
+      "Condition": {
+        "Checks": [
+          {
+            "Kind": "TeacherStage",
+            "Op": "GreaterOrEqual",
+            "Value": 2
+          }
+        ]
+      }
+    },
+    {
+      "Id": "TC_TEACHER_3",
+      "Kind": "TeacherComment",
+      "Priority": 67,
+      "TextKey": "tc.teacher_ill_3",
+      "Condition": {
+        "Checks": [
+          {
+            "Kind": "TeacherStage",
+            "Op": "GreaterOrEqual",
+            "Value": 3
+          }
+        ]
+      }
+    },
+    {
+      "Id": "TC_RAIN",
+      "Kind": "TeacherComment",
+      "Priority": 30,
+      "TextKey": "tc.rain",
+      "Condition": {
+        "Checks": [
+          {
+            "Kind": "Weather",
+            "Key": "Rain",
+            "Op": "Equal",
+            "Value": 1
+          }
+        ]
+      }
+    },
+    {
+      "Id": "TC_HEAT",
+      "Kind": "TeacherComment",
+      "Priority": 31,
+      "TextKey": "tc.heat",
+      "Condition": {
+        "Checks": [
+          {
+            "Kind": "Weather",
+            "Key": "Heat",
+            "Op": "Equal",
+            "Value": 1
+          }
+        ]
+      }
+    },
+    {
+      "Id": "TC_COLD",
+      "Kind": "TeacherComment",
+      "Priority": 32,
+      "TextKey": "tc.cold",
+      "Condition": {
+        "Checks": [
+          {
+            "Kind": "Weather",
+            "Key": "Cold",
+            "Op": "Equal",
+            "Value": 1
+          }
+        ]
+      }
+    },
+    {
+      "Id": "REVIEW_A1",
+      "Kind": "ActReview",
+      "Priority": 10,
+      "TextKey": "review.a1",
+      "Condition": {
+        "FlagsAll": [
+          "ACT1_DONE"
+        ]
+      }
+    },
+    {
+      "Id": "REVIEW_A1_HARD",
+      "Kind": "ActReview",
+      "Priority": 20,
+      "TextKey": "review.a1_hard",
+      "Condition": {
+        "FlagsAll": [
+          "ACT1_DONE"
+        ],
+        "AnyChecks": [
+          {
+            "Kind": "Vital",
+            "Key": "Stress",
+            "Op": "GreaterOrEqual",
+            "Value": 60
+          },
+          {
+            "Kind": "SleepDebt",
+            "Op": "GreaterOrEqual",
+            "Value": 3
+          }
+        ]
+      }
+    }
+  ],
+  "Events": [
+    {
+      "Id": "EVT_WX_HEAT_SPOIL",
+      "Kind": "Crisis",
+      "Once": false,
+      "CooldownWeeks": 3,
+      "Weight": 2,
+      "Condition": {
+        "Phase": "Day",
+        "Checks": [
+          {
+            "Kind": "Weather",
+            "Key": "Heat",
+            "Op": "Equal",
+            "Value": 1
+          },
+          {
+            "Kind": "Resource",
+            "Key": "Food",
+            "Op": "GreaterOrEqual",
+            "Value": 10
+          }
+        ]
+      },
+      "Choices": [
+        {
+          "Id": "SALT",
+          "TextKey": "event.EVT_WX_HEAT_SPOIL.salt",
+          "HasCheck": true,
+          "Check": {
+            "BaseRate": 0.5,
+            "UsesProficiency": true,
+            "Proficiency": "Cooking",
+            "ProficiencyWeight": 0.1
+          },
+          "Effect": {
+            "Resources": [
+              {
+                "Resource": "Food",
+                "Amount": -1
+              }
+            ]
+          }
+        },
+        {
+          "Id": "THROW",
+          "TextKey": "event.EVT_WX_HEAT_SPOIL.throw",
+          "Effect": {
+            "Resources": [
+              {
+                "Resource": "Food",
+                "Amount": -4
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "Id": "EVT_WX_COLD_ILLNESS",
+      "Kind": "Crisis",
+      "Once": false,
+      "CooldownWeeks": 4,
+      "Weight": 2,
+      "Condition": {
+        "Phase": "Night",
+        "Checks": [
+          {
+            "Kind": "Weather",
+            "Key": "Cold",
+            "Op": "Equal",
+            "Value": 1
+          },
+          {
+            "Kind": "Vital",
+            "Key": "Fatigue",
+            "Op": "GreaterOrEqual",
+            "Value": 40
+          }
+        ]
+      },
+      "Choices": [
+        {
+          "Id": "MEDICINE",
+          "TextKey": "event.EVT_WX_COLD_ILLNESS.medicine",
+          "Costs": [
+            {
+              "Resource": "Medicine",
+              "Amount": 1
+            }
+          ],
+          "Effect": {
+            "Vitals": [
+              {
+                "Vital": "Fatigue",
+                "Amount": -10
+              }
+            ]
+          }
+        },
+        {
+          "Id": "ENDURE",
+          "TextKey": "event.EVT_WX_COLD_ILLNESS.endure",
+          "Effect": {
+            "Vitals": [
+              {
+                "Vital": "Hp",
+                "Amount": -8
+              },
+              {
+                "Vital": "Fatigue",
+                "Amount": 10
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "Id": "EVT_WX_RAIN_LEAK",
+      "Kind": "Crisis",
+      "Once": false,
+      "CooldownWeeks": 4,
+      "Weight": 1.5,
+      "Condition": {
+        "Checks": [
+          {
+            "Kind": "Weather",
+            "Key": "Rain",
+            "Op": "Equal",
+            "Value": 1
+          }
+        ]
+      },
+      "Choices": [
+        {
+          "Id": "FIX",
+          "TextKey": "event.EVT_WX_RAIN_LEAK.fix",
+          "Costs": [
+            {
+              "Resource": "Materials",
+              "Amount": 1
+            }
+          ],
+          "Effect": {
+            "Defense": 1
+          }
+        },
+        {
+          "Id": "COLLECT",
+          "TextKey": "event.EVT_WX_RAIN_LEAK.collect",
+          "Effect": {
+            "Resources": [
+              {
+                "Resource": "Water",
+                "Amount": 3
+              }
+            ],
+            "Vitals": [
+              {
+                "Vital": "Fatigue",
+                "Amount": 4
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

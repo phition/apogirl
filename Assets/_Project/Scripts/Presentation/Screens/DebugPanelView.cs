@@ -42,6 +42,12 @@ namespace ApoGirl.Presentation.Screens
             Add("debug.week_last", () => _session.DebugJumpToWeek(51));
             Add("debug.week_52", () => _session.DebugJumpToWeek(52));
 
+            // M6: 감염·병세·날씨·구조 공지
+            Add("debug.infect", () => _session.DebugInfect(25));
+            Add("debug.teacher_reinfect", () => _session.DebugTeacherInfection(25));
+            Add("debug.weather", () => _session.DebugCycleWeather());
+            Add("debug.rescue_flag", () => _session.DebugToggleFlag("RESCUE_ANNOUNCED"));
+
             // M5: 엔딩 확인 (계획 단계에서 지금 상태로 판을 끝낸다)
             Add("debug.end_rescue", () =>
             {
@@ -50,7 +56,7 @@ namespace ApoGirl.Presentation.Screens
             });
             var causes = new System.Collections.Generic.List<string>
             {
-                WeekRunner.EndCauseExpedition, WeekRunner.EndCauseRaid, WeekRunner.EndCauseStarvation, WeekRunner.EndCauseCollapse, WeekRunner.EndCauseHpZero,
+                WeekRunner.EndCauseExpedition, WeekRunner.EndCauseRaid, WeekRunner.EndCauseStarvation, WeekRunner.EndCauseCollapse, WeekRunner.EndCauseInfection, WeekRunner.EndCauseHpZero,
             };
             var causePicker = new DropdownField(Loc.T("debug.end_bad"), causes, 0);
             causePicker.AddToClassList("debug-dropdown");
@@ -133,7 +139,9 @@ namespace ApoGirl.Presentation.Screens
                            + " · expedition " + (_session.UseRealtimeExpeditions ? "realtime" : "headless")
                            + " · events " + (_session.InteractiveEvents ? "interactive" : "auto")
                            + " · seen " + _session.State.Events.Records.Count
-                           + " · ending " + Preview();
+                           + " · ending " + Preview()
+                           + " · infection " + _session.State.Player.Vitals.Infection
+                           + " · teacher " + (_session.State.Teacher.Reinfected ? _session.State.Teacher.InfectionProgress.ToString() : "-");
         }
 
         /// <summary>지금 상태로 구조된다면 받을 엔딩 (판정 미리보기).</summary>

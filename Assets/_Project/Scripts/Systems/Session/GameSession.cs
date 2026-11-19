@@ -385,6 +385,40 @@ namespace ApoGirl.Systems.Session
             StateChanged?.Invoke();
         }
 
+        /// <summary>M6 디버그: 주인공 감염도 변화.</summary>
+        public void DebugInfect(int amount)
+        {
+            EffectApplier.ChangeVital(State, VitalType.Infection, amount, _db.Balance, new StateDelta());
+            StateChanged?.Invoke();
+        }
+
+        /// <summary>M6 디버그: 선생님 재감염 (이미 재감염이면 진행도 +amount).</summary>
+        public void DebugTeacherInfection(int amount)
+        {
+            var effect = new GameEffect { TeacherReinfect = true, TeacherInfection = State.Teacher.Reinfected ? amount : 0 };
+            EffectApplier.Apply(State, effect, _db.Balance, new StateDelta());
+            StateChanged?.Invoke();
+        }
+
+        /// <summary>M6 디버그: 날씨 순환.</summary>
+        public void DebugCycleWeather()
+        {
+            var values = (WeatherType[])Enum.GetValues(typeof(WeatherType));
+            State.Base.Weather = values[((int)State.Base.Weather + 1) % values.Length];
+            StateChanged?.Invoke();
+        }
+
+        /// <summary>M6 디버그: 구조 공지 플래그 토글.</summary>
+        public void DebugToggleFlag(string flag)
+        {
+            if (!State.Flags.Remove(flag))
+            {
+                State.Flags.Add(flag);
+            }
+
+            StateChanged?.Invoke();
+        }
+
         public void DebugTogglePowerRestored()
         {
             State.Base.PowerRestored = !State.Base.PowerRestored;

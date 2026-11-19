@@ -127,7 +127,7 @@
     { "Id": "EVT_A1_FINALE", "Kind": "Story", "Priority": 100, "Condition": { "WeekMin": 13, "WeekMax": 13, "Days": [ 6 ], "Phase": "Night" },
       "OnShow": { "RaidStrength": 55, "SetFlags": [ "ACT1_FINALE" ] } },
 
-    { "Id": "EVT_A1_REVIEW", "Kind": "Story", "Priority": 100, "Condition": { "WeekMin": 13, "WeekMax": 13, "Days": [ 7 ], "Phase": "Night" },
+    { "Id": "EVT_A1_REVIEW", "Kind": "Story", "Priority": 100, "ReviewAct": 1, "ReviewFromWeek": 1, "Condition": { "WeekMin": 13, "WeekMax": 13, "Days": [ 7 ], "Phase": "Night" },
       "OnShow": { "SetFlags": [ "ACT1_DONE" ] } },
 
     { "Id": "EVT_CAL_MIDTERM", "Kind": "Calendar", "Priority": 50, "Condition": { "Month": 4, "DayOfMonth": 27, "Phase": "Day" },
