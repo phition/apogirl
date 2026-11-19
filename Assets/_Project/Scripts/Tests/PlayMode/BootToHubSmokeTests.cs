@@ -1,8 +1,10 @@
 using System.Collections;
+using System.Linq;
 using ApoGirl.Core.Expedition;
 using ApoGirl.Core.State;
 using ApoGirl.Exploration.Runtime;
 using ApoGirl.Presentation.App;
+using ApoGirl.Presentation.Dialogue;
 using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -31,8 +33,16 @@ namespace ApoGirl.Tests.PlayMode
                     session.CompleteExpedition(new ExpeditionResult { Status = ExtractStatus.Extracted });
                 }
 
+                while (session.HasPendingEvent)
+                {
+                    var choice = session.PendingChoices.FirstOrDefault(c => c.Enabled);
+                    session.ResolveEvent(choice?.Id ?? "");
+                }
+
                 yield return null;
             }
+
+            Assert.IsTrue(session.State.Events.Records.ContainsKey("EVT_NIGHT_TEACHER_TALK_01"), "1주차 밤 휴식 대화");
 
             Assert.AreEqual(2, session.State.Calendar.Week);
             Assert.AreEqual(GameStatus.Playing, session.State.Status);
@@ -185,6 +195,63 @@ namespace ApoGirl.Tests.PlayMode
             session.CompleteExpedition(result);
             Assert.AreEqual(debtBefore + 2, session.State.Player.SleepDebt, "밤 탐험 +1, 새벽 귀환 +1");
             Object.Destroy(host.gameObject);
+        }
+
+        /// <summary>M3: 허브에서 Yarn 대사가 문자열 테이블로 나오고, #choice 선택이 이벤트 데이터에 반영된다.</summary>
+        [UnityTest]
+        public IEnumerator HubDialogue_RunsYarnNode_AndAppliesChoice()
+        {
+            yield return BootToHub(31);
+
+            var session = GameApp.Session;
+            var root = Object.FindAnyObjectByType<ApoGirl.Presentation.Screens.HubScreen>().GetComponent<UIDocument>().rootVisualElement;
+            var project = Resources.Load<Yarn.Unity.YarnProject>(ApoGirl.Presentation.Screens.HubScreen.YarnProjectResource);
+            Assert.IsNotNull(project, "Resources의 Yarn 프로젝트");
+            Assert.IsNotNull(project.Program, "Yarn 대본 컴파일");
+
+            var view = new DialogueView(root);
+            var player = new EventDialoguePlayer(project, view);
+            session.DebugForceEvent("EVT_NIGHT_TEACHER_TALK_01");
+            Assert.IsTrue(session.HasPendingEvent);
+
+            string picked = null;
+            var task = player.Run(session.PendingEvent.Node, session.PendingChoices, id =>
+            {
+                picked = id;
+                session.ResolveEvent(id);
+            }, System.Threading.CancellationToken.None);
+
+            var options = root.Q("dialogue-options");
+            var text = root.Q<Label>("dialogue-text");
+            var sawJosa = false;
+            for (var frame = 0; frame < 2000 && !task.IsCompleted; frame++)
+            {
+                sawJosa |= text.text.Contains("한서진이 깬 걸");
+                if (options.childCount > 0)
+                {
+                    var buttons = options.Query<Button>().ToList();
+                    Assert.AreEqual(2, buttons.Count, "선택지 2개");
+                    using (var submit = NavigationSubmitEvent.GetPooled())
+                    {
+                        submit.target = buttons[0];
+                        buttons[0].SendEvent(submit);
+                    }
+                }
+                else
+                {
+                    view.Advance();
+                }
+
+                yield return null;
+            }
+
+            Assert.IsTrue(task.IsCompleted, "대화가 끝나야 함");
+            Assert.IsFalse(task.IsFaulted, task.Exception?.ToString());
+            Assert.IsTrue(sawJosa, "조사 자동 처리 (한서진 + 이/가)");
+            Assert.AreEqual("ASK", picked);
+            Assert.IsFalse(session.HasPendingEvent);
+            Assert.IsTrue(session.State.Flags.Contains("ASKED_TEACHER_LEG"));
+            Assert.AreEqual(3, session.State.Teacher.Affinity);
         }
 
         private static IEnumerator BootToHub(int seed)
