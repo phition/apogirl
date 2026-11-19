@@ -18,7 +18,7 @@
 - 로컬 커밋만 한다. **사용자가 요청하기 전까지 push 하지 않는다.**
 
 ## 현재 단계
-- M0, M1, M2 완료. M2b 진행 중: M2b-1(뼈대), M2b-1.5(복도·방 템플릿), **M2b-2(위협·낮 버전) 완료** → 사용자 플레이 확인 후 M2b-3(밤 버전·손전등·디버그 도구·플레이 로그).
+- M0, M1, M2, **M2b(탐험 프로토타입: 뼈대·복도/방·위협/낮·밤/손전등·디버그·플레이 기록) 구현 완료** → 사용자 플레이로 "재미 검증"(문서 12장) 후 M3(콘텐츠 파이프라인).
 - 코어 진입점: `NewGameFactory.Create` → `WeekRunner`(`PrepareWeek` → `ExecuteNextSlot` × 14 → `FinishWeek`), 정의 DB는 `Assets/_Project/Data/DefinitionDatabase.asset`.
 
 ## Unity
@@ -26,5 +26,6 @@
 - 시뮬레이션 코어(`ApoGirl.Core`)는 UnityEngine을 참조하지 않는다(asmdef `noEngineReferences`).
 - 테스트: Unity Test Runner → EditMode (`ApoGirl.Tests.EditMode`), PlayMode (`ApoGirl.Tests.PlayMode`). 결과 요약은 `Temp/ApoGirlTestResults.txt`에도 기록된다.
 - UI: UI Toolkit (`Assets/_Project/UI`: Title.uxml, Hub.uxml, Theme.uss, PanelSettings). 화면 문자열은 `Assets/_Project/Localization/Source/ko.json`이 원본 → 메뉴 `ApoGirl/Localization/Sync Tables`로 테이블 생성.
-- 실행: Boot 씬에서 플레이 (Title/Hub/Expedition 단독 실행도 가능). 허브 F1 = 디버그 패널, 탐험 F2 = 시간 ×10, Space 숨기, Q 밀치기.
+- 실행: Boot 씬에서 플레이 (Title/Hub/Expedition 단독 실행도 가능). 허브 F1 = 디버그 패널. 탐험: Space 숨기, Q 밀치기, F 손전등, 디버그 F2 ×10 · F3 AI·소음 · F4 무적 · F5 시야 · F6 아이템 · F7 +1분 · F8 시계 끝.
+- 플레이 기록: `persistentDataPath/PlayLogs/expeditions.jsonl` (디버그 사용 판·자동 테스트 제외) → 메뉴 `ApoGirl/Exploration/Summarize Play Logs`, `Apply Play Logs To Headless Models`.
 - 탐험 슬롯은 2단계: `GameSession.Step()`이 `AwaitingExpedition`을 돌려주면 탐험 씬(Additive) → `CompleteExpedition(result)`. 디버그 패널에서 헤드리스(자동) 탐험으로 전환 가능.
