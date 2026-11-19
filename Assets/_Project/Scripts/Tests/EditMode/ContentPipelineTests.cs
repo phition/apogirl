@@ -68,7 +68,7 @@ namespace ApoGirl.Tests.EditMode
             return new InMemoryDefinitionDatabase(
                 new BalanceConfig(), content.Actions, content.ExpeditionModels, content.Items, content.LootTables,
                 null, content.Enemies, content.Events, content.Npcs,
-                new DefinitionExtras { Traits = content.Traits, Facilities = content.Facilities, Lines = content.Lines, Prologue = content.Prologue ?? new PrologueDef(), Endings = content.Endings });
+                new DefinitionExtras { Traits = content.Traits, Facilities = content.Facilities, Lines = content.Lines, Prologue = content.Prologue ?? new PrologueDef(), Endings = content.Endings, Roles = content.Roles });
         }
 
         [Test]

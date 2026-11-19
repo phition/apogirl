@@ -76,6 +76,15 @@ namespace ApoGirl.Core.State
         Winter,
     }
 
+    /// <summary>주간 날씨 (M6, 문서 6.6). 계절표로 굴린다.</summary>
+    public enum WeatherType
+    {
+        Clear,
+        Rain,
+        Heat,
+        Cold,
+    }
+
     /// <summary>게임 진행 상태.</summary>
     public enum GameStatus
     {

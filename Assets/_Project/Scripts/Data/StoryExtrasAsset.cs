@@ -13,6 +13,7 @@ namespace ApoGirl.Data
         [SerializeField] private List<LineDef> _lines = new List<LineDef>();
         [SerializeField] private PrologueDef _prologue = new PrologueDef();
         [SerializeField] private List<EndingDef> _endings = new List<EndingDef>();
+        [SerializeField] private List<RoleDef> _roles = new List<RoleDef>();
 
         public DefinitionExtras ToDefinition()
         {
@@ -23,12 +24,14 @@ namespace ApoGirl.Data
                 Lines = new List<LineDef>(_lines),
                 Prologue = _prologue ?? new PrologueDef(),
                 Endings = new List<EndingDef>(_endings ?? new List<EndingDef>()),
+                Roles = new List<RoleDef>(_roles ?? new List<RoleDef>()),
             };
         }
 
 #if UNITY_EDITOR
-        public void EditorSet(List<TraitDef> traits, List<FacilityDef> facilities, List<LineDef> lines, PrologueDef prologue, List<EndingDef> endings)
+        public void EditorSet(List<TraitDef> traits, List<FacilityDef> facilities, List<LineDef> lines, PrologueDef prologue, List<EndingDef> endings, List<RoleDef> roles)
         {
+            _roles = roles;
             _endings = endings;
             _traits = traits;
             _facilities = facilities;

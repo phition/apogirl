@@ -200,12 +200,17 @@ namespace ApoGirl.Core.Simulation
                 return 1f;
             }
 
+            float multiplier;
             switch (action.Teaching)
             {
-                case TeachingMode.TeacherDirect: return balance.TeacherDirectMultiplier;
-                case TeachingMode.SelfStudyGuided: return balance.TeacherGuidanceMultiplier;
+                case TeachingMode.TeacherDirect: multiplier = balance.TeacherDirectMultiplier; break;
+                case TeachingMode.SelfStudyGuided: multiplier = balance.TeacherGuidanceMultiplier; break;
                 default: return 1f;
             }
+
+            // M6: 재감염 병세 단계마다 멘토 기능이 약해진다 (문서 5.3.1)
+            var decay = Math.Min(1f, InfectionRules.TeacherStage(state, balance) * balance.MentorDecayPerStage);
+            return 1f + (multiplier - 1f) * (1f - decay);
         }
 
         private static GameEffect EffectFor(ActionDef action, CheckResult result)

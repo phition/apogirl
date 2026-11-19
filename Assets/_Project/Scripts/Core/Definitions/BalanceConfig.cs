@@ -26,6 +26,30 @@ namespace ApoGirl.Core.Definitions
     /// 밸런스 수치 모음 (문서 9.1 초기안 + M1 설계 추천안). 모든 규칙 공식은 이 값만 읽는다.
     /// 배열 인덱스가 "단계"인 항목은 0단계부터 시작한다.
     /// </summary>
+    /// <summary>계절 하나의 날씨 가중치.</summary>
+    [Serializable]
+    public sealed class WeatherOdds
+    {
+        public Season Season;
+        public int Clear;
+        public int Rain;
+        public int Heat;
+        public int Cold;
+
+        public WeatherOdds()
+        {
+        }
+
+        public WeatherOdds(Season season, int clear, int rain, int heat, int cold)
+        {
+            Season = season;
+            Clear = clear;
+            Rain = rain;
+            Heat = heat;
+            Cold = cold;
+        }
+    }
+
     [Serializable]
     public sealed class BalanceConfig
     {
@@ -170,6 +194,41 @@ namespace ApoGirl.Core.Definitions
         public int StarvationHpLoss = 5;
         public int DehydrationThreshold = 60;
         public int DehydrationHpLoss = 10;
+
+        // ── M6 주인공 감염 (문서 3.1.1): 쓰러지면 물릴 수 있다. 응급 처치 성공 시 감염이 휴면 ──
+        public float BiteChanceOnDownDay = 0.25f;
+        public float BiteChanceOnDownNight = 0.5f;
+        public int BiteInfection = 30;
+        public int BiteInfectionTreated = 8;
+        public float FirstAidBaseChance = 0.15f;
+        public float FirstAidPerMedicineLevel = 0.1f;
+        public int InfectionWeeklyGrowth = 8;
+        public int InfectionGrowthReducePerMedicineLevel = 1;
+        public int InfectionGrowthMin = 2;
+
+        // ── M6 선생님 재감염 (문서 5.3.1, 7.2) ──
+        public int TeacherInfectionWeekly = 6;
+        public int TeacherInfectionReducePerMedicineLevel = 1;
+        public int TeacherInfectionMinWeekly = 2;
+        public int TeacherInfectionColdBonus = 2;
+        public int TeacherStageSize = 25;
+
+        /// <summary>병세 단계마다 선생님 지도 보정(1 초과분)이 줄어드는 비율.</summary>
+        public float MentorDecayPerStage = 0.2f;
+
+        // ── M6 날씨 (계절별 가중치: 맑음·비·폭염·한파) ──
+        public WeatherOdds[] WeatherBySeason =
+        {
+            new WeatherOdds(Season.Spring, 6, 3, 0, 1),
+            new WeatherOdds(Season.Summer, 4, 4, 3, 0),
+            new WeatherOdds(Season.Autumn, 6, 3, 0, 1),
+            new WeatherOdds(Season.Winter, 4, 1, 0, 5),
+        };
+
+        public float RainNoiseBonus = -0.25f;
+        public float RainRaidMultiplier = 0.6f;
+        public int HeatExtraWater = 1;
+        public int ColdDailyStress = 2;
 
         // ── 정신 붕괴 (M5 배드 엔딩): 주간 정산 때 스트레스가 이 값 이상인 주가 연속 CollapseWeeks면 종료 ──
         public int CollapseStress = 100;

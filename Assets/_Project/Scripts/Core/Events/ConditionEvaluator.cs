@@ -189,6 +189,18 @@ namespace ApoGirl.Core.Events
                     }
 
                     return clues;
+                case ValueKind.TeacherInfection: return state.Teacher.Reinfected ? state.Teacher.InfectionProgress : 0;
+                case ValueKind.TeacherStage: return InfectionRules.TeacherStage(state, null);
+                case ValueKind.WeeksToRescue: return Math.Max(0, CalendarState.TotalWeeks - state.Calendar.Week);
+                case ValueKind.Weather: return state.Base.Weather.ToString() == key ? 1 : 0;
+                case ValueKind.RoleCount:
+                    var roles = 0;
+                    foreach (var npc in state.Npcs.Values)
+                    {
+                        if (npc.Status == NpcStatus.Joined && npc.Role == key) roles++;
+                    }
+
+                    return roles;
                 default: throw new ArgumentOutOfRangeException(nameof(kind), kind, null);
             }
         }
@@ -216,7 +228,12 @@ namespace ApoGirl.Core.Events
                 case ValueKind.StatMin:
                 case ValueKind.BreakdownWeeks:
                 case ValueKind.ClueCount:
+                case ValueKind.TeacherInfection:
+                case ValueKind.TeacherStage:
+                case ValueKind.WeeksToRescue:
                     return true;
+                case ValueKind.Weather:
+                    return Enum.TryParse<WeatherType>(key, out _);
                 case ValueKind.Expeditions:
                     return string.IsNullOrEmpty(key) || key == "Day" || key == "Night";
                 default: return !string.IsNullOrEmpty(key);

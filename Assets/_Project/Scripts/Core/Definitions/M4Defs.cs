@@ -32,6 +32,17 @@ namespace ApoGirl.Core.Definitions
         NoiseMultiplier,
         RunSpeed,
         StealthBonus,
+
+        // ── M6 (시설·동료 역할에서 주로 쓴다) ──
+
+        /// <summary>밤 습격 방어력 가산 (정수).</summary>
+        RaidGuard,
+
+        /// <summary>주간 감염 증가 감소량 (정수, 주인공).</summary>
+        InfectionResist,
+
+        /// <summary>주간 선생님 감염 진행 감소량 (정수).</summary>
+        TeacherCare,
     }
 
     [Serializable]
@@ -56,6 +67,17 @@ namespace ApoGirl.Core.Definitions
     {
         public string Id = "";
         public int MaxLevel = 1;
+
+        /// <summary>M6: 레벨마다 더해지는 보정 (특성과 같은 방식으로 합산).</summary>
+        public List<TraitModifier> Modifiers = new List<TraitModifier>();
+    }
+
+    /// <summary>M6: 동료 역할 (경비·요리·간호·교사 …). 이름은 UI 키 "role.{Id}". 합류한 동료마다 보정이 더해진다.</summary>
+    [Serializable]
+    public sealed class RoleDef
+    {
+        public string Id = "";
+        public List<TraitModifier> Modifiers = new List<TraitModifier>();
     }
 
     [Serializable]
@@ -194,5 +216,8 @@ namespace ApoGirl.Core.Definitions
 
         /// <summary>M5: 엔딩 목록 (등록 순서 = 같은 우선순위·점수일 때의 순서).</summary>
         public List<EndingDef> Endings = new List<EndingDef>();
+
+        /// <summary>M6: 동료 역할.</summary>
+        public List<RoleDef> Roles = new List<RoleDef>();
     }
 }

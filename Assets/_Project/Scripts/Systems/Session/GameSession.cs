@@ -192,6 +192,9 @@ namespace ApoGirl.Systems.Session
 
         public bool CopyLastWeek() => EditBool(() => PlanEditing.CopyLastWeek(State, _db));
 
+        /// <summary>M6: 합류한 동료의 역할을 바꾼다 (계획 단계에서만, 빈 문자열 = 역할 없음).</summary>
+        public bool SetNpcRole(string npcId, string roleId) => EditBool(() => Core.Rules.RoleRules.Assign(State, _db, npcId, roleId));
+
         public bool SavePreset(string name) => EditBool(() => PlanEditing.SavePreset(State, name));
 
         public bool ApplyPreset(string name) => EditBool(() => PlanEditing.ApplyPreset(State, _db, name));

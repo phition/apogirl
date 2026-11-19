@@ -26,6 +26,9 @@ namespace ApoGirl.Systems.Content
         // ── M5 ──
         public List<EndingDef> Endings = new List<EndingDef>();
 
+        // ── M6 ──
+        public List<RoleDef> Roles = new List<RoleDef>();
+
         /// <summary>여러 파일 중 하나에만 둔다 (마지막 것이 이긴다).</summary>
         public PrologueDef Prologue;
     }
@@ -82,6 +85,7 @@ namespace ApoGirl.Systems.Content
                 merged.Facilities.AddRange(content.Facilities);
                 merged.Lines.AddRange(content.Lines);
                 merged.Endings.AddRange(content.Endings);
+                merged.Roles.AddRange(content.Roles);
                 if (content.Prologue != null)
                 {
                     merged.Prologue = content.Prologue;

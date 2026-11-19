@@ -35,7 +35,13 @@ namespace ApoGirl.Core.Rules
         {
             var food = state.Calendar.Day % 2 == 0 ? Math.Max(0, balance.DailyFood - foodSaving) : balance.DailyFood;
             Consume(state, ResourceType.Food, food, VitalType.Hunger, balance.HungerRecovery, balance.HungerIncrease, balance, delta);
-            Consume(state, ResourceType.Water, balance.DailyWater, VitalType.Thirst, balance.ThirstRecovery, balance.ThirstIncrease, balance, delta);
+            var water = balance.DailyWater + (state.Base.Weather == WeatherType.Heat ? balance.HeatExtraWater : 0);
+            Consume(state, ResourceType.Water, water, VitalType.Thirst, balance.ThirstRecovery, balance.ThirstIncrease, balance, delta);
+            if (state.Base.Weather == WeatherType.Cold && balance.ColdDailyStress > 0)
+            {
+                // M6: 한파 (문서 6.6)
+                EffectApplier.ChangeVital(state, VitalType.Stress, balance.ColdDailyStress, balance, delta);
+            }
 
             var vitals = state.Player.Vitals;
             if (vitals.Hunger >= balance.StarvationThreshold)

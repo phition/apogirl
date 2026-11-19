@@ -57,6 +57,23 @@ namespace ApoGirl.Core.Definitions
 
         /// <summary>단서 수 (Key가 있으면 그 접두어로 시작하는 단서만).</summary>
         ClueCount,
+
+        // ── M6 ──
+
+        /// <summary>선생님 감염 진행도 0~100 (재감염 전에는 0).</summary>
+        TeacherInfection,
+
+        /// <summary>선생님 병세 단계 (진행도 / TeacherStageSize).</summary>
+        TeacherStage,
+
+        /// <summary>구조까지 남은 주 (52 − 현재 주).</summary>
+        WeeksToRescue,
+
+        /// <summary>이번 주 날씨가 Key(WeatherType 이름)이면 1.</summary>
+        Weather,
+
+        /// <summary>이 역할을 맡은 동료 수 (Key = 역할 ID).</summary>
+        RoleCount,
     }
 
     public enum CompareOp

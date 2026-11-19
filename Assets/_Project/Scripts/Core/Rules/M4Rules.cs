@@ -8,7 +8,9 @@ using ApoGirl.Core.State;
 
 namespace ApoGirl.Core.Rules
 {
-    /// <summary>특성 효과 합산 (문서 7.1 ③⑥). 특성 정의는 데이터(TraitDef).</summary>
+    /// <summary>
+    /// 보정 합산: 특성 (문서 7.1 ③⑥) + 시설 레벨 (M6) + 합류한 동료의 역할 (M6). 정의는 모두 데이터.
+    /// </summary>
     public static class TraitRules
     {
         public static float Sum(GameState state, IDefinitionDatabase db, TraitModifierKind kind, string key = "")
@@ -17,17 +19,48 @@ namespace ApoGirl.Core.Rules
             foreach (var traitId in state.Player.Traits)
             {
                 var trait = db.Extras.Traits.Find(t => t.Id == traitId);
-                if (trait == null)
+                if (trait != null)
                 {
-                    continue;
+                    total += Match(trait.Modifiers, kind, key);
                 }
+            }
 
-                foreach (var modifier in trait.Modifiers)
+            foreach (var facility in db.Extras.Facilities)
+            {
+                if (facility.Modifiers.Count > 0 && state.Base.Facilities.TryGetValue(facility.Id, out var level) && level > 0)
                 {
-                    if (modifier.Kind == kind && (string.IsNullOrEmpty(modifier.Key) || modifier.Key == key))
+                    total += Match(facility.Modifiers, kind, key) * level;
+                }
+            }
+
+            if (db.Extras.Roles.Count > 0)
+            {
+                foreach (var npc in state.Npcs.Values)
+                {
+                    if (npc.Status != NpcStatus.Joined || string.IsNullOrEmpty(npc.Role))
                     {
-                        total += modifier.Value;
+                        continue;
                     }
+
+                    var role = db.Extras.Roles.Find(r => r.Id == npc.Role);
+                    if (role != null)
+                    {
+                        total += Match(role.Modifiers, kind, key);
+                    }
+                }
+            }
+
+            return total;
+        }
+
+        private static float Match(List<TraitModifier> modifiers, TraitModifierKind kind, string key)
+        {
+            var total = 0f;
+            foreach (var modifier in modifiers)
+            {
+                if (modifier.Kind == kind && (string.IsNullOrEmpty(modifier.Key) || modifier.Key == key))
+                {
+                    total += modifier.Value;
                 }
             }
 
@@ -41,6 +74,12 @@ namespace ApoGirl.Core.Rules
             foreach (var kind in new[] { TraitModifierKind.SearchSpeed, TraitModifierKind.NoiseMultiplier, TraitModifierKind.RunSpeed, TraitModifierKind.StealthBonus })
             {
                 var value = Sum(state, db, kind);
+                if (kind == TraitModifierKind.NoiseMultiplier && state.Base.Weather == WeatherType.Rain)
+                {
+                    // M6: 빗소리가 발소리를 덮는다 (문서 6.3.8)
+                    value += db.Balance.RainNoiseBonus;
+                }
+
                 if (Math.Abs(value) > 0.0001f)
                 {
                     result[kind.ToString()] = value;
@@ -75,11 +114,12 @@ namespace ApoGirl.Core.Rules
             }
 
             var chance = balance.RaidBaseChance + (state.Base.Threat - state.Base.Defense) * balance.RaidChancePerPoint;
-            return Math.Min(Math.Max(chance, 0f), balance.RaidMaxChance);
+            chance = Math.Min(Math.Max(chance, 0f), balance.RaidMaxChance);
+            return state.Base.Weather == WeatherType.Rain ? chance * balance.RainRaidMultiplier : chance;
         }
 
         /// <summary>밤 슬롯마다: 확률로 습격이 오면 판정. 위협 후보가 0이면 난수를 쓰지 않는다.</summary>
-        public static RaidResult RollNight(GameState state, ActionDef action, BalanceConfig balance, IRandomService random, StateDelta delta)
+        public static RaidResult RollNight(GameState state, ActionDef action, BalanceConfig balance, IRandomService random, StateDelta delta, int companionGuard = 0)
         {
             var chance = Chance(state, balance);
             if (chance <= 0f || random.NextDouble() >= chance)
@@ -87,7 +127,7 @@ namespace ApoGirl.Core.Rules
                 return null;
             }
 
-            return Resolve(state, state.Base.Threat, action?.RaidGuard ?? 0, false, balance, random, delta);
+            return Resolve(state, state.Base.Threat, (action?.RaidGuard ?? 0) + companionGuard, false, balance, random, delta);
         }
 
         public static RaidResult Resolve(GameState state, int threat, int guard, bool scripted, BalanceConfig balance, IRandomService random, StateDelta delta)

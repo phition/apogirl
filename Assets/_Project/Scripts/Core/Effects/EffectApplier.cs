@@ -139,6 +139,19 @@ namespace ApoGirl.Core.Effects
                 state.Base.PowerRestored = true;
                 delta.PowerRestored = true;
             }
+
+            // M6: 선생님 재감염 (7.2)
+            if (effect.TeacherReinfect && !state.Teacher.Reinfected)
+            {
+                state.Teacher.Reinfected = true;
+                state.Flags.Add(InfectionRules.FlagTeacherReinfected);
+                delta.FlagsSet.Add(InfectionRules.FlagTeacherReinfected);
+            }
+
+            if (effect.TeacherInfection != 0)
+            {
+                InfectionRules.ChangeTeacherInfection(state, effect.TeacherInfection, balance);
+            }
         }
 
         public static int ChangeDefense(GameState state, int amount, BalanceConfig balance, StateDelta delta)

@@ -37,6 +37,9 @@ namespace ApoGirl.Core.Simulation
         /// <summary>이 밤에 일어난 습격 (없으면 null).</summary>
         public RaidResult Raid;
 
+        /// <summary>M6: 탐험에서 물렸다면 결과 (없으면 null).</summary>
+        public BiteResult Bite;
+
         /// <summary>이벤트 대기 중: ResolveEvent(choiceId)를 호출해야 슬롯이 끝난다.</summary>
         public bool AwaitingEvent;
 
@@ -69,6 +72,7 @@ namespace ApoGirl.Core.Simulation
         public const string EndCauseRaid = "END_CAUSE_RAID";
         public const string EndCauseStarvation = "END_CAUSE_STARVATION";
         public const string EndCauseCollapse = "END_CAUSE_COLLAPSE";
+        public const string EndCauseInfection = "END_CAUSE_INFECTION";
 
         private readonly GameState _state;
         private readonly IDefinitionDatabase _db;
@@ -241,7 +245,8 @@ namespace ApoGirl.Core.Simulation
 
             if (calendar.Phase == DayPhase.Night && !action.IsExpedition && player.Vitals.Hp > 0)
             {
-                outcome.Raid = RaidRules.RollNight(_state, action, Balance, _random, delta);
+                var companionGuard = (int)Math.Round(TraitRules.Sum(_state, _db, TraitModifierKind.RaidGuard));
+                outcome.Raid = RaidRules.RollNight(_state, action, Balance, _random, delta, companionGuard);
             }
 
             if (player.Vitals.Hp <= 0)
@@ -445,6 +450,15 @@ namespace ApoGirl.Core.Simulation
             }
 
             CheckBreakdown();
+
+            // M6: 감염 진행 (주인공 → 최대치면 감염 배드 엔딩, 선생님 → 병세 단계)
+            if (InfectionRules.WeeklyPlayer(_state, _db, summary.Delta) && _state.Status == GameStatus.Playing)
+            {
+                _state.Status = GameStatus.GameOver;
+                _state.EndCause = EndCauseInfection;
+            }
+
+            InfectionRules.WeeklyTeacher(_state, _db);
             RecordWeek(calendar.Week);
             var diary = LineRules.Pick(_state, _db, LineKind.Diary, new EventContext { Phase = DayPhase.Night, Day = CalendarState.DaysPerWeek });
             foreach (var outcome in _outcomes)
@@ -479,6 +493,7 @@ namespace ApoGirl.Core.Simulation
                 calendar.Phase = DayPhase.Day;
                 calendar.WeekComplete = false;
                 _state.Plan = PlanPreparer.CreateWeekPlan(_state, Balance);
+                _state.Base.Weather = WeatherRules.Roll(calendar.Week, Balance, _random);
             }
 
             summary.StatusAfter = _state.Status;
@@ -539,6 +554,14 @@ namespace ApoGirl.Core.Simulation
             {
                 _state.Clues.Add(clue);
             }
+
+            // M6: 정찰 정보는 한 번 쓰면 사라진다
+            _state.Flags.Remove(ScoutRules.FlagFor(action.LocationId));
+
+            // M6: 물림 (쓰러짐 또는 물림 부상) → 응급 처치 판정 (문서 3.1.1)
+            outcome.Bite = InfectionRules.RollBite(
+                _state, _db, _random, action.ExpeditionTime == ExpeditionTime.Night, result.Status == ExtractStatus.Down,
+                (result.Injuries & InjuryFlags.Bite) != 0, delta);
 
             if (result.Status == ExtractStatus.Down)
             {

@@ -46,6 +46,14 @@ namespace ApoGirl.Core.Definitions
         /// <summary>0보다 크면 이 세기의 밤 습격을 즉시 판정한다 (이벤트 효과 전용).</summary>
         public int RaidStrength;
 
+        // ── M6 ──
+
+        /// <summary>선생님 재감염 발병 (문서 7.2). 한 번 켜지면 되돌릴 수 없다.</summary>
+        public bool TeacherReinfect;
+
+        /// <summary>선생님 감염 진행도 변화 (돌봄 −, 악화 +). 재감염 전에는 무시.</summary>
+        public int TeacherInfection;
+
         /// <summary>다른 효과를 이 효과에 더한다 (목록은 이어 붙이고, 수치는 더하고, 단계·세기는 큰 쪽).</summary>
         public GameEffect MergeFrom(GameEffect other)
         {
@@ -74,6 +82,8 @@ namespace ApoGirl.Core.Definitions
             TeacherMobility = Math.Max(TeacherMobility, other.TeacherMobility);
             RestorePower |= other.RestorePower;
             RaidStrength = Math.Max(RaidStrength, other.RaidStrength);
+            TeacherReinfect |= other.TeacherReinfect;
+            TeacherInfection += other.TeacherInfection;
             return this;
         }
     }

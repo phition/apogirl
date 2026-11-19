@@ -217,6 +217,9 @@ namespace ApoGirl.Core.State
 
         /// <summary>1막 전력 복구 이벤트 전에는 정전이 기본 상태 (문서 5.4).</summary>
         public bool PowerRestored { get; set; }
+
+        /// <summary>이번 주 날씨 (M6). 주간 정산 때 다음 주 날씨를 굴린다.</summary>
+        public WeatherType Weather { get; set; }
     }
 
     public sealed class ItemStack

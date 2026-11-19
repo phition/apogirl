@@ -131,6 +131,7 @@ namespace ApoGirl.Core.Expedition
                 Fatigue = player.Vitals.Fatigue,
                 Stress = player.Vitals.Stress,
                 ConsecutiveRun = consecutiveRun,
+                WeatherId = state.Base.Weather.ToString(),
             };
 
             foreach (var pair in player.Proficiency)
