@@ -1035,8 +1035,22 @@ namespace ApoGirl.Exploration.Runtime
             }
         }
 
+        /// <summary>false면 플레이 기록을 남기지 않는다 (자동 테스트가 보정 데이터를 오염시키지 않게).</summary>
+        public static bool PlayLogEnabled { get; set; } = true;
+
+        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
+        private static void ResetStatics()
+        {
+            PlayLogEnabled = true;
+        }
+
         private void WritePlayLog(ExtractStatus status)
         {
+            if (!PlayLogEnabled)
+            {
+                return;
+            }
+
             try
             {
                 _log.Timestamp = DateTime.Now.ToString("o");

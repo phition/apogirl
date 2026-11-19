@@ -190,6 +190,8 @@ namespace ApoGirl.Tests.PlayMode
         private static IEnumerator BootToHub(int seed)
         {
             SceneManager.LoadScene("Boot");
+            yield return null;
+            ExpeditionDirector.PlayLogEnabled = false;
             yield return WaitForScene(GameApp.TitleScene);
             Assert.IsNotNull(GameApp.Session, "Boot가 세션을 만들어야 함");
 
