@@ -153,23 +153,39 @@ namespace ApoGirl.EditorTools
             return source.TryGetValue("UI", out var ui) ? new HashSet<string>(ui.Keys) : new HashSet<string>();
         }
 
+        /// <summary>
+        /// [YarnFunction] 선언은 Yarn 소스 생성기가 ProjectSettings/Packages/dev.yarnspinner/*.ysls.json으로 만든다.
+        /// 프로젝트가 그 파일을 읽어야 name()·josa() 같은 함수를 컴파일할 수 있다.
+        /// </summary>
+        private const string GeneratedDefinitions = "${workspaceRoot}/ProjectSettings/Packages/dev.yarnspinner/**/*.ysls.json";
+
         private static void EnsureYarnProject()
         {
+            Yarn.Compiler.Project project;
             if (File.Exists(YarnProjectPath))
             {
-                return;
+                project = Yarn.Compiler.Project.LoadFromFile(YarnProjectPath);
+                if (project.Definitions != null && project.Definitions.Contains(GeneratedDefinitions))
+                {
+                    return;
+                }
+            }
+            else
+            {
+                Directory.CreateDirectory(DialogueFolder);
+                project = new Yarn.Compiler.Project
+                {
+                    BaseLanguage = LocaleCode,
+                    SourceFilePatterns = new[] { "**/*.yarn" },
+                    ExcludeFilePatterns = new[] { "**/*~/*" },
+                };
             }
 
-            Directory.CreateDirectory(DialogueFolder);
-            var project = new Yarn.Compiler.Project
-            {
-                BaseLanguage = LocaleCode,
-                SourceFilePatterns = new[] { "**/*.yarn" },
-                ExcludeFilePatterns = new[] { "**/*~/*" },
-            };
+            project.Definitions ??= new List<string>();
+            project.Definitions.Add(GeneratedDefinitions);
             project.SaveToFile(YarnProjectPath);
-            AssetDatabase.ImportAsset(YarnProjectPath);
-            Debug.Log("[Content] Yarn 프로젝트 생성: " + YarnProjectPath);
+            AssetDatabase.ImportAsset(YarnProjectPath, ImportAssetOptions.ForceUpdate);
+            Debug.Log("[Content] Yarn 프로젝트 설정 갱신: " + YarnProjectPath);
         }
 
         /// <summary>정의마다 에셋 하나 (파일 이름 = ID). 원본에 없는 에셋은 지운다.</summary>
