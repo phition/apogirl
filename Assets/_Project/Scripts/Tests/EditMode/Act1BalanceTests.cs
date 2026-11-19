@@ -118,23 +118,28 @@ namespace ApoGirl.Tests.EditMode
         public void Act1_ThreeStrategies_ReportAndReachReview()
         {
             var report = new StringBuilder();
+            var failures = new StringBuilder();
             foreach (var strategy in new[] { Strategy.Study, Strategy.Expedition, Strategy.Mixed })
             {
                 foreach (var seed in new[] { 11, 22, 33 })
                 {
                     report.Append(Run(strategy, seed, out var state));
-                    if (strategy != Strategy.Study)
+                    report.AppendLine($"  end cause: {state.EndCause} hp {state.Player.Vitals.Hp} hunger {state.Player.Vitals.Hunger} thirst {state.Player.Vitals.Thirst}");
+                    if (strategy == Strategy.Study)
                     {
-                        Assert.AreEqual(GameStatus.Playing, state.Status, $"{strategy}/{seed}: 1막을 버텨야 함");
-                        Assert.IsTrue(state.Events.Records.ContainsKey("EVT_A1_REVIEW"), $"{strategy}/{seed}: 1막 평가 도달");
-                        Assert.IsTrue(state.Events.Records.ContainsKey("EVT_A1_FINALE"), $"{strategy}/{seed}: 막 마무리 습격");
+                        continue;
                     }
+
+                    if (state.Status != GameStatus.Playing) failures.AppendLine($"{strategy}/{seed}: 1막을 버티지 못함 ({state.EndCause})");
+                    if (!state.Events.Records.ContainsKey("EVT_A1_REVIEW")) failures.AppendLine($"{strategy}/{seed}: 1막 평가 미도달");
+                    if (!state.Events.Records.ContainsKey("EVT_A1_FINALE")) failures.AppendLine($"{strategy}/{seed}: 막 마무리 습격 미도달");
                 }
             }
 
             Directory.CreateDirectory("Temp");
             File.WriteAllText("Temp/ApoGirlAct1Balance.txt", report.ToString());
             Debug.Log(report.ToString());
+            Assert.IsEmpty(failures.ToString(), failures.ToString());
         }
     }
 
