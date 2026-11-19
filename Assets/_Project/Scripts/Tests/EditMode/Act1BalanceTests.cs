@@ -61,7 +61,9 @@ namespace ApoGirl.Tests.EditMode
                         break;
                     default:
                         id = day
-                            ? dayIndex == 1 || dayIndex == 4 ? dayExpedition : dayIndex == 3 ? Pick("ACT_SURV_RESTORE_POWER", "ACT_SURV_MAKE_CRUTCH", "ACT_SURV_BARRICADE") : "ACT_EDU_HUMANITIES"
+                            ? dayIndex == 1 || dayIndex == 4 ? dayExpedition
+                            : dayIndex == 3 ? Pick("ACT_SURV_RESTORE_POWER", "ACT_SURV_MAKE_CRUTCH", "ACT_SURV_BARRICADE")
+                            : dayIndex == 6 ? "ACT_SURV_PURIFY_WATER" : "ACT_EDU_HUMANITIES"
                             : dayIndex == 5 ? Pick("ACT_NIGHT_TALK") : "ACT_REST_NIGHT";
                         break;
                 }

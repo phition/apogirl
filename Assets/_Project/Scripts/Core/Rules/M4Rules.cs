@@ -96,7 +96,7 @@ namespace ApoGirl.Core.Rules
             {
                 Scripted = scripted,
                 Strength = threat + random.Range(0, Math.Max(0, balance.RaidStrengthVariance)),
-                Power = DerivedStats.CombatPower(state, balance)
+                Power = balance.RaidBasePower + DerivedStats.CombatPower(state, balance)
                         + (int)Math.Round(state.Base.Defense * balance.RaidDefenseWeight)
                         + guard
                         + random.Range(0, Math.Max(0, balance.RaidPowerVariance)),

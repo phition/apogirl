@@ -73,29 +73,32 @@ namespace ApoGirl.Core.Definitions
         public string OpeningEventId = "EVT_A1_OPENING";
 
         /// <summary>밤 습격 (문서 5.5): 이 주차부터, 확률 = 기본 + (위협 − 방어) × 계수, 상한.</summary>
-        public int RaidStartWeek = 3;
+        public int RaidStartWeek = 4;
         public float RaidBaseChance = 0.02f;
-        public float RaidChancePerPoint = 0.006f;
-        public float RaidMaxChance = 0.35f;
+        public float RaidChancePerPoint = 0.004f;
+        public float RaidMaxChance = 0.25f;
 
         /// <summary>습격 세기 = 위협 + 0~분산, 방어력 = 전투력 + 방어도 × 배율 + 경계 보정 + 0~분산.</summary>
         public int RaidStrengthVariance = 20;
         public int RaidPowerVariance = 20;
         public float RaidDefenseWeight = 2f;
 
+        /// <summary>거점 기본 방어력 (선생님·지형). 전투력·방어도에 더해진다.</summary>
+        public int RaidBasePower = 20;
+
         /// <summary>습격 결과.</summary>
         public int RaidRepelStress = 6;
         public int RaidRepelDefenseLoss = 1;
         public int RaidBreachStress = 18;
-        public int RaidBreachHp = 15;
-        public int RaidBreachFood = 4;
+        public int RaidBreachHp = 10;
+        public int RaidBreachFood = 3;
         public int RaidBreachDefenseLoss = 3;
         public int RaidThreatRelief = 8;
 
         /// <summary>위협도: 탐험마다(낮/밤), 매주 자연 증가, 상한.</summary>
-        public int ThreatPerDayExpedition = 3;
+        public int ThreatPerDayExpedition = 2;
         public int ThreatPerNightExpedition = 2;
-        public int ThreatWeekly = 2;
+        public int ThreatWeekly = 1;
         public int ThreatMax = 100;
         public int DefenseMax = 60;
 
