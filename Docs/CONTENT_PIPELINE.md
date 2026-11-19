@@ -73,6 +73,9 @@ SO 에셋과 문자열 테이블은 생성물이라 직접 고치지 않는다.
 - **효과 확장**: `Defense`, `Threat`, `Facilities`, `AddTraits`, `Proficiencies`, `TeacherMobility`, `RestorePower`, `RaidStrength`(이벤트에서 즉시 습격 판정).
 - **조건 확장**: `Facility`, `Defense`, `Threat`, `TeacherMobility`, `Trait`, `Expeditions`(Key Day/Night), `ActionCount`, `IsBirthday`.
 - **탐험 조우**: `LocationVariantDef.Encounters`(LocationBuilder). 고르면 플래그 `ENC_{조우}_{선택지}`와 선택지 플래그·단서가 결과로 돌아온다. 문구는 UI 키 `enc.*`.
+  - M7: `SpriteKey`로 탐험 화면 그림을 정한다(비면 웅크린 사람, 이름에 NOTE·NOTICE가 있으면 종이).
+  - M7: 헤드리스 탐험(봇·자동 탐험)도 조건이 맞는 조우를 탐험 모델의 `EncounterChance`(낮·밤 따로, 기본 0.5)로 만난다.
+- **수혈 (M7, D16)**: 선생님은 B형. 조건 값 `BloodCompatible`(Key = 받는 사람 혈액형)은 주인공이 수혈할 수 있으면 1, 혈액형을 모르면 0. `Flag`(Key = 플래그)는 플래그가 켜져 있으면 1이라 `AnyChecks`에서 "수치 또는 플래그"를 표현할 때 쓴다.
 - **일기·선생님 한마디**: `Lines`(Kind Diary/TeacherComment), 조건이 맞는 것 중 Priority가 가장 높은 것.
 - **프롤로그**: Yarn `PROLOGUE_START`(선택지 태그 `#choice:문항.선택지`, 입력 `<<input name|contact|birthday|personality>>`) → 생활기록부 카드 → `PROLOGUE_AFTER`.
 
