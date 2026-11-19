@@ -822,7 +822,13 @@ namespace ApoGirl.Exploration.Runtime
                 var crowd = spawn.Dormant ? _threat.AddCrowd(areaId, spawn.X) : null;
                 for (var i = 0; i < spawn.Count; i++)
                 {
-                    var x = spawn.X + (float)(spread.NextDouble() * 2 - 1) * spawn.Spread;
+                    // 무리 안에서 고르게 벌려 세우고 약간만 흔든다 (한 덩어리로 겹쳐 보이지 않게)
+                    var slot = spawn.Count > 1 ? 2f * spawn.Spread / spawn.Count : 0f;
+                    var x = spawn.X - spawn.Spread + slot * (i + 0.5f) + (float)(spread.NextDouble() * 2 - 1) * slot * 0.2f;
+                    if (spawn.Count <= 1)
+                    {
+                        x = spawn.X;
+                    }
                     var zombie = _threat.AddZombie(enemy, areaId, x, crowd);
                     var body = BuildingView.Rect(_world, "Zombie_" + zombie.Id, Vector2.zero, Vector2.one, new Color(0.42f, 0.5f, 0.4f), 6);
                     var marker = BuildingView.Rect(_world, "Awareness_" + zombie.Id, Vector2.zero, Vector2.one, Color.yellow, 12);
@@ -904,13 +910,15 @@ namespace ApoGirl.Exploration.Runtime
                 var dormant = unit.State == ZombieState.Dormant;
 
                 // 휴면도 선 채로 (고개 숙인 듯 살짝 낮게), 머리 위 Zzz는 HUD가 그린다
-                var size = dormant ? new Vector2(0.65f, 1.6f) : new Vector2(0.65f, 1.75f);
+                var size = dormant ? new Vector2(0.55f, 1.6f) : new Vector2(0.6f, 1.75f);
                 view.Body.localPosition = new Vector3(origin.x + unit.X - size.x / 2f, origin.y + 0.15f, 0f);
                 view.Body.localScale = new Vector3(size.x, size.y, 1f);
-                view.BodyRenderer.color = dormant ? new Color(0.34f, 0.4f, 0.34f)
+                var shade = 1f + (unit.Id % 3 - 1) * 0.08f;
+                var color = dormant ? new Color(0.34f, 0.4f, 0.34f)
                     : unit.State == ZombieState.Stunned ? new Color(0.35f, 0.4f, 0.55f)
                     : unit.State == ZombieState.Chase ? new Color(0.6f, 0.38f, 0.33f)
                     : new Color(0.42f, 0.5f, 0.4f);
+                view.BodyRenderer.color = new Color(color.r * shade, color.g * shade, color.b * shade);
 
                 var showMarker = !dormant && (unit.Awareness > 0.02f || unit.State == ZombieState.Chase);
                 view.Marker.gameObject.SetActive(showMarker);
