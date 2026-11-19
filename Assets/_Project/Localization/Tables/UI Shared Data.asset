@@ -2931,6 +2931,10 @@ MonoBehaviour:
     m_Key: bonus.SUPPLIES.desc
     m_Metadata:
       m_Items: []
+  - m_Id: 190216773320704
+    m_Key: debug.restore_vitals
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
