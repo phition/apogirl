@@ -23,6 +23,8 @@ namespace ApoGirl.Exploration.Runtime
     {
         private const float PlayerWidth = 0.6f;
         private const float PlayerHeight = 1.7f;
+        private const float MinOrthographicSize = 3.4f;
+        private const float MinVisibleWidth = 16f;
 
         [Tooltip("허브 없이 단독 실행할 때 쓸 정의 DB")]
         [SerializeField] private DefinitionDatabaseAsset _fallbackDatabase;
@@ -467,6 +469,8 @@ namespace ApoGirl.Exploration.Runtime
                 _player.localPosition += new Vector3(PlayerWidth, 0f, 0f);
             }
 
+            // 화면 비율과 관계없이 가로 최소 MinVisibleWidth 유닛, 세로 한 층 이상이 보이게
+            _camera.orthographicSize = Mathf.Max(MinOrthographicSize, MinVisibleWidth / (2f * Mathf.Max(0.1f, _camera.aspect)));
             var target = new Vector3(X, floorY + _building.FloorHeight * 0.55f, -10f);
             var cameraTransform = _camera.transform;
             cameraTransform.position = Vector3.Lerp(cameraTransform.position, target, Mathf.Clamp01(dt * 6f));
