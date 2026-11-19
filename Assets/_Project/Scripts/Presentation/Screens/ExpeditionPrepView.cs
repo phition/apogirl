@@ -85,7 +85,7 @@ namespace ApoGirl.Presentation.Screens
                 options.AddRange(consumables.Select(c => c.ItemId));
                 var field = new DropdownField(options.Select(Label).ToList(), Math.Max(0, options.IndexOf(current)));
                 field.AddToClassList("prep-quick");
-                KoreanFont.ApplyDeep(field);
+                FieldStyle.Dark(field);
                 field.RegisterValueChangedCallback(_ =>
                 {
                     var chosen = options[Math.Max(0, field.index)];
@@ -115,7 +115,7 @@ namespace ApoGirl.Presentation.Screens
             row.Add(new Label(Loc.T(labelKey)));
             var field = new DropdownField(options.Select(Label).ToList(), Math.Max(0, options.IndexOf(current)));
             field.AddToClassList("prep-field");
-            KoreanFont.ApplyDeep(field);
+            FieldStyle.Dark(field);
             field.RegisterValueChangedCallback(_ =>
             {
                 set(options[Math.Max(0, field.index)]);

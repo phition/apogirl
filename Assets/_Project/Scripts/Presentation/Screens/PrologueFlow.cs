@@ -237,7 +237,7 @@ namespace ApoGirl.Presentation.Screens
                 done.TrySetResult(true);
             }));
             _input.Add(row);
-            KoreanFont.ApplyDeep(field);
+            FieldStyle.Dark(field);
             field.schedule.Execute(() => field.Focus());
         }
 
@@ -251,6 +251,8 @@ namespace ApoGirl.Presentation.Screens
             var day = new DropdownField(days, 14);
             month.AddToClassList("prologue-field");
             day.AddToClassList("prologue-field");
+            FieldStyle.Dark(month);
+            FieldStyle.Dark(day);
             row.Add(month);
             row.Add(day);
             row.Add(Confirm(() =>
