@@ -140,7 +140,7 @@ Button.selected { border-color: var(--accent); background-color: var(--accent-so
 .action-gains { color: var(--ok); font-size: 15px; }
 
 /* ── 하단 플래너 ── */
-.bottom { flex-direction: row; height: 250px; margin-top: 8px; }
+.bottom { flex-direction: row; height: 280px; margin-top: 8px; }
 .planner { flex-grow: 1; margin-right: 8px; }
 .plan-side { width: 420px; }
 
@@ -171,7 +171,7 @@ Button.selected { border-color: var(--accent); background-color: var(--accent-so
 .slot:disabled { opacity: 1; }
 .slot.done:disabled { opacity: 0.4; }
 
-.warnings { flex-grow: 1; }
+.warnings { flex-grow: 1; min-height: 64px; }
 .warning { color: var(--warn); font-size: 15px; }
 .warning-none { color: var(--text-dim); font-size: 15px; }
 .forecast { margin: 4px 0; }
