@@ -194,6 +194,9 @@ namespace ApoGirl.Core.Definitions
 
         public string PromptKey = "";
         public List<EncounterChoiceDef> Choices = new List<EncounterChoiceDef>();
+
+        /// <summary>M7: 탐험 화면에 그릴 스프라이트 키 (비면 이름으로 추정: 쪽지·공문 = 종이, 그 밖 = 웅크린 사람).</summary>
+        public string SpriteKey = "";
     }
 
     [Serializable]

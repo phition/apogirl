@@ -74,6 +74,14 @@ namespace ApoGirl.Core.Definitions
 
         /// <summary>이 역할을 맡은 동료 수 (Key = 역할 ID).</summary>
         RoleCount,
+
+        // ── M7 ──
+
+        /// <summary>플래그 Key가 켜져 있으면 1 (AnyChecks로 "플래그 또는 수치" 조건을 만들 때).</summary>
+        Flag,
+
+        /// <summary>주인공이 혈액형 Key(받는 사람)에게 수혈할 수 있으면 1. 주인공 혈액형을 모르면 0 (D16).</summary>
+        BloodCompatible,
     }
 
     public enum CompareOp

@@ -813,6 +813,20 @@ namespace ApoGirl.EditorTools
                 },
             };
 
+            // M7: 수혈 (D16). 선생님과 혈액형이 맞지 않으면 밤에만 나타난다.
+            var bloodFridge = new EncounterDef
+            {
+                Id = "BLOOD_FRIDGE", Floor = 1, RoomId = "ROOM_PH_CLINIC_1", X = 2.6f, SpriteKey = "prop_fridge",
+                FlagsAll = { "NEED_BLOOD_PACK" },
+                FlagsNone = { "BLOOD_PACK", "TEACHER_CURED" },
+                PromptKey = "enc.BLOOD_FRIDGE.prompt",
+                Choices =
+                {
+                    new EncounterChoiceDef { Id = "TAKE", TextKey = "enc.BLOOD_FRIDGE.take", SetFlags = { "BLOOD_PACK" } },
+                    new EncounterChoiceDef { Id = "LEAVE", TextKey = "enc.BLOOD_FRIDGE.leave", Removes = false },
+                },
+            };
+
             return new LocationDef
             {
                 Layout = layout, DayRunSeconds = 420f, NightRunSeconds = 390f, DefaultLootTableId = "LOOT_PHARMACY_SHELF",
@@ -839,7 +853,7 @@ namespace ApoGirl.EditorTools
                         Walk("ENEMY_WATCHER", 0, "", 44f, 1, 0f),
                     },
                     ForceableRooms = { "ROOM_PH_DISPENSARY_1" },
-                    Encounters = { doctorNote },
+                    Encounters = { doctorNote, bloodFridge },
                 },
             };
         }

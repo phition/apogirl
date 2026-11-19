@@ -680,7 +680,7 @@ namespace ApoGirl.Exploration.Runtime
             _runFlags.AddRange(choice.SetFlags);
             _runClues.AddRange(choice.AddClues);
             _runStress = Math.Max(0, _runStress + (int)choice.StressDelta);
-            _runFlags.Add("ENC_" + target.Encounter.Id + "_" + choice.Id);
+            _runFlags.Add(EncounterRules.ChoiceFlag(target.Encounter, choice));
             OpenEncounter = null;
             if (choice.Removes)
             {
@@ -1145,20 +1145,13 @@ namespace ApoGirl.Exploration.Runtime
         /// <summary>이번 시간대 변형에서 출정 플래그 조건이 맞는 조우.</summary>
         private IEnumerable<EncounterDef> ActiveEncounters()
         {
-            var variant = Request.TimeOfDay == ExpeditionTime.Day ? Location.DayVariant : Location.NightVariant;
-            var flags = Request.Flags ?? new HashSet<string>();
-            foreach (var encounter in variant.Encounters)
-            {
-                if (encounter.FlagsAll.All(flags.Contains) && !encounter.FlagsNone.Any(flags.Contains))
-                {
-                    yield return encounter;
-                }
-            }
+            return EncounterRules.Active(Location, Request.TimeOfDay, Request.Flags);
         }
 
         private void CreateEncounter(ExplorationArea area, EncounterDef encounter)
         {
-            var key = encounter.Id.Contains("NOTE") || encounter.Id.Contains("NOTICE") ? "prop_paper" : "person_student_crouch";
+            var key = !string.IsNullOrEmpty(encounter.SpriteKey) ? encounter.SpriteKey
+                : encounter.Id.Contains("NOTE") || encounter.Id.Contains("NOTICE") ? "prop_paper" : "person_student_crouch";
             var view = Prop(area, "Encounter_" + encounter.Id, key, encounter.X, new Vector2(0.6f, 1.5f), new Color(0.55f, 0.62f, 0.75f), 9);
             AddTarget(new ExplorationTarget { Kind = TargetKind.Encounter, Area = area, X = encounter.X, Encounter = encounter, View = view });
         }

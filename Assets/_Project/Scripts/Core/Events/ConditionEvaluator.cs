@@ -201,6 +201,9 @@ namespace ApoGirl.Core.Events
                     }
 
                     return roles;
+                case ValueKind.Flag: return state.Flags.Contains(key) ? 1 : 0;
+                case ValueKind.BloodCompatible:
+                    return Enum.TryParse<BloodType>(key, out var recipient) && BloodRules.CanDonate(state.Player.Profile.BloodType, recipient) ? 1 : 0;
                 default: throw new ArgumentOutOfRangeException(nameof(kind), kind, null);
             }
         }
@@ -236,6 +239,8 @@ namespace ApoGirl.Core.Events
                     return Enum.TryParse<WeatherType>(key, out _);
                 case ValueKind.Expeditions:
                     return string.IsNullOrEmpty(key) || key == "Day" || key == "Night";
+                case ValueKind.BloodCompatible:
+                    return Enum.TryParse<BloodType>(key, out var blood) && blood != BloodType.Unknown;
                 default: return !string.IsNullOrEmpty(key);
             }
         }

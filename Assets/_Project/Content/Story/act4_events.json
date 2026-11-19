@@ -158,6 +158,111 @@
       }
     },
     {
+      "Id": "EVT_A4_BLOOD_MATCH",
+      "Kind": "Night",
+      "Priority": 59,
+      "Condition": {
+        "Phase": "Night",
+        "FlagsAll": [
+          "TEACHER_REINFECTED",
+          "RESEARCH_DATA"
+        ],
+        "FlagsAny": [
+          "CURE_ROUTE",
+          "CARE_ROUTE"
+        ],
+        "FlagsNone": [
+          "TEACHER_BLOOD_KNOWN",
+          "TEACHER_CURED",
+          "BLOOD_UNKNOWN"
+        ],
+        "Checks": [
+          {
+            "Kind": "BloodCompatible",
+            "Key": "B",
+            "Op": "GreaterOrEqual",
+            "Value": 1
+          }
+        ]
+      },
+      "OnShow": {
+        "SetFlags": [
+          "TEACHER_BLOOD_KNOWN"
+        ],
+        "AddClues": [
+          "CLUE_STAFF_HEALTH_RECORD"
+        ]
+      }
+    },
+    {
+      "Id": "EVT_A4_BLOOD_MISMATCH",
+      "Kind": "Night",
+      "Priority": 59,
+      "Condition": {
+        "Phase": "Night",
+        "FlagsAll": [
+          "TEACHER_REINFECTED",
+          "RESEARCH_DATA"
+        ],
+        "FlagsAny": [
+          "CURE_ROUTE",
+          "CARE_ROUTE"
+        ],
+        "FlagsNone": [
+          "TEACHER_BLOOD_KNOWN",
+          "TEACHER_CURED",
+          "BLOOD_UNKNOWN"
+        ],
+        "Checks": [
+          {
+            "Kind": "BloodCompatible",
+            "Key": "B",
+            "Op": "Equal",
+            "Value": 0
+          }
+        ]
+      },
+      "OnShow": {
+        "SetFlags": [
+          "TEACHER_BLOOD_KNOWN",
+          "NEED_BLOOD_PACK"
+        ],
+        "AddClues": [
+          "CLUE_STAFF_HEALTH_RECORD"
+        ]
+      }
+    },
+    {
+      "Id": "EVT_A4_BLOOD_UNKNOWN",
+      "Kind": "Night",
+      "Priority": 59,
+      "Condition": {
+        "Phase": "Night",
+        "FlagsAll": [
+          "TEACHER_REINFECTED",
+          "RESEARCH_DATA",
+          "BLOOD_UNKNOWN"
+        ],
+        "FlagsAny": [
+          "CURE_ROUTE",
+          "CARE_ROUTE"
+        ],
+        "FlagsNone": [
+          "TEACHER_BLOOD_KNOWN",
+          "TEACHER_CURED"
+        ]
+      },
+      "OnShow": {
+        "SetFlags": [
+          "TEACHER_BLOOD_KNOWN",
+          "NEED_BLOOD_PACK"
+        ],
+        "AddClues": [
+          "CLUE_STAFF_HEALTH_RECORD"
+        ]
+      }
+    },
+    {
       "Id": "EVT_A4_CURE_HINT",
       "Kind": "Night",
       "Priority": 58,
@@ -207,7 +312,8 @@
         "Phase": "Night",
         "FlagsAll": [
           "TEACHER_REINFECTED",
-          "RESEARCH_DATA"
+          "RESEARCH_DATA",
+          "TEACHER_BLOOD_KNOWN"
         ],
         "FlagsAny": [
           "CURE_ROUTE",
@@ -230,11 +336,25 @@
             "Op": "GreaterOrEqual",
             "Value": 4
           }
+        ],
+        "AnyChecks": [
+          {
+            "Kind": "BloodCompatible",
+            "Key": "B",
+            "Op": "GreaterOrEqual",
+            "Value": 1
+          },
+          {
+            "Kind": "Flag",
+            "Key": "BLOOD_PACK",
+            "Op": "GreaterOrEqual",
+            "Value": 1
+          }
         ]
       },
       "Choices": [
         {
-          "Id": "TREAT",
+          "Id": "TREAT_SELF",
           "HasCheck": true,
           "Check": {
             "BaseRate": 0.3
@@ -254,6 +374,77 @@
                 "Hidden": "Humanity",
                 "Amount": 4
               }
+            ],
+            "Vitals": [
+              {
+                "Vital": "Hp",
+                "Amount": -15
+              },
+              {
+                "Vital": "Fatigue",
+                "Amount": 20
+              }
+            ]
+          },
+          "OnFailure": {
+            "SetFlags": [
+              "CURE_ATTEMPTED",
+              "CURE_FAILED"
+            ],
+            "TeacherInfection": 5,
+            "Vitals": [
+              {
+                "Vital": "Stress",
+                "Amount": 10
+              },
+              {
+                "Vital": "Hp",
+                "Amount": -15
+              },
+              {
+                "Vital": "Fatigue",
+                "Amount": 20
+              }
+            ],
+            "AddClues": [
+              "CURE_FAILED_RECORD"
+            ]
+          },
+          "Condition": {
+            "Checks": [
+              {
+                "Kind": "BloodCompatible",
+                "Key": "B",
+                "Op": "GreaterOrEqual",
+                "Value": 1
+              }
+            ]
+          }
+        },
+        {
+          "Id": "TREAT_PACK",
+          "HasCheck": true,
+          "Check": {
+            "BaseRate": 0.3
+          },
+          "Effect": {
+            "SetFlags": [
+              "CURE_ATTEMPTED",
+              "TEACHER_CURED"
+            ],
+            "TeacherInfection": -100,
+            "Hidden": [
+              {
+                "Hidden": "Hope",
+                "Amount": 10
+              },
+              {
+                "Hidden": "Humanity",
+                "Amount": 4
+              }
+            ],
+            "ClearFlags": [
+              "BLOOD_PACK"
             ]
           },
           "OnFailure": {
@@ -270,6 +461,14 @@
             ],
             "AddClues": [
               "CURE_FAILED_RECORD"
+            ],
+            "ClearFlags": [
+              "BLOOD_PACK"
+            ]
+          },
+          "Condition": {
+            "FlagsAll": [
+              "BLOOD_PACK"
             ]
           }
         },

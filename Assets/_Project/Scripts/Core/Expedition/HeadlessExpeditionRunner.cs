@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using ApoGirl.Core.Definitions;
 using ApoGirl.Core.Random;
 using ApoGirl.Core.State;
@@ -12,10 +13,12 @@ namespace ApoGirl.Core.Expedition
     public sealed class HeadlessExpeditionRunner : IExpeditionRunner
     {
         private readonly IDefinitionDatabase _db;
+        private readonly IEncounterChooser _encounterChooser;
 
-        public HeadlessExpeditionRunner(IDefinitionDatabase db)
+        public HeadlessExpeditionRunner(IDefinitionDatabase db, IEncounterChooser encounterChooser = null)
         {
             _db = db ?? throw new ArgumentNullException(nameof(db));
+            _encounterChooser = encounterChooser ?? new RandomEncounterChooser();
         }
 
         public ExpeditionResult Run(ExpeditionRequest request)
@@ -67,7 +70,29 @@ namespace ApoGirl.Core.Expedition
                 result.SleepDebtDelta = 1;
             }
 
+            // M7: 조우도 확률로 (봇 판에서도 간호사·주동자·연구 자료 갈래가 열리게). 기존 굴림 뒤에 굴려 자원 결과는 그대로다.
+            RollEncounters(request, timeYield, random, result);
             return result;
+        }
+
+        private void RollEncounters(ExpeditionRequest request, ExpeditionYield timeYield, IRandomService random, ExpeditionResult result)
+        {
+            if (timeYield.EncounterChance <= 0f || !_db.TryGetLocation(request.LocationId, out var location))
+            {
+                return;
+            }
+
+            foreach (var encounter in EncounterRules.Active(location, request.TimeOfDay, request.Flags).ToList())
+            {
+                if (encounter.Choices.Count == 0 || random.NextDouble() >= timeYield.EncounterChance)
+                {
+                    continue;
+                }
+
+                var index = _encounterChooser.Choose(encounter, request, random);
+                index = Math.Min(Math.Max(index, 0), encounter.Choices.Count - 1);
+                EncounterRules.Apply(result, encounter, encounter.Choices[index]);
+            }
         }
     }
 }

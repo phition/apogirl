@@ -23,7 +23,7 @@ namespace ApoGirl.Tests.EditMode
     /// <summary>M6-4: 4막 완치 판정·병세 정지, 52주 전체 진행과 엔딩 도달, 회차 요소.</summary>
     public sealed class M6Act4Tests
     {
-        private static InMemoryDefinitionDatabase ShippedDb()
+        internal static InMemoryDefinitionDatabase ShippedDb()
         {
             var content = ContentJson.LoadFolder(ContentPipelineTests.ProjectPath(ContentJson.ContentFolder));
             return new InMemoryDefinitionDatabase(
@@ -36,8 +36,8 @@ namespace ApoGirl.Tests.EditMode
                 });
         }
 
-        /// <summary>완치 시도 조건을 모두 갖춘 상태 (50주 밤, 치료 단서 6, 의학 Lv4, 연구 자료, 치료의 길).</summary>
-        private static GameState CureReady(IDefinitionDatabase db, int seed)
+        /// <summary>완치 시도 조건을 모두 갖춘 상태 (50주 밤, 치료 단서 6, 의학 Lv4, 연구 자료, 치료의 길, 선생님 혈액형 확인 + O형 주인공).</summary>
+        internal static GameState CureReady(IDefinitionDatabase db, int seed)
         {
             var state = NewGameFactory.Create(db.Balance, seed);
             state.Calendar.Week = 48;
@@ -45,6 +45,8 @@ namespace ApoGirl.Tests.EditMode
             InfectionRules.ChangeTeacherInfection(state, 50, db.Balance);
             state.Flags.Add("RESEARCH_DATA");
             state.Flags.Add("CURE_ROUTE");
+            state.Flags.Add("TEACHER_BLOOD_KNOWN"); // M7: 수혈 (D16). O형은 B형 선생님께 직접 수혈 가능
+            state.Player.Profile.BloodType = BloodType.O;
             state.Player.Proficiency[ProficiencyType.Medicine] = new ProficiencyState { Level = 4 };
             for (var i = 0; i < 6; i++) state.Clues.Add("CURE_TEST_" + i);
             return state;
@@ -67,7 +69,7 @@ namespace ApoGirl.Tests.EditMode
             {
                 var state = CureReady(db, seed);
                 Assert.IsTrue(ConditionEvaluator.IsMet(state, ev.Condition, night, db.Balance), "조건을 갖추면 시도 가능");
-                EventResolver.Choose(state, ev, "TREAT", night, db.Balance, new SeededRandom(SeededRandom.CreateState(seed * 7919)), new StateDelta());
+                EventResolver.Choose(state, ev, "TREAT_SELF", night, db.Balance, new SeededRandom(SeededRandom.CreateState(seed * 7919)), new StateDelta());
                 Assert.IsTrue(state.Flags.Contains("CURE_ATTEMPTED"), "성공·실패 모두 시도 기록");
                 if (state.Flags.Contains(InfectionRules.FlagTeacherCured)) cured++;
             }

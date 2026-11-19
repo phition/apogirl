@@ -21,6 +21,9 @@ namespace ApoGirl.Core.Definitions
 
         public int HpLossOnDown = 30;
         public int StressOnDown = 30;
+
+        /// <summary>M7: 무사히 돌아온 헤드리스 탐험에서 조건이 맞는 조우 하나를 만날 확률 (조우마다 따로 굴린다).</summary>
+        public float EncounterChance = 0.5f;
     }
 
     /// <summary>
