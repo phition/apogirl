@@ -87,13 +87,13 @@
         "Resources": [
           {
             "Resource": "Food",
-            "Min": 4,
-            "Max": 8
+            "Min": 6,
+            "Max": 10
           },
           {
             "Resource": "Water",
-            "Min": 2,
-            "Max": 5
+            "Min": 4,
+            "Max": 7
           },
           {
             "Resource": "Materials",
@@ -143,8 +143,13 @@
           },
           {
             "Resource": "Food",
-            "Min": 2,
-            "Max": 5
+            "Min": 3,
+            "Max": 6
+          },
+          {
+            "Resource": "Water",
+            "Min": 1,
+            "Max": 3
           }
         ],
         "BaseDownChance": 0.09,

@@ -220,7 +220,7 @@ namespace ApoGirl.Core.Definitions
         public WeatherOdds[] WeatherBySeason =
         {
             new WeatherOdds(Season.Spring, 6, 3, 0, 1),
-            new WeatherOdds(Season.Summer, 4, 4, 3, 0),
+            new WeatherOdds(Season.Summer, 5, 4, 2, 0),
             new WeatherOdds(Season.Autumn, 6, 3, 0, 1),
             new WeatherOdds(Season.Winter, 4, 1, 0, 5),
         };
