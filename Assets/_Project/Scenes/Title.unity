@@ -320,7 +320,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d8ea009f05d2a041b177f081ce6b4ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: ApoGirl.Presentation::ApoGirl.Presentation.Screens.TitleScreen
-  _fallbackDatabase: {fileID: 0}
+  _fallbackDatabase: {fileID: 11400000, guid: a4c14e417cb539c4591647f108e6dca6, type: 2}
 --- !u!114 &1999818652
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -333,7 +333,7 @@ MonoBehaviour:
   m_Script: {fileID: 19102, guid: 0000000000000000e000000000000000, type: 0}
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.dll::UnityEngine.UIElements.UIDocument
-  m_PanelSettings: {fileID: 0}
+  m_PanelSettings: {fileID: 11400000, guid: ae29f09802dec484db6e9a163cc44af6, type: 2}
   m_ParentUI: {fileID: 0}
   sourceAsset: {fileID: 9197481963319205126, guid: 99b0741121ff70b47b05d7a01458e6ad, type: 3}
   m_SortingOrder: 0

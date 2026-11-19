@@ -148,7 +148,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 353ba6bcb3853504a93c27a4a3dad720, type: 3}
   m_Name: 
   m_EditorClassIdentifier: ApoGirl.Presentation::ApoGirl.Presentation.App.Bootstrap
-  _database: {fileID: 0}
+  _database: {fileID: 11400000, guid: a4c14e417cb539c4591647f108e6dca6, type: 2}
 --- !u!4 &728818767
 Transform:
   m_ObjectHideFlags: 0
