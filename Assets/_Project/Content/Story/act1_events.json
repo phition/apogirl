@@ -4,7 +4,8 @@
       "OnShow": { "Facilities": [ { "FacilityId": "STORAGE", "Level": 1 } ], "SetFlags": [ "UI_BASIC" ], "Npcs": [ { "NpcId": "NPC_TEACHER", "Affinity": 5 } ] } },
 
     { "Id": "EVT_A1_TUTORIAL_DONE", "Kind": "Story", "Priority": 95, "Condition": { "ActionIds": [ "ACT_EXP_TUTORIAL" ] },
-      "OnShow": { "SetFlags": [ "LOC_SCHOOL_DAY", "UI_STATS" ], "Items": [ { "ItemId": "ITEM_TOOL_FLASHLIGHT", "Count": 1 }, { "ItemId": "ITEM_WEAPON_MOP", "Count": 1 } ] } },
+      "OnShow": { "SetFlags": [ "LOC_SCHOOL_DAY", "UI_STATS" ], "Items": [ { "ItemId": "ITEM_TOOL_FLASHLIGHT", "Count": 1 }, { "ItemId": "ITEM_WEAPON_MOP", "Count": 1 } ],
+        "Resources": [ { "Resource": "Food", "Amount": 10 }, { "Resource": "Water", "Amount": 6 } ] } },
 
     { "Id": "EVT_A1_FIRST_LESSON", "Kind": "Story", "Priority": 60, "Condition": { "WeekMax": 3, "ActionCategories": [ "Education" ] },
       "OnShow": { "SetFlags": [ "UI_PROFICIENCY" ] },

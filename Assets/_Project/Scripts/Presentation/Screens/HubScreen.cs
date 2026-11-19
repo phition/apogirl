@@ -103,6 +103,19 @@ namespace ApoGirl.Presentation.Screens
             }
         }
 
+        /// <summary>
+        /// Unity 6.6은 UIDocument 옆에 PanelRenderer를 붙여 같은 UXML 사본을 따로 그린다.
+        /// 탐험 중 허브를 숨길 때 그 사본도 함께 꺼야 탐험 화면이 가려지지 않는다.
+        /// </summary>
+        private void SetPanelRendererEnabled(bool enabled)
+        {
+            var renderer = GetComponent<PanelRenderer>();
+            if (renderer != null)
+            {
+                renderer.enabled = enabled;
+            }
+        }
+
         /// <summary>새 게임 직후: 1막 시작 이벤트 (선생님과의 만남).</summary>
         private IEnumerator OpeningRoutine()
         {
@@ -248,8 +261,10 @@ namespace ApoGirl.Presentation.Screens
 
                     ExpeditionResult expeditionResult = null;
                     _root.style.display = DisplayStyle.None;
+                    SetPanelRendererEnabled(false);
                     yield return GameApp.RunExpedition(outcome.ExpeditionRequest, result => expeditionResult = result);
                     _root.style.display = DisplayStyle.Flex;
+                    SetPanelRendererEnabled(true);
                     outcome = _session.CompleteExpedition(expeditionResult);
                 }
 

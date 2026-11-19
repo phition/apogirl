@@ -237,6 +237,7 @@ namespace ApoGirl.Presentation.Screens
                 done.TrySetResult(true);
             }));
             _input.Add(row);
+            KoreanFont.ApplyDeep(field);
             field.schedule.Execute(() => field.Focus());
         }
 

@@ -45,8 +45,33 @@ namespace ApoGirl.Presentation.Text
 
             if (_font != null)
             {
-                root.style.unityFontDefinition = FontDefinition.FromSDFFont(_font);
+                var definition = FontDefinition.FromSDFFont(_font);
+                root.style.unityFontDefinition = definition;
+
+                // 드롭다운 목록 등은 패널 최상위에 붙으므로 패널 전체에도 적용한다
+                if (root.panel?.visualTree != null)
+                {
+                    root.panel.visualTree.style.unityFontDefinition = definition;
+                }
+                else
+                {
+                    root.RegisterCallback<AttachToPanelEvent>(e => ((VisualElement)e.target).panel.visualTree.style.unityFontDefinition = definition);
+                }
             }
+        }
+
+        /// <summary>입력 칸처럼 테마가 글꼴을 따로 지정하는 요소: 안쪽 글자 요소까지 직접 적용한다.</summary>
+        public static void ApplyDeep(VisualElement element)
+        {
+            Apply(element);
+            if (_font == null)
+            {
+                return;
+            }
+
+            var definition = FontDefinition.FromSDFFont(_font);
+            element.Query<TextElement>().ForEach(t => t.style.unityFontDefinition = definition);
+            element.Query(className: "unity-text-element").ForEach(t => t.style.unityFontDefinition = definition);
         }
     }
 }

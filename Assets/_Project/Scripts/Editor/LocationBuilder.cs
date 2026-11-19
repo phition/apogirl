@@ -102,7 +102,8 @@ namespace ApoGirl.EditorTools
             layout.Containers.Add(C("C_TUT_LOCKER_A", ContainerKind.Locker, 0, 26f, "LOOT_TUTORIAL"));
             layout.Containers.Add(C("C_TUT_LOCKER_B", ContainerKind.Locker, 0, 34f, "LOOT_TUTORIAL"));
             layout.Containers.Add(C("C_TUT_DESK", ContainerKind.Desk, 0, 40f, "LOOT_TUTORIAL"));
-            layout.Exits.Add(new ExitDef { Kind = ExitKind.Main, Floor = 0, X = 2f });
+            // 출발점(체육관 창고 쪽 문)은 잠겨 있고, 복도 끝 본관 창고 문으로만 끝낼 수 있다
+            layout.Exits.Add(new ExitDef { Kind = ExitKind.Main, Floor = 0, X = 2f, StartsLocked = true });
             layout.Exits.Add(new ExitDef { Kind = ExitKind.Alternate, Floor = 0, X = 44f });
 
             return new LocationDef
