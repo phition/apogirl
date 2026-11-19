@@ -144,13 +144,13 @@ namespace ApoGirl.Core.Effects
             if (effect.TeacherReinfect && !state.Teacher.Reinfected)
             {
                 state.Teacher.Reinfected = true;
-                state.Flags.Add(InfectionRules.FlagTeacherReinfected);
-                delta.FlagsSet.Add(InfectionRules.FlagTeacherReinfected);
+                state.Flags.Add(ApoGirl.Core.Rules.InfectionRules.FlagTeacherReinfected);
+                delta.FlagsSet.Add(ApoGirl.Core.Rules.InfectionRules.FlagTeacherReinfected);
             }
 
             if (effect.TeacherInfection != 0)
             {
-                InfectionRules.ChangeTeacherInfection(state, effect.TeacherInfection, balance);
+                ApoGirl.Core.Rules.InfectionRules.ChangeTeacherInfection(state, effect.TeacherInfection, balance);
             }
         }
 
