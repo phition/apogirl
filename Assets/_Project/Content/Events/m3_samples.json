@@ -106,8 +106,8 @@
       "Kind": "Story",
       "Priority": 20,
       "Condition": {
-        "WeekMin": 2,
-        "WeekMax": 8,
+        "WeekMin": 14,
+        "WeekMax": 20,
         "ActionCategories": [ "Expedition" ],
         "NpcStatuses": [ { "NpcId": "NPC_SURVIVOR_A", "Status": "Unknown" } ]
       },

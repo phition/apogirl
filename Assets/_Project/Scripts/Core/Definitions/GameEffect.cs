@@ -45,5 +45,36 @@ namespace ApoGirl.Core.Definitions
 
         /// <summary>0보다 크면 이 세기의 밤 습격을 즉시 판정한다 (이벤트 효과 전용).</summary>
         public int RaidStrength;
+
+        /// <summary>다른 효과를 이 효과에 더한다 (목록은 이어 붙이고, 수치는 더하고, 단계·세기는 큰 쪽).</summary>
+        public GameEffect MergeFrom(GameEffect other)
+        {
+            if (other == null)
+            {
+                return this;
+            }
+
+            Stats.AddRange(other.Stats);
+            Vitals.AddRange(other.Vitals);
+            Resources.AddRange(other.Resources);
+            Hidden.AddRange(other.Hidden);
+            SleepDebt += other.SleepDebt;
+            Conscience += other.Conscience;
+            SetFlags.AddRange(other.SetFlags);
+            ClearFlags.AddRange(other.ClearFlags);
+            AddClues.AddRange(other.AddClues);
+            EndingTags.AddRange(other.EndingTags);
+            Npcs.AddRange(other.Npcs);
+            Items.AddRange(other.Items);
+            Defense += other.Defense;
+            Threat += other.Threat;
+            Facilities.AddRange(other.Facilities);
+            AddTraits.AddRange(other.AddTraits);
+            Proficiencies.AddRange(other.Proficiencies);
+            TeacherMobility = Math.Max(TeacherMobility, other.TeacherMobility);
+            RestorePower |= other.RestorePower;
+            RaidStrength = Math.Max(RaidStrength, other.RaidStrength);
+            return this;
+        }
     }
 }

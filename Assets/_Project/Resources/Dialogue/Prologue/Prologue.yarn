@@ -1,0 +1,164 @@
+title: PROLOGUE_START
+tags: prologue
+---
+3월 둘째 주, 월요일 아침.
+교복 재킷이 아직 몸에 덜 맞는다. 고등학교에 들어온 지 겨우 일주일.
+주머니 속 휴대폰이 짧게 울렸다.
+<<input contact>>
+뒤에서 누군가 달려오는 발소리가 들린다.
+<<input name>>
+{friend()}: 야, {josa(given(), "아/야")}! 같이 가!
+{friend()}: 헉… 헉… 너 왜 이렇게 빨리 걸어. 버스 놓친 줄 알았잖아.
+<<jump PROLOGUE_BIRTHDAY>>
+===
+
+title: PROLOGUE_BIRTHDAY
+---
+{friend()}: 아 맞다, 반 단톡방에 생일 목록 만든대. 너 생일 언제였지? 나 또 까먹었어.
+<<input birthday>>
+{friend()}: 오케이, 저장 완료. 이번엔 진짜 안 까먹는다.
+<<jump PROLOGUE_PERSONALITY>>
+===
+
+title: PROLOGUE_PERSONALITY
+---
+{friend()}: 근데 너 그 검사 해 봤어? 네 글자 나오는 거. I야, E야?
+-> 알아. 내 네 글자는… #choice:PERSONALITY.KNOW
+    <<input personality>>
+    {friend()}: 오, 역시. 딱 너 같다.
+-> 몰라. 해 본 적 없어. #choice:PERSONALITY.QUIZ
+    {friend()}: 그럼 내가 즉석으로 해 줄게. 대충 맞아, 진짜로.
+    <<jump PROLOGUE_QUIZ_1>>
+<<jump PROLOGUE_BLOOD>>
+===
+
+title: PROLOGUE_QUIZ_1
+---
+{friend()}: 1번. 주말에 약속이 갑자기 취소됐어. 너는?
+-> 다른 사람한테 연락해서 나간다 #choice:PERSONALITY.E
+-> 오히려 좋아. 집에서 쉰다 #choice:PERSONALITY.I
+<<jump PROLOGUE_QUIZ_2>>
+===
+
+title: PROLOGUE_QUIZ_2
+---
+{friend()}: 2번. '사과' 하면 떠오르는 거.
+-> 빨갛고 아삭한 과일 #choice:PERSONALITY.S
+-> 백설공주, 뉴턴, 미안하다는 말… #choice:PERSONALITY.N
+<<jump PROLOGUE_QUIZ_3>>
+===
+
+title: PROLOGUE_QUIZ_3
+---
+{friend()}: 3번. 친구가 시험 망쳤다고 울어. 첫마디는?
+-> "몇 점인데? 어디서 틀렸어?" #choice:PERSONALITY.T
+-> "많이 속상했겠다…" #choice:PERSONALITY.F
+<<jump PROLOGUE_QUIZ_4>>
+===
+
+title: PROLOGUE_QUIZ_4
+---
+{friend()}: 마지막. 여행 가면 계획표 짜?
+-> 시간 단위로 짠다 #choice:PERSONALITY.J
+-> 가서 정한다 #choice:PERSONALITY.P
+{friend()}: 결과 나왔다. 음… 내가 생각한 너랑 거의 같네.
+<<jump PROLOGUE_BLOOD>>
+===
+
+title: PROLOGUE_BLOOD
+---
+{friend()}가 휴대폰 화면을 내밀었다. 운세 앱이다.
+{friend()}: 야, 오늘 A형 운세 최악이래. ㅋㅋ 너 무슨 형이었지?
+-> A형 #choice:BLOOD.A
+    {friend()}: 헐. 오늘 조심해라 진짜.
+-> B형 #choice:BLOOD.B
+    {friend()}: B형은 '예상치 못한 만남'이래. 뭐야 그게.
+-> O형 #choice:BLOOD.O
+    {friend()}: O형은 '체력 관리'. 너한테 딱이다.
+-> AB형 #choice:BLOOD.AB
+    {friend()}: AB형은 '중요한 결정을 미루지 말 것'. 오, 의미심장.
+-> 몰라. 검사해 본 적 없어 #choice:BLOOD.UNKNOWN
+    {friend()}: 그런 사람이 제일 운 좋대. 방금 내가 지어냈어.
+<<jump PROLOGUE_GRADE>>
+===
+
+title: PROLOGUE_GRADE
+---
+{friend()}: 근데 배치고사 결과 나왔잖아. 너 몇 등 했어?
+-> 생각보다 잘 나왔어 #choice:GRADE.TOP
+    {friend()}: 역시… 공부하는 애는 다르네.
+-> 딱 중간 #choice:GRADE.MIDDLE
+    {friend()}: 중간이 제일 편해. 기대도 없고 걱정도 없고.
+-> 말하고 싶지 않아… #choice:GRADE.LOW
+    {friend()}: 괜찮아. 대신 너 체육은 잘하잖아.
+-> 아직 확인 안 했어 #choice:GRADE.UNKNOWN
+    {friend()}: 대단하다, 그 배짱.
+{friend()}: 그럼 제일 자신 있는 과목은?
+-> 국어 #choice:SUBJECT.KOREAN
+-> 수학·과학 #choice:SUBJECT.MATH_SCI
+-> 체육 #choice:SUBJECT.PE
+-> 기술·가정 #choice:SUBJECT.TECH_HOME
+-> 생명과학 #choice:SUBJECT.BIO
+-> 딱히 없어 #choice:SUBJECT.NONE
+<<jump PROLOGUE_CLUB>>
+===
+
+title: PROLOGUE_CLUB
+---
+{friend()}: 아 맞다, 오늘 동아리 신청 마감이잖아. 너 어디 넣었어?
+-> 육상부 #choice:CLUB.TRACK
+-> 요리부 #choice:CLUB.COOKING
+-> 과학탐구부 #choice:CLUB.SCIENCE
+-> 도서부 #choice:CLUB.LIBRARY
+-> 미술부 #choice:CLUB.ART
+-> 방송부 #choice:CLUB.BROADCAST
+-> 보건반 #choice:CLUB.HEALTH
+-> 귀가부 #choice:CLUB.HOME
+    {friend()}: 집에 빨리 가는 것도 재능이야. 인정.
+<<jump PROLOGUE_MIND>>
+===
+
+title: PROLOGUE_MIND
+---
+교문 앞 횡단보도. 맞은편에서 낯익은 무리가 걸어온다.
+같은 중학교에서 올라온 애들. 웃음소리가 이쪽까지 들린다.
+{friend()}의 표정이 굳었다.
+{friend()}: …쟤네 또 그래?
+-> "괜찮아." 하고 웃어넘긴다 #choice:MIND.LAUGH
+    괜찮다고 말하는 건 생각보다 쉬웠다. 늘 그랬으니까.
+-> 고개를 숙이고 걸음을 재촉한다 #choice:MIND.HURRY
+    신호가 바뀌자마자 먼저 건넜다. 뒤를 돌아보지 않았다.
+-> 처음으로 {friend()}에게 털어놓는다 #choice:MIND.TELL
+    짧게, 아주 조금만 말했다. {friend()}는 한참 아무 말도 하지 않았다.
+    {friend()}: …왜 이제 말해. 바보야.
+-> 그 무리를 똑바로 마주 본다 #choice:MIND.FACE
+    웃음소리가 잠깐 멈췄다. 심장이 귀에서 뛰는 것 같았다.
+<<jump PROLOGUE_PROMISE>>
+===
+
+title: PROLOGUE_PROMISE
+---
+멀리서 구급차 사이렌이 길게 울렸다. 오늘 아침에만 벌써 세 번째다.
+{friend()}: 요즘 열병 돈대. 옆 반 애도 결석했다던데.
+{friend()}: 아무튼! 방과 후에 떡볶이 콜?
+-> 콜. 수업 끝나고 교문 앞에서 #choice:PROMISE.YES
+    {friend()}: 약속했다? 도망가면 죽는다.
+-> 오늘은 좀… 다음에 가자 #choice:PROMISE.LATER
+    {friend()}: 치. 그럼 내일은 무조건이야.
+종이 울렸다. {friend()}가 다른 반 쪽으로 손을 흔들며 뛰어갔다.
+그게, 그날 본 {friend()}의 마지막 모습이었다.
+===
+
+title: PROLOGUE_AFTER
+tags: prologue
+---
+수업은 이상하게 길었다. 빈자리가 몇 개 더 늘었다.
+방과 후, 체육부장 심부름으로 체육관 창고에 공을 갖다 놓으러 갔다.
+등 뒤에서 문이 닫히는 소리. 그리고 바깥에서 무언가 걸리는 소리.
+"야, 열어 줘." 대답 대신 멀어지는 웃음소리.
+…
+그리고 학교가 조용해졌다.
+…
+7일째 되는 날, 철문이 덜컹거렸다.
+문틈으로 들어온 빛 속에, 벽을 짚고 몸을 끌다시피 한 누군가의 실루엣이 보였다.
+===

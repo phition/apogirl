@@ -54,6 +54,9 @@ namespace ApoGirl.Presentation.Dialogue
         private readonly Yarn.Dialogue _dialogue;
         private readonly LineParser _parser = new LineParser();
         private IReadOnlyList<EventChoiceView> _eventChoices = Array.Empty<EventChoiceView>();
+
+        /// <summary>Yarn 명령 처리 (예: 프롤로그의 &lt;&lt;input name&gt;&gt;). null이면 경고만 남긴다.</summary>
+        public Func<Command, CancellationToken, Task> CommandHandler { get; set; }
         private Action<string> _onChoice;
 
         public EventDialoguePlayer(YarnProject project, IDialogueView view)
@@ -83,7 +86,7 @@ namespace ApoGirl.Presentation.Dialogue
         /// <summary>노드를 끝까지 실행한다. eventChoices: 지금 이벤트의 선택지 (숨김 제외).</summary>
         public async Task Run(string node, IReadOnlyList<EventChoiceView> eventChoices, Action<string> onChoice, CancellationToken token)
         {
-            _eventChoices = eventChoices ?? Array.Empty<EventChoiceView>();
+            _eventChoices = eventChoices; // null = 데이터 선택지와 대조하지 않음 (프롤로그)
             _onChoice = onChoice;
             _view.Open();
             try
@@ -112,7 +115,7 @@ namespace ApoGirl.Presentation.Dialogue
             {
                 var choiceId = ChoiceTag(option.Line.ID);
                 var choice = new DialogueChoice { OptionId = option.ID, Text = Localize(option.Line).Text, Enabled = option.IsAvailable, ChoiceId = choiceId ?? "" };
-                if (choiceId != null)
+                if (choiceId != null && _eventChoices != null)
                 {
                     var data = _eventChoices.FirstOrDefault(c => c.Id == choiceId);
                     if (data == null)
@@ -146,10 +149,15 @@ namespace ApoGirl.Presentation.Dialogue
             return selected;
         }
 
-        public ValueTask HandleCommand(Command command, CancellationToken token)
+        public async ValueTask HandleCommand(Command command, CancellationToken token)
         {
+            if (CommandHandler != null)
+            {
+                await CommandHandler(command, token);
+                return;
+            }
+
             Debug.LogWarning("[Yarn] 처리하지 않는 명령: " + command.Text);
-            return default;
         }
 
         public ValueTask HandleNodeStart(string node, CancellationToken token) => default;

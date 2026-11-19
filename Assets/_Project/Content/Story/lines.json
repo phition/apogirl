@@ -1,0 +1,34 @@
+{
+  "Lines": [
+    { "Id": "DIARY_DEFAULT", "Kind": "Diary", "Priority": 0, "TextKey": "diary.default" },
+    { "Id": "DIARY_W1", "Kind": "Diary", "Priority": 50, "TextKey": "diary.w1", "Condition": { "WeekMax": 1 } },
+    { "Id": "DIARY_W2", "Kind": "Diary", "Priority": 40, "TextKey": "diary.w2", "Condition": { "WeekMin": 2, "WeekMax": 2 } },
+    { "Id": "DIARY_TIRED", "Kind": "Diary", "Priority": 20, "TextKey": "diary.tired", "Condition": { "Checks": [ { "Kind": "Vital", "Key": "Fatigue", "Op": "GreaterOrEqual", "Value": 60 } ] } },
+    { "Id": "DIARY_STRESS", "Kind": "Diary", "Priority": 22, "TextKey": "diary.stress", "Condition": { "Checks": [ { "Kind": "Vital", "Key": "Stress", "Op": "GreaterOrEqual", "Value": 60 } ] } },
+    { "Id": "DIARY_HUNGRY", "Kind": "Diary", "Priority": 25, "TextKey": "diary.hungry", "Condition": { "AnyChecks": [ { "Kind": "Resource", "Key": "Food", "Op": "LessOrEqual", "Value": 3 }, { "Kind": "Resource", "Key": "Water", "Op": "LessOrEqual", "Value": 3 } ] } },
+    { "Id": "DIARY_DEBT", "Kind": "Diary", "Priority": 23, "TextKey": "diary.debt", "Condition": { "Checks": [ { "Kind": "SleepDebt", "Op": "GreaterOrEqual", "Value": 3 } ] } },
+    { "Id": "DIARY_CRUTCH", "Kind": "Diary", "Priority": 30, "TextKey": "diary.crutch", "Condition": { "FlagsAll": [ "CRUTCH_DONE" ], "FlagsNone": [ "POWER_PLAN" ] } },
+    { "Id": "DIARY_DOHYEON", "Kind": "Diary", "Priority": 31, "TextKey": "diary.dohyeon", "Condition": { "NpcStatuses": [ { "NpcId": "NPC_DOHYEON", "Status": "Joined" } ], "FlagsNone": [ "UI_DEFENSE" ] } },
+    { "Id": "DIARY_MESSAGES", "Kind": "Diary", "Priority": 35, "TextKey": "diary.messages", "Condition": { "FlagsAll": [ "READ_MESSAGES" ], "FlagsNone": [ "NOTICE_HINT" ] } },
+    { "Id": "DIARY_RAID", "Kind": "Diary", "Priority": 33, "TextKey": "diary.raid", "Condition": { "FlagsAll": [ "LAST_RAID_REPELLED" ], "FlagsNone": [ "ACT1_FINALE" ] } },
+    { "Id": "DIARY_BREACH", "Kind": "Diary", "Priority": 34, "TextKey": "diary.breach", "Condition": { "FlagsAll": [ "LAST_RAID_BREACHED" ], "FlagsNone": [ "ACT1_FINALE" ] } },
+    { "Id": "DIARY_SPRING", "Kind": "Diary", "Priority": 5, "TextKey": "diary.spring", "Condition": { "WeekMin": 5, "WeekMax": 9 } },
+    { "Id": "DIARY_EARLY_SUMMER", "Kind": "Diary", "Priority": 5, "TextKey": "diary.early_summer", "Condition": { "WeekMin": 10, "WeekMax": 12 } },
+    { "Id": "DIARY_HOPEFUL", "Kind": "Diary", "Priority": 15, "TextKey": "diary.hopeful", "Condition": { "Checks": [ { "Kind": "Hidden", "Key": "Hope", "Op": "GreaterOrEqual", "Value": 50 } ] } },
+    { "Id": "DIARY_LONELY", "Kind": "Diary", "Priority": 15, "TextKey": "diary.lonely", "Condition": { "Checks": [ { "Kind": "Hidden", "Key": "Isolation", "Op": "GreaterOrEqual", "Value": 40 } ] } },
+    { "Id": "DIARY_ACT1_END", "Kind": "Diary", "Priority": 60, "TextKey": "diary.act1_end", "Condition": { "FlagsAll": [ "ACT1_DONE" ] } },
+
+    { "Id": "TC_IDLE", "Kind": "TeacherComment", "Priority": 0, "TextKey": "tc.idle" },
+    { "Id": "TC_W1", "Kind": "TeacherComment", "Priority": 50, "TextKey": "tc.w1", "Condition": { "WeekMax": 1 } },
+    { "Id": "TC_HUNGRY", "Kind": "TeacherComment", "Priority": 40, "TextKey": "tc.hungry", "Condition": { "AnyChecks": [ { "Kind": "Resource", "Key": "Food", "Op": "LessOrEqual", "Value": 6 }, { "Kind": "Resource", "Key": "Water", "Op": "LessOrEqual", "Value": 6 } ] } },
+    { "Id": "TC_DEBT", "Kind": "TeacherComment", "Priority": 45, "TextKey": "tc.debt", "Condition": { "Checks": [ { "Kind": "SleepDebt", "Op": "GreaterOrEqual", "Value": 3 } ] } },
+    { "Id": "TC_STRESS", "Kind": "TeacherComment", "Priority": 42, "TextKey": "tc.stress", "Condition": { "Checks": [ { "Kind": "Vital", "Key": "Stress", "Op": "GreaterOrEqual", "Value": 55 } ] } },
+    { "Id": "TC_CRUTCH_TODO", "Kind": "TeacherComment", "Priority": 30, "TextKey": "tc.crutch_todo", "Condition": { "FlagsAll": [ "CRUTCH_PLAN" ], "FlagsNone": [ "CRUTCH_DONE" ] } },
+    { "Id": "TC_POWER_TODO", "Kind": "TeacherComment", "Priority": 31, "TextKey": "tc.power_todo", "Condition": { "FlagsAll": [ "POWER_PLAN" ], "FlagsNone": [ "POWER_RESTORED" ] } },
+    { "Id": "TC_THREAT", "Kind": "TeacherComment", "Priority": 41, "TextKey": "tc.threat", "Condition": { "FlagsAll": [ "UI_DEFENSE" ], "Checks": [ { "Kind": "Threat", "Op": "Greater", "Value": 30 } ] } },
+    { "Id": "TC_DOHYEON", "Kind": "TeacherComment", "Priority": 20, "TextKey": "tc.dohyeon", "Condition": { "NpcStatuses": [ { "NpcId": "NPC_DOHYEON", "Status": "Joined" } ] } },
+    { "Id": "TC_NIGHT", "Kind": "TeacherComment", "Priority": 18, "TextKey": "tc.night", "Condition": { "FlagsAll": [ "NIGHT_RUNS" ], "WeekMax": 6 } },
+    { "Id": "TC_FINAL_WEEK", "Kind": "TeacherComment", "Priority": 46, "TextKey": "tc.final_week", "Condition": { "WeekMin": 13, "WeekMax": 13 } },
+    { "Id": "TC_STUDY", "Kind": "TeacherComment", "Priority": 10, "TextKey": "tc.study", "Condition": { "WeekMin": 2 } }
+  ]
+}

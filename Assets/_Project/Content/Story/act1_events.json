@@ -1,0 +1,203 @@
+{
+  "Events": [
+    { "Id": "EVT_A1_OPENING", "Kind": "Story", "Priority": 100, "Condition": { "FlagsAll": [ "FORCED_ONLY" ] },
+      "OnShow": { "Facilities": [ { "FacilityId": "STORAGE", "Level": 1 } ], "SetFlags": [ "UI_BASIC" ], "Npcs": [ { "NpcId": "NPC_TEACHER", "Affinity": 5 } ] } },
+
+    { "Id": "EVT_A1_TUTORIAL_DONE", "Kind": "Story", "Priority": 95, "Condition": { "ActionIds": [ "ACT_EXP_TUTORIAL" ] },
+      "OnShow": { "SetFlags": [ "LOC_SCHOOL_DAY", "UI_STATS" ], "Items": [ { "ItemId": "ITEM_TOOL_FLASHLIGHT", "Count": 1 }, { "ItemId": "ITEM_WEAPON_MOP", "Count": 1 } ] } },
+
+    { "Id": "EVT_A1_FIRST_LESSON", "Kind": "Story", "Priority": 60, "Condition": { "WeekMax": 3, "ActionCategories": [ "Education" ] },
+      "OnShow": { "SetFlags": [ "UI_PROFICIENCY" ] },
+      "Choices": [
+        { "Id": "EAGER", "Effect": { "Npcs": [ { "NpcId": "NPC_TEACHER", "Affinity": 2 } ], "Hidden": [ { "Hidden": "Hope", "Amount": 2 } ] } },
+        { "Id": "QUIET", "Effect": { "Hidden": [ { "Hidden": "SelfAwareness", "Amount": 2 } ] } }
+      ] },
+
+    { "Id": "EVT_A1_CLASSROOM", "Kind": "Story", "Priority": 70,
+      "Condition": { "WeekMin": 2, "ActionIds": [ "ACT_EXP_DAY_SCHOOL", "ACT_EXP_NIGHT_SCHOOL" ], "Checks": [ { "Kind": "Facility", "Key": "CLASSROOM", "Op": "Equal", "Value": 0 } ] },
+      "OnShow": { "Facilities": [ { "FacilityId": "CLASSROOM", "Level": 1 } ], "SetFlags": [ "UI_RESOURCES" ] },
+      "Choices": [
+        { "Id": "MOVE_IN", "Effect": { "Vitals": [ { "Vital": "Stress", "Amount": -6 } ], "Threat": 3, "Hidden": [ { "Hidden": "Hope", "Amount": 3 } ] } },
+        { "Id": "STAY_STORAGE", "Effect": { "Defense": 4 } }
+      ] },
+
+    { "Id": "EVT_A1_CRUTCH_PLAN", "Kind": "Night", "Priority": 40,
+      "Condition": { "WeekMin": 2, "Phase": "Night", "Checks": [ { "Kind": "TeacherMobility", "Op": "Equal", "Value": 0 } ] },
+      "Choices": [
+        { "Id": "PROMISE", "Effect": { "SetFlags": [ "CRUTCH_PLAN" ], "Npcs": [ { "NpcId": "NPC_TEACHER", "Affinity": 2 } ] } },
+        { "Id": "ASK_HOW", "Effect": { "SetFlags": [ "CRUTCH_PLAN" ], "Stats": [ { "Stat": "Intellect", "Amount": 1 } ] } }
+      ] },
+
+    { "Id": "EVT_A1_CRUTCH_DONE", "Kind": "Story", "Priority": 90, "Condition": { "ActionIds": [ "ACT_SURV_MAKE_CRUTCH" ], "FlagsAll": [ "CRUTCH_DONE" ] },
+      "OnShow": { "Npcs": [ { "NpcId": "NPC_TEACHER", "Affinity": 6 } ], "Hidden": [ { "Hidden": "Hope", "Amount": 4 } ] } },
+
+    { "Id": "EVT_A1_NIGHT_UNLOCK", "Kind": "Night", "Priority": 50,
+      "Condition": { "WeekMin": 3, "Phase": "Night", "Checks": [ { "Kind": "Expeditions", "Key": "Day", "Op": "GreaterOrEqual", "Value": 2 } ] },
+      "OnShow": { "SetFlags": [ "NIGHT_RUNS", "UI_SLEEPDEBT" ] },
+      "Choices": [
+        { "Id": "AGREE", "Effect": { "Npcs": [ { "NpcId": "NPC_TEACHER", "Affinity": 1 } ] } },
+        { "Id": "SCARED", "Effect": { "Vitals": [ { "Vital": "Stress", "Amount": 3 } ], "Hidden": [ { "Hidden": "SelfAwareness", "Amount": 2 } ] } }
+      ] },
+
+    { "Id": "EVT_A1_STORE_UNLOCK", "Kind": "Story", "Priority": 55,
+      "Condition": { "WeekMin": 3, "ActionCategories": [ "Expedition" ], "FlagsNone": [ "LOC_STORE" ], "Checks": [ { "Kind": "Expeditions", "Op": "GreaterOrEqual", "Value": 3 } ] },
+      "OnShow": { "SetFlags": [ "LOC_STORE" ] } },
+
+    { "Id": "EVT_A1_INFIRMARY", "Kind": "Story", "Priority": 65,
+      "Condition": { "WeekMin": 3, "ActionIds": [ "ACT_EXP_DAY_SCHOOL", "ACT_EXP_NIGHT_SCHOOL" ], "Checks": [ { "Kind": "Facility", "Key": "INFIRMARY", "Op": "Equal", "Value": 0 }, { "Kind": "Facility", "Key": "CLASSROOM", "Op": "GreaterOrEqual", "Value": 1 } ] },
+      "OnShow": { "Facilities": [ { "FacilityId": "INFIRMARY", "Level": 1 } ], "Resources": [ { "Resource": "Medicine", "Amount": 2 } ] },
+      "Choices": [
+        { "Id": "RECORDS", "Effect": { "AddClues": [ "CLUE_STAFF_HEALTH_RECORDS" ], "SetFlags": [ "READ_STAFF_RECORDS" ] } },
+        { "Id": "SUPPLIES", "Effect": { "Resources": [ { "Resource": "Medicine", "Amount": 2 } ] } }
+      ] },
+
+    { "Id": "EVT_A1_ROOFTOP", "Kind": "Story", "Priority": 45, "Condition": { "WeekMin": 4, "Phase": "Day", "Checks": [ { "Kind": "Facility", "Key": "ROOFTOP", "Op": "Equal", "Value": 0 } ] },
+      "OnShow": { "Facilities": [ { "FacilityId": "ROOFTOP", "Level": 1 } ], "Hidden": [ { "Hidden": "Hope", "Amount": 3 } ] } },
+
+    { "Id": "EVT_A1_POWER_PLAN", "Kind": "Story", "Priority": 60,
+      "Condition": { "WeekMin": 5, "Phase": "Day", "FlagsNone": [ "POWER_PLAN" ], "Checks": [ { "Kind": "Facility", "Key": "CLASSROOM", "Op": "GreaterOrEqual", "Value": 1 } ] },
+      "OnShow": { "SetFlags": [ "POWER_PLAN" ], "Facilities": [ { "FacilityId": "BROADCAST", "Level": 1 } ] } },
+
+    { "Id": "EVT_A1_POWER_ON", "Kind": "Story", "Priority": 92, "Condition": { "ActionIds": [ "ACT_SURV_RESTORE_POWER" ], "FlagsAll": [ "POWER_RESTORED" ] },
+      "OnShow": { "Hidden": [ { "Hidden": "Hope", "Amount": 5 } ], "Npcs": [ { "NpcId": "NPC_TEACHER", "Affinity": 3 } ] } },
+
+    { "Id": "EVT_A1_PHONE", "Kind": "Night", "Priority": 90, "Condition": { "Phase": "Night", "FlagsAll": [ "POWER_RESTORED" ] },
+      "OnShow": { "SetFlags": [ "READ_MESSAGES" ], "Hidden": [ { "Hidden": "Isolation", "Amount": 3 } ] },
+      "Choices": [
+        { "Id": "REPLY", "Effect": { "Hidden": [ { "Hidden": "Hope", "Amount": 3 } ], "SetFlags": [ "WROTE_UNSENT_REPLY" ] } },
+        { "Id": "SILENT", "Effect": { "Hidden": [ { "Hidden": "Isolation", "Amount": 3 } ], "Vitals": [ { "Vital": "Stress", "Amount": 4 } ] } }
+      ] },
+
+    { "Id": "EVT_A1_SECRET_HINT", "Kind": "Night", "Priority": 30, "Condition": { "WeekMin": 7, "Phase": "Night", "FlagsAll": [ "POWER_RESTORED" ] },
+      "OnShow": { "SetFlags": [ "NOTICE_HINT" ] } },
+
+    { "Id": "EVT_A1_SECRET_FOUND", "Kind": "Story", "Priority": 75, "Condition": { "CluesAll": [ "CLUE_SCHOOL_NOTICE" ], "ActionCategories": [ "Expedition" ] },
+      "Choices": [
+        { "Id": "SHOW_TEACHER", "Effect": { "Npcs": [ { "NpcId": "NPC_TEACHER", "Trust": 2, "Affinity": 2 } ], "SetFlags": [ "SHOWED_NOTICE" ] } },
+        { "Id": "KEEP_SECRET", "Effect": { "Hidden": [ { "Hidden": "Isolation", "Amount": 3 }, { "Hidden": "SelfAwareness", "Amount": 2 } ], "SetFlags": [ "KEPT_NOTICE" ] } }
+      ] },
+
+    { "Id": "EVT_A1_PHARMACY_UNLOCK", "Kind": "Story", "Priority": 50,
+      "Condition": { "WeekMin": 6, "FlagsAll": [ "LOC_STORE" ], "FlagsNone": [ "LOC_PHARMACY" ], "ActionIds": [ "ACT_EXP_DAY_STORE", "ACT_EXP_NIGHT_STORE" ] },
+      "OnShow": { "SetFlags": [ "LOC_PHARMACY" ] } },
+
+    { "Id": "EVT_DH_01_KNOCK", "Kind": "Night", "Priority": 45, "Condition": { "WeekMin": 4, "WeekMax": 9, "Phase": "Night", "FlagsNone": [ "DH_HEARD" ] },
+      "OnShow": { "SetFlags": [ "DH_HEARD" ] },
+      "Choices": [
+        { "Id": "GO_TOMORROW", "Effect": { "SetFlags": [ "DH_PLAN" ], "Hidden": [ { "Hidden": "Humanity", "Amount": 2 } ] } },
+        { "Id": "IGNORE", "Effect": { "Hidden": [ { "Hidden": "Isolation", "Amount": 2 } ] } }
+      ] },
+
+    { "Id": "EVT_DH_02_ARRIVAL", "Kind": "Story", "Priority": 88, "Condition": { "FlagsAll": [ "DH_RESCUED" ], "ActionCategories": [ "Expedition" ] },
+      "OnShow": { "Npcs": [ { "NpcId": "NPC_DOHYEON", "SetStatus": "Joined", "SetRole": "student", "Affinity": 5 } ], "Defense": 3, "Hidden": [ { "Hidden": "Humanity", "Amount": 4 } ] },
+      "Choices": [
+        { "Id": "WELCOME", "Effect": { "Npcs": [ { "NpcId": "NPC_DOHYEON", "Affinity": 5 } ], "Hidden": [ { "Hidden": "Hope", "Amount": 3 } ] } },
+        { "Id": "RULES", "Effect": { "Npcs": [ { "NpcId": "NPC_DOHYEON", "Trust": 4 } ], "Stats": [ { "Stat": "Leadership", "Amount": 2 } ] } }
+      ] },
+
+    { "Id": "EVT_DH_02_DOOR", "Kind": "Night", "Priority": 70, "Condition": { "Phase": "Night", "FlagsAll": [ "DH_HELPED" ], "FlagsNone": [ "DH_RESCUED" ] },
+      "Choices": [
+        { "Id": "ACCEPT", "Effect": { "SetFlags": [ "DH_RESCUED" ], "Npcs": [ { "NpcId": "NPC_DOHYEON", "SetStatus": "Joined", "SetRole": "student", "Affinity": 8 } ], "Defense": 3, "Hidden": [ { "Hidden": "Humanity", "Amount": 4 } ] } },
+        { "Id": "REFUSE", "Effect": { "SetFlags": [ "DH_REFUSED" ], "Npcs": [ { "NpcId": "NPC_DOHYEON", "SetStatus": "Left", "Affinity": -5 } ], "Hidden": [ { "Hidden": "Humanity", "Amount": -4 }, { "Hidden": "Isolation", "Amount": 3 } ], "Resources": [ { "Resource": "Food", "Amount": 2 } ] } }
+      ] },
+
+    { "Id": "EVT_DH_03_NIGHTMARE", "Kind": "Night", "Priority": 35,
+      "Condition": { "Phase": "Night", "NpcStatuses": [ { "NpcId": "NPC_DOHYEON", "Status": "Joined" } ] },
+      "Choices": [
+        { "Id": "LISTEN", "Effect": { "Npcs": [ { "NpcId": "NPC_DOHYEON", "Affinity": 6 } ], "Hidden": [ { "Hidden": "TraumaRecovery", "Amount": 2 } ], "Vitals": [ { "Vital": "Fatigue", "Amount": 4 } ] } },
+        { "Id": "SLEEP", "Effect": { "Vitals": [ { "Vital": "Fatigue", "Amount": -2 } ], "Npcs": [ { "NpcId": "NPC_DOHYEON", "Affinity": -1 } ] } }
+      ] },
+
+    { "Id": "EVT_DH_04_HELPER", "Kind": "Story", "Priority": 35,
+      "Condition": { "Phase": "Day", "NpcStatuses": [ { "NpcId": "NPC_DOHYEON", "Status": "Joined" } ], "Checks": [ { "Kind": "NpcAffinity", "Key": "NPC_DOHYEON", "Op": "GreaterOrEqual", "Value": 12 } ] },
+      "Choices": [
+        { "Id": "TEACH", "Effect": { "Npcs": [ { "NpcId": "NPC_DOHYEON", "SetRole": "lookout", "Trust": 3 } ], "Defense": 4, "Stats": [ { "Stat": "Leadership", "Amount": 2 } ] } },
+        { "Id": "PROTECT", "Effect": { "Npcs": [ { "NpcId": "NPC_DOHYEON", "Affinity": 3 } ], "Hidden": [ { "Hidden": "Humanity", "Amount": 2 } ], "Vitals": [ { "Vital": "Stress", "Amount": 2 } ] } }
+      ] },
+
+    { "Id": "EVT_A1_RAID_WARNING", "Kind": "Night", "Priority": 40,
+      "Condition": { "WeekMin": 5, "Phase": "Night", "FlagsNone": [ "UI_DEFENSE" ], "AnyChecks": [ { "Kind": "Threat", "Op": "GreaterOrEqual", "Value": 18 }, { "Kind": "Expeditions", "Op": "GreaterOrEqual", "Value": 6 } ] },
+      "OnShow": { "SetFlags": [ "UI_DEFENSE" ] },
+      "Choices": [
+        { "Id": "BARRICADE", "Effect": { "Defense": 3, "Resources": [ { "Resource": "Materials", "Amount": -1 } ] } },
+        { "Id": "WATCH_PLAN", "Effect": { "Stats": [ { "Stat": "Willpower", "Amount": 1 } ], "Npcs": [ { "NpcId": "NPC_TEACHER", "Trust": 1 } ] } }
+      ] },
+
+    { "Id": "EVT_A1_FINALE", "Kind": "Story", "Priority": 100, "Condition": { "WeekMin": 13, "WeekMax": 13, "Days": [ 6 ], "Phase": "Night" },
+      "OnShow": { "RaidStrength": 55, "SetFlags": [ "ACT1_FINALE" ] } },
+
+    { "Id": "EVT_A1_REVIEW", "Kind": "Story", "Priority": 100, "Condition": { "WeekMin": 13, "WeekMax": 13, "Days": [ 7 ], "Phase": "Night" },
+      "OnShow": { "SetFlags": [ "ACT1_DONE" ] } },
+
+    { "Id": "EVT_CAL_MIDTERM", "Kind": "Calendar", "Priority": 50, "Condition": { "Month": 4, "DayOfMonth": 27, "Phase": "Day" },
+      "Choices": [
+        { "Id": "TEST", "Effect": { "Stats": [ { "Stat": "Intellect", "Amount": 1 }, { "Stat": "Willpower", "Amount": 1 } ], "Vitals": [ { "Vital": "Stress", "Amount": 2 } ] } },
+        { "Id": "SKIP", "Effect": { "Vitals": [ { "Vital": "Stress", "Amount": -5 } ], "Hidden": [ { "Hidden": "SelfAwareness", "Amount": 1 } ] } }
+      ] },
+    { "Id": "EVT_CAL_TEACHERS_DAY", "Kind": "Calendar", "Priority": 55, "Condition": { "Month": 5, "DayOfMonth": 15 },
+      "Choices": [
+        { "Id": "FLOWER", "Effect": { "Npcs": [ { "NpcId": "NPC_TEACHER", "Affinity": 6 } ], "Resources": [ { "Resource": "Materials", "Amount": -1 } ] } },
+        { "Id": "LETTER", "Effect": { "Npcs": [ { "NpcId": "NPC_TEACHER", "Affinity": 4, "Trust": 2 } ], "Hidden": [ { "Hidden": "SelfAwareness", "Amount": 2 } ] } }
+      ] },
+    { "Id": "EVT_CAL_SPORTS_DAY", "Kind": "Calendar", "Priority": 50, "Condition": { "Month": 5, "DayOfMonth": 28, "Phase": "Day" },
+      "Choices": [
+        { "Id": "RUN", "Effect": { "Stats": [ { "Stat": "Stamina", "Amount": 1 }, { "Stat": "Agility", "Amount": 1 } ], "Vitals": [ { "Vital": "Stress", "Amount": -6 }, { "Vital": "Fatigue", "Amount": 5 } ] } },
+        { "Id": "WATCH", "Effect": { "Hidden": [ { "Hidden": "Hope", "Amount": 2 } ] } }
+      ] },
+    { "Id": "EVT_CAL_BIRTHDAY", "Kind": "Calendar", "Priority": 80, "Condition": { "IsBirthday": true },
+      "OnShow": { "Hidden": [ { "Hidden": "Hope", "Amount": 6 } ], "Vitals": [ { "Vital": "Stress", "Amount": -10 } ], "Npcs": [ { "NpcId": "NPC_TEACHER", "Affinity": 4 } ] } },
+
+    { "Id": "EVT_TALK_02", "Kind": "Night", "Priority": 22, "Condition": { "ActionIds": [ "ACT_NIGHT_TALK" ], "FlagsNone": [ "TALK_02" ] },
+      "OnShow": { "SetFlags": [ "TALK_02" ], "Npcs": [ { "NpcId": "NPC_TEACHER", "Affinity": 2 } ] } },
+    { "Id": "EVT_TALK_03", "Kind": "Night", "Priority": 21, "Condition": { "ActionIds": [ "ACT_NIGHT_TALK" ], "FlagsAll": [ "TALK_02" ], "FlagsNone": [ "TALK_03" ] },
+      "OnShow": { "SetFlags": [ "TALK_03" ] },
+      "Choices": [
+        { "Id": "RECITE", "Effect": { "Proficiencies": [], "Stats": [ { "Stat": "Empathy", "Amount": 2 } ], "Npcs": [ { "NpcId": "NPC_TEACHER", "Affinity": 3 } ] } },
+        { "Id": "LISTEN", "Effect": { "Vitals": [ { "Vital": "Stress", "Amount": -5 } ] } }
+      ] },
+    { "Id": "EVT_TALK_04", "Kind": "Night", "Priority": 20, "Condition": { "ActionIds": [ "ACT_NIGHT_TALK" ], "FlagsAll": [ "TALK_03" ], "FlagsNone": [ "TALK_04" ] },
+      "OnShow": { "SetFlags": [ "TALK_04" ] },
+      "Choices": [
+        { "Id": "TALK_FRIEND", "Effect": { "Hidden": [ { "Hidden": "Hope", "Amount": 2 }, { "Hidden": "Isolation", "Amount": -3 } ] } },
+        { "Id": "CHANGE_SUBJECT", "Effect": { "Hidden": [ { "Hidden": "Isolation", "Amount": 1 } ] } }
+      ] },
+    { "Id": "EVT_TALK_05", "Kind": "Night", "Priority": 19, "Condition": { "ActionIds": [ "ACT_NIGHT_TALK" ], "FlagsAll": [ "TALK_04" ], "FlagsNone": [ "TALK_05" ], "Checks": [ { "Kind": "Facility", "Key": "ROOFTOP", "Op": "GreaterOrEqual", "Value": 1 } ] },
+      "OnShow": { "SetFlags": [ "TALK_05" ], "Hidden": [ { "Hidden": "Hope", "Amount": 4 }, { "Hidden": "TraumaRecovery", "Amount": 3 } ], "Npcs": [ { "NpcId": "NPC_TEACHER", "Affinity": 4 } ] } },
+
+    { "Id": "EVT_RND_RAIN_LEAK", "Kind": "Random", "Once": false, "CooldownWeeks": 4, "Weight": 1, "Condition": { "WeekMin": 2, "Phase": "Night" },
+      "Choices": [
+        { "Id": "PATCH", "HasCheck": true, "Check": { "BaseRate": 0.5, "StatWeights": [ { "Stat": "Craft", "Weight": 0.006 } ] },
+          "Effect": { "Stats": [ { "Stat": "Craft", "Amount": 1 } ] }, "OnFailure": { "Resources": [ { "Resource": "Materials", "Amount": -1 } ], "Vitals": [ { "Vital": "Fatigue", "Amount": 5 } ] } },
+        { "Id": "BUCKETS", "Effect": { "Resources": [ { "Resource": "Water", "Amount": 2 } ], "Vitals": [ { "Vital": "Fatigue", "Amount": 3 } ] } }
+      ] },
+    { "Id": "EVT_RND_NIGHTMARE", "Kind": "Crisis", "Once": false, "CooldownWeeks": 3, "Weight": 1.5,
+      "Condition": { "Phase": "Night", "Checks": [ { "Kind": "Vital", "Key": "Stress", "Op": "GreaterOrEqual", "Value": 50 } ] },
+      "Choices": [
+        { "Id": "WRITE", "Effect": { "Vitals": [ { "Vital": "Stress", "Amount": -8 } ], "Hidden": [ { "Hidden": "SelfAwareness", "Amount": 2 } ] } },
+        { "Id": "WAKE_TEACHER", "Effect": { "Vitals": [ { "Vital": "Stress", "Amount": -12 } ], "Npcs": [ { "NpcId": "NPC_TEACHER", "Affinity": 2 } ] } }
+      ] },
+    { "Id": "EVT_RND_RATS", "Kind": "Crisis", "Once": false, "CooldownWeeks": 4, "Weight": 1, "Condition": { "WeekMin": 3, "Checks": [ { "Kind": "Resource", "Key": "Food", "Op": "GreaterOrEqual", "Value": 8 } ] },
+      "Choices": [
+        { "Id": "TRAP", "HasCheck": true, "Check": { "BaseRate": 0.45, "StatWeights": [ { "Stat": "Craft", "Weight": 0.006 } ], "UsesProficiency": true, "Proficiency": "Survival", "ProficiencyWeight": 0.08 },
+          "Effect": { "Stats": [ { "Stat": "Craft", "Amount": 1 } ] }, "OnFailure": { "Resources": [ { "Resource": "Food", "Amount": -3 } ] } },
+        { "Id": "MOVE_FOOD", "Effect": { "Resources": [ { "Resource": "Food", "Amount": -1 } ], "Vitals": [ { "Vital": "Fatigue", "Amount": 4 } ] } }
+      ] },
+    { "Id": "EVT_RND_WATER_SMELL", "Kind": "Crisis", "Once": false, "CooldownWeeks": 4, "Weight": 1, "Condition": { "WeekMin": 2, "Checks": [ { "Kind": "Resource", "Key": "Water", "Op": "GreaterOrEqual", "Value": 6 } ] },
+      "Choices": [
+        { "Id": "BOIL", "Costs": [ { "Resource": "Fuel", "Amount": 1 } ], "Effect": { "Vitals": [ { "Vital": "Fatigue", "Amount": 3 } ] } },
+        { "Id": "DUMP", "Effect": { "Resources": [ { "Resource": "Water", "Amount": -3 } ] } }
+      ] },
+    { "Id": "EVT_RND_QUIET_MORNING", "Kind": "Random", "Once": false, "CooldownWeeks": 3, "Weight": 1.2, "Condition": { "Phase": "Day" },
+      "OnShow": { "Vitals": [ { "Vital": "Stress", "Amount": -4 } ], "Hidden": [ { "Hidden": "Hope", "Amount": 1 } ] } },
+    { "Id": "EVT_RND_TEACHER_PAIN", "Kind": "Random", "Once": false, "CooldownWeeks": 4, "Weight": 1, "Condition": { "WeekMin": 2, "Phase": "Night" },
+      "Choices": [
+        { "Id": "MEDICINE", "Costs": [ { "Resource": "Medicine", "Amount": 1 } ], "Effect": { "Npcs": [ { "NpcId": "NPC_TEACHER", "Affinity": 3 } ] } },
+        { "Id": "STAY_UP", "Effect": { "Vitals": [ { "Vital": "Fatigue", "Amount": 6 } ], "Npcs": [ { "NpcId": "NPC_TEACHER", "Affinity": 2 } ], "Hidden": [ { "Hidden": "Humanity", "Amount": 1 } ] } }
+      ] },
+    { "Id": "EVT_RND_LETTER", "Kind": "Random", "Once": true, "Weight": 1, "Condition": { "WeekMin": 2, "ActionCategories": [ "Expedition" ] },
+      "Choices": [
+        { "Id": "KEEP", "Effect": { "Hidden": [ { "Hidden": "Hope", "Amount": 2 } ], "SetFlags": [ "KEPT_LETTER" ] } },
+        { "Id": "LEAVE", "Effect": { "Hidden": [ { "Hidden": "Isolation", "Amount": 1 } ] } }
+      ] }
+  ]
+}

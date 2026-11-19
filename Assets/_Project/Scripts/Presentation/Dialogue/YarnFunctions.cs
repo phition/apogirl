@@ -30,11 +30,19 @@ namespace ApoGirl.Presentation.Dialogue
                 ["resource"] = p => (float)Resource(Str(p, 0)),
                 ["affinity"] = p => (float)Affinity(Str(p, 0)),
                 ["week"] = _ => (float)Week(),
+                ["hidden"] = p => (float)Hidden(Str(p, 0)),
                 ["succeeded"] = _ => Succeeded(),
                 ["great_success"] = _ => GreatSuccess(),
             };
 
         private static GameState State => GameApp.Session?.State;
+
+        /// <summary>프롤로그 중에는 아직 게임 상태가 없어서, 입력 중인 프로필·친구를 대신 쓴다.</summary>
+        public static ProfileState PreviewProfile { get; set; }
+        public static FriendState PreviewFriend { get; set; }
+
+        private static ProfileState Profile => PreviewProfile ?? State?.Player.Profile;
+        private static FriendState FriendInfo => PreviewFriend ?? State?.Friend;
 
         public static bool Has(string name) => Table.ContainsKey(name ?? "");
 
@@ -50,13 +58,13 @@ namespace ApoGirl.Presentation.Dialogue
 
         /// <summary>주인공 이름 (기본 한서진, D23).</summary>
         [YarnFunction("name")]
-        public static string Name() => State?.Player.Profile.Name ?? "한서진";
+        public static string Name() => string.IsNullOrEmpty(Profile?.Name) ? "한서진" : Profile.Name;
 
         /// <summary>부르는 이름: 별명 → 없으면 성을 뺀 이름 (세 글자 이름일 때). 예: 한서진 → 서진.</summary>
         [YarnFunction("given")]
         public static string Given()
         {
-            var profile = State?.Player.Profile;
+            var profile = Profile;
             if (profile != null && !string.IsNullOrEmpty(profile.Nickname)) return profile.Nickname;
             var name = Name();
             return name.Length == 3 ? name.Substring(1) : name;
@@ -66,7 +74,7 @@ namespace ApoGirl.Presentation.Dialogue
         [YarnFunction("friend")]
         public static string Friend()
         {
-            var friend = State?.Friend;
+            var friend = FriendInfo;
             if (friend != null && !string.IsNullOrEmpty(friend.CallName)) return friend.CallName;
             if (friend != null && !string.IsNullOrEmpty(friend.ContactName)) return friend.ContactName;
             return Loc.T("npc.friend_default");
@@ -89,6 +97,10 @@ namespace ApoGirl.Presentation.Dialogue
         /// <summary>NPC 호감 (NPC_TEACHER = 윤 선생님).</summary>
         [YarnFunction("affinity")]
         public static int Affinity(string npcId) => State == null ? 0 : ConditionEvaluator.ValueOf(State, ValueKind.NpcAffinity, npcId);
+
+        /// <summary>숨김 수치 (Hope, Isolation, SelfAwareness, TraumaRecovery, Humanity). 평가·후일담 분기용.</summary>
+        [YarnFunction("hidden")]
+        public static int Hidden(string key) => State == null ? 0 : ConditionEvaluator.ValueOf(State, ValueKind.Hidden, key);
 
         [YarnFunction("week")]
         public static int Week() => State?.Calendar.Week ?? 1;

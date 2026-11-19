@@ -14,13 +14,31 @@ namespace ApoGirl.Presentation.Screens
 {
     // 허브 화면 영역별 뷰. 규칙은 모르고, GameSession의 상태를 그리고 명령만 호출한다.
 
+    /// <summary>점진적 노출 (문서 5.3): 이벤트가 세우는 UI_* 플래그, 4주차 이후 또는 디버그 UI_ALL이면 전부 보인다.</summary>
+    internal static class Disclosure
+    {
+        public static bool Has(GameState state, string flag)
+        {
+            return state.Flags.Contains(flag) || state.Flags.Contains("UI_ALL")
+                   || (flag != "UI_DEFENSE" && flag != "UI_SLEEPDEBT" && state.Calendar.Week >= 4);
+        }
+    }
+
     /// <summary>상단 바: 달력, 자원, 정전 표시.</summary>
     internal sealed class TopBarView
     {
         private static readonly ResourceType[] Shown =
         {
-            ResourceType.Food, ResourceType.Water, ResourceType.Medicine, ResourceType.Materials, ResourceType.Power,
+            ResourceType.Food, ResourceType.Water, ResourceType.Medicine, ResourceType.Materials, ResourceType.Power, ResourceType.Fuel,
         };
+
+        /// <summary>1~3주차엔 식량·물만 (문서 5.3 점진적 노출). UI_RESOURCES 이후 전부.</summary>
+        private static bool Visible(GameState state, ResourceType type)
+        {
+            return type == ResourceType.Food || type == ResourceType.Water || Disclosure.Has(state, "UI_RESOURCES");
+        }
+
+        private Label _defense;
 
         private readonly GameSession _session;
         private readonly Label _calendar;
@@ -40,6 +58,10 @@ namespace ApoGirl.Presentation.Screens
                 _resources[type] = label;
             }
 
+            _defense = new Label();
+            _defense.AddToClassList("resource");
+            container.Add(_defense);
+
             _blackout = new Label(Loc.T("hub.blackout"));
             _blackout.AddToClassList("blackout");
             container.Add(_blackout);
@@ -57,7 +79,13 @@ namespace ApoGirl.Presentation.Screens
             foreach (var pair in _resources)
             {
                 pair.Value.text = UiText.Resource(pair.Key) + " " + state.Base.GetResource(pair.Key);
+                pair.Value.EnableInClassList("hidden", !Visible(state, pair.Key));
             }
+
+            var showDefense = Disclosure.Has(state, "UI_DEFENSE");
+            _defense.EnableInClassList("hidden", !showDefense);
+            _defense.text = Loc.F("hub.defense", state.Base.Defense, state.Base.Threat);
+            _defense.EnableInClassList("danger", state.Base.Threat > state.Base.Defense + 15);
 
             _blackout.EnableInClassList("hidden", !state.Base.IsBlackout());
         }
@@ -78,6 +106,11 @@ namespace ApoGirl.Presentation.Screens
         private readonly Label _sleepDebt;
         private readonly Label _conscience;
         private readonly Label _derived;
+        private readonly VisualElement _statsSection = new VisualElement();
+        private readonly VisualElement _profSection = new VisualElement();
+        private readonly VisualElement _debtSection = new VisualElement();
+        private readonly VisualElement _baseSection = new VisualElement();
+        private readonly Label _baseInfo;
 
         public StatusPanelView(VisualElement root, GameSession session)
         {
@@ -94,23 +127,31 @@ namespace ApoGirl.Presentation.Screens
                 _vitals[vital] = bar;
             }
 
-            _sleepDebt = Row(panel);
-            _conscience = Row(panel);
+            panel.Add(_debtSection);
+            _sleepDebt = Row(_debtSection);
+            _conscience = Row(_debtSection);
 
-            panel.Add(Header("status.stats"));
+            panel.Add(_statsSection);
+            _statsSection.Add(Header("status.stats"));
             foreach (StatType stat in Enum.GetValues(typeof(StatType)))
             {
-                _stats[stat] = Row(panel);
+                _stats[stat] = Row(_statsSection);
             }
 
-            _derived = Row(panel);
+            _derived = Row(_statsSection);
             _derived.AddToClassList("derived");
 
-            panel.Add(Header("status.proficiency"));
+            panel.Add(_profSection);
+            _profSection.Add(Header("status.proficiency"));
             foreach (ProficiencyType proficiency in Enum.GetValues(typeof(ProficiencyType)))
             {
-                _proficiencies[proficiency] = Row(panel);
+                _proficiencies[proficiency] = Row(_profSection);
             }
+
+            panel.Add(_baseSection);
+            _baseSection.Add(Header("status.base"));
+            _baseInfo = Row(_baseSection);
+            _baseInfo.style.whiteSpace = WhiteSpace.Normal;
         }
 
         public void Refresh()
@@ -124,7 +165,22 @@ namespace ApoGirl.Presentation.Screens
                 var value = player.Vitals.GetVital(pair.Key);
                 pair.Value.value = value;
                 pair.Value.title = UiText.Vital(pair.Key) + " " + value;
+                var basic = pair.Key == VitalType.Hp || pair.Key == VitalType.Stress || pair.Key == VitalType.Fatigue;
+                pair.Value.EnableInClassList("hidden", !basic && !Disclosure.Has(state, "UI_RESOURCES"));
             }
+
+            _statsSection.EnableInClassList("hidden", !Disclosure.Has(state, "UI_STATS"));
+            _profSection.EnableInClassList("hidden", !Disclosure.Has(state, "UI_PROFICIENCY"));
+            _debtSection.EnableInClassList("hidden", !Disclosure.Has(state, "UI_SLEEPDEBT"));
+
+            var facilities = state.Base.Facilities.Where(f => f.Value > 0).Select(f => Loc.T("facility." + f.Key)).ToList();
+            var people = new List<string> { Loc.F("status.teacher", state.Teacher.Affinity, Loc.T("mobility." + Math.Min(state.Teacher.MobilityStage, 2))) };
+            foreach (var npc in state.Npcs.Where(n => n.Value.Status == NpcStatus.Joined))
+            {
+                people.Add(Loc.F("status.npc", Loc.T("npc." + npc.Key), npc.Value.Affinity));
+            }
+
+            _baseInfo.text = Loc.F("status.facilities", facilities.Count > 0 ? string.Join(", ", facilities) : "-") + "\n" + string.Join("\n", people);
 
             _sleepDebt.text = Loc.T("status.sleep_debt") + "  " + Pips(player.SleepDebt, balance.SleepDebtMax);
             _sleepDebt.EnableInClassList("danger", player.SleepDebt >= 3);
@@ -172,7 +228,7 @@ namespace ApoGirl.Presentation.Screens
     {
         private static readonly ActionCategory[] Tabs =
         {
-            ActionCategory.Education, ActionCategory.Survival, ActionCategory.Rest, ActionCategory.Expedition,
+            ActionCategory.Education, ActionCategory.Survival, ActionCategory.Rest, ActionCategory.Daily, ActionCategory.Expedition,
         };
 
         private readonly GameSession _session;
@@ -211,7 +267,10 @@ namespace ApoGirl.Presentation.Screens
             _list.Clear();
             foreach (var action in _session.ActionsIn(_category))
             {
-                _list.Add(BuildCard(action));
+                if (_session.IsUnlocked(action))
+                {
+                    _list.Add(BuildCard(action));
+                }
             }
         }
 

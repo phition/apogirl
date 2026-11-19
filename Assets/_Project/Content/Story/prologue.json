@@ -1,0 +1,64 @@
+{
+  "Prologue": {
+    "Common": {
+      "Hidden": [
+        { "Hidden": "Hope", "Amount": 30 }, { "Hidden": "Isolation", "Amount": 20 }, { "Hidden": "SelfAwareness", "Amount": 20 },
+        { "Hidden": "TraumaRecovery", "Amount": 10 }, { "Hidden": "Humanity", "Amount": 40 }
+      ],
+      "Items": [ { "ItemId": "ITEM_BAG_SCHOOL", "Count": 1 } ]
+    },
+    "Questions": [
+      { "Id": "PERSONALITY", "Options": [
+        { "Id": "E", "Effect": { "Stats": [ { "Stat": "Empathy", "Amount": 3 }, { "Stat": "Leadership", "Amount": 2 } ], "AddTraits": [ "PT_E" ] } },
+        { "Id": "I", "Effect": { "Stats": [ { "Stat": "Willpower", "Amount": 2 }, { "Stat": "Intellect", "Amount": 3 } ], "AddTraits": [ "PT_I" ] } },
+        { "Id": "S", "Effect": { "Stats": [ { "Stat": "Craft", "Amount": 3 }, { "Stat": "Stamina", "Amount": 2 } ], "AddTraits": [ "PT_S" ] } },
+        { "Id": "N", "Effect": { "Stats": [ { "Stat": "Intellect", "Amount": 5 } ], "AddTraits": [ "PT_N" ] } },
+        { "Id": "T", "Effect": { "Stats": [ { "Stat": "Intellect", "Amount": 2 }, { "Stat": "Willpower", "Amount": 3 } ], "AddTraits": [ "PT_T" ] } },
+        { "Id": "F", "Effect": { "Stats": [ { "Stat": "Empathy", "Amount": 5 } ], "AddTraits": [ "PT_F" ] } },
+        { "Id": "J", "Effect": { "Stats": [ { "Stat": "Willpower", "Amount": 5 } ], "AddTraits": [ "PT_J" ] } },
+        { "Id": "P", "Effect": { "Stats": [ { "Stat": "Agility", "Amount": 5 } ], "AddTraits": [ "PT_P" ] } }
+      ] },
+      { "Id": "BLOOD", "Options": [
+        { "Id": "A", "ProfileField": "BloodType", "ProfileValue": "A", "Effect": { "Stats": [ { "Stat": "Willpower", "Amount": 2 } ] } },
+        { "Id": "B", "ProfileField": "BloodType", "ProfileValue": "B", "Effect": { "Stats": [ { "Stat": "Empathy", "Amount": 2 } ] } },
+        { "Id": "O", "ProfileField": "BloodType", "ProfileValue": "O", "Effect": { "Stats": [ { "Stat": "Stamina", "Amount": 2 } ] } },
+        { "Id": "AB", "ProfileField": "BloodType", "ProfileValue": "AB", "Effect": { "Stats": [ { "Stat": "Intellect", "Amount": 2 } ] } },
+        { "Id": "UNKNOWN", "ProfileField": "BloodType", "ProfileValue": "Unknown", "Effect": { "Stats": [ { "Stat": "Agility", "Amount": 2 } ], "SetFlags": [ "BLOOD_UNKNOWN" ] } }
+      ] },
+      { "Id": "GRADE", "Options": [
+        { "Id": "TOP", "ProfileField": "GradeBandId", "ProfileValue": "TOP", "Effect": { "Stats": [ { "Stat": "Intellect", "Amount": 10 }, { "Stat": "Stamina", "Amount": -2 }, { "Stat": "Willpower", "Amount": -1 } ] } },
+        { "Id": "MIDDLE", "ProfileField": "GradeBandId", "ProfileValue": "MIDDLE", "Effect": { "Stats": [ { "Stat": "Intellect", "Amount": 4 }, { "Stat": "Stamina", "Amount": 2 }, { "Stat": "Willpower", "Amount": 1 } ] } },
+        { "Id": "LOW", "ProfileField": "GradeBandId", "ProfileValue": "LOW", "Effect": { "Stats": [ { "Stat": "Intellect", "Amount": -2 }, { "Stat": "Stamina", "Amount": 5 }, { "Stat": "Willpower", "Amount": 4 } ] } },
+        { "Id": "UNKNOWN", "ProfileField": "GradeBandId", "ProfileValue": "UNKNOWN", "Effect": { "Stats": [ { "Stat": "Intellect", "Amount": 2 }, { "Stat": "Stamina", "Amount": 3 }, { "Stat": "Willpower", "Amount": 2 } ] } }
+      ] },
+      { "Id": "SUBJECT", "Options": [
+        { "Id": "KOREAN", "ProfileField": "FavoriteSubjectId", "ProfileValue": "KOREAN", "Effect": { "Stats": [ { "Stat": "Empathy", "Amount": 2 } ], "Proficiencies": [ { "Proficiency": "Humanities", "Level": 1 } ], "Npcs": [ { "NpcId": "NPC_TEACHER", "Affinity": 5 } ] } },
+        { "Id": "MATH_SCI", "ProfileField": "FavoriteSubjectId", "ProfileValue": "MATH_SCI", "Effect": { "Stats": [ { "Stat": "Intellect", "Amount": 2 } ], "Proficiencies": [ { "Proficiency": "Engineering", "Level": 1 } ] } },
+        { "Id": "PE", "ProfileField": "FavoriteSubjectId", "ProfileValue": "PE", "Effect": { "Stats": [ { "Stat": "Strength", "Amount": 2 } ], "Proficiencies": [ { "Proficiency": "SelfDefense", "Level": 1 } ] } },
+        { "Id": "TECH_HOME", "ProfileField": "FavoriteSubjectId", "ProfileValue": "TECH_HOME", "Effect": { "Stats": [ { "Stat": "Craft", "Amount": 2 } ], "Proficiencies": [ { "Proficiency": "Cooking", "Level": 1 } ] } },
+        { "Id": "BIO", "ProfileField": "FavoriteSubjectId", "ProfileValue": "BIO", "Effect": { "Stats": [ { "Stat": "Intellect", "Amount": 2 } ], "Proficiencies": [ { "Proficiency": "Medicine", "Level": 1 } ] } },
+        { "Id": "NONE", "ProfileField": "FavoriteSubjectId", "ProfileValue": "NONE", "Effect": { "Stats": [ { "Stat": "Willpower", "Amount": 3 } ], "Proficiencies": [ { "Proficiency": "Mind", "Level": 1 } ] } }
+      ] },
+      { "Id": "CLUB", "Options": [
+        { "Id": "TRACK", "ProfileField": "ClubId", "ProfileValue": "TRACK", "Effect": { "Stats": [ { "Stat": "Agility", "Amount": 3 }, { "Stat": "Stamina", "Amount": 2 } ], "AddTraits": [ "TRAIT_SPRINTER" ] } },
+        { "Id": "COOKING", "ProfileField": "ClubId", "ProfileValue": "COOKING", "Effect": { "Stats": [ { "Stat": "Craft", "Amount": 3 }, { "Stat": "Empathy", "Amount": 2 } ], "AddTraits": [ "TRAIT_FRUGAL" ] } },
+        { "Id": "SCIENCE", "ProfileField": "ClubId", "ProfileValue": "SCIENCE", "Effect": { "Stats": [ { "Stat": "Intellect", "Amount": 3 }, { "Stat": "Craft", "Amount": 2 } ], "AddTraits": [ "TRAIT_TINKERER" ] } },
+        { "Id": "LIBRARY", "ProfileField": "ClubId", "ProfileValue": "LIBRARY", "Effect": { "Stats": [ { "Stat": "Intellect", "Amount": 3 }, { "Stat": "Willpower", "Amount": 2 } ], "AddTraits": [ "TRAIT_BOOKWORM" ] } },
+        { "Id": "ART", "ProfileField": "ClubId", "ProfileValue": "ART", "Effect": { "Stats": [ { "Stat": "Craft", "Amount": 3 }, { "Stat": "Empathy", "Amount": 2 } ], "AddTraits": [ "TRAIT_KEEN_EYE" ] } },
+        { "Id": "BROADCAST", "ProfileField": "ClubId", "ProfileValue": "BROADCAST", "Effect": { "Stats": [ { "Stat": "Leadership", "Amount": 3 }, { "Stat": "Empathy", "Amount": 2 } ], "AddTraits": [ "TRAIT_FREQUENCY" ] } },
+        { "Id": "HEALTH", "ProfileField": "ClubId", "ProfileValue": "HEALTH", "Effect": { "Stats": [ { "Stat": "Intellect", "Amount": 3 }, { "Stat": "Craft", "Amount": 2 } ], "AddTraits": [ "TRAIT_FIRST_AID" ] } },
+        { "Id": "HOME", "ProfileField": "ClubId", "ProfileValue": "HOME", "Effect": { "Stats": [ { "Stat": "Agility", "Amount": 3 }, { "Stat": "Willpower", "Amount": 2 } ], "AddTraits": [ "TRAIT_SHADOW" ] } }
+      ] },
+      { "Id": "MIND", "Options": [
+        { "Id": "LAUGH", "Effect": { "Stats": [ { "Stat": "Willpower", "Amount": 4 } ], "Hidden": [ { "Hidden": "SelfAwareness", "Amount": -10 }, { "Hidden": "TraumaRecovery", "Amount": -5 } ], "SetFlags": [ "MIND_LAUGH" ] } },
+        { "Id": "HURRY", "Effect": { "Stats": [ { "Stat": "Agility", "Amount": 4 } ], "Hidden": [ { "Hidden": "Isolation", "Amount": 15 } ], "SetFlags": [ "MIND_HURRY" ] } },
+        { "Id": "TELL", "Effect": { "Stats": [ { "Stat": "Empathy", "Amount": 4 } ], "Hidden": [ { "Hidden": "Hope", "Amount": 15 } ], "SetFlags": [ "TOLD_FRIEND" ] } },
+        { "Id": "FACE", "Effect": { "Stats": [ { "Stat": "Willpower", "Amount": 6 } ], "Vitals": [ { "Vital": "Stress", "Amount": 10 } ], "SetFlags": [ "MIND_FACE" ] } }
+      ] },
+      { "Id": "PROMISE", "Options": [
+        { "Id": "YES", "Effect": { "Hidden": [ { "Hidden": "Hope", "Amount": 5 } ], "SetFlags": [ "PROMISE_YES" ] } },
+        { "Id": "LATER", "Effect": { "SetFlags": [ "PROMISE_LATER" ] } }
+      ] }
+    ]
+  }
+}

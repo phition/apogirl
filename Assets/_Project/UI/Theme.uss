@@ -292,3 +292,29 @@ Button.selected { border-color: var(--accent); background-color: var(--accent-so
 .title-buttons { width: 320px; }
 .title-button { height: 46px; margin: 5px 0; font-size: 19px; }
 .title-message { color: var(--text-dim); margin-top: 12px; }
+
+/* ── M4: 프롤로그 입력, 출정 준비 ── */
+.prologue-input {
+    width: 90%;
+    max-width: 1100px;
+    margin-bottom: 8px;
+    padding: 14px 20px;
+    background-color: rgba(30, 32, 36, 0.97);
+    border-color: var(--accent);
+    border-width: 1px;
+    border-radius: 8px;
+}
+.prologue-input-title { color: var(--accent); margin-bottom: 8px; }
+.prologue-row { flex-direction: row; align-items: center; margin-bottom: 6px; }
+.prologue-field { flex-grow: 1; min-width: 200px; }
+.prologue-axis { min-width: 120px; height: 34px; }
+.prologue-axis.selected { background-color: var(--accent-soft); }
+.record-card-line { white-space: normal; margin-bottom: 2px; }
+
+.prep-row { flex-direction: row; align-items: center; margin-bottom: 4px; flex-wrap: wrap; }
+.prep-row > Label { min-width: 90px; }
+.prep-field { min-width: 220px; }
+.prep-quick { min-width: 130px; }
+.prep-info { color: var(--text-dim); margin-left: 8px; font-size: 14px; }
+.title-screen .overlay { position: absolute; }
+.title-screen .dialogue { position: absolute; }

@@ -36,9 +36,10 @@ namespace ApoGirl.Presentation.Screens
         {
             _buttons.Clear();
             _message.text = "";
-            Add(Loc.T("title.new_game"), () =>
+            Add(Loc.T("title.new_game"), () => StartCoroutine(RunPrologue()));
+            Add(Loc.T("title.quick_start"), () =>
             {
-                _session.NewGame(Environment.TickCount);
+                _session.NewGame(Environment.TickCount, null, _session.Definitions.Extras.Prologue.Common);
                 GameApp.GoTo(GameApp.HubScene);
             });
 
@@ -47,6 +48,42 @@ namespace ApoGirl.Presentation.Screens
             Add(Loc.T("title.load"), ShowLoad);
             Add(Loc.T("title.quit"), Quit);
         }
+
+        /// <summary>0막 프롤로그 → 새 게임 → 허브 (Yarn 프로젝트가 없으면 빠른 시작).</summary>
+        private System.Collections.IEnumerator RunPrologue()
+        {
+            var project = Resources.Load<Yarn.Unity.YarnProject>(HubScreen.YarnProjectResource);
+            if (project == null || project.Program == null || !project.Program.Nodes.ContainsKey(PrologueFlow.StartNode))
+            {
+                Debug.LogWarning("프롤로그 대본이 없어 빠른 시작으로 진행");
+                _session.NewGame(Environment.TickCount);
+                GameApp.GoTo(GameApp.HubScene);
+                yield break;
+            }
+
+            _buttons.AddToClassList("hidden");
+            var root = GetComponent<UIDocument>().rootVisualElement;
+            var flow = new PrologueFlow(root, _session, project);
+            _advance = flow.Advance;
+            yield return flow.Run(destroyCancellationToken);
+            _advance = null;
+            GameApp.GoTo(GameApp.HubScene);
+        }
+
+        private void Update()
+        {
+            var keyboard = UnityEngine.InputSystem.Keyboard.current;
+            if (keyboard != null && (keyboard.spaceKey.wasPressedThisFrame || keyboard.enterKey.wasPressedThisFrame))
+            {
+                var root = GetComponent<UIDocument>().rootVisualElement;
+                if (root.Q("prologue-input") is VisualElement input && input.ClassListContains("hidden"))
+                {
+                    _advance?.Invoke();
+                }
+            }
+        }
+
+        private System.Action _advance;
 
         private void ShowLoad()
         {

@@ -1,0 +1,31 @@
+{
+  "Traits": [
+    { "Id": "TRAIT_SPRINTER", "Modifiers": [ { "Kind": "RunSpeed", "Value": 0.15 } ] },
+    { "Id": "TRAIT_FRUGAL", "Modifiers": [ { "Kind": "FoodSaving", "Value": 1 } ] },
+    { "Id": "TRAIT_TINKERER", "Modifiers": [ { "Kind": "CheckBonus", "Key": "Engineering", "Value": 0.1 } ] },
+    { "Id": "TRAIT_BOOKWORM", "Modifiers": [ { "Kind": "EducationGain", "Value": 0.1 } ] },
+    { "Id": "TRAIT_KEEN_EYE", "Modifiers": [ { "Kind": "SearchSpeed", "Value": 0.2 } ] },
+    { "Id": "TRAIT_FREQUENCY", "Modifiers": [ { "Kind": "CheckBonus", "Key": "Humanities", "Value": 0.05 } ] },
+    { "Id": "TRAIT_FIRST_AID", "Modifiers": [ { "Kind": "CheckBonus", "Key": "Medicine", "Value": 0.1 } ] },
+    { "Id": "TRAIT_SHADOW", "Modifiers": [ { "Kind": "NoiseMultiplier", "Value": -0.2 }, { "Kind": "StealthBonus", "Value": 0.1 } ] },
+
+    { "Id": "PT_E", "Modifiers": [] },
+    { "Id": "PT_I", "Modifiers": [ { "Kind": "RestRecovery", "Value": 0.1 } ] },
+    { "Id": "PT_S", "Modifiers": [ { "Kind": "SearchSpeed", "Value": 0.1 } ] },
+    { "Id": "PT_N", "Modifiers": [ { "Kind": "CheckBonus", "Key": "Humanities", "Value": 0.03 } ] },
+    { "Id": "PT_T", "Modifiers": [ { "Kind": "ExpeditionStress", "Value": -0.1 } ] },
+    { "Id": "PT_F", "Modifiers": [] },
+    { "Id": "PT_J", "Modifiers": [] },
+    { "Id": "PT_P", "Modifiers": [ { "Kind": "GreatSuccessBonus", "Value": 0.05 } ] }
+  ],
+  "Facilities": [
+    { "Id": "STORAGE", "MaxLevel": 1 },
+    { "Id": "CLASSROOM", "MaxLevel": 1 },
+    { "Id": "INFIRMARY", "MaxLevel": 1 },
+    { "Id": "ROOFTOP", "MaxLevel": 1 },
+    { "Id": "BROADCAST", "MaxLevel": 1 }
+  ],
+  "Npcs": [
+    { "Id": "NPC_DOHYEON", "DefaultRole": "student" }
+  ]
+}

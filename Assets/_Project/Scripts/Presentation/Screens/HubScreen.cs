@@ -43,6 +43,7 @@ namespace ApoGirl.Presentation.Screens
         private WeekSummary _pendingSummary;
         private int _fontIndex = 1;
         private DialogueView _dialogueView;
+        private ExpeditionPrepView _prep;
         private EventDialoguePlayer _dialoguePlayer;
 
         /// <summary>Yarn 프로젝트 (Resources/Dialogue/ApoGirl.yarnproject).</summary>
@@ -68,6 +69,7 @@ namespace ApoGirl.Presentation.Screens
             _card = new CardOverlay(_root);
             _debug = new DebugPanelView(_root.Q("debug-panel"), _session, ForceEvent);
             _dialogueView = new DialogueView(_root);
+            _prep = new ExpeditionPrepView(_session, _card);
             var yarnProject = Resources.Load<Yarn.Unity.YarnProject>(YarnProjectResource);
             if (yarnProject != null && yarnProject.Program != null)
             {
@@ -92,6 +94,23 @@ namespace ApoGirl.Presentation.Screens
             {
                 ShowEnd();
             }
+            else if (_session.HasPendingOpening)
+            {
+                StartCoroutine(OpeningRoutine());
+            }
+        }
+
+        /// <summary>새 게임 직후: 1막 시작 이벤트 (선생님과의 만남).</summary>
+        private IEnumerator OpeningRoutine()
+        {
+            yield return null;
+            _session.StartOpening();
+            while (_session.HasPendingEvent)
+            {
+                yield return PlayPendingEvent();
+            }
+
+            Refresh();
         }
 
         private void OnDisable()
@@ -195,7 +214,14 @@ namespace ApoGirl.Presentation.Screens
                 return Loc.T("teacher.sleep_debt");
             }
 
-            return hasWarnings ? Loc.T("teacher.warn") : Loc.T("teacher.idle." + state.Calendar.Week % 4);
+            if (hasWarnings)
+            {
+                return Loc.T("teacher.warn");
+            }
+
+            var line = ApoGirl.Core.Rules.LineRules.Pick(state, _session.Definitions, ApoGirl.Core.Definitions.LineKind.TeacherComment,
+                ApoGirl.Core.Events.EventContext.FromCalendar(state));
+            return line != null ? Loc.T(line.TextKey) : Loc.T("teacher.idle." + state.Calendar.Week % 4);
         }
 
         // ── 실행 ──
@@ -209,7 +235,14 @@ namespace ApoGirl.Presentation.Screens
                 var outcome = _session.Step();
                 if (outcome.AwaitingExpedition)
                 {
-                    // 실시간 탐험: 허브 UI를 숨기고 탐험 씬을 추가 로드 → 결과를 세션에 반영
+                    // 출정 준비 (목적지·예보·로드아웃) → 실시간 탐험: 허브 UI를 숨기고 탐험 씬을 추가 로드 → 결과를 세션에 반영
+                    var departed = false;
+                    _prep.Show(outcome.ExpeditionRequest, () => departed = true);
+                    while (!departed)
+                    {
+                        yield return null;
+                    }
+
                     ExpeditionResult expeditionResult = null;
                     _root.style.display = DisplayStyle.None;
                     yield return GameApp.RunExpedition(outcome.ExpeditionRequest, result => expeditionResult = result);
@@ -403,6 +436,11 @@ namespace ApoGirl.Presentation.Screens
                 lines.Add(Loc.T("result.consecutive"));
             }
 
+            if (outcome.Raid != null)
+            {
+                lines.Add(Loc.F(outcome.Raid.Repelled ? "result.raid_repelled" : "result.raid_breached", outcome.Raid.Strength, outcome.Raid.Power));
+            }
+
             if (outcome.Expedition != null)
             {
                 lines.Add(Loc.T("result.expedition_" + outcome.Expedition.Status));
@@ -424,7 +462,15 @@ namespace ApoGirl.Presentation.Screens
 
         private void ShowSummary(WeekSummary summary, System.Action onClosed)
         {
-            var lines = UiText.DeltaLines(summary.Delta);
+            var lines = new List<string>();
+            var diary = Loc.Lookup(Loc.UiTable, summary.DiaryKey);
+            if (!string.IsNullOrEmpty(diary))
+            {
+                lines.Add(Loc.F("summary.diary", diary));
+                lines.Add("");
+            }
+
+            lines.AddRange(UiText.DeltaLines(summary.Delta));
             if (summary.StatusAfter == GameStatus.Playing)
             {
                 lines.Add("");

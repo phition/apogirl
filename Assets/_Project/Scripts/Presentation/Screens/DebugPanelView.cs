@@ -56,6 +56,27 @@ namespace ApoGirl.Presentation.Screens
                 Refresh();
             });
 
+            Add("debug.ui_all", () =>
+            {
+                var flags = _session.State.Flags;
+                if (!flags.Remove("UI_ALL")) flags.Add("UI_ALL");
+                Refresh();
+            });
+            Add("debug.unlock_all", () =>
+            {
+                foreach (var flag in new[] { "LOC_SCHOOL_DAY", "NIGHT_RUNS", "LOC_STORE", "LOC_PHARMACY", "UI_ALL", "UI_DEFENSE", "CRUTCH_PLAN", "POWER_PLAN" })
+                {
+                    _session.State.Flags.Add(flag);
+                }
+
+                foreach (var facility in new[] { "STORAGE", "CLASSROOM", "INFIRMARY", "ROOFTOP", "BROADCAST" })
+                {
+                    _session.State.Base.Facilities[facility] = 1;
+                }
+
+                _session.DebugChangeResource(ResourceType.Materials, 0);
+            });
+
             Add("debug.events_interactive", () =>
             {
                 _session.InteractiveEvents = !_session.InteractiveEvents;

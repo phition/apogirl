@@ -71,6 +71,19 @@ namespace ApoGirl.Presentation.Text
                 }
             }
 
+            if (delta.Defense != 0) lines.Add(Loc.F("result.defense", Signed(delta.Defense)));
+            if (delta.Threat != 0) lines.Add(Loc.F("result.threat", Signed(delta.Threat)));
+            foreach (var facility in delta.FacilitiesOpened)
+            {
+                lines.Add(Loc.F("result.facility_opened", Loc.T("facility." + facility)));
+            }
+
+            if (delta.PowerRestored) lines.Add(Loc.T("result.power_restored"));
+            if (delta.ItemsLost.Count > 0)
+            {
+                lines.Add(Loc.F("result.items_lost", string.Join("  ", delta.ItemsLost.Select(i => Loc.Item(i.ItemId) + " ×" + i.Count))));
+            }
+
             if (delta.ItemsGained.Count > 0)
             {
                 lines.Add(Loc.F("result.items", string.Join("  ", delta.ItemsGained.Select(i => Loc.Item(i.ItemId) + " ×" + i.Count))));

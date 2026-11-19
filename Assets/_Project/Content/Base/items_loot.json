@@ -1,0 +1,88 @@
+{
+  "Items": [
+    { "Id": "ITEM_CANNED_FOOD", "Weight": 0.4, "Noise": 0.08, "Value": 3, "ResourceYield": [ { "Resource": "Food", "Amount": 2 } ] },
+    { "Id": "ITEM_SNACK", "Weight": 0.2, "Noise": 0.04, "Value": 1, "ResourceYield": [ { "Resource": "Food", "Amount": 1 } ], "Slot": "Consumable", "UseStress": 5 },
+    { "Id": "ITEM_INSTANT_NOODLE", "Weight": 0.15, "Noise": 0.04, "Value": 1, "ResourceYield": [ { "Resource": "Food", "Amount": 1 } ] },
+    { "Id": "ITEM_WATER_BOTTLE", "Height": 2, "Weight": 0.6, "Noise": 0.12, "Value": 2, "ResourceYield": [ { "Resource": "Water", "Amount": 2 } ] },
+    { "Id": "ITEM_DRINK", "Weight": 0.35, "Noise": 0.08, "Value": 1, "ResourceYield": [ { "Resource": "Water", "Amount": 1 } ], "Slot": "Consumable", "UseStress": 3, "UseHp": 3 },
+    { "Id": "ITEM_BANDAGE", "Weight": 0.1, "Noise": 0.02, "Value": 2, "ResourceYield": [ { "Resource": "Medicine", "Amount": 1 } ], "Slot": "Consumable", "UseHp": 20 },
+    { "Id": "ITEM_PAINKILLER", "Weight": 0.05, "Noise": 0.01, "Value": 4, "Grade": "Rare", "ResourceYield": [ { "Resource": "Medicine", "Amount": 1 } ], "Slot": "Consumable", "UseHp": 5, "UseStress": 15 },
+    { "Id": "ITEM_MEDKIT", "Width": 2, "Weight": 0.8, "Noise": 0.1, "Value": 8, "Grade": "Rare", "ResourceYield": [ { "Resource": "Medicine", "Amount": 4 } ] },
+    { "Id": "ITEM_ANTIBIOTIC", "Weight": 0.05, "Noise": 0.01, "Value": 6, "Grade": "Rare", "ResourceYield": [ { "Resource": "Medicine", "Amount": 2 } ] },
+    { "Id": "ITEM_VITAMIN", "Weight": 0.1, "Noise": 0.05, "Value": 2, "ResourceYield": [ { "Resource": "Medicine", "Amount": 1 } ] },
+    { "Id": "ITEM_SCRAP", "Width": 2, "Height": 2, "Weight": 1.5, "Noise": 0.3, "Value": 1, "ResourceYield": [ { "Resource": "Materials", "Amount": 2 } ] },
+    { "Id": "ITEM_DUCT_TAPE", "Weight": 0.3, "Noise": 0.03, "Value": 2, "ResourceYield": [ { "Resource": "Materials", "Amount": 2 } ] },
+    { "Id": "ITEM_BATTERY", "Weight": 0.2, "Noise": 0.04, "Value": 2, "ResourceYield": [ { "Resource": "Power", "Amount": 1 } ] },
+    { "Id": "ITEM_LIGHTER", "Weight": 0.05, "Noise": 0.02, "Value": 2, "ResourceYield": [ { "Resource": "Fuel", "Amount": 1 } ] },
+    { "Id": "ITEM_TEXTBOOK", "Width": 2, "Weight": 0.8, "Noise": 0.16, "Value": 2, "ResourceYield": [ { "Resource": "Intel", "Amount": 1 } ] },
+
+    { "Id": "ITEM_BAG_SCHOOL", "Width": 2, "Height": 2, "Weight": 0.6, "Value": 3, "Slot": "Backpack", "GridWidth": 5, "GridHeight": 4 },
+    { "Id": "ITEM_BAG_HIKING", "Width": 2, "Height": 3, "Weight": 1.2, "Value": 6, "Grade": "Rare", "Slot": "Backpack", "GridWidth": 6, "GridHeight": 5, "MoveSpeedMultiplier": 0.95, "NoiseMultiplier": 1.05 },
+    { "Id": "ITEM_BAG_TOTE", "Width": 2, "Height": 1, "Weight": 0.2, "Value": 1, "Slot": "Backpack", "GridWidth": 4, "GridHeight": 3, "MoveSpeedMultiplier": 1.05, "NoiseMultiplier": 0.9 },
+
+    { "Id": "ITEM_WEAPON_MOP", "Height": 3, "Weight": 0.9, "Noise": 0.2, "Value": 1, "Slot": "Weapon", "MaxDurability": 6, "WeaponPower": 1, "AttackNoise": 5, "AttackCooldown": 0.9, "StunSeconds": 1.6 },
+    { "Id": "ITEM_WEAPON_PIPE", "Height": 3, "Weight": 1.6, "Noise": 0.4, "Value": 4, "Slot": "Weapon", "MaxDurability": 14, "WeaponPower": 2, "AttackNoise": 7, "AttackCooldown": 1.1, "StunSeconds": 2.0 },
+    { "Id": "ITEM_WEAPON_BAT", "Height": 3, "Weight": 1.0, "Noise": 0.25, "Value": 5, "Grade": "Rare", "Slot": "Weapon", "MaxDurability": 10, "WeaponPower": 2, "AttackNoise": 6, "AttackCooldown": 1.0, "StunSeconds": 2.2 },
+
+    { "Id": "ITEM_TOOL_FLASHLIGHT", "Weight": 0.3, "Noise": 0.05, "Value": 4, "Slot": "Tool", "Tool": "Flashlight" },
+    { "Id": "ITEM_TOOL_CROWBAR", "Height": 2, "Weight": 1.3, "Noise": 0.35, "Value": 5, "Grade": "Rare", "Slot": "Tool", "Tool": "Crowbar" },
+
+    { "Id": "ITEM_ARMOR_GUARD", "Width": 2, "Weight": 0.7, "Value": 3, "Slot": "Armor", "DamageReduction": 0.15 },
+    { "Id": "ITEM_ARMOR_PADDING", "Width": 2, "Height": 2, "Weight": 1.4, "Value": 4, "Slot": "Armor", "DamageReduction": 0.3, "NoiseMultiplier": 1.1, "MoveSpeedMultiplier": 0.95 }
+  ],
+
+  "LootTables": [
+    { "Id": "LOOT_SCHOOL_GENERAL", "MinRolls": 1, "MaxRolls": 2, "EmptyChance": 0.2,
+      "Entries": [ { "ItemId": "ITEM_SNACK", "Weight": 5 }, { "ItemId": "ITEM_WATER_BOTTLE", "Weight": 3 }, { "ItemId": "ITEM_SCRAP", "Weight": 3 }, { "ItemId": "ITEM_BATTERY", "Weight": 2 }, { "ItemId": "ITEM_BANDAGE", "Weight": 2 }, { "ItemId": "ITEM_TEXTBOOK", "Weight": 1 } ] },
+    { "Id": "LOOT_SCHOOL_LOCKER", "MinRolls": 1, "MaxRolls": 3, "EmptyChance": 0.15,
+      "Entries": [ { "ItemId": "ITEM_SNACK", "Weight": 6 }, { "ItemId": "ITEM_CANNED_FOOD", "Weight": 2 }, { "ItemId": "ITEM_WATER_BOTTLE", "Weight": 3 }, { "ItemId": "ITEM_PAINKILLER", "Weight": 1 }, { "ItemId": "ITEM_BANDAGE", "Weight": 2 }, { "ItemId": "ITEM_ARMOR_PADDING", "Weight": 1 } ] },
+    { "Id": "LOOT_SCHOOL_TEACHER", "MinRolls": 1, "MaxRolls": 2, "EmptyChance": 0.1,
+      "Entries": [ { "ItemId": "ITEM_CANNED_FOOD", "Weight": 3 }, { "ItemId": "ITEM_PAINKILLER", "Weight": 2 }, { "ItemId": "ITEM_BATTERY", "Weight": 3 }, { "ItemId": "ITEM_TEXTBOOK", "Weight": 2 }, { "ItemId": "ITEM_TOOL_FLASHLIGHT", "Weight": 1 } ] },
+    { "Id": "LOOT_SCHOOL_CLEANING", "MinRolls": 1, "MaxRolls": 2, "EmptyChance": 0.2,
+      "Entries": [ { "ItemId": "ITEM_SCRAP", "Weight": 3 }, { "ItemId": "ITEM_DUCT_TAPE", "Weight": 2 }, { "ItemId": "ITEM_WEAPON_MOP", "Weight": 2 }, { "ItemId": "ITEM_WEAPON_PIPE", "Weight": 1 } ] },
+
+    { "Id": "LOOT_TUTORIAL", "MinRolls": 1, "MaxRolls": 1, "EmptyChance": 0.0,
+      "Entries": [ { "ItemId": "ITEM_SNACK", "Weight": 3 }, { "ItemId": "ITEM_WATER_BOTTLE", "Weight": 3 }, { "ItemId": "ITEM_BANDAGE", "Weight": 1 } ] },
+    { "Id": "LOOT_TUTORIAL_GEAR", "MinRolls": 1, "MaxRolls": 1, "EmptyChance": 0.0,
+      "Entries": [ { "ItemId": "ITEM_ARMOR_GUARD", "Weight": 1 } ] },
+
+    { "Id": "LOOT_STORE_SHELF", "MinRolls": 1, "MaxRolls": 3, "EmptyChance": 0.25,
+      "Entries": [ { "ItemId": "ITEM_SNACK", "Weight": 5 }, { "ItemId": "ITEM_INSTANT_NOODLE", "Weight": 5 }, { "ItemId": "ITEM_CANNED_FOOD", "Weight": 3 }, { "ItemId": "ITEM_DRINK", "Weight": 3 }, { "ItemId": "ITEM_LIGHTER", "Weight": 1 }, { "ItemId": "ITEM_BATTERY", "Weight": 1 } ] },
+    { "Id": "LOOT_STORE_FRIDGE", "MinRolls": 1, "MaxRolls": 3, "EmptyChance": 0.2,
+      "Entries": [ { "ItemId": "ITEM_DRINK", "Weight": 5 }, { "ItemId": "ITEM_WATER_BOTTLE", "Weight": 4 } ] },
+    { "Id": "LOOT_STORE_STOCK", "MinRolls": 2, "MaxRolls": 3, "EmptyChance": 0.1,
+      "Entries": [ { "ItemId": "ITEM_CANNED_FOOD", "Weight": 4 }, { "ItemId": "ITEM_INSTANT_NOODLE", "Weight": 4 }, { "ItemId": "ITEM_WATER_BOTTLE", "Weight": 3 }, { "ItemId": "ITEM_DUCT_TAPE", "Weight": 2 }, { "ItemId": "ITEM_TOOL_CROWBAR", "Weight": 1 }, { "ItemId": "ITEM_BAG_TOTE", "Weight": 1 } ] },
+    { "Id": "LOOT_STORE_COUNTER", "MinRolls": 1, "MaxRolls": 2, "EmptyChance": 0.2,
+      "Entries": [ { "ItemId": "ITEM_LIGHTER", "Weight": 3 }, { "ItemId": "ITEM_BATTERY", "Weight": 3 }, { "ItemId": "ITEM_PAINKILLER", "Weight": 1 }, { "ItemId": "ITEM_SNACK", "Weight": 2 } ] },
+    { "Id": "LOOT_STORE_OFFICE", "MinRolls": 1, "MaxRolls": 2, "EmptyChance": 0.05,
+      "Entries": [ { "ItemId": "ITEM_BAG_HIKING", "Weight": 2 }, { "ItemId": "ITEM_WEAPON_BAT", "Weight": 2 }, { "ItemId": "ITEM_CANNED_FOOD", "Weight": 3 }, { "ItemId": "ITEM_BATTERY", "Weight": 2 } ] },
+
+    { "Id": "LOOT_PHARMACY_SHELF", "MinRolls": 1, "MaxRolls": 2, "EmptyChance": 0.3,
+      "Entries": [ { "ItemId": "ITEM_BANDAGE", "Weight": 4 }, { "ItemId": "ITEM_VITAMIN", "Weight": 4 }, { "ItemId": "ITEM_PAINKILLER", "Weight": 2 }, { "ItemId": "ITEM_DRINK", "Weight": 2 } ] },
+    { "Id": "LOOT_PHARMACY_CLINIC", "MinRolls": 1, "MaxRolls": 2, "EmptyChance": 0.2,
+      "Entries": [ { "ItemId": "ITEM_BANDAGE", "Weight": 3 }, { "ItemId": "ITEM_PAINKILLER", "Weight": 3 }, { "ItemId": "ITEM_MEDKIT", "Weight": 1 }, { "ItemId": "ITEM_ANTIBIOTIC", "Weight": 1 } ] },
+    { "Id": "LOOT_PHARMACY_STOCK", "MinRolls": 2, "MaxRolls": 3, "EmptyChance": 0.05,
+      "Entries": [ { "ItemId": "ITEM_MEDKIT", "Weight": 3 }, { "ItemId": "ITEM_ANTIBIOTIC", "Weight": 4 }, { "ItemId": "ITEM_PAINKILLER", "Weight": 3 } ] }
+  ],
+
+  "ExpeditionModels": [
+    { "Id": "LOC_TUTORIAL",
+      "Day": { "Resources": [ { "Resource": "Food", "Min": 2, "Max": 3 }, { "Resource": "Water", "Min": 2, "Max": 3 } ], "BaseDownChance": 0.0, "Fatigue": 8, "StressMin": 4, "StressMax": 6 },
+      "Night": { "Resources": [ { "Resource": "Food", "Min": 2, "Max": 3 } ], "BaseDownChance": 0.0, "Fatigue": 8, "StressMin": 6, "StressMax": 8 } },
+    { "Id": "LOC_SCHOOL_INTERIOR",
+      "Day": { "Resources": [ { "Resource": "Food", "Min": 6, "Max": 10 }, { "Resource": "Water", "Min": 4, "Max": 8 }, { "Resource": "Materials", "Min": 1, "Max": 3 } ], "BaseDownChance": 0.05, "Fatigue": 15, "StressMin": 6, "StressMax": 12, "ConscienceMax": 2 },
+      "Night": { "Resources": [ { "Resource": "Food", "Min": 8, "Max": 12 }, { "Resource": "Medicine", "Min": 0, "Max": 2 }, { "Resource": "Materials", "Min": 2, "Max": 4 } ], "BaseDownChance": 0.1, "Fatigue": 20, "StressMin": 15, "StressMax": 15, "DawnReturnChance": 0.2 } },
+    { "Id": "LOC_STORE",
+      "Day": { "Resources": [ { "Resource": "Food", "Min": 8, "Max": 12 }, { "Resource": "Water", "Min": 4, "Max": 7 }, { "Resource": "Fuel", "Min": 0, "Max": 1 } ], "BaseDownChance": 0.06, "Fatigue": 14, "StressMin": 6, "StressMax": 12, "ConscienceMax": 2 },
+      "Night": { "Resources": [ { "Resource": "Food", "Min": 9, "Max": 14 }, { "Resource": "Water", "Min": 4, "Max": 8 }, { "Resource": "Materials", "Min": 1, "Max": 2 } ], "BaseDownChance": 0.11, "Fatigue": 18, "StressMin": 14, "StressMax": 16, "DawnReturnChance": 0.15 } },
+    { "Id": "LOC_PHARMACY",
+      "Day": { "Resources": [ { "Resource": "Medicine", "Min": 2, "Max": 4 }, { "Resource": "Water", "Min": 1, "Max": 3 } ], "BaseDownChance": 0.08, "Fatigue": 16, "StressMin": 8, "StressMax": 14, "ConscienceMax": 1 },
+      "Night": { "Resources": [ { "Resource": "Medicine", "Min": 4, "Max": 7 } ], "BaseDownChance": 0.15, "Fatigue": 20, "StressMin": 16, "StressMax": 18, "DawnReturnChance": 0.25 } }
+  ],
+
+  "Enemies": [
+    { "Id": "ENEMY_WANDERER", "WalkSpeed": 1.0, "RunSpeed": 3.2, "SightRange": 7.0, "HearingMultiplier": 1.0, "AwarenessRate": 1.2, "Damage": 12, "HitCooldown": 1.2, "AttackRange": 0.7, "Toughness": 3 },
+    { "Id": "ENEMY_LISTENER", "WalkSpeed": 0.8, "RunSpeed": 3.0, "SightRange": 4.0, "HearingMultiplier": 2.0, "AwarenessRate": 1.0, "Damage": 10, "HitCooldown": 1.2, "AttackRange": 0.7, "Toughness": 3 },
+    { "Id": "ENEMY_WATCHER", "WalkSpeed": 0.9, "RunSpeed": 3.4, "SightRange": 10.0, "HearingMultiplier": 0.6, "AwarenessRate": 1.7, "Damage": 12, "HitCooldown": 1.1, "AttackRange": 0.7, "Toughness": 4 }
+  ]
+}
