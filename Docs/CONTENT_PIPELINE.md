@@ -76,7 +76,31 @@ SO 에셋과 문자열 테이블은 생성물이라 직접 고치지 않는다.
 - **일기·선생님 한마디**: `Lines`(Kind Diary/TeacherComment), 조건이 맞는 것 중 Priority가 가장 높은 것.
 - **프롤로그**: Yarn `PROLOGUE_START`(선택지 태그 `#choice:문항.선택지`, 입력 `<<input name|contact|birthday|personality>>`) → 생활기록부 카드 → `PROLOGUE_AFTER`.
 
-## 6. 테스트
+## 6. M5 엔딩 규칙
+
+- **엔딩**: `Content/Story/endings.json`의 `Endings`.
+  - 종류: Bad, Normal, Balanced, Specialized, Relationship, Narrative, Hidden
+  - `Priority`, `Condition`, `Score`(ValueKind·Key·Weight 목록), `CutKeys`(후일담 문장 키), `Color`(배경색)
+  - 제목은 UI 키 `ending.{Id}.title`.
+- **판정**
+  - 게임오버면 `EndCauses`가 종료 원인과 맞는 배드 엔딩을 고른다. 원인이 빈 배드 엔딩은 대체 엔딩이다.
+  - 구조면 조건을 만족한 엔딩 중 우선순위, 그다음 점수로 고른다.
+  - 원인·조건 없는 배드 엔딩 1개와 조건 없는 구조 엔딩 1개가 꼭 있어야 한다(검증 도구가 확인).
+- **종료 원인**: `END_CAUSE_EXPEDITION`, `END_CAUSE_RAID`, `END_CAUSE_STARVATION`, `END_CAUSE_COLLAPSE`(스트레스 `CollapseStress` 이상인 주가 `CollapseWeeks` 연속), `END_CAUSE_HP_ZERO`(그 밖).
+- **공통 레이어**: `Lines`의 Kind `EndingTeacher`·`EndingFriend`·`EndingCure`·`EndingTendency`.
+  - 구조 엔딩의 후일담 뒤에 종류마다 하나씩 붙는다.
+  - `EndingMoment`는 조건 맞는 줄 전부가 "1년의 기록"의 주요 장면이 된다.
+- **2~4막이 세울 플래그**(M6)
+  - 선생님: `TEACHER_CURED`, `TEACHER_LAST_LESSON`, `TEACHER_ISOLATED`, `TEACHER_EXPOSED`, `TEACHER_LEFT_BEHIND`
+  - 구조 거부 `CHOSE_TO_STAY`
+  - 가해자 `BULLY_FORGAVE`, `BULLY_SEPARATED`, `BULLY_RESCUED`
+  - 잠긴 집 `LEFT_SUPPLIES_LOCKED_HOUSE`
+  - 교육 태그 `TAG_TEACHING`
+  - 단서 접두어: `CURE_`(치료), `TRUTH_`(진실)
+- **조건 확장**: `NightRatio`, `DiaryCount`, `Companions`, `StatSpread`, `StatMin`, `BreakdownWeeks`, `ClueCount`(Key = 접두어).
+- **문장 치환**(후일담·기록): `{name}`, `{given}`, `{friend}`, 조사는 `{given:은/는}`처럼 쓴다.
+
+## 7. 테스트
 
 - EditMode `ContentPipelineTests`가 실제 원본(JSON + Yarn)을 검증하고, 10주 헤드리스 진행을 확인한다.
 - PlayMode `HubDialogue_RunsYarnNode_AndAppliesChoice`가 허브에서 대사 표시, 조사 처리, 선택 반영을 확인한다.

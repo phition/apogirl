@@ -358,7 +358,7 @@ Button.selected { border-color: var(--accent); background-color: var(--accent-so
     font-size: 26px;
     white-space: normal;
     -unity-text-align: middle-center;
-    max-width: 900px;
+    max-width: 1040px;
 }
 .ending-counter { color: var(--text-dim); font-size: 14px; margin-top: 28px; }
 .ending-hint { position: absolute; bottom: 24px; color: var(--text-dim); font-size: 14px; }
