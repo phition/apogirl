@@ -209,5 +209,11 @@ namespace ApoGirl.Core.Definitions
 
         /// <summary>어둠 속 손전등 없이 수색하면 걸리는 시간 배율.</summary>
         public float DarkSearchMultiplier = 1.6f;
+
+        /// <summary>어둠 속에서 플레이어가 맨눈으로 알아볼 수 있는 거리 (이 밖의 좀비·NPC는 화면에 그리지 않는다).</summary>
+        public float NightViewDistance = 3.5f;
+
+        /// <summary>손전등이 비추는 방향으로 보이는 거리.</summary>
+        public float FlashlightViewDistance = 9f;
     }
 }

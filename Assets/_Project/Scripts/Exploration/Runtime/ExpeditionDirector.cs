@@ -155,6 +155,22 @@ namespace ApoGirl.Exploration.Runtime
         /// <summary>디버그 (F5): 전체 시야 (조명 최대).</summary>
         public bool FullVision { get; private set; }
 
+        /// <summary>
+        /// 플레이어 화면에 이 좀비를 그리는가: 같은 공간에 있고, 어둠 속이면 가까이 있거나 손전등에 비춰질 때만.
+        /// 디버그 전체 시야(F5)·AI 표시(F3)에서는 모두 보인다.
+        /// </summary>
+        public bool IsVisibleToPlayer(ZombieUnit unit)
+        {
+            if (FullVision || DebugOverlay)
+            {
+                return true;
+            }
+
+            return PlayerViewRules.CanPlayerSee(
+                AreaId(CurrentArea), X, _facingRight ? 1 : -1, IsDark, FlashlightOn && !Hidden,
+                unit.AreaId, unit.X, _balance);
+        }
+
         /// <summary>좀비 눈에 띄는 정도: 낮 1, 어둠 0.6, 손전등 1.5.</summary>
         public float Visibility => !IsDark ? 1f : FlashlightOn ? _balance.FlashlightExposure : _balance.DarknessVisibility;
 
@@ -802,7 +818,7 @@ namespace ApoGirl.Exploration.Runtime
             _selfLight = glow.AddComponent<Light2D>();
             _selfLight.lightType = Light2D.LightType.Point;
             _selfLight.pointLightInnerRadius = 0.3f;
-            _selfLight.pointLightOuterRadius = 2.6f;
+            _selfLight.pointLightOuterRadius = _balance.NightViewDistance;
             _selfLight.intensity = 0.55f;
             _selfLight.color = new Color(0.8f, 0.85f, 1f);
         }
@@ -1106,6 +1122,14 @@ namespace ApoGirl.Exploration.Runtime
             foreach (var view in _zombieViews)
             {
                 var unit = view.Unit;
+                var visible = IsVisibleToPlayer(unit);
+                view.Body.gameObject.SetActive(visible);
+                if (!visible)
+                {
+                    view.Marker.gameObject.SetActive(false);
+                    continue;
+                }
+
                 var area = _areasById[unit.AreaId];
                 var origin = area.Root != null ? (Vector2)area.Root.transform.localPosition : area.Origin;
                 var dormant = unit.State == ZombieState.Dormant;

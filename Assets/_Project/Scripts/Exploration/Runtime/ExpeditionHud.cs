@@ -305,7 +305,7 @@ namespace ApoGirl.Exploration.Runtime
                 foreach (var unit in _director.Threat.Zombies)
                 {
                     var dormant = unit.State == ZombieState.Dormant;
-                    if (!dormant && !_director.DebugOverlay)
+                    if ((!dormant && !_director.DebugOverlay) || !_director.IsVisibleToPlayer(unit))
                     {
                         continue;
                     }
