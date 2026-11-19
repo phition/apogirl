@@ -94,3 +94,11 @@
 .exp-stir-bar .unity-progress-bar__progress { background-color: #c9584f; }
 .exp-stir-bar .unity-progress-bar__title { font-size: 12px; color: var(--text); }
 .exp-hidden { color: #9ad0ff; -unity-font-style: bold; margin-bottom: 6px; }
+
+.world-labels { position: absolute; left: 0; top: 0; right: 0; bottom: 0; }
+.zzz {
+    position: absolute;
+    font-size: 16px;
+    -unity-font-style: bold;
+    color: rgb(178, 204, 230);
+}

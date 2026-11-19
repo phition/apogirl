@@ -1,6 +1,7 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" editor-extension-mode="False">
     <Style src="Theme.uss" />
     <Style src="Expedition.uss" />
+    <ui:VisualElement name="world-labels" class="world-labels" picking-mode="Ignore" />
     <ui:VisualElement name="exp-root" class="exp-root font-normal" picking-mode="Ignore">
         <ui:VisualElement name="exp-top" class="exp-top" picking-mode="Ignore">
             <ui:VisualElement class="exp-location" picking-mode="Ignore">

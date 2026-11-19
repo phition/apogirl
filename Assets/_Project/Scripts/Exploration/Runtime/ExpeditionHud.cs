@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using ApoGirl.Core.Definitions;
 using ApoGirl.Core.Expedition;
@@ -38,6 +39,9 @@ namespace ApoGirl.Exploration.Runtime
         private readonly Label _noise;
         private readonly Label _hidden;
         private readonly ProgressBar _stirBar;
+        private readonly VisualElement _worldLabels;
+        private readonly VisualElement _root;
+        private readonly List<Label> _sleepLabels = new List<Label>();
         private PlacedItem _selected;
         private int _gridVersion = -1;
         private ExplorationTarget _shownContainer;
@@ -67,6 +71,8 @@ namespace ApoGirl.Exploration.Runtime
             _noise = root.Q<Label>("noise-label");
             _hidden = root.Q<Label>("hidden-label");
             _stirBar = root.Q<ProgressBar>("stir-bar");
+            _worldLabels = root.Q("world-labels");
+            _root = root;
 
             root.Q<Label>("backpack-title").text = Loc.T("exp.backpack");
             root.Q<Label>("controls-label").text = Loc.T("exp.controls");
@@ -137,6 +143,7 @@ namespace ApoGirl.Exploration.Runtime
             RefreshPrompt();
             RefreshLoot();
             RefreshGrid();
+            RefreshSleepLabels();
         }
 
         private void RefreshPrompt()
@@ -275,6 +282,79 @@ namespace ApoGirl.Exploration.Runtime
                     _gridVersion = -1;
                 });
                 _grid.Add(element);
+            }
+        }
+
+        /// <summary>
+        /// 잠든 좀비 머리 위 "Zzz". 군집 각성 게이지가 오를수록 주황 → 빨강으로 바뀌어 위험을 알린다.
+        /// </summary>
+        private void RefreshSleepLabels()
+        {
+            var camera = _director.ViewCamera;
+            var panel = _root.panel;
+            var used = 0;
+            if (camera != null && panel != null)
+            {
+                var threshold = _director.Definitions.Balance.StirThreshold;
+                var phase = (int)(Time.time / 0.5f);
+                foreach (var unit in _director.Threat.Zombies)
+                {
+                    if (unit.State != ZombieState.Dormant)
+                    {
+                        continue;
+                    }
+
+                    var world = _director.HeadPosition(unit);
+                    var viewport = camera.WorldToViewportPoint(world);
+                    if (viewport.z < 0f || viewport.x < -0.05f || viewport.x > 1.05f || viewport.y < -0.05f || viewport.y > 1.05f)
+                    {
+                        continue;
+                    }
+
+                    var label = Acquire(used++);
+                    var position = RuntimePanelUtils.CameraTransformWorldToPanel(panel, world, camera);
+                    label.style.left = position.x - 14f;
+                    label.style.top = position.y - 24f;
+                    label.text = SleepText(phase + unit.Id);
+
+                    var stir = 0f;
+                    if (unit.CrowdId >= 0 && unit.CrowdId < _director.Threat.Crowds.Count)
+                    {
+                        stir = _director.Threat.Crowds[unit.CrowdId].Stirring / threshold;
+                    }
+
+                    label.style.color = stir < 0.4f ? new Color(0.7f, 0.8f, 0.9f)
+                        : stir < 0.75f ? new Color(0.95f, 0.7f, 0.3f)
+                        : new Color(0.95f, 0.35f, 0.3f);
+                }
+            }
+
+            for (var i = 0; i < _sleepLabels.Count; i++)
+            {
+                _sleepLabels[i].style.display = i < used ? DisplayStyle.Flex : DisplayStyle.None;
+            }
+        }
+
+        private Label Acquire(int index)
+        {
+            while (_sleepLabels.Count <= index)
+            {
+                var label = new Label { pickingMode = PickingMode.Ignore };
+                label.AddToClassList("zzz");
+                _worldLabels.Add(label);
+                _sleepLabels.Add(label);
+            }
+
+            return _sleepLabels[index];
+        }
+
+        private static string SleepText(int step)
+        {
+            switch (((step % 3) + 3) % 3)
+            {
+                case 0: return "z";
+                case 1: return "zZ";
+                default: return "zZz";
             }
         }
 

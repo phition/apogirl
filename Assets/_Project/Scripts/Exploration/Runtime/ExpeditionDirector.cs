@@ -133,6 +133,17 @@ namespace ApoGirl.Exploration.Runtime
 
         public int AreaId(ExplorationArea area) => _areasById.IndexOf(area);
 
+        /// <summary>탐험 카메라 (HUD가 월드 위치를 화면 좌표로 바꿀 때 사용).</summary>
+        public Camera ViewCamera => _camera;
+
+        /// <summary>좀비 머리 위 월드 좌표 (Zzz·표시용).</summary>
+        public Vector3 HeadPosition(ZombieUnit unit)
+        {
+            var area = _areasById[unit.AreaId];
+            var origin = _world.TransformPoint(area.Origin);
+            return new Vector3(origin.x + unit.X, origin.y + 2.1f, 0f);
+        }
+
         /// <summary>HUD 위치 표시: "2층 복도 · 2-3 교실 앞" / "2-3 교실".</summary>
         public string LocationLabel
         {
@@ -891,10 +902,13 @@ namespace ApoGirl.Exploration.Runtime
                 var area = _areasById[unit.AreaId];
                 var origin = area.Root != null ? (Vector2)area.Root.transform.localPosition : area.Origin;
                 var dormant = unit.State == ZombieState.Dormant;
-                var size = dormant ? new Vector2(1.6f, 0.45f) : new Vector2(0.65f, 1.75f);
+
+                // 휴면도 선 채로 (고개 숙인 듯 살짝 낮게), 머리 위 Zzz는 HUD가 그린다
+                var size = dormant ? new Vector2(0.65f, 1.6f) : new Vector2(0.65f, 1.75f);
                 view.Body.localPosition = new Vector3(origin.x + unit.X - size.x / 2f, origin.y + 0.15f, 0f);
                 view.Body.localScale = new Vector3(size.x, size.y, 1f);
-                view.BodyRenderer.color = unit.State == ZombieState.Stunned ? new Color(0.35f, 0.4f, 0.55f)
+                view.BodyRenderer.color = dormant ? new Color(0.34f, 0.4f, 0.34f)
+                    : unit.State == ZombieState.Stunned ? new Color(0.35f, 0.4f, 0.55f)
                     : unit.State == ZombieState.Chase ? new Color(0.6f, 0.38f, 0.33f)
                     : new Color(0.42f, 0.5f, 0.4f);
 
