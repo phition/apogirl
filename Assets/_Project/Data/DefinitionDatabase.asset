@@ -43,3 +43,11 @@ MonoBehaviour:
   _enemies:
   - {fileID: 11400000, guid: e6a3c9c213481e642bcd64cd2057ea4a, type: 2}
   - {fileID: 11400000, guid: e75628b415011bf48b385cfe6dc11fcf, type: 2}
+  _events:
+  - {fileID: 11400000, guid: 94f75d4ca2f9c0548a3418e1428a4615, type: 2}
+  - {fileID: 11400000, guid: ff7032e0e07c6cf4ea7a74e01f42fc83, type: 2}
+  - {fileID: 11400000, guid: 2dcafd96d696329438745dbf8d3ff8d9, type: 2}
+  - {fileID: 11400000, guid: 3a9ff94e356331e4f89ed5592590fa92, type: 2}
+  - {fileID: 11400000, guid: d97c3e87d77aa394f970286867c319be, type: 2}
+  _npcs:
+  - {fileID: 11400000, guid: c0b1c536ba862ef44a12f6d8fb44c32a, type: 2}

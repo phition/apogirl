@@ -1,0 +1,245 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e24ce4e6e4507494299ec76a5be73c10, type: 3}
+  m_Name: EVT_NPC_SURVIVOR_A_01
+  m_EditorClassIdentifier: ApoGirl.Data::ApoGirl.Data.EventDefinitionAsset
+  _id: EVT_NPC_SURVIVOR_A_01
+  _definition:
+    Id: EVT_NPC_SURVIVOR_A_01
+    Kind: 0
+    Condition:
+      WeekMin: 2
+      WeekMax: 8
+      Days: 
+      Phase: 0
+      Seasons: 
+      Month: 0
+      DayOfMonth: 0
+      ActionCategories: 04000000i
+      ActionIds: []
+      FlagsAll: []
+      FlagsAny: []
+      FlagsNone: []
+      CluesAll: []
+      Checks: []
+      AnyChecks: []
+      NpcStatuses:
+      - NpcId: NPC_SURVIVOR_A
+        Status: 0
+    Priority: 20
+    Weight: 1
+    Once: 1
+    CooldownWeeks: 0
+    DialogueNode: 
+    OnShow:
+      Stats: []
+      Vitals: []
+      Resources: []
+      Hidden: []
+      SleepDebt: 0
+      Conscience: 0
+      SetFlags: []
+      ClearFlags: []
+      AddClues: []
+      EndingTags: []
+      Npcs:
+      - NpcId: NPC_SURVIVOR_A
+        Affinity: 0
+        Trust: 0
+        SetStatus: 1
+        SetRole: 
+      Items: []
+    Choices:
+    - Id: INVITE
+      TextKey: 
+      Condition:
+        WeekMin: 0
+        WeekMax: 0
+        Days: 
+        Phase: 0
+        Seasons: 
+        Month: 0
+        DayOfMonth: 0
+        ActionCategories: 
+        ActionIds: []
+        FlagsAll: []
+        FlagsAny: []
+        FlagsNone: []
+        CluesAll: []
+        Checks: []
+        AnyChecks: []
+        NpcStatuses: []
+      Costs: []
+      HasCheck: 0
+      Check:
+        BaseRate: 0.5
+        StatWeights: []
+        UsesProficiency: 0
+        Proficiency: 0
+        ProficiencyWeight: 0.05
+      Effect:
+        Stats: []
+        Vitals: []
+        Resources: []
+        Hidden:
+        - Hidden: 2
+          Amount: 3
+        SleepDebt: 0
+        Conscience: 0
+        SetFlags: []
+        ClearFlags: []
+        AddClues: []
+        EndingTags:
+        - Tag: TAG_COMMUNITY
+          Amount: 1
+        Npcs:
+        - NpcId: NPC_SURVIVOR_A
+          Affinity: 5
+          Trust: 3
+          SetStatus: 0
+          SetRole: 
+        Items: []
+      OnFailure:
+        Stats: []
+        Vitals: []
+        Resources: []
+        Hidden: []
+        SleepDebt: 0
+        Conscience: 0
+        SetFlags: []
+        ClearFlags: []
+        AddClues: []
+        EndingTags: []
+        Npcs: []
+        Items: []
+      NextEventId: EVT_NPC_SURVIVOR_A_02
+    - Id: SHARE
+      TextKey: 
+      Condition:
+        WeekMin: 0
+        WeekMax: 0
+        Days: 
+        Phase: 0
+        Seasons: 
+        Month: 0
+        DayOfMonth: 0
+        ActionCategories: 
+        ActionIds: []
+        FlagsAll: []
+        FlagsAny: []
+        FlagsNone: []
+        CluesAll: []
+        Checks: []
+        AnyChecks: []
+        NpcStatuses: []
+      Costs:
+      - Resource: 0
+        Amount: 2
+      HasCheck: 0
+      Check:
+        BaseRate: 0.5
+        StatWeights: []
+        UsesProficiency: 0
+        Proficiency: 0
+        ProficiencyWeight: 0.05
+      Effect:
+        Stats: []
+        Vitals: []
+        Resources: []
+        Hidden:
+        - Hidden: 2
+          Amount: 2
+        SleepDebt: 0
+        Conscience: 0
+        SetFlags:
+        - SURVIVOR_A_LEFT_WITH_FOOD
+        ClearFlags: []
+        AddClues: []
+        EndingTags: []
+        Npcs:
+        - NpcId: NPC_SURVIVOR_A
+          Affinity: 3
+          Trust: 1
+          SetStatus: 0
+          SetRole: 
+        Items: []
+      OnFailure:
+        Stats: []
+        Vitals: []
+        Resources: []
+        Hidden: []
+        SleepDebt: 0
+        Conscience: 0
+        SetFlags: []
+        ClearFlags: []
+        AddClues: []
+        EndingTags: []
+        Npcs: []
+        Items: []
+      NextEventId: 
+    - Id: LEAVE
+      TextKey: 
+      Condition:
+        WeekMin: 0
+        WeekMax: 0
+        Days: 
+        Phase: 0
+        Seasons: 
+        Month: 0
+        DayOfMonth: 0
+        ActionCategories: 
+        ActionIds: []
+        FlagsAll: []
+        FlagsAny: []
+        FlagsNone: []
+        CluesAll: []
+        Checks: []
+        AnyChecks: []
+        NpcStatuses: []
+      Costs: []
+      HasCheck: 0
+      Check:
+        BaseRate: 0.5
+        StatWeights: []
+        UsesProficiency: 0
+        Proficiency: 0
+        ProficiencyWeight: 0.05
+      Effect:
+        Stats: []
+        Vitals: []
+        Resources: []
+        Hidden:
+        - Hidden: 4
+          Amount: 2
+        SleepDebt: 0
+        Conscience: 0
+        SetFlags:
+        - SURVIVOR_A_IGNORED
+        ClearFlags: []
+        AddClues: []
+        EndingTags: []
+        Npcs: []
+        Items: []
+      OnFailure:
+        Stats: []
+        Vitals: []
+        Resources: []
+        Hidden: []
+        SleepDebt: 0
+        Conscience: 0
+        SetFlags: []
+        ClearFlags: []
+        AddClues: []
+        EndingTags: []
+        Npcs: []
+        Items: []
+      NextEventId: 

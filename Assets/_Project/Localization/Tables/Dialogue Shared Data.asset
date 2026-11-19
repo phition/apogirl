@@ -1,0 +1,236 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b11a58205ec3474ca216360e9fa74a8, type: 3}
+  m_Name: Dialogue Shared Data
+  m_EditorClassIdentifier: Unity.Localization::UnityEngine.Localization.Tables.SharedTableData
+  m_TableCollectionName: Dialogue
+  m_TableCollectionNameGuidString: 33f6960b278f4ad429ad72f31ea481ac
+  m_Entries:
+  - m_Id: 833896448
+    m_Key: line:1e541d6a
+    m_Metadata:
+      m_Items: []
+  - m_Id: 959725568
+    m_Key: line:88641a1d
+    m_Metadata:
+      m_Items: []
+  - m_Id: 963919872
+    m_Key: line:32351384
+    m_Metadata:
+      m_Items: []
+  - m_Id: 963919873
+    m_Key: line:a40514f3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 963919874
+    m_Key: line:0790706d
+    m_Metadata:
+      m_Items: []
+  - m_Id: 963919875
+    m_Key: line:91a0771a
+    m_Metadata:
+      m_Items: []
+  - m_Id: 963919876
+    m_Key: line:2bf17e83
+    m_Metadata:
+      m_Items: []
+  - m_Id: 963919877
+    m_Key: line:bdc179f4
+    m_Metadata:
+      m_Items: []
+  - m_Id: 963919878
+    m_Key: line:2cdcc664
+    m_Metadata:
+      m_Items: []
+  - m_Id: 963919879
+    m_Key: line:baecc113
+    m_Metadata:
+      m_Items: []
+  - m_Id: 963919880
+    m_Key: line:57cea517
+    m_Metadata:
+      m_Items: []
+  - m_Id: 963919881
+    m_Key: line:c1fea260
+    m_Metadata:
+      m_Items: []
+  - m_Id: 963919882
+    m_Key: line:7bafabf9
+    m_Metadata:
+      m_Items: []
+  - m_Id: 963919883
+    m_Key: line:ed9fac8e
+    m_Metadata:
+      m_Items: []
+  - m_Id: 963919884
+    m_Key: line:3a35fc2a
+    m_Metadata:
+      m_Items: []
+  - m_Id: 963919885
+    m_Key: line:ac05fb5d
+    m_Metadata:
+      m_Items: []
+  - m_Id: 963919886
+    m_Key: line:1654f2c4
+    m_Metadata:
+      m_Items: []
+  - m_Id: 963919887
+    m_Key: line:8064f5b3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 963919888
+    m_Key: line:11794a23
+    m_Metadata:
+      m_Items: []
+  - m_Id: 963919889
+    m_Key: line:87494d54
+    m_Metadata:
+      m_Items: []
+  - m_Id: 963919890
+    m_Key: line:e0a2bc06
+    m_Metadata:
+      m_Items: []
+  - m_Id: 963919891
+    m_Key: line:7692bb71
+    m_Metadata:
+      m_Items: []
+  - m_Id: 963919892
+    m_Key: line:ccc3b2e8
+    m_Metadata:
+      m_Items: []
+  - m_Id: 963919893
+    m_Key: line:5af3b59f
+    m_Metadata:
+      m_Items: []
+  - m_Id: 963919894
+    m_Key: line:2ebf0e1b
+    m_Metadata:
+      m_Items: []
+  - m_Id: 963919895
+    m_Key: line:b88f096c
+    m_Metadata:
+      m_Items: []
+  - m_Id: 963919896
+    m_Key: line:02de00f5
+    m_Metadata:
+      m_Items: []
+  - m_Id: 963919897
+    m_Key: line:94ee0782
+    m_Metadata:
+      m_Items: []
+  - m_Id: 963919898
+    m_Key: line:05f3b812
+    m_Metadata:
+      m_Items: []
+  - m_Id: 963919899
+    m_Key: line:93c3bf65
+    m_Metadata:
+      m_Items: []
+  - m_Id: 963919900
+    m_Key: line:764a7805
+    m_Metadata:
+      m_Items: []
+  - m_Id: 963919901
+    m_Key: line:e07a7f72
+    m_Metadata:
+      m_Items: []
+  - m_Id: 963919902
+    m_Key: line:5a2b76eb
+    m_Metadata:
+      m_Items: []
+  - m_Id: 963919903
+    m_Key: line:cc1b719c
+    m_Metadata:
+      m_Items: []
+  - m_Id: 963919904
+    m_Key: line:9f8ef53a
+    m_Metadata:
+      m_Items: []
+  - m_Id: 963919905
+    m_Key: line:09bef24d
+    m_Metadata:
+      m_Items: []
+  - m_Id: 963919906
+    m_Key: line:b3effbd4
+    m_Metadata:
+      m_Items: []
+  - m_Id: 963919907
+    m_Key: line:25dffca3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 963919908
+    m_Key: line:b4c24333
+    m_Metadata:
+      m_Items: []
+  - m_Id: 963919909
+    m_Key: line:22f24444
+    m_Metadata:
+      m_Items: []
+  - m_Id: 963919910
+    m_Key: line:41dcd972
+    m_Metadata:
+      m_Items: []
+  - m_Id: 963919911
+    m_Key: line:d7ecde05
+    m_Metadata:
+      m_Items: []
+  - m_Id: 963919912
+    m_Key: line:6dbdd79c
+    m_Metadata:
+      m_Items: []
+  - m_Id: 963919913
+    m_Key: line:fb8dd0eb
+    m_Metadata:
+      m_Items: []
+  - m_Id: 963919914
+    m_Key: line:01a6f277
+    m_Metadata:
+      m_Items: []
+  - m_Id: 963919915
+    m_Key: line:9796f500
+    m_Metadata:
+      m_Items: []
+  - m_Id: 963919916
+    m_Key: line:2dc7fc99
+    m_Metadata:
+      m_Items: []
+  - m_Id: 963919917
+    m_Key: line:bbf7fbee
+    m_Metadata:
+      m_Items: []
+  - m_Id: 963919918
+    m_Key: line:2aea447e
+    m_Metadata:
+      m_Items: []
+  - m_Id: 963919919
+    m_Key: line:bcda4309
+    m_Metadata:
+      m_Items: []
+  - m_Id: 963919920
+    m_Key: line:59538469
+    m_Metadata:
+      m_Items: []
+  - m_Id: 963919921
+    m_Key: line:cf63831e
+    m_Metadata:
+      m_Items: []
+  m_Metadata:
+    m_Items: []
+  m_KeyGenerator:
+    rid: 5926415389285679221
+  references:
+    version: 2
+    RefIds:
+    - rid: 5926415389285679221
+      type: {class: DistributedUIDGenerator, ns: UnityEngine.Localization.Tables, asm: Unity.Localization}
+      data:
+        m_CustomEpoch: 1795070328234

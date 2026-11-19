@@ -1,0 +1,174 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e24ce4e6e4507494299ec76a5be73c10, type: 3}
+  m_Name: EVT_NIGHT_TEACHER_TALK_01
+  m_EditorClassIdentifier: ApoGirl.Data::ApoGirl.Data.EventDefinitionAsset
+  _id: EVT_NIGHT_TEACHER_TALK_01
+  _definition:
+    Id: EVT_NIGHT_TEACHER_TALK_01
+    Kind: 2
+    Condition:
+      WeekMin: 1
+      WeekMax: 0
+      Days: 0200000003000000040000000500000006000000i
+      Phase: 2
+      Seasons: 
+      Month: 0
+      DayOfMonth: 0
+      ActionCategories: 02000000i
+      ActionIds: []
+      FlagsAll: []
+      FlagsAny: []
+      FlagsNone: []
+      CluesAll: []
+      Checks: []
+      AnyChecks: []
+      NpcStatuses: []
+    Priority: 10
+    Weight: 1
+    Once: 1
+    CooldownWeeks: 0
+    DialogueNode: 
+    OnShow:
+      Stats: []
+      Vitals: []
+      Resources: []
+      Hidden: []
+      SleepDebt: 0
+      Conscience: 0
+      SetFlags: []
+      ClearFlags: []
+      AddClues: []
+      EndingTags: []
+      Npcs: []
+      Items: []
+    Choices:
+    - Id: ASK
+      TextKey: 
+      Condition:
+        WeekMin: 0
+        WeekMax: 0
+        Days: 
+        Phase: 0
+        Seasons: 
+        Month: 0
+        DayOfMonth: 0
+        ActionCategories: 
+        ActionIds: []
+        FlagsAll: []
+        FlagsAny: []
+        FlagsNone: []
+        CluesAll: []
+        Checks: []
+        AnyChecks: []
+        NpcStatuses: []
+      Costs: []
+      HasCheck: 0
+      Check:
+        BaseRate: 0.5
+        StatWeights: []
+        UsesProficiency: 0
+        Proficiency: 0
+        ProficiencyWeight: 0.05
+      Effect:
+        Stats: []
+        Vitals: []
+        Resources: []
+        Hidden:
+        - Hidden: 4
+          Amount: -2
+        SleepDebt: 0
+        Conscience: 0
+        SetFlags:
+        - ASKED_TEACHER_LEG
+        ClearFlags: []
+        AddClues: []
+        EndingTags: []
+        Npcs:
+        - NpcId: NPC_TEACHER
+          Affinity: 3
+          Trust: 0
+          SetStatus: 0
+          SetRole: 
+        Items: []
+      OnFailure:
+        Stats: []
+        Vitals: []
+        Resources: []
+        Hidden: []
+        SleepDebt: 0
+        Conscience: 0
+        SetFlags: []
+        ClearFlags: []
+        AddClues: []
+        EndingTags: []
+        Npcs: []
+        Items: []
+      NextEventId: 
+    - Id: FINE
+      TextKey: 
+      Condition:
+        WeekMin: 0
+        WeekMax: 0
+        Days: 
+        Phase: 0
+        Seasons: 
+        Month: 0
+        DayOfMonth: 0
+        ActionCategories: 
+        ActionIds: []
+        FlagsAll: []
+        FlagsAny: []
+        FlagsNone: []
+        CluesAll: []
+        Checks: []
+        AnyChecks: []
+        NpcStatuses: []
+      Costs: []
+      HasCheck: 0
+      Check:
+        BaseRate: 0.5
+        StatWeights: []
+        UsesProficiency: 0
+        Proficiency: 0
+        ProficiencyWeight: 0.05
+      Effect:
+        Stats: []
+        Vitals:
+        - Vital: 2
+          Amount: -3
+        Resources: []
+        Hidden:
+        - Hidden: 4
+          Amount: 1
+        SleepDebt: 0
+        Conscience: 0
+        SetFlags: []
+        ClearFlags: []
+        AddClues: []
+        EndingTags: []
+        Npcs: []
+        Items: []
+      OnFailure:
+        Stats: []
+        Vitals: []
+        Resources: []
+        Hidden: []
+        SleepDebt: 0
+        Conscience: 0
+        SetFlags: []
+        ClearFlags: []
+        AddClues: []
+        EndingTags: []
+        Npcs: []
+        Items: []
+      NextEventId: 

@@ -1,0 +1,178 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e24ce4e6e4507494299ec76a5be73c10, type: 3}
+  m_Name: EVT_CRISIS_FOOD_SPOIL
+  m_EditorClassIdentifier: ApoGirl.Data::ApoGirl.Data.EventDefinitionAsset
+  _id: EVT_CRISIS_FOOD_SPOIL
+  _definition:
+    Id: EVT_CRISIS_FOOD_SPOIL
+    Kind: 4
+    Condition:
+      WeekMin: 2
+      WeekMax: 0
+      Days: 
+      Phase: 0
+      Seasons: 0000000001000000i
+      Month: 0
+      DayOfMonth: 0
+      ActionCategories: 
+      ActionIds: []
+      FlagsAll: []
+      FlagsAny: []
+      FlagsNone: []
+      CluesAll: []
+      Checks:
+      - Kind: 3
+        Key: Food
+        Op: 0
+        Value: 6
+      AnyChecks: []
+      NpcStatuses: []
+    Priority: 0
+    Weight: 1
+    Once: 0
+    CooldownWeeks: 3
+    DialogueNode: 
+    OnShow:
+      Stats: []
+      Vitals: []
+      Resources: []
+      Hidden: []
+      SleepDebt: 0
+      Conscience: 0
+      SetFlags: []
+      ClearFlags: []
+      AddClues: []
+      EndingTags: []
+      Npcs: []
+      Items: []
+    Choices:
+    - Id: THROW
+      TextKey: 
+      Condition:
+        WeekMin: 0
+        WeekMax: 0
+        Days: 
+        Phase: 0
+        Seasons: 
+        Month: 0
+        DayOfMonth: 0
+        ActionCategories: 
+        ActionIds: []
+        FlagsAll: []
+        FlagsAny: []
+        FlagsNone: []
+        CluesAll: []
+        Checks: []
+        AnyChecks: []
+        NpcStatuses: []
+      Costs: []
+      HasCheck: 0
+      Check:
+        BaseRate: 0.5
+        StatWeights: []
+        UsesProficiency: 0
+        Proficiency: 0
+        ProficiencyWeight: 0.05
+      Effect:
+        Stats: []
+        Vitals: []
+        Resources:
+        - Resource: 0
+          Amount: -3
+        Hidden: []
+        SleepDebt: 0
+        Conscience: 0
+        SetFlags: []
+        ClearFlags: []
+        AddClues: []
+        EndingTags: []
+        Npcs: []
+        Items: []
+      OnFailure:
+        Stats: []
+        Vitals: []
+        Resources: []
+        Hidden: []
+        SleepDebt: 0
+        Conscience: 0
+        SetFlags: []
+        ClearFlags: []
+        AddClues: []
+        EndingTags: []
+        Npcs: []
+        Items: []
+      NextEventId: 
+    - Id: SALVAGE
+      TextKey: 
+      Condition:
+        WeekMin: 0
+        WeekMax: 0
+        Days: 
+        Phase: 0
+        Seasons: 
+        Month: 0
+        DayOfMonth: 0
+        ActionCategories: 
+        ActionIds: []
+        FlagsAll: []
+        FlagsAny: []
+        FlagsNone: []
+        CluesAll: []
+        Checks: []
+        AnyChecks: []
+        NpcStatuses: []
+      Costs: []
+      HasCheck: 1
+      Check:
+        BaseRate: 0.35
+        StatWeights:
+        - Stat: 4
+          Weight: 0.006
+        UsesProficiency: 1
+        Proficiency: 4
+        ProficiencyWeight: 0.08
+      Effect:
+        Stats: []
+        Vitals: []
+        Resources:
+        - Resource: 0
+          Amount: -1
+        Hidden: []
+        SleepDebt: 0
+        Conscience: 0
+        SetFlags: []
+        ClearFlags: []
+        AddClues: []
+        EndingTags: []
+        Npcs: []
+        Items: []
+      OnFailure:
+        Stats: []
+        Vitals:
+        - Vital: 0
+          Amount: -6
+        - Vital: 2
+          Amount: 5
+        Resources:
+        - Resource: 0
+          Amount: -3
+        Hidden: []
+        SleepDebt: 0
+        Conscience: 0
+        SetFlags: []
+        ClearFlags: []
+        AddClues: []
+        EndingTags: []
+        Npcs: []
+        Items: []
+      NextEventId: 
