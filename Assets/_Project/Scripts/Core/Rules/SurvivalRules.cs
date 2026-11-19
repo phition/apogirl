@@ -30,13 +30,16 @@ namespace ApoGirl.Core.Rules
     /// <summary>자원 소모 규칙 (문서 5.4, 9.1).</summary>
     public static class UpkeepRules
     {
-        /// <summary>매일 밤 처리: 식량·물 소모, 부족 시 허기·갈증 상승과 HP 감소.</summary>
+        /// <summary>
+        /// 매일 밤 처리: 식량·물 소모, 부족 시 허기·갈증 상승과 HP 감소.
+        /// HP 감소는 그날 실제로 먹지(마시지) 못했을 때만. 먹었다면 허기가 높아도 회복만 한다.
+        /// </summary>
         public static void ApplyDaily(GameState state, BalanceConfig balance, StateDelta delta, int foodSaving = 0)
         {
             var food = state.Calendar.Day % 2 == 0 ? Math.Max(0, balance.DailyFood - foodSaving) : balance.DailyFood;
-            Consume(state, ResourceType.Food, food, VitalType.Hunger, balance.HungerRecovery, balance.HungerIncrease, balance, delta);
+            var ate = Consume(state, ResourceType.Food, food, VitalType.Hunger, balance.HungerRecovery, balance.HungerIncrease, balance, delta);
             var water = balance.DailyWater + (state.Base.Weather == WeatherType.Heat ? balance.HeatExtraWater : 0);
-            Consume(state, ResourceType.Water, water, VitalType.Thirst, balance.ThirstRecovery, balance.ThirstIncrease, balance, delta);
+            var drank = Consume(state, ResourceType.Water, water, VitalType.Thirst, balance.ThirstRecovery, balance.ThirstIncrease, balance, delta);
             if (state.Base.Weather == WeatherType.Cold && balance.ColdDailyStress > 0)
             {
                 // M6: 한파 (문서 6.6)
@@ -44,12 +47,12 @@ namespace ApoGirl.Core.Rules
             }
 
             var vitals = state.Player.Vitals;
-            if (vitals.Hunger >= balance.StarvationThreshold)
+            if (!ate && vitals.Hunger >= balance.StarvationThreshold)
             {
                 EffectApplier.ChangeVital(state, VitalType.Hp, -balance.StarvationHpLoss, balance, delta);
             }
 
-            if (vitals.Thirst >= balance.DehydrationThreshold)
+            if (!drank && vitals.Thirst >= balance.DehydrationThreshold)
             {
                 EffectApplier.ChangeVital(state, VitalType.Hp, -balance.DehydrationHpLoss, balance, delta);
             }
@@ -66,7 +69,8 @@ namespace ApoGirl.Core.Rules
             EffectApplier.ChangeResource(state, ResourceType.Power, -balance.WeeklyPower, delta);
         }
 
-        private static void Consume(
+        /// <summary>필요량을 다 채웠으면 true.</summary>
+        private static bool Consume(
             GameState state, ResourceType resource, int need, VitalType vital, int recovery, int increase,
             BalanceConfig balance, StateDelta delta)
         {
@@ -75,12 +79,12 @@ namespace ApoGirl.Core.Rules
             {
                 EffectApplier.ChangeResource(state, resource, -need, delta);
                 EffectApplier.ChangeVital(state, vital, -recovery, balance, delta);
+                return true;
             }
-            else
-            {
-                EffectApplier.ChangeResource(state, resource, -have, delta);
-                EffectApplier.ChangeVital(state, vital, increase, balance, delta);
-            }
+
+            EffectApplier.ChangeResource(state, resource, -have, delta);
+            EffectApplier.ChangeVital(state, vital, increase, balance, delta);
+            return false;
         }
     }
 

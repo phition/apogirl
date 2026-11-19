@@ -716,7 +716,8 @@
     "bonus.SCHOLAR.name": "먼저 읽은 책",
     "bonus.SCHOLAR.desc": "지력 +5, 감수성 +3, 인문·의학 Lv1",
     "bonus.SUPPLIES.name": "숨겨 둔 상자",
-    "bonus.SUPPLIES.desc": "식량·물 +12, 의약품 +4, 등산 배낭"
+    "bonus.SUPPLIES.desc": "식량·물 +12, 의약품 +4, 등산 배낭",
+    "debug.restore_vitals": "생존 상태 회복 (체력·배고픔·갈증)"
   },
   "Actions": {
     "ACT_REST_DAY.name": "낮잠",

@@ -419,6 +419,19 @@ namespace ApoGirl.Systems.Session
             StateChanged?.Invoke();
         }
 
+        /// <summary>디버그: 생존 상태 회복 (체력 최대, 배고픔·갈증·피로·스트레스 0). 감염·수면 부채는 그대로.</summary>
+        public void DebugRestoreVitals()
+        {
+            var vitals = State.Player.Vitals;
+            vitals.Hp = _db.Balance.VitalMax;
+            vitals.Hunger = 0;
+            vitals.Thirst = 0;
+            vitals.Fatigue = 0;
+            vitals.Stress = 0;
+            State.Player.BreakdownWeeks = 0;
+            StateChanged?.Invoke();
+        }
+
         /// <summary>M6 디버그: 주인공 감염도 변화.</summary>
         public void DebugInfect(int amount)
         {

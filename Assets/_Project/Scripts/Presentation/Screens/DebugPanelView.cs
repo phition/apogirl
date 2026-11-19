@@ -33,6 +33,7 @@ namespace ApoGirl.Presentation.Screens
                 }
             });
             Add("debug.stats", () => _session.DebugChangeAllStats(10));
+            Add("debug.restore_vitals", () => _session.DebugRestoreVitals());
             Add("debug.debt_up", () => _session.DebugChangeSleepDebt(1));
             Add("debug.debt_down", () => _session.DebugChangeSleepDebt(-1));
             Add("debug.hp_down", () => _session.DebugChangeVital(VitalType.Hp, -20));

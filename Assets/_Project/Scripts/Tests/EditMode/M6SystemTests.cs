@@ -174,6 +174,25 @@ namespace ApoGirl.Tests.EditMode
             Assert.AreEqual(stress + db.Balance.ColdDailyStress, state.Player.Vitals.Stress);
         }
 
+        [Test]
+        public void Starvation_HurtsOnlyWhenNotFed()
+        {
+            var db = TestContent.CreateDatabase();
+            var state = TestContent.NewGame(db);
+            state.Player.Vitals.Hp = 50;
+            state.Player.Vitals.Hunger = 100;
+            state.Player.Vitals.Thirst = 100;
+            state.Base.Resources[ResourceType.Food] = 50;
+            state.Base.Resources[ResourceType.Water] = 50;
+            UpkeepRules.ApplyDaily(state, db.Balance, new StateDelta());
+            Assert.AreEqual(50, state.Player.Vitals.Hp, "먹고 마셨으면 배고픔이 높아도 체력 피해 없음");
+            Assert.Less(state.Player.Vitals.Hunger, 100);
+
+            state.Base.Resources[ResourceType.Food] = 0;
+            UpkeepRules.ApplyDaily(state, db.Balance, new StateDelta());
+            Assert.AreEqual(50 - db.Balance.StarvationHpLoss, state.Player.Vitals.Hp, "굶은 날에만 굶주림 피해");
+        }
+
         // ── 시설·동료 ──
 
         private static InMemoryDefinitionDatabase DbWithExtras()
