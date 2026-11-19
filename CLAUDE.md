@@ -18,7 +18,7 @@
 - 로컬 커밋만 한다. **사용자가 요청하기 전까지 push 하지 않는다.**
 
 ## 현재 단계
-- M0~M5 완료. **M6(전체 콘텐츠) 진행 중: M6-1 시스템 완료**(감염·선생님 병세·날씨·구조 카운트다운·시설/동료 보정·정찰·막 평가 카드) → 다음 M6-2(2막). 계획·결정: [Docs/M6_PLAN.md](Docs/M6_PLAN.md) (이전: M4_PLAN, M5_PLAN). 그림 프롬프트: [Docs/ART_PROMPTS.md](Docs/ART_PROMPTS.md), 사용자가 만든 그림은 `ArtInbox/`.
+- M0~M5 완료. **M6(전체 콘텐츠) 진행 중: M6-1 시스템, M6-2 2막(14~26주) 완료** → 다음 M6-3(3막). 2막 대본은 `Resources/Dialogue/Act2/`, 데이터는 `Content/Story/act2_events.json`·`Content/Base/act2_world.json`. 2막 점검은 EditMode `Act2_Strategies_ReachSecondReview` → `Temp/ApoGirlAct2Balance.txt`. 계획·결정: [Docs/M6_PLAN.md](Docs/M6_PLAN.md) (이전: M4_PLAN, M5_PLAN). 그림 프롬프트: [Docs/ART_PROMPTS.md](Docs/ART_PROMPTS.md), 사용자가 만든 그림은 `ArtInbox/`.
 - 엔딩 확인: 허브 F1 → "52주차로" / "지금 상태로 구조 엔딩" / 원인을 고른 "배드 엔딩". 디버그 상태 줄에 지금 구조되면 받을 엔딩이 보인다. 갤러리는 `persistentDataPath/Gallery.json`.
 - M6 디버그(F1): 감염 +25, 선생님 재감염/진행 +25, 날씨 바꾸기, 구조 공지 토글. 동료 역할은 허브 거점 칸의 동료 버튼을 눌러 바꾼다.
 - 콘텐츠 작성법: [Docs/CONTENT_PIPELINE.md](Docs/CONTENT_PIPELINE.md). 원본은 `Content/**/*.json`(행동·아이템·전리품·탐험 모델·적·특성·시설·이벤트·NPC·일기/코멘트·프롤로그) + `Resources/Dialogue/**/*.yarn` → 메뉴 `ApoGirl/Content/Import Events`. 지역 레이아웃은 `Editor/LocationBuilder.cs` → 메뉴 `ApoGirl/Content/Build Locations`.
