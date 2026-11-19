@@ -1,0 +1,95 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: Actions_ko
+  m_EditorClassIdentifier: Unity.Localization::UnityEngine.Localization.Tables.StringTable
+  m_LocaleId:
+    m_Code: ko
+  m_SharedData: {fileID: 11400000, guid: 832aec7dd3743354f9f61736d9ffdd4f, type: 2}
+  m_Metadata:
+    m_Items: []
+  m_TableData:
+  - m_Id: 770981888
+    m_Localized: "\uB0AE\uC7A0"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 909393920
+    m_Localized: "\uB0AE\uC7A0"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 909393921
+    m_Localized: "\uBC24 \uD734\uC2DD"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 909393922
+    m_Localized: "\uC218\uBA74"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 909393923
+    m_Localized: "\uAD6D\uC5B4\xB7\uC778\uBB38 \uC218\uC5C5"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 909393924
+    m_Localized: "\uAD6D\uC5B4"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 909393925
+    m_Localized: "\uC751\uAE09\uCC98\uCE58 \uB3C5\uD559"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 909393926
+    m_Localized: "\uC751\uAE09"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 909393927
+    m_Localized: "\uD638\uC2E0\uC220 \uD6C8\uB828"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 909393928
+    m_Localized: "\uD638\uC2E0"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 909393929
+    m_Localized: "\uBE57\uBB3C \uC815\uD654"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 909393930
+    m_Localized: "\uC815\uD654"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 909393931
+    m_Localized: "\uBC14\uB9AC\uCF00\uC774\uB4DC \uBCF4\uC218"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 909393932
+    m_Localized: "\uBCF4\uC218"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 909393933
+    m_Localized: "\uB0AE \uD0D0\uD5D8: \uAD50\uC2E4\uB3D9"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 909393934
+    m_Localized: "\uB0AE \uD0D0\uD5D8"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 909393935
+    m_Localized: "\uBC24 \uD0D0\uD5D8: \uAD50\uC2E4\uB3D9"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 909393936
+    m_Localized: "\uBC24 \uD0D0\uD5D8"
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds: []

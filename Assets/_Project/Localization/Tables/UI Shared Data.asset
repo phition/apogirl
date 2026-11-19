@@ -1,0 +1,648 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b11a58205ec3474ca216360e9fa74a8, type: 3}
+  m_Name: UI Shared Data
+  m_EditorClassIdentifier: Unity.Localization::UnityEngine.Localization.Tables.SharedTableData
+  m_TableCollectionName: UI
+  m_TableCollectionNameGuidString: f16bdbc34bce5be4b90f90b884076a68
+  m_Entries:
+  - m_Id: 1567899648
+    m_Key: title.game
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1714700288
+    m_Key: title.subtitle
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1723088896
+    m_Key: title.new_game
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1723088897
+    m_Key: title.continue
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1727283200
+    m_Key: title.load
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1727283201
+    m_Key: title.quit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1727283202
+    m_Key: title.load_slot
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1727283203
+    m_Key: title.no_saves
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1727283204
+    m_Key: common.close
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1727283205
+    m_Key: common.cancel
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1727283206
+    m_Key: common.ok
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1727283207
+    m_Key: hub.calendar
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1727283208
+    m_Key: hub.calendar_planning
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1727283209
+    m_Key: hub.save
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1727283210
+    m_Key: hub.menu
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1727283211
+    m_Key: hub.blackout
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1727283212
+    m_Key: hub.teacher_name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1727283213
+    m_Key: hub.backdrop
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1727283214
+    m_Key: season.Spring
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1727283215
+    m_Key: season.Summer
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1727283216
+    m_Key: season.Autumn
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1727283217
+    m_Key: season.Winter
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1727283218
+    m_Key: phase.Day
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1727283219
+    m_Key: phase.Night
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1727283220
+    m_Key: stat.Stamina
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1727283221
+    m_Key: stat.Strength
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1727283222
+    m_Key: stat.Agility
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1727283223
+    m_Key: stat.Intellect
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1727283224
+    m_Key: stat.Craft
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1727283225
+    m_Key: stat.Willpower
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1727283226
+    m_Key: stat.Empathy
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1727283227
+    m_Key: stat.Leadership
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1727283228
+    m_Key: prof.Medicine
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1727283229
+    m_Key: prof.Survival
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1727283230
+    m_Key: prof.Engineering
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1727283231
+    m_Key: prof.SelfDefense
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1727283232
+    m_Key: prof.Cooking
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1727283233
+    m_Key: prof.Humanities
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1727283234
+    m_Key: prof.Mind
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1727283235
+    m_Key: vital.Hp
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1727283236
+    m_Key: vital.Fatigue
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1727283237
+    m_Key: vital.Stress
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1727283238
+    m_Key: vital.Infection
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1727283239
+    m_Key: vital.Cleanliness
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1727283240
+    m_Key: vital.Hunger
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1727283241
+    m_Key: vital.Thirst
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1727283242
+    m_Key: res.Food
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1727283243
+    m_Key: res.Water
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1727283244
+    m_Key: res.Medicine
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1727283245
+    m_Key: res.Fuel
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1727283246
+    m_Key: res.Power
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1727283247
+    m_Key: res.Materials
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1727283248
+    m_Key: res.Ammo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1727283249
+    m_Key: res.Intel
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1727283250
+    m_Key: status.stats
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1727283251
+    m_Key: status.proficiency
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1727283252
+    m_Key: status.vitals
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1727283253
+    m_Key: status.sleep_debt
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1727283254
+    m_Key: status.conscience
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1727283255
+    m_Key: status.combat
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1727283256
+    m_Key: status.stress_threshold
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1727283257
+    m_Key: status.level
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1727283258
+    m_Key: cat.Education
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1727283259
+    m_Key: cat.Survival
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1727283260
+    m_Key: cat.Rest
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1727283261
+    m_Key: cat.Expedition
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1727283262
+    m_Key: cat.Daily
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1727283263
+    m_Key: palette.hint
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1727283264
+    m_Key: palette.chance
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1727283265
+    m_Key: palette.no_check
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1727283266
+    m_Key: palette.cost
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1727283267
+    m_Key: palette.unaffordable
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1727283268
+    m_Key: palette.gains
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1727283269
+    m_Key: palette.expedition_day
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1727283270
+    m_Key: palette.expedition_night
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1727283271
+    m_Key: planner.day_header
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1727283272
+    m_Key: planner.empty
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1727283273
+    m_Key: planner.locked
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1727283274
+    m_Key: planner.forced
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1727283275
+    m_Key: warn.slot
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1727283276
+    m_Key: warn.none
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1727283277
+    m_Key: warn.UnknownAction
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1727283278
+    m_Key: warn.SlotTagMismatch
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1727283279
+    m_Key: warn.ForcedRestViolation
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1727283280
+    m_Key: warn.ConsecutiveExpedition
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1727283281
+    m_Key: warn.HighIntensityWeek
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1727283282
+    m_Key: warn.NightExpeditionWithSleepDebt
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1727283283
+    m_Key: plan.forecast
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1727283284
+    m_Key: plan.copy_last
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1727283285
+    m_Key: plan.save_preset
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1727283286
+    m_Key: plan.load_preset
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1727283287
+    m_Key: plan.preset_name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1727283288
+    m_Key: plan.preset_default
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1727283289
+    m_Key: plan.preset_saved
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1727283290
+    m_Key: plan.preset_full
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1727283291
+    m_Key: plan.preset_empty
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1727283292
+    m_Key: plan.preset_apply
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1727283293
+    m_Key: plan.preset_delete
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1727283294
+    m_Key: plan.run
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1727283295
+    m_Key: plan.running
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1727283296
+    m_Key: plan.edit_locked
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1727283297
+    m_Key: plan.edit_wrong_slot
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1727283298
+    m_Key: plan.select_first
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1727283299
+    m_Key: speed.Normal
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1727283300
+    m_Key: speed.Fast
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1727283301
+    m_Key: speed.EventsOnly
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1727283302
+    m_Key: result.GreatSuccess
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1727283303
+    m_Key: result.Success
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1727283304
+    m_Key: result.Failure
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1727283305
+    m_Key: result.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1727283306
+    m_Key: result.violation
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1727283307
+    m_Key: result.consecutive
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1727283308
+    m_Key: result.expedition_ok
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1727283309
+    m_Key: result.expedition_down
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1727283310
+    m_Key: result.sleep_debt
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1727283311
+    m_Key: result.conscience
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1727283312
+    m_Key: result.levelup
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1727283313
+    m_Key: result.no_change
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1727283314
+    m_Key: summary.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1727283315
+    m_Key: summary.autosaved
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1727283316
+    m_Key: summary.next
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1727283317
+    m_Key: end.Rescued
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1727283318
+    m_Key: end.GameOver
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1727283319
+    m_Key: end.body
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1727283320
+    m_Key: end.to_title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1727283321
+    m_Key: save.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1727283322
+    m_Key: save.slot
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1727283323
+    m_Key: save.empty
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1727283324
+    m_Key: save.done
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1727283325
+    m_Key: save.only_planning
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1727283326
+    m_Key: menu.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1727283327
+    m_Key: menu.to_title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1727283328
+    m_Key: menu.font_size
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1727283329
+    m_Key: font.font-small
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1727283330
+    m_Key: font.font-normal
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1727283331
+    m_Key: font.font-large
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1727283332
+    m_Key: teacher.idle.0
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1727283333
+    m_Key: teacher.idle.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1727283334
+    m_Key: teacher.idle.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1727283335
+    m_Key: teacher.idle.3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1727283336
+    m_Key: teacher.warn
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1727283337
+    m_Key: teacher.sleep_debt
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1727283338
+    m_Key: teacher.running
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1727283339
+    m_Key: debug.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1727283340
+    m_Key: debug.resources
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1727283341
+    m_Key: debug.stats
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1727283342
+    m_Key: debug.debt_up
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1727283343
+    m_Key: debug.debt_down
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1727283344
+    m_Key: debug.hp_down
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1727283345
+    m_Key: debug.stress_up
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1727283346
+    m_Key: debug.power
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1727283347
+    m_Key: debug.week_next
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1727283348
+    m_Key: debug.week_last
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1727283349
+    m_Key: debug.force_down
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1727283350
+    m_Key: debug.force_ok
+    m_Metadata:
+      m_Items: []
+  m_Metadata:
+    m_Items: []
+  m_KeyGenerator:
+    rid: 5926415382932619471
+  references:
+    version: 2
+    RefIds:
+    - rid: 5926415382932619471
+      type: {class: DistributedUIDGenerator, ns: UnityEngine.Localization.Tables, asm: Unity.Localization}
+      data:
+        m_CustomEpoch: 1795052144561

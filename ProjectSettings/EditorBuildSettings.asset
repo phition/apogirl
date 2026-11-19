@@ -18,5 +18,7 @@ EditorBuildSettings:
     path: Assets/_Project/Scenes/Expedition.unity
     guid: 3fb73d39b4307e94db2f6ddbff45297a
   m_configObjects:
+    com.unity.addressableassets: {fileID: 11400000, guid: 71ceeccf59312a849818c52be7046a1f, type: 2}
     com.unity.dt.app-ui: {fileID: 11400000, guid: 1b1c20d82303e4b5781c3ef50ac1449f, type: 2}
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
+    com.unity.localization.settings: {fileID: 11400000, guid: d14f99084219c244d9ed85c7cc71e96d, type: 2}

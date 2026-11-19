@@ -1,0 +1,100 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b11a58205ec3474ca216360e9fa74a8, type: 3}
+  m_Name: Actions Shared Data
+  m_EditorClassIdentifier: Unity.Localization::UnityEngine.Localization.Tables.SharedTableData
+  m_TableCollectionName: Actions
+  m_TableCollectionNameGuidString: 832aec7dd3743354f9f61736d9ffdd4f
+  m_Entries:
+  - m_Id: 770981888
+    m_Key: ACT_REST_DAY.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 909393920
+    m_Key: ACT_REST_DAY.short
+    m_Metadata:
+      m_Items: []
+  - m_Id: 909393921
+    m_Key: ACT_REST_NIGHT.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 909393922
+    m_Key: ACT_REST_NIGHT.short
+    m_Metadata:
+      m_Items: []
+  - m_Id: 909393923
+    m_Key: ACT_EDU_HUMANITIES.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 909393924
+    m_Key: ACT_EDU_HUMANITIES.short
+    m_Metadata:
+      m_Items: []
+  - m_Id: 909393925
+    m_Key: ACT_EDU_MEDICINE.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 909393926
+    m_Key: ACT_EDU_MEDICINE.short
+    m_Metadata:
+      m_Items: []
+  - m_Id: 909393927
+    m_Key: ACT_EDU_SELFDEFENSE.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 909393928
+    m_Key: ACT_EDU_SELFDEFENSE.short
+    m_Metadata:
+      m_Items: []
+  - m_Id: 909393929
+    m_Key: ACT_SURV_PURIFY_WATER.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 909393930
+    m_Key: ACT_SURV_PURIFY_WATER.short
+    m_Metadata:
+      m_Items: []
+  - m_Id: 909393931
+    m_Key: ACT_SURV_BARRICADE.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 909393932
+    m_Key: ACT_SURV_BARRICADE.short
+    m_Metadata:
+      m_Items: []
+  - m_Id: 909393933
+    m_Key: ACT_EXP_DAY_SCHOOL.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 909393934
+    m_Key: ACT_EXP_DAY_SCHOOL.short
+    m_Metadata:
+      m_Items: []
+  - m_Id: 909393935
+    m_Key: ACT_EXP_NIGHT_SCHOOL.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 909393936
+    m_Key: ACT_EXP_NIGHT_SCHOOL.short
+    m_Metadata:
+      m_Items: []
+  m_Metadata:
+    m_Items: []
+  m_KeyGenerator:
+    rid: 5926415382932619472
+  references:
+    version: 2
+    RefIds:
+    - rid: 5926415382932619472
+      type: {class: DistributedUIDGenerator, ns: UnityEngine.Localization.Tables, asm: Unity.Localization}
+      data:
+        m_CustomEpoch: 1795052144973
