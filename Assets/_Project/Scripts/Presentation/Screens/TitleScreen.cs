@@ -46,6 +46,7 @@ namespace ApoGirl.Presentation.Screens
             var canContinue = _session.HasSave(SaveService.AutoSlot);
             Add(Loc.T("title.continue"), () => LoadAndEnter(SaveService.AutoSlot)).SetEnabled(canContinue);
             Add(Loc.T("title.load"), ShowLoad);
+            Add(Loc.T("title.gallery"), ShowGallery);
             Add(Loc.T("title.quit"), Quit);
         }
 
@@ -99,6 +100,13 @@ namespace ApoGirl.Presentation.Screens
 
             _message.text = any ? "" : Loc.T("title.no_saves");
             Add(Loc.T("common.close"), ShowMain);
+        }
+
+        private void ShowGallery()
+        {
+            _buttons.AddToClassList("hidden");
+            var root = GetComponent<UIDocument>().rootVisualElement;
+            new GalleryView(root, _session.Definitions, _session.Gallery, () => _buttons.RemoveFromClassList("hidden"));
         }
 
         private void LoadAndEnter(string slot)

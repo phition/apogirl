@@ -1,0 +1,919 @@
+{
+  "Endings": [
+    {
+      "Id": "ENDING_BAD_EXPEDITION",
+      "Category": "Bad",
+      "Priority": 0,
+      "EndCauses": [
+        "END_CAUSE_EXPEDITION"
+      ],
+      "CutKeys": [
+        "ending.ENDING_BAD_EXPEDITION.cut1",
+        "ending.ENDING_BAD_EXPEDITION.cut2",
+        "ending.ENDING_BAD_EXPEDITION.cut3"
+      ],
+      "Color": "#2A1E22"
+    },
+    {
+      "Id": "ENDING_BAD_RAID",
+      "Category": "Bad",
+      "Priority": 0,
+      "EndCauses": [
+        "END_CAUSE_RAID"
+      ],
+      "CutKeys": [
+        "ending.ENDING_BAD_RAID.cut1",
+        "ending.ENDING_BAD_RAID.cut2",
+        "ending.ENDING_BAD_RAID.cut3"
+      ],
+      "Color": "#241C1C"
+    },
+    {
+      "Id": "ENDING_BAD_STARVATION",
+      "Category": "Bad",
+      "Priority": 0,
+      "EndCauses": [
+        "END_CAUSE_STARVATION"
+      ],
+      "CutKeys": [
+        "ending.ENDING_BAD_STARVATION.cut1",
+        "ending.ENDING_BAD_STARVATION.cut2",
+        "ending.ENDING_BAD_STARVATION.cut3"
+      ],
+      "Color": "#262420"
+    },
+    {
+      "Id": "ENDING_BAD_COLLAPSE",
+      "Category": "Bad",
+      "Priority": 0,
+      "EndCauses": [
+        "END_CAUSE_COLLAPSE"
+      ],
+      "CutKeys": [
+        "ending.ENDING_BAD_COLLAPSE.cut1",
+        "ending.ENDING_BAD_COLLAPSE.cut2",
+        "ending.ENDING_BAD_COLLAPSE.cut3"
+      ],
+      "Color": "#1E2026"
+    },
+    {
+      "Id": "ENDING_BAD_WOUNDS",
+      "Category": "Bad",
+      "Priority": 0,
+      "CutKeys": [
+        "ending.ENDING_BAD_WOUNDS.cut1",
+        "ending.ENDING_BAD_WOUNDS.cut2",
+        "ending.ENDING_BAD_WOUNDS.cut3"
+      ],
+      "Color": "#22201E"
+    },
+    {
+      "Id": "ENDING_HIDDEN_CURE",
+      "Category": "Hidden",
+      "Priority": 520,
+      "Condition": {
+        "FlagsAll": [
+          "TEACHER_CURED"
+        ]
+      },
+      "CutKeys": [
+        "ending.ENDING_HIDDEN_CURE.cut1",
+        "ending.ENDING_HIDDEN_CURE.cut2",
+        "ending.ENDING_HIDDEN_CURE.cut3"
+      ],
+      "Color": "#2A3040"
+    },
+    {
+      "Id": "ENDING_HIDDEN_STAY",
+      "Category": "Hidden",
+      "Priority": 510,
+      "Condition": {
+        "FlagsAll": [
+          "CHOSE_TO_STAY"
+        ]
+      },
+      "CutKeys": [
+        "ending.ENDING_HIDDEN_STAY.cut1",
+        "ending.ENDING_HIDDEN_STAY.cut2",
+        "ending.ENDING_HIDDEN_STAY.cut3"
+      ],
+      "Color": "#1A2024"
+    },
+    {
+      "Id": "ENDING_HIDDEN_TRUTH",
+      "Category": "Hidden",
+      "Priority": 500,
+      "Condition": {
+        "Checks": [
+          {
+            "Kind": "ClueCount",
+            "Key": "TRUTH_",
+            "Op": "GreaterOrEqual",
+            "Value": 8
+          }
+        ]
+      },
+      "CutKeys": [
+        "ending.ENDING_HIDDEN_TRUTH.cut1",
+        "ending.ENDING_HIDDEN_TRUTH.cut2",
+        "ending.ENDING_HIDDEN_TRUTH.cut3"
+      ],
+      "Color": "#1A1E2A"
+    },
+    {
+      "Id": "ENDING_NARR_CONFRONT",
+      "Category": "Narrative",
+      "Priority": 350,
+      "Condition": {
+        "FlagsAny": [
+          "BULLY_FORGAVE",
+          "BULLY_SEPARATED",
+          "BULLY_RESCUED"
+        ]
+      },
+      "CutKeys": [
+        "ending.ENDING_NARR_CONFRONT.cut1",
+        "ending.ENDING_NARR_CONFRONT.cut2",
+        "ending.ENDING_NARR_CONFRONT.cut3"
+      ],
+      "Color": "#2E2A30"
+    },
+    {
+      "Id": "ENDING_NARR_OVERCOME",
+      "Category": "Narrative",
+      "Priority": 340,
+      "Condition": {
+        "Checks": [
+          {
+            "Kind": "Hidden",
+            "Key": "TraumaRecovery",
+            "Op": "GreaterOrEqual",
+            "Value": 60
+          },
+          {
+            "Kind": "Hidden",
+            "Key": "SelfAwareness",
+            "Op": "GreaterOrEqual",
+            "Value": 40
+          }
+        ]
+      },
+      "Score": [
+        {
+          "Kind": "Hidden",
+          "Key": "TraumaRecovery",
+          "Weight": 1
+        },
+        {
+          "Kind": "Hidden",
+          "Key": "SelfAwareness",
+          "Weight": 1
+        }
+      ],
+      "CutKeys": [
+        "ending.ENDING_NARR_OVERCOME.cut1",
+        "ending.ENDING_NARR_OVERCOME.cut2",
+        "ending.ENDING_NARR_OVERCOME.cut3"
+      ],
+      "Color": "#283040"
+    },
+    {
+      "Id": "ENDING_DOCTOR",
+      "Category": "Specialized",
+      "Priority": 300,
+      "Condition": {
+        "Checks": [
+          {
+            "Kind": "Proficiency",
+            "Key": "Medicine",
+            "Op": "GreaterOrEqual",
+            "Value": 4
+          },
+          {
+            "Kind": "Stat",
+            "Key": "Intellect",
+            "Op": "GreaterOrEqual",
+            "Value": 60
+          },
+          {
+            "Kind": "Hidden",
+            "Key": "Humanity",
+            "Op": "GreaterOrEqual",
+            "Value": 30
+          }
+        ]
+      },
+      "Score": [
+        {
+          "Kind": "Proficiency",
+          "Key": "Medicine",
+          "Weight": 20
+        },
+        {
+          "Kind": "Stat",
+          "Key": "Intellect",
+          "Weight": 1
+        },
+        {
+          "Kind": "Hidden",
+          "Key": "Humanity",
+          "Weight": 1
+        }
+      ],
+      "CutKeys": [
+        "ending.ENDING_DOCTOR.cut1",
+        "ending.ENDING_DOCTOR.cut2",
+        "ending.ENDING_DOCTOR.cut3"
+      ],
+      "Color": "#1E3036"
+    },
+    {
+      "Id": "ENDING_ENGINEER",
+      "Category": "Specialized",
+      "Priority": 300,
+      "Condition": {
+        "Checks": [
+          {
+            "Kind": "Proficiency",
+            "Key": "Engineering",
+            "Op": "GreaterOrEqual",
+            "Value": 4
+          },
+          {
+            "Kind": "Stat",
+            "Key": "Craft",
+            "Op": "GreaterOrEqual",
+            "Value": 60
+          }
+        ]
+      },
+      "Score": [
+        {
+          "Kind": "Proficiency",
+          "Key": "Engineering",
+          "Weight": 20
+        },
+        {
+          "Kind": "Stat",
+          "Key": "Craft",
+          "Weight": 1
+        }
+      ],
+      "CutKeys": [
+        "ending.ENDING_ENGINEER.cut1",
+        "ending.ENDING_ENGINEER.cut2",
+        "ending.ENDING_ENGINEER.cut3"
+      ],
+      "Color": "#2A2E24"
+    },
+    {
+      "Id": "ENDING_GUARD",
+      "Category": "Specialized",
+      "Priority": 300,
+      "Condition": {
+        "Checks": [
+          {
+            "Kind": "Stat",
+            "Key": "Strength",
+            "Op": "GreaterOrEqual",
+            "Value": 60
+          },
+          {
+            "Kind": "Stat",
+            "Key": "Agility",
+            "Op": "GreaterOrEqual",
+            "Value": 50
+          },
+          {
+            "Kind": "Proficiency",
+            "Key": "SelfDefense",
+            "Op": "GreaterOrEqual",
+            "Value": 3
+          }
+        ]
+      },
+      "Score": [
+        {
+          "Kind": "Stat",
+          "Key": "Strength",
+          "Weight": 1
+        },
+        {
+          "Kind": "Stat",
+          "Key": "Agility",
+          "Weight": 1
+        },
+        {
+          "Kind": "Proficiency",
+          "Key": "SelfDefense",
+          "Weight": 20
+        }
+      ],
+      "CutKeys": [
+        "ending.ENDING_GUARD.cut1",
+        "ending.ENDING_GUARD.cut2",
+        "ending.ENDING_GUARD.cut3"
+      ],
+      "Color": "#2C2420"
+    },
+    {
+      "Id": "ENDING_LEADER",
+      "Category": "Specialized",
+      "Priority": 300,
+      "Condition": {
+        "Checks": [
+          {
+            "Kind": "Stat",
+            "Key": "Leadership",
+            "Op": "GreaterOrEqual",
+            "Value": 60
+          },
+          {
+            "Kind": "Companions",
+            "Op": "GreaterOrEqual",
+            "Value": 2
+          },
+          {
+            "Kind": "Hidden",
+            "Key": "Humanity",
+            "Op": "GreaterOrEqual",
+            "Value": 30
+          }
+        ]
+      },
+      "Score": [
+        {
+          "Kind": "Stat",
+          "Key": "Leadership",
+          "Weight": 1
+        },
+        {
+          "Kind": "Companions",
+          "Weight": 10
+        },
+        {
+          "Kind": "Hidden",
+          "Key": "Humanity",
+          "Weight": 1
+        }
+      ],
+      "CutKeys": [
+        "ending.ENDING_LEADER.cut1",
+        "ending.ENDING_LEADER.cut2",
+        "ending.ENDING_LEADER.cut3"
+      ],
+      "Color": "#2A2636"
+    },
+    {
+      "Id": "ENDING_WRITER",
+      "Category": "Specialized",
+      "Priority": 300,
+      "Condition": {
+        "Checks": [
+          {
+            "Kind": "Proficiency",
+            "Key": "Humanities",
+            "Op": "GreaterOrEqual",
+            "Value": 4
+          },
+          {
+            "Kind": "DiaryCount",
+            "Op": "GreaterOrEqual",
+            "Value": 40
+          }
+        ]
+      },
+      "Score": [
+        {
+          "Kind": "Proficiency",
+          "Key": "Humanities",
+          "Weight": 20
+        },
+        {
+          "Kind": "DiaryCount",
+          "Weight": 1
+        }
+      ],
+      "CutKeys": [
+        "ending.ENDING_WRITER.cut1",
+        "ending.ENDING_WRITER.cut2",
+        "ending.ENDING_WRITER.cut3"
+      ],
+      "Color": "#302A22"
+    },
+    {
+      "Id": "ENDING_EDUCATOR",
+      "Category": "Specialized",
+      "Priority": 300,
+      "Condition": {
+        "Checks": [
+          {
+            "Kind": "Proficiency",
+            "Key": "Humanities",
+            "Op": "GreaterOrEqual",
+            "Value": 3
+          },
+          {
+            "Kind": "Stat",
+            "Key": "Empathy",
+            "Op": "GreaterOrEqual",
+            "Value": 60
+          },
+          {
+            "Kind": "EndingTag",
+            "Key": "TAG_TEACHING",
+            "Op": "GreaterOrEqual",
+            "Value": 5
+          }
+        ]
+      },
+      "Score": [
+        {
+          "Kind": "Stat",
+          "Key": "Empathy",
+          "Weight": 1
+        },
+        {
+          "Kind": "Proficiency",
+          "Key": "Humanities",
+          "Weight": 20
+        },
+        {
+          "Kind": "EndingTag",
+          "Key": "TAG_TEACHING",
+          "Weight": 2
+        }
+      ],
+      "CutKeys": [
+        "ending.ENDING_EDUCATOR.cut1",
+        "ending.ENDING_EDUCATOR.cut2",
+        "ending.ENDING_EDUCATOR.cut3"
+      ],
+      "Color": "#26302A"
+    },
+    {
+      "Id": "ENDING_TOGETHER",
+      "Category": "Relationship",
+      "Priority": 280,
+      "Condition": {
+        "Checks": [
+          {
+            "Kind": "Companions",
+            "Op": "GreaterOrEqual",
+            "Value": 3
+          },
+          {
+            "Kind": "Hidden",
+            "Key": "Humanity",
+            "Op": "GreaterOrEqual",
+            "Value": 40
+          }
+        ]
+      },
+      "Score": [
+        {
+          "Kind": "Companions",
+          "Weight": 10
+        },
+        {
+          "Kind": "Hidden",
+          "Key": "Humanity",
+          "Weight": 1
+        }
+      ],
+      "CutKeys": [
+        "ending.ENDING_TOGETHER.cut1",
+        "ending.ENDING_TOGETHER.cut2",
+        "ending.ENDING_TOGETHER.cut3"
+      ],
+      "Color": "#2A3030"
+    },
+    {
+      "Id": "ENDING_LONE",
+      "Category": "Relationship",
+      "Priority": 280,
+      "Condition": {
+        "Checks": [
+          {
+            "Kind": "Hidden",
+            "Key": "Isolation",
+            "Op": "GreaterOrEqual",
+            "Value": 60
+          },
+          {
+            "Kind": "Companions",
+            "Op": "LessOrEqual",
+            "Value": 0
+          }
+        ]
+      },
+      "Score": [
+        {
+          "Kind": "Hidden",
+          "Key": "Isolation",
+          "Weight": 1
+        }
+      ],
+      "CutKeys": [
+        "ending.ENDING_LONE.cut1",
+        "ending.ENDING_LONE.cut2",
+        "ending.ENDING_LONE.cut3"
+      ],
+      "Color": "#1E2428"
+    },
+    {
+      "Id": "ENDING_BALANCED",
+      "Category": "Balanced",
+      "Priority": 200,
+      "Condition": {
+        "Checks": [
+          {
+            "Kind": "StatMin",
+            "Op": "GreaterOrEqual",
+            "Value": 40
+          },
+          {
+            "Kind": "StatSpread",
+            "Op": "LessOrEqual",
+            "Value": 35
+          }
+        ]
+      },
+      "Score": [
+        {
+          "Kind": "StatMin",
+          "Weight": 1
+        }
+      ],
+      "CutKeys": [
+        "ending.ENDING_BALANCED.cut1",
+        "ending.ENDING_BALANCED.cut2",
+        "ending.ENDING_BALANCED.cut3"
+      ],
+      "Color": "#24303A"
+    },
+    {
+      "Id": "ENDING_NARR_UNHEALED",
+      "Category": "Narrative",
+      "Priority": 150,
+      "Condition": {
+        "Checks": [
+          {
+            "Kind": "Hidden",
+            "Key": "TraumaRecovery",
+            "Op": "LessOrEqual",
+            "Value": 10
+          },
+          {
+            "Kind": "Hidden",
+            "Key": "Isolation",
+            "Op": "GreaterOrEqual",
+            "Value": 30
+          }
+        ]
+      },
+      "CutKeys": [
+        "ending.ENDING_NARR_UNHEALED.cut1",
+        "ending.ENDING_NARR_UNHEALED.cut2",
+        "ending.ENDING_NARR_UNHEALED.cut3"
+      ],
+      "Color": "#1C2230"
+    },
+    {
+      "Id": "ENDING_SURVIVOR",
+      "Category": "Normal",
+      "Priority": 100,
+      "CutKeys": [
+        "ending.ENDING_SURVIVOR.cut1",
+        "ending.ENDING_SURVIVOR.cut2",
+        "ending.ENDING_SURVIVOR.cut3"
+      ],
+      "Color": "#20283A"
+    }
+  ],
+  "Lines": [
+    {
+      "Id": "LT_DEFAULT",
+      "Kind": "EndingTeacher",
+      "Priority": 0,
+      "TextKey": "line.lt_default"
+    },
+    {
+      "Id": "LT_CURED",
+      "Kind": "EndingTeacher",
+      "Priority": 100,
+      "TextKey": "line.lt_cured",
+      "Condition": {
+        "FlagsAll": [
+          "TEACHER_CURED"
+        ]
+      }
+    },
+    {
+      "Id": "LT_LAST_LESSON",
+      "Kind": "EndingTeacher",
+      "Priority": 50,
+      "TextKey": "line.lt_last_lesson",
+      "Condition": {
+        "FlagsAll": [
+          "TEACHER_LAST_LESSON"
+        ]
+      }
+    },
+    {
+      "Id": "LT_ISOLATED",
+      "Kind": "EndingTeacher",
+      "Priority": 50,
+      "TextKey": "line.lt_isolated",
+      "Condition": {
+        "FlagsAll": [
+          "TEACHER_ISOLATED"
+        ]
+      }
+    },
+    {
+      "Id": "LT_EXPOSED",
+      "Kind": "EndingTeacher",
+      "Priority": 50,
+      "TextKey": "line.lt_exposed",
+      "Condition": {
+        "FlagsAll": [
+          "TEACHER_EXPOSED"
+        ]
+      }
+    },
+    {
+      "Id": "LT_LEFT_BEHIND",
+      "Kind": "EndingTeacher",
+      "Priority": 40,
+      "TextKey": "line.lt_left_behind",
+      "Condition": {
+        "FlagsAll": [
+          "TEACHER_LEFT_BEHIND"
+        ]
+      }
+    },
+    {
+      "Id": "LF_DEFAULT",
+      "Kind": "EndingFriend",
+      "Priority": 0,
+      "TextKey": "line.lf_default"
+    },
+    {
+      "Id": "LF_PROMISE",
+      "Kind": "EndingFriend",
+      "Priority": 20,
+      "TextKey": "line.lf_promise",
+      "Condition": {
+        "FlagsAll": [
+          "PROMISE_YES"
+        ]
+      }
+    },
+    {
+      "Id": "LF_TOLD",
+      "Kind": "EndingFriend",
+      "Priority": 30,
+      "TextKey": "line.lf_told",
+      "Condition": {
+        "FlagsAll": [
+          "TOLD_FRIEND"
+        ]
+      }
+    },
+    {
+      "Id": "LF_SUPPLIES",
+      "Kind": "EndingFriend",
+      "Priority": 40,
+      "TextKey": "line.lf_supplies",
+      "Condition": {
+        "FlagsAll": [
+          "LEFT_SUPPLIES_LOCKED_HOUSE"
+        ]
+      }
+    },
+    {
+      "Id": "LC_1",
+      "Kind": "EndingCure",
+      "Priority": 10,
+      "TextKey": "line.lc_1",
+      "Condition": {
+        "Checks": [
+          {
+            "Kind": "ClueCount",
+            "Key": "CURE_",
+            "Op": "GreaterOrEqual",
+            "Value": 1
+          }
+        ]
+      }
+    },
+    {
+      "Id": "LC_3",
+      "Kind": "EndingCure",
+      "Priority": 20,
+      "TextKey": "line.lc_3",
+      "Condition": {
+        "Checks": [
+          {
+            "Kind": "ClueCount",
+            "Key": "CURE_",
+            "Op": "GreaterOrEqual",
+            "Value": 3
+          }
+        ]
+      }
+    },
+    {
+      "Id": "LC_6",
+      "Kind": "EndingCure",
+      "Priority": 30,
+      "TextKey": "line.lc_6",
+      "Condition": {
+        "Checks": [
+          {
+            "Kind": "ClueCount",
+            "Key": "CURE_",
+            "Op": "GreaterOrEqual",
+            "Value": 6
+          }
+        ]
+      }
+    },
+    {
+      "Id": "LTD_HOME",
+      "Kind": "EndingTendency",
+      "Priority": 40,
+      "TextKey": "line.ltd_home",
+      "Condition": {
+        "Checks": [
+          {
+            "Kind": "Expeditions",
+            "Op": "LessOrEqual",
+            "Value": 2
+          }
+        ]
+      }
+    },
+    {
+      "Id": "LTD_NIGHT",
+      "Kind": "EndingTendency",
+      "Priority": 30,
+      "TextKey": "line.ltd_night",
+      "Condition": {
+        "Checks": [
+          {
+            "Kind": "NightRatio",
+            "Op": "GreaterOrEqual",
+            "Value": 60
+          },
+          {
+            "Kind": "Expeditions",
+            "Op": "GreaterOrEqual",
+            "Value": 5
+          }
+        ]
+      }
+    },
+    {
+      "Id": "LTD_DAY",
+      "Kind": "EndingTendency",
+      "Priority": 30,
+      "TextKey": "line.ltd_day",
+      "Condition": {
+        "Checks": [
+          {
+            "Kind": "NightRatio",
+            "Op": "LessOrEqual",
+            "Value": 30
+          },
+          {
+            "Kind": "Expeditions",
+            "Op": "GreaterOrEqual",
+            "Value": 5
+          }
+        ]
+      }
+    },
+    {
+      "Id": "LTD_MIXED",
+      "Kind": "EndingTendency",
+      "Priority": 10,
+      "TextKey": "line.ltd_mixed",
+      "Condition": {
+        "Checks": [
+          {
+            "Kind": "Expeditions",
+            "Op": "GreaterOrEqual",
+            "Value": 5
+          }
+        ]
+      }
+    },
+    {
+      "Id": "M_DOOR",
+      "Kind": "EndingMoment",
+      "Priority": 0,
+      "TextKey": "line.m_door"
+    },
+    {
+      "Id": "M_NIGHT",
+      "Kind": "EndingMoment",
+      "Priority": 0,
+      "TextKey": "line.m_night",
+      "Condition": {
+        "FlagsAll": [
+          "NIGHT_RUNS"
+        ]
+      }
+    },
+    {
+      "Id": "M_CRUTCH",
+      "Kind": "EndingMoment",
+      "Priority": 0,
+      "TextKey": "line.m_crutch",
+      "Condition": {
+        "FlagsAll": [
+          "CRUTCH_DONE"
+        ]
+      }
+    },
+    {
+      "Id": "M_POWER",
+      "Kind": "EndingMoment",
+      "Priority": 0,
+      "TextKey": "line.m_power",
+      "Condition": {
+        "FlagsAll": [
+          "POWER_RESTORED"
+        ]
+      }
+    },
+    {
+      "Id": "M_MESSAGES",
+      "Kind": "EndingMoment",
+      "Priority": 0,
+      "TextKey": "line.m_messages",
+      "Condition": {
+        "FlagsAll": [
+          "READ_MESSAGES"
+        ]
+      }
+    },
+    {
+      "Id": "M_DOHYEON",
+      "Kind": "EndingMoment",
+      "Priority": 0,
+      "TextKey": "line.m_dohyeon",
+      "Condition": {
+        "NpcStatuses": [
+          {
+            "NpcId": "NPC_DOHYEON",
+            "Status": "Joined"
+          }
+        ]
+      }
+    },
+    {
+      "Id": "M_ACT1",
+      "Kind": "EndingMoment",
+      "Priority": 0,
+      "TextKey": "line.m_act1",
+      "Condition": {
+        "FlagsAll": [
+          "ACT1_DONE"
+        ]
+      }
+    },
+    {
+      "Id": "DIARY_BREAKDOWN",
+      "Kind": "Diary",
+      "Priority": 60,
+      "TextKey": "diary.breakdown",
+      "Condition": {
+        "Checks": [
+          {
+            "Kind": "BreakdownWeeks",
+            "Op": "GreaterOrEqual",
+            "Value": 1
+          }
+        ]
+      }
+    },
+    {
+      "Id": "TC_BREAKDOWN",
+      "Kind": "TeacherComment",
+      "Priority": 60,
+      "TextKey": "tc.breakdown",
+      "Condition": {
+        "Checks": [
+          {
+            "Kind": "BreakdownWeeks",
+            "Op": "GreaterOrEqual",
+            "Value": 1
+          }
+        ]
+      }
+    }
+  ]
+}

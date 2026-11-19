@@ -336,3 +336,56 @@ Button.selected { border-color: var(--accent); background-color: var(--accent-so
 .debug-dropdown .unity-text-element {
     color: var(--text);
 }
+
+/* ── M5 엔딩 연출·1년의 기록·갤러리 ── */
+.ending-view {
+    position: absolute;
+    left: 0; top: 0; right: 0; bottom: 0;
+    justify-content: center;
+    align-items: center;
+    padding: 48px;
+}
+.ending-stage {
+    max-width: 1100px;
+    width: 100%;
+    align-items: center;
+}
+.ending-category { color: var(--text-dim); font-size: 20px; margin-bottom: 12px; }
+.ending-title { color: var(--text); font-size: 44px; -unity-font-style: bold; -unity-text-align: middle-center; }
+.ending-new { color: var(--accent); font-size: 18px; margin-top: 18px; }
+.ending-cut {
+    color: var(--text);
+    font-size: 26px;
+    white-space: normal;
+    -unity-text-align: middle-center;
+    max-width: 900px;
+}
+.ending-counter { color: var(--text-dim); font-size: 14px; margin-top: 28px; }
+.ending-hint { position: absolute; bottom: 24px; color: var(--text-dim); font-size: 14px; }
+.ending-record { align-items: stretch; height: 100%; }
+.ending-record-title { color: var(--accent); font-size: 30px; -unity-font-style: bold; margin-bottom: 12px; -unity-text-align: middle-center; }
+.ending-record-scroll { flex-grow: 1; background-color: rgba(0, 0, 0, 0.28); border-radius: 6px; padding: 12px 18px; }
+.ending-record-ending { color: var(--text); font-size: 22px; -unity-font-style: bold; margin-bottom: 4px; }
+.ending-record-section { color: var(--accent); font-size: 18px; -unity-font-style: bold; margin-top: 16px; margin-bottom: 6px; }
+.ending-record-line { color: var(--text); font-size: 17px; white-space: normal; margin: 2px 0; }
+.ending-record-diary { color: var(--text-dim); font-size: 15px; white-space: normal; margin: 1px 0; }
+.ending-graph-box { flex-direction: row; align-items: stretch; }
+.ending-graph { height: 220px; flex-grow: 1; background-color: rgba(0, 0, 0, 0.25); border-radius: 4px; }
+.ending-legend { width: 150px; margin-left: 12px; justify-content: center; }
+.ending-legend-item { font-size: 15px; margin: 1px 0; }
+.ending-button { margin-top: 14px; min-width: 200px; height: 40px; align-self: center; font-size: 17px; }
+
+.gallery-view {
+    position: absolute;
+    left: 0; top: 0; right: 0; bottom: 0;
+    background-color: var(--bg);
+    padding: 32px 64px;
+}
+.gallery-progress { color: var(--text-dim); font-size: 16px; -unity-text-align: middle-center; margin-bottom: 12px; }
+.gallery-scroll { flex-grow: 1; }
+.gallery-card { border-radius: 6px; padding: 10px 14px; margin: 4px 0; background-color: var(--panel); border-width: 1px; border-color: var(--line); }
+.gallery-card.locked { opacity: 0.55; }
+.gallery-category { color: var(--text-dim); font-size: 13px; }
+.gallery-title { color: var(--text); font-size: 20px; -unity-font-style: bold; }
+.gallery-cut { color: var(--text); font-size: 15px; white-space: normal; margin-top: 4px; }
+.gallery-info { color: var(--text-dim); font-size: 13px; margin-top: 4px; }

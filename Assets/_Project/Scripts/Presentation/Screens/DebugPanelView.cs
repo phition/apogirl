@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using ApoGirl.Core.Expedition;
+using ApoGirl.Core.Simulation;
 using ApoGirl.Core.State;
 using ApoGirl.Presentation.Text;
 using ApoGirl.Systems.Session;
@@ -15,7 +16,7 @@ namespace ApoGirl.Presentation.Screens
         private readonly GameSession _session;
         private readonly Label _status;
 
-        public DebugPanelView(VisualElement panel, GameSession session, Action<string> forceEvent = null)
+        public DebugPanelView(VisualElement panel, GameSession session, Action<string> forceEvent = null, Action showEnd = null)
         {
             _panel = panel;
             _session = session;
@@ -39,6 +40,26 @@ namespace ApoGirl.Presentation.Screens
             Add("debug.power", () => _session.DebugTogglePowerRestored());
             Add("debug.week_next", () => _session.DebugJumpToWeek(_session.State.Calendar.Week + 1));
             Add("debug.week_last", () => _session.DebugJumpToWeek(51));
+            Add("debug.week_52", () => _session.DebugJumpToWeek(52));
+
+            // M5: 엔딩 확인 (계획 단계에서 지금 상태로 판을 끝낸다)
+            Add("debug.end_rescue", () =>
+            {
+                _session.DebugEndGame(GameStatus.Rescued);
+                if (_session.IsEnded) showEnd?.Invoke();
+            });
+            var causes = new System.Collections.Generic.List<string>
+            {
+                WeekRunner.EndCauseExpedition, WeekRunner.EndCauseRaid, WeekRunner.EndCauseStarvation, WeekRunner.EndCauseCollapse, WeekRunner.EndCauseHpZero,
+            };
+            var causePicker = new DropdownField(Loc.T("debug.end_bad"), causes, 0);
+            causePicker.AddToClassList("debug-dropdown");
+            _panel.Add(causePicker);
+            Add("debug.end_bad", () =>
+            {
+                _session.DebugEndGame(GameStatus.GameOver, causePicker.value);
+                if (_session.IsEnded) showEnd?.Invoke();
+            });
             Add("debug.force_down", () =>
             {
                 _session.DebugExpedition.ForceNext = ExtractStatus.Down;
@@ -111,7 +132,29 @@ namespace ApoGirl.Presentation.Screens
                            + " · planning " + _session.IsPlanning
                            + " · expedition " + (_session.UseRealtimeExpeditions ? "realtime" : "headless")
                            + " · events " + (_session.InteractiveEvents ? "interactive" : "auto")
-                           + " · seen " + _session.State.Events.Records.Count;
+                           + " · seen " + _session.State.Events.Records.Count
+                           + " · ending " + Preview();
+        }
+
+        /// <summary>지금 상태로 구조된다면 받을 엔딩 (판정 미리보기).</summary>
+        private string Preview()
+        {
+            var state = _session.State;
+            var status = state.Status;
+            if (status == GameStatus.Playing)
+            {
+                state.Status = GameStatus.Rescued;
+            }
+
+            try
+            {
+                var result = ApoGirl.Core.Endings.EndingResolver.Resolve(state, _session.Definitions);
+                return result.Ending == null ? "-" : result.Ending.Id + " (" + result.Score.ToString("0") + ")";
+            }
+            finally
+            {
+                state.Status = status;
+            }
         }
 
         private void Add(string key, Action onClick)

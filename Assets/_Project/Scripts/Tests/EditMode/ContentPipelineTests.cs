@@ -12,7 +12,7 @@ namespace ApoGirl.Tests.EditMode
     /// <summary>M3-3: 콘텐츠 JSON 읽기, Yarn 태그 스캔, 검증기, 실제 샘플 콘텐츠의 무결성.</summary>
     public sealed class ContentPipelineTests
     {
-        private static string ProjectPath(string assetPath) => Path.Combine(Path.GetDirectoryName(Application.dataPath) ?? "", assetPath);
+        internal static string ProjectPath(string assetPath) => Path.Combine(Path.GetDirectoryName(Application.dataPath) ?? "", assetPath);
 
         private static InMemoryDefinitionDatabase Db(ContentFile content)
         {
@@ -68,7 +68,7 @@ namespace ApoGirl.Tests.EditMode
             return new InMemoryDefinitionDatabase(
                 new BalanceConfig(), content.Actions, content.ExpeditionModels, content.Items, content.LootTables,
                 null, content.Enemies, content.Events, content.Npcs,
-                new DefinitionExtras { Traits = content.Traits, Facilities = content.Facilities, Lines = content.Lines, Prologue = content.Prologue ?? new PrologueDef() });
+                new DefinitionExtras { Traits = content.Traits, Facilities = content.Facilities, Lines = content.Lines, Prologue = content.Prologue ?? new PrologueDef(), Endings = content.Endings });
         }
 
         [Test]

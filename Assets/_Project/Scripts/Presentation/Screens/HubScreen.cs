@@ -36,6 +36,7 @@ namespace ApoGirl.Presentation.Screens
         private PlanSideView _planSide;
         private CardOverlay _card;
         private DebugPanelView _debug;
+        private EndingView _ending;
         private Label _teacherLine;
         private Button _runButton;
         private Label _toast;
@@ -70,7 +71,7 @@ namespace ApoGirl.Presentation.Screens
             _planner = new PlannerView(_root, _session, () => _palette.SelectedActionId, ShowToast);
             _planSide = new PlanSideView(_root, _session);
             _card = new CardOverlay(_root);
-            _debug = new DebugPanelView(_root.Q("debug-panel"), _session, ForceEvent);
+            _debug = new DebugPanelView(_root.Q("debug-panel"), _session, ForceEvent, ShowEnd);
             _dialogueView = new DialogueView(_root);
             _prep = new ExpeditionPrepView(_session, _card);
             var yarnProject = Resources.Load<Yarn.Unity.YarnProject>(YarnProjectResource);
@@ -155,7 +156,14 @@ namespace ApoGirl.Presentation.Screens
 
             if (keyboard.spaceKey.wasPressedThisFrame || keyboard.enterKey.wasPressedThisFrame)
             {
-                _dialogueView.Advance();
+                if (_ending != null && _ending.IsOpen)
+                {
+                    _ending.Advance();
+                }
+                else
+                {
+                    _dialogueView.Advance();
+                }
             }
         }
 
@@ -502,14 +510,17 @@ namespace ApoGirl.Presentation.Screens
             }));
         }
 
+        /// <summary>엔딩 연출 (M5). 판정은 세션이 게임 종료 시점에 한 번 해 둔다.</summary>
         private void ShowEnd()
         {
-            var state = _session.State;
-            _card.Show(
-                Loc.T("end." + state.Status),
-                Loc.F("end.body", state.Calendar.Week),
-                false,
-                (Loc.T("end.to_title"), () => GameApp.GoTo(GameApp.TitleScene)));
+            if (_ending != null && _ending.IsOpen)
+            {
+                return;
+            }
+
+            _card.Hide();
+            var result = _session.Ending ?? Core.Endings.EndingResolver.Resolve(_session.State, _session.Definitions);
+            _ending = new EndingView(_root, _session.State, result, _session.EndingIsNew, () => GameApp.GoTo(GameApp.TitleScene));
         }
 
         // ── 저장·메뉴·프리셋 ──
