@@ -171,12 +171,12 @@ namespace ApoGirl.Presentation.Dialogue
         {
             if (functionName == StandardLibrary.EngineProvidedFunctionNames.Visited)
             {
-                return new ValueTask<IConvertible>(_dialogue.GetNodeVisitCount(parameters[0].ToString()) > 0);
+                return new ValueTask<IConvertible>(_dialogue.GetNodeVisitCount(parameters[0].ToString(System.Globalization.CultureInfo.InvariantCulture)) > 0);
             }
 
             if (functionName == StandardLibrary.EngineProvidedFunctionNames.VisitedCount)
             {
-                return new ValueTask<IConvertible>((int)_dialogue.GetNodeVisitCount(parameters[0].ToString()));
+                return new ValueTask<IConvertible>((int)_dialogue.GetNodeVisitCount(parameters[0].ToString(System.Globalization.CultureInfo.InvariantCulture)));
             }
 
             return new ValueTask<IConvertible>(YarnFunctions.Invoke(functionName, parameters));

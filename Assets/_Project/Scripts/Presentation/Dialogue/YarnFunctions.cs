@@ -102,7 +102,10 @@ namespace ApoGirl.Presentation.Dialogue
 
         private static string Str(IConvertible[] parameters, int index)
         {
-            return parameters.Length > index ? parameters[index]?.ToString() ?? "" : "";
+            // Yarn은 인자를 Yarn.Value(IConvertible)로 넘긴다: ToString()은 "[Value: …]"라서 IFormatProvider 버전을 쓴다
+            return parameters.Length > index && parameters[index] != null
+                ? parameters[index].ToString(System.Globalization.CultureInfo.InvariantCulture)
+                : "";
         }
     }
 }
