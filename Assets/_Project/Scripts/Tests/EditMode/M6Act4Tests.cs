@@ -90,6 +90,35 @@ namespace ApoGirl.Tests.EditMode
         }
 
         [Test]
+        public void DebugUnlockAll_OpensEveryExpeditionAndFacility()
+        {
+            var directory = Path.Combine(Path.GetTempPath(), "ApoGirlUnlock_" + Guid.NewGuid().ToString("N"));
+            try
+            {
+                var db = ShippedDb();
+                var session = new GameSession(db, new SaveService(directory, new GameStateSerializer()));
+                session.NewGame(3);
+                session.DebugUnlockAll();
+
+                var expeditions = db.Actions.Where(a => !string.IsNullOrEmpty(a.LocationId) && a.Id != "ACT_EXP_TUTORIAL").ToList();
+                Assert.IsTrue(expeditions.Any(a => a.LocationId.Contains("WATERWORKS")), "4막 지역도 검사 대상");
+                foreach (var action in expeditions)
+                {
+                    Assert.IsTrue(session.IsUnlocked(action), action.Id + " 해금");
+                }
+
+                foreach (var facility in db.Extras.Facilities)
+                {
+                    Assert.GreaterOrEqual(session.State.Base.Facilities[facility.Id], 1, facility.Id + " 열림");
+                }
+            }
+            finally
+            {
+                if (Directory.Exists(directory)) Directory.Delete(directory, true);
+            }
+        }
+
+        [Test]
         public void NewGamePlus_AppliesBonus_AndPlaysStorageFirst()
         {
             var directory = Path.Combine(Path.GetTempPath(), "ApoGirlNg_" + Guid.NewGuid().ToString("N"));

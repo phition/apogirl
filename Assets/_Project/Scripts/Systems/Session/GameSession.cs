@@ -432,6 +432,43 @@ namespace ApoGirl.Systems.Session
             StateChanged?.Invoke();
         }
 
+        /// <summary>디버그 "지역·시설 전부 해금"에서 지역 플래그 외에 함께 켜는 플래그 (UI·1막 계획).</summary>
+        private static readonly string[] DebugUnlockExtraFlags = { "NIGHT_RUNS", "UI_ALL", "UI_DEFENSE", "CRUTCH_PLAN", "POWER_PLAN" };
+
+        /// <summary>
+        /// 디버그: 모든 탐험 지역과 시설을 연다.
+        /// 지역은 데이터에서 읽는다: 탐험 행동(LocationId 있음)의 해금 조건 FlagsAll을 전부 켠다. 막이 늘어나도 따로 고칠 필요가 없다.
+        /// 시설은 정의된 것 전부를 최소 1레벨로 만든다(이미 높으면 그대로).
+        /// </summary>
+        public void DebugUnlockAll()
+        {
+            foreach (var flag in DebugUnlockExtraFlags)
+            {
+                State.Flags.Add(flag);
+            }
+
+            foreach (var action in _db.Actions)
+            {
+                if (string.IsNullOrEmpty(action.LocationId) || action.Unlock == null)
+                {
+                    continue;
+                }
+
+                foreach (var flag in action.Unlock.FlagsAll)
+                {
+                    State.Flags.Add(flag);
+                }
+            }
+
+            foreach (var facility in _db.Extras.Facilities)
+            {
+                State.Base.Facilities.TryGetValue(facility.Id, out var level);
+                State.Base.Facilities[facility.Id] = Math.Max(level, 1);
+            }
+
+            StateChanged?.Invoke();
+        }
+
         /// <summary>M6 디버그: 주인공 감염도 변화.</summary>
         public void DebugInfect(int amount)
         {
