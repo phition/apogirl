@@ -44,9 +44,9 @@
 
     { "Id": "ACT_NIGHT_DIARY", "Category": "Daily", "SlotTag": "NightOnly", "FatigueCost": 0,
       "HasProficiency": true, "Proficiency": "Mind", "ProficiencyXp": 1,
-      "OnSuccess": { "Vitals": [ { "Vital": "Fatigue", "Amount": -6 }, { "Vital": "Stress", "Amount": -7 } ], "Hidden": [ { "Hidden": "SelfAwareness", "Amount": 1 } ] } },
+      "OnSuccess": { "Vitals": [ { "Vital": "Fatigue", "Amount": -6 }, { "Vital": "Stress", "Amount": -7 } ] } },
     { "Id": "ACT_NIGHT_TALK", "Category": "Daily", "SlotTag": "NightOnly",
-      "OnSuccess": { "Vitals": [ { "Vital": "Fatigue", "Amount": -5 }, { "Vital": "Stress", "Amount": -8 } ], "Npcs": [ { "NpcId": "NPC_TEACHER", "Affinity": 1 } ], "Hidden": [ { "Hidden": "TraumaRecovery", "Amount": 1 } ] } },
+      "OnSuccess": { "Vitals": [ { "Vital": "Fatigue", "Amount": -5 }, { "Vital": "Stress", "Amount": -8 } ], "Npcs": [ { "NpcId": "NPC_TEACHER", "Affinity": 1 } ] } },
     { "Id": "ACT_NIGHT_WATCH", "Category": "Survival", "SlotTag": "NightOnly", "FatigueCost": 8, "StressCost": 2, "RaidGuard": 25,
       "StatGains": [ { "Stat": "Willpower", "Amount": 1 } ],
       "Unlock": { "FlagsAll": [ "UI_DEFENSE" ] } },
@@ -85,7 +85,7 @@
       "OnGreatSuccess": { "RestorePower": true, "SetFlags": [ "POWER_RESTORED" ], "Resources": [ { "Resource": "Power", "Amount": 6 } ] },
       "Unlock": { "FlagsAll": [ "POWER_PLAN" ], "FlagsNone": [ "POWER_RESTORED" ] } },
     { "Id": "ACT_DAILY_ROOFTOP", "Category": "Daily", "SlotTag": "DayOnly", "FatigueCost": 2,
-      "OnSuccess": { "Vitals": [ { "Vital": "Stress", "Amount": -12 } ], "Hidden": [ { "Hidden": "Hope", "Amount": 1 } ] },
+      "OnSuccess": { "Vitals": [ { "Vital": "Stress", "Amount": -12 } ] },
       "Unlock": { "Checks": [ { "Kind": "Facility", "Key": "ROOFTOP", "Op": "GreaterOrEqual", "Value": 1 } ] } },
 
     { "Id": "ACT_EXP_TUTORIAL", "Category": "Expedition", "SlotTag": "DayOnly", "ExpeditionTime": "Day", "LocationId": "LOC_TUTORIAL",

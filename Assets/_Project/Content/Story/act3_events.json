@@ -24,7 +24,7 @@
             "Hidden": [
               {
                 "Hidden": "Hope",
-                "Amount": 5
+                "Amount": 2
               }
             ],
             "Stats": [
@@ -109,7 +109,7 @@
         "Hidden": [
           {
             "Hidden": "Hope",
-            "Amount": 8
+            "Amount": 3
           }
         ]
       },
@@ -137,7 +137,7 @@
             "Hidden": [
               {
                 "Hidden": "SelfAwareness",
-                "Amount": 3
+                "Amount": 2
               }
             ],
             "AddClues": [
@@ -196,7 +196,7 @@
             "Hidden": [
               {
                 "Hidden": "Humanity",
-                "Amount": 3
+                "Amount": 2
               }
             ]
           }
@@ -246,11 +246,11 @@
             "Hidden": [
               {
                 "Hidden": "TraumaRecovery",
-                "Amount": 10
+                "Amount": 8
               },
               {
                 "Hidden": "SelfAwareness",
-                "Amount": 4
+                "Amount": 2
               }
             ],
             "Vitals": [
@@ -270,11 +270,11 @@
             "Hidden": [
               {
                 "Hidden": "TraumaRecovery",
-                "Amount": 8
+                "Amount": 6
               },
               {
                 "Hidden": "SelfAwareness",
-                "Amount": 6
+                "Amount": 4
               }
             ]
           }
@@ -295,11 +295,11 @@
             "Hidden": [
               {
                 "Hidden": "Humanity",
-                "Amount": 8
+                "Amount": 4
               },
               {
                 "Hidden": "TraumaRecovery",
-                "Amount": 4
+                "Amount": 3
               }
             ],
             "Vitals": [
@@ -354,7 +354,7 @@
             "Hidden": [
               {
                 "Hidden": "SelfAwareness",
-                "Amount": 2
+                "Amount": 1
               }
             ]
           }
@@ -365,7 +365,7 @@
             "Hidden": [
               {
                 "Hidden": "TraumaRecovery",
-                "Amount": 4
+                "Amount": 3
               }
             ],
             "Npcs": [
@@ -461,7 +461,7 @@
             "Hidden": [
               {
                 "Hidden": "Humanity",
-                "Amount": 4
+                "Amount": 2
               }
             ]
           }
@@ -495,7 +495,7 @@
             "Hidden": [
               {
                 "Hidden": "Humanity",
-                "Amount": 6
+                "Amount": 3
               }
             ]
           }
@@ -615,7 +615,7 @@
             "Hidden": [
               {
                 "Hidden": "Humanity",
-                "Amount": 2
+                "Amount": 1
               }
             ]
           }
@@ -717,7 +717,7 @@
             "Hidden": [
               {
                 "Hidden": "Hope",
-                "Amount": 4
+                "Amount": 2
               }
             ],
             "Stats": [
@@ -744,7 +744,7 @@
             "Hidden": [
               {
                 "Hidden": "Humanity",
-                "Amount": 3
+                "Amount": 2
               }
             ]
           }
@@ -798,7 +798,7 @@
             "Hidden": [
               {
                 "Hidden": "Hope",
-                "Amount": 4
+                "Amount": 2
               }
             ],
             "Stats": [
@@ -825,7 +825,7 @@
             "Hidden": [
               {
                 "Hidden": "Humanity",
-                "Amount": 3
+                "Amount": 2
               }
             ]
           }
@@ -885,7 +885,7 @@
             "Hidden": [
               {
                 "Hidden": "Hope",
-                "Amount": 4
+                "Amount": 2
               }
             ],
             "Stats": [
@@ -908,7 +908,7 @@
             "Hidden": [
               {
                 "Hidden": "TraumaRecovery",
-                "Amount": 3
+                "Amount": 2
               }
             ]
           }
@@ -925,7 +925,7 @@
             "Hidden": [
               {
                 "Hidden": "SelfAwareness",
-                "Amount": 3
+                "Amount": 2
               }
             ]
           }
@@ -1001,7 +1001,7 @@
             "Hidden": [
               {
                 "Hidden": "Hope",
-                "Amount": 3
+                "Amount": 1
               }
             ]
           }
@@ -1012,7 +1012,7 @@
             "Hidden": [
               {
                 "Hidden": "SelfAwareness",
-                "Amount": 2
+                "Amount": 1
               }
             ]
           }
@@ -1042,7 +1042,7 @@
         "Hidden": [
           {
             "Hidden": "Hope",
-            "Amount": 2
+            "Amount": 1
           }
         ],
         "Vitals": [
@@ -1130,7 +1130,7 @@
             "Hidden": [
               {
                 "Hidden": "Hope",
-                "Amount": 3
+                "Amount": 1
               }
             ]
           }
@@ -1147,7 +1147,7 @@
             "Hidden": [
               {
                 "Hidden": "SelfAwareness",
-                "Amount": 2
+                "Amount": 1
               }
             ]
           }
@@ -1192,7 +1192,7 @@
             "Hidden": [
               {
                 "Hidden": "TraumaRecovery",
-                "Amount": 3
+                "Amount": 2
               }
             ]
           }
@@ -1203,7 +1203,7 @@
             "Hidden": [
               {
                 "Hidden": "SelfAwareness",
-                "Amount": 2
+                "Amount": 1
               }
             ]
           }
@@ -1231,7 +1231,7 @@
             "Hidden": [
               {
                 "Hidden": "Hope",
-                "Amount": 5
+                "Amount": 2
               }
             ],
             "Vitals": [
@@ -1254,11 +1254,11 @@
             "Hidden": [
               {
                 "Hidden": "Hope",
-                "Amount": 3
+                "Amount": 1
               },
               {
                 "Hidden": "SelfAwareness",
-                "Amount": 2
+                "Amount": 1
               }
             ]
           }
@@ -1291,7 +1291,7 @@
             "Hidden": [
               {
                 "Hidden": "Hope",
-                "Amount": 4
+                "Amount": 2
               }
             ],
             "Vitals": [
@@ -1314,7 +1314,7 @@
             "Hidden": [
               {
                 "Hidden": "SelfAwareness",
-                "Amount": 2
+                "Amount": 1
               }
             ]
           }
@@ -1337,11 +1337,11 @@
             "Hidden": [
               {
                 "Hidden": "Hope",
-                "Amount": 2
+                "Amount": 1
               },
               {
                 "Hidden": "SelfAwareness",
-                "Amount": 3
+                "Amount": 2
               }
             ]
           }
@@ -1392,11 +1392,11 @@
             "Hidden": [
               {
                 "Hidden": "SelfAwareness",
-                "Amount": 3
+                "Amount": 2
               },
               {
                 "Hidden": "Hope",
-                "Amount": 2
+                "Amount": 1
               }
             ]
           }
@@ -1465,7 +1465,7 @@
             "Hidden": [
               {
                 "Hidden": "Hope",
-                "Amount": 2
+                "Amount": 1
               }
             ]
           }
@@ -1507,7 +1507,7 @@
             "Hidden": [
               {
                 "Hidden": "Hope",
-                "Amount": 2
+                "Amount": 1
               }
             ]
           }
@@ -1568,7 +1568,7 @@
             "Hidden": [
               {
                 "Hidden": "Hope",
-                "Amount": 2
+                "Amount": 1
               }
             ]
           }
@@ -1593,7 +1593,7 @@
             "Hidden": [
               {
                 "Hidden": "Humanity",
-                "Amount": 2
+                "Amount": 1
               }
             ],
             "Vitals": [
@@ -1643,7 +1643,7 @@
             "Hidden": [
               {
                 "Hidden": "Hope",
-                "Amount": 3
+                "Amount": 1
               }
             ],
             "Vitals": [

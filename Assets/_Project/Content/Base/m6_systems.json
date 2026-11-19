@@ -84,12 +84,6 @@
             "NpcId": "NPC_TEACHER",
             "Affinity": 1
           }
-        ],
-        "Hidden": [
-          {
-            "Hidden": "Humanity",
-            "Amount": 1
-          }
         ]
       },
       "Unlock": {

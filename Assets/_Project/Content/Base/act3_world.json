@@ -114,8 +114,8 @@
           },
           {
             "Resource": "Water",
-            "Min": 6,
-            "Max": 10
+            "Min": 8,
+            "Max": 12
           },
           {
             "Resource": "Fuel",

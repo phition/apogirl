@@ -14,7 +14,7 @@
       "Priority": 50,
       "Condition": { "Month": 3, "DayOfMonth": 26, "Phase": "Day" },
       "OnShow": {
-        "Hidden": [ { "Hidden": "SelfAwareness", "Amount": 2 } ]
+        "Hidden": [ { "Hidden": "SelfAwareness", "Amount": 1 } ]
       },
       "Choices": [
         {
@@ -120,7 +120,7 @@
           "NextEventId": "EVT_NPC_SURVIVOR_A_02",
           "Effect": {
             "Npcs": [ { "NpcId": "NPC_SURVIVOR_A", "Affinity": 5, "Trust": 3 } ],
-            "Hidden": [ { "Hidden": "Humanity", "Amount": 3 } ],
+            "Hidden": [ { "Hidden": "Humanity", "Amount": 2 } ],
             "EndingTags": [ { "Tag": "TAG_COMMUNITY", "Amount": 1 } ]
           }
         },
@@ -129,7 +129,7 @@
           "Costs": [ { "Resource": "Food", "Amount": 2 } ],
           "Effect": {
             "Npcs": [ { "NpcId": "NPC_SURVIVOR_A", "Affinity": 3, "Trust": 1 } ],
-            "Hidden": [ { "Hidden": "Humanity", "Amount": 2 } ],
+            "Hidden": [ { "Hidden": "Humanity", "Amount": 1 } ],
             "SetFlags": [ "SURVIVOR_A_LEFT_WITH_FOOD" ]
           }
         },

@@ -101,8 +101,8 @@ namespace ApoGirl.Core.Definitions
 
         /// <summary>밤 습격 (문서 5.5): 이 주차부터, 확률 = 기본 + (위협 − 방어) × 계수, 상한.</summary>
         public int RaidStartWeek = 4;
-        public float RaidBaseChance = 0.02f;
-        public float RaidChancePerPoint = 0.002f; // M7-2: 0.004 → 0.002 (연 30회 → 목표 10~15회)
+        public float RaidBaseChance = 0.01f; // M7-2: 0.02 → 0.01
+        public float RaidChancePerPoint = 0.0015f; // M7-2: 0.004 → 0.0015 (연 30회 → 목표 10~15회)
         public float RaidMaxChance = 0.15f; // M7-2: 0.25 → 0.15
 
         /// <summary>습격 세기 = 위협 + 0~분산, 방어력 = 전투력 + 방어도 × 배율 + 경계 보정 + 0~분산.</summary>
