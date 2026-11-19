@@ -1,0 +1,332 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f481e505b008c204ba7d5b19f247582d, type: 3}
+  m_Name: LOC_SUBWAY
+  m_EditorClassIdentifier: ApoGirl.Data::ApoGirl.Data.LocationAsset
+  _id: LOC_SUBWAY
+  _definition:
+    Id: LOC_SUBWAY
+    Layout:
+      Floors: 2
+      FloorHeight: 4
+      CorridorLength: 96
+      Connectors:
+      - Kind: 0
+        Floor: 0
+        X: 48
+        TargetFloor: 1
+      - Kind: 0
+        Floor: 1
+        X: 46.6
+        TargetFloor: 0
+      Doors:
+      - RoomId: ROOM_SUBWAY_OFFICE_1
+        TemplateId: ROOM_SUBWAY_OFFICE
+        Floor: 1
+        X: 14
+        Number: 1
+        LootTableId: 
+      - RoomId: ROOM_SUBWAY_KIOSK_1
+        TemplateId: ROOM_SUBWAY_KIOSK
+        Floor: 1
+        X: 66
+        Number: 1
+        LootTableId: 
+      - RoomId: ROOM_SUBWAY_RESTROOM_1
+        TemplateId: ROOM_SUBWAY_RESTROOM
+        Floor: 1
+        X: 82
+        Number: 1
+        LootTableId: 
+      - RoomId: ROOM_SUBWAY_OFFICE_2
+        TemplateId: ROOM_SUBWAY_OFFICE
+        Floor: 0
+        X: 70
+        Number: 2
+        LootTableId: 
+      RoomTemplates:
+      - Id: ROOM_SUBWAY_OFFICE
+        Width: 14
+        DoorXs:
+        - 1.2
+        Windows:
+        - X: 3
+          Width: 3.4
+        Containers:
+        - Id: OFFICE_DESK
+          Kind: 1
+          Floor: 0
+          X: 4
+          SearchSeconds: 2
+          LootTableId: 
+        - Id: OFFICE_CABINET
+          Kind: 2
+          Floor: 0
+          X: 7.4
+          SearchSeconds: 3.5
+          LootTableId: 
+        - Id: OFFICE_LOCKER
+          Kind: 0
+          Floor: 0
+          X: 11
+          SearchSeconds: 3
+          LootTableId: 
+        DefaultLootTableId: LOOT_SUBWAY_OFFICE
+      - Id: ROOM_SUBWAY_KIOSK
+        Width: 10
+        DoorXs:
+        - 1.2
+        Windows: []
+        Containers:
+        - Id: KIOSK_SHELF
+          Kind: 4
+          Floor: 0
+          X: 3.8
+          SearchSeconds: 2.5
+          LootTableId: 
+        - Id: KIOSK_FRIDGE
+          Kind: 3
+          Floor: 0
+          X: 6.6
+          SearchSeconds: 4
+          LootTableId: LOOT_STORE_FRIDGE
+        - Id: KIOSK_BOX
+          Kind: 4
+          Floor: 0
+          X: 8.6
+          SearchSeconds: 2.5
+          LootTableId: 
+        DefaultLootTableId: LOOT_SUBWAY_KIOSK
+      - Id: ROOM_SUBWAY_RESTROOM
+        Width: 8
+        DoorXs:
+        - 1.2
+        Windows: []
+        Containers:
+        - Id: SINK
+          Kind: 2
+          Floor: 0
+          X: 4.2
+          SearchSeconds: 3.5
+          LootTableId: 
+        - Id: SUPPLY
+          Kind: 4
+          Floor: 0
+          X: 6.6
+          SearchSeconds: 2.5
+          LootTableId: 
+        DefaultLootTableId: LOOT_SUBWAY_KIOSK
+      Containers:
+      - Id: C_SUB_LOCKER_1
+        Kind: 0
+        Floor: 1
+        X: 34
+        SearchSeconds: 3
+        LootTableId: LOOT_SUBWAY_KIOSK
+      - Id: C_SUB_LOCKER_2
+        Kind: 0
+        Floor: 1
+        X: 36
+        SearchSeconds: 3
+        LootTableId: LOOT_SUBWAY_KIOSK
+      - Id: C_SUB_LOCKER_3
+        Kind: 0
+        Floor: 1
+        X: 38
+        SearchSeconds: 3
+        LootTableId: LOOT_SUBWAY_KIOSK
+      - Id: C_SUB_LOCKER_4
+        Kind: 0
+        Floor: 1
+        X: 40
+        SearchSeconds: 3
+        LootTableId: LOOT_SUBWAY_KIOSK
+      - Id: C_SUB_BENCH_A
+        Kind: 4
+        Floor: 0
+        X: 20
+        SearchSeconds: 2.5
+        LootTableId: LOOT_SUBWAY_KIOSK
+      - Id: C_SUB_BENCH_B
+        Kind: 4
+        Floor: 0
+        X: 88
+        SearchSeconds: 2.5
+        LootTableId: LOOT_SUBWAY_OFFICE
+      Exits:
+      - Kind: 0
+        Floor: 1
+        X: 3
+        StartsLocked: 0
+      - Kind: 1
+        Floor: 0
+        X: 94
+        StartsLocked: 1
+    DayRunSeconds: 420
+    NightRunSeconds: 390
+    DefaultLootTableId: LOOT_SUBWAY_KIOSK
+    DayVariant:
+      Spawns:
+      - EnemyId: ENEMY_WANDERER
+        Floor: 0
+        RoomId: 
+        X: 34
+        Count: 10
+        Spread: 6
+        Dormant: 1
+      - EnemyId: ENEMY_LISTENER
+        Floor: 0
+        RoomId: 
+        X: 56
+        Count: 2
+        Spread: 1.5
+        Dormant: 1
+      - EnemyId: ENEMY_WANDERER
+        Floor: 1
+        RoomId: 
+        X: 70
+        Count: 3
+        Spread: 2
+        Dormant: 1
+      - EnemyId: ENEMY_WANDERER
+        Floor: 1
+        RoomId: ROOM_SUBWAY_RESTROOM_1
+        X: 4
+        Count: 2
+        Spread: 1
+        Dormant: 1
+      - EnemyId: ENEMY_WANDERER
+        Floor: 1
+        RoomId: 
+        X: 26
+        Count: 1
+        Spread: 0
+        Dormant: 0
+      LockedRooms: []
+      ForceableRooms:
+      - ROOM_SUBWAY_OFFICE_1
+      Encounters:
+      - Id: LAST_BROADCAST
+        Floor: 1
+        RoomId: ROOM_SUBWAY_OFFICE_1
+        X: 8
+        FlagsAll: []
+        FlagsNone:
+        - LAST_BROADCAST_HEARD
+        PromptKey: enc.LAST_BROADCAST.prompt
+        Choices:
+        - Id: LISTEN
+          TextKey: enc.LAST_BROADCAST.listen
+          SetFlags:
+          - LAST_BROADCAST_HEARD
+          AddClues:
+          - TRUTH_SUBWAY_BROADCAST
+          StressDelta: 4
+          Removes: 1
+        - Id: LEAVE
+          TextKey: enc.LAST_BROADCAST.leave
+          SetFlags: []
+          AddClues: []
+          StressDelta: 0
+          Removes: 0
+      - Id: BYSTANDER
+        Floor: 0
+        RoomId: ROOM_SUBWAY_OFFICE_2
+        X: 10
+        FlagsAll:
+        - A2_STARTED
+        FlagsNone:
+        - BYSTANDER_MET
+        PromptKey: enc.BYSTANDER.prompt
+        Choices:
+        - Id: TAKE
+          TextKey: enc.BYSTANDER.take
+          SetFlags:
+          - BYSTANDER_MET
+          - BYSTANDER_TAKEN
+          AddClues: []
+          StressDelta: 10
+          Removes: 1
+        - Id: SUPPLY
+          TextKey: enc.BYSTANDER.supply
+          SetFlags:
+          - BYSTANDER_MET
+          - BYSTANDER_HELPED
+          AddClues: []
+          StressDelta: 6
+          Removes: 1
+        - Id: WALK_AWAY
+          TextKey: enc.BYSTANDER.walk_away
+          SetFlags:
+          - BYSTANDER_MET
+          - BYSTANDER_LEFT
+          AddClues: []
+          StressDelta: 6
+          Removes: 1
+    NightVariant:
+      Spawns:
+      - EnemyId: ENEMY_WANDERER
+        Floor: 0
+        RoomId: 
+        X: 30
+        Count: 4
+        Spread: 10
+        Dormant: 0
+      - EnemyId: ENEMY_WATCHER
+        Floor: 0
+        RoomId: 
+        X: 60
+        Count: 1
+        Spread: 0
+        Dormant: 0
+      - EnemyId: ENEMY_WATCHER
+        Floor: 1
+        RoomId: 
+        X: 40
+        Count: 1
+        Spread: 0
+        Dormant: 0
+      - EnemyId: ENEMY_WANDERER
+        Floor: 1
+        RoomId: 
+        X: 76
+        Count: 3
+        Spread: 8
+        Dormant: 0
+      LockedRooms: []
+      ForceableRooms:
+      - ROOM_SUBWAY_OFFICE_1
+      Encounters:
+      - Id: LAST_BROADCAST
+        Floor: 1
+        RoomId: ROOM_SUBWAY_OFFICE_1
+        X: 8
+        FlagsAll: []
+        FlagsNone:
+        - LAST_BROADCAST_HEARD
+        PromptKey: enc.LAST_BROADCAST.prompt
+        Choices:
+        - Id: LISTEN
+          TextKey: enc.LAST_BROADCAST.listen
+          SetFlags:
+          - LAST_BROADCAST_HEARD
+          AddClues:
+          - TRUTH_SUBWAY_BROADCAST
+          StressDelta: 4
+          Removes: 1
+        - Id: LEAVE
+          TextKey: enc.LAST_BROADCAST.leave
+          SetFlags: []
+          AddClues: []
+          StressDelta: 0
+          Removes: 0
+    Tutorial: 0

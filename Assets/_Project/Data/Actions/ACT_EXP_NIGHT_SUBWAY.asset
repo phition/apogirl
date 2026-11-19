@@ -1,0 +1,129 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dae23a582c039304a81c2bdd418cbc38, type: 3}
+  m_Name: ACT_EXP_NIGHT_SUBWAY
+  m_EditorClassIdentifier: ApoGirl.Data::ApoGirl.Data.ActionDefinitionAsset
+  _id: ACT_EXP_NIGHT_SUBWAY
+  _definition:
+    Id: ACT_EXP_NIGHT_SUBWAY
+    Category: 4
+    SlotTag: 2
+    ResourceCosts: []
+    FatigueCost: 0
+    StressCost: 0
+    HasCheck: 0
+    Check:
+      BaseRate: 0.5
+      StatWeights: []
+      UsesProficiency: 0
+      Proficiency: 0
+      ProficiencyWeight: 0.05
+    StatGains: []
+    HasProficiency: 0
+    Proficiency: 0
+    ProficiencyXp: 0
+    Teaching: 0
+    OnSuccess:
+      Stats: []
+      Vitals: []
+      Resources: []
+      Hidden: []
+      SleepDebt: 0
+      Conscience: 0
+      SetFlags: []
+      ClearFlags: []
+      AddClues: []
+      EndingTags: []
+      Npcs: []
+      Items: []
+      Defense: 0
+      Threat: 0
+      Facilities: []
+      AddTraits: []
+      Proficiencies: []
+      TeacherMobility: 0
+      RestorePower: 0
+      RaidStrength: 0
+      TeacherReinfect: 0
+      TeacherInfection: 0
+    OnGreatSuccess:
+      Stats: []
+      Vitals: []
+      Resources: []
+      Hidden: []
+      SleepDebt: 0
+      Conscience: 0
+      SetFlags: []
+      ClearFlags: []
+      AddClues: []
+      EndingTags: []
+      Npcs: []
+      Items: []
+      Defense: 0
+      Threat: 0
+      Facilities: []
+      AddTraits: []
+      Proficiencies: []
+      TeacherMobility: 0
+      RestorePower: 0
+      RaidStrength: 0
+      TeacherReinfect: 0
+      TeacherInfection: 0
+    OnFailure:
+      Stats: []
+      Vitals: []
+      Resources: []
+      Hidden: []
+      SleepDebt: 0
+      Conscience: 0
+      SetFlags: []
+      ClearFlags: []
+      AddClues: []
+      EndingTags: []
+      Npcs: []
+      Items: []
+      Defense: 0
+      Threat: 0
+      Facilities: []
+      AddTraits: []
+      Proficiencies: []
+      TeacherMobility: 0
+      RestorePower: 0
+      RaidStrength: 0
+      TeacherReinfect: 0
+      TeacherInfection: 0
+    ExpeditionTime: 1
+    LocationId: LOC_SUBWAY
+    Unlock:
+      WeekMin: 0
+      WeekMax: 0
+      Days: 
+      Phase: 0
+      Seasons: 
+      Month: 0
+      DayOfMonth: 0
+      ActionCategories: 
+      ActionIds: []
+      FlagsAll:
+      - LOC_SUBWAY
+      - NIGHT_RUNS
+      FlagsAny: []
+      FlagsNone: []
+      CluesAll: []
+      Checks: []
+      AnyChecks: []
+      NpcStatuses: []
+      IsBirthday: 0
+    RaidGuard: 0
+    BonusFacilityId: 
+    BonusPerLevel: 0
+    ThreatGain: 0

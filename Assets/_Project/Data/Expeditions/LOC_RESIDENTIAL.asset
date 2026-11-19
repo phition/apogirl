@@ -1,0 +1,55 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67cfa2deefdc3d0419af6750ddd3f25d, type: 3}
+  m_Name: LOC_RESIDENTIAL
+  m_EditorClassIdentifier: ApoGirl.Data::ApoGirl.Data.ExpeditionModelAsset
+  _id: LOC_RESIDENTIAL
+  _definition:
+    Id: LOC_RESIDENTIAL
+    Day:
+      Resources:
+      - Resource: 0
+        Min: 4
+        Max: 8
+      - Resource: 1
+        Min: 2
+        Max: 5
+      - Resource: 5
+        Min: 1
+        Max: 3
+      - Resource: 2
+        Min: 0
+        Max: 1
+      BaseDownChance: 0.07
+      Fatigue: 15
+      StressMin: 8
+      StressMax: 14
+      ConscienceMax: 3
+      DawnReturnChance: 0
+      HpLossOnDown: 30
+      StressOnDown: 30
+    Night:
+      Resources:
+      - Resource: 0
+        Min: 3
+        Max: 6
+      BaseDownChance: 0.16
+      Fatigue: 20
+      StressMin: 16
+      StressMax: 18
+      ConscienceMax: 0
+      DawnReturnChance: 0.2
+      HpLossOnDown: 30
+      StressOnDown: 30
+    AgilityDownReduction: 0.001
+    SleepDebtDownIncrease: 0.03
+    ConsecutiveDownIncrease: 0.1

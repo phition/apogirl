@@ -1,0 +1,306 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e24ce4e6e4507494299ec76a5be73c10, type: 3}
+  m_Name: EVT_A2_FRIEND_TRACE
+  m_EditorClassIdentifier: ApoGirl.Data::ApoGirl.Data.EventDefinitionAsset
+  _id: EVT_A2_FRIEND_TRACE
+  _definition:
+    Id: EVT_A2_FRIEND_TRACE
+    Kind: 0
+    Condition:
+      WeekMin: 0
+      WeekMax: 0
+      Days: 
+      Phase: 0
+      Seasons: 
+      Month: 0
+      DayOfMonth: 0
+      ActionCategories: 04000000i
+      ActionIds: []
+      FlagsAll: []
+      FlagsAny:
+      - FRIEND_TRACE_FOUND
+      - FRIEND_TRACE_LEFT
+      FlagsNone: []
+      CluesAll: []
+      Checks: []
+      AnyChecks: []
+      NpcStatuses: []
+      IsBirthday: 0
+    Priority: 85
+    Weight: 1
+    Once: 1
+    CooldownWeeks: 0
+    DialogueNode: 
+    OnShow:
+      Stats: []
+      Vitals:
+      - Vital: 2
+        Amount: 6
+      Resources: []
+      Hidden:
+      - Hidden: 3
+        Amount: -6
+      SleepDebt: 0
+      Conscience: 0
+      SetFlags: []
+      ClearFlags: []
+      AddClues: []
+      EndingTags: []
+      Npcs: []
+      Items: []
+      Defense: 0
+      Threat: 0
+      Facilities: []
+      AddTraits: []
+      Proficiencies: []
+      TeacherMobility: 0
+      RestorePower: 0
+      RaidStrength: 0
+      TeacherReinfect: 0
+      TeacherInfection: 0
+    Choices:
+    - Id: CRY
+      TextKey: 
+      Condition:
+        WeekMin: 0
+        WeekMax: 0
+        Days: 
+        Phase: 0
+        Seasons: 
+        Month: 0
+        DayOfMonth: 0
+        ActionCategories: 
+        ActionIds: []
+        FlagsAll: []
+        FlagsAny: []
+        FlagsNone: []
+        CluesAll: []
+        Checks: []
+        AnyChecks: []
+        NpcStatuses: []
+        IsBirthday: 0
+      Costs: []
+      HasCheck: 0
+      Check:
+        BaseRate: 0.5
+        StatWeights: []
+        UsesProficiency: 0
+        Proficiency: 0
+        ProficiencyWeight: 0.05
+      Effect:
+        Stats: []
+        Vitals:
+        - Vital: 2
+          Amount: -8
+        Resources: []
+        Hidden:
+        - Hidden: 0
+          Amount: 2
+        SleepDebt: 0
+        Conscience: 0
+        SetFlags: []
+        ClearFlags: []
+        AddClues: []
+        EndingTags: []
+        Npcs: []
+        Items: []
+        Defense: 0
+        Threat: 0
+        Facilities: []
+        AddTraits: []
+        Proficiencies: []
+        TeacherMobility: 0
+        RestorePower: 0
+        RaidStrength: 0
+        TeacherReinfect: 0
+        TeacherInfection: 0
+      OnFailure:
+        Stats: []
+        Vitals: []
+        Resources: []
+        Hidden: []
+        SleepDebt: 0
+        Conscience: 0
+        SetFlags: []
+        ClearFlags: []
+        AddClues: []
+        EndingTags: []
+        Npcs: []
+        Items: []
+        Defense: 0
+        Threat: 0
+        Facilities: []
+        AddTraits: []
+        Proficiencies: []
+        TeacherMobility: 0
+        RestorePower: 0
+        RaidStrength: 0
+        TeacherReinfect: 0
+        TeacherInfection: 0
+      NextEventId: 
+    - Id: DIARY
+      TextKey: 
+      Condition:
+        WeekMin: 0
+        WeekMax: 0
+        Days: 
+        Phase: 0
+        Seasons: 
+        Month: 0
+        DayOfMonth: 0
+        ActionCategories: 
+        ActionIds: []
+        FlagsAll: []
+        FlagsAny: []
+        FlagsNone: []
+        CluesAll: []
+        Checks: []
+        AnyChecks: []
+        NpcStatuses: []
+        IsBirthday: 0
+      Costs: []
+      HasCheck: 0
+      Check:
+        BaseRate: 0.5
+        StatWeights: []
+        UsesProficiency: 0
+        Proficiency: 0
+        ProficiencyWeight: 0.05
+      Effect:
+        Stats: []
+        Vitals: []
+        Resources: []
+        Hidden:
+        - Hidden: 1
+          Amount: 3
+        SleepDebt: 0
+        Conscience: 0
+        SetFlags: []
+        ClearFlags: []
+        AddClues: []
+        EndingTags: []
+        Npcs: []
+        Items: []
+        Defense: 0
+        Threat: 0
+        Facilities: []
+        AddTraits: []
+        Proficiencies: []
+        TeacherMobility: 0
+        RestorePower: 0
+        RaidStrength: 0
+        TeacherReinfect: 0
+        TeacherInfection: 0
+      OnFailure:
+        Stats: []
+        Vitals: []
+        Resources: []
+        Hidden: []
+        SleepDebt: 0
+        Conscience: 0
+        SetFlags: []
+        ClearFlags: []
+        AddClues: []
+        EndingTags: []
+        Npcs: []
+        Items: []
+        Defense: 0
+        Threat: 0
+        Facilities: []
+        AddTraits: []
+        Proficiencies: []
+        TeacherMobility: 0
+        RestorePower: 0
+        RaidStrength: 0
+        TeacherReinfect: 0
+        TeacherInfection: 0
+      NextEventId: 
+    - Id: SILENCE
+      TextKey: 
+      Condition:
+        WeekMin: 0
+        WeekMax: 0
+        Days: 
+        Phase: 0
+        Seasons: 
+        Month: 0
+        DayOfMonth: 0
+        ActionCategories: 
+        ActionIds: []
+        FlagsAll: []
+        FlagsAny: []
+        FlagsNone: []
+        CluesAll: []
+        Checks: []
+        AnyChecks: []
+        NpcStatuses: []
+        IsBirthday: 0
+      Costs: []
+      HasCheck: 0
+      Check:
+        BaseRate: 0.5
+        StatWeights: []
+        UsesProficiency: 0
+        Proficiency: 0
+        ProficiencyWeight: 0.05
+      Effect:
+        Stats: []
+        Vitals: []
+        Resources: []
+        Hidden:
+        - Hidden: 4
+          Amount: 4
+        SleepDebt: 0
+        Conscience: 0
+        SetFlags: []
+        ClearFlags: []
+        AddClues: []
+        EndingTags: []
+        Npcs: []
+        Items: []
+        Defense: 0
+        Threat: 0
+        Facilities: []
+        AddTraits: []
+        Proficiencies: []
+        TeacherMobility: 0
+        RestorePower: 0
+        RaidStrength: 0
+        TeacherReinfect: 0
+        TeacherInfection: 0
+      OnFailure:
+        Stats: []
+        Vitals: []
+        Resources: []
+        Hidden: []
+        SleepDebt: 0
+        Conscience: 0
+        SetFlags: []
+        ClearFlags: []
+        AddClues: []
+        EndingTags: []
+        Npcs: []
+        Items: []
+        Defense: 0
+        Threat: 0
+        Facilities: []
+        AddTraits: []
+        Proficiencies: []
+        TeacherMobility: 0
+        RestorePower: 0
+        RaidStrength: 0
+        TeacherReinfect: 0
+        TeacherInfection: 0
+      NextEventId: 
+    ReviewAct: 0
+    ReviewFromWeek: 1

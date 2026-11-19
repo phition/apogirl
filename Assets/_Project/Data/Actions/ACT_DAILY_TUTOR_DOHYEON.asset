@@ -1,0 +1,140 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dae23a582c039304a81c2bdd418cbc38, type: 3}
+  m_Name: ACT_DAILY_TUTOR_DOHYEON
+  m_EditorClassIdentifier: ApoGirl.Data::ApoGirl.Data.ActionDefinitionAsset
+  _id: ACT_DAILY_TUTOR_DOHYEON
+  _definition:
+    Id: ACT_DAILY_TUTOR_DOHYEON
+    Category: 3
+    SlotTag: 2
+    ResourceCosts: []
+    FatigueCost: 4
+    StressCost: 1
+    HasCheck: 0
+    Check:
+      BaseRate: 0.5
+      StatWeights: []
+      UsesProficiency: 0
+      Proficiency: 0
+      ProficiencyWeight: 0.05
+    StatGains:
+    - Stat: 6
+      Amount: 1
+    - Stat: 7
+      Amount: 1
+    HasProficiency: 1
+    Proficiency: 5
+    ProficiencyXp: 1
+    Teaching: 0
+    OnSuccess:
+      Stats: []
+      Vitals: []
+      Resources: []
+      Hidden: []
+      SleepDebt: 0
+      Conscience: 0
+      SetFlags: []
+      ClearFlags: []
+      AddClues: []
+      EndingTags:
+      - Tag: TAG_TEACHING
+        Amount: 1
+      Npcs:
+      - NpcId: NPC_DOHYEON
+        Affinity: 1
+        Trust: 0
+        SetStatus: 0
+        SetRole: 
+      Items: []
+      Defense: 0
+      Threat: 0
+      Facilities: []
+      AddTraits: []
+      Proficiencies: []
+      TeacherMobility: 0
+      RestorePower: 0
+      RaidStrength: 0
+      TeacherReinfect: 0
+      TeacherInfection: 0
+    OnGreatSuccess:
+      Stats: []
+      Vitals: []
+      Resources: []
+      Hidden: []
+      SleepDebt: 0
+      Conscience: 0
+      SetFlags: []
+      ClearFlags: []
+      AddClues: []
+      EndingTags: []
+      Npcs: []
+      Items: []
+      Defense: 0
+      Threat: 0
+      Facilities: []
+      AddTraits: []
+      Proficiencies: []
+      TeacherMobility: 0
+      RestorePower: 0
+      RaidStrength: 0
+      TeacherReinfect: 0
+      TeacherInfection: 0
+    OnFailure:
+      Stats: []
+      Vitals: []
+      Resources: []
+      Hidden: []
+      SleepDebt: 0
+      Conscience: 0
+      SetFlags: []
+      ClearFlags: []
+      AddClues: []
+      EndingTags: []
+      Npcs: []
+      Items: []
+      Defense: 0
+      Threat: 0
+      Facilities: []
+      AddTraits: []
+      Proficiencies: []
+      TeacherMobility: 0
+      RestorePower: 0
+      RaidStrength: 0
+      TeacherReinfect: 0
+      TeacherInfection: 0
+    ExpeditionTime: 0
+    LocationId: 
+    Unlock:
+      WeekMin: 0
+      WeekMax: 0
+      Days: 
+      Phase: 0
+      Seasons: 
+      Month: 0
+      DayOfMonth: 0
+      ActionCategories: 
+      ActionIds: []
+      FlagsAll: []
+      FlagsAny: []
+      FlagsNone: []
+      CluesAll: []
+      Checks: []
+      AnyChecks: []
+      NpcStatuses:
+      - NpcId: NPC_DOHYEON
+        Status: 2
+      IsBirthday: 0
+    RaidGuard: 0
+    BonusFacilityId: 
+    BonusPerLevel: 0
+    ThreatGain: 0

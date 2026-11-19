@@ -2559,6 +2559,158 @@ MonoBehaviour:
     m_Key: debug.rescue_flag
     m_Metadata:
       m_Items: []
+  - m_Id: 173977321619456
+    m_Key: diary.a2_summer
+    m_Metadata:
+      m_Items: []
+  - m_Id: 173977711689728
+    m_Key: diary.a2_nurse
+    m_Metadata:
+      m_Items: []
+  - m_Id: 173977711689729
+    m_Key: diary.a2_trace
+    m_Metadata:
+      m_Items: []
+  - m_Id: 173977711689730
+    m_Key: diary.a2_knows
+    m_Metadata:
+      m_Items: []
+  - m_Id: 173977711689731
+    m_Key: diary.a2_bystander
+    m_Metadata:
+      m_Items: []
+  - m_Id: 173977711689732
+    m_Key: diary.a2_storm
+    m_Metadata:
+      m_Items: []
+  - m_Id: 173977711689733
+    m_Key: tc.a2_summer
+    m_Metadata:
+      m_Items: []
+  - m_Id: 173977711689734
+    m_Key: tc.a2_knows
+    m_Metadata:
+      m_Items: []
+  - m_Id: 173977711689735
+    m_Key: review.a2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 173977711689736
+    m_Key: review.a2_knows
+    m_Metadata:
+      m_Items: []
+  - m_Id: 173977711689737
+    m_Key: line.m_nurse
+    m_Metadata:
+      m_Items: []
+  - m_Id: 173977711689738
+    m_Key: line.m_trace
+    m_Metadata:
+      m_Items: []
+  - m_Id: 173977711689739
+    m_Key: line.m_locked_house
+    m_Metadata:
+      m_Items: []
+  - m_Id: 173977711689740
+    m_Key: line.m_knows
+    m_Metadata:
+      m_Items: []
+  - m_Id: 173977711689741
+    m_Key: line.m_bystander
+    m_Metadata:
+      m_Items: []
+  - m_Id: 173977711689742
+    m_Key: line.m_act2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 173977711689743
+    m_Key: location.LOC_RESIDENTIAL
+    m_Metadata:
+      m_Items: []
+  - m_Id: 173977711689744
+    m_Key: location.LOC_SUBWAY
+    m_Metadata:
+      m_Items: []
+  - m_Id: 173977711689745
+    m_Key: npc.NPC_NURSE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 173977711689746
+    m_Key: npc.NPC_BYSTANDER
+    m_Metadata:
+      m_Items: []
+  - m_Id: 173977711689747
+    m_Key: npc.NPC_RINGLEADER
+    m_Metadata:
+      m_Items: []
+  - m_Id: 173977711689748
+    m_Key: enc.FRIEND_TRACE.prompt
+    m_Metadata:
+      m_Items: []
+  - m_Id: 173977711689749
+    m_Key: enc.FRIEND_TRACE.take
+    m_Metadata:
+      m_Items: []
+  - m_Id: 173977711689750
+    m_Key: enc.FRIEND_TRACE.leave
+    m_Metadata:
+      m_Items: []
+  - m_Id: 173977711689751
+    m_Key: enc.LOCKED_HOUSE.prompt
+    m_Metadata:
+      m_Items: []
+  - m_Id: 173977711689752
+    m_Key: enc.LOCKED_HOUSE.supplies
+    m_Metadata:
+      m_Items: []
+  - m_Id: 173977711689753
+    m_Key: enc.LOCKED_HOUSE.knock
+    m_Metadata:
+      m_Items: []
+  - m_Id: 173977711689754
+    m_Key: enc.LOCKED_HOUSE.pass
+    m_Metadata:
+      m_Items: []
+  - m_Id: 173977711689755
+    m_Key: enc.NURSE.prompt
+    m_Metadata:
+      m_Items: []
+  - m_Id: 173977711689756
+    m_Key: enc.NURSE.invite
+    m_Metadata:
+      m_Items: []
+  - m_Id: 173977711689757
+    m_Key: enc.NURSE.later
+    m_Metadata:
+      m_Items: []
+  - m_Id: 173977711689758
+    m_Key: enc.LAST_BROADCAST.prompt
+    m_Metadata:
+      m_Items: []
+  - m_Id: 173977711689759
+    m_Key: enc.LAST_BROADCAST.listen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 173977711689760
+    m_Key: enc.LAST_BROADCAST.leave
+    m_Metadata:
+      m_Items: []
+  - m_Id: 173977711689761
+    m_Key: enc.BYSTANDER.prompt
+    m_Metadata:
+      m_Items: []
+  - m_Id: 173977711689762
+    m_Key: enc.BYSTANDER.take
+    m_Metadata:
+      m_Items: []
+  - m_Id: 173977711689763
+    m_Key: enc.BYSTANDER.supply
+    m_Metadata:
+      m_Items: []
+  - m_Id: 173977711689764
+    m_Key: enc.BYSTANDER.walk_away
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

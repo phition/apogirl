@@ -171,7 +171,32 @@ MonoBehaviour:
       LockedRooms: []
       ForceableRooms:
       - ROOM_STORE_OFFICE_1
-      Encounters: []
+      Encounters:
+      - Id: FRIEND_TRACE
+        Floor: 0
+        RoomId: 
+        X: 8
+        FlagsAll:
+        - A2_STARTED
+        FlagsNone:
+        - FRIEND_TRACE_FOUND
+        - FRIEND_TRACE_LEFT
+        PromptKey: enc.FRIEND_TRACE.prompt
+        Choices:
+        - Id: TAKE
+          TextKey: enc.FRIEND_TRACE.take
+          SetFlags:
+          - FRIEND_TRACE_FOUND
+          AddClues: []
+          StressDelta: 8
+          Removes: 1
+        - Id: LEAVE
+          TextKey: enc.FRIEND_TRACE.leave
+          SetFlags:
+          - FRIEND_TRACE_LEFT
+          AddClues: []
+          StressDelta: 5
+          Removes: 1
     NightVariant:
       Spawns:
       - EnemyId: ENEMY_WANDERER

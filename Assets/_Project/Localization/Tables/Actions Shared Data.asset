@@ -255,6 +255,38 @@ MonoBehaviour:
     m_Key: ACT_SCOUT_RADIO.short
     m_Metadata:
       m_Items: []
+  - m_Id: 173975983636480
+    m_Key: ACT_EXP_DAY_RESIDENTIAL.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 173976445009920
+    m_Key: ACT_EXP_DAY_RESIDENTIAL.short
+    m_Metadata:
+      m_Items: []
+  - m_Id: 173976445009921
+    m_Key: ACT_EXP_DAY_SUBWAY.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 173976445009922
+    m_Key: ACT_EXP_DAY_SUBWAY.short
+    m_Metadata:
+      m_Items: []
+  - m_Id: 173976445009923
+    m_Key: ACT_EXP_NIGHT_SUBWAY.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 173976445009924
+    m_Key: ACT_EXP_NIGHT_SUBWAY.short
+    m_Metadata:
+      m_Items: []
+  - m_Id: 173976445009925
+    m_Key: ACT_DAILY_TUTOR_DOHYEON.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 173976445009926
+    m_Key: ACT_DAILY_TUTOR_DOHYEON.short
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
