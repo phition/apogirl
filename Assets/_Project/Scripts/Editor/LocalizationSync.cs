@@ -76,6 +76,7 @@ namespace ApoGirl.EditorTools
             {
                 EnsureFolder(Root + "/Locales");
                 locale = Locale.CreateLocale(identifier);
+                locale.name = $"Korean ({LocaleCode})";
                 AssetDatabase.CreateAsset(locale, $"{Root}/Locales/{locale.name}.asset");
                 LocalizationEditorSettings.AddLocale(locale);
             }

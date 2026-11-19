@@ -19,7 +19,7 @@ namespace ApoGirl.Tests.PlayMode
             yield return WaitForScene(GameApp.TitleScene);
             Assert.IsNotNull(GameApp.Session, "Boot가 세션을 만들어야 함");
 
-            var title = Object.FindFirstObjectByType<UIDocument>();
+            var title = Object.FindAnyObjectByType<UIDocument>();
             Assert.IsNotNull(title.rootVisualElement.Q<Button>(className: "title-button"));
 
             GameApp.Session.NewGame(12345);
