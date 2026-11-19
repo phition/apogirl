@@ -35,6 +35,10 @@ namespace ApoGirl.Exploration.Runtime
         private const float MoveNoiseInterval = 0.35f;
         private const float SearchNoiseInterval = 0.5f;
 
+        /// <summary>보이는 공간이 바뀔 때(문 통과·문틈 살피기) 짧게 어두워졌다 밝아진다.</summary>
+        private const float FadeOutSeconds = 0.1f;
+        private const float FadeInSeconds = 0.15f;
+
         [Tooltip("허브 없이 단독 실행할 때 쓸 정의 DB")]
         [SerializeField] private DefinitionDatabaseAsset _fallbackDatabase;
 
@@ -59,6 +63,10 @@ namespace ApoGirl.Exploration.Runtime
         private Transform _player;
         private SpriteRenderer _playerRenderer;
         private Camera _camera;
+        private SpriteRenderer _fadeOverlay;
+
+        /// <summary>카메라가 지금 비추고 있는 공간 (페이드 중에는 목표 공간과 다를 수 있다).</summary>
+        private ExplorationArea _shownArea;
         private ExpeditionHud _hud;
         private bool _standalone;
         private int _baseFatigue;
@@ -195,6 +203,9 @@ namespace ApoGirl.Exploration.Runtime
 
         /// <summary>탐험 카메라 (HUD가 월드 위치를 화면 좌표로 바꿀 때 사용).</summary>
         public Camera ViewCamera => _camera;
+
+        /// <summary>화면 전환 페이드 정도 (0 = 밝음, 1 = 완전히 어두움).</summary>
+        public float ScreenFade { get; private set; }
 
         /// <summary>좀비 머리 위 월드 좌표 (Zzz·표시용).</summary>
         public Vector3 HeadPosition(ZombieUnit unit)
@@ -618,7 +629,6 @@ namespace ApoGirl.Exploration.Runtime
             CloseContainer();
             Hidden = false;
             Nearest = null;
-            SnapCamera();
         }
 
         private void Finish(ExtractStatus status)
@@ -833,6 +843,10 @@ namespace ApoGirl.Exploration.Runtime
                 go.AddComponent<AudioListener>();
             }
 
+            var fade = BuildingView.Rect(go.transform, "ScreenFade", new Vector2(-100f, -100f), new Vector2(200f, 200f), new Color(0f, 0f, 0f, 0f), 1000);
+            fade.transform.localPosition = new Vector3(-100f, -100f, 1f);
+            _fadeOverlay = fade.GetComponent<SpriteRenderer>();
+            _shownArea = CurrentArea;
             SnapCamera();
         }
 
@@ -881,6 +895,8 @@ namespace ApoGirl.Exploration.Runtime
 
         private void SnapCamera()
         {
+            _shownArea = PeekTarget != null ? PeekArea : CurrentArea;
+            ScreenFade = 0f;
             UpdateViews(1000f);
         }
 
@@ -916,21 +932,42 @@ namespace ApoGirl.Exploration.Runtime
             _camera.orthographicSize = Mathf.Clamp(MinVisibleWidth / (2f * Mathf.Max(0.1f, _camera.aspect)), MinOrthographicSize, MaxOrthographicSize);
             // 방이 화면에 다 들어오면 방 전체를 가운데에, 아니면 플레이어를 따라가되 공간 끝 너머 빈 곳은 덜 보이게.
             // 문틈으로 살피는 동안에는 문 너머 공간을 비춘다.
-            var viewArea = PeekTarget != null ? PeekArea : CurrentArea;
+            var wantedArea = PeekTarget != null ? PeekArea : CurrentArea;
+            var cut = false;
+            if (_shownArea != wantedArea)
+            {
+                // 다른 공간으로 넘어갈 때는 카메라를 끌고 가지 않고 어둡게 → 잘라 넘기기 → 밝게
+                ScreenFade = Mathf.Min(1f, ScreenFade + dt / FadeOutSeconds);
+                if (ScreenFade >= 1f)
+                {
+                    _shownArea = wantedArea;
+                    cut = true;
+                }
+            }
+            else if (ScreenFade > 0f)
+            {
+                ScreenFade = Mathf.Max(0f, ScreenFade - dt / FadeInSeconds);
+            }
+
+            if (_fadeOverlay != null)
+            {
+                _fadeOverlay.color = new Color(0f, 0f, 0f, ScreenFade);
+            }
+
+            var viewArea = _shownArea ?? wantedArea;
             var viewOrigin = viewArea.Origin;
-            var focusX = viewOrigin.x + (PeekTarget != null ? PeekTarget.LinkX : X);
+            var focusLocal = viewArea == PeekArea && PeekTarget != null ? PeekTarget.LinkX
+                : viewArea == CurrentArea ? X
+                : (_camera.transform.position.x - viewOrigin.x);
+            var focusX = viewOrigin.x + focusLocal;
             var halfWidth = _camera.orthographicSize * _camera.aspect;
             var width = viewArea.Width;
             var cameraX = width <= halfWidth * 2f
                 ? viewOrigin.x + width / 2f
                 : Mathf.Clamp(focusX, viewOrigin.x + halfWidth - 2f, viewOrigin.x + width - halfWidth + 2f);
             var target = new Vector3(cameraX, viewOrigin.y + _building.FloorHeight * 0.5f, -10f);
-            if (PeekTarget != null)
-            {
-                dt = 1000f;
-            }
             var cameraTransform = _camera.transform;
-            cameraTransform.position = Vector3.Lerp(cameraTransform.position, target, Mathf.Clamp01(dt * 6f));
+            cameraTransform.position = cut || dt >= 1000f ? target : Vector3.Lerp(cameraTransform.position, target, Mathf.Clamp01(dt * 6f));
         }
 
         // ── 위협 ──

@@ -469,7 +469,7 @@ namespace ApoGirl.Exploration.Model
                     continue;
                 }
 
-                var reach = noise.Radius * mods.Hearing;
+                var reach = noise.Radius * mods.Hearing * _balance.ZombieHearingBonus;
                 var d = Math.Abs(crowd.X - noise.X);
                 if (d <= reach)
                 {

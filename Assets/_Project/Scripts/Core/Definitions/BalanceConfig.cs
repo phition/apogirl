@@ -150,11 +150,11 @@ namespace ApoGirl.Core.Definitions
         // ── 탐험 위협 (M2b-2, 문서 6.3.2·6.3.5) ──
         /// <summary>소음 반경 (유닛): 웅크려 걷기 / 걷기 / 달리기 / 문 / 계단 / 수색(0.5초마다) / 버리기 / 밀치기.</summary>
         public float CrouchNoise = 0.8f;
-        public float WalkNoise = 3.2f;
-        public float RunNoise = 8.5f;
-        public float DoorNoise = 4.5f;
-        public float StairsNoise = 3.5f;
-        public float SearchNoise = 2.5f;
+        public float WalkNoise = 4f;
+        public float RunNoise = 11f;
+        public float DoorNoise = 5.5f;
+        public float StairsNoise = 4.5f;
+        public float SearchNoise = 3.5f;
         public float DropNoise = 3f;
         public float ShoveNoise = 7f;
 
@@ -213,8 +213,8 @@ namespace ApoGirl.Core.Definitions
         /// <summary>어둠 속에서 플레이어가 맨눈으로 알아볼 수 있는 거리 (이 밖의 좀비·NPC는 화면에 그리지 않는다).</summary>
         public float NightViewDistance = 3.5f;
 
-        /// <summary>깨어 있는 좀비가 소음을 듣는 반경 배율 (파밍·이동 소음에 더 민감하게).</summary>
-        public float ZombieHearingBonus = 1.25f;
+        /// <summary>좀비·잠든 군집이 소음을 듣는 반경 배율 (파밍·이동 소음에 더 민감하게).</summary>
+        public float ZombieHearingBonus = 1.4f;
 
         /// <summary>벽 너머(방 ↔ 복도)로 전해지는 소음 반경 배율.</summary>
         public float WallNoiseFactor = 0.6f;

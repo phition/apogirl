@@ -319,7 +319,7 @@ namespace ApoGirl.Exploration.Runtime
             var camera = _director.ViewCamera;
             var panel = _root.panel;
             var used = 0;
-            if (camera != null && panel != null)
+            if (camera != null && panel != null && _director.ScreenFade < 0.5f)
             {
                 var threshold = _director.Definitions.Balance.StirThreshold;
                 var phase = (int)(Time.time / 0.5f);
