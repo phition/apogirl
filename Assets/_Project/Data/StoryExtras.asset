@@ -99,6 +99,637 @@ MonoBehaviour:
   - Id: BROADCAST
     MaxLevel: 1
   _lines:
+  - Id: LT_DEFAULT
+    Kind: 2
+    Condition:
+      WeekMin: 0
+      WeekMax: 0
+      Days: 
+      Phase: 0
+      Seasons: 
+      Month: 0
+      DayOfMonth: 0
+      ActionCategories: 
+      ActionIds: []
+      FlagsAll: []
+      FlagsAny: []
+      FlagsNone: []
+      CluesAll: []
+      Checks: []
+      AnyChecks: []
+      NpcStatuses: []
+      IsBirthday: 0
+    Priority: 0
+    TextKey: line.lt_default
+  - Id: LT_CURED
+    Kind: 2
+    Condition:
+      WeekMin: 0
+      WeekMax: 0
+      Days: 
+      Phase: 0
+      Seasons: 
+      Month: 0
+      DayOfMonth: 0
+      ActionCategories: 
+      ActionIds: []
+      FlagsAll:
+      - TEACHER_CURED
+      FlagsAny: []
+      FlagsNone: []
+      CluesAll: []
+      Checks: []
+      AnyChecks: []
+      NpcStatuses: []
+      IsBirthday: 0
+    Priority: 100
+    TextKey: line.lt_cured
+  - Id: LT_LAST_LESSON
+    Kind: 2
+    Condition:
+      WeekMin: 0
+      WeekMax: 0
+      Days: 
+      Phase: 0
+      Seasons: 
+      Month: 0
+      DayOfMonth: 0
+      ActionCategories: 
+      ActionIds: []
+      FlagsAll:
+      - TEACHER_LAST_LESSON
+      FlagsAny: []
+      FlagsNone: []
+      CluesAll: []
+      Checks: []
+      AnyChecks: []
+      NpcStatuses: []
+      IsBirthday: 0
+    Priority: 50
+    TextKey: line.lt_last_lesson
+  - Id: LT_ISOLATED
+    Kind: 2
+    Condition:
+      WeekMin: 0
+      WeekMax: 0
+      Days: 
+      Phase: 0
+      Seasons: 
+      Month: 0
+      DayOfMonth: 0
+      ActionCategories: 
+      ActionIds: []
+      FlagsAll:
+      - TEACHER_ISOLATED
+      FlagsAny: []
+      FlagsNone: []
+      CluesAll: []
+      Checks: []
+      AnyChecks: []
+      NpcStatuses: []
+      IsBirthday: 0
+    Priority: 50
+    TextKey: line.lt_isolated
+  - Id: LT_EXPOSED
+    Kind: 2
+    Condition:
+      WeekMin: 0
+      WeekMax: 0
+      Days: 
+      Phase: 0
+      Seasons: 
+      Month: 0
+      DayOfMonth: 0
+      ActionCategories: 
+      ActionIds: []
+      FlagsAll:
+      - TEACHER_EXPOSED
+      FlagsAny: []
+      FlagsNone: []
+      CluesAll: []
+      Checks: []
+      AnyChecks: []
+      NpcStatuses: []
+      IsBirthday: 0
+    Priority: 50
+    TextKey: line.lt_exposed
+  - Id: LT_LEFT_BEHIND
+    Kind: 2
+    Condition:
+      WeekMin: 0
+      WeekMax: 0
+      Days: 
+      Phase: 0
+      Seasons: 
+      Month: 0
+      DayOfMonth: 0
+      ActionCategories: 
+      ActionIds: []
+      FlagsAll:
+      - TEACHER_LEFT_BEHIND
+      FlagsAny: []
+      FlagsNone: []
+      CluesAll: []
+      Checks: []
+      AnyChecks: []
+      NpcStatuses: []
+      IsBirthday: 0
+    Priority: 40
+    TextKey: line.lt_left_behind
+  - Id: LF_DEFAULT
+    Kind: 3
+    Condition:
+      WeekMin: 0
+      WeekMax: 0
+      Days: 
+      Phase: 0
+      Seasons: 
+      Month: 0
+      DayOfMonth: 0
+      ActionCategories: 
+      ActionIds: []
+      FlagsAll: []
+      FlagsAny: []
+      FlagsNone: []
+      CluesAll: []
+      Checks: []
+      AnyChecks: []
+      NpcStatuses: []
+      IsBirthday: 0
+    Priority: 0
+    TextKey: line.lf_default
+  - Id: LF_PROMISE
+    Kind: 3
+    Condition:
+      WeekMin: 0
+      WeekMax: 0
+      Days: 
+      Phase: 0
+      Seasons: 
+      Month: 0
+      DayOfMonth: 0
+      ActionCategories: 
+      ActionIds: []
+      FlagsAll:
+      - PROMISE_YES
+      FlagsAny: []
+      FlagsNone: []
+      CluesAll: []
+      Checks: []
+      AnyChecks: []
+      NpcStatuses: []
+      IsBirthday: 0
+    Priority: 20
+    TextKey: line.lf_promise
+  - Id: LF_TOLD
+    Kind: 3
+    Condition:
+      WeekMin: 0
+      WeekMax: 0
+      Days: 
+      Phase: 0
+      Seasons: 
+      Month: 0
+      DayOfMonth: 0
+      ActionCategories: 
+      ActionIds: []
+      FlagsAll:
+      - TOLD_FRIEND
+      FlagsAny: []
+      FlagsNone: []
+      CluesAll: []
+      Checks: []
+      AnyChecks: []
+      NpcStatuses: []
+      IsBirthday: 0
+    Priority: 30
+    TextKey: line.lf_told
+  - Id: LF_SUPPLIES
+    Kind: 3
+    Condition:
+      WeekMin: 0
+      WeekMax: 0
+      Days: 
+      Phase: 0
+      Seasons: 
+      Month: 0
+      DayOfMonth: 0
+      ActionCategories: 
+      ActionIds: []
+      FlagsAll:
+      - LEFT_SUPPLIES_LOCKED_HOUSE
+      FlagsAny: []
+      FlagsNone: []
+      CluesAll: []
+      Checks: []
+      AnyChecks: []
+      NpcStatuses: []
+      IsBirthday: 0
+    Priority: 40
+    TextKey: line.lf_supplies
+  - Id: LC_1
+    Kind: 4
+    Condition:
+      WeekMin: 0
+      WeekMax: 0
+      Days: 
+      Phase: 0
+      Seasons: 
+      Month: 0
+      DayOfMonth: 0
+      ActionCategories: 
+      ActionIds: []
+      FlagsAll: []
+      FlagsAny: []
+      FlagsNone: []
+      CluesAll: []
+      Checks:
+      - Kind: 25
+        Key: CURE_
+        Op: 0
+        Value: 1
+      AnyChecks: []
+      NpcStatuses: []
+      IsBirthday: 0
+    Priority: 10
+    TextKey: line.lc_1
+  - Id: LC_3
+    Kind: 4
+    Condition:
+      WeekMin: 0
+      WeekMax: 0
+      Days: 
+      Phase: 0
+      Seasons: 
+      Month: 0
+      DayOfMonth: 0
+      ActionCategories: 
+      ActionIds: []
+      FlagsAll: []
+      FlagsAny: []
+      FlagsNone: []
+      CluesAll: []
+      Checks:
+      - Kind: 25
+        Key: CURE_
+        Op: 0
+        Value: 3
+      AnyChecks: []
+      NpcStatuses: []
+      IsBirthday: 0
+    Priority: 20
+    TextKey: line.lc_3
+  - Id: LC_6
+    Kind: 4
+    Condition:
+      WeekMin: 0
+      WeekMax: 0
+      Days: 
+      Phase: 0
+      Seasons: 
+      Month: 0
+      DayOfMonth: 0
+      ActionCategories: 
+      ActionIds: []
+      FlagsAll: []
+      FlagsAny: []
+      FlagsNone: []
+      CluesAll: []
+      Checks:
+      - Kind: 25
+        Key: CURE_
+        Op: 0
+        Value: 6
+      AnyChecks: []
+      NpcStatuses: []
+      IsBirthday: 0
+    Priority: 30
+    TextKey: line.lc_6
+  - Id: LTD_HOME
+    Kind: 5
+    Condition:
+      WeekMin: 0
+      WeekMax: 0
+      Days: 
+      Phase: 0
+      Seasons: 
+      Month: 0
+      DayOfMonth: 0
+      ActionCategories: 
+      ActionIds: []
+      FlagsAll: []
+      FlagsAny: []
+      FlagsNone: []
+      CluesAll: []
+      Checks:
+      - Kind: 17
+        Key: 
+        Op: 1
+        Value: 2
+      AnyChecks: []
+      NpcStatuses: []
+      IsBirthday: 0
+    Priority: 40
+    TextKey: line.ltd_home
+  - Id: LTD_NIGHT
+    Kind: 5
+    Condition:
+      WeekMin: 0
+      WeekMax: 0
+      Days: 
+      Phase: 0
+      Seasons: 
+      Month: 0
+      DayOfMonth: 0
+      ActionCategories: 
+      ActionIds: []
+      FlagsAll: []
+      FlagsAny: []
+      FlagsNone: []
+      CluesAll: []
+      Checks:
+      - Kind: 19
+        Key: 
+        Op: 0
+        Value: 60
+      - Kind: 17
+        Key: 
+        Op: 0
+        Value: 5
+      AnyChecks: []
+      NpcStatuses: []
+      IsBirthday: 0
+    Priority: 30
+    TextKey: line.ltd_night
+  - Id: LTD_DAY
+    Kind: 5
+    Condition:
+      WeekMin: 0
+      WeekMax: 0
+      Days: 
+      Phase: 0
+      Seasons: 
+      Month: 0
+      DayOfMonth: 0
+      ActionCategories: 
+      ActionIds: []
+      FlagsAll: []
+      FlagsAny: []
+      FlagsNone: []
+      CluesAll: []
+      Checks:
+      - Kind: 19
+        Key: 
+        Op: 1
+        Value: 30
+      - Kind: 17
+        Key: 
+        Op: 0
+        Value: 5
+      AnyChecks: []
+      NpcStatuses: []
+      IsBirthday: 0
+    Priority: 30
+    TextKey: line.ltd_day
+  - Id: LTD_MIXED
+    Kind: 5
+    Condition:
+      WeekMin: 0
+      WeekMax: 0
+      Days: 
+      Phase: 0
+      Seasons: 
+      Month: 0
+      DayOfMonth: 0
+      ActionCategories: 
+      ActionIds: []
+      FlagsAll: []
+      FlagsAny: []
+      FlagsNone: []
+      CluesAll: []
+      Checks:
+      - Kind: 17
+        Key: 
+        Op: 0
+        Value: 5
+      AnyChecks: []
+      NpcStatuses: []
+      IsBirthday: 0
+    Priority: 10
+    TextKey: line.ltd_mixed
+  - Id: M_DOOR
+    Kind: 6
+    Condition:
+      WeekMin: 0
+      WeekMax: 0
+      Days: 
+      Phase: 0
+      Seasons: 
+      Month: 0
+      DayOfMonth: 0
+      ActionCategories: 
+      ActionIds: []
+      FlagsAll: []
+      FlagsAny: []
+      FlagsNone: []
+      CluesAll: []
+      Checks: []
+      AnyChecks: []
+      NpcStatuses: []
+      IsBirthday: 0
+    Priority: 0
+    TextKey: line.m_door
+  - Id: M_NIGHT
+    Kind: 6
+    Condition:
+      WeekMin: 0
+      WeekMax: 0
+      Days: 
+      Phase: 0
+      Seasons: 
+      Month: 0
+      DayOfMonth: 0
+      ActionCategories: 
+      ActionIds: []
+      FlagsAll:
+      - NIGHT_RUNS
+      FlagsAny: []
+      FlagsNone: []
+      CluesAll: []
+      Checks: []
+      AnyChecks: []
+      NpcStatuses: []
+      IsBirthday: 0
+    Priority: 0
+    TextKey: line.m_night
+  - Id: M_CRUTCH
+    Kind: 6
+    Condition:
+      WeekMin: 0
+      WeekMax: 0
+      Days: 
+      Phase: 0
+      Seasons: 
+      Month: 0
+      DayOfMonth: 0
+      ActionCategories: 
+      ActionIds: []
+      FlagsAll:
+      - CRUTCH_DONE
+      FlagsAny: []
+      FlagsNone: []
+      CluesAll: []
+      Checks: []
+      AnyChecks: []
+      NpcStatuses: []
+      IsBirthday: 0
+    Priority: 0
+    TextKey: line.m_crutch
+  - Id: M_POWER
+    Kind: 6
+    Condition:
+      WeekMin: 0
+      WeekMax: 0
+      Days: 
+      Phase: 0
+      Seasons: 
+      Month: 0
+      DayOfMonth: 0
+      ActionCategories: 
+      ActionIds: []
+      FlagsAll:
+      - POWER_RESTORED
+      FlagsAny: []
+      FlagsNone: []
+      CluesAll: []
+      Checks: []
+      AnyChecks: []
+      NpcStatuses: []
+      IsBirthday: 0
+    Priority: 0
+    TextKey: line.m_power
+  - Id: M_MESSAGES
+    Kind: 6
+    Condition:
+      WeekMin: 0
+      WeekMax: 0
+      Days: 
+      Phase: 0
+      Seasons: 
+      Month: 0
+      DayOfMonth: 0
+      ActionCategories: 
+      ActionIds: []
+      FlagsAll:
+      - READ_MESSAGES
+      FlagsAny: []
+      FlagsNone: []
+      CluesAll: []
+      Checks: []
+      AnyChecks: []
+      NpcStatuses: []
+      IsBirthday: 0
+    Priority: 0
+    TextKey: line.m_messages
+  - Id: M_DOHYEON
+    Kind: 6
+    Condition:
+      WeekMin: 0
+      WeekMax: 0
+      Days: 
+      Phase: 0
+      Seasons: 
+      Month: 0
+      DayOfMonth: 0
+      ActionCategories: 
+      ActionIds: []
+      FlagsAll: []
+      FlagsAny: []
+      FlagsNone: []
+      CluesAll: []
+      Checks: []
+      AnyChecks: []
+      NpcStatuses:
+      - NpcId: NPC_DOHYEON
+        Status: 2
+      IsBirthday: 0
+    Priority: 0
+    TextKey: line.m_dohyeon
+  - Id: M_ACT1
+    Kind: 6
+    Condition:
+      WeekMin: 0
+      WeekMax: 0
+      Days: 
+      Phase: 0
+      Seasons: 
+      Month: 0
+      DayOfMonth: 0
+      ActionCategories: 
+      ActionIds: []
+      FlagsAll:
+      - ACT1_DONE
+      FlagsAny: []
+      FlagsNone: []
+      CluesAll: []
+      Checks: []
+      AnyChecks: []
+      NpcStatuses: []
+      IsBirthday: 0
+    Priority: 0
+    TextKey: line.m_act1
+  - Id: DIARY_BREAKDOWN
+    Kind: 0
+    Condition:
+      WeekMin: 0
+      WeekMax: 0
+      Days: 
+      Phase: 0
+      Seasons: 
+      Month: 0
+      DayOfMonth: 0
+      ActionCategories: 
+      ActionIds: []
+      FlagsAll: []
+      FlagsAny: []
+      FlagsNone: []
+      CluesAll: []
+      Checks:
+      - Kind: 24
+        Key: 
+        Op: 0
+        Value: 1
+      AnyChecks: []
+      NpcStatuses: []
+      IsBirthday: 0
+    Priority: 60
+    TextKey: diary.breakdown
+  - Id: TC_BREAKDOWN
+    Kind: 1
+    Condition:
+      WeekMin: 0
+      WeekMax: 0
+      Days: 
+      Phase: 0
+      Seasons: 
+      Month: 0
+      DayOfMonth: 0
+      ActionCategories: 
+      ActionIds: []
+      FlagsAll: []
+      FlagsAny: []
+      FlagsNone: []
+      CluesAll: []
+      Checks:
+      - Kind: 24
+        Key: 
+        Op: 0
+        Value: 1
+      AnyChecks: []
+      NpcStatuses: []
+      IsBirthday: 0
+    Priority: 60
+    TextKey: tc.breakdown
   - Id: DIARY_DEFAULT
     Kind: 0
     Condition:
@@ -1904,3 +2535,775 @@ MonoBehaviour:
       TeacherMobility: 0
       RestorePower: 0
       RaidStrength: 0
+  _endings:
+  - Id: ENDING_BAD_EXPEDITION
+    Category: 0
+    Priority: 0
+    EndCauses:
+    - END_CAUSE_EXPEDITION
+    Condition:
+      WeekMin: 0
+      WeekMax: 0
+      Days: 
+      Phase: 0
+      Seasons: 
+      Month: 0
+      DayOfMonth: 0
+      ActionCategories: 
+      ActionIds: []
+      FlagsAll: []
+      FlagsAny: []
+      FlagsNone: []
+      CluesAll: []
+      Checks: []
+      AnyChecks: []
+      NpcStatuses: []
+      IsBirthday: 0
+    Score: []
+    CutKeys:
+    - ending.ENDING_BAD_EXPEDITION.cut1
+    - ending.ENDING_BAD_EXPEDITION.cut2
+    - ending.ENDING_BAD_EXPEDITION.cut3
+    Color: '#2A1E22'
+  - Id: ENDING_BAD_RAID
+    Category: 0
+    Priority: 0
+    EndCauses:
+    - END_CAUSE_RAID
+    Condition:
+      WeekMin: 0
+      WeekMax: 0
+      Days: 
+      Phase: 0
+      Seasons: 
+      Month: 0
+      DayOfMonth: 0
+      ActionCategories: 
+      ActionIds: []
+      FlagsAll: []
+      FlagsAny: []
+      FlagsNone: []
+      CluesAll: []
+      Checks: []
+      AnyChecks: []
+      NpcStatuses: []
+      IsBirthday: 0
+    Score: []
+    CutKeys:
+    - ending.ENDING_BAD_RAID.cut1
+    - ending.ENDING_BAD_RAID.cut2
+    - ending.ENDING_BAD_RAID.cut3
+    Color: '#241C1C'
+  - Id: ENDING_BAD_STARVATION
+    Category: 0
+    Priority: 0
+    EndCauses:
+    - END_CAUSE_STARVATION
+    Condition:
+      WeekMin: 0
+      WeekMax: 0
+      Days: 
+      Phase: 0
+      Seasons: 
+      Month: 0
+      DayOfMonth: 0
+      ActionCategories: 
+      ActionIds: []
+      FlagsAll: []
+      FlagsAny: []
+      FlagsNone: []
+      CluesAll: []
+      Checks: []
+      AnyChecks: []
+      NpcStatuses: []
+      IsBirthday: 0
+    Score: []
+    CutKeys:
+    - ending.ENDING_BAD_STARVATION.cut1
+    - ending.ENDING_BAD_STARVATION.cut2
+    - ending.ENDING_BAD_STARVATION.cut3
+    Color: '#262420'
+  - Id: ENDING_BAD_COLLAPSE
+    Category: 0
+    Priority: 0
+    EndCauses:
+    - END_CAUSE_COLLAPSE
+    Condition:
+      WeekMin: 0
+      WeekMax: 0
+      Days: 
+      Phase: 0
+      Seasons: 
+      Month: 0
+      DayOfMonth: 0
+      ActionCategories: 
+      ActionIds: []
+      FlagsAll: []
+      FlagsAny: []
+      FlagsNone: []
+      CluesAll: []
+      Checks: []
+      AnyChecks: []
+      NpcStatuses: []
+      IsBirthday: 0
+    Score: []
+    CutKeys:
+    - ending.ENDING_BAD_COLLAPSE.cut1
+    - ending.ENDING_BAD_COLLAPSE.cut2
+    - ending.ENDING_BAD_COLLAPSE.cut3
+    Color: '#1E2026'
+  - Id: ENDING_BAD_WOUNDS
+    Category: 0
+    Priority: 0
+    EndCauses: []
+    Condition:
+      WeekMin: 0
+      WeekMax: 0
+      Days: 
+      Phase: 0
+      Seasons: 
+      Month: 0
+      DayOfMonth: 0
+      ActionCategories: 
+      ActionIds: []
+      FlagsAll: []
+      FlagsAny: []
+      FlagsNone: []
+      CluesAll: []
+      Checks: []
+      AnyChecks: []
+      NpcStatuses: []
+      IsBirthday: 0
+    Score: []
+    CutKeys:
+    - ending.ENDING_BAD_WOUNDS.cut1
+    - ending.ENDING_BAD_WOUNDS.cut2
+    - ending.ENDING_BAD_WOUNDS.cut3
+    Color: '#22201E'
+  - Id: ENDING_HIDDEN_CURE
+    Category: 6
+    Priority: 520
+    EndCauses: []
+    Condition:
+      WeekMin: 0
+      WeekMax: 0
+      Days: 
+      Phase: 0
+      Seasons: 
+      Month: 0
+      DayOfMonth: 0
+      ActionCategories: 
+      ActionIds: []
+      FlagsAll:
+      - TEACHER_CURED
+      FlagsAny: []
+      FlagsNone: []
+      CluesAll: []
+      Checks: []
+      AnyChecks: []
+      NpcStatuses: []
+      IsBirthday: 0
+    Score: []
+    CutKeys:
+    - ending.ENDING_HIDDEN_CURE.cut1
+    - ending.ENDING_HIDDEN_CURE.cut2
+    - ending.ENDING_HIDDEN_CURE.cut3
+    Color: '#2A3040'
+  - Id: ENDING_HIDDEN_STAY
+    Category: 6
+    Priority: 510
+    EndCauses: []
+    Condition:
+      WeekMin: 0
+      WeekMax: 0
+      Days: 
+      Phase: 0
+      Seasons: 
+      Month: 0
+      DayOfMonth: 0
+      ActionCategories: 
+      ActionIds: []
+      FlagsAll:
+      - CHOSE_TO_STAY
+      FlagsAny: []
+      FlagsNone: []
+      CluesAll: []
+      Checks: []
+      AnyChecks: []
+      NpcStatuses: []
+      IsBirthday: 0
+    Score: []
+    CutKeys:
+    - ending.ENDING_HIDDEN_STAY.cut1
+    - ending.ENDING_HIDDEN_STAY.cut2
+    - ending.ENDING_HIDDEN_STAY.cut3
+    Color: '#1A2024'
+  - Id: ENDING_HIDDEN_TRUTH
+    Category: 6
+    Priority: 500
+    EndCauses: []
+    Condition:
+      WeekMin: 0
+      WeekMax: 0
+      Days: 
+      Phase: 0
+      Seasons: 
+      Month: 0
+      DayOfMonth: 0
+      ActionCategories: 
+      ActionIds: []
+      FlagsAll: []
+      FlagsAny: []
+      FlagsNone: []
+      CluesAll: []
+      Checks:
+      - Kind: 25
+        Key: TRUTH_
+        Op: 0
+        Value: 8
+      AnyChecks: []
+      NpcStatuses: []
+      IsBirthday: 0
+    Score: []
+    CutKeys:
+    - ending.ENDING_HIDDEN_TRUTH.cut1
+    - ending.ENDING_HIDDEN_TRUTH.cut2
+    - ending.ENDING_HIDDEN_TRUTH.cut3
+    Color: '#1A1E2A'
+  - Id: ENDING_NARR_CONFRONT
+    Category: 5
+    Priority: 350
+    EndCauses: []
+    Condition:
+      WeekMin: 0
+      WeekMax: 0
+      Days: 
+      Phase: 0
+      Seasons: 
+      Month: 0
+      DayOfMonth: 0
+      ActionCategories: 
+      ActionIds: []
+      FlagsAll: []
+      FlagsAny:
+      - BULLY_FORGAVE
+      - BULLY_SEPARATED
+      - BULLY_RESCUED
+      FlagsNone: []
+      CluesAll: []
+      Checks: []
+      AnyChecks: []
+      NpcStatuses: []
+      IsBirthday: 0
+    Score: []
+    CutKeys:
+    - ending.ENDING_NARR_CONFRONT.cut1
+    - ending.ENDING_NARR_CONFRONT.cut2
+    - ending.ENDING_NARR_CONFRONT.cut3
+    Color: '#2E2A30'
+  - Id: ENDING_NARR_OVERCOME
+    Category: 5
+    Priority: 340
+    EndCauses: []
+    Condition:
+      WeekMin: 0
+      WeekMax: 0
+      Days: 
+      Phase: 0
+      Seasons: 
+      Month: 0
+      DayOfMonth: 0
+      ActionCategories: 
+      ActionIds: []
+      FlagsAll: []
+      FlagsAny: []
+      FlagsNone: []
+      CluesAll: []
+      Checks:
+      - Kind: 4
+        Key: TraumaRecovery
+        Op: 0
+        Value: 60
+      - Kind: 4
+        Key: SelfAwareness
+        Op: 0
+        Value: 40
+      AnyChecks: []
+      NpcStatuses: []
+      IsBirthday: 0
+    Score:
+    - Kind: 4
+      Key: TraumaRecovery
+      Weight: 1
+    - Kind: 4
+      Key: SelfAwareness
+      Weight: 1
+    CutKeys:
+    - ending.ENDING_NARR_OVERCOME.cut1
+    - ending.ENDING_NARR_OVERCOME.cut2
+    - ending.ENDING_NARR_OVERCOME.cut3
+    Color: '#283040'
+  - Id: ENDING_DOCTOR
+    Category: 3
+    Priority: 300
+    EndCauses: []
+    Condition:
+      WeekMin: 0
+      WeekMax: 0
+      Days: 
+      Phase: 0
+      Seasons: 
+      Month: 0
+      DayOfMonth: 0
+      ActionCategories: 
+      ActionIds: []
+      FlagsAll: []
+      FlagsAny: []
+      FlagsNone: []
+      CluesAll: []
+      Checks:
+      - Kind: 1
+        Key: Medicine
+        Op: 0
+        Value: 4
+      - Kind: 0
+        Key: Intellect
+        Op: 0
+        Value: 60
+      - Kind: 4
+        Key: Humanity
+        Op: 0
+        Value: 30
+      AnyChecks: []
+      NpcStatuses: []
+      IsBirthday: 0
+    Score:
+    - Kind: 1
+      Key: Medicine
+      Weight: 20
+    - Kind: 0
+      Key: Intellect
+      Weight: 1
+    - Kind: 4
+      Key: Humanity
+      Weight: 1
+    CutKeys:
+    - ending.ENDING_DOCTOR.cut1
+    - ending.ENDING_DOCTOR.cut2
+    - ending.ENDING_DOCTOR.cut3
+    Color: '#1E3036'
+  - Id: ENDING_ENGINEER
+    Category: 3
+    Priority: 300
+    EndCauses: []
+    Condition:
+      WeekMin: 0
+      WeekMax: 0
+      Days: 
+      Phase: 0
+      Seasons: 
+      Month: 0
+      DayOfMonth: 0
+      ActionCategories: 
+      ActionIds: []
+      FlagsAll: []
+      FlagsAny: []
+      FlagsNone: []
+      CluesAll: []
+      Checks:
+      - Kind: 1
+        Key: Engineering
+        Op: 0
+        Value: 4
+      - Kind: 0
+        Key: Craft
+        Op: 0
+        Value: 60
+      AnyChecks: []
+      NpcStatuses: []
+      IsBirthday: 0
+    Score:
+    - Kind: 1
+      Key: Engineering
+      Weight: 20
+    - Kind: 0
+      Key: Craft
+      Weight: 1
+    CutKeys:
+    - ending.ENDING_ENGINEER.cut1
+    - ending.ENDING_ENGINEER.cut2
+    - ending.ENDING_ENGINEER.cut3
+    Color: '#2A2E24'
+  - Id: ENDING_GUARD
+    Category: 3
+    Priority: 300
+    EndCauses: []
+    Condition:
+      WeekMin: 0
+      WeekMax: 0
+      Days: 
+      Phase: 0
+      Seasons: 
+      Month: 0
+      DayOfMonth: 0
+      ActionCategories: 
+      ActionIds: []
+      FlagsAll: []
+      FlagsAny: []
+      FlagsNone: []
+      CluesAll: []
+      Checks:
+      - Kind: 0
+        Key: Strength
+        Op: 0
+        Value: 60
+      - Kind: 0
+        Key: Agility
+        Op: 0
+        Value: 50
+      - Kind: 1
+        Key: SelfDefense
+        Op: 0
+        Value: 3
+      AnyChecks: []
+      NpcStatuses: []
+      IsBirthday: 0
+    Score:
+    - Kind: 0
+      Key: Strength
+      Weight: 1
+    - Kind: 0
+      Key: Agility
+      Weight: 1
+    - Kind: 1
+      Key: SelfDefense
+      Weight: 20
+    CutKeys:
+    - ending.ENDING_GUARD.cut1
+    - ending.ENDING_GUARD.cut2
+    - ending.ENDING_GUARD.cut3
+    Color: '#2C2420'
+  - Id: ENDING_LEADER
+    Category: 3
+    Priority: 300
+    EndCauses: []
+    Condition:
+      WeekMin: 0
+      WeekMax: 0
+      Days: 
+      Phase: 0
+      Seasons: 
+      Month: 0
+      DayOfMonth: 0
+      ActionCategories: 
+      ActionIds: []
+      FlagsAll: []
+      FlagsAny: []
+      FlagsNone: []
+      CluesAll: []
+      Checks:
+      - Kind: 0
+        Key: Leadership
+        Op: 0
+        Value: 60
+      - Kind: 21
+        Key: 
+        Op: 0
+        Value: 2
+      - Kind: 4
+        Key: Humanity
+        Op: 0
+        Value: 30
+      AnyChecks: []
+      NpcStatuses: []
+      IsBirthday: 0
+    Score:
+    - Kind: 0
+      Key: Leadership
+      Weight: 1
+    - Kind: 21
+      Key: 
+      Weight: 10
+    - Kind: 4
+      Key: Humanity
+      Weight: 1
+    CutKeys:
+    - ending.ENDING_LEADER.cut1
+    - ending.ENDING_LEADER.cut2
+    - ending.ENDING_LEADER.cut3
+    Color: '#2A2636'
+  - Id: ENDING_WRITER
+    Category: 3
+    Priority: 300
+    EndCauses: []
+    Condition:
+      WeekMin: 0
+      WeekMax: 0
+      Days: 
+      Phase: 0
+      Seasons: 
+      Month: 0
+      DayOfMonth: 0
+      ActionCategories: 
+      ActionIds: []
+      FlagsAll: []
+      FlagsAny: []
+      FlagsNone: []
+      CluesAll: []
+      Checks:
+      - Kind: 1
+        Key: Humanities
+        Op: 0
+        Value: 4
+      - Kind: 20
+        Key: 
+        Op: 0
+        Value: 40
+      AnyChecks: []
+      NpcStatuses: []
+      IsBirthday: 0
+    Score:
+    - Kind: 1
+      Key: Humanities
+      Weight: 20
+    - Kind: 20
+      Key: 
+      Weight: 1
+    CutKeys:
+    - ending.ENDING_WRITER.cut1
+    - ending.ENDING_WRITER.cut2
+    - ending.ENDING_WRITER.cut3
+    Color: '#302A22'
+  - Id: ENDING_EDUCATOR
+    Category: 3
+    Priority: 300
+    EndCauses: []
+    Condition:
+      WeekMin: 0
+      WeekMax: 0
+      Days: 
+      Phase: 0
+      Seasons: 
+      Month: 0
+      DayOfMonth: 0
+      ActionCategories: 
+      ActionIds: []
+      FlagsAll: []
+      FlagsAny: []
+      FlagsNone: []
+      CluesAll: []
+      Checks:
+      - Kind: 1
+        Key: Humanities
+        Op: 0
+        Value: 3
+      - Kind: 0
+        Key: Empathy
+        Op: 0
+        Value: 60
+      - Kind: 10
+        Key: TAG_TEACHING
+        Op: 0
+        Value: 5
+      AnyChecks: []
+      NpcStatuses: []
+      IsBirthday: 0
+    Score:
+    - Kind: 0
+      Key: Empathy
+      Weight: 1
+    - Kind: 1
+      Key: Humanities
+      Weight: 20
+    - Kind: 10
+      Key: TAG_TEACHING
+      Weight: 2
+    CutKeys:
+    - ending.ENDING_EDUCATOR.cut1
+    - ending.ENDING_EDUCATOR.cut2
+    - ending.ENDING_EDUCATOR.cut3
+    Color: '#26302A'
+  - Id: ENDING_TOGETHER
+    Category: 4
+    Priority: 280
+    EndCauses: []
+    Condition:
+      WeekMin: 0
+      WeekMax: 0
+      Days: 
+      Phase: 0
+      Seasons: 
+      Month: 0
+      DayOfMonth: 0
+      ActionCategories: 
+      ActionIds: []
+      FlagsAll: []
+      FlagsAny: []
+      FlagsNone: []
+      CluesAll: []
+      Checks:
+      - Kind: 21
+        Key: 
+        Op: 0
+        Value: 3
+      - Kind: 4
+        Key: Humanity
+        Op: 0
+        Value: 40
+      AnyChecks: []
+      NpcStatuses: []
+      IsBirthday: 0
+    Score:
+    - Kind: 21
+      Key: 
+      Weight: 10
+    - Kind: 4
+      Key: Humanity
+      Weight: 1
+    CutKeys:
+    - ending.ENDING_TOGETHER.cut1
+    - ending.ENDING_TOGETHER.cut2
+    - ending.ENDING_TOGETHER.cut3
+    Color: '#2A3030'
+  - Id: ENDING_LONE
+    Category: 4
+    Priority: 280
+    EndCauses: []
+    Condition:
+      WeekMin: 0
+      WeekMax: 0
+      Days: 
+      Phase: 0
+      Seasons: 
+      Month: 0
+      DayOfMonth: 0
+      ActionCategories: 
+      ActionIds: []
+      FlagsAll: []
+      FlagsAny: []
+      FlagsNone: []
+      CluesAll: []
+      Checks:
+      - Kind: 4
+        Key: Isolation
+        Op: 0
+        Value: 60
+      - Kind: 21
+        Key: 
+        Op: 1
+        Value: 0
+      AnyChecks: []
+      NpcStatuses: []
+      IsBirthday: 0
+    Score:
+    - Kind: 4
+      Key: Isolation
+      Weight: 1
+    CutKeys:
+    - ending.ENDING_LONE.cut1
+    - ending.ENDING_LONE.cut2
+    - ending.ENDING_LONE.cut3
+    Color: '#1E2428'
+  - Id: ENDING_BALANCED
+    Category: 2
+    Priority: 200
+    EndCauses: []
+    Condition:
+      WeekMin: 0
+      WeekMax: 0
+      Days: 
+      Phase: 0
+      Seasons: 
+      Month: 0
+      DayOfMonth: 0
+      ActionCategories: 
+      ActionIds: []
+      FlagsAll: []
+      FlagsAny: []
+      FlagsNone: []
+      CluesAll: []
+      Checks:
+      - Kind: 23
+        Key: 
+        Op: 0
+        Value: 40
+      - Kind: 22
+        Key: 
+        Op: 1
+        Value: 35
+      AnyChecks: []
+      NpcStatuses: []
+      IsBirthday: 0
+    Score:
+    - Kind: 23
+      Key: 
+      Weight: 1
+    CutKeys:
+    - ending.ENDING_BALANCED.cut1
+    - ending.ENDING_BALANCED.cut2
+    - ending.ENDING_BALANCED.cut3
+    Color: '#24303A'
+  - Id: ENDING_NARR_UNHEALED
+    Category: 5
+    Priority: 150
+    EndCauses: []
+    Condition:
+      WeekMin: 0
+      WeekMax: 0
+      Days: 
+      Phase: 0
+      Seasons: 
+      Month: 0
+      DayOfMonth: 0
+      ActionCategories: 
+      ActionIds: []
+      FlagsAll: []
+      FlagsAny: []
+      FlagsNone: []
+      CluesAll: []
+      Checks:
+      - Kind: 4
+        Key: TraumaRecovery
+        Op: 1
+        Value: 10
+      - Kind: 4
+        Key: Isolation
+        Op: 0
+        Value: 30
+      AnyChecks: []
+      NpcStatuses: []
+      IsBirthday: 0
+    Score: []
+    CutKeys:
+    - ending.ENDING_NARR_UNHEALED.cut1
+    - ending.ENDING_NARR_UNHEALED.cut2
+    - ending.ENDING_NARR_UNHEALED.cut3
+    Color: '#1C2230'
+  - Id: ENDING_SURVIVOR
+    Category: 1
+    Priority: 100
+    EndCauses: []
+    Condition:
+      WeekMin: 0
+      WeekMax: 0
+      Days: 
+      Phase: 0
+      Seasons: 
+      Month: 0
+      DayOfMonth: 0
+      ActionCategories: 
+      ActionIds: []
+      FlagsAll: []
+      FlagsAny: []
+      FlagsNone: []
+      CluesAll: []
+      Checks: []
+      AnyChecks: []
+      NpcStatuses: []
+      IsBirthday: 0
+    Score: []
+    CutKeys:
+    - ending.ENDING_SURVIVOR.cut1
+    - ending.ENDING_SURVIVOR.cut2
+    - ending.ENDING_SURVIVOR.cut3
+    Color: '#20283A'

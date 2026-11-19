@@ -1707,6 +1707,566 @@ MonoBehaviour:
     m_Key: debug.unlock_all
     m_Metadata:
       m_Items: []
+  - m_Id: 150809009733632
+    m_Key: ending.ENDING_BAD_EXPEDITION.cut1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 150809064259584
+    m_Key: ending.ENDING_BAD_EXPEDITION.cut2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 150809064259585
+    m_Key: ending.ENDING_BAD_EXPEDITION.cut3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 150809064259586
+    m_Key: ending.ENDING_BAD_EXPEDITION.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 150809064259587
+    m_Key: ending.ENDING_BAD_RAID.cut1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 150809064259588
+    m_Key: ending.ENDING_BAD_RAID.cut2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 150809064259589
+    m_Key: ending.ENDING_BAD_RAID.cut3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 150809064259590
+    m_Key: ending.ENDING_BAD_RAID.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 150809064259591
+    m_Key: ending.ENDING_BAD_STARVATION.cut1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 150809064259592
+    m_Key: ending.ENDING_BAD_STARVATION.cut2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 150809064259593
+    m_Key: ending.ENDING_BAD_STARVATION.cut3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 150809064259594
+    m_Key: ending.ENDING_BAD_STARVATION.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 150809064259595
+    m_Key: ending.ENDING_BAD_COLLAPSE.cut1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 150809064259596
+    m_Key: ending.ENDING_BAD_COLLAPSE.cut2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 150809064259597
+    m_Key: ending.ENDING_BAD_COLLAPSE.cut3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 150809064259598
+    m_Key: ending.ENDING_BAD_COLLAPSE.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 150809064259599
+    m_Key: ending.ENDING_BAD_WOUNDS.cut1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 150809064259600
+    m_Key: ending.ENDING_BAD_WOUNDS.cut2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 150809064259601
+    m_Key: ending.ENDING_BAD_WOUNDS.cut3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 150809064259602
+    m_Key: ending.ENDING_BAD_WOUNDS.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 150809064259603
+    m_Key: ending.ENDING_HIDDEN_CURE.cut1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 150809064259604
+    m_Key: ending.ENDING_HIDDEN_CURE.cut2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 150809064259605
+    m_Key: ending.ENDING_HIDDEN_CURE.cut3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 150809064259606
+    m_Key: ending.ENDING_HIDDEN_CURE.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 150809064259607
+    m_Key: ending.ENDING_HIDDEN_STAY.cut1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 150809064259608
+    m_Key: ending.ENDING_HIDDEN_STAY.cut2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 150809064259609
+    m_Key: ending.ENDING_HIDDEN_STAY.cut3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 150809064259610
+    m_Key: ending.ENDING_HIDDEN_STAY.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 150809064259611
+    m_Key: ending.ENDING_HIDDEN_TRUTH.cut1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 150809064259612
+    m_Key: ending.ENDING_HIDDEN_TRUTH.cut2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 150809064259613
+    m_Key: ending.ENDING_HIDDEN_TRUTH.cut3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 150809064259614
+    m_Key: ending.ENDING_HIDDEN_TRUTH.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 150809064259615
+    m_Key: ending.ENDING_NARR_CONFRONT.cut1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 150809064259616
+    m_Key: ending.ENDING_NARR_CONFRONT.cut2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 150809064259617
+    m_Key: ending.ENDING_NARR_CONFRONT.cut3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 150809064259618
+    m_Key: ending.ENDING_NARR_CONFRONT.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 150809064259619
+    m_Key: ending.ENDING_NARR_OVERCOME.cut1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 150809064259620
+    m_Key: ending.ENDING_NARR_OVERCOME.cut2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 150809064259621
+    m_Key: ending.ENDING_NARR_OVERCOME.cut3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 150809064259622
+    m_Key: ending.ENDING_NARR_OVERCOME.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 150809064259623
+    m_Key: ending.ENDING_DOCTOR.cut1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 150809064259624
+    m_Key: ending.ENDING_DOCTOR.cut2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 150809064259625
+    m_Key: ending.ENDING_DOCTOR.cut3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 150809064259626
+    m_Key: ending.ENDING_DOCTOR.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 150809064259627
+    m_Key: ending.ENDING_ENGINEER.cut1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 150809064259628
+    m_Key: ending.ENDING_ENGINEER.cut2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 150809064259629
+    m_Key: ending.ENDING_ENGINEER.cut3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 150809064259630
+    m_Key: ending.ENDING_ENGINEER.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 150809064259631
+    m_Key: ending.ENDING_GUARD.cut1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 150809064259632
+    m_Key: ending.ENDING_GUARD.cut2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 150809064259633
+    m_Key: ending.ENDING_GUARD.cut3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 150809064259634
+    m_Key: ending.ENDING_GUARD.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 150809064259635
+    m_Key: ending.ENDING_LEADER.cut1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 150809064259636
+    m_Key: ending.ENDING_LEADER.cut2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 150809064259637
+    m_Key: ending.ENDING_LEADER.cut3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 150809064259638
+    m_Key: ending.ENDING_LEADER.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 150809064259639
+    m_Key: ending.ENDING_WRITER.cut1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 150809064259640
+    m_Key: ending.ENDING_WRITER.cut2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 150809064259641
+    m_Key: ending.ENDING_WRITER.cut3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 150809064259642
+    m_Key: ending.ENDING_WRITER.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 150809064259643
+    m_Key: ending.ENDING_EDUCATOR.cut1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 150809064259644
+    m_Key: ending.ENDING_EDUCATOR.cut2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 150809064259645
+    m_Key: ending.ENDING_EDUCATOR.cut3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 150809064259646
+    m_Key: ending.ENDING_EDUCATOR.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 150809064259647
+    m_Key: ending.ENDING_TOGETHER.cut1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 150809064259648
+    m_Key: ending.ENDING_TOGETHER.cut2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 150809064259649
+    m_Key: ending.ENDING_TOGETHER.cut3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 150809064259650
+    m_Key: ending.ENDING_TOGETHER.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 150809064259651
+    m_Key: ending.ENDING_LONE.cut1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 150809064259652
+    m_Key: ending.ENDING_LONE.cut2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 150809064259653
+    m_Key: ending.ENDING_LONE.cut3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 150809064259654
+    m_Key: ending.ENDING_LONE.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 150809064259655
+    m_Key: ending.ENDING_BALANCED.cut1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 150809064259656
+    m_Key: ending.ENDING_BALANCED.cut2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 150809064259657
+    m_Key: ending.ENDING_BALANCED.cut3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 150809064259658
+    m_Key: ending.ENDING_BALANCED.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 150809064259659
+    m_Key: ending.ENDING_NARR_UNHEALED.cut1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 150809064259660
+    m_Key: ending.ENDING_NARR_UNHEALED.cut2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 150809064259661
+    m_Key: ending.ENDING_NARR_UNHEALED.cut3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 150809064259662
+    m_Key: ending.ENDING_NARR_UNHEALED.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 150809064259663
+    m_Key: ending.ENDING_SURVIVOR.cut1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 150809064259664
+    m_Key: ending.ENDING_SURVIVOR.cut2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 150809064259665
+    m_Key: ending.ENDING_SURVIVOR.cut3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 150809064259666
+    m_Key: ending.ENDING_SURVIVOR.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 150809064259667
+    m_Key: line.lt_default
+    m_Metadata:
+      m_Items: []
+  - m_Id: 150809064259668
+    m_Key: line.lt_cured
+    m_Metadata:
+      m_Items: []
+  - m_Id: 150809064259669
+    m_Key: line.lt_last_lesson
+    m_Metadata:
+      m_Items: []
+  - m_Id: 150809064259670
+    m_Key: line.lt_isolated
+    m_Metadata:
+      m_Items: []
+  - m_Id: 150809064259671
+    m_Key: line.lt_exposed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 150809064259672
+    m_Key: line.lt_left_behind
+    m_Metadata:
+      m_Items: []
+  - m_Id: 150809064259673
+    m_Key: line.lf_default
+    m_Metadata:
+      m_Items: []
+  - m_Id: 150809064259674
+    m_Key: line.lf_promise
+    m_Metadata:
+      m_Items: []
+  - m_Id: 150809064259675
+    m_Key: line.lf_told
+    m_Metadata:
+      m_Items: []
+  - m_Id: 150809064259676
+    m_Key: line.lf_supplies
+    m_Metadata:
+      m_Items: []
+  - m_Id: 150809064259677
+    m_Key: line.lc_1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 150809064259678
+    m_Key: line.lc_3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 150809064259679
+    m_Key: line.lc_6
+    m_Metadata:
+      m_Items: []
+  - m_Id: 150809064259680
+    m_Key: line.ltd_home
+    m_Metadata:
+      m_Items: []
+  - m_Id: 150809064259681
+    m_Key: line.ltd_night
+    m_Metadata:
+      m_Items: []
+  - m_Id: 150809064259682
+    m_Key: line.ltd_day
+    m_Metadata:
+      m_Items: []
+  - m_Id: 150809064259683
+    m_Key: line.ltd_mixed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 150809064259684
+    m_Key: line.m_door
+    m_Metadata:
+      m_Items: []
+  - m_Id: 150809064259685
+    m_Key: line.m_night
+    m_Metadata:
+      m_Items: []
+  - m_Id: 150809064259686
+    m_Key: line.m_crutch
+    m_Metadata:
+      m_Items: []
+  - m_Id: 150809064259687
+    m_Key: line.m_power
+    m_Metadata:
+      m_Items: []
+  - m_Id: 150809064259688
+    m_Key: line.m_messages
+    m_Metadata:
+      m_Items: []
+  - m_Id: 150809064259689
+    m_Key: line.m_dohyeon
+    m_Metadata:
+      m_Items: []
+  - m_Id: 150809064259690
+    m_Key: line.m_act1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 150809064259691
+    m_Key: diary.breakdown
+    m_Metadata:
+      m_Items: []
+  - m_Id: 150809064259692
+    m_Key: tc.breakdown
+    m_Metadata:
+      m_Items: []
+  - m_Id: 150809064259693
+    m_Key: title.gallery
+    m_Metadata:
+      m_Items: []
+  - m_Id: 150809064259694
+    m_Key: ending.cat.Bad
+    m_Metadata:
+      m_Items: []
+  - m_Id: 150809064259695
+    m_Key: ending.cat.Normal
+    m_Metadata:
+      m_Items: []
+  - m_Id: 150809064259696
+    m_Key: ending.cat.Balanced
+    m_Metadata:
+      m_Items: []
+  - m_Id: 150809064259697
+    m_Key: ending.cat.Specialized
+    m_Metadata:
+      m_Items: []
+  - m_Id: 150809064259698
+    m_Key: ending.cat.Relationship
+    m_Metadata:
+      m_Items: []
+  - m_Id: 150809064259699
+    m_Key: ending.cat.Narrative
+    m_Metadata:
+      m_Items: []
+  - m_Id: 150809064259700
+    m_Key: ending.cat.Hidden
+    m_Metadata:
+      m_Items: []
+  - m_Id: 150809064259701
+    m_Key: ending.new
+    m_Metadata:
+      m_Items: []
+  - m_Id: 150809064259702
+    m_Key: ending.click
+    m_Metadata:
+      m_Items: []
+  - m_Id: 150809064259703
+    m_Key: ending.record
+    m_Metadata:
+      m_Items: []
+  - m_Id: 150809064259704
+    m_Key: ending.record_title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 150809064259705
+    m_Key: ending.weeks
+    m_Metadata:
+      m_Items: []
+  - m_Id: 150809064259706
+    m_Key: ending.stats
+    m_Metadata:
+      m_Items: []
+  - m_Id: 150809064259707
+    m_Key: ending.tendency
+    m_Metadata:
+      m_Items: []
+  - m_Id: 150809064259708
+    m_Key: ending.companions
+    m_Metadata:
+      m_Items: []
+  - m_Id: 150809064259709
+    m_Key: ending.companions_none
+    m_Metadata:
+      m_Items: []
+  - m_Id: 150809064259710
+    m_Key: ending.moments
+    m_Metadata:
+      m_Items: []
+  - m_Id: 150809064259711
+    m_Key: ending.diary
+    m_Metadata:
+      m_Items: []
+  - m_Id: 150809064259712
+    m_Key: ending.to_title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 150809064259713
+    m_Key: gallery.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 150809064259714
+    m_Key: gallery.progress
+    m_Metadata:
+      m_Items: []
+  - m_Id: 150809064259715
+    m_Key: gallery.locked
+    m_Metadata:
+      m_Items: []
+  - m_Id: 150809064259716
+    m_Key: gallery.seen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 150809064259717
+    m_Key: gallery.empty
+    m_Metadata:
+      m_Items: []
+  - m_Id: 150809064259718
+    m_Key: debug.week_52
+    m_Metadata:
+      m_Items: []
+  - m_Id: 150809064259719
+    m_Key: debug.end_rescue
+    m_Metadata:
+      m_Items: []
+  - m_Id: 150809064259720
+    m_Key: debug.end_bad
+    m_Metadata:
+      m_Items: []
+  - m_Id: 150809064259721
+    m_Key: debug.ending_preview
+    m_Metadata:
+      m_Items: []
+  - m_Id: 150809064259722
+    m_Key: ending.diary_line
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
