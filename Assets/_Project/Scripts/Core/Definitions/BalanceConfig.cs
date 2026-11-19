@@ -150,11 +150,11 @@ namespace ApoGirl.Core.Definitions
         // ── 탐험 위협 (M2b-2, 문서 6.3.2·6.3.5) ──
         /// <summary>소음 반경 (유닛): 웅크려 걷기 / 걷기 / 달리기 / 문 / 계단 / 수색(0.5초마다) / 버리기 / 밀치기.</summary>
         public float CrouchNoise = 0.8f;
-        public float WalkNoise = 2.5f;
-        public float RunNoise = 7f;
-        public float DoorNoise = 4f;
-        public float StairsNoise = 3f;
-        public float SearchNoise = 1.5f;
+        public float WalkNoise = 3.2f;
+        public float RunNoise = 8.5f;
+        public float DoorNoise = 4.5f;
+        public float StairsNoise = 3.5f;
+        public float SearchNoise = 2.5f;
         public float DropNoise = 3f;
         public float ShoveNoise = 7f;
 
@@ -164,8 +164,8 @@ namespace ApoGirl.Core.Definitions
         /// <summary>군집 각성 게이지: 임계값, 초당 감소, 소음 반경 1유닛당 증가, 근처 체류 초당 증가와 거리, 연쇄 각성 반경.</summary>
         public float StirThreshold = 100f;
         public float StirDecayPerSecond = 3f;
-        public float StirPerNoiseUnit = 9f;
-        public float PresenceStirPerSecond = 5f;
+        public float StirPerNoiseUnit = 14f;
+        public float PresenceStirPerSecond = 7f;
         public float PresenceRange = 4f;
         public float ChainWakeRadius = 12f;
 
@@ -212,6 +212,22 @@ namespace ApoGirl.Core.Definitions
 
         /// <summary>어둠 속에서 플레이어가 맨눈으로 알아볼 수 있는 거리 (이 밖의 좀비·NPC는 화면에 그리지 않는다).</summary>
         public float NightViewDistance = 3.5f;
+
+        /// <summary>깨어 있는 좀비가 소음을 듣는 반경 배율 (파밍·이동 소음에 더 민감하게).</summary>
+        public float ZombieHearingBonus = 1.25f;
+
+        /// <summary>벽 너머(방 ↔ 복도)로 전해지는 소음 반경 배율.</summary>
+        public float WallNoiseFactor = 0.6f;
+
+        /// <summary>문틈으로 살필 때 보이는 거리 (어둠 속에서는 NightViewDistance).</summary>
+        public float PeekRange = 7f;
+
+        /// <summary>문틈으로 살필 때 안쪽 좀비에게 들킬 정도 (시야 배율).</summary>
+        public float PeekVisibility = 0.35f;
+
+        /// <summary>문에 귀 기울이는 데 걸리는 시간, 잠든 숨소리가 들리는 거리.</summary>
+        public float ListenSeconds = 1.2f;
+        public float ListenBreathRange = 8f;
 
         /// <summary>손전등이 비추는 방향으로 보이는 거리.</summary>
         public float FlashlightViewDistance = 9f;

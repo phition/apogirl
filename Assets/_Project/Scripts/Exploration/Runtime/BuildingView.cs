@@ -13,6 +13,13 @@ namespace ApoGirl.Exploration.Runtime
         public static readonly Color CorridorColor = new Color(0.28f, 0.29f, 0.3f);
         public static readonly Color DoorColor = new Color(0.2f, 0.22f, 0.28f);
         public static readonly Color VisitedDoorColor = new Color(0.16f, 0.17f, 0.2f);
+        public static readonly Color RoomWallColor = new Color(0.24f, 0.25f, 0.27f);
+        public static readonly Color WindowColor = new Color(0.4f, 0.45f, 0.48f);
+        public static readonly Color SilhouetteColor = new Color(0.1f, 0.11f, 0.12f, 0.92f);
+
+        /// <summary>창문 높이 범위 (층 바닥 기준).</summary>
+        public const float WindowBottom = 1.7f;
+        public const float WindowHeight = 1.5f;
 
         private static readonly Color[] RoomColors =
         {
@@ -82,10 +89,10 @@ namespace ApoGirl.Exploration.Runtime
             Rect(root, "WallL", new Vector2(-0.3f, 0f), new Vector2(0.3f, h), new Color(0.1f, 0.1f, 0.11f), -3);
             Rect(root, "WallR", new Vector2(room.Width, 0f), new Vector2(0.3f, h), new Color(0.1f, 0.1f, 0.11f), -3);
 
-            // 뒷벽 창문 (분위기용)
-            for (var x = 3f; x < room.Width - 2f; x += 4f)
+            // 복도 쪽 창문: 너머로 복도의 실루엣이 보인다
+            foreach (var window in room.Template.Windows)
             {
-                Rect(root, "Window", new Vector2(x, 2.1f), new Vector2(2.2f, 1.2f), new Color(0.42f, 0.47f, 0.5f), -4);
+                Rect(root, "Window", new Vector2(window.X, WindowBottom), new Vector2(window.Width, WindowHeight), WindowColor, -4);
             }
         }
 
@@ -99,9 +106,24 @@ namespace ApoGirl.Exploration.Runtime
             for (var floor = 0; floor < _layout.Floors; floor++)
             {
                 var y = FloorY(floor);
-                Rect(_root, "Corridor" + floor, new Vector2(0f, y + 0.15f), new Vector2(length, h - 0.3f), CorridorColor, -5);
-                // 복도 창문 띠
-                Rect(_root, "CorridorWindows" + floor, new Vector2(0f, y + 2.9f), new Vector2(length, 0.5f), new Color(0.34f, 0.37f, 0.4f), -4);
+                Rect(_root, "Corridor" + floor, new Vector2(0f, y + 0.15f), new Vector2(length, h - 0.3f), CorridorColor, -6);
+            }
+
+            // 복도에서 보이는 교실 벽과 창문 (방이 차지하는 구간)
+            foreach (var door in _layout.Doors)
+            {
+                var template = _layout.FindTemplate(door.TemplateId);
+                if (template == null)
+                {
+                    continue;
+                }
+
+                var y = FloorY(door.Floor);
+                Rect(_root, "RoomWall_" + door.RoomId, new Vector2(door.X, y + 0.15f), new Vector2(template.Width, h - 0.3f), RoomWallColor, -5);
+                foreach (var window in template.Windows)
+                {
+                    Rect(_root, "RoomWindow", new Vector2(door.X + window.X, y + WindowBottom), new Vector2(window.Width, WindowHeight), WindowColor, -4);
+                }
             }
 
             for (var floor = 0; floor <= _layout.Floors; floor++)

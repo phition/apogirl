@@ -83,9 +83,9 @@ namespace ApoGirl.Tests.PlayMode
             ExplorationTarget roomExit = null;
             foreach (var target in director.CurrentArea.Targets)
             {
-                if (target.Kind == TargetKind.RoomExit)
+                if (target.Kind == TargetKind.RoomExit && Mathf.Abs(target.X - director.X) < 0.01f)
                 {
-                    roomExit = target;
+                    roomExit = target; // 들어온 그 문
                 }
             }
 

@@ -32,6 +32,12 @@ namespace ApoGirl.Exploration.Runtime
 
         public int DoorIndex = -1;
         public DoorDef Door;
+
+        /// <summary>방이 차지하는 복도 구간의 왼쪽 끝 (방 X + SpanX = 복도 X).</summary>
+        public float SpanX;
+
+        /// <summary>복도 쪽 문 대상들 (앞문·뒷문).</summary>
+        public readonly List<ExplorationTarget> CorridorDoors = new List<ExplorationTarget>();
         public RoomTemplateDef Template;
         public bool Built;
         public bool Visited;
@@ -61,8 +67,13 @@ namespace ApoGirl.Exploration.Runtime
         public ExitDef Exit;
         public bool Locked;
 
-        /// <summary>Door: 들어갈 방 / RoomExit: 나가서 설 복도 문.</summary>
+        /// <summary>Door: 들어갈 방 / RoomExit: 이 문이 속한 방.</summary>
         public ExplorationArea Room;
+
+        /// <summary>문을 지나면 서게 될 반대편 공간의 X (Door → 방 안 X, RoomExit → 복도 X).</summary>
+        public float LinkX;
+
+        public bool IsDoorway => Kind == TargetKind.Door || Kind == TargetKind.RoomExit;
 
         public int Floor => Area.Floor;
 

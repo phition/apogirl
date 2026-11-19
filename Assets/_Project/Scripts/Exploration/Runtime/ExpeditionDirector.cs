@@ -66,6 +66,7 @@ namespace ApoGirl.Exploration.Runtime
         private bool _facingRight = true;
         private readonly List<ExplorationArea> _areasById = new List<ExplorationArea>();
         private readonly List<ZombieView> _zombieViews = new List<ZombieView>();
+        private readonly List<GameObject> _silhouettes = new List<GameObject>();
         private ThreatSimulation _threat;
         private Light2D _light;
         private int _startHp;
@@ -166,10 +167,28 @@ namespace ApoGirl.Exploration.Runtime
                 return true;
             }
 
+            if (PeekTarget != null)
+            {
+                return unit.AreaId == AreaId(PeekArea) && Mathf.Abs(unit.X - PeekTarget.LinkX) <= PeekViewRange;
+            }
+
             return PlayerViewRules.CanPlayerSee(
                 AreaId(CurrentArea), X, _facingRight ? 1 : -1, IsDark, FlashlightOn && !Hidden,
                 unit.AreaId, unit.X, _balance);
         }
+
+        /// <summary>문틈으로 살피는 중인 문 (W를 누르고 있는 동안).</summary>
+        public ExplorationTarget PeekTarget { get; private set; }
+
+        /// <summary>귀 기울이는 진행도 0~1 (S).</summary>
+        public float ListenProgress { get; private set; }
+
+        /// <summary>문틈 너머 공간.</summary>
+        public ExplorationArea PeekArea => PeekTarget == null ? null
+            : PeekTarget.Kind == TargetKind.Door ? PeekTarget.Room : _corridors[PeekTarget.Room.Floor];
+
+        /// <summary>문틈으로 살필 때 보이는 거리.</summary>
+        public float PeekViewRange => IsDark ? _balance.NightViewDistance : _balance.PeekRange;
 
         /// <summary>좀비 눈에 띄는 정도: 낮 1, 어둠 0.6, 손전등 1.5.</summary>
         public float Visibility => !IsDark ? 1f : FlashlightOn ? _balance.FlashlightExposure : _balance.DarknessVisibility;
@@ -190,6 +209,12 @@ namespace ApoGirl.Exploration.Runtime
         {
             get
             {
+                if (PeekTarget != null)
+                {
+                    var other = PeekArea;
+                    return Loc.F("exp.peeking_into", other.IsRoom ? other.Label : Loc.F("exp.corridor", other.Floor + 1));
+                }
+
                 if (InRoom)
                 {
                     return CurrentArea.Label;
@@ -276,6 +301,7 @@ namespace ApoGirl.Exploration.Runtime
 
             UpdateViews(dt);
             UpdateZombieViews();
+            UpdateWindowSilhouettes();
             _hud.Refresh();
         }
 
@@ -299,19 +325,22 @@ namespace ApoGirl.Exploration.Runtime
                 case TargetKind.Door:
                     EnsureRoomBuilt(target.Room);
                     EmitNoise(CurrentArea, X, _balance.DoorNoise);
-                    MoveTo(target.Room, target.Room.Template.ExitX);
+                    MoveTo(target.Room, target.LinkX);
                     EmitNoise(CurrentArea, X, _balance.DoorNoise);
                     if (!target.Room.Visited)
                     {
                         _log.RoomsEntered++;
                         target.Room.Visited = true;
-                        target.Tint(BuildingView.VisitedDoorColor);
+                        foreach (var door in target.Room.CorridorDoors)
+                        {
+                            door.Tint(BuildingView.VisitedDoorColor);
+                        }
                     }
 
                     break;
                 case TargetKind.RoomExit:
                     EmitNoise(CurrentArea, X, _balance.DoorNoise);
-                    MoveTo(_corridors[target.Room.Floor], target.Room.Door.X);
+                    MoveTo(_corridors[target.Room.Floor], target.LinkX);
                     EmitNoise(CurrentArea, X, _balance.DoorNoise);
                     break;
                 case TargetKind.Exit:
@@ -489,6 +518,11 @@ namespace ApoGirl.Exploration.Runtime
             }
 
             if (Hidden)
+            {
+                return;
+            }
+
+            if (HandleDoorSenses(keyboard, dt))
             {
                 return;
             }
@@ -682,6 +716,7 @@ namespace ApoGirl.Exploration.Runtime
                     Width = template.Width,
                     DoorIndex = i,
                     Door = door,
+                    SpanX = door.X,
                     Template = template,
                     Label = Loc.F("roomname." + template.Id, door.Floor + 1, door.Number),
                 };
@@ -689,8 +724,14 @@ namespace ApoGirl.Exploration.Runtime
                 _areasById.Add(room);
 
                 var corridor = _corridors[door.Floor];
-                var view = Rect(corridor, "Door_" + door.RoomId, door.X - 0.7f, new Vector2(1.4f, 2.8f), BuildingView.DoorColor, 0);
-                AddTarget(new ExplorationTarget { Kind = TargetKind.Door, Area = corridor, X = door.X, Room = room, View = view });
+                foreach (var doorX in template.DoorXs)
+                {
+                    var corridorX = room.SpanX + doorX;
+                    var view = Rect(corridor, "Door_" + door.RoomId, corridorX - 0.7f, new Vector2(1.4f, 2.8f), BuildingView.DoorColor, 0);
+                    var target = new ExplorationTarget { Kind = TargetKind.Door, Area = corridor, X = corridorX, Room = room, LinkX = doorX, View = view };
+                    AddTarget(target);
+                    room.CorridorDoors.Add(target);
+                }
             }
 
             for (var i = 0; i < layout.Containers.Count; i++)
@@ -731,8 +772,11 @@ namespace ApoGirl.Exploration.Runtime
 
             room.Built = true;
             _building.BuildRoom(room, room.DoorIndex);
-            var exitView = Rect(room, "RoomExit", room.Template.ExitX - 0.7f, new Vector2(1.4f, 2.8f), BuildingView.DoorColor, 0);
-            AddTarget(new ExplorationTarget { Kind = TargetKind.RoomExit, Area = room, X = room.Template.ExitX, Room = room, View = exitView });
+            foreach (var doorX in room.Template.DoorXs)
+            {
+                var exitView = Rect(room, "RoomExit", doorX - 0.7f, new Vector2(1.4f, 2.8f), BuildingView.DoorColor, 0);
+                AddTarget(new ExplorationTarget { Kind = TargetKind.RoomExit, Area = room, X = doorX, Room = room, LinkX = room.SpanX + doorX, View = exitView });
+            }
 
             var contents = RoomLoot.RollRoom(_db, Location, room.DoorIndex, Request.Seed);
             for (var i = 0; i < room.Template.Containers.Count; i++)
@@ -870,13 +914,21 @@ namespace ApoGirl.Exploration.Runtime
 
             // 화면 비율과 관계없이 가로 최소 MinVisibleWidth 유닛이 보이게 (멀리서 건물과 캐릭터를 함께 잡는 앵글)
             _camera.orthographicSize = Mathf.Clamp(MinVisibleWidth / (2f * Mathf.Max(0.1f, _camera.aspect)), MinOrthographicSize, MaxOrthographicSize);
-            // 방이 화면에 다 들어오면 방 전체를 가운데에, 아니면 플레이어를 따라가되 공간 끝 너머 빈 곳은 덜 보이게
+            // 방이 화면에 다 들어오면 방 전체를 가운데에, 아니면 플레이어를 따라가되 공간 끝 너머 빈 곳은 덜 보이게.
+            // 문틈으로 살피는 동안에는 문 너머 공간을 비춘다.
+            var viewArea = PeekTarget != null ? PeekArea : CurrentArea;
+            var viewOrigin = viewArea.Origin;
+            var focusX = viewOrigin.x + (PeekTarget != null ? PeekTarget.LinkX : X);
             var halfWidth = _camera.orthographicSize * _camera.aspect;
-            var width = CurrentArea.Width;
+            var width = viewArea.Width;
             var cameraX = width <= halfWidth * 2f
-                ? origin.x + width / 2f
-                : Mathf.Clamp(worldX, origin.x + halfWidth - 2f, origin.x + width - halfWidth + 2f);
-            var target = new Vector3(cameraX, origin.y + _building.FloorHeight * 0.5f, -10f);
+                ? viewOrigin.x + width / 2f
+                : Mathf.Clamp(focusX, viewOrigin.x + halfWidth - 2f, viewOrigin.x + width - halfWidth + 2f);
+            var target = new Vector3(cameraX, viewOrigin.y + _building.FloorHeight * 0.5f, -10f);
+            if (PeekTarget != null)
+            {
+                dt = 1000f;
+            }
             var cameraTransform = _camera.transform;
             cameraTransform.position = Vector3.Lerp(cameraTransform.position, target, Mathf.Clamp01(dt * 6f));
         }
@@ -895,8 +947,11 @@ namespace ApoGirl.Exploration.Runtime
             {
                 var corridorId = AreaId(_corridors[room.Floor]);
                 var roomId = AreaId(room);
-                _threat.AddLink(corridorId, room.Door.X, roomId, room.Template.ExitX);
-                _threat.AddLink(roomId, room.Template.ExitX, corridorId, room.Door.X);
+                foreach (var doorX in room.Template.DoorXs)
+                {
+                    _threat.AddLink(corridorId, room.SpanX + doorX, roomId, doorX);
+                    _threat.AddLink(roomId, doorX, corridorId, room.SpanX + doorX);
+                }
             }
 
             var spread = new SeededRandom(SeededRandom.CreateState(Request.Seed ^ 0x2B));
@@ -978,6 +1033,169 @@ namespace ApoGirl.Exploration.Runtime
             _threat.AwakenAll();
             SetAmbient(0.2f, new Color(0.75f, 0.6f, 0.65f));
             _hud?.ShowMessage("exp.dusk");
+        }
+
+        /// <summary>
+        /// 문 앞 감각: W(누르고 있기) 문틈으로 살피기, S(누르고 있기) 귀 기울이기. 처리 중이면 true (이동하지 않음).
+        /// </summary>
+        private bool HandleDoorSenses(Keyboard keyboard, float dt)
+        {
+            var door = Nearest != null && Nearest.IsDoorway ? Nearest : null;
+            if (door != null && keyboard.wKey.isPressed)
+            {
+                if (door.Kind == TargetKind.Door)
+                {
+                    EnsureRoomBuilt(door.Room);
+                }
+
+                PeekTarget = door;
+                ListenProgress = 0f;
+                if (_threat.ExposeAt(AreaId(PeekArea), door.LinkX, dt, Activity))
+                {
+                    _hud?.ShowMessage("exp.peek_noticed");
+                }
+
+                return true;
+            }
+
+            PeekTarget = null;
+            if (door != null && keyboard.sKey.isPressed)
+            {
+                var before = ListenProgress;
+                ListenProgress = Mathf.Min(1f, ListenProgress + dt / Mathf.Max(0.1f, _balance.ListenSeconds));
+                if (before < 1f && ListenProgress >= 1f)
+                {
+                    ReportListen(door);
+                }
+
+                return true;
+            }
+
+            ListenProgress = 0f;
+            return false;
+        }
+
+        private void ReportListen(ExplorationTarget door)
+        {
+            var other = door.Kind == TargetKind.Door ? door.Room : _corridors[door.Room.Floor];
+            var heard = _threat.Listen(AreaId(other), door.LinkX);
+            string key;
+            if (heard.AwakeCount > 0)
+            {
+                key = heard.NearestAwake <= 4f ? "exp.listen_steps_near" : "exp.listen_steps";
+            }
+            else
+            {
+                key = heard.SleepingNearby > 0 ? "exp.listen_breath" : "exp.listen_quiet";
+            }
+
+            var count = Loc.T(heard.AwakeCount > 1 ? "exp.listen_many" : "exp.listen_one");
+            _hud?.ShowText(Loc.F(key, count));
+        }
+
+        /// <summary>벽 너머로 전해지는 소음: 방 ↔ 복도 (반경 감쇠).</summary>
+        private void EmitThroughWalls(ExplorationArea area, float x, float radius)
+        {
+            var muffled = radius * _balance.WallNoiseFactor;
+            if (muffled < 0.5f)
+            {
+                return;
+            }
+
+            if (area.IsRoom)
+            {
+                _threat.Emit(new NoiseEvent(AreaId(_corridors[area.Floor]), area.SpanX + x, muffled));
+                return;
+            }
+
+            foreach (var room in _rooms)
+            {
+                if (room.Floor != area.Floor || x < room.SpanX - muffled || x > room.SpanX + room.Width + muffled)
+                {
+                    continue;
+                }
+
+                var local = Mathf.Clamp(x - room.SpanX, 0f, room.Width);
+                _threat.Emit(new NoiseEvent(AreaId(room), local, muffled));
+            }
+        }
+
+        /// <summary>
+        /// 창문 너머 실루엣: 방 안에서는 창밖 복도의 좀비, 복도에서는 교실 창 안쪽의 좀비를 어두운 형체로 그린다.
+        /// 밤에는 플레이어 시야 규칙(거리·손전등)을 창 너머 위치에 그대로 적용한다.
+        /// </summary>
+        private void UpdateWindowSilhouettes()
+        {
+            var used = 0;
+            if (PeekTarget == null)
+            {
+                if (CurrentArea.IsRoom)
+                {
+                    var corridorId = AreaId(_corridors[CurrentArea.Floor]);
+                    var playerCorridorX = CurrentArea.SpanX + X;
+                    foreach (var window in CurrentArea.Template.Windows)
+                    {
+                        var from = CurrentArea.SpanX + window.X;
+                        var to = from + window.Width;
+                        foreach (var unit in _threat.Zombies)
+                        {
+                            if (unit.AreaId == corridorId && unit.X >= from && unit.X <= to && SeesThroughWindow(corridorId, playerCorridorX, unit))
+                            {
+                                PlaceSilhouette(used++, CurrentArea, unit.X - CurrentArea.SpanX, unit.State == ZombieState.Dormant);
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    foreach (var room in _rooms)
+                    {
+                        if (room.Floor != CurrentArea.Floor)
+                        {
+                            continue;
+                        }
+
+                        var roomId = AreaId(room);
+                        var playerLocalX = X - room.SpanX;
+                        foreach (var window in room.Template.Windows)
+                        {
+                            foreach (var unit in _threat.Zombies)
+                            {
+                                if (unit.AreaId == roomId && unit.X >= window.X && unit.X <= window.X + window.Width
+                                    && SeesThroughWindow(roomId, playerLocalX, unit))
+                                {
+                                    PlaceSilhouette(used++, CurrentArea, room.SpanX + unit.X, unit.State == ZombieState.Dormant);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            for (var i = 0; i < _silhouettes.Count; i++)
+            {
+                _silhouettes[i].SetActive(i < used);
+            }
+        }
+
+        private bool SeesThroughWindow(int areaId, float mappedPlayerX, ZombieUnit unit)
+        {
+            return FullVision || PlayerViewRules.CanPlayerSee(areaId, mappedPlayerX, _facingRight ? 1 : -1, IsDark, FlashlightOn && !Hidden, areaId, unit.X, _balance);
+        }
+
+        private void PlaceSilhouette(int index, ExplorationArea area, float x, bool dormant)
+        {
+            while (_silhouettes.Count <= index)
+            {
+                _silhouettes.Add(BuildingView.Rect(_world, "Silhouette", Vector2.zero, Vector2.one, BuildingView.SilhouetteColor, -3));
+            }
+
+            // 창틀 안에 머리·어깨만 보이게 (잠든 좀비는 조금 낮게)
+            var origin = area.Origin;
+            var height = dormant ? 0.75f : 1.05f;
+            var shape = _silhouettes[index].transform;
+            shape.localPosition = new Vector3(origin.x + x - 0.27f, origin.y + BuildingView.WindowBottom, 0f);
+            shape.localScale = new Vector3(0.55f, height, 1f);
         }
 
         private void TriggerDawn()
@@ -1103,6 +1321,7 @@ namespace ApoGirl.Exploration.Runtime
             }
 
             _threat.Emit(new NoiseEvent(AreaId(area), x, radius));
+            EmitThroughWalls(area, x, radius);
             if (DebugOverlay)
             {
                 var origin = area.Origin;

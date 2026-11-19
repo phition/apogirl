@@ -152,6 +152,17 @@ namespace ApoGirl.Exploration.Model
         public readonly List<ZombieUnit> Members = new List<ZombieUnit>();
     }
 
+    /// <summary>귀 기울이기 결과.</summary>
+    public sealed class ListenResult
+    {
+        public int AwakeCount;
+
+        /// <summary>깨어 있는 좀비까지 가장 가까운 거리 (없으면 float.MaxValue).</summary>
+        public float NearestAwake;
+
+        public int SleepingNearby;
+    }
+
     public sealed class ThreatEvents
     {
         /// <summary>이번 틱에 플레이어가 받은 피해.</summary>
@@ -307,6 +318,60 @@ namespace ApoGirl.Exploration.Model
             return best;
         }
 
+        /// <summary>
+        /// 문틈으로 살피는 중: 그 공간의 문 위치에 희미하게 노출된 것으로 보고, 보고 있는 좀비의 인지 게이지가 오른다.
+        /// 다 차면 문 쪽으로 조사하러 온다. 반환: 이번 틱에 눈치챈 좀비가 있는가.
+        /// </summary>
+        public bool ExposeAt(int areaId, float x, float dt, ActivityMods mods)
+        {
+            var peeker = new PlayerSnapshot { AreaId = areaId, X = x, Crouching = true, Visibility = _balance.PeekVisibility };
+            var noticed = false;
+            foreach (var zombie in _zombies)
+            {
+                if (!zombie.IsAwake || zombie.AreaId != areaId || zombie.State == ZombieState.Chase || !CanSee(zombie, peeker, mods))
+                {
+                    continue;
+                }
+
+                zombie.Awareness = Math.Min(1f, zombie.Awareness + zombie.Def.AwarenessRate * dt);
+                if (zombie.Awareness >= 1f && zombie.State != ZombieState.Investigate)
+                {
+                    zombie.State = ZombieState.Investigate;
+                    zombie.TargetArea = areaId;
+                    zombie.TargetX = x;
+                    noticed = true;
+                }
+            }
+
+            return noticed;
+        }
+
+        /// <summary>문에 귀 기울이기: 문 너머 공간의 소리 정보.</summary>
+        public ListenResult Listen(int areaId, float x)
+        {
+            var result = new ListenResult { NearestAwake = float.MaxValue };
+            foreach (var zombie in _zombies)
+            {
+                if (zombie.AreaId != areaId)
+                {
+                    continue;
+                }
+
+                var d = Math.Abs(zombie.X - x);
+                if (zombie.IsAwake)
+                {
+                    result.AwakeCount++;
+                    result.NearestAwake = Math.Min(result.NearestAwake, d);
+                }
+                else if (d <= _balance.ListenBreathRange)
+                {
+                    result.SleepingNearby++;
+                }
+            }
+
+            return result;
+        }
+
         /// <summary>HUD용: 같은 공간에서 가장 가까운 잠든 군집.</summary>
         public CrowdState NearestDormantCrowd(PlayerSnapshot player, float maxDistance)
         {
@@ -421,7 +486,7 @@ namespace ApoGirl.Exploration.Model
                     continue;
                 }
 
-                var reach = noise.Radius * mods.Hearing * zombie.Def.HearingMultiplier;
+                var reach = noise.Radius * mods.Hearing * zombie.Def.HearingMultiplier * _balance.ZombieHearingBonus;
                 if (Math.Abs(zombie.X - noise.X) <= reach)
                 {
                     zombie.State = ZombieState.Investigate;

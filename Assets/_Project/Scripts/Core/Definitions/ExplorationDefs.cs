@@ -121,27 +121,49 @@ namespace ApoGirl.Core.Definitions
         public bool StartsLocked;
     }
 
+    /// <summary>복도 쪽 벽의 창문 (방 왼쪽 끝 기준 X, 폭). 안팎에서 서로의 실루엣이 보인다.</summary>
+    [Serializable]
+    public sealed class WindowDef
+    {
+        public float X;
+        public float Width = 3f;
+
+        public WindowDef()
+        {
+        }
+
+        public WindowDef(float x, float width)
+        {
+            X = x;
+            Width = width;
+        }
+    }
+
     /// <summary>
     /// 방 템플릿: 같은 종류의 방(일반 교실 등)은 내부 배치를 돌려 쓰고 전리품만 방마다 다르게 굴린다.
-    /// 컨테이너 X는 방 왼쪽 끝 기준. 방 출입문은 ExitX 위치.
+    /// 방은 복도를 따라 [SpanX, SpanX + Width] 구간을 차지하고, 방 안 X와 복도 X는 SpanX만큼 차이 난다.
+    /// 문(DoorXs: 앞문·뒷문)과 창문은 복도 쪽 벽에 있다.
     /// </summary>
     [Serializable]
     public sealed class RoomTemplateDef
     {
         public string Id = "";
         public float Width = 14f;
-        public float ExitX = 1.2f;
+        public List<float> DoorXs = new List<float> { 1.2f };
+        public List<WindowDef> Windows = new List<WindowDef>();
         public List<ContainerDef> Containers = new List<ContainerDef>();
         public string DefaultLootTableId = "";
     }
 
-    /// <summary>복도의 문: 위치 → 방 템플릿. Number는 방 이름 표기용 (예: 2-3 교실의 3).</summary>
+    /// <summary>복도에 붙은 방 하나: X = 방 왼쪽 끝의 복도 위치(SpanX). Number는 방 이름 표기용 (예: 2-3 교실의 3).</summary>
     [Serializable]
     public sealed class DoorDef
     {
         public string RoomId = "";
         public string TemplateId = "";
         public int Floor;
+
+        /// <summary>방 왼쪽 끝이 놓이는 복도 X. 문 위치 = X + 템플릿 DoorXs.</summary>
         public float X;
         public int Number;
 

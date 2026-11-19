@@ -95,7 +95,13 @@ namespace ApoGirl.Exploration.Runtime
 
         public void ShowMessage(string key)
         {
-            _message.text = Loc.T(key);
+            ShowText(Loc.T(key));
+        }
+
+        /// <summary>이미 조합한 문장을 잠시 보여준다.</summary>
+        public void ShowText(string text)
+        {
+            _message.text = text;
             _message.RemoveFromClassList("hidden");
             _message.schedule.Execute(() => _message.AddToClassList("hidden")).ExecuteLater(1600);
         }
@@ -161,6 +167,20 @@ namespace ApoGirl.Exploration.Runtime
                 return;
             }
 
+            if (_director.PeekTarget != null)
+            {
+                _prompt.text = Loc.T("exp.prompt_peeking");
+                return;
+            }
+
+            if (_director.ListenProgress > 0f && _director.ListenProgress < 1f)
+            {
+                _prompt.text = Loc.T("exp.prompt_listening");
+                _searchBar.RemoveFromClassList("hidden");
+                _searchBar.value = _director.ListenProgress * 100f;
+                return;
+            }
+
             if (target == null)
             {
                 _prompt.text = "";
@@ -195,10 +215,11 @@ namespace ApoGirl.Exploration.Runtime
                     _prompt.text = Loc.T(target.Locked ? "exp.prompt_exit_locked" : "exp.prompt_exit");
                     break;
                 case TargetKind.Door:
-                    _prompt.text = Loc.F(target.Room.Visited ? "exp.prompt_enter_again" : "exp.prompt_enter", target.Room.Label);
+                    _prompt.text = Loc.F(target.Room.Visited ? "exp.prompt_enter_again" : "exp.prompt_enter", target.Room.Label)
+                                   + "  ·  " + Loc.T("exp.prompt_door_senses");
                     break;
                 case TargetKind.RoomExit:
-                    _prompt.text = Loc.T("exp.prompt_leave");
+                    _prompt.text = Loc.T("exp.prompt_leave") + "  ·  " + Loc.T("exp.prompt_door_senses");
                     break;
             }
         }
