@@ -1,0 +1,300 @@
+{
+  "Actions": [
+    {
+      "Id": "ACT_EXP_DAY_RESIDENTIAL",
+      "Category": "Expedition",
+      "SlotTag": "DayOnly",
+      "ExpeditionTime": "Day",
+      "LocationId": "LOC_RESIDENTIAL",
+      "Unlock": {
+        "FlagsAll": [
+          "LOC_RESIDENTIAL"
+        ]
+      }
+    },
+    {
+      "Id": "ACT_EXP_DAY_SUBWAY",
+      "Category": "Expedition",
+      "SlotTag": "DayOnly",
+      "ExpeditionTime": "Day",
+      "LocationId": "LOC_SUBWAY",
+      "Unlock": {
+        "FlagsAll": [
+          "LOC_SUBWAY"
+        ]
+      }
+    },
+    {
+      "Id": "ACT_EXP_NIGHT_SUBWAY",
+      "Category": "Expedition",
+      "SlotTag": "NightOnly",
+      "ExpeditionTime": "Night",
+      "LocationId": "LOC_SUBWAY",
+      "Unlock": {
+        "FlagsAll": [
+          "LOC_SUBWAY",
+          "NIGHT_RUNS"
+        ]
+      }
+    },
+    {
+      "Id": "ACT_DAILY_TUTOR_DOHYEON",
+      "Category": "Daily",
+      "SlotTag": "NightOnly",
+      "FatigueCost": 4,
+      "StressCost": 1,
+      "StatGains": [
+        {
+          "Stat": "Empathy",
+          "Amount": 1
+        },
+        {
+          "Stat": "Leadership",
+          "Amount": 1
+        }
+      ],
+      "HasProficiency": true,
+      "Proficiency": "Humanities",
+      "ProficiencyXp": 1,
+      "OnSuccess": {
+        "EndingTags": [
+          {
+            "Tag": "TAG_TEACHING",
+            "Amount": 1
+          }
+        ],
+        "Npcs": [
+          {
+            "NpcId": "NPC_DOHYEON",
+            "Affinity": 1
+          }
+        ]
+      },
+      "Unlock": {
+        "NpcStatuses": [
+          {
+            "NpcId": "NPC_DOHYEON",
+            "Status": "Joined"
+          }
+        ]
+      }
+    }
+  ],
+  "ExpeditionModels": [
+    {
+      "Id": "LOC_RESIDENTIAL",
+      "Day": {
+        "Resources": [
+          {
+            "Resource": "Food",
+            "Min": 4,
+            "Max": 8
+          },
+          {
+            "Resource": "Water",
+            "Min": 2,
+            "Max": 5
+          },
+          {
+            "Resource": "Materials",
+            "Min": 1,
+            "Max": 3
+          },
+          {
+            "Resource": "Medicine",
+            "Min": 0,
+            "Max": 1
+          }
+        ],
+        "BaseDownChance": 0.07,
+        "Fatigue": 15,
+        "StressMin": 8,
+        "StressMax": 14,
+        "ConscienceMax": 3
+      },
+      "Night": {
+        "Resources": [
+          {
+            "Resource": "Food",
+            "Min": 3,
+            "Max": 6
+          }
+        ],
+        "BaseDownChance": 0.16,
+        "Fatigue": 20,
+        "StressMin": 16,
+        "StressMax": 18,
+        "DawnReturnChance": 0.2
+      }
+    },
+    {
+      "Id": "LOC_SUBWAY",
+      "Day": {
+        "Resources": [
+          {
+            "Resource": "Materials",
+            "Min": 2,
+            "Max": 4
+          },
+          {
+            "Resource": "Fuel",
+            "Min": 1,
+            "Max": 2
+          },
+          {
+            "Resource": "Food",
+            "Min": 2,
+            "Max": 5
+          }
+        ],
+        "BaseDownChance": 0.09,
+        "Fatigue": 17,
+        "StressMin": 10,
+        "StressMax": 15,
+        "ConscienceMax": 1
+      },
+      "Night": {
+        "Resources": [
+          {
+            "Resource": "Materials",
+            "Min": 3,
+            "Max": 6
+          },
+          {
+            "Resource": "Fuel",
+            "Min": 1,
+            "Max": 3
+          },
+          {
+            "Resource": "Medicine",
+            "Min": 0,
+            "Max": 2
+          }
+        ],
+        "BaseDownChance": 0.16,
+        "Fatigue": 21,
+        "StressMin": 16,
+        "StressMax": 20,
+        "DawnReturnChance": 0.25
+      }
+    }
+  ],
+  "LootTables": [
+    {
+      "Id": "LOOT_HOUSE_KITCHEN",
+      "MinRolls": 1,
+      "MaxRolls": 2,
+      "EmptyChance": 0.25,
+      "Entries": [
+        {
+          "ItemId": "ITEM_CANNED_FOOD",
+          "Weight": 4
+        },
+        {
+          "ItemId": "ITEM_INSTANT_NOODLE",
+          "Weight": 3
+        },
+        {
+          "ItemId": "ITEM_WATER_BOTTLE",
+          "Weight": 3
+        },
+        {
+          "ItemId": "ITEM_LIGHTER",
+          "Weight": 1
+        }
+      ]
+    },
+    {
+      "Id": "LOOT_HOUSE_ROOM",
+      "MinRolls": 1,
+      "MaxRolls": 2,
+      "EmptyChance": 0.3,
+      "Entries": [
+        {
+          "ItemId": "ITEM_BANDAGE",
+          "Weight": 2
+        },
+        {
+          "ItemId": "ITEM_PAINKILLER",
+          "Weight": 1
+        },
+        {
+          "ItemId": "ITEM_BATTERY",
+          "Weight": 2
+        },
+        {
+          "ItemId": "ITEM_DUCT_TAPE",
+          "Weight": 2
+        },
+        {
+          "ItemId": "ITEM_TEXTBOOK",
+          "Weight": 1
+        },
+        {
+          "ItemId": "ITEM_BAG_HIKING",
+          "Weight": 1
+        },
+        {
+          "ItemId": "ITEM_ARMOR_PADDING",
+          "Weight": 1
+        }
+      ]
+    },
+    {
+      "Id": "LOOT_SUBWAY_KIOSK",
+      "MinRolls": 1,
+      "MaxRolls": 2,
+      "EmptyChance": 0.3,
+      "Entries": [
+        {
+          "ItemId": "ITEM_SNACK",
+          "Weight": 3
+        },
+        {
+          "ItemId": "ITEM_DRINK",
+          "Weight": 3
+        },
+        {
+          "ItemId": "ITEM_BATTERY",
+          "Weight": 2
+        },
+        {
+          "ItemId": "ITEM_SCRAP",
+          "Weight": 2
+        }
+      ]
+    },
+    {
+      "Id": "LOOT_SUBWAY_OFFICE",
+      "MinRolls": 1,
+      "MaxRolls": 2,
+      "EmptyChance": 0.15,
+      "Entries": [
+        {
+          "ItemId": "ITEM_SCRAP",
+          "Weight": 3
+        },
+        {
+          "ItemId": "ITEM_DUCT_TAPE",
+          "Weight": 2
+        },
+        {
+          "ItemId": "ITEM_TOOL_CROWBAR",
+          "Weight": 1
+        },
+        {
+          "ItemId": "ITEM_WEAPON_PIPE",
+          "Weight": 2
+        },
+        {
+          "ItemId": "ITEM_BATTERY",
+          "Weight": 2
+        },
+        {
+          "ItemId": "ITEM_MEDKIT",
+          "Weight": 1
+        }
+      ]
+    }
+  ]
+}

@@ -89,7 +89,8 @@ namespace ApoGirl.Exploration.Runtime
         /// <summary>방 템플릿별 안쪽 벽 타일.</summary>
         public static string InteriorWall(string templateId)
         {
-            if (templateId.Contains("RESTROOM")) return "wall_restroom";
+            if (templateId.Contains("RESTROOM") || templateId.Contains("SUBWAY")) return "wall_restroom";
+            if (templateId.Contains("HOUSE")) return "wall_office";
             if (templateId.Contains("OFFICE") && !templateId.Contains("STORE")) return "wall_office";
             if (templateId.Contains("CLASSROOM")) return "wall_classroom";
             if (templateId.Contains("STORE")) return "wall_store";
@@ -103,6 +104,8 @@ namespace ApoGirl.Exploration.Runtime
             locationId ??= string.Empty;
             if (locationId.Contains("STORE")) return "wall_store";
             if (locationId.Contains("PHARMACY")) return "wall_pharmacy";
+            if (locationId.Contains("RESIDENTIAL")) return "wall_brick";
+            if (locationId.Contains("SUBWAY")) return "wall_restroom";
             return "wall_corridor";
         }
 

@@ -9,7 +9,7 @@ namespace ApoGirl.EditorTools
     /// <summary>
     /// 탐험 지역 레이아웃 생성기 (메뉴 ApoGirl/Content/Build Locations). 건물 단면은 코드로 짓고 결과를 LocationAsset으로 저장한다.
     /// 수치·배치를 바꾸려면 이 파일을 고친 뒤 메뉴를 다시 실행한다 (에셋은 생성물).
-    /// 지역 목록: 튜토리얼(체육관 창고 → 본관 창고), 학교 교실동, 편의점, 약국·의원.
+    /// 지역 목록: 튜토리얼(체육관 창고 → 본관 창고), 학교 교실동, 편의점, 약국·의원, 주택가(M6), 지하철역(M6).
     /// </summary>
     public static class LocationBuilder
     {
@@ -24,6 +24,8 @@ namespace ApoGirl.EditorTools
                 Save("LOC_SCHOOL_INTERIOR", School()),
                 Save("LOC_STORE", Store()),
                 Save("LOC_PHARMACY", Pharmacy()),
+                Save("LOC_RESIDENTIAL", Residential()),
+                Save("LOC_SUBWAY", Subway()),
             };
 
             var database = AssetDatabase.LoadAssetAtPath<DefinitionDatabaseAsset>(ContentPipeline.DatabasePath);
@@ -295,11 +297,204 @@ namespace ApoGirl.EditorTools
                 {
                     Spawns = { Crowd("ENEMY_WANDERER", 0, "", 18f, 3, 1.5f), Walk("ENEMY_WANDERER", 0, "", 30f, 1, 0f), Crowd("ENEMY_WANDERER", 0, "ROOM_STORE_STOCK_1", 6f, 2, 1f) },
                     ForceableRooms = { "ROOM_STORE_OFFICE_1" },
+                    Encounters = { FriendTrace() },
                 },
                 NightVariant = new LocationVariantDef
                 {
                     Spawns = { Walk("ENEMY_WANDERER", 0, "", 12f, 2, 5f), Walk("ENEMY_WANDERER", 0, "", 28f, 2, 5f), Walk("ENEMY_LISTENER", 0, "", 36f, 1, 0f) },
                     ForceableRooms = { "ROOM_STORE_OFFICE_1" },
+                },
+            };
+        }
+
+        /// <summary>2막: 편의점 앞 버스 정류장에 친구의 흔적 (문서 7.3, 물건으로만).</summary>
+        private static EncounterDef FriendTrace() => new EncounterDef
+        {
+            Id = "FRIEND_TRACE", Floor = 0, X = 8f,
+            FlagsAll = { "A2_STARTED" }, FlagsNone = { "FRIEND_TRACE_FOUND", "FRIEND_TRACE_LEFT" },
+            PromptKey = "enc.FRIEND_TRACE.prompt",
+            Choices =
+            {
+                new EncounterChoiceDef { Id = "TAKE", TextKey = "enc.FRIEND_TRACE.take", SetFlags = { "FRIEND_TRACE_FOUND" }, StressDelta = 8 },
+                new EncounterChoiceDef { Id = "LEAVE", TextKey = "enc.FRIEND_TRACE.leave", SetFlags = { "FRIEND_TRACE_LEFT" }, StressDelta = 5 },
+            },
+        };
+
+        // ── 주택가 (낮 전용 성격, 문서 6.3.8): 빌라 골목 2층. 잠긴 집(접촉 불가), 박 간호사 ──
+
+        private static LocationDef Residential()
+        {
+            var layout = new BuildingLayoutDef { Floors = 2, FloorHeight = 4f, CorridorLength = 72f };
+            layout.RoomTemplates.Add(new RoomTemplateDef
+            {
+                Id = "ROOM_HOUSE", Width = 14f, DefaultLootTableId = "LOOT_HOUSE_ROOM",
+                DoorXs = new List<float> { 1.2f },
+                Windows = new List<WindowDef> { new WindowDef(3f, 3f) },
+                Containers =
+                {
+                    C("KITCHEN", ContainerKind.Cabinet, 0, 4f, "LOOT_HOUSE_KITCHEN"),
+                    C("FRIDGE", ContainerKind.Fridge, 0, 6.4f, "LOOT_HOUSE_KITCHEN"),
+                    C("DRAWER", ContainerKind.Desk, 0, 9.2f),
+                    C("CLOSET", ContainerKind.Locker, 0, 12f),
+                },
+            });
+
+            Stairs(layout, 4f);
+            Room(layout, "ROOM_HOUSE_101", "ROOM_HOUSE", 0, 12f, 101);
+            Room(layout, "ROOM_HOUSE_102", "ROOM_HOUSE", 0, 46f, 102);
+            Room(layout, "ROOM_HOUSE_201", "ROOM_HOUSE", 1, 12f, 201);
+            Room(layout, "ROOM_HOUSE_202", "ROOM_HOUSE", 1, 30f, 202);
+            Room(layout, "ROOM_HOUSE_203", "ROOM_HOUSE", 1, 52f, 203);
+            layout.Containers.Add(C("C_RES_MAILBOX", ContainerKind.Box, 0, 28f, "LOOT_HOUSE_ROOM"));
+            layout.Containers.Add(C("C_RES_RECYCLE", ContainerKind.Box, 0, 64f, "LOOT_HOUSE_KITCHEN"));
+            layout.Exits.Add(new ExitDef { Kind = ExitKind.Main, Floor = 0, X = 69f });
+            layout.Exits.Add(new ExitDef { Kind = ExitKind.Alternate, Floor = 1, X = 70f, StartsLocked = true });
+
+            // 잠긴 집: 안에서 인기척. 들어갈 수 없고, 문 앞에 물자를 두고 갈 수 있다 (7.3 복선)
+            var lockedHouse = new EncounterDef
+            {
+                Id = "LOCKED_HOUSE", Floor = 0, X = 47f,
+                FlagsNone = { "LEFT_SUPPLIES_LOCKED_HOUSE" },
+                PromptKey = "enc.LOCKED_HOUSE.prompt",
+                Choices =
+                {
+                    new EncounterChoiceDef { Id = "SUPPLIES", TextKey = "enc.LOCKED_HOUSE.supplies", SetFlags = { "LEFT_SUPPLIES_LOCKED_HOUSE" }, StressDelta = -3 },
+                    new EncounterChoiceDef { Id = "KNOCK", TextKey = "enc.LOCKED_HOUSE.knock", SetFlags = { "KNOCKED_LOCKED_HOUSE" }, Removes = false },
+                    new EncounterChoiceDef { Id = "PASS", TextKey = "enc.LOCKED_HOUSE.pass", Removes = false },
+                },
+            };
+
+            // 박 간호사 (보건 교사): 2층 203호에 숨어 있다
+            var nurse = new EncounterDef
+            {
+                Id = "NURSE", Floor = 1, RoomId = "ROOM_HOUSE_203", X = 10f,
+                FlagsAll = { "A2_STARTED" }, FlagsNone = { "NURSE_FOUND", "NURSE_DECLINED" },
+                PromptKey = "enc.NURSE.prompt",
+                Choices =
+                {
+                    new EncounterChoiceDef { Id = "INVITE", TextKey = "enc.NURSE.invite", SetFlags = { "NURSE_FOUND" }, StressDelta = -4 },
+                    new EncounterChoiceDef { Id = "LATER", TextKey = "enc.NURSE.later", SetFlags = { "NURSE_DECLINED" } },
+                },
+            };
+
+            return new LocationDef
+            {
+                Layout = layout, DayRunSeconds = 360f, NightRunSeconds = 300f, DefaultLootTableId = "LOOT_HOUSE_ROOM",
+                DayVariant = new LocationVariantDef
+                {
+                    Spawns =
+                    {
+                        Crowd("ENEMY_WANDERER", 0, "", 22f, 3, 2f),
+                        Crowd("ENEMY_WANDERER", 1, "", 40f, 2, 1.5f),
+                        Crowd("ENEMY_WANDERER", 0, "ROOM_HOUSE_101", 8f, 2, 1f),
+                        Crowd("ENEMY_LISTENER", 1, "ROOM_HOUSE_202", 7f, 1, 0f),
+                        Walk("ENEMY_WANDERER", 0, "", 58f, 1, 0f),
+                    },
+                    LockedRooms = { "ROOM_HOUSE_102" },
+                    ForceableRooms = { "ROOM_HOUSE_201" },
+                    Encounters = { lockedHouse, nurse },
+                },
+                NightVariant = new LocationVariantDef
+                {
+                    Spawns = { Walk("ENEMY_WANDERER", 0, "", 20f, 3, 8f), Walk("ENEMY_WANDERER", 1, "", 40f, 3, 8f), Walk("ENEMY_WATCHER", 0, "", 55f, 1, 0f) },
+                    LockedRooms = { "ROOM_HOUSE_102" },
+                    ForceableRooms = { "ROOM_HOUSE_201" },
+                },
+            };
+        }
+
+        // ── 지하철역 (문서 6.3.8): 위층 대합실, 아래층 승강장 대규모 휴면 군집. 밤에는 터널 대체 추출 ──
+
+        private static LocationDef Subway()
+        {
+            var layout = new BuildingLayoutDef { Floors = 2, FloorHeight = 4f, CorridorLength = 96f };
+            layout.RoomTemplates.Add(new RoomTemplateDef
+            {
+                Id = "ROOM_SUBWAY_OFFICE", Width = 14f, DefaultLootTableId = "LOOT_SUBWAY_OFFICE",
+                DoorXs = new List<float> { 1.2f },
+                Windows = new List<WindowDef> { new WindowDef(3f, 3.4f) },
+                Containers = { C("OFFICE_DESK", ContainerKind.Desk, 0, 4f), C("OFFICE_CABINET", ContainerKind.Cabinet, 0, 7.4f), C("OFFICE_LOCKER", ContainerKind.Locker, 0, 11f) },
+            });
+            layout.RoomTemplates.Add(new RoomTemplateDef
+            {
+                Id = "ROOM_SUBWAY_KIOSK", Width = 10f, DefaultLootTableId = "LOOT_SUBWAY_KIOSK",
+                DoorXs = new List<float> { 1.2f },
+                Containers = { C("KIOSK_SHELF", ContainerKind.Box, 0, 3.8f), C("KIOSK_FRIDGE", ContainerKind.Fridge, 0, 6.6f, "LOOT_STORE_FRIDGE"), C("KIOSK_BOX", ContainerKind.Box, 0, 8.6f) },
+            });
+            layout.RoomTemplates.Add(new RoomTemplateDef
+            {
+                Id = "ROOM_SUBWAY_RESTROOM", Width = 8f, DefaultLootTableId = "LOOT_SUBWAY_KIOSK",
+                DoorXs = new List<float> { 1.2f },
+                Containers = { C("SINK", ContainerKind.Cabinet, 0, 4.2f), C("SUPPLY", ContainerKind.Box, 0, 6.6f) },
+            });
+
+            Stairs(layout, 48f);
+            Room(layout, "ROOM_SUBWAY_OFFICE_1", "ROOM_SUBWAY_OFFICE", 1, 14f, 1);
+            Room(layout, "ROOM_SUBWAY_KIOSK_1", "ROOM_SUBWAY_KIOSK", 1, 66f, 1);
+            Room(layout, "ROOM_SUBWAY_RESTROOM_1", "ROOM_SUBWAY_RESTROOM", 1, 82f, 1);
+            Room(layout, "ROOM_SUBWAY_OFFICE_2", "ROOM_SUBWAY_OFFICE", 0, 70f, 2);
+            for (var i = 0; i < 4; i++)
+            {
+                layout.Containers.Add(C($"C_SUB_LOCKER_{i + 1}", ContainerKind.Locker, 1, 34f + i * 2f, "LOOT_SUBWAY_KIOSK"));
+            }
+
+            layout.Containers.Add(C("C_SUB_BENCH_A", ContainerKind.Box, 0, 20f, "LOOT_SUBWAY_KIOSK"));
+            layout.Containers.Add(C("C_SUB_BENCH_B", ContainerKind.Box, 0, 88f, "LOOT_SUBWAY_OFFICE"));
+            layout.Exits.Add(new ExitDef { Kind = ExitKind.Main, Floor = 1, X = 3f });
+            layout.Exits.Add(new ExitDef { Kind = ExitKind.Alternate, Floor = 0, X = 94f, StartsLocked = true });
+
+            // 마지막 방송 (진실 단서), 방관했던 동창 (2막)
+            var broadcast = new EncounterDef
+            {
+                Id = "LAST_BROADCAST", Floor = 1, RoomId = "ROOM_SUBWAY_OFFICE_1", X = 8f,
+                FlagsNone = { "LAST_BROADCAST_HEARD" },
+                PromptKey = "enc.LAST_BROADCAST.prompt",
+                Choices =
+                {
+                    new EncounterChoiceDef { Id = "LISTEN", TextKey = "enc.LAST_BROADCAST.listen", SetFlags = { "LAST_BROADCAST_HEARD" }, AddClues = { "TRUTH_SUBWAY_BROADCAST" }, StressDelta = 4 },
+                    new EncounterChoiceDef { Id = "LEAVE", TextKey = "enc.LAST_BROADCAST.leave", Removes = false },
+                },
+            };
+            var bystander = new EncounterDef
+            {
+                Id = "BYSTANDER", Floor = 0, RoomId = "ROOM_SUBWAY_OFFICE_2", X = 10f,
+                FlagsAll = { "A2_STARTED" }, FlagsNone = { "BYSTANDER_MET" },
+                PromptKey = "enc.BYSTANDER.prompt",
+                Choices =
+                {
+                    new EncounterChoiceDef { Id = "TAKE", TextKey = "enc.BYSTANDER.take", SetFlags = { "BYSTANDER_MET", "BYSTANDER_TAKEN" }, StressDelta = 10 },
+                    new EncounterChoiceDef { Id = "SUPPLY", TextKey = "enc.BYSTANDER.supply", SetFlags = { "BYSTANDER_MET", "BYSTANDER_HELPED" }, StressDelta = 6 },
+                    new EncounterChoiceDef { Id = "WALK_AWAY", TextKey = "enc.BYSTANDER.walk_away", SetFlags = { "BYSTANDER_MET", "BYSTANDER_LEFT" }, StressDelta = 6 },
+                },
+            };
+
+            return new LocationDef
+            {
+                Layout = layout, DayRunSeconds = 420f, NightRunSeconds = 390f, DefaultLootTableId = "LOOT_SUBWAY_KIOSK",
+                DayVariant = new LocationVariantDef
+                {
+                    Spawns =
+                    {
+                        Crowd("ENEMY_WANDERER", 0, "", 34f, 10, 6f),
+                        Crowd("ENEMY_LISTENER", 0, "", 56f, 2, 1.5f),
+                        Crowd("ENEMY_WANDERER", 1, "", 70f, 3, 2f),
+                        Crowd("ENEMY_WANDERER", 1, "ROOM_SUBWAY_RESTROOM_1", 4f, 2, 1f),
+                        Walk("ENEMY_WANDERER", 1, "", 26f, 1, 0f),
+                    },
+                    ForceableRooms = { "ROOM_SUBWAY_OFFICE_1" },
+                    Encounters = { broadcast, bystander },
+                },
+                NightVariant = new LocationVariantDef
+                {
+                    Spawns =
+                    {
+                        Walk("ENEMY_WANDERER", 0, "", 30f, 4, 10f),
+                        Walk("ENEMY_WATCHER", 0, "", 60f, 1, 0f),
+                        Walk("ENEMY_WATCHER", 1, "", 40f, 1, 0f),
+                        Walk("ENEMY_WANDERER", 1, "", 76f, 3, 8f),
+                    },
+                    ForceableRooms = { "ROOM_SUBWAY_OFFICE_1" },
+                    Encounters = { broadcast },
                 },
             };
         }
