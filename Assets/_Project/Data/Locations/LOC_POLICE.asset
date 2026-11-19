@@ -203,6 +203,7 @@ MonoBehaviour:
           AddClues: []
           StressDelta: 0
           Removes: 0
+        SpriteKey: 
     NightVariant:
       Spawns:
       - EnemyId: ENEMY_WANDERER
@@ -253,4 +254,5 @@ MonoBehaviour:
           AddClues: []
           StressDelta: 0
           Removes: 0
+        SpriteKey: 
     Tutorial: 0

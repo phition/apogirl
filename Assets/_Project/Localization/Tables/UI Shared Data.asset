@@ -2935,6 +2935,18 @@ MonoBehaviour:
     m_Key: debug.restore_vitals
     m_Metadata:
       m_Items: []
+  - m_Id: 233296838803456
+    m_Key: enc.BLOOD_FRIDGE.prompt
+    m_Metadata:
+      m_Items: []
+  - m_Id: 233296897523712
+    m_Key: enc.BLOOD_FRIDGE.take
+    m_Metadata:
+      m_Items: []
+  - m_Id: 233296897523713
+    m_Key: enc.BLOOD_FRIDGE.leave
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

@@ -238,6 +238,7 @@ MonoBehaviour:
           AddClues: []
           StressDelta: 0
           Removes: 0
+        SpriteKey: 
       - Id: BYSTANDER
         Floor: 0
         RoomId: ROOM_SUBWAY_OFFICE_2
@@ -272,6 +273,7 @@ MonoBehaviour:
           AddClues: []
           StressDelta: 6
           Removes: 1
+        SpriteKey: 
     NightVariant:
       Spawns:
       - EnemyId: ENEMY_WANDERER
@@ -329,4 +331,5 @@ MonoBehaviour:
           AddClues: []
           StressDelta: 0
           Removes: 0
+        SpriteKey: 
     Tutorial: 0

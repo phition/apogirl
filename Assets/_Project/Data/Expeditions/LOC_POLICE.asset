@@ -31,6 +31,7 @@ MonoBehaviour:
       DawnReturnChance: 0
       HpLossOnDown: 30
       StressOnDown: 30
+      EncounterChance: 0.5
     Night:
       Resources:
       - Resource: 5
@@ -50,6 +51,7 @@ MonoBehaviour:
       DawnReturnChance: 0.2
       HpLossOnDown: 30
       StressOnDown: 30
+      EncounterChance: 0.5
     AgilityDownReduction: 0.001
     SleepDebtDownIncrease: 0.03
     ConsecutiveDownIncrease: 0.1

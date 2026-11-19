@@ -280,6 +280,7 @@ MonoBehaviour:
           AddClues: []
           StressDelta: 0
           Removes: 0
+        SpriteKey: 
       - Id: RINGLEADER
         Floor: 1
         RoomId: ROOM_MART_OFFICE_2
@@ -303,6 +304,7 @@ MonoBehaviour:
           AddClues: []
           StressDelta: 6
           Removes: 0
+        SpriteKey: 
     NightVariant:
       Spawns:
       - EnemyId: ENEMY_WANDERER

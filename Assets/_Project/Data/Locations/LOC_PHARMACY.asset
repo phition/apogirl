@@ -244,6 +244,7 @@ MonoBehaviour:
           AddClues: []
           StressDelta: 0
           Removes: 0
+        SpriteKey: 
     NightVariant:
       Spawns:
       - EnemyId: ENEMY_WANDERER
@@ -301,4 +302,30 @@ MonoBehaviour:
           AddClues: []
           StressDelta: 0
           Removes: 0
+        SpriteKey: 
+      - Id: BLOOD_FRIDGE
+        Floor: 1
+        RoomId: ROOM_PH_CLINIC_1
+        X: 2.6
+        FlagsAll:
+        - NEED_BLOOD_PACK
+        FlagsNone:
+        - BLOOD_PACK
+        - TEACHER_CURED
+        PromptKey: enc.BLOOD_FRIDGE.prompt
+        Choices:
+        - Id: TAKE
+          TextKey: enc.BLOOD_FRIDGE.take
+          SetFlags:
+          - BLOOD_PACK
+          AddClues: []
+          StressDelta: 0
+          Removes: 1
+        - Id: LEAVE
+          TextKey: enc.BLOOD_FRIDGE.leave
+          SetFlags: []
+          AddClues: []
+          StressDelta: 0
+          Removes: 0
+        SpriteKey: prop_fridge
     Tutorial: 0

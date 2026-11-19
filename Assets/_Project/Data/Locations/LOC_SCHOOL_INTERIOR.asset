@@ -543,6 +543,7 @@ MonoBehaviour:
           AddClues: []
           StressDelta: 4
           Removes: 1
+        SpriteKey: 
       - Id: SCHOOL_NOTICE
         Floor: 0
         RoomId: ROOM_1F_ROOM_OFFICE_0
@@ -569,6 +570,7 @@ MonoBehaviour:
           AddClues: []
           StressDelta: 0
           Removes: 1
+        SpriteKey: 
     NightVariant:
       Spawns:
       - EnemyId: ENEMY_WANDERER
@@ -698,6 +700,7 @@ MonoBehaviour:
           AddClues: []
           StressDelta: 4
           Removes: 1
+        SpriteKey: 
       - Id: SCHOOL_NOTICE
         Floor: 0
         RoomId: ROOM_1F_ROOM_OFFICE_0
@@ -724,4 +727,5 @@ MonoBehaviour:
           AddClues: []
           StressDelta: 0
           Removes: 1
+        SpriteKey: 
     Tutorial: 0

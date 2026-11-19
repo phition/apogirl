@@ -189,6 +189,7 @@ MonoBehaviour:
           AddClues: []
           StressDelta: 0
           Removes: 0
+        SpriteKey: 
       - Id: NURSE
         Floor: 1
         RoomId: ROOM_HOUSE_203
@@ -214,6 +215,7 @@ MonoBehaviour:
           AddClues: []
           StressDelta: 0
           Removes: 1
+        SpriteKey: 
     NightVariant:
       Spawns:
       - EnemyId: ENEMY_WANDERER
