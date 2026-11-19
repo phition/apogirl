@@ -1,0 +1,131 @@
+using System;
+using ApoGirl.Core.Definitions;
+using ApoGirl.Core.State;
+
+namespace ApoGirl.Core.Effects
+{
+    /// <summary>
+    /// 모든 상태 변경의 단일 진입점. 범위 제한(Clamp)을 보장하고 실제 변화량을 <see cref="StateDelta"/>에 기록한다.
+    /// </summary>
+    public static class EffectApplier
+    {
+        /// <param name="recoveryMultiplier">피로·스트레스 감소(회복)량에 곱하는 배율. 새벽 귀환 후 휴식 등.</param>
+        public static void Apply(GameState state, GameEffect effect, BalanceConfig balance, StateDelta delta, float recoveryMultiplier = 1f)
+        {
+            if (effect == null)
+            {
+                return;
+            }
+
+            foreach (var stat in effect.Stats)
+            {
+                ChangeStat(state, stat.Stat, stat.Amount, balance, delta);
+            }
+
+            foreach (var vital in effect.Vitals)
+            {
+                var amount = vital.Amount;
+                if (amount < 0 && (vital.Vital == VitalType.Fatigue || vital.Vital == VitalType.Stress))
+                {
+                    amount = (int)Math.Round(amount * recoveryMultiplier, MidpointRounding.AwayFromZero);
+                }
+
+                ChangeVital(state, vital.Vital, amount, balance, delta);
+            }
+
+            foreach (var resource in effect.Resources)
+            {
+                ChangeResource(state, resource.Resource, resource.Amount, delta);
+            }
+
+            foreach (var hidden in effect.Hidden)
+            {
+                ChangeHidden(state, hidden.Hidden, hidden.Amount, balance, delta);
+            }
+
+            ChangeSleepDebt(state, effect.SleepDebt, balance, delta);
+            ChangeConscience(state, effect.Conscience, balance, delta);
+
+            foreach (var flag in effect.SetFlags)
+            {
+                if (!string.IsNullOrEmpty(flag) && state.Flags.Add(flag))
+                {
+                    delta.FlagsSet.Add(flag);
+                }
+            }
+
+            foreach (var tag in effect.EndingTags)
+            {
+                if (string.IsNullOrEmpty(tag.Tag))
+                {
+                    continue;
+                }
+
+                state.EndingTags.TryGetValue(tag.Tag, out var current);
+                state.EndingTags[tag.Tag] = current + tag.Amount;
+            }
+        }
+
+        public static int ChangeStat(GameState state, StatType type, int amount, BalanceConfig balance, StateDelta delta)
+        {
+            var before = state.Player.GetStat(type);
+            var after = Clamp(before + amount, 0, balance.StatMax);
+            state.Player.SetStat(type, after);
+            delta.AddStat(type, after - before);
+            return after - before;
+        }
+
+        public static int ChangeVital(GameState state, VitalType type, int amount, BalanceConfig balance, StateDelta delta)
+        {
+            var vitals = state.Player.Vitals;
+            var before = vitals.GetVital(type);
+            var after = Clamp(before + amount, 0, balance.VitalMax);
+            vitals.SetVital(type, after);
+            delta.AddVital(type, after - before);
+            return after - before;
+        }
+
+        /// <summary>자원은 0 미만으로 내려가지 않는다. 보관량 상한은 창고 레벨 도입 시 추가.</summary>
+        public static int ChangeResource(GameState state, ResourceType type, int amount, StateDelta delta)
+        {
+            var before = state.Base.GetResource(type);
+            var after = Math.Max(0, before + amount);
+            state.Base.SetResource(type, after);
+            delta.AddResource(type, after - before);
+            return after - before;
+        }
+
+        public static int ChangeHidden(GameState state, HiddenType type, int amount, BalanceConfig balance, StateDelta delta)
+        {
+            var hidden = state.Player.Hidden;
+            var before = hidden.GetHidden(type);
+            var after = Clamp(before + amount, 0, balance.HiddenMax);
+            hidden.SetHidden(type, after);
+            delta.AddHidden(type, after - before);
+            return after - before;
+        }
+
+        public static int ChangeSleepDebt(GameState state, int amount, BalanceConfig balance, StateDelta delta)
+        {
+            var before = state.Player.SleepDebt;
+            var after = Clamp(before + amount, 0, balance.SleepDebtMax);
+            state.Player.SleepDebt = after;
+            delta.SleepDebt += after - before;
+            return after - before;
+        }
+
+        public static int ChangeConscience(GameState state, int amount, BalanceConfig balance, StateDelta delta)
+        {
+            var before = state.Player.Conscience;
+            var after = Clamp(before + amount, 0, balance.ConscienceMax);
+            state.Player.Conscience = after;
+            delta.Conscience += after - before;
+            return after - before;
+        }
+
+        private static int Clamp(int value, int min, int max)
+        {
+            return value < min ? min : value > max ? max : value;
+        }
+    }
+}

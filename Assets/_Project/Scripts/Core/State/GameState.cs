@@ -12,6 +12,11 @@ namespace ApoGirl.Core.State
         public const int CurrentSaveVersion = 1;
 
         public int SaveVersion { get; set; } = CurrentSaveVersion;
+        public GameStatus Status { get; set; } = GameStatus.Playing;
+
+        /// <summary>게임 종료 사유 ID (예: END_CAUSE_STARVATION). 진행 중이면 빈 문자열.</summary>
+        public string EndCause { get; set; } = "";
+
         public RandomState Rng { get; set; } = new RandomState();
         public CalendarState Calendar { get; set; } = new CalendarState();
         public PlayerState Player { get; set; } = new PlayerState();
@@ -26,13 +31,23 @@ namespace ApoGirl.Core.State
         public Dictionary<string, int> EndingTags { get; set; } = new Dictionary<string, int>();
         public ExplorationStats Exploration { get; set; } = new ExplorationStats();
         public List<DiaryEntry> Diary { get; set; } = new List<DiaryEntry>();
+        public CarryOverState CarryOver { get; set; } = new CarryOverState();
+    }
+
+    /// <summary>다음 주로 넘어가는 규칙 효과.</summary>
+    public sealed class CarryOverState
+    {
+        /// <summary>다음 주 1일차 낮부터 강제 휴식으로 잠글 슬롯 수 (7일차 밤 탐험, 쓰러짐 등).</summary>
+        public int LockedRestSlots { get; set; }
     }
 
     /// <summary>시드 기반 난수 상태(재현 가능한 시뮬레이션용).</summary>
     public sealed class RandomState
     {
         public int Seed { get; set; }
-        public long Step { get; set; }
+
+        /// <summary>난수 생성기 내부 상태. 세이브 후 이어서 같은 난수열을 재현한다.</summary>
+        public long State { get; set; }
     }
 
     /// <summary>달력: 52주 × 7일 × 낮/밤 (문서 4.1, D5).</summary>
@@ -48,6 +63,9 @@ namespace ApoGirl.Core.State
         public int Day { get; set; } = 1;
 
         public DayPhase Phase { get; set; } = DayPhase.Day;
+
+        /// <summary>이번 주 14슬롯을 모두 실행했고 주간 정산을 기다리는 중.</summary>
+        public bool WeekComplete { get; set; }
     }
 
     public sealed class PlayerState
@@ -65,6 +83,20 @@ namespace ApoGirl.Core.State
 
         public HiddenState Hidden { get; set; } = new HiddenState();
         public List<string> Traits { get; set; } = new List<string>();
+
+        /// <summary>연속 밤 휴식 횟수. 규정 횟수에 도달하면 수면 부채를 갚는다.</summary>
+        public int NightRestStreak { get; set; }
+
+        /// <summary>연속 행동 보너스 추적용: 마지막 교육 행동 ID와 연속 횟수.</summary>
+        public string RoutineActionId { get; set; } = "";
+
+        public int RoutineStreak { get; set; }
+
+        /// <summary>직전 슬롯이 탐험이었는지 (연속 출정 판정).</summary>
+        public bool LastSlotWasExpedition { get; set; }
+
+        /// <summary>새벽 귀환 후 다음 휴식의 회복량 감소 (문서 6.3.2-(4)).</summary>
+        public bool ReducedNextRest { get; set; }
     }
 
     /// <summary>0막 프롤로그에서 정해지는 인적 사항 (문서 7.1).</summary>
@@ -192,7 +224,10 @@ namespace ApoGirl.Core.State
     {
         public string ActionId { get; set; } = "";
 
-        /// <summary>탐험 후 강제 휴식처럼 시스템이 잠근 슬롯 (문서 4.2).</summary>
+        /// <summary>규칙상 휴식이어야 하는 슬롯 (탐험 직후, 문서 4.2). 다른 행동을 두면 경고 후 허용.</summary>
+        public bool ForcedRest { get; set; }
+
+        /// <summary>플레이어가 바꿀 수 없는 슬롯 (주 경계 이월, 쓰러짐, 수면 부채 4단계).</summary>
         public bool Locked { get; set; }
     }
 

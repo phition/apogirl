@@ -45,6 +45,45 @@ namespace ApoGirl.Core.State
         Night,
     }
 
+    /// <summary>생존 상태 수치 (문서 5.2). 모두 0~100.</summary>
+    public enum VitalType
+    {
+        Hp,
+        Fatigue,
+        Stress,
+        Infection,
+        Cleanliness,
+        Hunger,
+        Thirst,
+    }
+
+    /// <summary>엔딩 판정용 숨김 수치 (문서 5.3).</summary>
+    public enum HiddenType
+    {
+        TraumaRecovery,
+        SelfAwareness,
+        Humanity,
+        Hope,
+        Isolation,
+    }
+
+    /// <summary>계절 (문서 4.4). 봄 1~13 / 여름 14~26 / 가을 27~39 / 겨울 40~52주.</summary>
+    public enum Season
+    {
+        Spring,
+        Summer,
+        Autumn,
+        Winter,
+    }
+
+    /// <summary>게임 진행 상태.</summary>
+    public enum GameStatus
+    {
+        Playing,
+        Rescued,
+        GameOver,
+    }
+
     /// <summary>혈액형 (문서 7.1 ④). Rh는 다루지 않는다.</summary>
     public enum BloodType
     {
