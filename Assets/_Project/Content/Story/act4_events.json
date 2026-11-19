@@ -1,0 +1,1262 @@
+{
+  "Events": [
+    {
+      "Id": "EVT_NG_STORAGE_7DAYS",
+      "Kind": "Story",
+      "Priority": 101,
+      "Condition": {
+        "FlagsAll": [
+          "FORCED_ONLY"
+        ]
+      },
+      "OnShow": {
+        "AddClues": [
+          "TRUTH_STORAGE_SOUNDS"
+        ],
+        "Hidden": [
+          {
+            "Hidden": "SelfAwareness",
+            "Amount": 3
+          }
+        ]
+      }
+    },
+    {
+      "Id": "EVT_A4_OPENING",
+      "Kind": "Night",
+      "Priority": 100,
+      "Condition": {
+        "WeekMin": 40,
+        "Phase": "Night",
+        "FlagsNone": [
+          "A4_STARTED"
+        ]
+      },
+      "OnShow": {
+        "SetFlags": [
+          "A4_STARTED"
+        ]
+      },
+      "Choices": [
+        {
+          "Id": "PLAN_SELF",
+          "Effect": {
+            "Stats": [
+              {
+                "Stat": "Leadership",
+                "Amount": 2
+              }
+            ],
+            "Hidden": [
+              {
+                "Hidden": "SelfAwareness",
+                "Amount": 3
+              }
+            ]
+          }
+        },
+        {
+          "Id": "ASK_ADVICE",
+          "Effect": {
+            "Npcs": [
+              {
+                "NpcId": "NPC_TEACHER",
+                "Affinity": 3
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "Id": "EVT_A4_WATERWORKS_UNLOCK",
+      "Kind": "Night",
+      "Priority": 60,
+      "Condition": {
+        "WeekMin": 40,
+        "Phase": "Night",
+        "FlagsAny": [
+          "WATERWORKS_RUMOR",
+          "CURE_ROUTE"
+        ],
+        "FlagsNone": [
+          "LOC_WATERWORKS"
+        ]
+      },
+      "OnShow": {
+        "SetFlags": [
+          "LOC_WATERWORKS"
+        ]
+      }
+    },
+    {
+      "Id": "EVT_A4_WATERWORKS_LATE",
+      "Kind": "Night",
+      "Priority": 55,
+      "DialogueNode": "EVT_A4_WATERWORKS_UNLOCK",
+      "Condition": {
+        "WeekMin": 43,
+        "Phase": "Night",
+        "FlagsNone": [
+          "LOC_WATERWORKS"
+        ]
+      },
+      "OnShow": {
+        "SetFlags": [
+          "LOC_WATERWORKS"
+        ]
+      }
+    },
+    {
+      "Id": "EVT_A4_RESEARCH",
+      "Kind": "Story",
+      "Priority": 85,
+      "Condition": {
+        "FlagsAll": [
+          "RESEARCH_DATA"
+        ],
+        "ActionIds": [
+          "ACT_EXP_DAY_WATERWORKS",
+          "ACT_EXP_NIGHT_WATERWORKS"
+        ]
+      },
+      "OnShow": {
+        "Npcs": [
+          {
+            "NpcId": "NPC_TEACHER",
+            "Trust": 2
+          }
+        ],
+        "Hidden": [
+          {
+            "Hidden": "Hope",
+            "Amount": 4
+          }
+        ]
+      }
+    },
+    {
+      "Id": "EVT_A4_RESEARCH_MEMO",
+      "Kind": "Story",
+      "Priority": 80,
+      "Condition": {
+        "FlagsAll": [
+          "RESEARCH_MEMO"
+        ],
+        "ActionIds": [
+          "ACT_EXP_DAY_WATERWORKS",
+          "ACT_EXP_NIGHT_WATERWORKS"
+        ]
+      },
+      "OnShow": {
+        "Hidden": [
+          {
+            "Hidden": "SelfAwareness",
+            "Amount": 2
+          }
+        ]
+      }
+    },
+    {
+      "Id": "EVT_A4_CURE_HINT",
+      "Kind": "Night",
+      "Priority": 58,
+      "Condition": {
+        "Phase": "Night",
+        "FlagsAll": [
+          "TEACHER_REINFECTED",
+          "RESEARCH_DATA"
+        ],
+        "FlagsAny": [
+          "CURE_ROUTE",
+          "CARE_ROUTE"
+        ],
+        "FlagsNone": [
+          "CURE_HINTED",
+          "TEACHER_CURED"
+        ],
+        "AnyChecks": [
+          {
+            "Kind": "ClueCount",
+            "Key": "CURE_",
+            "Op": "Less",
+            "Value": 6
+          },
+          {
+            "Kind": "Proficiency",
+            "Key": "Medicine",
+            "Op": "Less",
+            "Value": 4
+          }
+        ]
+      },
+      "OnShow": {
+        "SetFlags": [
+          "CURE_HINTED"
+        ]
+      }
+    },
+    {
+      "Id": "EVT_A4_CURE_ATTEMPT",
+      "Kind": "Night",
+      "Priority": 97,
+      "Once": false,
+      "CooldownWeeks": 1,
+      "Condition": {
+        "WeekMax": 50,
+        "Phase": "Night",
+        "FlagsAll": [
+          "TEACHER_REINFECTED",
+          "RESEARCH_DATA"
+        ],
+        "FlagsAny": [
+          "CURE_ROUTE",
+          "CARE_ROUTE"
+        ],
+        "FlagsNone": [
+          "CURE_ATTEMPTED",
+          "TEACHER_CURED"
+        ],
+        "Checks": [
+          {
+            "Kind": "ClueCount",
+            "Key": "CURE_",
+            "Op": "GreaterOrEqual",
+            "Value": 6
+          },
+          {
+            "Kind": "Proficiency",
+            "Key": "Medicine",
+            "Op": "GreaterOrEqual",
+            "Value": 4
+          }
+        ]
+      },
+      "Choices": [
+        {
+          "Id": "TREAT",
+          "HasCheck": true,
+          "Check": {
+            "BaseRate": 0.3
+          },
+          "Effect": {
+            "SetFlags": [
+              "CURE_ATTEMPTED",
+              "TEACHER_CURED"
+            ],
+            "TeacherInfection": -100,
+            "Hidden": [
+              {
+                "Hidden": "Hope",
+                "Amount": 10
+              },
+              {
+                "Hidden": "Humanity",
+                "Amount": 4
+              }
+            ]
+          },
+          "OnFailure": {
+            "SetFlags": [
+              "CURE_ATTEMPTED",
+              "CURE_FAILED"
+            ],
+            "TeacherInfection": 5,
+            "Vitals": [
+              {
+                "Vital": "Stress",
+                "Amount": 10
+              }
+            ],
+            "AddClues": [
+              "CURE_FAILED_RECORD"
+            ]
+          }
+        },
+        {
+          "Id": "WAIT",
+          "Effect": {
+            "Vitals": [
+              {
+                "Vital": "Stress",
+                "Amount": 2
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "Id": "EVT_A4_TEACHER_BEDRIDDEN",
+      "Kind": "Night",
+      "Priority": 65,
+      "Condition": {
+        "Phase": "Night",
+        "FlagsNone": [
+          "TEACHER_BEDRIDDEN",
+          "TEACHER_CURED"
+        ],
+        "Checks": [
+          {
+            "Kind": "TeacherStage",
+            "Op": "GreaterOrEqual",
+            "Value": 3
+          }
+        ]
+      },
+      "OnShow": {
+        "SetFlags": [
+          "TEACHER_BEDRIDDEN"
+        ]
+      },
+      "Choices": [
+        {
+          "Id": "TAKE_BOOK",
+          "Effect": {
+            "Stats": [
+              {
+                "Stat": "Leadership",
+                "Amount": 2
+              }
+            ],
+            "EndingTags": [
+              {
+                "Tag": "TAG_TEACHING",
+                "Amount": 2
+              }
+            ]
+          }
+        },
+        {
+          "Id": "REFUSE_BOOK",
+          "Effect": {
+            "Hidden": [
+              {
+                "Hidden": "TraumaRecovery",
+                "Amount": -2
+              }
+            ],
+            "Npcs": [
+              {
+                "NpcId": "NPC_TEACHER",
+                "Affinity": 2
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "Id": "EVT_A4_NOTICE",
+      "Kind": "Story",
+      "Priority": 40,
+      "Condition": {
+        "WeekMin": 41,
+        "FlagsAll": [
+          "NOTICE_TAKEN"
+        ],
+        "FlagsNone": [
+          "NOTICE_LINKED"
+        ],
+        "Checks": [
+          {
+            "Kind": "Facility",
+            "Key": "STAFFROOM",
+            "Op": "GreaterOrEqual",
+            "Value": 1
+          }
+        ]
+      },
+      "OnShow": {
+        "SetFlags": [
+          "NOTICE_LINKED"
+        ],
+        "AddClues": [
+          "TRUTH_SCHOOL_NOTICE"
+        ]
+      }
+    },
+    {
+      "Id": "EVT_A4_TRUTH_LINK",
+      "Kind": "Night",
+      "Priority": 45,
+      "Condition": {
+        "WeekMin": 42,
+        "Phase": "Night",
+        "FlagsNone": [
+          "TRUTH_LINKED"
+        ],
+        "Checks": [
+          {
+            "Kind": "ClueCount",
+            "Key": "TRUTH_",
+            "Op": "GreaterOrEqual",
+            "Value": 6
+          }
+        ]
+      },
+      "OnShow": {
+        "SetFlags": [
+          "TRUTH_LINKED"
+        ],
+        "AddClues": [
+          "TRUTH_CONNECTED"
+        ],
+        "Stats": [
+          {
+            "Stat": "Intellect",
+            "Amount": 2
+          }
+        ]
+      }
+    },
+    {
+      "Id": "EVT_A4_FUEL",
+      "Kind": "Story",
+      "Priority": 70,
+      "Condition": {
+        "WeekMin": 44,
+        "WeekMax": 46,
+        "FlagsNone": [
+          "A4_FUEL"
+        ]
+      },
+      "OnShow": {
+        "SetFlags": [
+          "A4_FUEL"
+        ]
+      },
+      "Choices": [
+        {
+          "Id": "DESKS",
+          "Effect": {
+            "Resources": [
+              {
+                "Resource": "Fuel",
+                "Amount": 6
+              }
+            ],
+            "Hidden": [
+              {
+                "Hidden": "Hope",
+                "Amount": -2
+              }
+            ]
+          }
+        },
+        {
+          "Id": "SHARE_HEAT",
+          "Effect": {
+            "Vitals": [
+              {
+                "Vital": "Stress",
+                "Amount": 4
+              }
+            ],
+            "Hidden": [
+              {
+                "Hidden": "Humanity",
+                "Amount": 3
+              }
+            ]
+          }
+        },
+        {
+          "Id": "BOOKS",
+          "Condition": {
+            "Checks": [
+              {
+                "Kind": "Facility",
+                "Key": "LIBRARY",
+                "Op": "GreaterOrEqual",
+                "Value": 1
+              }
+            ]
+          },
+          "Effect": {
+            "Resources": [
+              {
+                "Resource": "Fuel",
+                "Amount": 8
+              }
+            ],
+            "Hidden": [
+              {
+                "Hidden": "Hope",
+                "Amount": -4
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "Id": "EVT_A4_FINALE_RAID",
+      "Kind": "Story",
+      "Priority": 100,
+      "Condition": {
+        "WeekMin": 49,
+        "WeekMax": 49,
+        "Days": [
+          6
+        ],
+        "Phase": "Night"
+      },
+      "OnShow": {
+        "RaidStrength": 95,
+        "SetFlags": [
+          "A4_RAID"
+        ]
+      }
+    },
+    {
+      "Id": "EVT_A4_RESCUE_ROUTE",
+      "Kind": "Night",
+      "Priority": 90,
+      "Condition": {
+        "WeekMin": 50,
+        "Phase": "Night",
+        "FlagsAll": [
+          "RESCUE_ANNOUNCED"
+        ],
+        "FlagsNone": [
+          "RESCUE_ROUTE"
+        ]
+      },
+      "OnShow": {
+        "SetFlags": [
+          "RESCUE_ROUTE"
+        ],
+        "Hidden": [
+          {
+            "Hidden": "Hope",
+            "Amount": 6
+          }
+        ]
+      }
+    },
+    {
+      "Id": "EVT_A4_FINAL_CHOICE",
+      "Kind": "Night",
+      "Priority": 100,
+      "Condition": {
+        "WeekMin": 51,
+        "Phase": "Night",
+        "FlagsAll": [
+          "TEACHER_REINFECTED"
+        ],
+        "FlagsNone": [
+          "FINAL_CHOICE",
+          "TEACHER_CURED"
+        ]
+      },
+      "OnShow": {
+        "SetFlags": [
+          "FINAL_CHOICE"
+        ]
+      },
+      "Choices": [
+        {
+          "Id": "LAST_LESSON",
+          "Effect": {
+            "SetFlags": [
+              "TEACHER_LAST_LESSON"
+            ],
+            "Hidden": [
+              {
+                "Hidden": "TraumaRecovery",
+                "Amount": 6
+              },
+              {
+                "Hidden": "Hope",
+                "Amount": 4
+              }
+            ],
+            "EndingTags": [
+              {
+                "Tag": "TAG_TEACHING",
+                "Amount": 2
+              }
+            ]
+          }
+        },
+        {
+          "Id": "ISOLATE",
+          "Effect": {
+            "SetFlags": [
+              "TEACHER_ISOLATED"
+            ],
+            "Hidden": [
+              {
+                "Hidden": "SelfAwareness",
+                "Amount": 4
+              }
+            ]
+          }
+        },
+        {
+          "Id": "HIDE",
+          "Effect": {
+            "SetFlags": [
+              "TEACHER_EXPOSED"
+            ],
+            "Hidden": [
+              {
+                "Hidden": "Humanity",
+                "Amount": 2
+              }
+            ]
+          }
+        },
+        {
+          "Id": "STAY",
+          "Effect": {
+            "SetFlags": [
+              "CHOSE_TO_STAY"
+            ],
+            "Hidden": [
+              {
+                "Hidden": "Humanity",
+                "Amount": 6
+              }
+            ]
+          }
+        },
+        {
+          "Id": "QUIET_FAREWELL",
+          "Condition": {
+            "FlagsAll": [
+              "DISTANCE_ROUTE"
+            ]
+          },
+          "Effect": {
+            "SetFlags": [
+              "TEACHER_LEFT_BEHIND"
+            ],
+            "Hidden": [
+              {
+                "Hidden": "Isolation",
+                "Amount": 4
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "Id": "EVT_A4_CURED",
+      "Kind": "Night",
+      "Priority": 100,
+      "Condition": {
+        "WeekMin": 51,
+        "Phase": "Night",
+        "FlagsAll": [
+          "TEACHER_CURED"
+        ],
+        "FlagsNone": [
+          "FINAL_CHOICE"
+        ]
+      },
+      "OnShow": {
+        "SetFlags": [
+          "FINAL_CHOICE"
+        ],
+        "Hidden": [
+          {
+            "Hidden": "Hope",
+            "Amount": 8
+          }
+        ],
+        "Npcs": [
+          {
+            "NpcId": "NPC_TEACHER",
+            "Affinity": 5
+          }
+        ]
+      }
+    },
+    {
+      "Id": "EVT_A4_NIGHT_BEFORE",
+      "Kind": "Night",
+      "Priority": 100,
+      "Condition": {
+        "WeekMin": 52,
+        "Days": [
+          6
+        ],
+        "Phase": "Night"
+      },
+      "OnShow": {
+        "SetFlags": [
+          "NIGHT_BEFORE"
+        ]
+      },
+      "Choices": [
+        {
+          "Id": "ROOFTOP_ALL",
+          "Effect": {
+            "Hidden": [
+              {
+                "Hidden": "Hope",
+                "Amount": 4
+              }
+            ],
+            "Vitals": [
+              {
+                "Vital": "Stress",
+                "Amount": -10
+              }
+            ]
+          }
+        },
+        {
+          "Id": "WRITE_LAST",
+          "Effect": {
+            "Hidden": [
+              {
+                "Hidden": "SelfAwareness",
+                "Amount": 4
+              }
+            ],
+            "EndingTags": [
+              {
+                "Tag": "TAG_WRITING",
+                "Amount": 2
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "Id": "EVT_CAL_CHRISTMAS",
+      "Kind": "Calendar",
+      "Priority": 55,
+      "Condition": {
+        "Month": 12,
+        "DayOfMonth": 25
+      },
+      "Choices": [
+        {
+          "Id": "GIFTS",
+          "Effect": {
+            "Resources": [
+              {
+                "Resource": "Materials",
+                "Amount": -2
+              }
+            ],
+            "Hidden": [
+              {
+                "Hidden": "Hope",
+                "Amount": 5
+              }
+            ],
+            "Vitals": [
+              {
+                "Vital": "Stress",
+                "Amount": -8
+              }
+            ]
+          }
+        },
+        {
+          "Id": "CAROL",
+          "Effect": {
+            "Hidden": [
+              {
+                "Hidden": "Hope",
+                "Amount": 3
+              }
+            ],
+            "Npcs": [
+              {
+                "NpcId": "NPC_TEACHER",
+                "Affinity": 2
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "Id": "EVT_CAL_NEW_YEAR",
+      "Kind": "Calendar",
+      "Priority": 55,
+      "Condition": {
+        "Month": 1,
+        "DayOfMonth": 1
+      },
+      "Choices": [
+        {
+          "Id": "SUNRISE",
+          "Effect": {
+            "Hidden": [
+              {
+                "Hidden": "Hope",
+                "Amount": 4
+              }
+            ],
+            "Vitals": [
+              {
+                "Vital": "Fatigue",
+                "Amount": 5
+              }
+            ]
+          }
+        },
+        {
+          "Id": "RESOLUTION",
+          "Effect": {
+            "Hidden": [
+              {
+                "Hidden": "SelfAwareness",
+                "Amount": 3
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "Id": "EVT_CAL_GRADUATION",
+      "Kind": "Calendar",
+      "Priority": 70,
+      "Condition": {
+        "Month": 2,
+        "DayOfMonth": 12
+      },
+      "Choices": [
+        {
+          "Id": "CEREMONY",
+          "Effect": {
+            "Hidden": [
+              {
+                "Hidden": "Hope",
+                "Amount": 6
+              },
+              {
+                "Hidden": "TraumaRecovery",
+                "Amount": 4
+              }
+            ],
+            "Vitals": [
+              {
+                "Vital": "Stress",
+                "Amount": -10
+              }
+            ],
+            "EndingTags": [
+              {
+                "Tag": "TAG_TEACHING",
+                "Amount": 1
+              }
+            ],
+            "SetFlags": [
+              "GRADUATED"
+            ]
+          }
+        },
+        {
+          "Id": "SEATS",
+          "Effect": {
+            "Hidden": [
+              {
+                "Hidden": "SelfAwareness",
+                "Amount": 4
+              }
+            ],
+            "SetFlags": [
+              "GRADUATED"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "Id": "EVT_TALK_12",
+      "Kind": "Night",
+      "Priority": 23,
+      "Condition": {
+        "ActionIds": [
+          "ACT_NIGHT_TALK",
+          "ACT_CARE_TEACHER"
+        ],
+        "FlagsAll": [
+          "A4_STARTED"
+        ],
+        "FlagsNone": [
+          "TALK_12"
+        ]
+      },
+      "OnShow": {
+        "SetFlags": [
+          "TALK_12"
+        ]
+      },
+      "Choices": [
+        {
+          "Id": "PROMISE_WRITE",
+          "Effect": {
+            "EndingTags": [
+              {
+                "Tag": "TAG_WRITING",
+                "Amount": 2
+              }
+            ],
+            "Hidden": [
+              {
+                "Hidden": "SelfAwareness",
+                "Amount": 2
+              }
+            ]
+          }
+        },
+        {
+          "Id": "CRY",
+          "Effect": {
+            "Vitals": [
+              {
+                "Vital": "Stress",
+                "Amount": -6
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "Id": "EVT_TALK_13",
+      "Kind": "Night",
+      "Priority": 23,
+      "Condition": {
+        "WeekMin": 46,
+        "ActionIds": [
+          "ACT_NIGHT_TALK",
+          "ACT_CARE_TEACHER",
+          "ACT_NIGHT_DIARY"
+        ],
+        "FlagsAll": [
+          "TALK_12"
+        ],
+        "FlagsNone": [
+          "TALK_13"
+        ]
+      },
+      "OnShow": {
+        "SetFlags": [
+          "TALK_13"
+        ]
+      },
+      "Choices": [
+        {
+          "Id": "READ_DIARY",
+          "Effect": {
+            "Hidden": [
+              {
+                "Hidden": "TraumaRecovery",
+                "Amount": 4
+              },
+              {
+                "Hidden": "Hope",
+                "Amount": 3
+              }
+            ],
+            "Npcs": [
+              {
+                "NpcId": "NPC_TEACHER",
+                "Affinity": 3
+              }
+            ]
+          }
+        },
+        {
+          "Id": "KEEP_PRIVATE",
+          "Effect": {
+            "Hidden": [
+              {
+                "Hidden": "SelfAwareness",
+                "Amount": 3
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "Id": "EVT_RND_A4_SNOW",
+      "Kind": "Random",
+      "Priority": 0,
+      "Once": false,
+      "CooldownWeeks": 4,
+      "Weight": 1.2,
+      "Condition": {
+        "Phase": "Day",
+        "Seasons": [
+          "Winter"
+        ]
+      },
+      "Choices": [
+        {
+          "Id": "SNOWMAN",
+          "Effect": {
+            "Vitals": [
+              {
+                "Vital": "Stress",
+                "Amount": -6
+              },
+              {
+                "Vital": "Fatigue",
+                "Amount": 3
+              }
+            ],
+            "Hidden": [
+              {
+                "Hidden": "Hope",
+                "Amount": 2
+              }
+            ]
+          }
+        },
+        {
+          "Id": "WATER",
+          "Effect": {
+            "Resources": [
+              {
+                "Resource": "Water",
+                "Amount": 4
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "Id": "EVT_RND_A4_PIPE",
+      "Kind": "Crisis",
+      "Priority": 0,
+      "Once": false,
+      "CooldownWeeks": 5,
+      "Weight": 1,
+      "Condition": {
+        "WeekMin": 41,
+        "Seasons": [
+          "Winter"
+        ]
+      },
+      "Choices": [
+        {
+          "Id": "FIX",
+          "Effect": {
+            "Resources": [
+              {
+                "Resource": "Materials",
+                "Amount": -1
+              }
+            ],
+            "Stats": [
+              {
+                "Stat": "Craft",
+                "Amount": 1
+              }
+            ]
+          }
+        },
+        {
+          "Id": "BOIL",
+          "Effect": {
+            "Resources": [
+              {
+                "Resource": "Fuel",
+                "Amount": -2
+              },
+              {
+                "Resource": "Water",
+                "Amount": 2
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "Id": "EVT_RND_A4_GREETING",
+      "Kind": "Random",
+      "Priority": 0,
+      "Once": false,
+      "CooldownWeeks": 5,
+      "Weight": 1,
+      "Condition": {
+        "Phase": "Night",
+        "FlagsAll": [
+          "DJ_CONTACT",
+          "RESCUE_ANNOUNCED"
+        ]
+      },
+      "Choices": [
+        {
+          "Id": "SEND",
+          "Effect": {
+            "Hidden": [
+              {
+                "Hidden": "Hope",
+                "Amount": 3
+              }
+            ]
+          }
+        },
+        {
+          "Id": "LISTEN",
+          "Effect": {
+            "Vitals": [
+              {
+                "Vital": "Stress",
+                "Amount": -4
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "Lines": [
+    {
+      "Id": "DIARY_A4_WINTER",
+      "Kind": "Diary",
+      "Priority": 12,
+      "TextKey": "diary.a4_winter",
+      "Condition": {
+        "WeekMin": 40
+      }
+    },
+    {
+      "Id": "DIARY_A4_TWO_CLOCKS",
+      "Kind": "Diary",
+      "Priority": 64,
+      "TextKey": "diary.a4_two_clocks",
+      "Condition": {
+        "WeekMin": 40,
+        "FlagsAll": [
+          "TEACHER_REINFECTED"
+        ],
+        "FlagsNone": [
+          "TEACHER_CURED"
+        ]
+      }
+    },
+    {
+      "Id": "DIARY_A4_RESEARCH",
+      "Kind": "Diary",
+      "Priority": 66,
+      "TextKey": "diary.a4_research",
+      "Condition": {
+        "WeekMin": 40,
+        "FlagsAll": [
+          "RESEARCH_DATA"
+        ],
+        "FlagsNone": [
+          "TEACHER_CURED"
+        ]
+      }
+    },
+    {
+      "Id": "DIARY_A4_CURED",
+      "Kind": "Diary",
+      "Priority": 80,
+      "TextKey": "diary.a4_cured",
+      "Condition": {
+        "WeekMin": 40,
+        "FlagsAll": [
+          "TEACHER_CURED"
+        ]
+      }
+    },
+    {
+      "Id": "DIARY_A4_FAILED",
+      "Kind": "Diary",
+      "Priority": 70,
+      "TextKey": "diary.a4_failed",
+      "Condition": {
+        "WeekMin": 40,
+        "FlagsAll": [
+          "CURE_FAILED"
+        ]
+      }
+    },
+    {
+      "Id": "TC_A4_PLAN",
+      "Kind": "TeacherComment",
+      "Priority": 69,
+      "TextKey": "tc.a4_plan",
+      "Condition": {
+        "WeekMin": 40,
+        "Checks": [
+          {
+            "Kind": "TeacherStage",
+            "Op": "GreaterOrEqual",
+            "Value": 2
+          }
+        ],
+        "FlagsNone": [
+          "TEACHER_CURED"
+        ]
+      }
+    },
+    {
+      "Id": "TC_A4_CURED",
+      "Kind": "TeacherComment",
+      "Priority": 80,
+      "TextKey": "tc.a4_cured",
+      "Condition": {
+        "WeekMin": 40,
+        "FlagsAll": [
+          "TEACHER_CURED"
+        ]
+      }
+    },
+    {
+      "Id": "M_RESEARCH",
+      "Kind": "EndingMoment",
+      "Priority": 0,
+      "TextKey": "line.m_research",
+      "Condition": {
+        "FlagsAll": [
+          "RESEARCH_DATA"
+        ]
+      }
+    },
+    {
+      "Id": "M_CURE_TRY",
+      "Kind": "EndingMoment",
+      "Priority": 0,
+      "TextKey": "line.m_cure_try",
+      "Condition": {
+        "FlagsAll": [
+          "CURE_ATTEMPTED"
+        ]
+      }
+    },
+    {
+      "Id": "M_GRADUATION",
+      "Kind": "EndingMoment",
+      "Priority": 0,
+      "TextKey": "line.m_graduation",
+      "Condition": {
+        "FlagsAll": [
+          "GRADUATED"
+        ]
+      }
+    },
+    {
+      "Id": "M_NIGHT_BEFORE",
+      "Kind": "EndingMoment",
+      "Priority": 0,
+      "TextKey": "line.m_night_before",
+      "Condition": {
+        "FlagsAll": [
+          "NIGHT_BEFORE"
+        ]
+      }
+    }
+  ]
+}

@@ -96,6 +96,9 @@ namespace ApoGirl.Core.Definitions
         /// <summary>새 게임을 시작하면 허브에서 바로 띄우는 이벤트.</summary>
         public string OpeningEventId = "EVT_A1_OPENING";
 
+        /// <summary>2회차부터 1막 시작 전에 보는 이벤트 ("창고 안의 7일"). 플래그 NG_PLUS가 있을 때만.</summary>
+        public string NgPlusOpeningEventId = "EVT_NG_STORAGE_7DAYS";
+
         /// <summary>밤 습격 (문서 5.5): 이 주차부터, 확률 = 기본 + (위협 − 방어) × 계수, 상한.</summary>
         public int RaidStartWeek = 4;
         public float RaidBaseChance = 0.02f;

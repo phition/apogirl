@@ -9,7 +9,7 @@ namespace ApoGirl.EditorTools
     /// <summary>
     /// 탐험 지역 레이아웃 생성기 (메뉴 ApoGirl/Content/Build Locations). 건물 단면은 코드로 짓고 결과를 LocationAsset으로 저장한다.
     /// 수치·배치를 바꾸려면 이 파일을 고친 뒤 메뉴를 다시 실행한다 (에셋은 생성물).
-    /// 지역 목록: 튜토리얼(체육관 창고 → 본관 창고), 학교 교실동, 편의점, 약국·의원, 주택가(M6), 지하철역(M6), 마트·물류창고(M6), 파출소(M6).
+    /// 지역 목록: 튜토리얼(체육관 창고 → 본관 창고), 학교 교실동, 편의점, 약국·의원, 주택가(M6), 지하철역(M6), 마트·물류창고(M6), 파출소(M6), 정수장 연구동(M6).
     /// </summary>
     public static class LocationBuilder
     {
@@ -28,6 +28,7 @@ namespace ApoGirl.EditorTools
                 Save("LOC_SUBWAY", Subway()),
                 Save("LOC_MART", Mart()),
                 Save("LOC_POLICE", Police()),
+                Save("LOC_WATERWORKS", Waterworks()),
             };
 
             var database = AssetDatabase.LoadAssetAtPath<DefinitionDatabaseAsset>(ContentPipeline.DatabasePath);
@@ -660,6 +661,101 @@ namespace ApoGirl.EditorTools
                     Spawns = { Walk("ENEMY_WANDERER", 0, "", 28f, 3, 8f), Walk("ENEMY_WATCHER", 1, "", 36f, 1, 0f), Walk("ENEMY_WANDERER", 1, "", 20f, 2, 5f) },
                     ForceableRooms = { "ROOM_POLICE_ARMORY_1" },
                     Encounters = { report },
+                },
+            };
+        }
+
+        // ── 강변 정수장 연구동 (문서 7.2): 낮엔 거대한 휴면 군집, 밤에만 지하 기록실까지 ──
+
+        private static LocationDef Waterworks()
+        {
+            var layout = new BuildingLayoutDef { Floors = 3, FloorHeight = 4f, CorridorLength = 100f };
+            layout.RoomTemplates.Add(new RoomTemplateDef
+            {
+                Id = "ROOM_WATER_ARCHIVE", Width = 16f, DefaultLootTableId = "LOOT_WATER_LAB",
+                DoorXs = new List<float> { 1.2f },
+                Containers = { C("ARCHIVE_A", ContainerKind.Cabinet, 0, 4f), C("ARCHIVE_B", ContainerKind.Cabinet, 0, 7f), C("ARCHIVE_DESK", ContainerKind.Desk, 0, 10.5f), C("SAMPLE_FRIDGE", ContainerKind.Fridge, 0, 13.6f, "LOOT_PHARMACY_STOCK") },
+            });
+            layout.RoomTemplates.Add(new RoomTemplateDef
+            {
+                Id = "ROOM_WATER_LAB", Width = 16f, DefaultLootTableId = "LOOT_WATER_LAB",
+                DoorXs = new List<float> { 1.2f, 14.8f },
+                Windows = new List<WindowDef> { new WindowDef(3f, 3.4f), new WindowDef(9f, 3.4f) },
+                Containers = { C("BENCH_A", ContainerKind.Desk, 0, 4f), C("BENCH_B", ContainerKind.Desk, 0, 7f), C("REAGENT", ContainerKind.Cabinet, 0, 10.4f), C("LOCKER", ContainerKind.Locker, 0, 13.2f) },
+            });
+            layout.RoomTemplates.Add(new RoomTemplateDef
+            {
+                Id = "ROOM_WATER_CONTROL", Width = 14f, DefaultLootTableId = "LOOT_SUBWAY_OFFICE",
+                DoorXs = new List<float> { 1.2f },
+                Windows = new List<WindowDef> { new WindowDef(3f, 3.4f) },
+                Containers = { C("CONSOLE", ContainerKind.Desk, 0, 5f), C("PARTS", ContainerKind.Box, 0, 8.4f), C("SUPPLY", ContainerKind.Cabinet, 0, 11.4f) },
+            });
+
+            Stairs(layout, 6f);
+            Stairs(layout, 96f);
+            Room(layout, "ROOM_WATER_ARCHIVE_1", "ROOM_WATER_ARCHIVE", 0, 40f, 1);
+            Room(layout, "ROOM_WATER_CONTROL_1", "ROOM_WATER_CONTROL", 1, 20f, 1);
+            Room(layout, "ROOM_WATER_LAB_1", "ROOM_WATER_LAB", 2, 20f, 1);
+            Room(layout, "ROOM_WATER_LAB_2", "ROOM_WATER_LAB", 2, 56f, 2);
+            for (var i = 0; i < 4; i++)
+            {
+                layout.Containers.Add(C($"C_WATER_TANK_{i + 1}", ContainerKind.Box, 1, 46f + i * 9f, "LOOT_SUBWAY_OFFICE"));
+            }
+
+            layout.Exits.Add(new ExitDef { Kind = ExitKind.Main, Floor = 1, X = 3f });
+            layout.Exits.Add(new ExitDef { Kind = ExitKind.Alternate, Floor = 2, X = 98f, StartsLocked = true });
+
+            var data = new EncounterDef
+            {
+                Id = "RESEARCH_DATA", Floor = 0, RoomId = "ROOM_WATER_ARCHIVE_1", X = 12f,
+                FlagsNone = { "RESEARCH_DATA" },
+                PromptKey = "enc.RESEARCH_DATA.prompt",
+                Choices =
+                {
+                    new EncounterChoiceDef { Id = "TAKE", TextKey = "enc.RESEARCH_DATA.take", SetFlags = { "RESEARCH_DATA" }, AddClues = { "CURE_RESEARCH_DATA", "TRUTH_RESEARCH_ORIGIN" }, StressDelta = 6 },
+                    new EncounterChoiceDef { Id = "LEAVE", TextKey = "enc.RESEARCH_DATA.leave", Removes = false },
+                },
+            };
+            var memo = new EncounterDef
+            {
+                Id = "RESEARCH_MEMO", Floor = 2, RoomId = "ROOM_WATER_LAB_2", X = 8f,
+                FlagsNone = { "RESEARCH_MEMO" },
+                PromptKey = "enc.RESEARCH_MEMO.prompt",
+                Choices =
+                {
+                    new EncounterChoiceDef { Id = "TAKE", TextKey = "enc.RESEARCH_MEMO.take", SetFlags = { "RESEARCH_MEMO" }, AddClues = { "CURE_RESEARCH_LOG", "TRUTH_RESEARCH_MEMO" } },
+                    new EncounterChoiceDef { Id = "LEAVE", TextKey = "enc.RESEARCH_MEMO.leave", Removes = false },
+                },
+            };
+
+            return new LocationDef
+            {
+                Layout = layout, DayRunSeconds = 480f, NightRunSeconds = 450f, DefaultLootTableId = "LOOT_WATER_LAB",
+                DayVariant = new LocationVariantDef
+                {
+                    Spawns =
+                    {
+                        Crowd("ENEMY_WANDERER", 1, "", 50f, 12, 7f),
+                        Crowd("ENEMY_WANDERER", 0, "", 30f, 8, 5f),
+                        Crowd("ENEMY_LISTENER", 0, "", 50f, 3, 2f),
+                        Crowd("ENEMY_WANDERER", 2, "", 40f, 5, 4f),
+                        Walk("ENEMY_WATCHER", 2, "", 78f, 1, 0f),
+                    },
+                    LockedRooms = { "ROOM_WATER_ARCHIVE_1" },
+                    Encounters = { memo },
+                },
+                NightVariant = new LocationVariantDef
+                {
+                    Spawns =
+                    {
+                        Walk("ENEMY_WANDERER", 1, "", 50f, 4, 14f),
+                        Walk("ENEMY_WATCHER", 1, "", 80f, 1, 0f),
+                        Walk("ENEMY_WANDERER", 0, "", 24f, 2, 6f),
+                        Walk("ENEMY_LISTENER", 0, "", 62f, 2, 6f),
+                        Walk("ENEMY_WANDERER", 2, "", 40f, 3, 10f),
+                    },
+                    ForceableRooms = { "ROOM_WATER_ARCHIVE_1" },
+                    Encounters = { data, memo },
                 },
             };
         }

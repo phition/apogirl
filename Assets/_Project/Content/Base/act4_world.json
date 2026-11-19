@@ -1,0 +1,178 @@
+{
+  "Actions": [
+    {
+      "Id": "ACT_EXP_DAY_WATERWORKS",
+      "Category": "Expedition",
+      "SlotTag": "DayOnly",
+      "ExpeditionTime": "Day",
+      "LocationId": "LOC_WATERWORKS",
+      "Unlock": {
+        "FlagsAll": [
+          "LOC_WATERWORKS"
+        ]
+      }
+    },
+    {
+      "Id": "ACT_EXP_NIGHT_WATERWORKS",
+      "Category": "Expedition",
+      "SlotTag": "NightOnly",
+      "ExpeditionTime": "Night",
+      "LocationId": "LOC_WATERWORKS",
+      "Unlock": {
+        "FlagsAll": [
+          "LOC_WATERWORKS",
+          "NIGHT_RUNS"
+        ]
+      }
+    }
+  ],
+  "ExpeditionModels": [
+    {
+      "Id": "LOC_WATERWORKS",
+      "Day": {
+        "Resources": [
+          {
+            "Resource": "Water",
+            "Min": 8,
+            "Max": 14
+          },
+          {
+            "Resource": "Materials",
+            "Min": 1,
+            "Max": 3
+          }
+        ],
+        "BaseDownChance": 0.14,
+        "Fatigue": 20,
+        "StressMin": 12,
+        "StressMax": 18,
+        "ConscienceMax": 1
+      },
+      "Night": {
+        "Resources": [
+          {
+            "Resource": "Medicine",
+            "Min": 2,
+            "Max": 4
+          },
+          {
+            "Resource": "Water",
+            "Min": 6,
+            "Max": 10
+          },
+          {
+            "Resource": "Materials",
+            "Min": 2,
+            "Max": 4
+          }
+        ],
+        "BaseDownChance": 0.2,
+        "Fatigue": 24,
+        "StressMin": 18,
+        "StressMax": 22,
+        "DawnReturnChance": 0.3
+      }
+    }
+  ],
+  "LootTables": [
+    {
+      "Id": "LOOT_WATER_LAB",
+      "MinRolls": 1,
+      "MaxRolls": 2,
+      "EmptyChance": 0.2,
+      "Entries": [
+        {
+          "ItemId": "ITEM_ANTIBIOTIC",
+          "Weight": 3
+        },
+        {
+          "ItemId": "ITEM_MEDKIT",
+          "Weight": 2
+        },
+        {
+          "ItemId": "ITEM_BATTERY",
+          "Weight": 2
+        },
+        {
+          "ItemId": "ITEM_VITAMIN",
+          "Weight": 2
+        },
+        {
+          "ItemId": "ITEM_SCRAP",
+          "Weight": 2
+        }
+      ]
+    }
+  ],
+  "StartBonuses": [
+    {
+      "Id": "STRONG",
+      "Effect": {
+        "Stats": [
+          {
+            "Stat": "Stamina",
+            "Amount": 5
+          },
+          {
+            "Stat": "Strength",
+            "Amount": 5
+          },
+          {
+            "Stat": "Agility",
+            "Amount": 5
+          }
+        ]
+      }
+    },
+    {
+      "Id": "SCHOLAR",
+      "Effect": {
+        "Stats": [
+          {
+            "Stat": "Intellect",
+            "Amount": 5
+          },
+          {
+            "Stat": "Empathy",
+            "Amount": 3
+          }
+        ],
+        "Proficiencies": [
+          {
+            "Proficiency": "Humanities",
+            "Level": 1
+          },
+          {
+            "Proficiency": "Medicine",
+            "Level": 1
+          }
+        ]
+      }
+    },
+    {
+      "Id": "SUPPLIES",
+      "Effect": {
+        "Resources": [
+          {
+            "Resource": "Food",
+            "Amount": 12
+          },
+          {
+            "Resource": "Water",
+            "Amount": 12
+          },
+          {
+            "Resource": "Medicine",
+            "Amount": 4
+          }
+        ],
+        "Items": [
+          {
+            "ItemId": "ITEM_BAG_HIKING",
+            "Count": 1
+          }
+        ]
+      }
+    }
+  ]
+}

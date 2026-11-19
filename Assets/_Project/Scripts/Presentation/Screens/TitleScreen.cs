@@ -36,12 +36,12 @@ namespace ApoGirl.Presentation.Screens
         {
             _buttons.Clear();
             _message.text = "";
-            Add(Loc.T("title.new_game"), () => StartCoroutine(RunPrologue()));
-            Add(Loc.T("title.quick_start"), () =>
+            Add(Loc.T("title.new_game"), () => ChooseBonus(() => StartCoroutine(RunPrologue())));
+            Add(Loc.T("title.quick_start"), () => ChooseBonus(() =>
             {
                 _session.NewGame(Environment.TickCount, null, _session.Definitions.Extras.Prologue.Common);
                 GameApp.GoTo(GameApp.HubScene);
-            });
+            }));
 
             var canContinue = _session.HasSave(SaveService.AutoSlot);
             Add(Loc.T("title.continue"), () => LoadAndEnter(SaveService.AutoSlot)).SetEnabled(canContinue);
@@ -99,6 +99,34 @@ namespace ApoGirl.Presentation.Screens
             }
 
             _message.text = any ? "" : Loc.T("title.no_saves");
+            Add(Loc.T("common.close"), ShowMain);
+        }
+
+        /// <summary>회차 요소: 엔딩을 하나라도 봤으면 시작 보너스를 하나 고른 뒤 시작한다.</summary>
+        private void ChooseBonus(Action start)
+        {
+            var bonuses = _session.Definitions.Extras.StartBonuses;
+            _session.PendingStartBonus = null;
+            if (!_session.IsNewGamePlus || bonuses.Count == 0)
+            {
+                start();
+                return;
+            }
+
+            _buttons.Clear();
+            _message.text = Loc.T("title.bonus_pick");
+            foreach (var bonus in bonuses)
+            {
+                var picked = bonus;
+                var button = Add(Loc.T("bonus." + bonus.Id + ".name"), () =>
+                {
+                    _session.PendingStartBonus = picked;
+                    start();
+                });
+                button.tooltip = Loc.T("bonus." + bonus.Id + ".desc");
+            }
+
+            Add(Loc.T("title.bonus_none"), start);
             Add(Loc.T("common.close"), ShowMain);
         }
 

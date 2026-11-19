@@ -121,10 +121,13 @@ namespace ApoGirl.Presentation.Screens
         private IEnumerator OpeningRoutine()
         {
             yield return null;
-            _session.StartOpening();
-            while (_session.HasPendingEvent)
+            while (_session.HasPendingOpening && _session.IsPlanning)
             {
-                yield return PlayPendingEvent();
+                _session.StartOpening();
+                while (_session.HasPendingEvent)
+                {
+                    yield return PlayPendingEvent();
+                }
             }
 
             Refresh();

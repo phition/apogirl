@@ -24,6 +24,9 @@ namespace ApoGirl.Core.Rules
         public const string FlagBitten = "BITTEN";
         public const string FlagTeacherReinfected = "TEACHER_REINFECTED";
 
+        /// <summary>완치 (4막 히든 루트). 진행이 멈추고 병세 단계는 0이 된다.</summary>
+        public const string FlagTeacherCured = "TEACHER_CURED";
+
         /// <summary>증상 단계 경계 (감염도). 0 = 증상 없음, 1 미열, 2 기침, 3 손떨림.</summary>
         public static readonly int[] SymptomThresholds = { 25, 50, 75 };
 
@@ -91,7 +94,7 @@ namespace ApoGirl.Core.Rules
         {
             var balance = db.Balance;
             var teacher = state.Teacher;
-            if (!teacher.Reinfected || !teacher.Alive)
+            if (!teacher.Reinfected || !teacher.Alive || state.Flags.Contains(FlagTeacherCured))
             {
                 return;
             }
@@ -118,7 +121,7 @@ namespace ApoGirl.Core.Rules
         /// <summary>병세 단계 0~4 (재감염 전에는 0). balance가 없으면 기본 단계 크기 25.</summary>
         public static int TeacherStage(GameState state, BalanceConfig balance)
         {
-            if (!state.Teacher.Reinfected)
+            if (!state.Teacher.Reinfected || state.Flags.Contains(FlagTeacherCured))
             {
                 return 0;
             }

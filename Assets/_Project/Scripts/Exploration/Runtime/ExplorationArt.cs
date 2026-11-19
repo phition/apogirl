@@ -92,6 +92,7 @@ namespace ApoGirl.Exploration.Runtime
             if (templateId.Contains("RESTROOM") || templateId.Contains("SUBWAY")) return "wall_restroom";
             if (templateId.Contains("HOUSE") || templateId.Contains("POLICE")) return "wall_office";
             if (templateId.Contains("MART")) return "wall_store";
+            if (templateId.Contains("WATER")) return "wall_pharmacy";
             if (templateId.Contains("OFFICE") && !templateId.Contains("STORE")) return "wall_office";
             if (templateId.Contains("CLASSROOM")) return "wall_classroom";
             if (templateId.Contains("STORE")) return "wall_store";
@@ -109,6 +110,7 @@ namespace ApoGirl.Exploration.Runtime
             if (locationId.Contains("SUBWAY")) return "wall_restroom";
             if (locationId.Contains("MART")) return "wall_store";
             if (locationId.Contains("POLICE")) return "wall_corridor";
+            if (locationId.Contains("WATERWORKS")) return "wall_restroom";
             return "wall_corridor";
         }
 

@@ -114,12 +114,31 @@ namespace ApoGirl.Systems.Session
 
         // ── 게임 시작·저장 ──
 
+        /// <summary>다음 NewGame에 적용할 회차 시작 보너스 (타이틀에서 고른다). 적용 후 비운다.</summary>
+        public StartBonusDef PendingStartBonus { get; set; }
+
+        /// <summary>엔딩을 하나라도 본 적 있는가 (회차 요소 해금).</summary>
+        public bool IsNewGamePlus => Gallery != null && Gallery.Entries.Count > 0;
+
         public void NewGame(int seed, ProfileState profile = null, GameEffect prologue = null)
         {
             var state = NewGameFactory.Create(_db.Balance, seed, profile);
             if (prologue != null)
             {
                 EffectApplier.Apply(state, prologue, _db.Balance, new StateDelta());
+            }
+
+            // M6 회차 요소: 시작 보너스 + 2회차 표시 ("창고 안의 7일")
+            if (IsNewGamePlus)
+            {
+                state.Flags.Add(NgPlusFlag);
+            }
+
+            if (PendingStartBonus != null)
+            {
+                EffectApplier.Apply(state, PendingStartBonus.Effect, _db.Balance, new StateDelta());
+                state.Flags.Add("BONUS_" + PendingStartBonus.Id);
+                PendingStartBonus = null;
             }
 
             // 1주차 1일 낮: 튜토리얼 런 고정 (문서 6.3.3)
@@ -135,16 +154,31 @@ namespace ApoGirl.Systems.Session
         }
 
         /// <summary>새 게임 직후 아직 보지 않은 시작 이벤트 (BalanceConfig.OpeningEventId).</summary>
-        public bool HasPendingOpening =>
-            HasGame && !string.IsNullOrEmpty(_db.Balance.OpeningEventId)
-                    && _db.TryGetEvent(_db.Balance.OpeningEventId, out _)
-                    && !State.Events.Records.ContainsKey(_db.Balance.OpeningEventId);
+        public bool HasPendingOpening => HasGame && NextOpeningEventId() != null;
 
-        /// <summary>시작 이벤트를 띄운다 (계획 단계에서, 슬롯 밖).</summary>
+        public const string NgPlusFlag = "NG_PLUS";
+
+        /// <summary>시작 이벤트를 띄운다 (계획 단계에서, 슬롯 밖). 2회차면 "창고 안의 7일"이 먼저.</summary>
         public SlotOutcome StartOpening()
         {
-            return DebugForceEvent(_db.Balance.OpeningEventId);
+            return DebugForceEvent(NextOpeningEventId());
         }
+
+        private string NextOpeningEventId()
+        {
+            var balance = _db.Balance;
+            if (State.Flags.Contains(NgPlusFlag) && IsUnseen(balance.NgPlusOpeningEventId) && !IsSeen(balance.OpeningEventId))
+            {
+                return balance.NgPlusOpeningEventId;
+            }
+
+            return IsUnseen(balance.OpeningEventId) ? balance.OpeningEventId : null;
+        }
+
+        private bool IsUnseen(string eventId) =>
+            !string.IsNullOrEmpty(eventId) && _db.TryGetEvent(eventId, out _) && !State.Events.Records.ContainsKey(eventId);
+
+        private bool IsSeen(string eventId) => !string.IsNullOrEmpty(eventId) && State.Events.Records.ContainsKey(eventId);
 
         /// <summary>출정 준비 화면에서 로드아웃을 바꾼 뒤 대기 중인 탐험 요청에 반영한다.</summary>
         public void RefreshPendingLoadout()

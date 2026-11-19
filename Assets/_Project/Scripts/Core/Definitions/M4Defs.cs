@@ -222,5 +222,16 @@ namespace ApoGirl.Core.Definitions
 
         /// <summary>M6: 동료 역할.</summary>
         public List<RoleDef> Roles = new List<RoleDef>();
+
+        /// <summary>M6: 회차 시작 보너스 (엔딩을 하나라도 보면 새 게임에서 하나를 고른다).</summary>
+        public List<StartBonusDef> StartBonuses = new List<StartBonusDef>();
+    }
+
+    /// <summary>회차 시작 보너스 (문서 8.2). 이름·설명은 UI 키 "bonus.{Id}.name/desc".</summary>
+    [Serializable]
+    public sealed class StartBonusDef
+    {
+        public string Id = "";
+        public GameEffect Effect = new GameEffect();
     }
 }
