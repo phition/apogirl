@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using ApoGirl.Core.Definitions;
 using UnityEngine;
 
@@ -87,8 +88,13 @@ namespace ApoGirl.Exploration.Runtime
                 RoomColors[colorIndex % RoomColors.Length]);
             if (room.Template.Id.Contains("CLASSROOM"))
             {
-                // 칠판: 교실 앞쪽 (창문과 겹치지 않게 뒤쪽 벽면 위쪽)
-                ExplorationArt.Place(root, "Chalkboard", "prop_chalkboard", new Vector2(room.Width * 0.5f - 3f, 1.5f), -4, Vector2.zero, Color.clear);
+                // 칠판: 창문과 겹치지 않는 가장 넓은 벽면 가운데. 들어갈 자리가 없으면 걸지 않는다
+                var board = ExplorationArt.Get("prop_chalkboard");
+                var boardWidth = board != null ? board.bounds.size.x : 6f;
+                if (TryFindWallGap(room, boardWidth + 0.6f, out var gapCenter))
+                {
+                    ExplorationArt.Place(root, "Chalkboard", "prop_chalkboard", new Vector2(gapCenter - boardWidth * 0.5f, 1.5f), -4, Vector2.zero, Color.clear);
+                }
             }
 
             for (var x = 2f; x < room.Width - 1f; x += 5f)
@@ -105,6 +111,39 @@ namespace ApoGirl.Exploration.Runtime
             {
                 // 복도 쪽 벽(앞면)의 창: 반투명 유리라 뒤 벽의 칠판 앞에 겹쳐 그린다
                 ExplorationArt.Stretched(root, "Window", "prop_window", new Vector2(window.X, WindowBottom), new Vector2(window.Width, WindowHeight), -2, WindowColor);
+            }
+        }
+
+        /// <summary>창문 사이 빈 벽 중 가장 넓은 구간의 가운데 (needed 이상일 때만).</summary>
+        private static bool TryFindWallGap(ExplorationArea room, float needed, out float center)
+        {
+            var edges = new List<(float Start, float End)>();
+            foreach (var window in room.Template.Windows)
+            {
+                edges.Add((window.X, window.X + window.Width));
+            }
+            edges.Sort((l, r) => l.Start.CompareTo(r.Start));
+
+            var bestWidth = 0f;
+            var bestCenter = 0f;
+            var cursor = 1.5f; // 문 자리 여유
+            var limit = room.Width - 1.5f;
+            foreach (var (start, end) in edges)
+            {
+                Consider(cursor, Mathf.Min(start, limit));
+                cursor = Mathf.Max(cursor, end);
+            }
+            Consider(cursor, limit);
+            center = bestCenter;
+            return bestWidth >= needed;
+
+            void Consider(float from, float to)
+            {
+                if (to - from > bestWidth)
+                {
+                    bestWidth = to - from;
+                    bestCenter = (from + to) * 0.5f;
+                }
             }
         }
 
