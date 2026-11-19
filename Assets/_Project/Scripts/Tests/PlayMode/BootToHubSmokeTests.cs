@@ -208,6 +208,7 @@ namespace ApoGirl.Tests.PlayMode
 
             var view = new DialogueView(root);
             var player = new EventDialoguePlayer(project, view);
+            var affinityBefore = session.State.Teacher.Affinity;
             session.DebugForceEvent("EVT_NIGHT_TEACHER_TALK_01");
             Assert.IsTrue(session.HasPendingEvent);
 
@@ -250,7 +251,7 @@ namespace ApoGirl.Tests.PlayMode
             Assert.AreEqual("ASK", picked);
             Assert.IsFalse(session.HasPendingEvent);
             Assert.IsTrue(session.State.Flags.Contains("ASKED_TEACHER_LEG"));
-            Assert.AreEqual(3, session.State.Teacher.Affinity);
+            Assert.AreEqual(affinityBefore + 3, session.State.Teacher.Affinity);
         }
 
         private static IEnumerator BootToHub(int seed)
