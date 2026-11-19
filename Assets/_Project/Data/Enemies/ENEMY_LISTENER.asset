@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: ApoGirl.Data::ApoGirl.Data.EnemyAsset
   _id: ENEMY_LISTENER
   _definition:
-    Id: 
+    Id: ENEMY_LISTENER
     WalkSpeed: 0.8
     RunSpeed: 3
     SightRange: 4
@@ -23,3 +23,4 @@ MonoBehaviour:
     Damage: 10
     HitCooldown: 1.2
     AttackRange: 0.7
+    Toughness: 3

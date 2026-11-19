@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: ApoGirl.Data::ApoGirl.Data.LocationAsset
   _id: LOC_SCHOOL_INTERIOR
   _definition:
-    Id: 
+    Id: LOC_SCHOOL_INTERIOR
     Layout:
       Floors: 4
       FloorHeight: 4
@@ -290,7 +290,7 @@ MonoBehaviour:
           Floor: 0
           X: 9.9
           SearchSeconds: 3.5
-          LootTableId: 
+          LootTableId: LOOT_SCHOOL_CLEANING
         - Id: LOCKERS
           Kind: 0
           Floor: 0
@@ -507,6 +507,68 @@ MonoBehaviour:
         Count: 1
         Spread: 0
         Dormant: 0
+      LockedRooms: []
+      ForceableRooms: []
+      Encounters:
+      - Id: DOHYEON
+        Floor: 2
+        RoomId: ROOM_3F_ROOM_CLASSROOM_5
+        X: 9.5
+        FlagsAll:
+        - DH_HEARD
+        FlagsNone:
+        - DH_RESCUED
+        - DH_LEFT
+        - DH_HELPED
+        PromptKey: enc.DOHYEON.prompt
+        Choices:
+        - Id: TAKE
+          TextKey: enc.DOHYEON.take
+          SetFlags:
+          - DH_RESCUED
+          AddClues: []
+          StressDelta: -3
+          Removes: 1
+        - Id: WATER
+          TextKey: enc.DOHYEON.water
+          SetFlags:
+          - DH_HELPED
+          AddClues: []
+          StressDelta: 0
+          Removes: 1
+        - Id: LEAVE
+          TextKey: enc.DOHYEON.leave
+          SetFlags:
+          - DH_LEFT
+          AddClues: []
+          StressDelta: 4
+          Removes: 1
+      - Id: SCHOOL_NOTICE
+        Floor: 0
+        RoomId: ROOM_1F_ROOM_OFFICE_0
+        X: 13
+        FlagsAll:
+        - NOTICE_HINT
+        FlagsNone:
+        - NOTICE_TAKEN
+        - NOTICE_LEFT
+        PromptKey: enc.SCHOOL_NOTICE.prompt
+        Choices:
+        - Id: TAKE
+          TextKey: enc.SCHOOL_NOTICE.take
+          SetFlags:
+          - NOTICE_TAKEN
+          AddClues:
+          - CLUE_SCHOOL_NOTICE
+          StressDelta: 0
+          Removes: 1
+        - Id: LEAVE
+          TextKey: enc.SCHOOL_NOTICE.leave
+          SetFlags:
+          - NOTICE_LEFT
+          AddClues: []
+          StressDelta: 0
+          Removes: 1
     NightVariant:
       Spawns:
       - EnemyId: ENEMY_WANDERER
@@ -589,7 +651,7 @@ MonoBehaviour:
       - EnemyId: ENEMY_LISTENER
         Floor: 2
         RoomId: ROOM_3F_ROOM_CLASSROOM_5
-        X: 7
+        X: 3
         Count: 1
         Spread: 0
         Dormant: 0
@@ -600,3 +662,66 @@ MonoBehaviour:
         Count: 2
         Spread: 3
         Dormant: 0
+      LockedRooms: []
+      ForceableRooms: []
+      Encounters:
+      - Id: DOHYEON
+        Floor: 2
+        RoomId: ROOM_3F_ROOM_CLASSROOM_5
+        X: 9.5
+        FlagsAll:
+        - DH_HEARD
+        FlagsNone:
+        - DH_RESCUED
+        - DH_LEFT
+        - DH_HELPED
+        PromptKey: enc.DOHYEON.prompt
+        Choices:
+        - Id: TAKE
+          TextKey: enc.DOHYEON.take
+          SetFlags:
+          - DH_RESCUED
+          AddClues: []
+          StressDelta: -3
+          Removes: 1
+        - Id: WATER
+          TextKey: enc.DOHYEON.water
+          SetFlags:
+          - DH_HELPED
+          AddClues: []
+          StressDelta: 0
+          Removes: 1
+        - Id: LEAVE
+          TextKey: enc.DOHYEON.leave
+          SetFlags:
+          - DH_LEFT
+          AddClues: []
+          StressDelta: 4
+          Removes: 1
+      - Id: SCHOOL_NOTICE
+        Floor: 0
+        RoomId: ROOM_1F_ROOM_OFFICE_0
+        X: 13
+        FlagsAll:
+        - NOTICE_HINT
+        FlagsNone:
+        - NOTICE_TAKEN
+        - NOTICE_LEFT
+        PromptKey: enc.SCHOOL_NOTICE.prompt
+        Choices:
+        - Id: TAKE
+          TextKey: enc.SCHOOL_NOTICE.take
+          SetFlags:
+          - NOTICE_TAKEN
+          AddClues:
+          - CLUE_SCHOOL_NOTICE
+          StressDelta: 0
+          Removes: 1
+        - Id: LEAVE
+          TextKey: enc.SCHOOL_NOTICE.leave
+          SetFlags:
+          - NOTICE_LEFT
+          AddClues: []
+          StressDelta: 0
+          Removes: 1
+    Tutorial: 0

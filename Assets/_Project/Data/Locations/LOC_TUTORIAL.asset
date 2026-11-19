@@ -1,0 +1,111 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f481e505b008c204ba7d5b19f247582d, type: 3}
+  m_Name: LOC_TUTORIAL
+  m_EditorClassIdentifier: ApoGirl.Data::ApoGirl.Data.LocationAsset
+  _id: LOC_TUTORIAL
+  _definition:
+    Id: LOC_TUTORIAL
+    Layout:
+      Floors: 1
+      FloorHeight: 4
+      CorridorLength: 46
+      Connectors: []
+      Doors:
+      - RoomId: ROOM_PE_STORAGE_1
+        TemplateId: ROOM_PE_STORAGE
+        Floor: 0
+        X: 12
+        Number: 1
+        LootTableId: 
+      RoomTemplates:
+      - Id: ROOM_PE_STORAGE
+        Width: 12
+        DoorXs:
+        - 1.2
+        Windows: []
+        Containers:
+        - Id: MAT_PILE
+          Kind: 4
+          Floor: 0
+          X: 4
+          SearchSeconds: 2.5
+          LootTableId: LOOT_TUTORIAL_GEAR
+        - Id: BALL_CART
+          Kind: 4
+          Floor: 0
+          X: 7
+          SearchSeconds: 2.5
+          LootTableId: 
+        - Id: SHELF
+          Kind: 2
+          Floor: 0
+          X: 10
+          SearchSeconds: 3.5
+          LootTableId: 
+        DefaultLootTableId: LOOT_TUTORIAL
+      Containers:
+      - Id: C_TUT_LOCKER_A
+        Kind: 0
+        Floor: 0
+        X: 26
+        SearchSeconds: 3
+        LootTableId: LOOT_TUTORIAL
+      - Id: C_TUT_LOCKER_B
+        Kind: 0
+        Floor: 0
+        X: 34
+        SearchSeconds: 3
+        LootTableId: LOOT_TUTORIAL
+      - Id: C_TUT_DESK
+        Kind: 1
+        Floor: 0
+        X: 40
+        SearchSeconds: 2
+        LootTableId: LOOT_TUTORIAL
+      Exits:
+      - Kind: 0
+        Floor: 0
+        X: 2
+        StartsLocked: 0
+      - Kind: 1
+        Floor: 0
+        X: 44
+        StartsLocked: 0
+    DayRunSeconds: 420
+    NightRunSeconds: 420
+    DefaultLootTableId: LOOT_TUTORIAL
+    DayVariant:
+      Spawns:
+      - EnemyId: ENEMY_WANDERER
+        Floor: 0
+        RoomId: 
+        X: 30
+        Count: 2
+        Spread: 1.2
+        Dormant: 1
+      LockedRooms: []
+      ForceableRooms: []
+      Encounters: []
+    NightVariant:
+      Spawns:
+      - EnemyId: ENEMY_WANDERER
+        Floor: 0
+        RoomId: 
+        X: 30
+        Count: 2
+        Spread: 1.2
+        Dormant: 1
+      LockedRooms: []
+      ForceableRooms: []
+      Encounters: []
+    Tutorial: 1

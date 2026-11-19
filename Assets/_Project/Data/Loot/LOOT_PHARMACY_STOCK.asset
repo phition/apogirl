@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c4918c53a1a01a44a50fc643af2cbac, type: 3}
+  m_Name: LOOT_PHARMACY_STOCK
+  m_EditorClassIdentifier: ApoGirl.Data::ApoGirl.Data.LootTableAsset
+  _id: LOOT_PHARMACY_STOCK
+  _definition:
+    Id: LOOT_PHARMACY_STOCK
+    MinRolls: 2
+    MaxRolls: 3
+    EmptyChance: 0.05
+    Entries:
+    - ItemId: ITEM_MEDKIT
+      Weight: 3
+      MinCount: 1
+      MaxCount: 1
+    - ItemId: ITEM_ANTIBIOTIC
+      Weight: 4
+      MinCount: 1
+      MaxCount: 1
+    - ItemId: ITEM_PAINKILLER
+      Weight: 3
+      MinCount: 1
+      MaxCount: 1

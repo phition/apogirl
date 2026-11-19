@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: ApoGirl.Data::ApoGirl.Data.EnemyAsset
   _id: ENEMY_WANDERER
   _definition:
-    Id: 
+    Id: ENEMY_WANDERER
     WalkSpeed: 1
     RunSpeed: 3.2
     SightRange: 7
@@ -23,3 +23,4 @@ MonoBehaviour:
     Damage: 12
     HitCooldown: 1.2
     AttackRange: 0.7
+    Toughness: 3

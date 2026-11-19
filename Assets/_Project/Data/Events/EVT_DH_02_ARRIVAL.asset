@@ -1,0 +1,227 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e24ce4e6e4507494299ec76a5be73c10, type: 3}
+  m_Name: EVT_DH_02_ARRIVAL
+  m_EditorClassIdentifier: ApoGirl.Data::ApoGirl.Data.EventDefinitionAsset
+  _id: EVT_DH_02_ARRIVAL
+  _definition:
+    Id: EVT_DH_02_ARRIVAL
+    Kind: 0
+    Condition:
+      WeekMin: 0
+      WeekMax: 0
+      Days: 
+      Phase: 0
+      Seasons: 
+      Month: 0
+      DayOfMonth: 0
+      ActionCategories: 04000000i
+      ActionIds: []
+      FlagsAll:
+      - DH_RESCUED
+      FlagsAny: []
+      FlagsNone: []
+      CluesAll: []
+      Checks: []
+      AnyChecks: []
+      NpcStatuses: []
+      IsBirthday: 0
+    Priority: 88
+    Weight: 1
+    Once: 1
+    CooldownWeeks: 0
+    DialogueNode: 
+    OnShow:
+      Stats: []
+      Vitals: []
+      Resources: []
+      Hidden:
+      - Hidden: 2
+        Amount: 4
+      SleepDebt: 0
+      Conscience: 0
+      SetFlags: []
+      ClearFlags: []
+      AddClues: []
+      EndingTags: []
+      Npcs:
+      - NpcId: NPC_DOHYEON
+        Affinity: 5
+        Trust: 0
+        SetStatus: 2
+        SetRole: student
+      Items: []
+      Defense: 3
+      Threat: 0
+      Facilities: []
+      AddTraits: []
+      Proficiencies: []
+      TeacherMobility: 0
+      RestorePower: 0
+      RaidStrength: 0
+    Choices:
+    - Id: WELCOME
+      TextKey: 
+      Condition:
+        WeekMin: 0
+        WeekMax: 0
+        Days: 
+        Phase: 0
+        Seasons: 
+        Month: 0
+        DayOfMonth: 0
+        ActionCategories: 
+        ActionIds: []
+        FlagsAll: []
+        FlagsAny: []
+        FlagsNone: []
+        CluesAll: []
+        Checks: []
+        AnyChecks: []
+        NpcStatuses: []
+        IsBirthday: 0
+      Costs: []
+      HasCheck: 0
+      Check:
+        BaseRate: 0.5
+        StatWeights: []
+        UsesProficiency: 0
+        Proficiency: 0
+        ProficiencyWeight: 0.05
+      Effect:
+        Stats: []
+        Vitals: []
+        Resources: []
+        Hidden:
+        - Hidden: 3
+          Amount: 3
+        SleepDebt: 0
+        Conscience: 0
+        SetFlags: []
+        ClearFlags: []
+        AddClues: []
+        EndingTags: []
+        Npcs:
+        - NpcId: NPC_DOHYEON
+          Affinity: 5
+          Trust: 0
+          SetStatus: 0
+          SetRole: 
+        Items: []
+        Defense: 0
+        Threat: 0
+        Facilities: []
+        AddTraits: []
+        Proficiencies: []
+        TeacherMobility: 0
+        RestorePower: 0
+        RaidStrength: 0
+      OnFailure:
+        Stats: []
+        Vitals: []
+        Resources: []
+        Hidden: []
+        SleepDebt: 0
+        Conscience: 0
+        SetFlags: []
+        ClearFlags: []
+        AddClues: []
+        EndingTags: []
+        Npcs: []
+        Items: []
+        Defense: 0
+        Threat: 0
+        Facilities: []
+        AddTraits: []
+        Proficiencies: []
+        TeacherMobility: 0
+        RestorePower: 0
+        RaidStrength: 0
+      NextEventId: 
+    - Id: RULES
+      TextKey: 
+      Condition:
+        WeekMin: 0
+        WeekMax: 0
+        Days: 
+        Phase: 0
+        Seasons: 
+        Month: 0
+        DayOfMonth: 0
+        ActionCategories: 
+        ActionIds: []
+        FlagsAll: []
+        FlagsAny: []
+        FlagsNone: []
+        CluesAll: []
+        Checks: []
+        AnyChecks: []
+        NpcStatuses: []
+        IsBirthday: 0
+      Costs: []
+      HasCheck: 0
+      Check:
+        BaseRate: 0.5
+        StatWeights: []
+        UsesProficiency: 0
+        Proficiency: 0
+        ProficiencyWeight: 0.05
+      Effect:
+        Stats:
+        - Stat: 7
+          Amount: 2
+        Vitals: []
+        Resources: []
+        Hidden: []
+        SleepDebt: 0
+        Conscience: 0
+        SetFlags: []
+        ClearFlags: []
+        AddClues: []
+        EndingTags: []
+        Npcs:
+        - NpcId: NPC_DOHYEON
+          Affinity: 0
+          Trust: 4
+          SetStatus: 0
+          SetRole: 
+        Items: []
+        Defense: 0
+        Threat: 0
+        Facilities: []
+        AddTraits: []
+        Proficiencies: []
+        TeacherMobility: 0
+        RestorePower: 0
+        RaidStrength: 0
+      OnFailure:
+        Stats: []
+        Vitals: []
+        Resources: []
+        Hidden: []
+        SleepDebt: 0
+        Conscience: 0
+        SetFlags: []
+        ClearFlags: []
+        AddClues: []
+        EndingTags: []
+        Npcs: []
+        Items: []
+        Defense: 0
+        Threat: 0
+        Facilities: []
+        AddTraits: []
+        Proficiencies: []
+        TeacherMobility: 0
+        RestorePower: 0
+        RaidStrength: 0
+      NextEventId: 

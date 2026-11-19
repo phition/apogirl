@@ -1,0 +1,202 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f481e505b008c204ba7d5b19f247582d, type: 3}
+  m_Name: LOC_STORE
+  m_EditorClassIdentifier: ApoGirl.Data::ApoGirl.Data.LocationAsset
+  _id: LOC_STORE
+  _definition:
+    Id: LOC_STORE
+    Layout:
+      Floors: 1
+      FloorHeight: 4
+      CorridorLength: 40
+      Connectors: []
+      Doors:
+      - RoomId: ROOM_STORE_STOCK_1
+        TemplateId: ROOM_STORE_STOCK
+        Floor: 0
+        X: 24
+        Number: 1
+        LootTableId: 
+      - RoomId: ROOM_STORE_OFFICE_1
+        TemplateId: ROOM_STORE_OFFICE
+        Floor: 0
+        X: 14
+        Number: 1
+        LootTableId: 
+      RoomTemplates:
+      - Id: ROOM_STORE_STOCK
+        Width: 12
+        DoorXs:
+        - 1.2
+        Windows: []
+        Containers:
+        - Id: STOCK_1
+          Kind: 4
+          Floor: 0
+          X: 3.6
+          SearchSeconds: 2.5
+          LootTableId: 
+        - Id: STOCK_2
+          Kind: 4
+          Floor: 0
+          X: 6
+          SearchSeconds: 2.5
+          LootTableId: 
+        - Id: STOCK_3
+          Kind: 4
+          Floor: 0
+          X: 8.4
+          SearchSeconds: 2.5
+          LootTableId: 
+        - Id: WALKIN
+          Kind: 3
+          Floor: 0
+          X: 10.6
+          SearchSeconds: 4
+          LootTableId: LOOT_STORE_FRIDGE
+        DefaultLootTableId: LOOT_STORE_STOCK
+      - Id: ROOM_STORE_OFFICE
+        Width: 8
+        DoorXs:
+        - 1.2
+        Windows: []
+        Containers:
+        - Id: OFFICE_DESK
+          Kind: 1
+          Floor: 0
+          X: 3.8
+          SearchSeconds: 2
+          LootTableId: 
+        - Id: OFFICE_LOCKER
+          Kind: 0
+          Floor: 0
+          X: 6.4
+          SearchSeconds: 3
+          LootTableId: 
+        DefaultLootTableId: LOOT_STORE_OFFICE
+      Containers:
+      - Id: C_SHELF_1
+        Kind: 4
+        Floor: 0
+        X: 5
+        SearchSeconds: 2.5
+        LootTableId: LOOT_STORE_SHELF
+      - Id: C_SHELF_2
+        Kind: 4
+        Floor: 0
+        X: 6.6
+        SearchSeconds: 2.5
+        LootTableId: LOOT_STORE_SHELF
+      - Id: C_SHELF_3
+        Kind: 4
+        Floor: 0
+        X: 8.2
+        SearchSeconds: 2.5
+        LootTableId: LOOT_STORE_SHELF
+      - Id: C_SHELF_4
+        Kind: 4
+        Floor: 0
+        X: 9.8
+        SearchSeconds: 2.5
+        LootTableId: LOOT_STORE_SHELF
+      - Id: C_SHELF_5
+        Kind: 4
+        Floor: 0
+        X: 11.4
+        SearchSeconds: 2.5
+        LootTableId: LOOT_STORE_SHELF
+      - Id: C_SHELF_6
+        Kind: 4
+        Floor: 0
+        X: 13
+        SearchSeconds: 2.5
+        LootTableId: LOOT_STORE_SHELF
+      - Id: C_COUNTER
+        Kind: 1
+        Floor: 0
+        X: 37
+        SearchSeconds: 2
+        LootTableId: LOOT_STORE_COUNTER
+      - Id: C_DRINK_FRIDGE
+        Kind: 3
+        Floor: 0
+        X: 39
+        SearchSeconds: 4
+        LootTableId: LOOT_STORE_FRIDGE
+      Exits:
+      - Kind: 0
+        Floor: 0
+        X: 2
+        StartsLocked: 0
+      - Kind: 1
+        Floor: 0
+        X: 34
+        StartsLocked: 1
+    DayRunSeconds: 270
+    NightRunSeconds: 240
+    DefaultLootTableId: LOOT_STORE_SHELF
+    DayVariant:
+      Spawns:
+      - EnemyId: ENEMY_WANDERER
+        Floor: 0
+        RoomId: 
+        X: 18
+        Count: 3
+        Spread: 1.5
+        Dormant: 1
+      - EnemyId: ENEMY_WANDERER
+        Floor: 0
+        RoomId: 
+        X: 30
+        Count: 1
+        Spread: 0
+        Dormant: 0
+      - EnemyId: ENEMY_WANDERER
+        Floor: 0
+        RoomId: ROOM_STORE_STOCK_1
+        X: 6
+        Count: 2
+        Spread: 1
+        Dormant: 1
+      LockedRooms: []
+      ForceableRooms:
+      - ROOM_STORE_OFFICE_1
+      Encounters: []
+    NightVariant:
+      Spawns:
+      - EnemyId: ENEMY_WANDERER
+        Floor: 0
+        RoomId: 
+        X: 12
+        Count: 2
+        Spread: 5
+        Dormant: 0
+      - EnemyId: ENEMY_WANDERER
+        Floor: 0
+        RoomId: 
+        X: 28
+        Count: 2
+        Spread: 5
+        Dormant: 0
+      - EnemyId: ENEMY_LISTENER
+        Floor: 0
+        RoomId: 
+        X: 36
+        Count: 1
+        Spread: 0
+        Dormant: 0
+      LockedRooms: []
+      ForceableRooms:
+      - ROOM_STORE_OFFICE_1
+      Encounters: []
+    Tutorial: 0

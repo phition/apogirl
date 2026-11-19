@@ -1,0 +1,139 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dae23a582c039304a81c2bdd418cbc38, type: 3}
+  m_Name: ACT_SURV_RESTORE_POWER
+  m_EditorClassIdentifier: ApoGirl.Data::ApoGirl.Data.ActionDefinitionAsset
+  _id: ACT_SURV_RESTORE_POWER
+  _definition:
+    Id: ACT_SURV_RESTORE_POWER
+    Category: 1
+    SlotTag: 1
+    ResourceCosts:
+    - Resource: 5
+      Amount: 3
+    FatigueCost: 10
+    StressCost: 4
+    HasCheck: 1
+    Check:
+      BaseRate: 0.35
+      StatWeights:
+      - Stat: 3
+        Weight: 0.004
+      - Stat: 4
+        Weight: 0.004
+      UsesProficiency: 1
+      Proficiency: 2
+      ProficiencyWeight: 0.1
+    StatGains:
+    - Stat: 3
+      Amount: 1
+    - Stat: 4
+      Amount: 1
+    HasProficiency: 1
+    Proficiency: 2
+    ProficiencyXp: 2
+    Teaching: 0
+    OnSuccess:
+      Stats: []
+      Vitals: []
+      Resources:
+      - Resource: 4
+        Amount: 3
+      Hidden: []
+      SleepDebt: 0
+      Conscience: 0
+      SetFlags:
+      - POWER_RESTORED
+      ClearFlags: []
+      AddClues: []
+      EndingTags: []
+      Npcs: []
+      Items: []
+      Defense: 0
+      Threat: 0
+      Facilities: []
+      AddTraits: []
+      Proficiencies: []
+      TeacherMobility: 0
+      RestorePower: 1
+      RaidStrength: 0
+    OnGreatSuccess:
+      Stats: []
+      Vitals: []
+      Resources:
+      - Resource: 4
+        Amount: 6
+      Hidden: []
+      SleepDebt: 0
+      Conscience: 0
+      SetFlags:
+      - POWER_RESTORED
+      ClearFlags: []
+      AddClues: []
+      EndingTags: []
+      Npcs: []
+      Items: []
+      Defense: 0
+      Threat: 0
+      Facilities: []
+      AddTraits: []
+      Proficiencies: []
+      TeacherMobility: 0
+      RestorePower: 1
+      RaidStrength: 0
+    OnFailure:
+      Stats: []
+      Vitals: []
+      Resources: []
+      Hidden: []
+      SleepDebt: 0
+      Conscience: 0
+      SetFlags: []
+      ClearFlags: []
+      AddClues: []
+      EndingTags: []
+      Npcs: []
+      Items: []
+      Defense: 0
+      Threat: 0
+      Facilities: []
+      AddTraits: []
+      Proficiencies: []
+      TeacherMobility: 0
+      RestorePower: 0
+      RaidStrength: 0
+    ExpeditionTime: 0
+    LocationId: 
+    Unlock:
+      WeekMin: 0
+      WeekMax: 0
+      Days: 
+      Phase: 0
+      Seasons: 
+      Month: 0
+      DayOfMonth: 0
+      ActionCategories: 
+      ActionIds: []
+      FlagsAll:
+      - POWER_PLAN
+      FlagsAny: []
+      FlagsNone:
+      - POWER_RESTORED
+      CluesAll: []
+      Checks: []
+      AnyChecks: []
+      NpcStatuses: []
+      IsBirthday: 0
+    RaidGuard: 0
+    BonusFacilityId: 
+    BonusPerLevel: 0
+    ThreatGain: 0

@@ -46,7 +46,19 @@ MonoBehaviour:
       SleepDebt: 0
       Conscience: 0
       SetFlags: []
+      ClearFlags: []
+      AddClues: []
       EndingTags: []
+      Npcs: []
+      Items: []
+      Defense: 5
+      Threat: 0
+      Facilities: []
+      AddTraits: []
+      Proficiencies: []
+      TeacherMobility: 0
+      RestorePower: 0
+      RaidStrength: 0
     OnGreatSuccess:
       Stats: []
       Vitals: []
@@ -55,7 +67,19 @@ MonoBehaviour:
       SleepDebt: 0
       Conscience: 0
       SetFlags: []
+      ClearFlags: []
+      AddClues: []
       EndingTags: []
+      Npcs: []
+      Items: []
+      Defense: 0
+      Threat: 0
+      Facilities: []
+      AddTraits: []
+      Proficiencies: []
+      TeacherMobility: 0
+      RestorePower: 0
+      RaidStrength: 0
     OnFailure:
       Stats: []
       Vitals: []
@@ -64,6 +88,40 @@ MonoBehaviour:
       SleepDebt: 0
       Conscience: 0
       SetFlags: []
+      ClearFlags: []
+      AddClues: []
       EndingTags: []
+      Npcs: []
+      Items: []
+      Defense: 0
+      Threat: 0
+      Facilities: []
+      AddTraits: []
+      Proficiencies: []
+      TeacherMobility: 0
+      RestorePower: 0
+      RaidStrength: 0
     ExpeditionTime: 0
     LocationId: 
+    Unlock:
+      WeekMin: 0
+      WeekMax: 0
+      Days: 
+      Phase: 0
+      Seasons: 
+      Month: 0
+      DayOfMonth: 0
+      ActionCategories: 
+      ActionIds: []
+      FlagsAll: []
+      FlagsAny: []
+      FlagsNone: []
+      CluesAll: []
+      Checks: []
+      AnyChecks: []
+      NpcStatuses: []
+      IsBirthday: 0
+    RaidGuard: 0
+    BonusFacilityId: 
+    BonusPerLevel: 0
+    ThreatGain: 0

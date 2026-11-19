@@ -17,8 +17,8 @@ MonoBehaviour:
     Id: EVT_NPC_SURVIVOR_A_01
     Kind: 0
     Condition:
-      WeekMin: 2
-      WeekMax: 8
+      WeekMin: 14
+      WeekMax: 20
       Days: 
       Phase: 0
       Seasons: 
@@ -35,6 +35,7 @@ MonoBehaviour:
       NpcStatuses:
       - NpcId: NPC_SURVIVOR_A
         Status: 0
+      IsBirthday: 0
     Priority: 20
     Weight: 1
     Once: 1
@@ -58,6 +59,14 @@ MonoBehaviour:
         SetStatus: 1
         SetRole: 
       Items: []
+      Defense: 0
+      Threat: 0
+      Facilities: []
+      AddTraits: []
+      Proficiencies: []
+      TeacherMobility: 0
+      RestorePower: 0
+      RaidStrength: 0
     Choices:
     - Id: INVITE
       TextKey: 
@@ -78,6 +87,7 @@ MonoBehaviour:
         Checks: []
         AnyChecks: []
         NpcStatuses: []
+        IsBirthday: 0
       Costs: []
       HasCheck: 0
       Check:
@@ -108,6 +118,14 @@ MonoBehaviour:
           SetStatus: 0
           SetRole: 
         Items: []
+        Defense: 0
+        Threat: 0
+        Facilities: []
+        AddTraits: []
+        Proficiencies: []
+        TeacherMobility: 0
+        RestorePower: 0
+        RaidStrength: 0
       OnFailure:
         Stats: []
         Vitals: []
@@ -121,6 +139,14 @@ MonoBehaviour:
         EndingTags: []
         Npcs: []
         Items: []
+        Defense: 0
+        Threat: 0
+        Facilities: []
+        AddTraits: []
+        Proficiencies: []
+        TeacherMobility: 0
+        RestorePower: 0
+        RaidStrength: 0
       NextEventId: EVT_NPC_SURVIVOR_A_02
     - Id: SHARE
       TextKey: 
@@ -141,6 +167,7 @@ MonoBehaviour:
         Checks: []
         AnyChecks: []
         NpcStatuses: []
+        IsBirthday: 0
       Costs:
       - Resource: 0
         Amount: 2
@@ -172,6 +199,14 @@ MonoBehaviour:
           SetStatus: 0
           SetRole: 
         Items: []
+        Defense: 0
+        Threat: 0
+        Facilities: []
+        AddTraits: []
+        Proficiencies: []
+        TeacherMobility: 0
+        RestorePower: 0
+        RaidStrength: 0
       OnFailure:
         Stats: []
         Vitals: []
@@ -185,6 +220,14 @@ MonoBehaviour:
         EndingTags: []
         Npcs: []
         Items: []
+        Defense: 0
+        Threat: 0
+        Facilities: []
+        AddTraits: []
+        Proficiencies: []
+        TeacherMobility: 0
+        RestorePower: 0
+        RaidStrength: 0
       NextEventId: 
     - Id: LEAVE
       TextKey: 
@@ -205,6 +248,7 @@ MonoBehaviour:
         Checks: []
         AnyChecks: []
         NpcStatuses: []
+        IsBirthday: 0
       Costs: []
       HasCheck: 0
       Check:
@@ -229,6 +273,14 @@ MonoBehaviour:
         EndingTags: []
         Npcs: []
         Items: []
+        Defense: 0
+        Threat: 0
+        Facilities: []
+        AddTraits: []
+        Proficiencies: []
+        TeacherMobility: 0
+        RestorePower: 0
+        RaidStrength: 0
       OnFailure:
         Stats: []
         Vitals: []
@@ -242,4 +294,12 @@ MonoBehaviour:
         EndingTags: []
         Npcs: []
         Items: []
+        Defense: 0
+        Threat: 0
+        Facilities: []
+        AddTraits: []
+        Proficiencies: []
+        TeacherMobility: 0
+        RestorePower: 0
+        RaidStrength: 0
       NextEventId: 

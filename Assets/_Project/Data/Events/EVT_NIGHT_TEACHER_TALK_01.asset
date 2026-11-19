@@ -33,6 +33,7 @@ MonoBehaviour:
       Checks: []
       AnyChecks: []
       NpcStatuses: []
+      IsBirthday: 0
     Priority: 10
     Weight: 1
     Once: 1
@@ -51,6 +52,14 @@ MonoBehaviour:
       EndingTags: []
       Npcs: []
       Items: []
+      Defense: 0
+      Threat: 0
+      Facilities: []
+      AddTraits: []
+      Proficiencies: []
+      TeacherMobility: 0
+      RestorePower: 0
+      RaidStrength: 0
     Choices:
     - Id: ASK
       TextKey: 
@@ -71,6 +80,7 @@ MonoBehaviour:
         Checks: []
         AnyChecks: []
         NpcStatuses: []
+        IsBirthday: 0
       Costs: []
       HasCheck: 0
       Check:
@@ -100,6 +110,14 @@ MonoBehaviour:
           SetStatus: 0
           SetRole: 
         Items: []
+        Defense: 0
+        Threat: 0
+        Facilities: []
+        AddTraits: []
+        Proficiencies: []
+        TeacherMobility: 0
+        RestorePower: 0
+        RaidStrength: 0
       OnFailure:
         Stats: []
         Vitals: []
@@ -113,6 +131,14 @@ MonoBehaviour:
         EndingTags: []
         Npcs: []
         Items: []
+        Defense: 0
+        Threat: 0
+        Facilities: []
+        AddTraits: []
+        Proficiencies: []
+        TeacherMobility: 0
+        RestorePower: 0
+        RaidStrength: 0
       NextEventId: 
     - Id: FINE
       TextKey: 
@@ -133,6 +159,7 @@ MonoBehaviour:
         Checks: []
         AnyChecks: []
         NpcStatuses: []
+        IsBirthday: 0
       Costs: []
       HasCheck: 0
       Check:
@@ -158,6 +185,14 @@ MonoBehaviour:
         EndingTags: []
         Npcs: []
         Items: []
+        Defense: 0
+        Threat: 0
+        Facilities: []
+        AddTraits: []
+        Proficiencies: []
+        TeacherMobility: 0
+        RestorePower: 0
+        RaidStrength: 0
       OnFailure:
         Stats: []
         Vitals: []
@@ -171,4 +206,12 @@ MonoBehaviour:
         EndingTags: []
         Npcs: []
         Items: []
+        Defense: 0
+        Threat: 0
+        Facilities: []
+        AddTraits: []
+        Proficiencies: []
+        TeacherMobility: 0
+        RestorePower: 0
+        RaidStrength: 0
       NextEventId: 

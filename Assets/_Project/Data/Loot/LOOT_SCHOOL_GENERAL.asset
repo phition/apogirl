@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: ApoGirl.Data::ApoGirl.Data.LootTableAsset
   _id: LOOT_SCHOOL_GENERAL
   _definition:
-    Id: 
+    Id: LOOT_SCHOOL_GENERAL
     MinRolls: 1
     MaxRolls: 2
     EmptyChance: 0.2

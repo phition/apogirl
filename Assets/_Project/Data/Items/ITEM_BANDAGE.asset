@@ -14,14 +14,27 @@ MonoBehaviour:
   m_EditorClassIdentifier: ApoGirl.Data::ApoGirl.Data.ItemDefinitionAsset
   _id: ITEM_BANDAGE
   _definition:
-    Id: 
+    Id: ITEM_BANDAGE
     Width: 1
     Height: 1
     Weight: 0.1
-    Noise: 0.020000001
+    Noise: 0.02
     Value: 2
     Grade: 0
     MaxDurability: 0
     ResourceYield:
     - Resource: 2
       Amount: 1
+    Slot: 5
+    GridWidth: 0
+    GridHeight: 0
+    MoveSpeedMultiplier: 1
+    NoiseMultiplier: 1
+    WeaponPower: 0
+    AttackNoise: 6
+    AttackCooldown: 1
+    StunSeconds: 1.5
+    DamageReduction: 0
+    Tool: 0
+    UseHp: 20
+    UseStress: 0

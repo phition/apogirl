@@ -47,6 +47,74 @@ MonoBehaviour:
     m_Key: ITEM_TEXTBOOK.name
     m_Metadata:
       m_Items: []
+  - m_Id: 92081170432000
+    m_Key: ITEM_INSTANT_NOODLE.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 92081224957952
+    m_Key: ITEM_DRINK.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 92081224957953
+    m_Key: ITEM_MEDKIT.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 92081224957954
+    m_Key: ITEM_ANTIBIOTIC.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 92081224957955
+    m_Key: ITEM_VITAMIN.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 92081224957956
+    m_Key: ITEM_DUCT_TAPE.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 92081224957957
+    m_Key: ITEM_LIGHTER.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 92081224957958
+    m_Key: ITEM_BAG_SCHOOL.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 92081224957959
+    m_Key: ITEM_BAG_HIKING.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 92081224957960
+    m_Key: ITEM_BAG_TOTE.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 92081224957961
+    m_Key: ITEM_WEAPON_MOP.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 92081224957962
+    m_Key: ITEM_WEAPON_PIPE.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 92081224957963
+    m_Key: ITEM_WEAPON_BAT.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 92081224957964
+    m_Key: ITEM_TOOL_FLASHLIGHT.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 92081224957965
+    m_Key: ITEM_TOOL_CROWBAR.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 92081224957966
+    m_Key: ITEM_ARMOR_GUARD.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 92081224957967
+    m_Key: ITEM_ARMOR_PADDING.name
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

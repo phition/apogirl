@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: ApoGirl.Data::ApoGirl.Data.ExpeditionModelAsset
   _id: LOC_SCHOOL_INTERIOR
   _definition:
-    Id: 
+    Id: LOC_SCHOOL_INTERIOR
     Day:
       Resources:
       - Resource: 0
@@ -28,7 +28,7 @@ MonoBehaviour:
         Max: 3
       BaseDownChance: 0.05
       Fatigue: 15
-      StressMin: 0
+      StressMin: 6
       StressMax: 12
       ConscienceMax: 2
       DawnReturnChance: 0

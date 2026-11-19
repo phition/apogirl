@@ -87,6 +87,150 @@ MonoBehaviour:
     m_Key: ACT_EXP_NIGHT_SCHOOL.short
     m_Metadata:
       m_Items: []
+  - m_Id: 104235617501184
+    m_Key: ACT_EDU_SURVIVAL.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104235680415744
+    m_Key: ACT_EDU_SURVIVAL.short
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104235680415745
+    m_Key: ACT_EDU_ENGINEERING.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104235680415746
+    m_Key: ACT_EDU_ENGINEERING.short
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104235680415747
+    m_Key: ACT_EDU_COOKING.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104235680415748
+    m_Key: ACT_EDU_COOKING.short
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104235680415749
+    m_Key: ACT_EDU_MIND.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104235680415750
+    m_Key: ACT_EDU_MIND.short
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104235680415751
+    m_Key: ACT_NIGHT_DIARY.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104235680415752
+    m_Key: ACT_NIGHT_DIARY.short
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104235680415753
+    m_Key: ACT_NIGHT_TALK.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104235680415754
+    m_Key: ACT_NIGHT_TALK.short
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104235680415755
+    m_Key: ACT_NIGHT_WATCH.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104235680415756
+    m_Key: ACT_NIGHT_WATCH.short
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104235680415757
+    m_Key: ACT_NIGHT_WORK.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104235680415758
+    m_Key: ACT_NIGHT_WORK.short
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104235680415759
+    m_Key: ACT_NIGHT_STUDY.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104235680415760
+    m_Key: ACT_NIGHT_STUDY.short
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104235680415761
+    m_Key: ACT_SURV_CLEAN.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104235680415762
+    m_Key: ACT_SURV_CLEAN.short
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104235680415763
+    m_Key: ACT_SURV_MAKE_CRUTCH.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104235680415764
+    m_Key: ACT_SURV_MAKE_CRUTCH.short
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104235680415765
+    m_Key: ACT_SURV_RESTORE_POWER.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104235680415766
+    m_Key: ACT_SURV_RESTORE_POWER.short
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104235680415767
+    m_Key: ACT_DAILY_ROOFTOP.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104235680415768
+    m_Key: ACT_DAILY_ROOFTOP.short
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104235680415769
+    m_Key: ACT_EXP_TUTORIAL.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104235680415770
+    m_Key: ACT_EXP_TUTORIAL.short
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104235680415771
+    m_Key: ACT_EXP_DAY_STORE.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104235680415772
+    m_Key: ACT_EXP_DAY_STORE.short
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104235680415773
+    m_Key: ACT_EXP_NIGHT_STORE.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104235680415774
+    m_Key: ACT_EXP_NIGHT_STORE.short
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104235680415775
+    m_Key: ACT_EXP_DAY_PHARMACY.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104235680415776
+    m_Key: ACT_EXP_DAY_PHARMACY.short
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104235680415777
+    m_Key: ACT_EXP_NIGHT_PHARMACY.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104235680415778
+    m_Key: ACT_EXP_NIGHT_PHARMACY.short
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

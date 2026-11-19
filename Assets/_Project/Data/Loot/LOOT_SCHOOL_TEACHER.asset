@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: ApoGirl.Data::ApoGirl.Data.LootTableAsset
   _id: LOOT_SCHOOL_TEACHER
   _definition:
-    Id: 
+    Id: LOOT_SCHOOL_TEACHER
     MinRolls: 1
     MaxRolls: 2
     EmptyChance: 0.1
@@ -33,5 +33,9 @@ MonoBehaviour:
       MaxCount: 1
     - ItemId: ITEM_TEXTBOOK
       Weight: 2
+      MinCount: 1
+      MaxCount: 1
+    - ItemId: ITEM_TOOL_FLASHLIGHT
+      Weight: 1
       MinCount: 1
       MaxCount: 1

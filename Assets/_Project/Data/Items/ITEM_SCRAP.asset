@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: ApoGirl.Data::ApoGirl.Data.ItemDefinitionAsset
   _id: ITEM_SCRAP
   _definition:
-    Id: 
+    Id: ITEM_SCRAP
     Width: 2
     Height: 2
     Weight: 1.5
@@ -25,3 +25,16 @@ MonoBehaviour:
     ResourceYield:
     - Resource: 5
       Amount: 2
+    Slot: 0
+    GridWidth: 0
+    GridHeight: 0
+    MoveSpeedMultiplier: 1
+    NoiseMultiplier: 1
+    WeaponPower: 0
+    AttackNoise: 6
+    AttackCooldown: 1
+    StunSeconds: 1.5
+    DamageReduction: 0
+    Tool: 0
+    UseHp: 0
+    UseStress: 0

@@ -14,12 +14,27 @@ MonoBehaviour:
   m_EditorClassIdentifier: ApoGirl.Data::ApoGirl.Data.ItemDefinitionAsset
   _id: ITEM_TEXTBOOK
   _definition:
-    Id: 
+    Id: ITEM_TEXTBOOK
     Width: 2
     Height: 1
     Weight: 0.8
-    Noise: 0.16000001
+    Noise: 0.16
     Value: 2
     Grade: 0
     MaxDurability: 0
-    ResourceYield: []
+    ResourceYield:
+    - Resource: 7
+      Amount: 1
+    Slot: 0
+    GridWidth: 0
+    GridHeight: 0
+    MoveSpeedMultiplier: 1
+    NoiseMultiplier: 1
+    WeaponPower: 0
+    AttackNoise: 6
+    AttackCooldown: 1
+    StunSeconds: 1.5
+    DamageReduction: 0
+    Tool: 0
+    UseHp: 0
+    UseStress: 0

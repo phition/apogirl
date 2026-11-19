@@ -1059,6 +1059,654 @@ MonoBehaviour:
     m_Key: npc.status.Lost
     m_Metadata:
       m_Items: []
+  - m_Id: 104237286834176
+    m_Key: hub.defense
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104237345554432
+    m_Key: status.base
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104237345554433
+    m_Key: status.facilities
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104237345554434
+    m_Key: status.teacher
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104237345554435
+    m_Key: status.npc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104237345554436
+    m_Key: mobility.0
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104237345554437
+    m_Key: mobility.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104237345554438
+    m_Key: mobility.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104237345554439
+    m_Key: facility.STORAGE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104237345554440
+    m_Key: facility.CLASSROOM
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104237345554441
+    m_Key: facility.INFIRMARY
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104237345554442
+    m_Key: facility.ROOFTOP
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104237345554443
+    m_Key: facility.BROADCAST
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104237345554444
+    m_Key: npc.NPC_DOHYEON
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104237345554445
+    m_Key: trait.TRAIT_SPRINTER
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104237345554446
+    m_Key: trait.TRAIT_FRUGAL
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104237345554447
+    m_Key: trait.TRAIT_TINKERER
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104237345554448
+    m_Key: trait.TRAIT_BOOKWORM
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104237345554449
+    m_Key: trait.TRAIT_KEEN_EYE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104237345554450
+    m_Key: trait.TRAIT_FREQUENCY
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104237345554451
+    m_Key: trait.TRAIT_FIRST_AID
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104237345554452
+    m_Key: trait.TRAIT_SHADOW
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104237345554453
+    m_Key: result.defense
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104237345554454
+    m_Key: result.threat
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104237345554455
+    m_Key: result.facility_opened
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104237345554456
+    m_Key: result.power_restored
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104237345554457
+    m_Key: result.items_lost
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104237345554458
+    m_Key: result.raid_repelled
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104237345554459
+    m_Key: result.raid_breached
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104237345554460
+    m_Key: summary.diary
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104237345554461
+    m_Key: prep.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104237345554462
+    m_Key: prep.forecast_day
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104237345554463
+    m_Key: prep.forecast_night
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104237345554464
+    m_Key: prep.cost
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104237345554465
+    m_Key: prep.night_debt
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104237345554466
+    m_Key: prep.loss_warning
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104237345554467
+    m_Key: prep.depart
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104237345554468
+    m_Key: prep.backpack
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104237345554469
+    m_Key: prep.weapon
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104237345554470
+    m_Key: prep.tool
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104237345554471
+    m_Key: prep.armor
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104237345554472
+    m_Key: prep.quick
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104237345554473
+    m_Key: prep.none
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104237345554474
+    m_Key: prep.info_backpack
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104237345554475
+    m_Key: prep.info_weapon
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104237345554476
+    m_Key: prep.info_armor
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104237345554477
+    m_Key: tool.None
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104237345554478
+    m_Key: tool.Flashlight
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104237345554479
+    m_Key: tool.Crowbar
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104237345554480
+    m_Key: exp.room_shuttered
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104237345554481
+    m_Key: exp.room_locked_need_crowbar
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104237345554482
+    m_Key: exp.forced_open
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104237345554483
+    m_Key: exp.no_flashlight
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104237345554484
+    m_Key: exp.zombie_down
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104237345554485
+    m_Key: exp.hit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104237345554486
+    m_Key: exp.weapon_broke
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104237345554487
+    m_Key: exp.used_item
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104237345554488
+    m_Key: exp.equip_weapon
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104237345554489
+    m_Key: exp.equip_bare
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104237345554490
+    m_Key: exp.prompt_encounter
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104237345554491
+    m_Key: exp.prompt_exit_force
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104237345554492
+    m_Key: exp.prompt_door_shuttered
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104237345554493
+    m_Key: exp.prompt_door_force
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104237345554494
+    m_Key: exp.prompt_door_locked
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104237345554495
+    m_Key: tut.move
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104237345554496
+    m_Key: tut.crouch
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104237345554497
+    m_Key: tut.search
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104237345554498
+    m_Key: tut.backpack
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104237345554499
+    m_Key: tut.hide
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104237345554500
+    m_Key: tut.extract
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104237345554501
+    m_Key: enc.DOHYEON.prompt
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104237345554502
+    m_Key: enc.DOHYEON.take
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104237345554503
+    m_Key: enc.DOHYEON.water
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104237345554504
+    m_Key: enc.DOHYEON.leave
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104237345554505
+    m_Key: enc.SCHOOL_NOTICE.prompt
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104237345554506
+    m_Key: enc.SCHOOL_NOTICE.take
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104237345554507
+    m_Key: enc.SCHOOL_NOTICE.leave
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104237345554508
+    m_Key: enc.DOCTOR_NOTE.prompt
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104237345554509
+    m_Key: enc.DOCTOR_NOTE.take
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104237345554510
+    m_Key: enc.DOCTOR_NOTE.leave
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104237345554511
+    m_Key: location.LOC_TUTORIAL
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104237345554512
+    m_Key: location.LOC_STORE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104237345554513
+    m_Key: location.LOC_PHARMACY
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104237345554514
+    m_Key: roomname.ROOM_PE_STORAGE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104237345554515
+    m_Key: roomname.ROOM_STORE_STOCK
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104237345554516
+    m_Key: roomname.ROOM_STORE_OFFICE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104237345554517
+    m_Key: roomname.ROOM_PH_DISPENSARY
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104237345554518
+    m_Key: roomname.ROOM_PH_CLINIC
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104237345554519
+    m_Key: roomname.ROOM_PH_STOCKROOM
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104237345554520
+    m_Key: diary.default
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104237345554521
+    m_Key: diary.w1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104237345554522
+    m_Key: diary.w2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104237345554523
+    m_Key: diary.tired
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104237345554524
+    m_Key: diary.stress
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104237345554525
+    m_Key: diary.hungry
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104237345554526
+    m_Key: diary.debt
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104237345554527
+    m_Key: diary.crutch
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104237345554528
+    m_Key: diary.dohyeon
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104237345554529
+    m_Key: diary.messages
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104237345554530
+    m_Key: diary.raid
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104237345554531
+    m_Key: diary.breach
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104237345554532
+    m_Key: diary.spring
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104237345554533
+    m_Key: diary.early_summer
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104237345554534
+    m_Key: diary.hopeful
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104237345554535
+    m_Key: diary.lonely
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104237345554536
+    m_Key: diary.act1_end
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104237345554537
+    m_Key: tc.idle
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104237345554538
+    m_Key: tc.w1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104237345554539
+    m_Key: tc.hungry
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104237345554540
+    m_Key: tc.debt
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104237345554541
+    m_Key: tc.stress
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104237345554542
+    m_Key: tc.crutch_todo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104237345554543
+    m_Key: tc.power_todo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104237345554544
+    m_Key: tc.threat
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104237345554545
+    m_Key: tc.dohyeon
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104237345554546
+    m_Key: tc.night
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104237345554547
+    m_Key: tc.final_week
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104237345554548
+    m_Key: tc.study
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104237345554549
+    m_Key: prologue.default_name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104237345554550
+    m_Key: prologue.input_name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104237345554551
+    m_Key: prologue.input_contact
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104237345554552
+    m_Key: prologue.input_birthday
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104237345554553
+    m_Key: prologue.input_personality
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104237345554554
+    m_Key: prologue.month
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104237345554555
+    m_Key: prologue.day
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104237345554556
+    m_Key: record.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104237345554557
+    m_Key: record.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104237345554558
+    m_Key: record.personality
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104237345554559
+    m_Key: record.school
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104237345554560
+    m_Key: record.traits
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104237345554561
+    m_Key: record.total
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104237345554562
+    m_Key: record.friend
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104237345554563
+    m_Key: record.ok
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104237345554564
+    m_Key: blood.A
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104237345554565
+    m_Key: blood.B
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104237345554566
+    m_Key: blood.O
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104237345554567
+    m_Key: blood.AB
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104237345554568
+    m_Key: blood.Unknown
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104237345554569
+    m_Key: grade.TOP
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104237345554570
+    m_Key: grade.MIDDLE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104237345554571
+    m_Key: grade.LOW
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104237345554572
+    m_Key: grade.UNKNOWN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104237345554573
+    m_Key: grade.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104237345554574
+    m_Key: subject.KOREAN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104237345554575
+    m_Key: subject.MATH_SCI
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104237345554576
+    m_Key: subject.PE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104237345554577
+    m_Key: subject.TECH_HOME
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104237345554578
+    m_Key: subject.BIO
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104237345554579
+    m_Key: subject.NONE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104237345554580
+    m_Key: subject.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104237345554581
+    m_Key: club.TRACK
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104237345554582
+    m_Key: club.COOKING
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104237345554583
+    m_Key: club.SCIENCE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104237345554584
+    m_Key: club.LIBRARY
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104237345554585
+    m_Key: club.ART
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104237345554586
+    m_Key: club.BROADCAST
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104237345554587
+    m_Key: club.HEALTH
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104237345554588
+    m_Key: club.HOME
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104237345554589
+    m_Key: club.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104237345554590
+    m_Key: title.quick_start
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104237345554591
+    m_Key: debug.ui_all
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104237345554592
+    m_Key: debug.unlock_all
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
