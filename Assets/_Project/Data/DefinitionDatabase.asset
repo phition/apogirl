@@ -40,3 +40,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: cdd7c4dcf131e2a47b53cc8454eac976, type: 2}
   _locations:
   - {fileID: 11400000, guid: fafdd46fd3da70047a389fc3cff53d2f, type: 2}
+  _enemies:
+  - {fileID: 11400000, guid: e6a3c9c213481e642bcd64cd2057ea4a, type: 2}
+  - {fileID: 11400000, guid: e75628b415011bf48b385cfe6dc11fcf, type: 2}

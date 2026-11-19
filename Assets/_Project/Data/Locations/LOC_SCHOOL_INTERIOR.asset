@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: ApoGirl.Data::ApoGirl.Data.LocationAsset
   _id: LOC_SCHOOL_INTERIOR
   _definition:
-    Id: 
+    Id: LOC_SCHOOL_INTERIOR
     Layout:
       Floors: 4
       FloorHeight: 4
@@ -410,3 +410,84 @@ MonoBehaviour:
     DayRunSeconds: 360
     NightRunSeconds: 360
     DefaultLootTableId: LOOT_SCHOOL_GENERAL
+    DayVariant:
+      Spawns:
+      - EnemyId: ENEMY_WANDERER
+        Floor: 1
+        RoomId: 
+        X: 40
+        Count: 6
+        Spread: 3
+        Dormant: 1
+      - EnemyId: ENEMY_WANDERER
+        Floor: 0
+        RoomId: ROOM_1F_ROOM_OFFICE_0
+        X: 10
+        Count: 3
+        Spread: 3
+        Dormant: 1
+      - EnemyId: ENEMY_WANDERER
+        Floor: 2
+        RoomId: 
+        X: 58
+        Count: 4
+        Spread: 2
+        Dormant: 1
+      - EnemyId: ENEMY_WANDERER
+        Floor: 3
+        RoomId: 
+        X: 24
+        Count: 5
+        Spread: 2.5
+        Dormant: 1
+      - EnemyId: ENEMY_WANDERER
+        Floor: 1
+        RoomId: ROOM_2F_ROOM_CLASSROOM_4
+        X: 8
+        Count: 3
+        Spread: 2
+        Dormant: 1
+      - EnemyId: ENEMY_WANDERER
+        Floor: 2
+        RoomId: ROOM_3F_ROOM_CLASSROOM_2
+        X: 7
+        Count: 2
+        Spread: 1.5
+        Dormant: 1
+      - EnemyId: ENEMY_WANDERER
+        Floor: 3
+        RoomId: ROOM_4F_ROOM_CLASSROOM_6
+        X: 8
+        Count: 3
+        Spread: 2
+        Dormant: 1
+      - EnemyId: ENEMY_LISTENER
+        Floor: 3
+        RoomId: ROOM_4F_ROOM_RESTROOM_0
+        X: 5
+        Count: 2
+        Spread: 1
+        Dormant: 1
+      - EnemyId: ENEMY_WANDERER
+        Floor: 0
+        RoomId: 
+        X: 62
+        Count: 1
+        Spread: 0
+        Dormant: 0
+      - EnemyId: ENEMY_LISTENER
+        Floor: 2
+        RoomId: 
+        X: 20
+        Count: 1
+        Spread: 0
+        Dormant: 0
+      - EnemyId: ENEMY_WANDERER
+        Floor: 3
+        RoomId: 
+        X: 52
+        Count: 1
+        Spread: 0
+        Dormant: 0
+    NightVariant:
+      Spawns: []

@@ -855,6 +855,70 @@ MonoBehaviour:
     m_Key: roomname.ROOM_OFFICE
     m_Metadata:
       m_Items: []
+  - m_Id: 29575466991616
+    m_Key: exp.activity
+    m_Metadata:
+      m_Items: []
+  - m_Id: 29575550877696
+    m_Key: activity.Dormant
+    m_Metadata:
+      m_Items: []
+  - m_Id: 29575550877697
+    m_Key: activity.Stirring
+    m_Metadata:
+      m_Items: []
+  - m_Id: 29575550877698
+    m_Key: activity.Alert
+    m_Metadata:
+      m_Items: []
+  - m_Id: 29575550877699
+    m_Key: activity.Hunting
+    m_Metadata:
+      m_Items: []
+  - m_Id: 29575550877700
+    m_Key: exp.noise
+    m_Metadata:
+      m_Items: []
+  - m_Id: 29575550877701
+    m_Key: exp.hidden
+    m_Metadata:
+      m_Items: []
+  - m_Id: 29575550877702
+    m_Key: exp.stirring
+    m_Metadata:
+      m_Items: []
+  - m_Id: 29575550877703
+    m_Key: exp.prompt_hide
+    m_Metadata:
+      m_Items: []
+  - m_Id: 29575550877704
+    m_Key: exp.prompt_unhide
+    m_Metadata:
+      m_Items: []
+  - m_Id: 29575550877705
+    m_Key: exp.hide_blocked
+    m_Metadata:
+      m_Items: []
+  - m_Id: 29575550877706
+    m_Key: exp.shoved
+    m_Metadata:
+      m_Items: []
+  - m_Id: 29575550877707
+    m_Key: exp.hurt
+    m_Metadata:
+      m_Items: []
+  - m_Id: 29575550877708
+    m_Key: exp.spotted
+    m_Metadata:
+      m_Items: []
+  - m_Id: 29575550877709
+    m_Key: exp.crowd_woke
+    m_Metadata:
+      m_Items: []
+  - m_Id: 29575550877710
+    m_Key: exp.dusk
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
