@@ -150,8 +150,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: ApoGirl.Exploration::ApoGirl.Exploration.Runtime.ExpeditionDirector
   _fallbackDatabase: {fileID: 11400000, guid: a4c14e417cb539c4591647f108e6dca6, type: 2}
   _panelSettings: {fileID: 11400000, guid: ae29f09802dec484db6e9a163cc44af6, type: 2}
-  _hudLayout: {fileID: 9197481963319205126, guid: 7ca71cd7690bed8479d15f4649646ea6
-{fileID:, type: 3}
+  _hudLayout: {fileID: 9197481963319205126, guid: 7ca71cd7690bed8479d15f4649646ea6, type: 3}
   _debugLocationId: LOC_SCHOOL_INTERIOR
   _debugTimeOfDay: 0
 --- !u!4 &434080926
