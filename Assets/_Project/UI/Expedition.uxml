@@ -24,6 +24,7 @@
         <ui:VisualElement name="exp-prompt" class="exp-prompt" picking-mode="Ignore">
             <ui:ProgressBar name="stir-bar" class="exp-stir-bar hidden" low-value="0" high-value="100" />
             <ui:Label name="hidden-label" class="exp-hidden hidden" />
+            <ui:Label name="tutorial-label" class="exp-tutorial hidden" />
             <ui:Label name="prompt-label" class="exp-prompt-label" />
             <ui:ProgressBar name="search-bar" class="exp-search-bar hidden" low-value="0" high-value="100" />
         </ui:VisualElement>
@@ -33,6 +34,7 @@
                 <ui:Label name="vitals-label" class="exp-status-label" />
                 <ui:Label name="weight-label" class="exp-status-label" />
                 <ui:Label name="noise-label" class="exp-status-label" />
+                <ui:Label name="equip-label" class="exp-status-label" />
             </ui:VisualElement>
             <ui:Label name="controls-label" class="exp-controls" />
         </ui:VisualElement>
@@ -49,6 +51,11 @@
         <ui:VisualElement name="backpack-panel" class="exp-panel exp-backpack hidden">
             <ui:Label name="backpack-title" class="exp-panel-title" />
             <ui:VisualElement name="backpack-grid" class="bp-grid" />
+        </ui:VisualElement>
+
+        <ui:VisualElement name="encounter-panel" class="exp-panel exp-encounter hidden">
+            <ui:Label name="encounter-text" class="exp-encounter-text" />
+            <ui:VisualElement name="encounter-choices" class="exp-encounter-choices" />
         </ui:VisualElement>
 
         <ui:Label name="message" class="exp-message hidden" />

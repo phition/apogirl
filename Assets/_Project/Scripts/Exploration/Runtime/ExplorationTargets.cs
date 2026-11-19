@@ -16,6 +16,9 @@ namespace ApoGirl.Exploration.Runtime
 
         /// <summary>방 안의 출입문 (복도로 나가기).</summary>
         RoomExit,
+
+        /// <summary>사람·스토리 오브젝트 조우 (M4).</summary>
+        Encounter,
     }
 
     /// <summary>
@@ -74,6 +77,16 @@ namespace ApoGirl.Exploration.Runtime
         public float LinkX;
 
         public bool IsDoorway => Kind == TargetKind.Door || Kind == TargetKind.RoomExit;
+
+        // ── M4 ──
+        public EncounterDef Encounter;
+
+        /// <summary>이 시간대에 열리지 않는 방 문 (셔터 등).</summary>
+        public bool RoomLocked;
+
+        /// <summary>쇠지렛대로 열 수 있는 잠긴 문 (Forced가 되면 열림).</summary>
+        public bool Forceable;
+        public bool Forced;
 
         public int Floor => Area.Floor;
 

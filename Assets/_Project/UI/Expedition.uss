@@ -102,3 +102,25 @@
     -unity-font-style: bold;
     color: rgb(178, 204, 230);
 }
+
+/* ── M4: 튜토리얼 안내, 조우 ── */
+.exp-tutorial {
+    color: #f0d89a;
+    background-color: rgba(30, 28, 20, 0.85);
+    padding: 6px 14px;
+    border-radius: 6px;
+    margin-bottom: 8px;
+    font-size: 18px;
+}
+
+.exp-encounter {
+    position: absolute;
+    left: 25%;
+    right: 25%;
+    top: 28%;
+    padding: 16px 20px;
+}
+
+.exp-encounter-text { white-space: normal; font-size: 18px; margin-bottom: 12px; }
+.exp-encounter-choices { flex-direction: column; }
+.exp-encounter-choice { height: 38px; margin: 3px 0; -unity-text-align: middle-left; padding-left: 12px; }

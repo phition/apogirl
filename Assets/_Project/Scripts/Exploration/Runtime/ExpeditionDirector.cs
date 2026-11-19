@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using ApoGirl.Core.Definitions;
 using ApoGirl.Core.Expedition;
 using ApoGirl.Core.Random;
@@ -79,6 +80,26 @@ namespace ApoGirl.Exploration.Runtime
         private Light2D _light;
         private int _startHp;
         private float _moveNoiseTimer;
+
+        // ── M4: 장비·조우·튜토리얼 ──
+        private ItemDef _weapon;
+        private ItemDef _armor;
+        private ItemDef _backpackItem;
+        private ToolKind _toolKind;
+        private int _weaponDurability;
+        private int _weaponWear;
+        private float _attackTimer;
+        private readonly List<string> _quickSlots = new List<string>();
+        private readonly List<string> _usedItems = new List<string>();
+        private readonly List<string> _runFlags = new List<string>();
+        private readonly List<string> _runClues = new List<string>();
+        private float _moveMultiplier = 1f;
+        private float _noiseMultiplier = 1f;
+        private float _tutorialMoved;
+        private float _tutorialCrouched;
+        private bool _tutorialSearched;
+        private bool _tutorialHidden;
+        private bool _tutorialOpenedBag;
         private float _searchNoiseTimer;
         private float _shoveTimer;
         private bool _crouching;
@@ -152,6 +173,31 @@ namespace ApoGirl.Exploration.Runtime
 
         public bool FlashlightOn { get; private set; }
 
+        /// <summary>장비 (HUD 표시용).</summary>
+        public ItemDef Weapon => _weapon;
+        public ItemDef Armor => _armor;
+        public ToolKind ToolKind => _toolKind;
+        public int WeaponDurabilityLeft => _weapon == null ? 0 : Math.Max(0, _weaponDurability - _weaponWear);
+        public IReadOnlyList<string> QuickSlots => _quickSlots;
+
+        /// <summary>조우 선택 중 (시간 정지).</summary>
+        public ExplorationTarget OpenEncounter { get; private set; }
+
+        /// <summary>튜토리얼 안내 키 (튜토리얼 런이 아니면 null).</summary>
+        public string TutorialHintKey
+        {
+            get
+            {
+                if (Location == null || !Location.Tutorial) return null;
+                if (_tutorialMoved < 3f) return "tut.move";
+                if (_tutorialCrouched < 1f) return "tut.crouch";
+                if (!_tutorialSearched) return "tut.search";
+                if (!_tutorialOpenedBag) return "tut.backpack";
+                if (!_tutorialHidden) return "tut.hide";
+                return "tut.extract";
+            }
+        }
+
         /// <summary>밤 시계가 끝나 새벽이 됨: 활동성이 가라앉고, 이후 탈출은 새벽 귀환 (수면 부채 +1, 문서 6.3.2-(4)).</summary>
         public bool DawnReturn { get; private set; }
 
@@ -170,6 +216,11 @@ namespace ApoGirl.Exploration.Runtime
         /// </summary>
         public bool IsVisibleToPlayer(ZombieUnit unit)
         {
+            if (unit.IsDown)
+            {
+                return false; // 쓰러진 좀비는 치운다 (고어 지양, 문서 13-4)
+            }
+
             if (FullVision || DebugOverlay)
             {
                 return true;
@@ -199,7 +250,8 @@ namespace ApoGirl.Exploration.Runtime
         public float PeekViewRange => IsDark ? _balance.NightViewDistance : _balance.PeekRange;
 
         /// <summary>좀비 눈에 띄는 정도: 낮 1, 어둠 0.6, 손전등 1.5.</summary>
-        public float Visibility => !IsDark ? 1f : FlashlightOn ? _balance.FlashlightExposure : _balance.DarknessVisibility;
+        public float Visibility => (!IsDark ? 1f : FlashlightOn ? _balance.FlashlightExposure : _balance.DarknessVisibility)
+                                   * Mathf.Max(0.3f, 1f - Request.Modifier("StealthBonus"));
 
         /// <summary>탐험 카메라 (HUD가 월드 위치를 화면 좌표로 바꿀 때 사용).</summary>
         public Camera ViewCamera => _camera;
@@ -264,7 +316,10 @@ namespace ApoGirl.Exploration.Runtime
             }
 
             Clock = new RunClock(day ? Location.DayRunSeconds : Location.NightRunSeconds, Request.TimeOfDay);
-            Backpack = new BackpackGrid(_balance.BackpackWidth, _balance.BackpackHeight);
+            SetupEquipment();
+            Backpack = _backpackItem != null && _backpackItem.GridWidth > 0
+                ? new BackpackGrid(_backpackItem.GridWidth, _backpackItem.GridHeight)
+                : new BackpackGrid(_balance.PocketWidth, _balance.PocketHeight);
             CarryCapacity = ExplorationRules.CarryCapacity(Request.Stats, _balance);
 
             BuildWorld();
@@ -286,6 +341,12 @@ namespace ApoGirl.Exploration.Runtime
         {
             if (IsFinished || _hud == null)
             {
+                return;
+            }
+
+            if (OpenEncounter != null)
+            {
+                _hud.Refresh();
                 return;
             }
 
@@ -333,6 +394,28 @@ namespace ApoGirl.Exploration.Runtime
                     MoveTo(_corridors[target.Connector.TargetFloor], target.X);
                     EmitNoise(CurrentArea, X, _balance.StairsNoise);
                     break;
+                case TargetKind.Door when target.RoomLocked:
+                    _hud?.ShowMessage("exp.room_shuttered");
+                    break;
+                case TargetKind.Door when target.Forceable && !target.Forced:
+                    if (_toolKind != ToolKind.Crowbar)
+                    {
+                        _hud?.ShowMessage("exp.room_locked_need_crowbar");
+                        break;
+                    }
+
+                    target.Forced = true;
+                    foreach (var other in target.Room.CorridorDoors)
+                    {
+                        other.Forced = true;
+                    }
+
+                    EmitNoise(CurrentArea, X, _balance.ShoveNoise);
+                    _hud?.ShowMessage("exp.forced_open");
+                    break;
+                case TargetKind.Encounter:
+                    OpenEncounter = target;
+                    break;
                 case TargetKind.Door:
                     EnsureRoomBuilt(target.Room);
                     EmitNoise(CurrentArea, X, _balance.DoorNoise);
@@ -355,7 +438,14 @@ namespace ApoGirl.Exploration.Runtime
                     EmitNoise(CurrentArea, X, _balance.DoorNoise);
                     break;
                 case TargetKind.Exit:
-                    if (target.Locked)
+                    if (target.Locked && _toolKind == ToolKind.Crowbar)
+                    {
+                        target.Locked = false;
+                        target.Tint(new Color(0.35f, 0.6f, 0.38f));
+                        EmitNoise(CurrentArea, X, _balance.ShoveNoise);
+                        _hud?.ShowMessage("exp.forced_open");
+                    }
+                    else if (target.Locked)
                     {
                         _hud?.ShowMessage("exp.exit_locked");
                     }
@@ -481,7 +571,132 @@ namespace ApoGirl.Exploration.Runtime
         /// <summary>손전등 켜기/끄기 (F). 어둠 속 수색이 빨라지는 대신 멀리서도 눈에 띈다.</summary>
         public void ToggleFlashlight()
         {
+            if (_toolKind != ToolKind.Flashlight && !FlashlightOn)
+            {
+                _hud?.ShowMessage("exp.no_flashlight");
+                return;
+            }
+
             FlashlightOn = !FlashlightOn;
+        }
+
+        /// <summary>
+        /// Q: 주무기가 있으면 공격 (타격 누적·쓰러뜨림·내구도 소모·무기 소음), 없으면 밀치기.
+        /// 정면전은 손해라는 감각을 위해 소음이 크고 내구도가 닳는다 (문서 6.3.5-(4)).
+        /// </summary>
+        public bool Attack()
+        {
+            if (_weapon == null)
+            {
+                return Shove();
+            }
+
+            if (_attackTimer > 0f || Hidden)
+            {
+                return false;
+            }
+
+            _attackTimer = Mathf.Max(0.3f, _weapon.AttackCooldown);
+            EmitNoise(CurrentArea, X, _weapon.AttackNoise);
+            var hit = _threat.Strike(Snapshot, _facingRight ? 1 : -1, _weapon.WeaponPower, _weapon.StunSeconds, _balance.ShoveRange + 0.3f);
+            if (hit == null)
+            {
+                return false;
+            }
+
+            _weaponWear++;
+            _hud?.ShowMessage(hit.IsDown ? "exp.zombie_down" : "exp.hit");
+            if (_weaponDurability > 0 && _weaponWear >= _weaponDurability)
+            {
+                _hud?.ShowMessage("exp.weapon_broke");
+                _weapon = null;
+            }
+
+            return true;
+        }
+
+        /// <summary>퀵슬롯 소모품 사용 (1~4). 탐험 중 HP 회복·스트레스 완화.</summary>
+        public bool UseQuickSlot(int index)
+        {
+            if (index < 0 || index >= _quickSlots.Count || IsFinished)
+            {
+                return false;
+            }
+
+            var item = _db.GetItemOrNull(_quickSlots[index]);
+            if (item == null)
+            {
+                return false;
+            }
+
+            _usedItems.Add(item.Id);
+            _quickSlots.RemoveAt(index);
+            if (item.UseHp > 0)
+            {
+                Hp = Math.Min(Math.Max(_startHp, Hp), Hp + item.UseHp);
+            }
+
+            if (item.UseStress > 0)
+            {
+                _runStress = Math.Max(0, _runStress - item.UseStress);
+            }
+
+            _hud?.ShowText(Loc.F("exp.used_item", Loc.Item(item.Id)));
+            return true;
+        }
+
+        /// <summary>조우 선택지를 고른다.</summary>
+        public void ChooseEncounter(int choiceIndex)
+        {
+            var target = OpenEncounter;
+            if (target == null || choiceIndex < 0 || choiceIndex >= target.Encounter.Choices.Count)
+            {
+                return;
+            }
+
+            var choice = target.Encounter.Choices[choiceIndex];
+            _runFlags.AddRange(choice.SetFlags);
+            _runClues.AddRange(choice.AddClues);
+            _runStress = Math.Max(0, _runStress + (int)choice.StressDelta);
+            _runFlags.Add("ENC_" + target.Encounter.Id + "_" + choice.Id);
+            OpenEncounter = null;
+            if (choice.Removes)
+            {
+                target.Area.Targets.Remove(target);
+                _targets.Remove(target);
+                if (target.View != null)
+                {
+                    target.View.SetActive(false);
+                }
+            }
+            else
+            {
+                target.Encounter = null;
+                target.Area.Targets.Remove(target);
+                _targets.Remove(target);
+            }
+        }
+
+        public void CancelEncounter()
+        {
+            OpenEncounter = null;
+        }
+
+        private void SetupEquipment()
+        {
+            var loadout = Request.Loadout ?? new LoadoutState();
+            _backpackItem = _db.GetItemOrNull(loadout.Backpack);
+            _weapon = _db.GetItemOrNull(loadout.MainWeapon);
+            _armor = _db.GetItemOrNull(loadout.Armor);
+            var tool = _db.GetItemOrNull(loadout.Tool);
+            _toolKind = tool?.Tool ?? ToolKind.None;
+            _weaponDurability = _weapon == null ? 0 : Request.WeaponDurability > 0 ? Request.WeaponDurability : _weapon.MaxDurability;
+            _quickSlots.Clear();
+            _quickSlots.AddRange(loadout.QuickSlots.Where(id => !string.IsNullOrEmpty(id)));
+
+            _moveMultiplier = (_backpackItem?.MoveSpeedMultiplier ?? 1f) * (_armor?.MoveSpeedMultiplier ?? 1f);
+            _noiseMultiplier = (_backpackItem?.NoiseMultiplier ?? 1f) * (_armor?.NoiseMultiplier ?? 1f)
+                               * Mathf.Max(0.2f, 1f + Request.Modifier("NoiseMultiplier"));
         }
 
         /// <summary>디버그·테스트: 소음 발생.</summary>
@@ -515,12 +730,23 @@ namespace ApoGirl.Exploration.Runtime
             if (keyboard.tabKey.wasPressedThisFrame)
             {
                 _hud.ToggleBackpack();
+                _tutorialOpenedBag = true;
             }
 
             if (_shoveTimer > 0f)
             {
                 _shoveTimer -= dt;
             }
+
+            if (_attackTimer > 0f)
+            {
+                _attackTimer -= dt;
+            }
+
+            if (keyboard.digit1Key.wasPressedThisFrame) UseQuickSlot(0);
+            if (keyboard.digit2Key.wasPressedThisFrame) UseQuickSlot(1);
+            if (keyboard.digit3Key.wasPressedThisFrame) UseQuickSlot(2);
+            if (keyboard.digit4Key.wasPressedThisFrame) UseQuickSlot(3);
 
             Nearest = FindNearest();
             if (keyboard.spaceKey.wasPressedThisFrame)
@@ -540,7 +766,12 @@ namespace ApoGirl.Exploration.Runtime
 
             if (keyboard.qKey.wasPressedThisFrame)
             {
-                Shove();
+                Attack();
+            }
+
+            if (Hidden)
+            {
+                _tutorialHidden = true;
             }
 
             _crouching = keyboard.leftCtrlKey.isPressed;
@@ -551,7 +782,13 @@ namespace ApoGirl.Exploration.Runtime
             {
                 _facingRight = move > 0f;
                 CloseContainer();
-                var speed = ExplorationRules.MoveSpeed(running, _crouching, IsOverweight, _balance);
+                var speed = ExplorationRules.MoveSpeed(running, _crouching, IsOverweight, _balance)
+                            * _moveMultiplier * (running ? 1f + Request.Modifier("RunSpeed") : 1f);
+                _tutorialMoved += Mathf.Abs(move) * speed * dt;
+                if (_crouching)
+                {
+                    _tutorialCrouched += dt;
+                }
                 X = Mathf.Clamp(X + move * speed * dt, EdgeMargin, CurrentArea.Width - EdgeMargin);
 
                 _moveNoiseTimer -= dt;
@@ -580,11 +817,13 @@ namespace ApoGirl.Exploration.Runtime
                         EmitNoise(CurrentArea, X, _balance.SearchNoise);
                     }
 
-                    Nearest.SearchProgress += IsDark && !FlashlightOn ? dt / _balance.DarkSearchMultiplier : dt;
+                    var searchRate = 1f + Request.Modifier("SearchSpeed");
+                    Nearest.SearchProgress += (IsDark && !FlashlightOn ? dt / _balance.DarkSearchMultiplier : dt) * searchRate;
                     if (Nearest.SearchProgress >= Nearest.SearchSeconds)
                     {
                         _log.ContainersSearched++;
                         Nearest.MarkSearched();
+                        _tutorialSearched = true;
                         OpenContainer = Nearest;
                     }
                 }
@@ -643,6 +882,18 @@ namespace ApoGirl.Exploration.Runtime
                 ? Math.Min(0, _balance.DownRemainingHp - _startHp)
                 : Hp - _startHp;
             Result = RunResultBuilder.Build(status, Backpack.Items, _db, _baseFatigue, _runStress, hpDelta, Clock.Elapsed);
+            Result.UsedItems.AddRange(_usedItems);
+            Result.WeaponWear = _weaponWear;
+            foreach (var flag in _runFlags)
+            {
+                if (!Result.Flags.Contains(flag)) Result.Flags.Add(flag);
+            }
+
+            foreach (var clue in _runClues)
+            {
+                if (!Result.Clues.Contains(clue)) Result.Clues.Add(clue);
+            }
+
             if (DawnReturn && status != ExtractStatus.Down)
             {
                 // 새벽까지 버틴 대가: 수면 부채 +1, 다음 강제 휴식 회복 감소 (허브가 처리)
@@ -739,6 +990,13 @@ namespace ApoGirl.Exploration.Runtime
                     var corridorX = room.SpanX + doorX;
                     var view = Rect(corridor, "Door_" + door.RoomId, corridorX - 0.7f, new Vector2(1.4f, 2.8f), BuildingView.DoorColor, 0);
                     var target = new ExplorationTarget { Kind = TargetKind.Door, Area = corridor, X = corridorX, Room = room, LinkX = doorX, View = view };
+                    var variant = Request.TimeOfDay == ExpeditionTime.Day ? Location.DayVariant : Location.NightVariant;
+                    target.RoomLocked = variant.LockedRooms.Contains(door.RoomId);
+                    target.Forceable = variant.ForceableRooms.Contains(door.RoomId);
+                    if (target.RoomLocked || target.Forceable)
+                    {
+                        target.Tint(target.RoomLocked ? new Color(0.12f, 0.12f, 0.14f) : new Color(0.3f, 0.22f, 0.18f));
+                    }
                     AddTarget(target);
                     room.CorridorDoors.Add(target);
                 }
@@ -749,6 +1007,14 @@ namespace ApoGirl.Exploration.Runtime
                 var container = layout.Containers[i];
                 var target = CreateContainer(_corridors[container.Floor], container);
                 target.Contents.AddRange(RoomLoot.RollCorridorContainer(_db, Location, i, Request.Seed));
+            }
+
+            foreach (var encounter in ActiveEncounters())
+            {
+                if (string.IsNullOrEmpty(encounter.RoomId) && encounter.Floor >= 0 && encounter.Floor < _corridors.Count)
+                {
+                    CreateEncounter(_corridors[encounter.Floor], encounter);
+                }
             }
 
             ExitDef start = null;
@@ -788,6 +1054,14 @@ namespace ApoGirl.Exploration.Runtime
                 AddTarget(new ExplorationTarget { Kind = TargetKind.RoomExit, Area = room, X = doorX, Room = room, LinkX = room.SpanX + doorX, View = exitView });
             }
 
+            foreach (var encounter in ActiveEncounters())
+            {
+                if (encounter.RoomId == room.Door.RoomId)
+                {
+                    CreateEncounter(room, encounter);
+                }
+            }
+
             var contents = RoomLoot.RollRoom(_db, Location, room.DoorIndex, Request.Seed);
             for (var i = 0; i < room.Template.Containers.Count; i++)
             {
@@ -797,6 +1071,26 @@ namespace ApoGirl.Exploration.Runtime
                     target.Contents.AddRange(contents[i]);
                 }
             }
+        }
+
+        /// <summary>이번 시간대 변형에서 출정 플래그 조건이 맞는 조우.</summary>
+        private IEnumerable<EncounterDef> ActiveEncounters()
+        {
+            var variant = Request.TimeOfDay == ExpeditionTime.Day ? Location.DayVariant : Location.NightVariant;
+            var flags = Request.Flags ?? new HashSet<string>();
+            foreach (var encounter in variant.Encounters)
+            {
+                if (encounter.FlagsAll.All(flags.Contains) && !encounter.FlagsNone.Any(flags.Contains))
+                {
+                    yield return encounter;
+                }
+            }
+        }
+
+        private void CreateEncounter(ExplorationArea area, EncounterDef encounter)
+        {
+            var view = Rect(area, "Encounter_" + encounter.Id, encounter.X - 0.3f, new Vector2(0.6f, 1.5f), new Color(0.55f, 0.62f, 0.75f), 9);
+            AddTarget(new ExplorationTarget { Kind = TargetKind.Encounter, Area = area, X = encounter.X, Encounter = encounter, View = view });
         }
 
         private ExplorationTarget CreateContainer(ExplorationArea area, ContainerDef container)
@@ -1042,8 +1336,9 @@ namespace ApoGirl.Exploration.Runtime
             var events = _threat.Step(dt, Snapshot, Activity);
             if (events.Damage > 0 && !Invincible)
             {
-                _log.DamageTaken += events.Damage;
-                Hp = Math.Max(0, Hp - events.Damage);
+                var damage = Mathf.Max(1, Mathf.RoundToInt(events.Damage * (1f - Mathf.Clamp01(_armor?.DamageReduction ?? 0f))));
+                _log.DamageTaken += damage;
+                Hp = Math.Max(0, Hp - damage);
                 _hud?.ShowMessage("exp.hurt");
                 if (Hp <= 0)
                 {
@@ -1357,6 +1652,7 @@ namespace ApoGirl.Exploration.Runtime
                 return;
             }
 
+            radius *= _noiseMultiplier;
             _threat.Emit(new NoiseEvent(AreaId(area), x, radius));
             EmitThroughWalls(area, x, radius);
             if (DebugOverlay)

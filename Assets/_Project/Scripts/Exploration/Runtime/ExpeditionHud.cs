@@ -41,6 +41,12 @@ namespace ApoGirl.Exploration.Runtime
         private readonly ProgressBar _stirBar;
         private readonly VisualElement _worldLabels;
         private readonly VisualElement _root;
+        private readonly Label _equip;
+        private readonly Label _tutorial;
+        private readonly VisualElement _encounterPanel;
+        private readonly Label _encounterText;
+        private readonly VisualElement _encounterChoices;
+        private ExplorationTarget _shownEncounter;
         private readonly List<Label> _sleepLabels = new List<Label>();
         private PlacedItem _selected;
         private int _gridVersion = -1;
@@ -73,6 +79,11 @@ namespace ApoGirl.Exploration.Runtime
             _stirBar = root.Q<ProgressBar>("stir-bar");
             _worldLabels = root.Q("world-labels");
             _root = root;
+            _equip = root.Q<Label>("equip-label");
+            _tutorial = root.Q<Label>("tutorial-label");
+            _encounterPanel = root.Q("encounter-panel");
+            _encounterText = root.Q<Label>("encounter-text");
+            _encounterChoices = root.Q("encounter-choices");
 
             root.Q<Label>("backpack-title").text = Loc.T("exp.backpack");
             root.Q<Label>("controls-label").text = Loc.T("exp.controls");
@@ -151,10 +162,56 @@ namespace ApoGirl.Exploration.Runtime
             if (_director.DebugOverlay) debug += " F3";
             _debug.text = debug.Trim();
 
+            _equip.text = EquipmentText();
+            var hint = _director.TutorialHintKey;
+            _tutorial.EnableInClassList("hidden", hint == null);
+            if (hint != null)
+            {
+                _tutorial.text = Loc.T(hint);
+            }
+
+            RefreshEncounter();
             RefreshPrompt();
             RefreshLoot();
             RefreshGrid();
             RefreshSleepLabels();
+        }
+
+        private string EquipmentText()
+        {
+            var weapon = _director.Weapon != null
+                ? Loc.F("exp.equip_weapon", Loc.Item(_director.Weapon.Id), _director.WeaponDurabilityLeft)
+                : Loc.T("exp.equip_bare");
+            var tool = _director.ToolKind == ToolKind.None ? "" : "  ·  " + Loc.T("tool." + _director.ToolKind);
+            var quick = "";
+            for (var i = 0; i < _director.QuickSlots.Count; i++)
+            {
+                quick += $"  [{i + 1}] " + Loc.Item(_director.QuickSlots[i]);
+            }
+
+            return weapon + tool + quick;
+        }
+
+        private void RefreshEncounter()
+        {
+            var target = _director.OpenEncounter;
+            _encounterPanel.EnableInClassList("hidden", target == null);
+            if (target == null || target == _shownEncounter)
+            {
+                _shownEncounter = target;
+                return;
+            }
+
+            _shownEncounter = target;
+            _encounterText.text = Loc.T(target.Encounter.PromptKey);
+            _encounterChoices.Clear();
+            for (var i = 0; i < target.Encounter.Choices.Count; i++)
+            {
+                var index = i;
+                var button = new Button(() => _director.ChooseEncounter(index)) { text = Loc.T(target.Encounter.Choices[i].TextKey) };
+                button.AddToClassList("exp-encounter-choice");
+                _encounterChoices.Add(button);
+            }
         }
 
         private void RefreshPrompt()
@@ -212,7 +269,15 @@ namespace ApoGirl.Exploration.Runtime
                     _prompt.text = Loc.F(target.Connector.TargetFloor > target.Floor ? "exp.prompt_up" : "exp.prompt_down", target.Connector.TargetFloor + 1);
                     break;
                 case TargetKind.Exit:
-                    _prompt.text = Loc.T(target.Locked ? "exp.prompt_exit_locked" : "exp.prompt_exit");
+                    _prompt.text = Loc.T(!target.Locked ? "exp.prompt_exit"
+                        : _director.ToolKind == ToolKind.Crowbar ? "exp.prompt_exit_force" : "exp.prompt_exit_locked");
+                    break;
+                case TargetKind.Door when target.RoomLocked:
+                    _prompt.text = Loc.F("exp.prompt_door_shuttered", target.Room.Label) + "  ·  " + Loc.T("exp.prompt_door_senses");
+                    break;
+                case TargetKind.Door when target.Forceable && !target.Forced:
+                    _prompt.text = Loc.F(_director.ToolKind == ToolKind.Crowbar ? "exp.prompt_door_force" : "exp.prompt_door_locked", target.Room.Label)
+                                   + "  ·  " + Loc.T("exp.prompt_door_senses");
                     break;
                 case TargetKind.Door:
                     _prompt.text = Loc.F(target.Room.Visited ? "exp.prompt_enter_again" : "exp.prompt_enter", target.Room.Label)
@@ -220,6 +285,9 @@ namespace ApoGirl.Exploration.Runtime
                     break;
                 case TargetKind.RoomExit:
                     _prompt.text = Loc.T("exp.prompt_leave") + "  ·  " + Loc.T("exp.prompt_door_senses");
+                    break;
+                case TargetKind.Encounter:
+                    _prompt.text = Loc.T("exp.prompt_encounter");
                     break;
             }
         }

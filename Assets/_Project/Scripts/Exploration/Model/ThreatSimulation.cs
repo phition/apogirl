@@ -115,6 +115,9 @@ namespace ApoGirl.Exploration.Model
         Search,
         Return,
         Stunned,
+
+        /// <summary>무기로 쓰러뜨림 (더 이상 움직이지 않는다, M4).</summary>
+        Down,
     }
 
     public sealed class ZombieUnit
@@ -138,7 +141,12 @@ namespace ApoGirl.Exploration.Model
         public int HomeArea;
         public float HomeX;
 
-        public bool IsAwake => State != ZombieState.Dormant;
+        /// <summary>무기 타격 누적 (EnemyDef.Toughness에 닿으면 쓰러짐).</summary>
+        public int Wounds;
+
+        public bool IsAwake => State != ZombieState.Dormant && State != ZombieState.Down;
+
+        public bool IsDown => State == ZombieState.Down;
     }
 
     /// <summary>휴면 군집 (문서 6.3.2-(3) Crowd Site): 각성 게이지를 공유하고 임계에서 함께 깨어난다.</summary>
@@ -280,6 +288,60 @@ namespace ApoGirl.Exploration.Model
             }
 
             return true;
+        }
+
+        /// <summary>
+        /// 무기 공격 (M4): 밀치기처럼 가장 가까운 좀비를 기절시키고 타격을 누적한다. 휴면 중인 좀비도 맞힐 수 있다.
+        /// 반환: 맞힌 좀비 (없으면 null). 쓰러뜨렸으면 State = Down.
+        /// </summary>
+        public ZombieUnit Strike(PlayerSnapshot player, int facing, int power, float stunSeconds, float range)
+        {
+            ZombieUnit best = null;
+            var bestDistance = range;
+            foreach (var zombie in _zombies)
+            {
+                if (zombie.IsDown || zombie.AreaId != player.AreaId)
+                {
+                    continue;
+                }
+
+                var dx = zombie.X - player.X;
+                if (Math.Sign(dx) != facing && Math.Abs(dx) > 0.2f)
+                {
+                    continue;
+                }
+
+                if (Math.Abs(dx) <= bestDistance)
+                {
+                    best = zombie;
+                    bestDistance = Math.Abs(dx);
+                }
+            }
+
+            if (best == null)
+            {
+                return null;
+            }
+
+            best.Wounds += Math.Max(1, power);
+            if (best.Wounds >= Math.Max(1, best.Def.Toughness))
+            {
+                best.State = ZombieState.Down;
+                best.Awareness = 0f;
+                return best;
+            }
+
+            if (best.State == ZombieState.Dormant)
+            {
+                // 잠든 무리를 때리면 그 무리가 깨어난다 (Step의 소음 처리로 이어짐)
+                best.State = ZombieState.Stunned;
+            }
+
+            best.State = ZombieState.Stunned;
+            best.StunTimer = stunSeconds;
+            best.X = Clamp(best.AreaId, best.X + facing * _balance.ShovePush * 0.6f);
+            best.Facing = -facing;
+            return best;
         }
 
         /// <summary>바라보는 방향의 가장 가까운 깨어 있는 좀비를 밀친다 (기절 + 밀려남). 소음은 호출 측이 낸다.</summary>

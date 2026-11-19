@@ -67,6 +67,9 @@ namespace ApoGirl.Core.Expedition
         public Dictionary<string, float> Modifiers = new Dictionary<string, float>();
 
         public float Modifier(string key) => Modifiers.TryGetValue(key, out var value) ? value : 0f;
+
+        /// <summary>주무기의 남은 내구도 (0 = 최대치 사용).</summary>
+        public int WeaponDurability;
     }
 
     public sealed class ExpeditionResult
@@ -116,6 +119,7 @@ namespace ApoGirl.Core.Expedition
                 LocationId = action.LocationId,
                 Seed = seed,
                 Loadout = CloneLoadout(state.Loadout),
+                WeaponDurability = WeaponDurability(state),
                 Flags = new HashSet<string>(state.Flags),
                 Modifiers = db != null ? Rules.TraitRules.ExplorationModifiers(state, db) : new Dictionary<string, float>(),
                 Stats = new Dictionary<StatType, int>(player.Stats),
@@ -142,6 +146,13 @@ namespace ApoGirl.Core.Expedition
         {
             Rules.LoadoutRules.Sanitize(state);
             request.Loadout = CloneLoadout(state.Loadout);
+            request.WeaponDurability = WeaponDurability(state);
+        }
+
+        private static int WeaponDurability(GameState state)
+        {
+            var stack = state.Storage.Find(s => s.ItemId == state.Loadout.MainWeapon);
+            return stack?.Durability ?? 0;
         }
 
         private static LoadoutState CloneLoadout(LoadoutState source)
