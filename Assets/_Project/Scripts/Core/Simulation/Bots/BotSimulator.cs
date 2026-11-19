@@ -255,11 +255,11 @@ namespace ApoGirl.Core.Simulation.Bots
             result.FinalChoice = string.Join("+", FinalChoiceFlags.Where(flags.Contains));
 
             var context = EventContext.FromCalendar(state);
-            foreach (var ending in db.Extras.Endings.Where(e => e.Category != Definitions.EndingCategory.Bad))
+            foreach (var candidate in db.Extras.Endings.Where(e => e.Category != Definitions.EndingCategory.Bad))
             {
-                if (ConditionEvaluator.IsMet(state, ending.Condition, context, db.Balance))
+                if (ConditionEvaluator.IsMet(state, candidate.Condition, context, db.Balance))
                 {
-                    result.EligibleEndings.Add(ending.Id);
+                    result.EligibleEndings.Add(candidate.Id);
                 }
             }
 
