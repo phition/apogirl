@@ -62,6 +62,7 @@ namespace ApoGirl.Presentation.App
             Session = new GameSession(database.Build(), new SaveService(saveDirectory, new GameStateSerializer()))
             {
                 UseRealtimeExpeditions = true,
+                InteractiveEvents = true,
             };
         }
 

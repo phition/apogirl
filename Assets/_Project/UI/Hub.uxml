@@ -41,6 +41,21 @@
 
         <ui:VisualElement name="debug-panel" class="debug-panel hidden" />
 
+        <ui:VisualElement name="dialogue" class="dialogue hidden">
+            <ui:ScrollView name="dialogue-log" class="dialogue-log hidden" />
+            <ui:VisualElement class="dialogue-tools">
+                <ui:Button name="dialogue-log-button" class="dialogue-tool" />
+                <ui:Button name="dialogue-auto" class="dialogue-tool" />
+                <ui:Button name="dialogue-skip" class="dialogue-tool" />
+            </ui:VisualElement>
+            <ui:VisualElement name="dialogue-box" class="dialogue-box">
+                <ui:Label name="dialogue-speaker" class="dialogue-speaker" />
+                <ui:Label name="dialogue-text" class="dialogue-text" />
+                <ui:VisualElement name="dialogue-options" class="dialogue-options" />
+                <ui:Label name="dialogue-next" class="dialogue-next hidden" text="▼" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+
         <ui:VisualElement name="overlay" class="overlay hidden">
             <ui:VisualElement name="card" class="card">
                 <ui:Label name="card-title" class="card-title" />

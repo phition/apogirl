@@ -6,7 +6,8 @@
         "ApoGirl.Data",
         "ApoGirl.Systems",
         "Unity.InputSystem",
-        "Unity.Localization"
+        "Unity.Localization",
+        "YarnSpinner.Unity"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

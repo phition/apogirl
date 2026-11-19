@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using ApoGirl.Core.Expedition;
 using ApoGirl.Core.State;
 using ApoGirl.Presentation.Text;
@@ -14,7 +15,7 @@ namespace ApoGirl.Presentation.Screens
         private readonly GameSession _session;
         private readonly Label _status;
 
-        public DebugPanelView(VisualElement panel, GameSession session)
+        public DebugPanelView(VisualElement panel, GameSession session, Action<string> forceEvent = null)
         {
             _panel = panel;
             _session = session;
@@ -55,6 +56,22 @@ namespace ApoGirl.Presentation.Screens
                 Refresh();
             });
 
+            Add("debug.events_interactive", () =>
+            {
+                _session.InteractiveEvents = !_session.InteractiveEvents;
+                Refresh();
+            });
+
+            // 이벤트 강제 발생 (계획 단계에서만)
+            var eventIds = _session.Definitions.Events.Select(e => e.Id).ToList();
+            if (eventIds.Count > 0 && forceEvent != null)
+            {
+                var picker = new DropdownField(Loc.T("debug.event"), eventIds, 0);
+                picker.AddToClassList("debug-dropdown");
+                _panel.Add(picker);
+                Add("debug.force_event", () => forceEvent(picker.value));
+            }
+
             _status = new Label();
             _status.AddToClassList("debug-status");
             _panel.Add(_status);
@@ -71,7 +88,9 @@ namespace ApoGirl.Presentation.Screens
             var forced = _session.DebugExpedition.ForceNext;
             _status.text = "seed " + _session.State.Rng.Seed + " · next expedition: " + (forced?.ToString() ?? "-")
                            + " · planning " + _session.IsPlanning
-                           + " · expedition " + (_session.UseRealtimeExpeditions ? "realtime" : "headless");
+                           + " · expedition " + (_session.UseRealtimeExpeditions ? "realtime" : "headless")
+                           + " · events " + (_session.InteractiveEvents ? "interactive" : "auto")
+                           + " · seen " + _session.State.Events.Records.Count;
         }
 
         private void Add(string key, Action onClick)

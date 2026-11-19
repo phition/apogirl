@@ -6,6 +6,7 @@ using ApoGirl.Core.Simulation;
 using ApoGirl.Core.State;
 using ApoGirl.Data;
 using ApoGirl.Presentation.App;
+using ApoGirl.Presentation.Dialogue;
 using ApoGirl.Presentation.Text;
 using ApoGirl.Systems.Save;
 using ApoGirl.Systems.Session;
@@ -41,6 +42,11 @@ namespace ApoGirl.Presentation.Screens
         private ExecutionSpeed _speed = ExecutionSpeed.Fast;
         private WeekSummary _pendingSummary;
         private int _fontIndex = 1;
+        private DialogueView _dialogueView;
+        private EventDialoguePlayer _dialoguePlayer;
+
+        /// <summary>Yarn 프로젝트 (Resources/Dialogue/ApoGirl.yarnproject).</summary>
+        public const string YarnProjectResource = "Dialogue/ApoGirl";
 
         private void OnEnable()
         {
@@ -60,7 +66,17 @@ namespace ApoGirl.Presentation.Screens
             _planner = new PlannerView(_root, _session, () => _palette.SelectedActionId, ShowToast);
             _planSide = new PlanSideView(_root, _session);
             _card = new CardOverlay(_root);
-            _debug = new DebugPanelView(_root.Q("debug-panel"), _session);
+            _debug = new DebugPanelView(_root.Q("debug-panel"), _session, ForceEvent);
+            _dialogueView = new DialogueView(_root);
+            var yarnProject = Resources.Load<Yarn.Unity.YarnProject>(YarnProjectResource);
+            if (yarnProject != null && yarnProject.Program != null)
+            {
+                _dialoguePlayer = new EventDialoguePlayer(yarnProject, _dialogueView);
+            }
+            else
+            {
+                Debug.LogWarning("Yarn 프로젝트를 불러오지 못함: Resources/" + YarnProjectResource);
+            }
             _teacherLine = _root.Q<Label>("teacher-line");
             _toast = _root.Q<Label>("toast");
             _root.Q<Label>("teacher-name").text = Loc.T("hub.teacher_name");
@@ -100,6 +116,11 @@ namespace ApoGirl.Presentation.Screens
             if (keyboard.f1Key.wasPressedThisFrame)
             {
                 _debug.Toggle();
+            }
+
+            if (keyboard.spaceKey.wasPressedThisFrame || keyboard.enterKey.wasPressedThisFrame)
+            {
+                _dialogueView.Advance();
             }
         }
 
@@ -196,6 +217,11 @@ namespace ApoGirl.Presentation.Screens
                     outcome = _session.CompleteExpedition(expeditionResult);
                 }
 
+                while (_session.HasPendingEvent)
+                {
+                    yield return PlayPendingEvent();
+                }
+
                 if (outcome.StopForPresentation)
                 {
                     var closed = false;
@@ -230,6 +256,131 @@ namespace ApoGirl.Presentation.Screens
             {
                 ShowEnd();
             }
+        }
+
+        /// <summary>
+        /// 대기 중인 이벤트 하나를 보여준다. Yarn 노드가 있으면 대화로, 없으면 카드로.
+        /// 선택지를 고르는 즉시 세션에 반영하고(판정 결과를 대화가 읽을 수 있게), 대화가 선택 없이 끝나면 첫 선택지로 마무리한다.
+        /// </summary>
+        private IEnumerator PlayPendingEvent()
+        {
+            var ev = _session.PendingEvent;
+            var choices = _session.PendingChoices;
+            var resolved = false;
+            EventDialoguePlayer.LastChoiceResult = null;
+
+            void Choose(string choiceId)
+            {
+                if (resolved || _session.PendingEvent != ev)
+                {
+                    return;
+                }
+
+                resolved = true;
+                var outcome = _session.ResolveEvent(choiceId);
+                EventDialoguePlayer.LastChoiceResult = outcome.Events.Count > 0 ? outcome.Events[outcome.Events.Count - 1] : null;
+            }
+
+            if (_dialoguePlayer != null && _dialoguePlayer.HasNode(ev.Node))
+            {
+                var task = _dialoguePlayer.Run(ev.Node, choices, Choose, destroyCancellationToken);
+                while (!task.IsCompleted)
+                {
+                    yield return null;
+                }
+
+                if (task.IsFaulted)
+                {
+                    Debug.LogException(task.Exception);
+                }
+            }
+            else
+            {
+                var closed = false;
+                ShowEventCard(ev, choices, id =>
+                {
+                    Choose(id);
+                    closed = true;
+                });
+                while (!closed)
+                {
+                    yield return null;
+                }
+            }
+
+            if (!resolved && _session.PendingEvent == ev)
+            {
+                var first = choices.FirstOrDefault(c => c.Enabled);
+                Choose(first?.Id ?? "");
+            }
+        }
+
+        /// <summary>Yarn 노드가 없는 이벤트: 문자열 테이블(event.{ID}.title/body, 선택지 TextKey)로 카드 표시.</summary>
+        private void ShowEventCard(ApoGirl.Core.Definitions.EventDef ev, IReadOnlyList<ApoGirl.Core.Events.EventChoiceView> choices, System.Action<string> onPick)
+        {
+            var buttons = new List<(string, System.Action)>();
+            foreach (var choice in choices)
+            {
+                var id = choice.Id;
+                var label = string.IsNullOrEmpty(choice.Def.TextKey) ? id : Loc.T(choice.Def.TextKey);
+                if (choice.Enabled)
+                {
+                    buttons.Add((label, () =>
+                    {
+                        _card.Hide();
+                        onPick(id);
+                    }));
+                }
+            }
+
+            if (buttons.Count == 0)
+            {
+                buttons.Add((Loc.T("common.ok"), () =>
+                {
+                    _card.Hide();
+                    onPick("");
+                }));
+            }
+
+            var title = Loc.Lookup(Loc.UiTable, "event." + ev.Id + ".title") ?? ev.Id;
+            var body = Loc.Lookup(Loc.UiTable, "event." + ev.Id + ".body") ?? "";
+            _card.Show(title, body, true, buttons.ToArray());
+        }
+
+        /// <summary>디버그 패널: 계획 단계에서 이벤트를 강제로 발생시킨다.</summary>
+        private void ForceEvent(string eventId)
+        {
+            if (!_session.IsPlanning || _card.IsOpen || _dialogueView.IsOpen)
+            {
+                ShowToast(Loc.T("debug.force_event_planning"));
+                return;
+            }
+
+            StartCoroutine(ForceEventRoutine(eventId));
+        }
+
+        private IEnumerator ForceEventRoutine(string eventId)
+        {
+            var outcome = _session.DebugForceEvent(eventId);
+            while (_session.HasPendingEvent)
+            {
+                yield return PlayPendingEvent();
+            }
+
+            var closed = false;
+            var lines = UiText.DeltaLines(outcome.Delta);
+            _card.Show(Loc.F("debug.event_result", eventId), string.Join("\n", lines.Count > 0 ? lines : new List<string> { Loc.T("result.no_change") }), false,
+                (Loc.T("common.ok"), () =>
+                {
+                    _card.Hide();
+                    closed = true;
+                }));
+            while (!closed)
+            {
+                yield return null;
+            }
+
+            Refresh();
         }
 
         private void OnWeekEnded(WeekSummary summary)

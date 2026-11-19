@@ -242,6 +242,47 @@ Button.selected { border-color: var(--accent); background-color: var(--accent-so
 .preset-name { flex-grow: 1; }
 .preset-field { margin-bottom: 8px; }
 
+/* ── 대화 (M3) ── */
+.dialogue {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.45);
+    justify-content: flex-end;
+    align-items: center;
+    padding-bottom: 28px;
+}
+
+.dialogue-box {
+    width: 1100px;
+    min-height: 200px;
+    padding: 18px 26px;
+    background-color: rgba(30, 32, 36, 0.96);
+    border-color: var(--accent-soft);
+    border-width: 1px;
+    border-radius: 8px;
+}
+
+.dialogue-speaker { font-size: 20px; -unity-font-style: bold; color: var(--accent); margin-bottom: 8px; }
+.dialogue-text { font-size: 19px; white-space: normal; min-height: 70px; }
+.dialogue-next { position: absolute; right: 18px; bottom: 10px; color: var(--accent); }
+.dialogue-options { margin-top: 10px; }
+.dialogue-option { height: 40px; margin: 3px 0; -unity-text-align: middle-left; padding-left: 14px; font-size: 17px; }
+.dialogue-tools { width: 1100px; flex-direction: row; justify-content: flex-end; margin-bottom: 6px; }
+.dialogue-tool { min-width: 64px; height: 28px; font-size: 14px; }
+.dialogue-tool.selected { background-color: var(--accent-soft); }
+.dialogue-log {
+    width: 1100px;
+    max-height: 460px;
+    margin-bottom: 8px;
+    padding: 10px 16px;
+    background-color: rgba(20, 21, 24, 0.97);
+    border-radius: 6px;
+}
+.dialogue-log-line { color: var(--text-dim); margin-bottom: 4px; white-space: normal; }
+
 /* ── 타이틀 ── */
 .title-screen { align-items: center; justify-content: center; }
 .title-label { font-size: 48px; -unity-font-style: bold; color: var(--accent); }

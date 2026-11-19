@@ -43,6 +43,16 @@ namespace ApoGirl.Presentation.Text
             return Get(ItemTable, itemId + ".name", itemId);
         }
 
+        /// <summary>테이블 조회. 없으면 null (Yarn 대사 등 대체 경로가 있는 경우).</summary>
+        public static string Lookup(string table, string key)
+        {
+            var value = Get(table, key, null);
+            return value;
+        }
+
+        /// <summary>단어 + 조사 (UI 문자열용, 예: Loc.Josa(name, "이/가")).</summary>
+        public static string Josa(string word, string pair) => ApoGirl.Core.Text.KoreanJosa.Attach(word, pair);
+
         private static string Get(string table, string key, string fallback)
         {
             var cacheKey = table + "/" + key;
