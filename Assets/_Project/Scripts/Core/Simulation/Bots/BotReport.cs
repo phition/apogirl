@@ -45,6 +45,8 @@ namespace ApoGirl.Core.Simulation.Bots
             ("defense", w => w.Defense),
         };
 
+        private static readonly string[] ValueNames = BotSimulator.TrackedValues().Select(v => v.Name).ToArray();
+
         public static Dictionary<string, string> Build(IReadOnlyList<BotRunResult> runs, string header = "")
         {
             return new Dictionary<string, string>
@@ -62,7 +64,8 @@ namespace ApoGirl.Core.Simulation.Bots
         {
             var sb = new StringBuilder();
             sb.AppendLine("strategy,seed,blood,personality,status,end_week,end_cause,ending,category,day_exp,night_exp,downs,raids,raids_repelled,companions,events," +
-                          "teacher_reinfected,teacher_alive,blood_known,need_pack,got_pack,cure_attempted,cured,final_choice,avg_sleep_debt,max_sleep_debt,final_food,final_water");
+                          "teacher_reinfected,teacher_alive,blood_known,need_pack,got_pack,cure_attempted,cured,final_choice,avg_sleep_debt,max_sleep_debt,final_food,final_water," +
+                          "eligible_endings,flags," + string.Join(",", ValueNames));
             foreach (var r in runs)
             {
                 var last = r.Weeks.LastOrDefault();
@@ -72,7 +75,9 @@ namespace ApoGirl.Core.Simulation.Bots
                     r.Raids, r.RaidsRepelled, r.Companions, r.Events,
                     B(r.TeacherReinfected), B(r.TeacherAlive), B(r.TeacherBloodKnown), B(r.NeededBloodPack), B(r.GotBloodPack), B(r.CureAttempted), B(r.TeacherCured),
                     r.FinalChoice, F(r.Weeks.Count == 0 ? 0 : r.Weeks.Average(w => w.SleepDebt)), r.Weeks.Count == 0 ? 0 : r.Weeks.Max(w => w.SleepDebt),
-                    last?.Food ?? 0, last?.Water ?? 0));
+                    last?.Food ?? 0, last?.Water ?? 0,
+                    string.Join(";", r.EligibleEndings), string.Join(";", r.TrackedFlags.OrderBy(f => f)),
+                    string.Join(",", ValueNames.Select(n => r.FinalValues.TryGetValue(n, out var v) ? v.ToString(Inv) : ""))));
             }
 
             return sb.ToString();
@@ -233,6 +238,58 @@ namespace ApoGirl.Core.Simulation.Bots
                 sb.AppendLine($"| {g.Key} | {P(list.Count(r => r.TeacherReinfected), list.Count)} | {P(list.Count(r => r.TeacherAlive), list.Count)} " +
                               $"| {P(list.Count(r => r.TeacherBloodKnown), list.Count)} | {needed.Count} → {needed.Count(r => r.GotBloodPack)} " +
                               $"| {P(list.Count(r => r.CureAttempted), list.Count)} | {P(list.Count(r => r.TeacherCured), list.Count)} | {(finals == "" ? "-" : finals)} |");
+            }
+
+            sb.AppendLine();
+
+            // 엔딩 조건 충족률 (구조된 판)
+            var rescued = runs.Where(r => r.Survived).ToList();
+            sb.AppendLine("## 엔딩 조건 충족률 (구조된 판, 판정 전)");
+            sb.AppendLine();
+            sb.AppendLine("조건만 본 비율. 실제 엔딩은 우선순위 → 점수로 하나가 고른다.");
+            sb.AppendLine();
+            sb.AppendLine("| 엔딩 | 조건 충족 | 실제 엔딩 | " + string.Join(" | ", strategies) + " |");
+            sb.AppendLine("|---|---|---|" + string.Concat(strategies.Select(_ => "---|")));
+            foreach (var id in rescued.SelectMany(r => r.EligibleEndings).Distinct().OrderByDescending(id => rescued.Count(r => r.EligibleEndings.Contains(id))))
+            {
+                sb.AppendLine($"| {id} | {P(rescued.Count(r => r.EligibleEndings.Contains(id)), rescued.Count)} | {P(rescued.Count(r => r.EndingId == id), rescued.Count)} | " +
+                              string.Join(" | ", strategies.Select(s => P(rescued.Count(r => r.StrategyId == s && r.EligibleEndings.Contains(id)), rescued.Count(r => r.StrategyId == s)))) + " |");
+            }
+
+            sb.AppendLine();
+
+            // 끝났을 때 수치
+            sb.AppendLine("## 끝났을 때 수치 평균 (구조된 판)");
+            sb.AppendLine();
+            sb.AppendLine("| 수치 | 전체 (최소·중앙·최대) | " + string.Join(" | ", strategies) + " |");
+            sb.AppendLine("|---|---|" + string.Concat(strategies.Select(_ => "---|")));
+            foreach (var name in ValueNames)
+            {
+                var values = rescued.Where(r => r.FinalValues.ContainsKey(name)).Select(r => r.FinalValues[name]).OrderBy(v => v).ToList();
+                if (values.Count == 0)
+                {
+                    continue;
+                }
+
+                sb.AppendLine($"| {name} | {F(values.Average())} ({values.First()}·{Percentile(values, 0.5f)}·{values.Last()}) | " +
+                              string.Join(" | ", strategies.Select(s =>
+                              {
+                                  var list = rescued.Where(r => r.StrategyId == s && r.FinalValues.ContainsKey(name)).Select(r => r.FinalValues[name]).ToList();
+                                  return list.Count == 0 ? "-" : F(list.Average());
+                              })) + " |");
+            }
+
+            sb.AppendLine();
+
+            // 갈래 플래그
+            sb.AppendLine("## 갈래 플래그 도달률 (전체 판)");
+            sb.AppendLine();
+            sb.AppendLine("| 플래그 | 전체 | " + string.Join(" | ", strategies) + " |");
+            sb.AppendLine("|---|---|" + string.Concat(strategies.Select(_ => "---|")));
+            foreach (var flag in BotSimulator.TrackedFlagIds)
+            {
+                sb.AppendLine($"| {flag} | {P(runs.Count(r => r.TrackedFlags.Contains(flag)), runs.Count)} | " +
+                              string.Join(" | ", strategies.Select(s => P(runs.Count(r => r.StrategyId == s && r.TrackedFlags.Contains(flag)), runs.Count(r => r.StrategyId == s)))) + " |");
             }
 
             sb.AppendLine();

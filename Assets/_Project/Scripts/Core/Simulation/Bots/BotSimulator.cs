@@ -4,6 +4,7 @@ using System.Linq;
 using ApoGirl.Core.Definitions;
 using ApoGirl.Core.Effects;
 using ApoGirl.Core.Endings;
+using ApoGirl.Core.Events;
 using ApoGirl.Core.Expedition;
 using ApoGirl.Core.Planning;
 using ApoGirl.Core.Random;
@@ -76,6 +77,15 @@ namespace ApoGirl.Core.Simulation.Bots
         public bool TeacherCured;
         public string FinalChoice = "";
 
+        /// <summary>M7-2 진단: 판이 끝났을 때 조건을 만족한 (배드 제외) 엔딩.</summary>
+        public readonly List<string> EligibleEndings = new List<string>();
+
+        /// <summary>M7-2 진단: 끝났을 때 수치 ("Stat.Intellect", "Prof.Medicine", "Hidden.Humanity", "Companions", "DiaryCount", "Clues.CURE_" …).</summary>
+        public readonly Dictionary<string, int> FinalValues = new Dictionary<string, int>();
+
+        /// <summary>M7-2 진단: 끝났을 때 켜져 있던 갈래 플래그 (BotSimulator.TrackedFlags 중).</summary>
+        public readonly HashSet<string> TrackedFlags = new HashSet<string>();
+
         public readonly List<BotWeekSample> Weeks = new List<BotWeekSample>();
         public readonly List<BotExpeditionSample> Expeditions = new List<BotExpeditionSample>();
 
@@ -90,6 +100,30 @@ namespace ApoGirl.Core.Simulation.Bots
         {
             "TEACHER_LAST_LESSON", "TEACHER_ISOLATED", "TEACHER_EXPOSED", "CHOSE_TO_STAY", "TEACHER_LEFT_BEHIND",
         };
+
+        /// <summary>보고서의 갈래 깔때기에 쓰는 플래그.</summary>
+        public static readonly string[] TrackedFlagIds =
+        {
+            "RINGLEADER_MET", "BULLY_FORGAVE", "BULLY_SEPARATED", "BULLY_RESCUED",
+            "RESEARCH_DATA", "CURE_ROUTE", "CARE_ROUTE", "DISTANCE_ROUTE", "CURE_HINTED", "TEACHER_BLOOD_KNOWN", "NEED_BLOOD_PACK", "BLOOD_PACK",
+            "CURE_ATTEMPTED", "TEACHER_CURED", "FINAL_CHOICE", "NIGHT_RUNS", "POWER_RESTORED",
+        };
+
+        /// <summary>끝났을 때 기록할 수치 (이름, 종류, 키).</summary>
+        public static IEnumerable<(string Name, ValueKind Kind, string Key)> TrackedValues()
+        {
+            foreach (StatType stat in Enum.GetValues(typeof(StatType))) yield return ("Stat." + stat, ValueKind.Stat, stat.ToString());
+            foreach (ProficiencyType prof in Enum.GetValues(typeof(ProficiencyType))) yield return ("Prof." + prof, ValueKind.Proficiency, prof.ToString());
+            foreach (HiddenType hidden in Enum.GetValues(typeof(HiddenType))) yield return ("Hidden." + hidden, ValueKind.Hidden, hidden.ToString());
+            yield return ("StatMin", ValueKind.StatMin, "");
+            yield return ("StatSpread", ValueKind.StatSpread, "");
+            yield return ("Companions", ValueKind.Companions, "");
+            yield return ("DiaryCount", ValueKind.DiaryCount, "");
+            yield return ("TeacherAffinity", ValueKind.TeacherAffinity, "");
+            yield return ("Clues.CURE_", ValueKind.ClueCount, "CURE_");
+            yield return ("Clues.TRUTH_", ValueKind.ClueCount, "TRUTH_");
+            yield return ("Tag.TAG_TEACHING", ValueKind.EndingTag, "TAG_TEACHING");
+        }
 
         public static BotRunResult Run(IDefinitionDatabase db, BotConfigDef config, BotStrategyDef strategy, int seed)
         {
@@ -219,6 +253,32 @@ namespace ApoGirl.Core.Simulation.Bots
             result.CureAttempted = flags.Contains("CURE_ATTEMPTED");
             result.TeacherCured = flags.Contains(InfectionRules.FlagTeacherCured);
             result.FinalChoice = string.Join("+", FinalChoiceFlags.Where(flags.Contains));
+
+            var context = EventContext.FromCalendar(state);
+            foreach (var ending in db.Extras.Endings.Where(e => e.Category != Definitions.EndingCategory.Bad))
+            {
+                if (ConditionEvaluator.IsMet(state, ending.Condition, context, db.Balance))
+                {
+                    result.EligibleEndings.Add(ending.Id);
+                }
+            }
+
+            foreach (var (name, kind, key) in TrackedValues())
+            {
+                try
+                {
+                    result.FinalValues[name] = ConditionEvaluator.ValueOf(state, kind, key);
+                }
+                catch (ArgumentException)
+                {
+                    // 지원하지 않는 키는 건너뛴다
+                }
+            }
+
+            foreach (var flag in TrackedFlagIds.Where(flags.Contains))
+            {
+                result.TrackedFlags.Add(flag);
+            }
         }
 
         /// <summary>프롤로그 선택: 묶음 문항은 묶음마다 하나, 나머지 문항은 선택지 하나를 무작위로.</summary>
