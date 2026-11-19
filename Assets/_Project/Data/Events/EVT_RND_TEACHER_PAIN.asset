@@ -60,6 +60,8 @@ MonoBehaviour:
       TeacherMobility: 0
       RestorePower: 0
       RaidStrength: 0
+      TeacherReinfect: 0
+      TeacherInfection: 0
     Choices:
     - Id: MEDICINE
       TextKey: 
@@ -117,6 +119,8 @@ MonoBehaviour:
         TeacherMobility: 0
         RestorePower: 0
         RaidStrength: 0
+        TeacherReinfect: 0
+        TeacherInfection: 0
       OnFailure:
         Stats: []
         Vitals: []
@@ -138,6 +142,8 @@ MonoBehaviour:
         TeacherMobility: 0
         RestorePower: 0
         RaidStrength: 0
+        TeacherReinfect: 0
+        TeacherInfection: 0
       NextEventId: 
     - Id: STAY_UP
       TextKey: 
@@ -197,6 +203,8 @@ MonoBehaviour:
         TeacherMobility: 0
         RestorePower: 0
         RaidStrength: 0
+        TeacherReinfect: 0
+        TeacherInfection: 0
       OnFailure:
         Stats: []
         Vitals: []
@@ -218,4 +226,8 @@ MonoBehaviour:
         TeacherMobility: 0
         RestorePower: 0
         RaidStrength: 0
+        TeacherReinfect: 0
+        TeacherInfection: 0
       NextEventId: 
+    ReviewAct: 0
+    ReviewFromWeek: 1

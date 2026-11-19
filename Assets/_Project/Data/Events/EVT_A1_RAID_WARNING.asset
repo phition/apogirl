@@ -70,6 +70,8 @@ MonoBehaviour:
       TeacherMobility: 0
       RestorePower: 0
       RaidStrength: 0
+      TeacherReinfect: 0
+      TeacherInfection: 0
     Choices:
     - Id: BARRICADE
       TextKey: 
@@ -122,6 +124,8 @@ MonoBehaviour:
         TeacherMobility: 0
         RestorePower: 0
         RaidStrength: 0
+        TeacherReinfect: 0
+        TeacherInfection: 0
       OnFailure:
         Stats: []
         Vitals: []
@@ -143,6 +147,8 @@ MonoBehaviour:
         TeacherMobility: 0
         RestorePower: 0
         RaidStrength: 0
+        TeacherReinfect: 0
+        TeacherInfection: 0
       NextEventId: 
     - Id: WATCH_PLAN
       TextKey: 
@@ -200,6 +206,8 @@ MonoBehaviour:
         TeacherMobility: 0
         RestorePower: 0
         RaidStrength: 0
+        TeacherReinfect: 0
+        TeacherInfection: 0
       OnFailure:
         Stats: []
         Vitals: []
@@ -221,4 +229,8 @@ MonoBehaviour:
         TeacherMobility: 0
         RestorePower: 0
         RaidStrength: 0
+        TeacherReinfect: 0
+        TeacherInfection: 0
       NextEventId: 
+    ReviewAct: 0
+    ReviewFromWeek: 1

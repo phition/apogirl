@@ -2267,6 +2267,298 @@ MonoBehaviour:
     m_Key: ending.diary_line
     m_Metadata:
       m_Items: []
+  - m_Id: 169172251459584
+    m_Key: facility.CAFETERIA
+    m_Metadata:
+      m_Items: []
+  - m_Id: 169172331151360
+    m_Key: facility.LIBRARY
+    m_Metadata:
+      m_Items: []
+  - m_Id: 169172331151361
+    m_Key: facility.SCIENCE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 169172331151362
+    m_Key: facility.GYM
+    m_Metadata:
+      m_Items: []
+  - m_Id: 169172331151363
+    m_Key: facility.STAFFROOM
+    m_Metadata:
+      m_Items: []
+  - m_Id: 169172331151364
+    m_Key: role.none
+    m_Metadata:
+      m_Items: []
+  - m_Id: 169172331151365
+    m_Key: role.GUARD
+    m_Metadata:
+      m_Items: []
+  - m_Id: 169172331151366
+    m_Key: role.COOK
+    m_Metadata:
+      m_Items: []
+  - m_Id: 169172331151367
+    m_Key: role.MEDIC
+    m_Metadata:
+      m_Items: []
+  - m_Id: 169172331151368
+    m_Key: role.TUTOR
+    m_Metadata:
+      m_Items: []
+  - m_Id: 169172331151369
+    m_Key: role.GUARD.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 169172331151370
+    m_Key: role.COOK.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 169172331151371
+    m_Key: role.MEDIC.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 169172331151372
+    m_Key: role.TUTOR.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 169172331151373
+    m_Key: status.role_hint
+    m_Metadata:
+      m_Items: []
+  - m_Id: 169172331151374
+    m_Key: ending.ENDING_BAD_INFECTION.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 169172331151375
+    m_Key: ending.ENDING_BAD_INFECTION.cut1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 169172331151376
+    m_Key: ending.ENDING_BAD_INFECTION.cut2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 169172331151377
+    m_Key: ending.ENDING_BAD_INFECTION.cut3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 169172331151378
+    m_Key: diary.fever
+    m_Metadata:
+      m_Items: []
+  - m_Id: 169172331151379
+    m_Key: diary.cough
+    m_Metadata:
+      m_Items: []
+  - m_Id: 169172331151380
+    m_Key: diary.tremor
+    m_Metadata:
+      m_Items: []
+  - m_Id: 169172331151381
+    m_Key: tc.fever
+    m_Metadata:
+      m_Items: []
+  - m_Id: 169172331151382
+    m_Key: tc.tremor
+    m_Metadata:
+      m_Items: []
+  - m_Id: 169172331151383
+    m_Key: tc.teacher_ill_1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 169172331151384
+    m_Key: tc.teacher_ill_2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 169172331151385
+    m_Key: tc.teacher_ill_3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 169172331151386
+    m_Key: tc.rain
+    m_Metadata:
+      m_Items: []
+  - m_Id: 169172331151387
+    m_Key: tc.heat
+    m_Metadata:
+      m_Items: []
+  - m_Id: 169172331151388
+    m_Key: tc.cold
+    m_Metadata:
+      m_Items: []
+  - m_Id: 169172331151389
+    m_Key: review.a1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 169172331151390
+    m_Key: review.a1_hard
+    m_Metadata:
+      m_Items: []
+  - m_Id: 169172331151391
+    m_Key: event.EVT_WX_HEAT_SPOIL.salt
+    m_Metadata:
+      m_Items: []
+  - m_Id: 169172331151392
+    m_Key: event.EVT_WX_HEAT_SPOIL.throw
+    m_Metadata:
+      m_Items: []
+  - m_Id: 169172331151393
+    m_Key: event.EVT_WX_COLD_ILLNESS.medicine
+    m_Metadata:
+      m_Items: []
+  - m_Id: 169172331151394
+    m_Key: event.EVT_WX_COLD_ILLNESS.endure
+    m_Metadata:
+      m_Items: []
+  - m_Id: 169172331151395
+    m_Key: event.EVT_WX_RAIN_LEAK.fix
+    m_Metadata:
+      m_Items: []
+  - m_Id: 169172331151396
+    m_Key: event.EVT_WX_RAIN_LEAK.collect
+    m_Metadata:
+      m_Items: []
+  - m_Id: 169172331151397
+    m_Key: event.EVT_WX_HEAT_SPOIL.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 169172331151398
+    m_Key: event.EVT_WX_HEAT_SPOIL.body
+    m_Metadata:
+      m_Items: []
+  - m_Id: 169172331151399
+    m_Key: event.EVT_WX_COLD_ILLNESS.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 169172331151400
+    m_Key: event.EVT_WX_COLD_ILLNESS.body
+    m_Metadata:
+      m_Items: []
+  - m_Id: 169172331151401
+    m_Key: event.EVT_WX_RAIN_LEAK.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 169172331151402
+    m_Key: event.EVT_WX_RAIN_LEAK.body
+    m_Metadata:
+      m_Items: []
+  - m_Id: 169172331151403
+    m_Key: weather.Clear
+    m_Metadata:
+      m_Items: []
+  - m_Id: 169172331151404
+    m_Key: weather.Rain
+    m_Metadata:
+      m_Items: []
+  - m_Id: 169172331151405
+    m_Key: weather.Heat
+    m_Metadata:
+      m_Items: []
+  - m_Id: 169172331151406
+    m_Key: weather.Cold
+    m_Metadata:
+      m_Items: []
+  - m_Id: 169172331151407
+    m_Key: weather.Rain.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 169172331151408
+    m_Key: weather.Heat.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 169172331151409
+    m_Key: weather.Cold.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 169172331151410
+    m_Key: hub.weather
+    m_Metadata:
+      m_Items: []
+  - m_Id: 169172331151411
+    m_Key: hub.rescue
+    m_Metadata:
+      m_Items: []
+  - m_Id: 169172331151412
+    m_Key: symptom.0
+    m_Metadata:
+      m_Items: []
+  - m_Id: 169172331151413
+    m_Key: symptom.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 169172331151414
+    m_Key: symptom.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 169172331151415
+    m_Key: symptom.3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 169172331151416
+    m_Key: teacher.stage.0
+    m_Metadata:
+      m_Items: []
+  - m_Id: 169172331151417
+    m_Key: teacher.stage.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 169172331151418
+    m_Key: teacher.stage.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 169172331151419
+    m_Key: teacher.stage.3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 169172331151420
+    m_Key: teacher.stage.4
+    m_Metadata:
+      m_Items: []
+  - m_Id: 169172331151421
+    m_Key: result.bite
+    m_Metadata:
+      m_Items: []
+  - m_Id: 169172331151422
+    m_Key: result.bite_treated
+    m_Metadata:
+      m_Items: []
+  - m_Id: 169172331151423
+    m_Key: prep.scouted
+    m_Metadata:
+      m_Items: []
+  - m_Id: 169172331151424
+    m_Key: prep.weather
+    m_Metadata:
+      m_Items: []
+  - m_Id: 169172331151425
+    m_Key: review.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 169172331151426
+    m_Key: review.growth
+    m_Metadata:
+      m_Items: []
+  - m_Id: 169172331151427
+    m_Key: review.weeks
+    m_Metadata:
+      m_Items: []
+  - m_Id: 169172331151428
+    m_Key: debug.infect
+    m_Metadata:
+      m_Items: []
+  - m_Id: 169172331151429
+    m_Key: debug.teacher_reinfect
+    m_Metadata:
+      m_Items: []
+  - m_Id: 169172331151430
+    m_Key: debug.weather
+    m_Metadata:
+      m_Items: []
+  - m_Id: 169172331151431
+    m_Key: debug.rescue_flag
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

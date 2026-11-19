@@ -231,6 +231,30 @@ MonoBehaviour:
     m_Key: ACT_EXP_NIGHT_PHARMACY.short
     m_Metadata:
       m_Items: []
+  - m_Id: 169170607292416
+    m_Key: ACT_TREAT_INFECTION.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 169170666012672
+    m_Key: ACT_CARE_TEACHER.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 169170666012673
+    m_Key: ACT_SCOUT_RADIO.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 169170666012674
+    m_Key: ACT_TREAT_INFECTION.short
+    m_Metadata:
+      m_Items: []
+  - m_Id: 169170666012675
+    m_Key: ACT_CARE_TEACHER.short
+    m_Metadata:
+      m_Items: []
+  - m_Id: 169170666012676
+    m_Key: ACT_SCOUT_RADIO.short
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

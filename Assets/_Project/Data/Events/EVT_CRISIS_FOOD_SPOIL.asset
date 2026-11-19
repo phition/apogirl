@@ -64,6 +64,8 @@ MonoBehaviour:
       TeacherMobility: 0
       RestorePower: 0
       RaidStrength: 0
+      TeacherReinfect: 0
+      TeacherInfection: 0
     Choices:
     - Id: THROW
       TextKey: 
@@ -116,6 +118,8 @@ MonoBehaviour:
         TeacherMobility: 0
         RestorePower: 0
         RaidStrength: 0
+        TeacherReinfect: 0
+        TeacherInfection: 0
       OnFailure:
         Stats: []
         Vitals: []
@@ -137,6 +141,8 @@ MonoBehaviour:
         TeacherMobility: 0
         RestorePower: 0
         RaidStrength: 0
+        TeacherReinfect: 0
+        TeacherInfection: 0
       NextEventId: 
     - Id: SALVAGE
       TextKey: 
@@ -191,6 +197,8 @@ MonoBehaviour:
         TeacherMobility: 0
         RestorePower: 0
         RaidStrength: 0
+        TeacherReinfect: 0
+        TeacherInfection: 0
       OnFailure:
         Stats: []
         Vitals:
@@ -218,4 +226,8 @@ MonoBehaviour:
         TeacherMobility: 0
         RestorePower: 0
         RaidStrength: 0
+        TeacherReinfect: 0
+        TeacherInfection: 0
       NextEventId: 
+    ReviewAct: 0
+    ReviewFromWeek: 1

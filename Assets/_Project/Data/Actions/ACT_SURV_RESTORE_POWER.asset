@@ -66,6 +66,8 @@ MonoBehaviour:
       TeacherMobility: 0
       RestorePower: 1
       RaidStrength: 0
+      TeacherReinfect: 0
+      TeacherInfection: 0
     OnGreatSuccess:
       Stats: []
       Vitals: []
@@ -90,6 +92,8 @@ MonoBehaviour:
       TeacherMobility: 0
       RestorePower: 1
       RaidStrength: 0
+      TeacherReinfect: 0
+      TeacherInfection: 0
     OnFailure:
       Stats: []
       Vitals: []
@@ -111,6 +115,8 @@ MonoBehaviour:
       TeacherMobility: 0
       RestorePower: 0
       RaidStrength: 0
+      TeacherReinfect: 0
+      TeacherInfection: 0
     ExpeditionTime: 0
     LocationId: 
     Unlock:

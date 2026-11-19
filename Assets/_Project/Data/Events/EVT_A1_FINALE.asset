@@ -61,4 +61,8 @@ MonoBehaviour:
       TeacherMobility: 0
       RestorePower: 0
       RaidStrength: 55
+      TeacherReinfect: 0
+      TeacherInfection: 0
     Choices: []
+    ReviewAct: 0
+    ReviewFromWeek: 1
