@@ -35,6 +35,13 @@
 - 접두사: `ACT_`(행동) `ITEM_`(아이템) `EVT_`(이벤트) `NPC_` `END_`(엔딩) `LOC_`(탐험 지역) `FAC_`(시설) `FLAG_`(플래그) `CLUE_`(단서) `TRAIT_`(특성)
 - 형식: 대문자 스네이크 케이스. 예: `EVT_SPRING_W03_RADIO_01`
 - 설계상 고정된 집합(능력치 8종, 숙련도 7종, 자원 등)만 enum으로 둔다.
+- **enum 값은 끝에만 추가한다.** 중간 삽입·순서 변경·삭제 금지. Unity 에셋은 enum을 정수로 저장하므로 순서가 바뀌면 기존 데이터가 다른 값으로 읽힌다. (세이브 JSON은 문자열로 저장해 영향 없음)
+
+## 4-1. 정의 데이터 클래스 (예외 규칙)
+- `ApoGirl.Core.Definitions`의 정의 클래스(`ActionDef`, `BalanceConfig` 등)는 `[Serializable]` + **public 필드**로 둔다.
+  ScriptableObject가 Core 정의를 그대로 직렬화하고(Inspector 편집), 테스트도 같은 클래스를 코드로 만든다. 6장의 "public 필드 노출 지양"은 MonoBehaviour/SO 자체 필드에 적용된다.
+- 런타임 상태(`ApoGirl.Core.State`)는 Newtonsoft 직렬화용 프로퍼티(`{ get; set; }`)를 쓴다.
+- SO 에셋을 코드로 만들 때는 각 에셋의 `Editor*` 메서드(`#if UNITY_EDITOR`)를 쓴다.
 
 ## 5. 수치와 텍스트
 - 매직 넘버 금지. 밸런스 수치는 `Assets/_Project/Data/Balance/`의 SO 또는 상수로 둔다.

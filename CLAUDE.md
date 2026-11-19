@@ -18,7 +18,8 @@
 - 로컬 커밋만 한다. **사용자가 요청하기 전까지 push 하지 않는다.**
 
 ## 현재 단계
-- M0(프로젝트 셋업) 완료 후 M1(코어 시뮬레이션) 진입 전: M1 클래스 다이어그램과 테스트 계획을 먼저 보고한다.
+- M0(프로젝트 셋업), M1(코어 시뮬레이션) 완료. 다음은 M2(플레이 가능한 UI 프로토타입) — 착수 전 설계 요약을 먼저 보고한다.
+- 코어 진입점: `NewGameFactory.Create` → `WeekRunner`(`PrepareWeek` → `ExecuteNextSlot` × 14 → `FinishWeek`), 정의 DB는 `Assets/_Project/Data/DefinitionDatabase.asset`.
 
 ## Unity
 - Unity 6000.6, 2D URP. Unity MCP(`.mcp.json`, 서버 이름 `unity`)로 에디터와 연결된다.
