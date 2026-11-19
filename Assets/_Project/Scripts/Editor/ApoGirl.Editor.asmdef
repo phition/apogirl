@@ -4,6 +4,7 @@
     "references": [
         "ApoGirl.Core",
         "ApoGirl.Data",
+        "ApoGirl.Exploration.Model",
         "Unity.Localization",
         "Unity.Localization.Editor",
         "UnityEditor.TestRunner",

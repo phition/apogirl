@@ -195,5 +195,19 @@ namespace ApoGirl.Core.Definitions
         public float AwakenedSight = 1.3f;
         public float AwakenedHearing = 1.4f;
         public float AwakenedSpeed = 1.25f;
+
+        // ── 밤·조명 (M2b-3, 문서 6.3.5-(2)) ──
+        /// <summary>밤 전체 조명 밝기 (0~1), 새벽 이후 밝기.</summary>
+        public float NightAmbientIntensity = 0.12f;
+        public float DawnAmbientIntensity = 0.45f;
+
+        /// <summary>어둠 속에서 손전등을 끈 플레이어가 좀비 눈에 띄는 정도 (시야 배율).</summary>
+        public float DarknessVisibility = 0.6f;
+
+        /// <summary>손전등을 켠 플레이어의 노출 (시야 배율). 시야 확대 vs 노출 증가의 트레이드오프.</summary>
+        public float FlashlightExposure = 1.5f;
+
+        /// <summary>어둠 속 손전등 없이 수색하면 걸리는 시간 배율.</summary>
+        public float DarkSearchMultiplier = 1.6f;
     }
 }

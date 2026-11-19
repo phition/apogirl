@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using ApoGirl.Core.Definitions;
 using ApoGirl.Core.Expedition;
 using ApoGirl.Core.Random;
@@ -72,6 +73,10 @@ namespace ApoGirl.Exploration.Runtime
         private float _searchNoiseTimer;
         private float _shoveTimer;
         private bool _crouching;
+        private Light2D _flashlight;
+        private Light2D _selfLight;
+        private float _ambientIntensity;
+        private readonly PlayLogEntry _log = new PlayLogEntry();
 
         public ExpeditionRequest Request { get; private set; }
 
@@ -129,9 +134,29 @@ namespace ApoGirl.Exploration.Runtime
 
         public ThreatSimulation Threat => _threat;
 
-        public PlayerSnapshot Snapshot => new PlayerSnapshot { AreaId = AreaId(CurrentArea), X = X, Crouching = _crouching, Hidden = Hidden };
+        public PlayerSnapshot Snapshot => new PlayerSnapshot { AreaId = AreaId(CurrentArea), X = X, Crouching = _crouching, Hidden = Hidden, Visibility = Visibility };
 
         public int AreaId(ExplorationArea area) => _areasById.IndexOf(area);
+
+        /// <summary>어둠 (밤 탐험, 또는 낮 탐험의 황혼 각성 이후).</summary>
+        public bool IsDark => Request.TimeOfDay == ExpeditionTime.Night || DuskAwakened;
+
+        public bool FlashlightOn { get; private set; }
+
+        /// <summary>밤 시계가 끝나 새벽이 됨: 활동성이 가라앉고, 이후 탈출은 새벽 귀환 (수면 부채 +1, 문서 6.3.2-(4)).</summary>
+        public bool DawnReturn { get; private set; }
+
+        /// <summary>디버그 (F3): AI 상태·소음 반경 표시.</summary>
+        public bool DebugOverlay { get; private set; }
+
+        /// <summary>디버그 (F4): 무적.</summary>
+        public bool Invincible { get; private set; }
+
+        /// <summary>디버그 (F5): 전체 시야 (조명 최대).</summary>
+        public bool FullVision { get; private set; }
+
+        /// <summary>좀비 눈에 띄는 정도: 낮 1, 어둠 0.6, 손전등 1.5.</summary>
+        public float Visibility => !IsDark ? 1f : FlashlightOn ? _balance.FlashlightExposure : _balance.DarknessVisibility;
 
         /// <summary>탐험 카메라 (HUD가 월드 위치를 화면 좌표로 바꿀 때 사용).</summary>
         public Camera ViewCamera => _camera;
@@ -214,17 +239,15 @@ namespace ApoGirl.Exploration.Runtime
 
             var dt = Time.deltaTime;
             Clock.Tick(dt * TimeScale);
-            if (Clock.IsOver && !DuskAwakened)
+            if (Clock.IsOver)
             {
-                if (Request.TimeOfDay == ExpeditionTime.Day)
+                if (Request.TimeOfDay == ExpeditionTime.Day && !DuskAwakened)
                 {
                     TriggerDuskAwakening();
                 }
-                else
+                else if (Request.TimeOfDay == ExpeditionTime.Night && !DawnReturn)
                 {
-                    // 밤 시계 종료(새벽) 처리는 M2b-3
-                    Finish(ExtractStatus.Stranded);
-                    return;
+                    TriggerDawn();
                 }
             }
 
@@ -264,6 +287,7 @@ namespace ApoGirl.Exploration.Runtime
                     EmitNoise(CurrentArea, X, _balance.DoorNoise);
                     if (!target.Room.Visited)
                     {
+                        _log.RoomsEntered++;
                         target.Room.Visited = true;
                         target.Tint(BuildingView.VisitedDoorColor);
                     }
@@ -417,6 +441,13 @@ namespace ApoGirl.Exploration.Runtime
             if (keyboard.f2Key.wasPressedThisFrame)
             {
                 TimeScale = TimeScale > 1f ? 1f : 10f;
+                _log.DebugUsed = true;
+            }
+
+            HandleDebugKeys(keyboard);
+            if (keyboard.fKey.wasPressedThisFrame)
+            {
+                FlashlightOn = !FlashlightOn;
             }
 
             if (keyboard.tabKey.wasPressedThisFrame)
@@ -482,9 +513,10 @@ namespace ApoGirl.Exploration.Runtime
                         EmitNoise(CurrentArea, X, _balance.SearchNoise);
                     }
 
-                    Nearest.SearchProgress += dt;
+                    Nearest.SearchProgress += IsDark && !FlashlightOn ? dt / _balance.DarkSearchMultiplier : dt;
                     if (Nearest.SearchProgress >= Nearest.SearchSeconds)
                     {
+                        _log.ContainersSearched++;
                         Nearest.MarkSearched();
                         OpenContainer = Nearest;
                     }
@@ -545,6 +577,13 @@ namespace ApoGirl.Exploration.Runtime
                 ? Math.Min(0, _balance.DownRemainingHp - _startHp)
                 : Hp - _startHp;
             Result = RunResultBuilder.Build(status, Backpack.Items, _db, _baseFatigue, _runStress, hpDelta, Clock.Elapsed);
+            if (DawnReturn && status != ExtractStatus.Down)
+            {
+                // 새벽까지 버틴 대가: 수면 부채 +1, 다음 강제 휴식 회복 감소 (허브가 처리)
+                Result.SleepDebtDelta = 1;
+            }
+
+            WritePlayLog(status);
             if (_standalone)
             {
                 _hud?.ShowEnd(Result);
@@ -737,8 +776,29 @@ namespace ApoGirl.Exploration.Runtime
             go.transform.SetParent(transform, false);
             _light = go.AddComponent<Light2D>();
             _light.lightType = Light2D.LightType.Global;
-            _light.intensity = day ? 1f : 0.25f;
-            _light.color = day ? new Color(1f, 0.97f, 0.9f) : new Color(0.6f, 0.7f, 1f);
+            SetAmbient(day ? 1f : _balance.NightAmbientIntensity, day ? new Color(1f, 0.97f, 0.9f) : new Color(0.6f, 0.7f, 1f));
+
+            // 손전등: 바라보는 방향의 원뿔 빛 (밤에만 의미)
+            var flash = new GameObject("Flashlight");
+            flash.transform.SetParent(_world, false);
+            _flashlight = flash.AddComponent<Light2D>();
+            _flashlight.lightType = Light2D.LightType.Point;
+            _flashlight.pointLightInnerRadius = 1f;
+            _flashlight.pointLightOuterRadius = 10f;
+            _flashlight.pointLightInnerAngle = 40f;
+            _flashlight.pointLightOuterAngle = 70f;
+            _flashlight.intensity = 1.2f;
+            _flashlight.color = new Color(1f, 0.95f, 0.8f);
+
+            // 어둠 속에서도 자기 주변은 희미하게 보이게
+            var glow = new GameObject("SelfGlow");
+            glow.transform.SetParent(_world, false);
+            _selfLight = glow.AddComponent<Light2D>();
+            _selfLight.lightType = Light2D.LightType.Point;
+            _selfLight.pointLightInnerRadius = 0.3f;
+            _selfLight.pointLightOuterRadius = 2.6f;
+            _selfLight.intensity = 0.55f;
+            _selfLight.color = new Color(0.8f, 0.85f, 1f);
         }
 
         private static void EnsureEventSystem()
@@ -771,6 +831,20 @@ namespace ApoGirl.Exploration.Runtime
             _player.localPosition = new Vector3(worldX + (_facingRight ? -PlayerWidth / 2f : PlayerWidth / 2f), origin.y + 0.15f, 0f);
             _player.localScale = new Vector3(_facingRight ? PlayerWidth : -PlayerWidth, height, 1f);
             _playerRenderer.color = Hidden ? new Color(0.88f, 0.84f, 0.76f, 0.3f) : new Color(0.88f, 0.84f, 0.76f);
+
+            var center = new Vector3(worldX, origin.y + 1.4f, 0f);
+            if (_flashlight != null)
+            {
+                _flashlight.enabled = IsDark && FlashlightOn && !Hidden;
+                _flashlight.transform.localPosition = center;
+                _flashlight.transform.localRotation = Quaternion.Euler(0f, 0f, _facingRight ? -90f : 90f);
+            }
+
+            if (_selfLight != null)
+            {
+                _selfLight.enabled = IsDark;
+                _selfLight.transform.localPosition = center;
+            }
 
             // 화면 비율과 관계없이 가로 최소 MinVisibleWidth 유닛이 보이게 (멀리서 건물과 캐릭터를 함께 잡는 앵글)
             _camera.orthographicSize = Mathf.Clamp(MinVisibleWidth / (2f * Mathf.Max(0.1f, _camera.aspect)), MinOrthographicSize, MaxOrthographicSize);
@@ -852,8 +926,9 @@ namespace ApoGirl.Exploration.Runtime
             Activity = ActivityModel.Evaluate(Clock.Phase, DuskAwakened, _balance);
             NoiseLevel = Mathf.Max(0f, NoiseLevel - dt * 6f);
             var events = _threat.Step(dt, Snapshot, Activity);
-            if (events.Damage > 0)
+            if (events.Damage > 0 && !Invincible)
             {
+                _log.DamageTaken += events.Damage;
                 Hp = Math.Max(0, Hp - events.Damage);
                 _hud?.ShowMessage("exp.hurt");
                 if (Hp <= 0)
@@ -863,8 +938,10 @@ namespace ApoGirl.Exploration.Runtime
                 }
             }
 
+            _log.CrowdsWoken += events.WokenCrowds.Count;
             if (events.Spotted)
             {
+                _log.TimesSpotted++;
                 _hud?.ShowMessage("exp.spotted");
             }
             else if (events.WokenCrowds.Count > 0)
@@ -877,13 +954,109 @@ namespace ApoGirl.Exploration.Runtime
         {
             DuskAwakened = true;
             _threat.AwakenAll();
+            SetAmbient(0.2f, new Color(0.75f, 0.6f, 0.65f));
+            _hud?.ShowMessage("exp.dusk");
+        }
+
+        private void TriggerDawn()
+        {
+            DawnReturn = true;
+            SetAmbient(_balance.DawnAmbientIntensity, new Color(0.85f, 0.8f, 0.9f));
+            _hud?.ShowMessage("exp.dawn");
+        }
+
+        private void SetAmbient(float intensity, Color color)
+        {
+            _ambientIntensity = intensity;
             if (_light != null)
             {
-                _light.intensity = 0.35f;
-                _light.color = new Color(0.75f, 0.6f, 0.65f);
+                _light.intensity = FullVision ? 1f : intensity;
+                _light.color = color;
+            }
+        }
+
+        private void HandleDebugKeys(Keyboard keyboard)
+        {
+            if (keyboard.f3Key.wasPressedThisFrame)
+            {
+                DebugOverlay = !DebugOverlay;
             }
 
-            _hud?.ShowMessage("exp.dusk");
+            if (keyboard.f4Key.wasPressedThisFrame)
+            {
+                Invincible = !Invincible;
+                _log.DebugUsed = true;
+            }
+
+            if (keyboard.f5Key.wasPressedThisFrame)
+            {
+                FullVision = !FullVision;
+                _light.intensity = FullVision ? 1f : _ambientIntensity;
+                _log.DebugUsed = true;
+            }
+
+            if (keyboard.f6Key.wasPressedThisFrame)
+            {
+                DebugGiveItem();
+            }
+
+            if (keyboard.f7Key.wasPressedThisFrame)
+            {
+                Clock.Tick(60f);
+                _log.DebugUsed = true;
+            }
+
+            if (keyboard.f8Key.wasPressedThisFrame)
+            {
+                Clock.Tick(Clock.Length);
+                _log.DebugUsed = true;
+            }
+        }
+
+        /// <summary>디버그 (F6): 무작위 아이템 하나를 배낭에.</summary>
+        public void DebugGiveItem()
+        {
+            _log.DebugUsed = true;
+            if (!_db.TryGetLootTable(Location.DefaultLootTableId, out var table) || table.Entries.Count == 0)
+            {
+                return;
+            }
+
+            var entry = table.Entries[UnityEngine.Random.Range(0, table.Entries.Count)];
+            if (_db.TryGetItem(entry.ItemId, out var item))
+            {
+                Backpack.TryAutoPlace(item.Id, item.Width, item.Height, item.Weight);
+            }
+        }
+
+        private void WritePlayLog(ExtractStatus status)
+        {
+            try
+            {
+                _log.Timestamp = DateTime.Now.ToString("o");
+                _log.LocationId = Request.LocationId;
+                _log.TimeOfDay = Request.TimeOfDay.ToString();
+                _log.Seed = Request.Seed;
+                _log.Status = status.ToString();
+                _log.TimeSpent = Clock.Elapsed;
+                _log.HpDelta = Result.HpDelta;
+                _log.DuskAwakened = DuskAwakened;
+                _log.DawnReturn = DawnReturn;
+                _log.Resources = Result.ResourceLoot;
+                _log.Items.Clear();
+                foreach (var item in Result.Loot)
+                {
+                    _log.Items.Add(item.ItemId + "x" + item.Count);
+                }
+
+                var directory = Path.Combine(Application.persistentDataPath, "PlayLogs");
+                Directory.CreateDirectory(directory);
+                File.AppendAllText(Path.Combine(directory, "expeditions.jsonl"), JsonUtility.ToJson(_log) + "\n");
+            }
+            catch (Exception exception)
+            {
+                Debug.LogWarning("플레이 기록 저장 실패: " + exception.Message);
+            }
         }
 
         private void EmitNoise(ExplorationArea area, float x, float radius)
@@ -894,6 +1067,14 @@ namespace ApoGirl.Exploration.Runtime
             }
 
             _threat.Emit(new NoiseEvent(AreaId(area), x, radius));
+            if (DebugOverlay)
+            {
+                var origin = area.Origin;
+                var ring = BuildingView.Rect(_world, "NoiseDebug", new Vector2(origin.x + x - radius, origin.y + 0.2f),
+                    new Vector2(radius * 2f, 0.12f), new Color(1f, 0.95f, 0.4f, 0.6f), 20);
+                Destroy(ring, 0.6f);
+            }
+
             if (area == CurrentArea)
             {
                 NoiseLevel = Mathf.Max(NoiseLevel, radius);

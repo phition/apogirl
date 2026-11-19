@@ -124,7 +124,8 @@ namespace ApoGirl.Exploration.Runtime
             _activity.text = Loc.F("exp.activity", Loc.T("activity." + _director.Activity.Level));
             _activity.EnableInClassList("danger", _director.Activity.Level >= ActivityLevel.Alert);
             var noiseBars = Mathf.Clamp(Mathf.CeilToInt(_director.NoiseLevel / 1.8f), 0, 4);
-            _noise.text = Loc.T("exp.noise") + " " + new string('■', noiseBars) + new string('□', 4 - noiseBars);
+            _noise.text = Loc.T("exp.noise") + " " + new string('■', noiseBars) + new string('□', 4 - noiseBars)
+                          + (_director.IsDark ? "   " + Loc.T(_director.FlashlightOn ? "exp.light_on" : "exp.light_off") : "");
             _hidden.EnableInClassList("hidden", !_director.Hidden);
             _hidden.text = Loc.T("exp.hidden");
 
@@ -138,7 +139,11 @@ namespace ApoGirl.Exploration.Runtime
             }
             _weight.text = Loc.F("exp.weight", _director.Backpack.TotalWeight.ToString("0.0"), _director.CarryCapacity.ToString("0.0"));
             _weight.EnableInClassList("danger", _director.IsOverweight);
-            _debug.text = _director.TimeScale > 1f ? "×" + _director.TimeScale.ToString("0") : "";
+            var debug = _director.TimeScale > 1f ? "×" + _director.TimeScale.ToString("0") : "";
+            if (_director.Invincible) debug += " " + Loc.T("exp.debug_invincible");
+            if (_director.FullVision) debug += " " + Loc.T("exp.debug_vision");
+            if (_director.DebugOverlay) debug += " F3";
+            _debug.text = debug.Trim();
 
             RefreshPrompt();
             RefreshLoot();
@@ -299,7 +304,8 @@ namespace ApoGirl.Exploration.Runtime
                 var phase = (int)(Time.time / 0.5f);
                 foreach (var unit in _director.Threat.Zombies)
                 {
-                    if (unit.State != ZombieState.Dormant)
+                    var dormant = unit.State == ZombieState.Dormant;
+                    if (!dormant && !_director.DebugOverlay)
                     {
                         continue;
                     }
@@ -315,6 +321,13 @@ namespace ApoGirl.Exploration.Runtime
                     var position = RuntimePanelUtils.CameraTransformWorldToPanel(panel, world, camera);
                     label.style.left = position.x - 14f;
                     label.style.top = position.y - 24f;
+                    if (!dormant)
+                    {
+                        label.text = unit.State + " " + unit.Awareness.ToString("0.0");
+                        label.style.color = new Color(0.75f, 0.75f, 1f);
+                        continue;
+                    }
+
                     label.text = SleepText(phase + unit.Id);
 
                     var stir = 0f;

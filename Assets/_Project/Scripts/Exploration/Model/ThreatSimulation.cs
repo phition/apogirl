@@ -101,6 +101,9 @@ namespace ApoGirl.Exploration.Model
         public float X;
         public bool Crouching;
         public bool Hidden;
+
+        /// <summary>좀비 눈에 띄는 정도 (어둠 0.6, 손전등 1.5 등). 시야 거리에 곱한다.</summary>
+        public float Visibility = 1f;
     }
 
     public enum ZombieState
@@ -382,7 +385,8 @@ namespace ApoGirl.Exploration.Model
 
             var dx = player.X - zombie.X;
             var distance = Math.Abs(dx);
-            var range = zombie.Def.SightRange * mods.Sight * (player.Crouching ? _balance.CrouchSightMultiplier : 1f);
+            var range = zombie.Def.SightRange * mods.Sight * player.Visibility
+                        * (player.Crouching ? _balance.CrouchSightMultiplier : 1f);
             if (distance > range)
             {
                 return false;

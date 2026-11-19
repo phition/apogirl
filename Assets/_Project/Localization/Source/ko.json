@@ -159,7 +159,7 @@
     "result.items": "가져온 물건: {0}",
     "debug.expedition_mode": "탐험 방식 전환 (실시간/자동)",
     "exp.backpack": "배낭 (Tab)",
-    "exp.controls": "A/D 이동 · Shift 달리기 · Ctrl 웅크리기 · E 상호작용 (수색은 길게) · Space 숨기 · Q 밀치기 · Tab 배낭 · 배낭: 클릭 선택→칸 클릭 이동, 우클릭 버리기 · F2 시간 ×10 (디버그)",
+    "exp.controls": "A/D 이동 · Shift 달리기 · Ctrl 웅크리기 · E 상호작용 (수색은 길게) · Space 숨기 · Q 밀치기 · F 손전등 · Tab 배낭 (클릭 선택→칸 클릭 이동, 우클릭 버리기) · 디버그: F2 ×10 · F3 AI·소음 · F4 무적 · F5 시야 · F6 아이템 · F7 +1분 · F8 시계 끝",
     "exp.take_all": "모두 가져가기",
     "exp.time_day": "낮 탐험",
     "exp.time_night": "밤 탐험",
@@ -213,7 +213,12 @@
     "exp.hurt": "공격당했다!",
     "exp.spotted": "들켰다!",
     "exp.crowd_woke": "무리가 깨어났다…",
-    "exp.dusk": "해가 졌다. 놈들이 깨어난다."
+    "exp.dusk": "해가 졌다. 놈들이 깨어난다.",
+    "exp.light_on": "손전등 켜짐",
+    "exp.light_off": "손전등 꺼짐",
+    "exp.dawn": "새벽이 밝아온다. 놈들이 가라앉는다.",
+    "exp.debug_invincible": "무적",
+    "exp.debug_vision": "시야"
   },
   "Actions": {
     "ACT_REST_DAY.name": "낮잠",

@@ -131,6 +131,62 @@ namespace ApoGirl.Tests.PlayMode
             Object.Destroy(host.gameObject);
         }
 
+        [UnityTest]
+        public IEnumerator NightExpedition_IsDark_HasAwakeZombies_DawnAddsSleepDebt()
+        {
+            yield return BootToHub(4242);
+
+            var session = GameApp.Session;
+            session.SetSlot(1, "ACT_EXP_NIGHT_SCHOOL");
+            session.BeginWeek();
+            session.Step(); // 1일차 낮
+            var outcome = session.Step();
+            Assert.IsTrue(outcome.AwaitingExpedition);
+            Assert.AreEqual(ExpeditionTime.Night, outcome.ExpeditionRequest.TimeOfDay);
+
+            ExpeditionResult result = null;
+            var host = new GameObject("CoroutineHost").AddComponent<CoroutineHost>();
+            host.StartCoroutine(GameApp.RunExpedition(outcome.ExpeditionRequest, r => result = r));
+
+            ExpeditionDirector director = null;
+            for (var i = 0; i < 300 && (director == null || director.Clock == null); i++)
+            {
+                director = Object.FindAnyObjectByType<ExpeditionDirector>();
+                yield return null;
+            }
+
+            Assert.IsNotNull(director);
+            Assert.IsTrue(director.IsDark);
+            Assert.Less(director.Visibility, 1f, "손전등 없이 어둠 속에서는 덜 보인다");
+            var awake = 0;
+            foreach (var zombie in director.Threat.Zombies)
+            {
+                if (zombie.IsAwake)
+                {
+                    awake++;
+                }
+            }
+
+            Assert.Greater(awake, 5, "밤에는 깨어 있는 좀비가 많다");
+
+            // 새벽까지 버틴 뒤 귀환
+            director.Clock.Tick(director.Clock.Length);
+            yield return null;
+            yield return null;
+            Assert.IsTrue(director.DawnReturn);
+            director.ExtractNow();
+            for (var i = 0; i < 300 && result == null; i++)
+            {
+                yield return null;
+            }
+
+            Assert.AreEqual(1, result.SleepDebtDelta, "새벽 귀환: 수면 부채 +1");
+            var debtBefore = session.State.Player.SleepDebt;
+            session.CompleteExpedition(result);
+            Assert.AreEqual(debtBefore + 2, session.State.Player.SleepDebt, "밤 탐험 +1, 새벽 귀환 +1");
+            Object.Destroy(host.gameObject);
+        }
+
         private static IEnumerator BootToHub(int seed)
         {
             SceneManager.LoadScene("Boot");
