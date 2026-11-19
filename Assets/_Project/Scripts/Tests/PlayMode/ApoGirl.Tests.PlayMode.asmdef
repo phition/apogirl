@@ -5,6 +5,7 @@
         "ApoGirl.Core",
         "ApoGirl.Systems",
         "ApoGirl.Presentation",
+        "ApoGirl.Exploration",
         "UnityEngine.TestRunner",
         "UnityEditor.TestRunner"
     ],

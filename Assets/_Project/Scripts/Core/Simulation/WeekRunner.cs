@@ -24,6 +24,12 @@ namespace ApoGirl.Core.Simulation
         /// <summary>탐험 슬롯이었다면 결과, 아니면 null.</summary>
         public ExpeditionResult Expedition;
 
+        /// <summary>탐험 슬롯의 요청 (실시간 탐험에 넘길 데이터).</summary>
+        public ExpeditionRequest ExpeditionRequest;
+
+        /// <summary>실시간 탐험 대기 중: CompleteExpedition(result)를 호출해야 슬롯이 끝난다.</summary>
+        public bool AwaitingExpedition;
+
         public readonly StateDelta Delta = new StateDelta();
 
         /// <summary>UI가 멈춰서 연출해야 하는 슬롯 (대성공·실패·탐험·위반·게임 종료). 나머지는 빠른 진행.</summary>
@@ -52,6 +58,7 @@ namespace ApoGirl.Core.Simulation
         private readonly IRandomService _random;
         private readonly IExpeditionRunner _expeditionRunner;
         private readonly List<SlotOutcome> _outcomes = new List<SlotOutcome>();
+        private PendingExpedition _pending;
 
         public WeekRunner(GameState state, IDefinitionDatabase db, IRandomService random, IExpeditionRunner expeditionRunner)
         {
@@ -68,6 +75,13 @@ namespace ApoGirl.Core.Simulation
         public bool IsWeekComplete => _state.Calendar.WeekComplete;
 
         public bool IsGameOver => _state.Status != GameStatus.Playing;
+
+        /// <summary>true면 탐험 슬롯에서 멈추고 실시간 탐험 결과를 기다린다 (false면 IExpeditionRunner로 즉시 처리).</summary>
+        public bool DeferExpeditions { get; set; }
+
+        public bool HasPendingExpedition => _pending != null;
+
+        public ExpeditionRequest PendingRequest => _pending?.Outcome.ExpeditionRequest;
 
         private BalanceConfig Balance => _db.Balance;
 
@@ -87,6 +101,11 @@ namespace ApoGirl.Core.Simulation
             if (IsWeekComplete)
             {
                 throw new InvalidOperationException("이번 주 슬롯을 모두 실행함. FinishWeek()를 먼저 호출할 것");
+            }
+
+            if (HasPendingExpedition)
+            {
+                throw new InvalidOperationException("탐험 결과를 기다리는 중. CompleteExpedition()을 먼저 호출할 것");
             }
 
             var calendar = _state.Calendar;
@@ -126,18 +145,51 @@ namespace ApoGirl.Core.Simulation
 
             if (action.IsExpedition)
             {
-                outcome.Result = RunExpedition(action, index, consecutive, outcome);
-            }
-            else
-            {
-                if (calendar.Phase == DayPhase.Day && action.Category != ActionCategory.Education)
+                outcome.ExpeditionRequest = ExpeditionRequestFactory.Create(_state, action, _random.NextSeed(), consecutive);
+                _pending = new PendingExpedition { Action = action, Index = index, Violation = violation, Outcome = outcome };
+                if (DeferExpeditions)
                 {
-                    ActionResolver.ResetRoutine(player);
+                    outcome.AwaitingExpedition = true;
+                    return outcome;
                 }
 
-                outcome.Result = ActionResolver.Resolve(_state, action, _db, _random, delta);
+                return CompleteExpedition(_expeditionRunner.Run(outcome.ExpeditionRequest));
             }
 
+            if (calendar.Phase == DayPhase.Day && action.Category != ActionCategory.Education)
+            {
+                ActionResolver.ResetRoutine(player);
+            }
+
+            outcome.Result = ActionResolver.Resolve(_state, action, _db, _random, delta);
+            return FinishSlot(action, violation, outcome);
+        }
+
+        /// <summary>대기 중인 탐험 슬롯에 결과를 반영하고 슬롯을 끝낸다.</summary>
+        public SlotOutcome CompleteExpedition(ExpeditionResult result)
+        {
+            if (_pending == null)
+            {
+                throw new InvalidOperationException("대기 중인 탐험이 없음");
+            }
+
+            if (result == null)
+            {
+                throw new ArgumentNullException(nameof(result));
+            }
+
+            var pending = _pending;
+            _pending = null;
+            pending.Outcome.AwaitingExpedition = false;
+            pending.Outcome.Result = ApplyExpedition(pending.Action, pending.Index, result, pending.Outcome);
+            return FinishSlot(pending.Action, pending.Violation, pending.Outcome);
+        }
+
+        private SlotOutcome FinishSlot(ActionDef action, bool violation, SlotOutcome outcome)
+        {
+            var calendar = _state.Calendar;
+            var player = _state.Player;
+            var delta = outcome.Delta;
             if (calendar.Phase == DayPhase.Night)
             {
                 SleepDebtRules.OnNightSlotResolved(_state, action.IsRest, Balance, delta);
@@ -201,12 +253,10 @@ namespace ApoGirl.Core.Simulation
             return summary;
         }
 
-        private CheckResult RunExpedition(ActionDef action, int index, bool consecutive, SlotOutcome outcome)
+        private CheckResult ApplyExpedition(ActionDef action, int index, ExpeditionResult result, SlotOutcome outcome)
         {
             var delta = outcome.Delta;
             var player = _state.Player;
-            var request = ExpeditionRequestFactory.Create(_state, action, _random.NextSeed(), consecutive);
-            var result = _expeditionRunner.Run(request);
             outcome.Expedition = result;
 
             if (action.ExpeditionTime == ExpeditionTime.Night)
@@ -304,6 +354,14 @@ namespace ApoGirl.Core.Simulation
             {
                 calendar.WeekComplete = true;
             }
+        }
+
+        private sealed class PendingExpedition
+        {
+            public ActionDef Action;
+            public int Index;
+            public bool Violation;
+            public SlotOutcome Outcome;
         }
     }
 }

@@ -1,0 +1,51 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" editor-extension-mode="False">
+    <Style src="Theme.uss" />
+    <Style src="Expedition.uss" />
+    <ui:VisualElement name="exp-root" class="exp-root font-normal" picking-mode="Ignore">
+        <ui:VisualElement name="exp-top" class="exp-top" picking-mode="Ignore">
+            <ui:VisualElement class="exp-location" picking-mode="Ignore">
+                <ui:Label name="location-label" class="exp-location-label" />
+                <ui:Label name="room-label" class="exp-room-label" />
+            </ui:VisualElement>
+            <ui:VisualElement class="exp-clock" picking-mode="Ignore">
+                <ui:VisualElement class="exp-clock-row" picking-mode="Ignore">
+                    <ui:Label name="clock-phase" class="exp-clock-phase" />
+                    <ui:Label name="clock-time" class="exp-clock-time" />
+                    <ui:Label name="debug-label" class="exp-debug" />
+                </ui:VisualElement>
+                <ui:ProgressBar name="clock-bar" class="exp-clock-bar" low-value="0" high-value="100" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+
+        <ui:VisualElement class="exp-spacer" picking-mode="Ignore" />
+
+        <ui:VisualElement name="exp-prompt" class="exp-prompt" picking-mode="Ignore">
+            <ui:Label name="prompt-label" class="exp-prompt-label" />
+            <ui:ProgressBar name="search-bar" class="exp-search-bar hidden" low-value="0" high-value="100" />
+        </ui:VisualElement>
+
+        <ui:VisualElement name="exp-bottom" class="exp-bottom" picking-mode="Ignore">
+            <ui:VisualElement class="exp-status" picking-mode="Ignore">
+                <ui:Label name="vitals-label" class="exp-status-label" />
+                <ui:Label name="weight-label" class="exp-status-label" />
+            </ui:VisualElement>
+            <ui:Label name="controls-label" class="exp-controls" />
+        </ui:VisualElement>
+
+        <ui:VisualElement name="loot-panel" class="exp-panel exp-loot hidden">
+            <ui:Label name="loot-title" class="exp-panel-title" />
+            <ui:ScrollView name="loot-list" class="exp-loot-list" />
+            <ui:VisualElement class="exp-panel-buttons">
+                <ui:Button name="loot-take-all" class="small-button" />
+                <ui:Button name="loot-close" class="small-button" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+
+        <ui:VisualElement name="backpack-panel" class="exp-panel exp-backpack hidden">
+            <ui:Label name="backpack-title" class="exp-panel-title" />
+            <ui:VisualElement name="backpack-grid" class="bp-grid" />
+        </ui:VisualElement>
+
+        <ui:Label name="message" class="exp-message hidden" />
+    </ui:VisualElement>
+</ui:UXML>

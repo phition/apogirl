@@ -12,6 +12,9 @@ namespace ApoGirl.Data
         [SerializeField] private BalanceConfigAsset _balance;
         [SerializeField] private List<ActionDefinitionAsset> _actions = new List<ActionDefinitionAsset>();
         [SerializeField] private List<ExpeditionModelAsset> _expeditionModels = new List<ExpeditionModelAsset>();
+        [SerializeField] private List<ItemDefinitionAsset> _items = new List<ItemDefinitionAsset>();
+        [SerializeField] private List<LootTableAsset> _lootTables = new List<LootTableAsset>();
+        [SerializeField] private List<LocationAsset> _locations = new List<LocationAsset>();
 
         /// <summary>빈 참조는 건너뛰고, 빈 ID·중복 ID는 예외로 알린다.</summary>
         public IDefinitionDatabase Build()
@@ -20,7 +23,10 @@ namespace ApoGirl.Data
             return new InMemoryDefinitionDatabase(
                 balance,
                 _actions.Where(a => a != null).Select(a => a.ToDefinition()),
-                _expeditionModels.Where(m => m != null).Select(m => m.ToDefinition()));
+                _expeditionModels.Where(m => m != null).Select(m => m.ToDefinition()),
+                _items.Where(i => i != null).Select(i => i.ToDefinition()),
+                _lootTables.Where(t => t != null).Select(t => t.ToDefinition()),
+                _locations.Where(l => l != null).Select(l => l.ToDefinition()));
         }
 
 #if UNITY_EDITOR
@@ -30,6 +36,14 @@ namespace ApoGirl.Data
             _balance = balance;
             _actions = actions;
             _expeditionModels = expeditionModels;
+        }
+
+        /// <summary>에디터 도구용: 탐험 모드 정의 지정.</summary>
+        public void EditorSetExplorationContents(List<ItemDefinitionAsset> items, List<LootTableAsset> lootTables, List<LocationAsset> locations)
+        {
+            _items = items;
+            _lootTables = lootTables;
+            _locations = locations;
         }
 #endif
     }

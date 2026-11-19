@@ -1,0 +1,87 @@
+/* 탐험 HUD — 어두운 분위기 + 최소 UI (문서 10장) */
+
+.exp-root {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    padding: 16px;
+    color: var(--text);
+}
+
+.exp-top { flex-direction: row; justify-content: space-between; align-items: flex-start; }
+.exp-location-label { font-size: 20px; -unity-font-style: bold; color: var(--accent); }
+.exp-room-label { color: var(--text-dim); }
+
+.exp-clock { width: 420px; }
+.exp-clock-row { flex-direction: row; justify-content: flex-end; align-items: center; }
+.exp-clock-phase { -unity-font-style: bold; margin-right: 10px; }
+.exp-clock-time { font-size: 20px; min-width: 70px; -unity-text-align: middle-right; }
+.exp-debug { color: #9a9ae0; margin-left: 8px; }
+.exp-clock-bar { height: 16px; margin: 4px 0; }
+.exp-clock-bar .unity-progress-bar__background { background-color: rgba(0, 0, 0, 0.6); border-color: var(--line); }
+.exp-clock-bar .unity-progress-bar__progress { background-color: #b9a37a; }
+.exp-clock-bar.late .unity-progress-bar__progress { background-color: #c9584f; }
+
+.exp-spacer { flex-grow: 1; }
+
+.exp-prompt { align-items: center; margin-bottom: 18px; }
+.exp-prompt-label {
+    font-size: 19px;
+    padding: 4px 14px;
+    background-color: rgba(0, 0, 0, 0.55);
+    border-radius: 4px;
+}
+.exp-search-bar { width: 260px; height: 12px; margin-top: 6px; }
+.exp-search-bar .unity-progress-bar__progress { background-color: var(--ok); }
+
+.exp-bottom { flex-direction: row; justify-content: space-between; align-items: flex-end; }
+.exp-status-label {
+    padding: 2px 10px;
+    background-color: rgba(0, 0, 0, 0.5);
+    margin-top: 2px;
+}
+.exp-status-label.danger { color: var(--danger); }
+.exp-controls { color: var(--text-dim); font-size: 14px; max-width: 900px; -unity-text-align: lower-right; }
+
+.exp-panel {
+    position: absolute;
+    padding: 12px;
+    background-color: rgba(30, 32, 36, 0.95);
+    border-color: var(--accent);
+    border-width: 1px;
+    border-radius: 6px;
+}
+.exp-panel-title { -unity-font-style: bold; color: var(--accent); margin-bottom: 6px; }
+.exp-panel-buttons { flex-direction: row; justify-content: flex-end; margin-top: 6px; }
+
+.exp-loot { left: 30%; top: 22%; width: 420px; max-height: 420px; }
+.exp-loot-list { max-height: 300px; }
+.loot-row { -unity-text-align: middle-left; height: 34px; }
+
+.exp-backpack { right: 16px; top: 110px; }
+.bp-grid { position: relative; }
+.bp-cell { background-color: rgba(255, 255, 255, 0.05); border-color: rgba(255, 255, 255, 0.12); border-width: 1px; }
+.bp-item {
+    background-color: #5b5242;
+    border-color: #b9a37a;
+    border-width: 1px;
+    border-radius: 3px;
+    font-size: 13px;
+    -unity-text-align: middle-center;
+    white-space: normal;
+}
+.bp-item.selected { background-color: #7a6a4a; border-color: #ffffff; }
+
+.exp-message {
+    position: absolute;
+    left: 30%;
+    right: 30%;
+    top: 40%;
+    padding: 12px 18px;
+    background-color: rgba(0, 0, 0, 0.8);
+    border-radius: 6px;
+    -unity-text-align: middle-center;
+    font-size: 19px;
+}

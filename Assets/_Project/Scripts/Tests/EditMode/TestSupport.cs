@@ -56,7 +56,8 @@ namespace ApoGirl.Tests.EditMode
         {
             var balance = new BalanceConfig();
             tweak?.Invoke(balance);
-            return new InMemoryDefinitionDatabase(balance, CreateActions(), new[] { CreateModel() });
+            return new InMemoryDefinitionDatabase(
+                balance, CreateActions(), new[] { CreateModel() }, CreateItems(), new[] { CreateLootTable() }, new[] { CreateLocation() });
         }
 
         public static IEnumerable<ActionDef> CreateActions()
@@ -154,6 +155,44 @@ namespace ApoGirl.Tests.EditMode
                     StressMin = 15,
                     StressMax = 15,
                     DawnReturnChance = 0.2f,
+                },
+            };
+        }
+
+        public const string LootTable = "LOOT_TEST";
+
+        public static IEnumerable<ItemDef> CreateItems()
+        {
+            yield return new ItemDef { Id = "ITEM_CANNED_FOOD", Weight = 0.4f, ResourceYield = { new ResourceAmount(ResourceType.Food, 2) } };
+            yield return new ItemDef { Id = "ITEM_WATER_BOTTLE", Height = 2, Weight = 0.6f, ResourceYield = { new ResourceAmount(ResourceType.Water, 2) } };
+            yield return new ItemDef { Id = "ITEM_SCRAP", Width = 2, Height = 2, Weight = 1.5f, ResourceYield = { new ResourceAmount(ResourceType.Materials, 2) } };
+            yield return new ItemDef { Id = "ITEM_TEXTBOOK", Width = 2, Weight = 0.8f };
+        }
+
+        public static LootTableDef CreateLootTable()
+        {
+            return new LootTableDef
+            {
+                Id = LootTable,
+                MinRolls = 1,
+                MaxRolls = 3,
+                EmptyChance = 0.1f,
+                Entries = { new LootEntry("ITEM_CANNED_FOOD", 5), new LootEntry("ITEM_WATER_BOTTLE", 3), new LootEntry("ITEM_TEXTBOOK", 1) },
+            };
+        }
+
+        public static LocationDef CreateLocation()
+        {
+            return new LocationDef
+            {
+                Id = Location,
+                DefaultLootTableId = LootTable,
+                Layout = new BuildingLayoutDef
+                {
+                    Floors = 1,
+                    Rooms = { new RoomDef { Id = "ROOM_A", Floor = 0, X = 0, Width = 10 } },
+                    Containers = { new ContainerDef { Id = "C1", Floor = 0, X = 5 } },
+                    Exits = { new ExitDef { Kind = ExitKind.Main, Floor = 0, X = 1 } },
                 },
             };
         }

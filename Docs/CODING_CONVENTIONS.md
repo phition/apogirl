@@ -10,7 +10,8 @@
 | `ApoGirl.Data` | `Scripts/Data` | ScriptableObject 정의 → Core 정의로 변환 | Core |
 | `ApoGirl.Systems` | `Scripts/Systems` | 세이브(파일 I/O), 로컬라이제이션, 입력, 오디오 | Core, Data |
 | `ApoGirl.Presentation` | `Scripts/Presentation` | UI, 연출, 일러스트 제어 | Core, Data, Systems |
-| `ApoGirl.Exploration` | `Scripts/Exploration` | 탐험 모드(M2b~) | Core, Data, Systems |
+| `ApoGirl.Exploration.Model` | `Scripts/Exploration/Model` | 탐험 순수 로직(시계·배낭·전리품·결과) | Core (**UnityEngine 참조 금지**) |
+| `ApoGirl.Exploration` | `Scripts/Exploration` | 탐험 모드 런타임(씬·입력·HUD) | Core, Data, Systems, Presentation(문자열·폰트·GameApp), Exploration.Model |
 | `ApoGirl.Tests.EditMode` | `Scripts/Tests/EditMode` | EditMode 유닛 테스트 | Core (+필요 시 Data) |
 
 - 의존은 **위 표의 방향으로만** 흐른다. Core가 다른 어셈블리를 참조하는 일은 없다.

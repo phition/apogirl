@@ -186,6 +186,16 @@ namespace ApoGirl.Presentation.Screens
             while (_session.IsExecuting)
             {
                 var outcome = _session.Step();
+                if (outcome.AwaitingExpedition)
+                {
+                    // 실시간 탐험: 허브 UI를 숨기고 탐험 씬을 추가 로드 → 결과를 세션에 반영
+                    ExpeditionResult expeditionResult = null;
+                    _root.style.display = DisplayStyle.None;
+                    yield return GameApp.RunExpedition(outcome.ExpeditionRequest, result => expeditionResult = result);
+                    _root.style.display = DisplayStyle.Flex;
+                    outcome = _session.CompleteExpedition(expeditionResult);
+                }
+
                 if (outcome.StopForPresentation)
                 {
                     var closed = false;
@@ -244,7 +254,11 @@ namespace ApoGirl.Presentation.Screens
 
             if (outcome.Expedition != null)
             {
-                lines.Add(Loc.T(outcome.Expedition.Status == ExtractStatus.Down ? "result.expedition_down" : "result.expedition_ok"));
+                lines.Add(Loc.T("result.expedition_" + outcome.Expedition.Status));
+                if (outcome.Expedition.Loot.Count > 0)
+                {
+                    lines.Add(Loc.F("result.items", string.Join("  ", outcome.Expedition.Loot.Select(i => Loc.Item(i.ItemId) + " ×" + i.Count))));
+                }
             }
 
             var deltas = UiText.DeltaLines(outcome.Delta);

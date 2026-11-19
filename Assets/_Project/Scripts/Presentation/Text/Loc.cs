@@ -12,6 +12,7 @@ namespace ApoGirl.Presentation.Text
     {
         public const string UiTable = "UI";
         public const string ActionTable = "Actions";
+        public const string ItemTable = "Items";
         private const string MissingPrefix = "No translation found";
 
         private static readonly Dictionary<string, string> Cache = new Dictionary<string, string>();
@@ -34,6 +35,12 @@ namespace ApoGirl.Presentation.Text
         public static string Action(string actionId, string suffix = "name")
         {
             return Get(ActionTable, actionId + "." + suffix, actionId);
+        }
+
+        /// <summary>아이템 이름.</summary>
+        public static string Item(string itemId)
+        {
+            return Get(ItemTable, itemId + ".name", itemId);
         }
 
         private static string Get(string table, string key, string fallback)

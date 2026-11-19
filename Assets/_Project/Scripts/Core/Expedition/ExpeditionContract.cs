@@ -46,6 +46,7 @@ namespace ApoGirl.Core.Expedition
         public float RunLength;
 
         public int SleepDebt;
+        public int Hp;
         public int Fatigue;
         public int Stress;
 
@@ -101,6 +102,7 @@ namespace ApoGirl.Core.Expedition
                 Week = state.Calendar.Week,
                 DayOfWeek = state.Calendar.Day,
                 SleepDebt = player.SleepDebt,
+                Hp = player.Vitals.Hp,
                 Fatigue = player.Vitals.Fatigue,
                 Stress = player.Vitals.Stress,
                 ConsecutiveRun = consecutiveRun,

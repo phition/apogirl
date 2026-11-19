@@ -23,6 +23,7 @@ namespace ApoGirl.Systems.Session
         private readonly DebugExpeditionRunner _expedition;
         private WeekRunner _runner;
         private bool _executing;
+        private bool _useRealtimeExpeditions;
 
         public GameSession(IDefinitionDatabase db, SaveService saves, IExpeditionRunner expeditionRunner = null)
         {
@@ -41,6 +42,9 @@ namespace ApoGirl.Systems.Session
 
         public event Action<GameStatus> GameEnded;
 
+        /// <summary>실시간 탐험 슬롯 도달: UI가 탐험 씬을 열고 CompleteExpedition(result)로 돌려줘야 한다.</summary>
+        public event Action<ExpeditionRequest> ExpeditionStarted;
+
         public IDefinitionDatabase Definitions => _db;
 
         public GameState State { get; private set; }
@@ -54,6 +58,22 @@ namespace ApoGirl.Systems.Session
         public bool IsExecuting => _executing;
 
         public bool IsEnded => HasGame && State.Status != GameStatus.Playing;
+
+        /// <summary>true: 탐험 슬롯에서 실시간 탐험을 기다린다. false: 헤드리스 확률 모델로 즉시 처리 (테스트·봇·디버그).</summary>
+        public bool UseRealtimeExpeditions
+        {
+            get => _useRealtimeExpeditions;
+            set
+            {
+                _useRealtimeExpeditions = value;
+                if (_runner != null && !_runner.HasPendingExpedition)
+                {
+                    _runner.DeferExpeditions = value;
+                }
+            }
+        }
+
+        public ExpeditionRequest PendingExpedition => _runner?.PendingRequest;
 
         // ── 게임 시작·저장 ──
 
@@ -134,6 +154,29 @@ namespace ApoGirl.Systems.Session
             }
 
             var outcome = _runner.ExecuteNextSlot();
+            if (outcome.AwaitingExpedition)
+            {
+                StateChanged?.Invoke();
+                ExpeditionStarted?.Invoke(outcome.ExpeditionRequest);
+                return outcome;
+            }
+
+            return AfterSlot(outcome);
+        }
+
+        /// <summary>실시간 탐험 결과를 반영하고 슬롯을 끝낸다 (주 마지막 슬롯이면 정산까지).</summary>
+        public SlotOutcome CompleteExpedition(ExpeditionResult result)
+        {
+            if (_runner == null || !_runner.HasPendingExpedition)
+            {
+                throw new InvalidOperationException("대기 중인 탐험이 없음");
+            }
+
+            return AfterSlot(_runner.CompleteExpedition(result));
+        }
+
+        private SlotOutcome AfterSlot(SlotOutcome outcome)
+        {
             SlotResolved?.Invoke(outcome);
 
             if (_runner.IsGameOver)
@@ -220,7 +263,10 @@ namespace ApoGirl.Systems.Session
         {
             State = state ?? throw new ArgumentNullException(nameof(state));
             _executing = false;
-            _runner = new WeekRunner(state, _db, new SeededRandom(state.Rng), _expedition);
+            _runner = new WeekRunner(state, _db, new SeededRandom(state.Rng), _expedition)
+            {
+                DeferExpeditions = _useRealtimeExpeditions,
+            };
             StateChanged?.Invoke();
         }
 

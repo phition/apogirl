@@ -1,0 +1,270 @@
+using System;
+using System.Linq;
+using ApoGirl.Core.Expedition;
+using ApoGirl.Exploration.Model;
+using ApoGirl.Presentation.Text;
+using UnityEngine;
+using UnityEngine.UIElements;
+
+namespace ApoGirl.Exploration.Runtime
+{
+    /// <summary>
+    /// 탐험 HUD (문서 10장, M2b-1 범위): 시계, 위치, 상태, 무게, 상호작용 안내·수색 진행, 배낭 격자, 컨테이너 내용.
+    /// 활동성·각성·소음 게이지는 M2b-2에서 추가.
+    /// </summary>
+    public sealed class ExpeditionHud
+    {
+        private const float CellSize = 54f;
+
+        private readonly ExpeditionDirector _director;
+        private readonly ProgressBar _clockBar;
+        private readonly Label _clockPhase;
+        private readonly Label _clockTime;
+        private readonly Label _location;
+        private readonly Label _room;
+        private readonly Label _vitals;
+        private readonly Label _weight;
+        private readonly Label _prompt;
+        private readonly ProgressBar _searchBar;
+        private readonly VisualElement _backpackPanel;
+        private readonly VisualElement _grid;
+        private readonly VisualElement _lootPanel;
+        private readonly Label _lootTitle;
+        private readonly VisualElement _lootList;
+        private readonly Label _message;
+        private readonly Label _debug;
+        private PlacedItem _selected;
+        private int _gridVersion = -1;
+        private ExplorationTarget _shownContainer;
+        private int _shownContentCount = -1;
+
+        public ExpeditionHud(VisualElement root, ExpeditionDirector director)
+        {
+            _director = director;
+            KoreanFont.Apply(root);
+            _clockBar = root.Q<ProgressBar>("clock-bar");
+            _clockPhase = root.Q<Label>("clock-phase");
+            _clockTime = root.Q<Label>("clock-time");
+            _location = root.Q<Label>("location-label");
+            _room = root.Q<Label>("room-label");
+            _vitals = root.Q<Label>("vitals-label");
+            _weight = root.Q<Label>("weight-label");
+            _prompt = root.Q<Label>("prompt-label");
+            _searchBar = root.Q<ProgressBar>("search-bar");
+            _backpackPanel = root.Q("backpack-panel");
+            _grid = root.Q("backpack-grid");
+            _lootPanel = root.Q("loot-panel");
+            _lootTitle = root.Q<Label>("loot-title");
+            _lootList = root.Q("loot-list");
+            _message = root.Q<Label>("message");
+            _debug = root.Q<Label>("debug-label");
+
+            root.Q<Label>("backpack-title").text = Loc.T("exp.backpack");
+            root.Q<Label>("controls-label").text = Loc.T("exp.controls");
+            root.Q<Button>("loot-take-all").text = Loc.T("exp.take_all");
+            root.Q<Button>("loot-take-all").clicked += () => _director.TakeAll();
+            root.Q<Button>("loot-close").text = Loc.T("common.close");
+            root.Q<Button>("loot-close").clicked += () => _director.CloseContainer();
+
+            var time = _director.Request.TimeOfDay == ExpeditionTime.Day ? "exp.time_day" : "exp.time_night";
+            _location.text = Loc.T("location." + _director.Location.Id) + " · " + Loc.T(time);
+            _grid.style.width = _director.Backpack.Width * CellSize;
+            _grid.style.height = _director.Backpack.Height * CellSize;
+            Refresh();
+        }
+
+        public void ToggleBackpack()
+        {
+            _backpackPanel.ToggleInClassList("hidden");
+        }
+
+        public void ShowMessage(string key)
+        {
+            _message.text = Loc.T(key);
+            _message.RemoveFromClassList("hidden");
+            _message.schedule.Execute(() => _message.AddToClassList("hidden")).ExecuteLater(1600);
+        }
+
+        /// <summary>단독 실행 종료 표시.</summary>
+        public void ShowEnd(ExpeditionResult result)
+        {
+            var loot = string.Join("  ", result.ResourceLoot.Select(r => UiText.Resource(r.Resource) + " +" + r.Amount)
+                .Concat(result.Loot.Select(i => Loc.Item(i.ItemId) + " ×" + i.Count)));
+            _message.text = Loc.T("exp.status." + result.Status) + "\n" + loot;
+            _message.RemoveFromClassList("hidden");
+        }
+
+        public void Refresh()
+        {
+            var clock = _director.Clock;
+            _clockBar.value = clock.Normalized * 100f;
+            _clockPhase.text = Loc.T("clock." + clock.Phase);
+            var remaining = Mathf.CeilToInt(clock.Remaining);
+            _clockTime.text = $"{remaining / 60}:{remaining % 60:00}";
+            _clockBar.EnableInClassList("late", clock.Phase == ClockPhase.Dusk || clock.Phase == ClockPhase.Dawn);
+
+            var room = _director.Building.RoomAt(_director.Floor, _director.X);
+            _room.text = Loc.F("exp.floor", _director.Floor + 1) + (room != null ? " · " + Loc.T("room." + room.Id) : "");
+            _vitals.text = Loc.F("exp.vitals", _director.Request.Hp);
+            _weight.text = Loc.F("exp.weight", _director.Backpack.TotalWeight.ToString("0.0"), _director.CarryCapacity.ToString("0.0"));
+            _weight.EnableInClassList("danger", _director.IsOverweight);
+            _debug.text = _director.TimeScale > 1f ? "×" + _director.TimeScale.ToString("0") : "";
+
+            RefreshPrompt();
+            RefreshLoot();
+            RefreshGrid();
+        }
+
+        private void RefreshPrompt()
+        {
+            var target = _director.Nearest;
+            _searchBar.AddToClassList("hidden");
+            if (target == null)
+            {
+                _prompt.text = "";
+                return;
+            }
+
+            switch (target.Kind)
+            {
+                case TargetKind.Container:
+                    var name = Loc.T("container." + target.Container.Kind);
+                    if (target.Searched)
+                    {
+                        _prompt.text = Loc.F(target.Contents.Count > 0 ? "exp.prompt_open" : "exp.prompt_empty", name);
+                    }
+                    else
+                    {
+                        _prompt.text = Loc.F("exp.prompt_search", name);
+                        if (target.SearchProgress > 0f)
+                        {
+                            _searchBar.RemoveFromClassList("hidden");
+                            _searchBar.value = target.SearchProgress / target.SearchSeconds * 100f;
+                        }
+                    }
+
+                    break;
+                case TargetKind.Connector:
+                    _prompt.text = Loc.F(target.Connector.TargetFloor > target.Floor ? "exp.prompt_up" : "exp.prompt_down", target.Connector.TargetFloor + 1);
+                    break;
+                case TargetKind.Exit:
+                    _prompt.text = Loc.T(target.Locked ? "exp.prompt_exit_locked" : "exp.prompt_exit");
+                    break;
+            }
+        }
+
+        private void RefreshLoot()
+        {
+            var container = _director.OpenContainer;
+            _lootPanel.EnableInClassList("hidden", container == null);
+            if (container == null)
+            {
+                _shownContainer = null;
+                return;
+            }
+
+            if (container == _shownContainer && container.Contents.Count == _shownContentCount)
+            {
+                return;
+            }
+
+            _shownContainer = container;
+            _shownContentCount = container.Contents.Count;
+            _lootTitle.text = Loc.T("container." + container.Container.Kind);
+            _lootList.Clear();
+            if (container.Contents.Count == 0)
+            {
+                _lootList.Add(new Label(Loc.T("exp.container_empty")));
+                return;
+            }
+
+            for (var i = 0; i < container.Contents.Count; i++)
+            {
+                var index = i;
+                var item = _director.Definitions.GetItemOrNull(container.Contents[i].ItemId);
+                var row = new Button(() => _director.TakeItem(index));
+                row.AddToClassList("loot-row");
+                row.text = Loc.Item(container.Contents[i].ItemId) + (item != null ? $"   {item.Width}×{item.Height} · {item.Weight:0.0}kg" : "");
+                _lootList.Add(row);
+            }
+        }
+
+        private void RefreshGrid()
+        {
+            var backpack = _director.Backpack;
+            var version = backpack.Items.Aggregate(backpack.Items.Count, (hash, i) => hash * 31 + i.X * 7 + i.Y * 13 + i.ItemId.GetHashCode());
+            if (version == _gridVersion)
+            {
+                return;
+            }
+
+            _gridVersion = version;
+            _grid.Clear();
+            for (var y = 0; y < backpack.Height; y++)
+            {
+                for (var x = 0; x < backpack.Width; x++)
+                {
+                    var cellX = x;
+                    var cellY = y;
+                    var cell = new VisualElement();
+                    cell.AddToClassList("bp-cell");
+                    Place(cell, x, y, 1, 1);
+                    cell.RegisterCallback<PointerDownEvent>(_ => OnCellClicked(cellX, cellY));
+                    _grid.Add(cell);
+                }
+            }
+
+            foreach (var placed in backpack.Items)
+            {
+                var item = placed;
+                var element = new Label(Loc.Item(placed.ItemId));
+                element.AddToClassList("bp-item");
+                element.EnableInClassList("selected", placed == _selected);
+                Place(element, placed.X, placed.Y, placed.Width, placed.Height);
+                element.RegisterCallback<PointerDownEvent>(evt =>
+                {
+                    evt.StopPropagation();
+                    if (evt.button == 1)
+                    {
+                        _director.DropItem(item);
+                        _selected = null;
+                    }
+                    else
+                    {
+                        _selected = _selected == item ? null : item;
+                    }
+
+                    _gridVersion = -1;
+                });
+                _grid.Add(element);
+            }
+        }
+
+        private void OnCellClicked(int x, int y)
+        {
+            if (_selected != null && _director.Backpack.TryMove(_selected, x, y))
+            {
+                _selected = null;
+            }
+
+            _gridVersion = -1;
+        }
+
+        private static void Place(VisualElement element, int x, int y, int width, int height)
+        {
+            element.style.position = Position.Absolute;
+            element.style.left = x * CellSize;
+            element.style.top = y * CellSize;
+            element.style.width = width * CellSize - 2f;
+            element.style.height = height * CellSize - 2f;
+        }
+    }
+
+    internal static class DefinitionLookupExtensions
+    {
+        public static Core.Definitions.ItemDef GetItemOrNull(this Core.Definitions.IDefinitionDatabase db, string id)
+        {
+            return db.TryGetItem(id, out var item) ? item : null;
+        }
+    }
+}

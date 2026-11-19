@@ -5,7 +5,11 @@
         "ApoGirl.Core",
         "ApoGirl.Data",
         "ApoGirl.Systems",
-        "Unity.InputSystem"
+        "ApoGirl.Presentation",
+        "ApoGirl.Exploration.Model",
+        "Unity.InputSystem",
+        "Unity.RenderPipelines.Universal.Runtime",
+        "UnityEngine.UI"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

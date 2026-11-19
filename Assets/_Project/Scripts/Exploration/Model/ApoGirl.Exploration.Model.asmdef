@@ -1,0 +1,16 @@
+{
+    "name": "ApoGirl.Exploration.Model",
+    "rootNamespace": "ApoGirl.Exploration.Model",
+    "references": [
+        "ApoGirl.Core"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": true
+}

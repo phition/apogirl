@@ -1,5 +1,7 @@
 using System.Collections;
+using ApoGirl.Core.Expedition;
 using ApoGirl.Core.State;
+using ApoGirl.Exploration.Runtime;
 using ApoGirl.Presentation.App;
 using NUnit.Framework;
 using UnityEngine;
@@ -9,23 +11,13 @@ using UnityEngine.UIElements;
 
 namespace ApoGirl.Tests.PlayMode
 {
-    /// <summary>Boot → Title → Hub 로드 후 한 주를 실행해도 에러 로그가 없는지 (에러 로그가 나오면 테스트 실패).</summary>
+    /// <summary>씬 흐름 스모크 테스트. 에러 로그가 나오면 실패한다.</summary>
     public sealed class BootToHubSmokeTests
     {
         [UnityTest]
         public IEnumerator BootTitleHub_RunOneWeek_NoErrors()
         {
-            SceneManager.LoadScene("Boot");
-            yield return WaitForScene(GameApp.TitleScene);
-            Assert.IsNotNull(GameApp.Session, "Boot가 세션을 만들어야 함");
-
-            var title = Object.FindAnyObjectByType<UIDocument>();
-            Assert.IsNotNull(title.rootVisualElement.Q<Button>(className: "title-button"));
-
-            GameApp.Session.NewGame(12345);
-            GameApp.GoTo(GameApp.HubScene);
-            yield return WaitForScene(GameApp.HubScene);
-            yield return null;
+            yield return BootToHub(12345);
 
             var session = GameApp.Session;
             session.SetSlot(0, "ACT_EDU_HUMANITIES");
@@ -34,11 +26,83 @@ namespace ApoGirl.Tests.PlayMode
             while (session.IsExecuting)
             {
                 session.Step();
+                if (session.PendingExpedition != null)
+                {
+                    session.CompleteExpedition(new ExpeditionResult { Status = ExtractStatus.Extracted });
+                }
+
                 yield return null;
             }
 
             Assert.AreEqual(2, session.State.Calendar.Week);
             Assert.AreEqual(GameStatus.Playing, session.State.Status);
+        }
+
+        [UnityTest]
+        public IEnumerator HubExpedition_LoadsSceneSearchesAndReturns()
+        {
+            yield return BootToHub(777);
+
+            var session = GameApp.Session;
+            Assert.IsTrue(session.UseRealtimeExpeditions);
+            session.SetSlot(0, "ACT_EXP_DAY_SCHOOL");
+            session.BeginWeek();
+            var outcome = session.Step();
+            Assert.IsTrue(outcome.AwaitingExpedition);
+
+            ExpeditionResult result = null;
+            var host = new GameObject("CoroutineHost").AddComponent<CoroutineHost>();
+            host.StartCoroutine(GameApp.RunExpedition(outcome.ExpeditionRequest, r => result = r));
+
+            ExpeditionDirector director = null;
+            for (var i = 0; i < 300 && (director == null || director.Clock == null); i++)
+            {
+                director = Object.FindAnyObjectByType<ExpeditionDirector>();
+                yield return null;
+            }
+
+            Assert.IsNotNull(director, "탐험 씬이 로드되어야 함");
+            Assert.Greater(director.Targets.Count, 5, "건물에 계단·컨테이너·출구가 있어야 함");
+
+            // 첫 컨테이너를 강제로 열어 모두 가져간 뒤 탈출
+            foreach (var target in director.Targets)
+            {
+                if (target.Kind == TargetKind.Container && target.Contents.Count > 0)
+                {
+                    target.MarkSearched();
+                    director.Open(target);
+                    director.TakeAll();
+                    break;
+                }
+            }
+
+            director.ExtractNow();
+            for (var i = 0; i < 300 && result == null; i++)
+            {
+                yield return null;
+            }
+
+            Assert.IsNotNull(result, "결과가 허브로 돌아와야 함");
+            Assert.AreEqual(ExtractStatus.Extracted, result.Status);
+            session.CompleteExpedition(result);
+            Assert.AreEqual(1, session.State.Exploration.DayExplorations);
+            Assert.IsFalse(SceneManager.GetSceneByName(GameApp.ExpeditionScene).isLoaded, "탐험 씬은 내려가야 함");
+            Object.Destroy(host.gameObject);
+        }
+
+        private static IEnumerator BootToHub(int seed)
+        {
+            SceneManager.LoadScene("Boot");
+            yield return WaitForScene(GameApp.TitleScene);
+            Assert.IsNotNull(GameApp.Session, "Boot가 세션을 만들어야 함");
+
+            var title = Object.FindAnyObjectByType<UIDocument>();
+            Assert.IsNotNull(title.rootVisualElement.Q<Button>(className: "title-button"));
+
+            GameApp.Session.NewGame(seed);
+            GameApp.GoTo(GameApp.HubScene);
+            yield return WaitForScene(GameApp.HubScene);
+            yield return null;
         }
 
         private static IEnumerator WaitForScene(string name)
@@ -49,6 +113,10 @@ namespace ApoGirl.Tests.PlayMode
             }
 
             Assert.AreEqual(name, SceneManager.GetActiveScene().name);
+        }
+
+        private sealed class CoroutineHost : MonoBehaviour
+        {
         }
     }
 }

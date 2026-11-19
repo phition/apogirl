@@ -127,5 +127,24 @@ namespace ApoGirl.Core.Definitions
         public float StressThresholdPerWillpower = 0.3f;
         public float StressThresholdPerMindLevel = 5f;
         public float StressThresholdCap = 90f;
+
+        // ── 실시간 탐험 (M2b, 문서 6.3.7) ──
+        public float WalkSpeed = 2.2f;
+        public float RunSpeed = 4f;
+        public float CrouchSpeed = 1.2f;
+        public float BaseCarryWeight = 8f;
+        public float CarryWeightPerStrength = 0.1f;
+
+        /// <summary>적재 한도를 넘었을 때 이동 속도 배율.</summary>
+        public float OverweightSpeedMultiplier = 0.6f;
+
+        public float SearchSpeedPerCraft = 0.003f;
+        public float MaxSearchSpeedBonus = 0.3f;
+        public int BackpackWidth = 6;
+        public int BackpackHeight = 4;
+
+        /// <summary>시계가 끝날 때까지 나오지 못했을 때 추가 피로·스트레스 (M2b-1 임시 규칙, M2b-2에서 황혼 각성으로 대체).</summary>
+        public int StrandedFatigue = 10;
+        public int StrandedStress = 10;
     }
 }

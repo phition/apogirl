@@ -14,6 +14,12 @@ namespace ApoGirl.Core.Definitions
         bool TryGetAction(string id, out ActionDef action);
 
         bool TryGetExpeditionModel(string id, out ExpeditionModelDef model);
+
+        bool TryGetItem(string id, out ItemDef item);
+
+        bool TryGetLootTable(string id, out LootTableDef table);
+
+        bool TryGetLocation(string id, out LocationDef location);
     }
 
     public static class DefinitionDatabaseExtensions
@@ -37,6 +43,26 @@ namespace ApoGirl.Core.Definitions
 
             return model;
         }
+
+        public static ItemDef GetItem(this IDefinitionDatabase db, string id)
+        {
+            if (!db.TryGetItem(id, out var item))
+            {
+                throw new KeyNotFoundException($"아이템 정의를 찾을 수 없음: '{id}'");
+            }
+
+            return item;
+        }
+
+        public static LocationDef GetLocation(this IDefinitionDatabase db, string id)
+        {
+            if (!db.TryGetLocation(id, out var location))
+            {
+                throw new KeyNotFoundException($"탐험 지역을 찾을 수 없음: '{id}'");
+            }
+
+            return location;
+        }
     }
 
     /// <summary>메모리 기반 정의 DB. 빈 ID·중복 ID는 생성 시점에 거부한다.</summary>
@@ -45,11 +71,17 @@ namespace ApoGirl.Core.Definitions
         private readonly Dictionary<string, ActionDef> _actions = new Dictionary<string, ActionDef>();
         private readonly Dictionary<string, ExpeditionModelDef> _expeditionModels = new Dictionary<string, ExpeditionModelDef>();
         private readonly List<ActionDef> _actionList = new List<ActionDef>();
+        private readonly Dictionary<string, ItemDef> _items = new Dictionary<string, ItemDef>();
+        private readonly Dictionary<string, LootTableDef> _lootTables = new Dictionary<string, LootTableDef>();
+        private readonly Dictionary<string, LocationDef> _locations = new Dictionary<string, LocationDef>();
 
         public InMemoryDefinitionDatabase(
             BalanceConfig balance,
             IEnumerable<ActionDef> actions,
-            IEnumerable<ExpeditionModelDef> expeditionModels = null)
+            IEnumerable<ExpeditionModelDef> expeditionModels = null,
+            IEnumerable<ItemDef> items = null,
+            IEnumerable<LootTableDef> lootTables = null,
+            IEnumerable<LocationDef> locations = null)
         {
             Balance = balance ?? throw new ArgumentNullException(nameof(balance));
             foreach (var action in actions)
@@ -65,6 +97,10 @@ namespace ApoGirl.Core.Definitions
                     Register(_expeditionModels, model.Id, model);
                 }
             }
+
+            RegisterAll(_items, items, i => i.Id);
+            RegisterAll(_lootTables, lootTables, t => t.Id);
+            RegisterAll(_locations, locations, l => l.Id);
         }
 
         public BalanceConfig Balance { get; }
@@ -79,6 +115,25 @@ namespace ApoGirl.Core.Definitions
         public bool TryGetExpeditionModel(string id, out ExpeditionModelDef model)
         {
             return _expeditionModels.TryGetValue(id ?? "", out model);
+        }
+
+        public bool TryGetItem(string id, out ItemDef item) => _items.TryGetValue(id ?? "", out item);
+
+        public bool TryGetLootTable(string id, out LootTableDef table) => _lootTables.TryGetValue(id ?? "", out table);
+
+        public bool TryGetLocation(string id, out LocationDef location) => _locations.TryGetValue(id ?? "", out location);
+
+        private static void RegisterAll<T>(Dictionary<string, T> map, IEnumerable<T> values, Func<T, string> id)
+        {
+            if (values == null)
+            {
+                return;
+            }
+
+            foreach (var value in values)
+            {
+                Register(map, id(value), value);
+            }
         }
 
         private static void Register<T>(Dictionary<string, T> map, string id, T value)

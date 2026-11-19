@@ -49,6 +49,12 @@ namespace ApoGirl.Presentation.Screens
                 Refresh();
             });
 
+            Add("debug.expedition_mode", () =>
+            {
+                _session.UseRealtimeExpeditions = !_session.UseRealtimeExpeditions;
+                Refresh();
+            });
+
             _status = new Label();
             _status.AddToClassList("debug-status");
             _panel.Add(_status);
@@ -64,7 +70,8 @@ namespace ApoGirl.Presentation.Screens
         {
             var forced = _session.DebugExpedition.ForceNext;
             _status.text = "seed " + _session.State.Rng.Seed + " · next expedition: " + (forced?.ToString() ?? "-")
-                           + " · planning " + _session.IsPlanning;
+                           + " · planning " + _session.IsPlanning
+                           + " · expedition " + (_session.UseRealtimeExpeditions ? "realtime" : "headless");
         }
 
         private void Add(string key, Action onClick)
