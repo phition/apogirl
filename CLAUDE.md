@@ -32,4 +32,5 @@
 - 실행: Boot 씬에서 플레이 → 타이틀 "새 게임 (프롤로그)" 또는 "빠른 시작". 허브 F1 = 디버그 패널(지역·시설 전부 해금, UI 전부 보기, 이벤트 강제 발생). 탐험: Space 숨기, Q 무기 공격(무기 없으면 밀치기), 1~4 퀵슬롯, F 손전등(도구 필요), 문 앞 W 살피기·S 듣기, 디버그 F2 ×10 · F3 AI·소음 · F4 무적 · F5 시야 · F6 아이템 · F7 +1분 · F8 시계 끝.
 - Unity 6.6은 허브 UIDocument 옆에 PanelRenderer를 런타임에 붙여 UXML 사본을 그린다. 탐험 중 허브를 숨길 때 `HubScreen.SetPanelRendererEnabled(false)`로 함께 끈다.
 - 플레이 기록: `persistentDataPath/PlayLogs/expeditions.jsonl` (디버그 사용 판·자동 테스트 제외) → 메뉴 `ApoGirl/Exploration/Summarize Play Logs`, `Apply Play Logs To Headless Models`.
+- 탐험 아트(픽셀 아트): `Editor/PixelArtBuilder.cs` → 메뉴 `ApoGirl/Art/Build Exploration Sprites`가 `Resources/Art/Exploration/*.png`(캐릭터·좀비·소품·벽 타일, CC0 오피스 타일셋 조각)를 생성한다. 런타임은 `ExplorationArt`가 키로 불러오고, 없으면 사각형으로 대체한다. 외부 에셋 출처는 `Art/ThirdParty/*/CREDITS.md`.
 - 탐험 슬롯은 2단계: `GameSession.Step()`이 `AwaitingExpedition`을 돌려주면 탐험 씬(Additive) → `CompleteExpedition(result)`. 디버그 패널에서 헤드리스(자동) 탐험으로 전환 가능.
