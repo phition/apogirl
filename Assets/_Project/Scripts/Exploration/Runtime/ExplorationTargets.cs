@@ -93,7 +93,7 @@ namespace ApoGirl.Exploration.Runtime
         public void MarkSearched()
         {
             Searched = true;
-            Tint(new Color(0.35f, 0.33f, 0.3f));
+            Tint(new Color(0.62f, 0.6f, 0.56f));
         }
 
         public void Tint(Color color)

@@ -94,6 +94,11 @@ namespace ApoGirl.Exploration.Runtime
         private readonly List<string> _runFlags = new List<string>();
         private readonly List<string> _runClues = new List<string>();
         private float _moveMultiplier = 1f;
+        private bool _playerSprites;
+        private bool _animMoving;
+        private bool _animRunning;
+        private float _animTime;
+        private float _attackAnim;
         private float _noiseMultiplier = 1f;
         private float _tutorialMoved;
         private float _tutorialCrouched;
@@ -408,6 +413,12 @@ namespace ApoGirl.Exploration.Runtime
                     foreach (var other in target.Room.CorridorDoors)
                     {
                         other.Forced = true;
+                        var doorRenderer = other.View != null ? other.View.GetComponent<SpriteRenderer>() : null;
+                        if (doorRenderer != null && ExplorationArt.Get("door_open") != null)
+                        {
+                            doorRenderer.sprite = ExplorationArt.Get("door_open");
+                            doorRenderer.color = Color.white;
+                        }
                     }
 
                     EmitNoise(CurrentArea, X, _balance.ShoveNoise);
@@ -441,7 +452,17 @@ namespace ApoGirl.Exploration.Runtime
                     if (target.Locked && _toolKind == ToolKind.Crowbar)
                     {
                         target.Locked = false;
-                        target.Tint(new Color(0.35f, 0.6f, 0.38f));
+                        var exitRenderer = target.View != null ? target.View.GetComponent<SpriteRenderer>() : null;
+                        var openSprite = ExplorationArt.Get("prop_exit");
+                        if (exitRenderer != null && openSprite != null)
+                        {
+                            exitRenderer.sprite = openSprite;
+                            exitRenderer.color = Color.white;
+                        }
+                        else
+                        {
+                            target.Tint(new Color(0.35f, 0.6f, 0.38f));
+                        }
                         EmitNoise(CurrentArea, X, _balance.ShoveNoise);
                         _hud?.ShowMessage("exp.forced_open");
                     }
@@ -597,6 +618,7 @@ namespace ApoGirl.Exploration.Runtime
             }
 
             _attackTimer = Mathf.Max(0.3f, _weapon.AttackCooldown);
+            _attackAnim = 0.25f;
             EmitNoise(CurrentArea, X, _weapon.AttackNoise);
             var hit = _threat.Strike(Snapshot, _facingRight ? 1 : -1, _weapon.WeaponPower, _weapon.StunSeconds, _balance.ShoveRange + 0.3f);
             if (hit == null)
@@ -776,8 +798,10 @@ namespace ApoGirl.Exploration.Runtime
 
             _crouching = keyboard.leftCtrlKey.isPressed;
             var running = keyboard.leftShiftKey.isPressed && !_crouching;
+            _animRunning = running;
             var move = (keyboard.dKey.isPressed || keyboard.rightArrowKey.isPressed ? 1f : 0f)
                        - (keyboard.aKey.isPressed || keyboard.leftArrowKey.isPressed ? 1f : 0f);
+            _animMoving = move != 0f;
             if (move != 0f)
             {
                 _facingRight = move > 0f;
@@ -955,7 +979,8 @@ namespace ApoGirl.Exploration.Runtime
 
             foreach (var connector in layout.Connectors)
             {
-                var view = Rect(_corridors[connector.Floor], "Stairs", connector.X - 0.5f, new Vector2(1f, 2.7f), new Color(0.32f, 0.38f, 0.5f), 0);
+                var view = Prop(_corridors[connector.Floor], "Stairs", connector.TargetFloor > connector.Floor ? "prop_stairs_up" : "prop_stairs_down",
+                    connector.X, new Vector2(1f, 2.7f), new Color(0.32f, 0.38f, 0.5f), 0);
                 AddTarget(new ExplorationTarget { Kind = TargetKind.Connector, Area = _corridors[connector.Floor], X = connector.X, Connector = connector, View = view });
             }
 
@@ -988,14 +1013,14 @@ namespace ApoGirl.Exploration.Runtime
                 foreach (var doorX in template.DoorXs)
                 {
                     var corridorX = room.SpanX + doorX;
-                    var view = Rect(corridor, "Door_" + door.RoomId, corridorX - 0.7f, new Vector2(1.4f, 2.8f), BuildingView.DoorColor, 0);
+                    var view = Prop(corridor, "Door_" + door.RoomId, "door_closed", corridorX, new Vector2(1.4f, 2.8f), BuildingView.DoorColor, 0);
                     var target = new ExplorationTarget { Kind = TargetKind.Door, Area = corridor, X = corridorX, Room = room, LinkX = doorX, View = view };
                     var variant = Request.TimeOfDay == ExpeditionTime.Day ? Location.DayVariant : Location.NightVariant;
                     target.RoomLocked = variant.LockedRooms.Contains(door.RoomId);
                     target.Forceable = variant.ForceableRooms.Contains(door.RoomId);
                     if (target.RoomLocked || target.Forceable)
                     {
-                        target.Tint(target.RoomLocked ? new Color(0.12f, 0.12f, 0.14f) : new Color(0.3f, 0.22f, 0.18f));
+                        target.Tint(target.RoomLocked ? new Color(0.42f, 0.42f, 0.48f) : new Color(0.88f, 0.62f, 0.56f));
                     }
                     AddTarget(target);
                     room.CorridorDoors.Add(target);
@@ -1021,7 +1046,7 @@ namespace ApoGirl.Exploration.Runtime
             foreach (var exit in layout.Exits)
             {
                 var color = exit.StartsLocked ? new Color(0.3f, 0.3f, 0.3f) : new Color(0.35f, 0.6f, 0.38f);
-                var view = Rect(_corridors[exit.Floor], "Exit", exit.X - 0.8f, new Vector2(1.6f, 3f), color, 0);
+                var view = Prop(_corridors[exit.Floor], "Exit", exit.StartsLocked ? "prop_exit_locked" : "prop_exit", exit.X, new Vector2(1.6f, 3f), color, 0);
                 AddTarget(new ExplorationTarget { Kind = TargetKind.Exit, Area = _corridors[exit.Floor], X = exit.X, Exit = exit, Locked = exit.StartsLocked, View = view });
                 if (exit.Kind == ExitKind.Main && start == null)
                 {
@@ -1032,10 +1057,16 @@ namespace ApoGirl.Exploration.Runtime
             CurrentArea = _corridors[start?.Floor ?? 0];
             X = start?.X ?? 1f;
 
-            _player = BuildingView.Rect(_world, "Player", Vector2.zero, new Vector2(PlayerWidth, PlayerHeight), new Color(0.88f, 0.84f, 0.76f), 10).transform;
+            _playerSprites = ExplorationArt.Get("player_idle") != null;
+            _player = _playerSprites
+                ? ExplorationArt.Place(_world, "Player", "player_idle", Vector2.zero, 10, Vector2.zero, Color.white).transform
+                : BuildingView.Rect(_world, "Player", Vector2.zero, new Vector2(PlayerWidth, PlayerHeight), new Color(0.88f, 0.84f, 0.76f), 10).transform;
             _playerRenderer = _player.GetComponent<SpriteRenderer>();
             // 바라보는 방향 표시 (부모 스케일 기준 0~1 좌표)
-            BuildingView.Rect(_player, "Facing", new Vector2(0.65f, 0.78f), new Vector2(0.35f, 0.05f), new Color(0.2f, 0.2f, 0.2f), 11);
+            if (!_playerSprites)
+            {
+                BuildingView.Rect(_player, "Facing", new Vector2(0.65f, 0.78f), new Vector2(0.35f, 0.05f), new Color(0.2f, 0.2f, 0.2f), 11);
+            }
         }
 
         /// <summary>방 내부는 처음 들어갈 때 만든다. 전리품은 방 시드로 굴려 같은 템플릿이라도 방마다 다르다.</summary>
@@ -1050,7 +1081,7 @@ namespace ApoGirl.Exploration.Runtime
             _building.BuildRoom(room, room.DoorIndex);
             foreach (var doorX in room.Template.DoorXs)
             {
-                var exitView = Rect(room, "RoomExit", doorX - 0.7f, new Vector2(1.4f, 2.8f), BuildingView.DoorColor, 0);
+                var exitView = Prop(room, "RoomExit", "door_closed", doorX, new Vector2(1.4f, 2.8f), BuildingView.DoorColor, 0);
                 AddTarget(new ExplorationTarget { Kind = TargetKind.RoomExit, Area = room, X = doorX, Room = room, LinkX = room.SpanX + doorX, View = exitView });
             }
 
@@ -1073,6 +1104,44 @@ namespace ApoGirl.Exploration.Runtime
             }
         }
 
+        /// <summary>플레이어 애니메이션 프레임 키 (걷기 4프레임, 달리기, 웅크리기, 공격).</summary>
+        private string PlayerFrame(float dt)
+        {
+            if (dt < 100f)
+            {
+                _animTime += dt;
+                _attackAnim = Mathf.Max(0f, _attackAnim - dt);
+            }
+
+            if (_attackAnim > 0f) return "player_attack";
+            if (_crouching || Hidden) return "player_crouch";
+            if (!_animMoving) return "player_idle";
+            var frame = (int)(_animTime * (_animRunning ? 12f : 7f)) % 4;
+            return (_animRunning ? "player_run_" : "player_walk_") + frame;
+        }
+
+        /// <summary>스프라이트 소품 (피벗 = 바닥 가운데). 없으면 기존 사각형.</summary>
+        private GameObject Prop(ExplorationArea area, string name, string key, float centerX, Vector2 fallbackSize, Color fallbackColor, int order)
+        {
+            var parent = area.Root != null ? area.Root.transform : _world;
+            var origin = area.Root != null ? Vector2.zero : area.Origin;
+            return ExplorationArt.Place(parent, name, key, origin + new Vector2(centerX, 0.15f), order, fallbackSize, fallbackColor);
+        }
+
+        private string ContainerSprite(ContainerKind kind)
+        {
+            var store = Location.Id.Contains("STORE");
+            var pharmacy = Location.Id.Contains("PHARMACY");
+            switch (kind)
+            {
+                case ContainerKind.Locker: return "prop_locker";
+                case ContainerKind.Desk: return store || pharmacy ? "office_desk" : "prop_desk";
+                case ContainerKind.Cabinet: return pharmacy ? "prop_medcabinet" : "prop_cabinet";
+                case ContainerKind.Fridge: return "prop_fridge";
+                default: return store ? "prop_shelf" : "prop_box";
+            }
+        }
+
         /// <summary>이번 시간대 변형에서 출정 플래그 조건이 맞는 조우.</summary>
         private IEnumerable<EncounterDef> ActiveEncounters()
         {
@@ -1089,14 +1158,15 @@ namespace ApoGirl.Exploration.Runtime
 
         private void CreateEncounter(ExplorationArea area, EncounterDef encounter)
         {
-            var view = Rect(area, "Encounter_" + encounter.Id, encounter.X - 0.3f, new Vector2(0.6f, 1.5f), new Color(0.55f, 0.62f, 0.75f), 9);
+            var key = encounter.Id.Contains("NOTE") || encounter.Id.Contains("NOTICE") ? "prop_paper" : "person_student_crouch";
+            var view = Prop(area, "Encounter_" + encounter.Id, key, encounter.X, new Vector2(0.6f, 1.5f), new Color(0.55f, 0.62f, 0.75f), 9);
             AddTarget(new ExplorationTarget { Kind = TargetKind.Encounter, Area = area, X = encounter.X, Encounter = encounter, View = view });
         }
 
         private ExplorationTarget CreateContainer(ExplorationArea area, ContainerDef container)
         {
             var size = ContainerSize(container.Kind);
-            var view = Rect(area, "Container_" + container.Id, container.X - size.x / 2f, size, new Color(0.55f, 0.45f, 0.3f), 1);
+            var view = Prop(area, "Container_" + container.Id, ContainerSprite(container.Kind), container.X, size, new Color(0.55f, 0.45f, 0.3f), 1);
             var target = new ExplorationTarget
             {
                 Kind = TargetKind.Container,
@@ -1204,9 +1274,19 @@ namespace ApoGirl.Exploration.Runtime
             var origin = CurrentArea.Origin;
             var height = _crouching || Hidden ? PlayerHeight * 0.65f : PlayerHeight;
             var worldX = origin.x + X;
-            _player.localPosition = new Vector3(worldX + (_facingRight ? -PlayerWidth / 2f : PlayerWidth / 2f), origin.y + 0.15f, 0f);
-            _player.localScale = new Vector3(_facingRight ? PlayerWidth : -PlayerWidth, height, 1f);
-            _playerRenderer.color = Hidden ? new Color(0.88f, 0.84f, 0.76f, 0.3f) : new Color(0.88f, 0.84f, 0.76f);
+            if (_playerSprites)
+            {
+                _player.localPosition = new Vector3(worldX, origin.y + 0.15f, 0f);
+                _playerRenderer.flipX = !_facingRight;
+                _playerRenderer.sprite = ExplorationArt.Get(PlayerFrame(dt));
+                _playerRenderer.color = Hidden ? new Color(1f, 1f, 1f, 0.3f) : Color.white;
+            }
+            else
+            {
+                _player.localPosition = new Vector3(worldX + (_facingRight ? -PlayerWidth / 2f : PlayerWidth / 2f), origin.y + 0.15f, 0f);
+                _player.localScale = new Vector3(_facingRight ? PlayerWidth : -PlayerWidth, height, 1f);
+                _playerRenderer.color = Hidden ? new Color(0.88f, 0.84f, 0.76f, 0.3f) : new Color(0.88f, 0.84f, 0.76f);
+            }
 
             var center = new Vector3(worldX, origin.y + 1.4f, 0f);
             if (_flashlight != null)
@@ -1312,9 +1392,17 @@ namespace ApoGirl.Exploration.Runtime
                         x = spawn.X;
                     }
                     var zombie = _threat.AddZombie(enemy, areaId, x, crowd);
-                    var body = BuildingView.Rect(_world, "Zombie_" + zombie.Id, Vector2.zero, Vector2.one, new Color(0.42f, 0.5f, 0.4f), 6);
+                    var kind = ExplorationArt.ZombieKind(enemy.Id);
+                    var body = ExplorationArt.Get($"zombie_{kind}_walk_0") != null
+                        ? ExplorationArt.Place(_world, "Zombie_" + zombie.Id, $"zombie_{kind}_walk_0", Vector2.zero, 6, Vector2.zero, Color.white)
+                        : BuildingView.Rect(_world, "Zombie_" + zombie.Id, Vector2.zero, Vector2.one, new Color(0.42f, 0.5f, 0.4f), 6);
                     var marker = BuildingView.Rect(_world, "Awareness_" + zombie.Id, Vector2.zero, Vector2.one, Color.yellow, 12);
-                    _zombieViews.Add(new ZombieView { Unit = zombie, Body = body.transform, BodyRenderer = body.GetComponent<SpriteRenderer>(), Marker = marker.transform, MarkerRenderer = marker.GetComponent<SpriteRenderer>() });
+                    _zombieViews.Add(new ZombieView
+                    {
+                        Unit = zombie, Body = body.transform, BodyRenderer = body.GetComponent<SpriteRenderer>(), Marker = marker.transform,
+                        MarkerRenderer = marker.GetComponent<SpriteRenderer>(), Kind = kind, Sprites = ExplorationArt.Get($"zombie_{kind}_walk_0") != null,
+                        LastX = zombie.X,
+                    });
                 }
             }
         }
@@ -1519,13 +1607,23 @@ namespace ApoGirl.Exploration.Runtime
         {
             while (_silhouettes.Count <= index)
             {
-                _silhouettes.Add(BuildingView.Rect(_world, "Silhouette", Vector2.zero, Vector2.one, BuildingView.SilhouetteColor, -3));
+                var sil = ExplorationArt.Get("silhouette") != null
+                    ? ExplorationArt.Place(_world, "Silhouette", "silhouette", Vector2.zero, -3, Vector2.zero, Color.clear)
+                    : BuildingView.Rect(_world, "Silhouette", Vector2.zero, Vector2.one, BuildingView.SilhouetteColor, -3);
+                sil.GetComponent<SpriteRenderer>().color = BuildingView.SilhouetteColor;
+                _silhouettes.Add(sil);
             }
 
             // 창틀 안에 머리·어깨만 보이게 (잠든 좀비는 조금 낮게)
             var origin = area.Origin;
             var height = dormant ? 0.75f : 1.05f;
             var shape = _silhouettes[index].transform;
+            if (ExplorationArt.Get("silhouette") != null)
+            {
+                shape.localPosition = new Vector3(origin.x + x, origin.y + BuildingView.WindowBottom + (dormant ? -0.25f : 0f), 0f);
+                return;
+            }
+
             shape.localPosition = new Vector3(origin.x + x - 0.27f, origin.y + BuildingView.WindowBottom, 0f);
             shape.localScale = new Vector3(0.55f, height, 1f);
         }
@@ -1687,16 +1785,39 @@ namespace ApoGirl.Exploration.Runtime
                 var dormant = unit.State == ZombieState.Dormant;
 
                 // 휴면도 선 채로 (고개 숙인 듯 살짝 낮게), 머리 위 Zzz는 HUD가 그린다
+                var shade = 1f + (unit.Id % 3 - 1) * 0.08f;
+                if (view.Sprites)
+                {
+                    var moved = Mathf.Abs(unit.X - view.LastX) > 0.0005f;
+                    if (moved)
+                    {
+                        view.MoveTime += Time.deltaTime;
+                        view.BodyRenderer.flipX = unit.X < view.LastX;
+                    }
+
+                    view.LastX = unit.X;
+                    var phase = (int)((dormant ? Time.time * 0.8f : view.MoveTime * (unit.State == ZombieState.Chase ? 7f : 4f)) + unit.Id) % 2;
+                    var pose = dormant ? "dormant_" + phase
+                        : unit.State == ZombieState.Stunned ? "stun"
+                        : unit.State == ZombieState.Chase ? "chase_" + phase
+                        : "walk_" + (moved ? phase : 0);
+                    view.BodyRenderer.sprite = ExplorationArt.Get($"zombie_{view.Kind}_{pose}");
+                    view.Body.localPosition = new Vector3(origin.x + unit.X, origin.y + 0.15f, 0f);
+                    view.BodyRenderer.color = unit.State == ZombieState.Stunned ? new Color(0.75f, 0.8f, 1f) : new Color(shade, shade, shade);
+                    view.Body.localScale = Vector3.one;
+                    goto Marker;
+                }
+
                 var size = dormant ? new Vector2(0.55f, 1.6f) : new Vector2(0.6f, 1.75f);
                 view.Body.localPosition = new Vector3(origin.x + unit.X - size.x / 2f, origin.y + 0.15f, 0f);
                 view.Body.localScale = new Vector3(size.x, size.y, 1f);
-                var shade = 1f + (unit.Id % 3 - 1) * 0.08f;
                 var color = dormant ? new Color(0.34f, 0.4f, 0.34f)
                     : unit.State == ZombieState.Stunned ? new Color(0.35f, 0.4f, 0.55f)
                     : unit.State == ZombieState.Chase ? new Color(0.6f, 0.38f, 0.33f)
                     : new Color(0.42f, 0.5f, 0.4f);
                 view.BodyRenderer.color = new Color(color.r * shade, color.g * shade, color.b * shade);
 
+                Marker:
                 var showMarker = !dormant && (unit.Awareness > 0.02f || unit.State == ZombieState.Chase);
                 view.Marker.gameObject.SetActive(showMarker);
                 if (showMarker)
@@ -1716,6 +1837,10 @@ namespace ApoGirl.Exploration.Runtime
             public SpriteRenderer BodyRenderer;
             public Transform Marker;
             public SpriteRenderer MarkerRenderer;
+            public string Kind = "wanderer";
+            public bool Sprites;
+            public float LastX;
+            public float MoveTime;
         }
 
         private static Vector2 ContainerSize(ContainerKind kind)
