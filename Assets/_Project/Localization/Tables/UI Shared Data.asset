@@ -939,6 +939,50 @@ MonoBehaviour:
     m_Key: exp.debug_vision
     m_Metadata:
       m_Items: []
+  - m_Id: 55440108175360
+    m_Key: exp.prompt_door_senses
+    m_Metadata:
+      m_Items: []
+  - m_Id: 55440200450048
+    m_Key: exp.prompt_peeking
+    m_Metadata:
+      m_Items: []
+  - m_Id: 55440200450049
+    m_Key: exp.prompt_listening
+    m_Metadata:
+      m_Items: []
+  - m_Id: 55440200450050
+    m_Key: exp.peeking_into
+    m_Metadata:
+      m_Items: []
+  - m_Id: 55440200450051
+    m_Key: exp.peek_noticed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 55440200450052
+    m_Key: exp.listen_quiet
+    m_Metadata:
+      m_Items: []
+  - m_Id: 55440200450053
+    m_Key: exp.listen_steps
+    m_Metadata:
+      m_Items: []
+  - m_Id: 55440200450054
+    m_Key: exp.listen_steps_near
+    m_Metadata:
+      m_Items: []
+  - m_Id: 55440200450055
+    m_Key: exp.listen_breath
+    m_Metadata:
+      m_Items: []
+  - m_Id: 55440200450056
+    m_Key: exp.listen_one
+    m_Metadata:
+      m_Items: []
+  - m_Id: 55440200450057
+    m_Key: exp.listen_many
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
