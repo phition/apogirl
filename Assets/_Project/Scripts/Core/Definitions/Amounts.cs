@@ -91,6 +91,34 @@ namespace ApoGirl.Core.Definitions
         }
     }
 
+    /// <summary>NPC 관계 변화. SetStatus가 Unknown이면 상태는 바꾸지 않는다.</summary>
+    [Serializable]
+    public sealed class NpcChange
+    {
+        public string NpcId = "";
+        public int Affinity;
+        public int Trust;
+        public NpcStatus SetStatus;
+        public string SetRole = "";
+    }
+
+    [Serializable]
+    public sealed class ItemGrant
+    {
+        public string ItemId = "";
+        public int Count = 1;
+
+        public ItemGrant()
+        {
+        }
+
+        public ItemGrant(string itemId, int count)
+        {
+            ItemId = itemId;
+            Count = count;
+        }
+    }
+
     /// <summary>자원 획득 범위 (양 끝 포함).</summary>
     [Serializable]
     public sealed class ResourceRange

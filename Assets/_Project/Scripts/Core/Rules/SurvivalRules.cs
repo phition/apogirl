@@ -1,3 +1,4 @@
+using System;
 using ApoGirl.Core.Definitions;
 using ApoGirl.Core.Effects;
 using ApoGirl.Core.State;
@@ -101,6 +102,24 @@ namespace ApoGirl.Core.Rules
         public static int DayOf(int slotIndex)
         {
             return slotIndex / 2 + 1;
+        }
+
+        private static readonly int[] DaysInMonth = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
+
+        /// <summary>주차·요일의 실제 날짜 (월, 일). 학사력 이벤트 조건용 (문서 4.4, D20).</summary>
+        public static (int Month, int Day) DateOf(int week, int day, BalanceConfig balance)
+        {
+            var month = Math.Min(Math.Max(balance.StartMonth, 1), 12);
+            var date = Math.Min(Math.Max(balance.StartDayOfMonth, 1), DaysInMonth[month - 1]);
+            var offset = Math.Max(0, (week - 1) * CalendarState.DaysPerWeek + (day - 1));
+            date += offset;
+            while (date > DaysInMonth[month - 1])
+            {
+                date -= DaysInMonth[month - 1];
+                month = month % 12 + 1;
+            }
+
+            return (month, date);
         }
     }
 }

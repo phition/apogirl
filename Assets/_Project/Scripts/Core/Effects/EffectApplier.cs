@@ -54,6 +54,22 @@ namespace ApoGirl.Core.Effects
                 }
             }
 
+            foreach (var flag in effect.ClearFlags)
+            {
+                if (!string.IsNullOrEmpty(flag) && state.Flags.Remove(flag))
+                {
+                    delta.FlagsCleared.Add(flag);
+                }
+            }
+
+            foreach (var clue in effect.AddClues)
+            {
+                if (!string.IsNullOrEmpty(clue) && state.Clues.Add(clue))
+                {
+                    delta.CluesAdded.Add(clue);
+                }
+            }
+
             foreach (var tag in effect.EndingTags)
             {
                 if (string.IsNullOrEmpty(tag.Tag))
@@ -64,6 +80,74 @@ namespace ApoGirl.Core.Effects
                 state.EndingTags.TryGetValue(tag.Tag, out var current);
                 state.EndingTags[tag.Tag] = current + tag.Amount;
             }
+
+            foreach (var change in effect.Npcs)
+            {
+                ChangeNpc(state, change, balance, delta);
+            }
+
+            foreach (var item in effect.Items)
+            {
+                AddItem(state, item.ItemId, item.Count, delta);
+            }
+        }
+
+        /// <summary>윤 선생님 ID. 호감 변화는 Teacher.Affinity에 반영한다.</summary>
+        public const string TeacherNpcId = "NPC_TEACHER";
+
+        /// <summary>NPC 상태를 가져온다. 없으면 만든다 (Unknown).</summary>
+        public static NpcState GetNpc(GameState state, string npcId)
+        {
+            if (!state.Npcs.TryGetValue(npcId, out var npc))
+            {
+                npc = new NpcState();
+                state.Npcs[npcId] = npc;
+            }
+
+            return npc;
+        }
+
+        public static void ChangeNpc(GameState state, NpcChange change, BalanceConfig balance, StateDelta delta)
+        {
+            if (change == null || string.IsNullOrEmpty(change.NpcId))
+            {
+                return;
+            }
+
+            if (change.NpcId == TeacherNpcId)
+            {
+                var before = state.Teacher.Affinity;
+                state.Teacher.Affinity = Clamp(before + change.Affinity, balance.NpcAffinityMin, balance.NpcAffinityMax);
+                delta.AddNpcAffinity(change.NpcId, state.Teacher.Affinity - before);
+                return;
+            }
+
+            var npc = GetNpc(state, change.NpcId);
+            var affinityBefore = npc.Affinity;
+            npc.Affinity = Clamp(npc.Affinity + change.Affinity, balance.NpcAffinityMin, balance.NpcAffinityMax);
+            npc.Trust = Clamp(npc.Trust + change.Trust, balance.NpcAffinityMin, balance.NpcAffinityMax);
+            delta.AddNpcAffinity(change.NpcId, npc.Affinity - affinityBefore);
+            if (change.SetStatus != NpcStatus.Unknown && npc.Status != change.SetStatus)
+            {
+                npc.Status = change.SetStatus;
+                delta.NpcStatusChanges.Add(change.NpcId + ":" + change.SetStatus);
+            }
+
+            if (!string.IsNullOrEmpty(change.SetRole))
+            {
+                npc.Role = change.SetRole;
+            }
+        }
+
+        public static void AddItem(GameState state, string itemId, int count, StateDelta delta)
+        {
+            if (string.IsNullOrEmpty(itemId) || count <= 0)
+            {
+                return;
+            }
+
+            state.Storage.Add(new ItemStack { ItemId = itemId, Count = count });
+            delta.ItemsGained.Add(new ItemStack { ItemId = itemId, Count = count });
         }
 
         public static int ChangeStat(GameState state, StatType type, int amount, BalanceConfig balance, StateDelta delta)

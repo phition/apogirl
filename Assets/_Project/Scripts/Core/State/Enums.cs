@@ -84,6 +84,16 @@ namespace ApoGirl.Core.State
         GameOver,
     }
 
+    /// <summary>NPC 관계 단계 (문서 6.4). Unknown = 아직 만나지 않음.</summary>
+    public enum NpcStatus
+    {
+        Unknown,
+        Met,
+        Joined,
+        Left,
+        Lost,
+    }
+
     /// <summary>혈액형 (문서 7.1 ④). Rh는 다루지 않는다.</summary>
     public enum BloodType
     {

@@ -22,6 +22,15 @@ namespace ApoGirl.Core.Definitions
         bool TryGetLocation(string id, out LocationDef location);
 
         bool TryGetEnemy(string id, out EnemyDef enemy);
+
+        /// <summary>모든 이벤트 정의 (등록 순서 = 같은 우선순위일 때의 순서).</summary>
+        IReadOnlyList<EventDef> Events { get; }
+
+        bool TryGetEvent(string id, out EventDef ev);
+
+        IReadOnlyList<NpcDef> Npcs { get; }
+
+        bool TryGetNpc(string id, out NpcDef npc);
     }
 
     public static class DefinitionDatabaseExtensions
@@ -77,6 +86,10 @@ namespace ApoGirl.Core.Definitions
         private readonly Dictionary<string, LootTableDef> _lootTables = new Dictionary<string, LootTableDef>();
         private readonly Dictionary<string, LocationDef> _locations = new Dictionary<string, LocationDef>();
         private readonly Dictionary<string, EnemyDef> _enemies = new Dictionary<string, EnemyDef>();
+        private readonly Dictionary<string, EventDef> _events = new Dictionary<string, EventDef>();
+        private readonly List<EventDef> _eventList = new List<EventDef>();
+        private readonly Dictionary<string, NpcDef> _npcs = new Dictionary<string, NpcDef>();
+        private readonly List<NpcDef> _npcList = new List<NpcDef>();
 
         public InMemoryDefinitionDatabase(
             BalanceConfig balance,
@@ -85,7 +98,9 @@ namespace ApoGirl.Core.Definitions
             IEnumerable<ItemDef> items = null,
             IEnumerable<LootTableDef> lootTables = null,
             IEnumerable<LocationDef> locations = null,
-            IEnumerable<EnemyDef> enemies = null)
+            IEnumerable<EnemyDef> enemies = null,
+            IEnumerable<EventDef> events = null,
+            IEnumerable<NpcDef> npcs = null)
         {
             Balance = balance ?? throw new ArgumentNullException(nameof(balance));
             foreach (var action in actions)
@@ -106,6 +121,17 @@ namespace ApoGirl.Core.Definitions
             RegisterAll(_lootTables, lootTables, t => t.Id);
             RegisterAll(_locations, locations, l => l.Id);
             RegisterAll(_enemies, enemies, e => e.Id);
+            foreach (var ev in events ?? Array.Empty<EventDef>())
+            {
+                Register(_events, ev.Id, ev);
+                _eventList.Add(ev);
+            }
+
+            foreach (var npc in npcs ?? Array.Empty<NpcDef>())
+            {
+                Register(_npcs, npc.Id, npc);
+                _npcList.Add(npc);
+            }
         }
 
         public BalanceConfig Balance { get; }
@@ -129,6 +155,14 @@ namespace ApoGirl.Core.Definitions
         public bool TryGetLocation(string id, out LocationDef location) => _locations.TryGetValue(id ?? "", out location);
 
         public bool TryGetEnemy(string id, out EnemyDef enemy) => _enemies.TryGetValue(id ?? "", out enemy);
+
+        public IReadOnlyList<EventDef> Events => _eventList;
+
+        public bool TryGetEvent(string id, out EventDef ev) => _events.TryGetValue(id ?? "", out ev);
+
+        public IReadOnlyList<NpcDef> Npcs => _npcList;
+
+        public bool TryGetNpc(string id, out NpcDef npc) => _npcs.TryGetValue(id ?? "", out npc);
 
         private static void RegisterAll<T>(Dictionary<string, T> map, IEnumerable<T> values, Func<T, string> id)
         {

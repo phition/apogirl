@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using ApoGirl.Core.Definitions;
 using ApoGirl.Core.Effects;
+using ApoGirl.Core.Events;
 using ApoGirl.Core.Expedition;
 using ApoGirl.Core.Planning;
 using ApoGirl.Core.Random;
@@ -24,6 +25,8 @@ namespace ApoGirl.Systems.Session
         private WeekRunner _runner;
         private bool _executing;
         private bool _useRealtimeExpeditions;
+        private bool _interactiveEvents;
+        private bool _forcedEvent;
 
         public GameSession(IDefinitionDatabase db, SaveService saves, IExpeditionRunner expeditionRunner = null)
         {
@@ -45,6 +48,9 @@ namespace ApoGirl.Systems.Session
         /// <summary>실시간 탐험 슬롯 도달: UI가 탐험 씬을 열고 CompleteExpedition(result)로 돌려줘야 한다.</summary>
         public event Action<ExpeditionRequest> ExpeditionStarted;
 
+        /// <summary>이벤트 시작 (InteractiveEvents일 때): UI가 대화를 보여주고 ResolveEvent(choiceId)로 돌려줘야 한다.</summary>
+        public event Action<EventDef> EventStarted;
+
         public IDefinitionDatabase Definitions => _db;
 
         public GameState State { get; private set; }
@@ -53,7 +59,7 @@ namespace ApoGirl.Systems.Session
 
         public bool HasGame => State != null;
 
-        public bool IsPlanning => HasGame && !_executing && PlanEditing.CanEdit(State);
+        public bool IsPlanning => HasGame && !_executing && !HasPendingEvent && PlanEditing.CanEdit(State);
 
         public bool IsExecuting => _executing;
 
@@ -74,6 +80,26 @@ namespace ApoGirl.Systems.Session
         }
 
         public ExpeditionRequest PendingExpedition => _runner?.PendingRequest;
+
+        /// <summary>true: 이벤트에서 멈추고 선택을 기다린다. false: 첫 선택지로 즉시 진행 (테스트·봇).</summary>
+        public bool InteractiveEvents
+        {
+            get => _interactiveEvents;
+            set
+            {
+                _interactiveEvents = value;
+                if (_runner != null && !_runner.HasPendingEvent)
+                {
+                    _runner.DeferEvents = value;
+                }
+            }
+        }
+
+        public bool HasPendingEvent => _runner != null && _runner.HasPendingEvent;
+
+        public EventDef PendingEvent => _runner?.PendingEvent;
+
+        public IReadOnlyList<EventChoiceView> PendingChoices => _runner?.PendingChoices;
 
         // ── 게임 시작·저장 ──
 
@@ -164,6 +190,30 @@ namespace ApoGirl.Systems.Session
             return AfterSlot(outcome);
         }
 
+        /// <summary>진행 중인 이벤트에 선택을 반영한다. 연쇄 이벤트가 이어지면 다시 EventStarted.</summary>
+        public SlotOutcome ResolveEvent(string choiceId)
+        {
+            if (!HasPendingEvent)
+            {
+                throw new InvalidOperationException("대기 중인 이벤트가 없음");
+            }
+
+            return AfterSlot(_runner.ResolveEvent(choiceId));
+        }
+
+        /// <summary>디버그: 계획 단계에서 이벤트를 강제로 시작한다.</summary>
+        public SlotOutcome DebugForceEvent(string eventId)
+        {
+            if (!IsPlanning)
+            {
+                throw new InvalidOperationException("계획 단계에서만 강제 발생할 수 있음");
+            }
+
+            _forcedEvent = true;
+            var outcome = _runner.ForceEvent(eventId);
+            return AfterSlot(outcome);
+        }
+
         /// <summary>실시간 탐험 결과를 반영하고 슬롯을 끝낸다 (주 마지막 슬롯이면 정산까지).</summary>
         public SlotOutcome CompleteExpedition(ExpeditionResult result)
         {
@@ -177,6 +227,22 @@ namespace ApoGirl.Systems.Session
 
         private SlotOutcome AfterSlot(SlotOutcome outcome)
         {
+            if (outcome.AwaitingEvent)
+            {
+                StateChanged?.Invoke();
+                EventStarted?.Invoke(_runner.PendingEvent);
+                return outcome;
+            }
+
+            if (_forcedEvent)
+            {
+                // 강제 이벤트는 슬롯이 아니므로 정산·진행 없이 끝
+                _forcedEvent = false;
+                CheckEnded();
+                StateChanged?.Invoke();
+                return outcome;
+            }
+
             SlotResolved?.Invoke(outcome);
 
             if (_runner.IsGameOver)
@@ -266,8 +332,17 @@ namespace ApoGirl.Systems.Session
             _runner = new WeekRunner(state, _db, new SeededRandom(state.Rng), _expedition)
             {
                 DeferExpeditions = _useRealtimeExpeditions,
+                DeferEvents = _interactiveEvents,
             };
             StateChanged?.Invoke();
+        }
+
+        private void CheckEnded()
+        {
+            if (State.Status != GameStatus.Playing)
+            {
+                GameEnded?.Invoke(State.Status);
+            }
         }
 
         private PlanEditResult Edit(Func<PlanEditResult> edit)

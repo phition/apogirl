@@ -12,6 +12,13 @@ namespace ApoGirl.Core.Effects
         public readonly Dictionary<HiddenType, int> Hidden = new Dictionary<HiddenType, int>();
         public readonly List<ProficiencyType> ProficiencyLevelUps = new List<ProficiencyType>();
         public readonly List<string> FlagsSet = new List<string>();
+        public readonly List<string> FlagsCleared = new List<string>();
+        public readonly List<string> CluesAdded = new List<string>();
+        public readonly Dictionary<string, int> NpcAffinity = new Dictionary<string, int>();
+
+        /// <summary>"NPC_ID:Status" 형식.</summary>
+        public readonly List<string> NpcStatusChanges = new List<string>();
+        public readonly List<ItemStack> ItemsGained = new List<ItemStack>();
         public int SleepDebt;
         public int Conscience;
 
@@ -22,6 +29,8 @@ namespace ApoGirl.Core.Effects
         public void AddResource(ResourceType type, int amount) => Add(Resources, type, amount);
 
         public void AddHidden(HiddenType type, int amount) => Add(Hidden, type, amount);
+
+        public void AddNpcAffinity(string npcId, int amount) => Add(NpcAffinity, npcId, amount);
 
         public int StatChange(StatType type) => Stats.TryGetValue(type, out var v) ? v : 0;
 
@@ -38,6 +47,11 @@ namespace ApoGirl.Core.Effects
             foreach (var pair in other.Hidden) AddHidden(pair.Key, pair.Value);
             ProficiencyLevelUps.AddRange(other.ProficiencyLevelUps);
             FlagsSet.AddRange(other.FlagsSet);
+            FlagsCleared.AddRange(other.FlagsCleared);
+            CluesAdded.AddRange(other.CluesAdded);
+            foreach (var pair in other.NpcAffinity) AddNpcAffinity(pair.Key, pair.Value);
+            NpcStatusChanges.AddRange(other.NpcStatusChanges);
+            ItemsGained.AddRange(other.ItemsGained);
             SleepDebt += other.SleepDebt;
             Conscience += other.Conscience;
         }

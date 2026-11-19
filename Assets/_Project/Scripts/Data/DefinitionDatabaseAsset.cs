@@ -16,6 +16,8 @@ namespace ApoGirl.Data
         [SerializeField] private List<LootTableAsset> _lootTables = new List<LootTableAsset>();
         [SerializeField] private List<LocationAsset> _locations = new List<LocationAsset>();
         [SerializeField] private List<EnemyAsset> _enemies = new List<EnemyAsset>();
+        [SerializeField] private List<EventDefinitionAsset> _events = new List<EventDefinitionAsset>();
+        [SerializeField] private List<NpcDefinitionAsset> _npcs = new List<NpcDefinitionAsset>();
 
         /// <summary>빈 참조는 건너뛰고, 빈 ID·중복 ID는 예외로 알린다.</summary>
         public IDefinitionDatabase Build()
@@ -28,7 +30,9 @@ namespace ApoGirl.Data
                 _items.Where(i => i != null).Select(i => i.ToDefinition()),
                 _lootTables.Where(t => t != null).Select(t => t.ToDefinition()),
                 _locations.Where(l => l != null).Select(l => l.ToDefinition()),
-                _enemies.Where(e => e != null).Select(e => e.ToDefinition()));
+                _enemies.Where(e => e != null).Select(e => e.ToDefinition()),
+                _events.Where(e => e != null).Select(e => e.ToDefinition()),
+                _npcs.Where(n => n != null).Select(n => n.ToDefinition()));
         }
 
 #if UNITY_EDITOR
@@ -52,6 +56,13 @@ namespace ApoGirl.Data
         public void EditorSetEnemies(List<EnemyAsset> enemies)
         {
             _enemies = enemies;
+        }
+
+        /// <summary>에디터 도구용: 이벤트·NPC 지정 (콘텐츠 가져오기).</summary>
+        public void EditorSetStoryContents(List<EventDefinitionAsset> events, List<NpcDefinitionAsset> npcs)
+        {
+            _events = events;
+            _npcs = npcs;
         }
 #endif
     }

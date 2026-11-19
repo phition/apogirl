@@ -9,7 +9,7 @@ namespace ApoGirl.Core.State
     public sealed class GameState
     {
         /// <summary>현재 세이브 포맷 버전. 마이그레이션 시 증가시킨다.</summary>
-        public const int CurrentSaveVersion = 2;
+        public const int CurrentSaveVersion = 3;
 
         public int SaveVersion { get; set; } = CurrentSaveVersion;
         public GameStatus Status { get; set; } = GameStatus.Playing;
@@ -30,6 +30,12 @@ namespace ApoGirl.Core.State
         public HashSet<string> Clues { get; set; } = new HashSet<string>();
         public Dictionary<string, int> EndingTags { get; set; } = new Dictionary<string, int>();
         public ExplorationStats Exploration { get; set; } = new ExplorationStats();
+
+        /// <summary>NPC ID → 관계 상태 (윤 선생님은 Teacher에 따로 둔다). 없으면 Unknown.</summary>
+        public Dictionary<string, NpcState> Npcs { get; set; } = new Dictionary<string, NpcState>();
+
+        /// <summary>이벤트 발생·선택 기록 (1회성, 쿨다운, 랜덤 빈도 상한, 엔딩 회상).</summary>
+        public EventLogState Events { get; set; } = new EventLogState();
         public List<DiaryEntry> Diary { get; set; } = new List<DiaryEntry>();
         public CarryOverState CarryOver { get; set; } = new CarryOverState();
 
@@ -250,6 +256,37 @@ namespace ApoGirl.Core.State
         public int DayExplorations { get; set; }
         public int NightExplorations { get; set; }
         public int Downs { get; set; }
+    }
+
+    public sealed class NpcState
+    {
+        public NpcStatus Status { get; set; }
+        public int Affinity { get; set; }
+        public int Trust { get; set; }
+        public string Role { get; set; } = "";
+    }
+
+    public sealed class EventLogState
+    {
+        /// <summary>이벤트 ID → 기록.</summary>
+        public Dictionary<string, EventRecord> Records { get; set; } = new Dictionary<string, EventRecord>();
+
+        /// <summary>선택 순서대로 "이벤트ID:선택지ID" (엔딩 후일담의 KeyChoices).</summary>
+        public List<string> ChoiceLog { get; set; } = new List<string>();
+
+        /// <summary>랜덤 빈도 상한용: 마지막으로 센 주차와 그 주의 랜덤 이벤트 수.</summary>
+        public int RandomWeek { get; set; }
+        public int RandomCountThisWeek { get; set; }
+
+        /// <summary>마지막 랜덤 이벤트가 난 날 (주차 × 10 + 요일).</summary>
+        public int LastRandomDayKey { get; set; }
+    }
+
+    public sealed class EventRecord
+    {
+        public int Count { get; set; }
+        public int LastWeek { get; set; }
+        public string LastChoice { get; set; } = "";
     }
 
     public sealed class DiaryEntry

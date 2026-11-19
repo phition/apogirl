@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using ApoGirl.Core.Definitions;
 using ApoGirl.Core.Effects;
+using ApoGirl.Core.Events;
 using ApoGirl.Core.Expedition;
 using ApoGirl.Core.Planning;
 using ApoGirl.Core.Random;
@@ -32,6 +34,12 @@ namespace ApoGirl.Core.Simulation
 
         public readonly StateDelta Delta = new StateDelta();
 
+        /// <summary>이벤트 대기 중: ResolveEvent(choiceId)를 호출해야 슬롯이 끝난다.</summary>
+        public bool AwaitingEvent;
+
+        /// <summary>이 슬롯 뒤에 일어난 이벤트와 선택 (연쇄 이벤트 포함, 순서대로).</summary>
+        public readonly List<EventChoiceResult> Events = new List<EventChoiceResult>();
+
         /// <summary>UI가 멈춰서 연출해야 하는 슬롯 (대성공·실패·탐험·위반·게임 종료). 나머지는 빠른 진행.</summary>
         public bool StopForPresentation;
     }
@@ -59,9 +67,13 @@ namespace ApoGirl.Core.Simulation
         private readonly IExpeditionRunner _expeditionRunner;
         private readonly List<SlotOutcome> _outcomes = new List<SlotOutcome>();
         private PendingExpedition _pending;
+        private readonly IEventChooser _eventChooser;
+        private PendingEventState _pendingEvent;
 
-        public WeekRunner(GameState state, IDefinitionDatabase db, IRandomService random, IExpeditionRunner expeditionRunner)
+        public WeekRunner(
+            GameState state, IDefinitionDatabase db, IRandomService random, IExpeditionRunner expeditionRunner, IEventChooser eventChooser = null)
         {
+            _eventChooser = eventChooser ?? new FirstChoiceChooser();
             _state = state ?? throw new ArgumentNullException(nameof(state));
             _db = db ?? throw new ArgumentNullException(nameof(db));
             _random = random ?? throw new ArgumentNullException(nameof(random));
@@ -82,6 +94,17 @@ namespace ApoGirl.Core.Simulation
         public bool HasPendingExpedition => _pending != null;
 
         public ExpeditionRequest PendingRequest => _pending?.Outcome.ExpeditionRequest;
+
+        /// <summary>true면 이벤트에서 멈추고 ResolveEvent를 기다린다 (false면 IEventChooser가 즉시 고른다).</summary>
+        public bool DeferEvents { get; set; }
+
+        public bool HasPendingEvent => _pendingEvent != null;
+
+        /// <summary>진행 중인 이벤트 (없으면 null).</summary>
+        public EventDef PendingEvent => _pendingEvent?.Event;
+
+        /// <summary>진행 중인 이벤트의 선택지 (숨김 제외).</summary>
+        public IReadOnlyList<EventChoiceView> PendingChoices => _pendingEvent?.Choices;
 
         private BalanceConfig Balance => _db.Balance;
 
@@ -107,6 +130,8 @@ namespace ApoGirl.Core.Simulation
             {
                 throw new InvalidOperationException("탐험 결과를 기다리는 중. CompleteExpedition()을 먼저 호출할 것");
             }
+
+            ThrowIfEventPending();
 
             var calendar = _state.Calendar;
             var player = _state.Player;
@@ -205,10 +230,124 @@ namespace ApoGirl.Core.Simulation
 
             outcome.StopForPresentation = outcome.Result != CheckResult.Success || action.IsExpedition || violation || IsGameOver;
 
+            // 이벤트 판정은 달력을 넘기기 전 (지금 슬롯의 요일·낮밤 기준)
+            EventDef ev = null;
+            var context = new EventContext { Phase = calendar.Phase, Day = calendar.Day, ActionId = action.Id, ActionCategory = action.Category };
+            if (!IsGameOver)
+            {
+                ev = EventScheduler.Pick(_state, _db, context, _random);
+            }
+
             Advance();
             _outcomes.Add(outcome);
+            if (ev != null)
+            {
+                StartEvent(ev, context, outcome);
+                if (HasPendingEvent)
+                {
+                    return outcome;
+                }
+            }
+
             SlotResolved?.Invoke(outcome);
             return outcome;
+        }
+
+        /// <summary>대기 중인 이벤트에 선택을 반영한다. 연쇄 이벤트가 있으면 다시 대기 상태가 된다.</summary>
+        public SlotOutcome ResolveEvent(string choiceId)
+        {
+            if (_pendingEvent == null)
+            {
+                throw new InvalidOperationException("대기 중인 이벤트가 없음");
+            }
+
+            var pending = _pendingEvent;
+            _pendingEvent = null;
+            ApplyChoice(pending, choiceId);
+            AutoResolveEvents();
+            if (!HasPendingEvent)
+            {
+                pending.Outcome.AwaitingEvent = false;
+                SlotResolved?.Invoke(pending.Outcome);
+            }
+
+            return pending.Outcome;
+        }
+
+        /// <summary>디버그: 조건을 무시하고 이벤트를 지금 시작한다.</summary>
+        public SlotOutcome ForceEvent(string eventId)
+        {
+            ThrowIfEventPending();
+            var ev = _db.Events.FirstOrDefault(e => e.Id == eventId) ?? throw new ArgumentException($"이벤트 없음: '{eventId}'");
+            var outcome = new SlotOutcome { Week = _state.Calendar.Week, Day = _state.Calendar.Day, Phase = _state.Calendar.Phase, ActionId = "" };
+            StartEvent(ev, EventContext.FromCalendar(_state), outcome);
+            return outcome;
+        }
+
+        private void StartEvent(EventDef ev, EventContext context, SlotOutcome outcome)
+        {
+            EventResolver.Begin(_state, ev, context, Balance, outcome.Delta);
+            CheckGameOver();
+            _pendingEvent = new PendingEventState
+            {
+                Event = ev,
+                Context = context,
+                Outcome = outcome,
+                Choices = EventResolver.Choices(_state, ev, context, Balance),
+            };
+            outcome.AwaitingEvent = true;
+            outcome.StopForPresentation = true;
+            AutoResolveEvents();
+            if (!HasPendingEvent)
+            {
+                outcome.AwaitingEvent = false;
+            }
+        }
+
+        private void ApplyChoice(PendingEventState pending, string choiceId)
+        {
+            var result = EventResolver.Choose(_state, pending.Event, choiceId, pending.Context, Balance, _random, pending.Outcome.Delta);
+            pending.Outcome.Events.Add(result);
+            CheckGameOver();
+            if (!IsGameOver && !string.IsNullOrEmpty(result.NextEventId) && _db.TryGetEvent(result.NextEventId, out var next))
+            {
+                EventResolver.Begin(_state, next, pending.Context, Balance, pending.Outcome.Delta);
+                _pendingEvent = new PendingEventState
+                {
+                    Event = next,
+                    Context = pending.Context,
+                    Outcome = pending.Outcome,
+                    Choices = EventResolver.Choices(_state, next, pending.Context, Balance),
+                };
+            }
+        }
+
+        /// <summary>DeferEvents가 꺼져 있으면 선택자로 바로 진행.</summary>
+        private void AutoResolveEvents()
+        {
+            while (!DeferEvents && _pendingEvent != null)
+            {
+                var pending = _pendingEvent;
+                _pendingEvent = null;
+                ApplyChoice(pending, _eventChooser.Choose(_state, pending.Event, pending.Choices));
+            }
+        }
+
+        private void CheckGameOver()
+        {
+            if (_state.Status == GameStatus.Playing && _state.Player.Vitals.Hp <= 0)
+            {
+                _state.Status = GameStatus.GameOver;
+                _state.EndCause = EndCauseHpZero;
+            }
+        }
+
+        private void ThrowIfEventPending()
+        {
+            if (HasPendingEvent)
+            {
+                throw new InvalidOperationException("이벤트 선택을 기다리는 중. ResolveEvent()를 먼저 호출할 것");
+            }
         }
 
         /// <summary>주간 정산: 주간 소모, 일기, 주 넘김(또는 52주 종료 → 구조).</summary>
@@ -218,6 +357,8 @@ namespace ApoGirl.Core.Simulation
             {
                 throw new InvalidOperationException("아직 이번 주 슬롯이 남아 있음");
             }
+
+            ThrowIfEventPending();
 
             var calendar = _state.Calendar;
             var summary = new WeekSummary { Week = calendar.Week, DiaryKey = $"DIARY_W{calendar.Week:00}" };
@@ -354,6 +495,14 @@ namespace ApoGirl.Core.Simulation
             {
                 calendar.WeekComplete = true;
             }
+        }
+
+        private sealed class PendingEventState
+        {
+            public EventDef Event;
+            public EventContext Context;
+            public SlotOutcome Outcome;
+            public List<EventChoiceView> Choices;
         }
 
         private sealed class PendingExpedition

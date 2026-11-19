@@ -21,6 +21,14 @@ namespace ApoGirl.Core.Definitions
         public int Conscience;
 
         public List<string> SetFlags = new List<string>();
+        public List<string> ClearFlags = new List<string>();
+        public List<string> AddClues = new List<string>();
         public List<TagAmount> EndingTags = new List<TagAmount>();
+
+        /// <summary>NPC 관계 변화 (NPC_TEACHER는 윤 선생님 호감).</summary>
+        public List<NpcChange> Npcs = new List<NpcChange>();
+
+        /// <summary>창고에 넣을 아이템.</summary>
+        public List<ItemGrant> Items = new List<ItemGrant>();
     }
 }

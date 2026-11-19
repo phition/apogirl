@@ -48,6 +48,21 @@ namespace ApoGirl.Core.Definitions
         public int ConscienceMax = 10;
         public int SleepDebtMax = 5;
         public int ProficiencyMaxLevel = 5;
+        public int NpcAffinityMax = 100;
+        public int NpcAffinityMin = -100;
+
+        // ── 달력·이벤트 (M3) ──
+
+        /// <summary>1주차 1일의 실제 날짜 (문서 4.1: 3월 셋째 주 무렵). 윤년은 쓰지 않는다.</summary>
+        public int StartMonth = 3;
+        public int StartDayOfMonth = 16;
+
+        /// <summary>랜덤·위기 이벤트 빈도 상한 (반복 피로 방지).</summary>
+        public int RandomEventsPerDay = 1;
+        public int RandomEventsPerWeek = 3;
+
+        /// <summary>슬롯이 끝날 때마다 랜덤 이벤트를 굴릴 확률 (상한 이내일 때).</summary>
+        public float RandomEventChance = 0.3f;
 
         // ── 성장 ──
         public List<GrowthBand> GrowthBands = new List<GrowthBand>

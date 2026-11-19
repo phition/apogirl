@@ -8,7 +8,11 @@ namespace ApoGirl.Systems.Save
     {
         public static IEnumerable<ISaveMigration> BuiltIn
         {
-            get { yield return new V1ToV2(); }
+            get
+            {
+                yield return new V1ToV2();
+                yield return new V2ToV3();
+            }
         }
 
         /// <summary>v2: 지난주 계획(LastWeekPlan), 계획 프리셋(PlanPresets) 추가.</summary>
@@ -21,6 +25,25 @@ namespace ApoGirl.Systems.Save
                 if (root["PlanPresets"] == null)
                 {
                     root["PlanPresets"] = new JArray();
+                }
+            }
+        }
+
+        /// <summary>v3: NPC 관계(Npcs), 이벤트 기록(Events) 추가 (M3).</summary>
+        private sealed class V2ToV3 : ISaveMigration
+        {
+            public int FromVersion => 2;
+
+            public void Migrate(JObject root)
+            {
+                if (root["Npcs"] == null)
+                {
+                    root["Npcs"] = new JObject();
+                }
+
+                if (root["Events"] == null)
+                {
+                    root["Events"] = new JObject();
                 }
             }
         }
