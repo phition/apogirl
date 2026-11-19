@@ -100,7 +100,25 @@ SO 에셋과 문자열 테이블은 생성물이라 직접 고치지 않는다.
 - **조건 확장**: `NightRatio`, `DiaryCount`, `Companions`, `StatSpread`, `StatMin`, `BreakdownWeeks`, `ClueCount`(Key = 접두어).
 - **문장 치환**(후일담·기록): `{name}`, `{given}`, `{friend}`, 조사는 `{given:은/는}`처럼 쓴다.
 
-## 7. 테스트
+## 7. M6 규칙
+
+- **감염**
+  - 감염도(`Vital Infection`)는 화면에 숫자로 보이지 않는다. 25·50·75에서 증상 문장(미열·기침·손떨림)이 나온다.
+  - 일기·선생님 한마디는 조건 `Vital Infection ≥ N`으로 쓴다.
+- **선생님 재감염**
+  - 효과 `TeacherReinfect: true`로 발병하고, 플래그 `TEACHER_REINFECTED`가 선다.
+  - 진행도는 효과 `TeacherInfection`으로 바뀐다(돌봄은 −).
+  - 조건은 `TeacherInfection`(0~100), `TeacherStage`(25마다 1단계).
+- **날씨**: 조건 `Weather`(Key = Clear/Rain/Heat/Cold, Op Equal, Value 1). 계절표는 `BalanceConfig.WeatherBySeason`.
+- **구조 카운트다운**: 플래그 `RESCUE_ANNOUNCED`를 세우면 허브에 "구조까지 N주"가 뜬다. 조건은 `WeeksToRescue`.
+- **시설 보정**: `Facilities[].Modifiers`(특성과 같은 형식, 레벨마다 곱해짐).
+  - 보정 종류 추가: `RaidGuard`, `InfectionResist`, `TeacherCare`.
+- **동료 역할**: `Roles`(Id, Modifiers). 합류한 NPC에게 허브에서 지정한다. 조건은 `RoleCount`(Key = 역할 ID).
+- **정찰**: 플래그 `SCOUT_{지역 ID}`가 있으면 출정 준비 화면에 잠긴 방·조우 수가 나오고, 출정하면 사라진다.
+- **막 평가 카드**: 이벤트에 `ReviewAct`(막 번호)·`ReviewFromWeek`(그래프 시작 주)를 두면, 이벤트가 끝난 뒤 그래프와 한마디 카드가 뜬다.
+  - 한마디는 `Lines`의 Kind `ActReview`.
+
+## 8. 테스트
 
 - EditMode `ContentPipelineTests`가 실제 원본(JSON + Yarn)을 검증하고, 10주 헤드리스 진행을 확인한다.
 - PlayMode `HubDialogue_RunsYarnNode_AndAppliesChoice`가 허브에서 대사 표시, 조사 처리, 선택 반영을 확인한다.

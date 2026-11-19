@@ -18,8 +18,9 @@
 - 로컬 커밋만 한다. **사용자가 요청하기 전까지 push 하지 않는다.**
 
 ## 현재 단계
-- M0~M4 완료, **M5(엔딩 시스템: 엔딩 21종 데이터·판정·공통 레이어·배드 엔딩 4원인·후일담 연출·1년의 기록·갤러리) 구현 완료** → 사용자 확인 후 M6(전체 콘텐츠). 계획·결정: [Docs/M4_PLAN.md](Docs/M4_PLAN.md), [Docs/M5_PLAN.md](Docs/M5_PLAN.md).
+- M0~M5 완료. **M6(전체 콘텐츠) 진행 중: M6-1 시스템 완료**(감염·선생님 병세·날씨·구조 카운트다운·시설/동료 보정·정찰·막 평가 카드) → 다음 M6-2(2막). 계획·결정: [Docs/M6_PLAN.md](Docs/M6_PLAN.md) (이전: M4_PLAN, M5_PLAN). 그림 프롬프트: [Docs/ART_PROMPTS.md](Docs/ART_PROMPTS.md), 사용자가 만든 그림은 `ArtInbox/`.
 - 엔딩 확인: 허브 F1 → "52주차로" / "지금 상태로 구조 엔딩" / 원인을 고른 "배드 엔딩". 디버그 상태 줄에 지금 구조되면 받을 엔딩이 보인다. 갤러리는 `persistentDataPath/Gallery.json`.
+- M6 디버그(F1): 감염 +25, 선생님 재감염/진행 +25, 날씨 바꾸기, 구조 공지 토글. 동료 역할은 허브 거점 칸의 동료 버튼을 눌러 바꾼다.
 - 콘텐츠 작성법: [Docs/CONTENT_PIPELINE.md](Docs/CONTENT_PIPELINE.md). 원본은 `Content/**/*.json`(행동·아이템·전리품·탐험 모델·적·특성·시설·이벤트·NPC·일기/코멘트·프롤로그) + `Resources/Dialogue/**/*.yarn` → 메뉴 `ApoGirl/Content/Import Events`. 지역 레이아웃은 `Editor/LocationBuilder.cs` → 메뉴 `ApoGirl/Content/Build Locations`.
 - 1막 밸런스 점검: EditMode `Act1BalanceTests`가 세 전략으로 13주를 돌려 `Temp/ApoGirlAct1Balance.txt`에 기록.
 - 주 진행 중 이벤트: `GameSession.Step()`/`CompleteExpedition()`이 `AwaitingEvent`를 돌려주면 대화 → `ResolveEvent(choiceId)`. 허브 F1 디버그 패널에서 이벤트 강제 발생·자동 진행 전환.
