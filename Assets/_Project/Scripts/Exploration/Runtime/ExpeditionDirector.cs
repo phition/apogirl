@@ -962,7 +962,7 @@ namespace ApoGirl.Exploration.Runtime
             _world = new GameObject("World").transform;
             _world.SetParent(transform, false);
             var layout = Location.Layout;
-            _building = new BuildingView(_world, layout);
+            _building = new BuildingView(_world, layout, Location.Id);
 
             for (var floor = 0; floor < layout.Floors; floor++)
             {
@@ -1635,12 +1635,17 @@ namespace ApoGirl.Exploration.Runtime
             _hud?.ShowMessage("exp.dawn");
         }
 
+        /// <summary>밸런스 값은 체감 밝기(화면 기준). 선형 색 공간에서는 감마를 풀어야 0.12가 실제로 어둡게 보인다.</summary>
+        private float AmbientLightIntensity => QualitySettings.activeColorSpace == ColorSpace.Linear
+            ? Mathf.Pow(_ambientIntensity, 2.2f)
+            : _ambientIntensity;
+
         private void SetAmbient(float intensity, Color color)
         {
             _ambientIntensity = intensity;
             if (_light != null)
             {
-                _light.intensity = FullVision ? 1f : intensity;
+                _light.intensity = FullVision ? 1f : AmbientLightIntensity;
                 _light.color = color;
             }
         }
@@ -1661,7 +1666,7 @@ namespace ApoGirl.Exploration.Runtime
             if (keyboard.f5Key.wasPressedThisFrame)
             {
                 FullVision = !FullVision;
-                _light.intensity = FullVision ? 1f : _ambientIntensity;
+                _light.intensity = FullVision ? 1f : AmbientLightIntensity;
                 _log.DebugUsed = true;
             }
 

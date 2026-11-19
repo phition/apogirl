@@ -97,6 +97,15 @@ namespace ApoGirl.Exploration.Runtime
             return "wall_corridor";
         }
 
+        /// <summary>지역별 복도(매장 바닥층) 벽 타일.</summary>
+        public static string CorridorWall(string locationId)
+        {
+            locationId ??= string.Empty;
+            if (locationId.Contains("STORE")) return "wall_store";
+            if (locationId.Contains("PHARMACY")) return "wall_pharmacy";
+            return "wall_corridor";
+        }
+
         /// <summary>적 유형별 스프라이트 접두어.</summary>
         public static string ZombieKind(string enemyId)
         {

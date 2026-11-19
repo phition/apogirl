@@ -33,8 +33,11 @@ namespace ApoGirl.Exploration.Runtime
         private readonly Transform _root;
         private readonly BuildingLayoutDef _layout;
 
-        public BuildingView(Transform root, BuildingLayoutDef layout)
+        private readonly string _corridorWall;
+
+        public BuildingView(Transform root, BuildingLayoutDef layout, string locationId = "")
         {
+            _corridorWall = ExplorationArt.CorridorWall(locationId);
             _root = root;
             _layout = layout;
             BuildCorridors();
@@ -157,7 +160,7 @@ namespace ApoGirl.Exploration.Runtime
             for (var floor = 0; floor < _layout.Floors; floor++)
             {
                 var y = FloorY(floor);
-                ExplorationArt.Tiled(_root, "Corridor" + floor, "wall_corridor", new Vector2(0f, y + 0.15f), new Vector2(length, h - 0.3f), -6, CorridorColor);
+                ExplorationArt.Tiled(_root, "Corridor" + floor, _corridorWall, new Vector2(0f, y + 0.15f), new Vector2(length, h - 0.3f), -6, CorridorColor);
                 for (var x = 3f; x < length - 1f; x += 7f)
                 {
                     ExplorationArt.Place(_root, "Lamp", "prop_ceiling_lamp", new Vector2(x, y + h - 0.15f), -3, Vector2.zero, Color.clear);
