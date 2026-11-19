@@ -1,13 +1,12 @@
-using System;
 using System.Collections.Generic;
 using ApoGirl.Core.Definitions;
 
 namespace ApoGirl.Core.Simulation.Bots
 {
     // M7-1: 봇 시뮬레이터 설정. 원본은 Assets/_Project/Balance/bot_strategies.json (콘텐츠가 아닌 개발 도구 데이터).
+    // JSON으로만 읽으므로 Unity 직렬화([Serializable])는 붙이지 않는다.
 
     /// <summary>봇 시뮬레이터 설정 전체.</summary>
-    [Serializable]
     public sealed class BotConfigDef
     {
         /// <summary>전략마다 돌릴 판 수 (에디터 메뉴 기본값).</summary>
@@ -44,7 +43,6 @@ namespace ApoGirl.Core.Simulation.Bots
     }
 
     /// <summary>행동 묶음.</summary>
-    [Serializable]
     public sealed class BotGroupDef
     {
         public BotPickMode Pick = BotPickMode.First;
@@ -55,7 +53,6 @@ namespace ApoGirl.Core.Simulation.Bots
     }
 
     /// <summary>전략 하나: 주간 틀 14칸 + 조건부 규칙 + 선택 가중치.</summary>
-    [Serializable]
     public sealed class BotStrategyDef
     {
         public string Id = "";
@@ -75,7 +72,6 @@ namespace ApoGirl.Core.Simulation.Bots
     }
 
     /// <summary>조건부 규칙: 조건이 맞으면 지정 칸을 후보로 바꾼다 (후보가 하나도 안 되면 그대로 둔다).</summary>
-    [Serializable]
     public sealed class BotRuleDef
     {
         public string Note = "";
@@ -91,7 +87,6 @@ namespace ApoGirl.Core.Simulation.Bots
     }
 
     /// <summary>이벤트 선택지 가중치: Ids 중 하나면 Weight (여러 개 맞으면 곱한다). 기본 1.</summary>
-    [Serializable]
     public sealed class BotChoiceBiasDef
     {
         public List<string> Ids = new List<string>();
@@ -99,7 +94,6 @@ namespace ApoGirl.Core.Simulation.Bots
     }
 
     /// <summary>한 문항에서 묶음마다 하나씩 고른다 (예: [E,I], [S,N], [T,F], [J,P]).</summary>
-    [Serializable]
     public sealed class BotPrologueGroupDef
     {
         public string QuestionId = "";

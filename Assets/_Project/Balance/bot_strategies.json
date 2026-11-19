@@ -90,6 +90,64 @@
         "ACT_SURV_MAKE_CRUTCH",
         "ACT_SURV_BARRICADE"
       ]
+    },
+    "EXP_DAY_WATER": {
+      "Pick": "Random",
+      "Actions": [
+        "ACT_EXP_DAY_WATERWORKS",
+        "ACT_EXP_DAY_MART",
+        "ACT_EXP_DAY_SCHOOL",
+        "ACT_EXP_DAY_STORE",
+        "ACT_EXP_DAY_RESIDENTIAL"
+      ],
+      "Weights": [
+        3,
+        2,
+        2,
+        2,
+        2
+      ]
+    },
+    "EXP_DAY_FOOD": {
+      "Pick": "Random",
+      "Actions": [
+        "ACT_EXP_DAY_MART",
+        "ACT_EXP_DAY_STORE",
+        "ACT_EXP_DAY_SCHOOL",
+        "ACT_EXP_DAY_RESIDENTIAL"
+      ],
+      "Weights": [
+        3,
+        2,
+        1,
+        1
+      ]
+    },
+    "EXP_NIGHT_WATER": {
+      "Pick": "Random",
+      "Actions": [
+        "ACT_EXP_NIGHT_MART",
+        "ACT_EXP_NIGHT_STORE",
+        "ACT_EXP_NIGHT_WATERWORKS"
+      ],
+      "Weights": [
+        2,
+        2,
+        1
+      ]
+    },
+    "EXP_NIGHT_FOOD": {
+      "Pick": "Random",
+      "Actions": [
+        "ACT_EXP_NIGHT_MART",
+        "ACT_EXP_NIGHT_STORE",
+        "ACT_EXP_NIGHT_SCHOOL"
+      ],
+      "Weights": [
+        2,
+        2,
+        1
+      ]
     }
   },
   "CommonRules": [
@@ -205,7 +263,42 @@
         "ACT_NIGHT_DIARY|ACT_REST_NIGHT",
         "ACT_REST_NIGHT"
       ],
-      "Rules": [],
+      "Rules": [
+        {
+          "Note": "식량이 떨어져 가면 식량 많은 곳",
+          "When": {
+            "Checks": [
+              {
+                "Kind": "Resource",
+                "Key": "Food",
+                "Op": "LessOrEqual",
+                "Value": 20
+              }
+            ]
+          },
+          "Slots": [
+            "D5"
+          ],
+          "Use": "EXP_DAY_FOOD"
+        },
+        {
+          "Note": "물이 떨어져 가면 물 많은 곳",
+          "When": {
+            "Checks": [
+              {
+                "Kind": "Resource",
+                "Key": "Water",
+                "Op": "LessOrEqual",
+                "Value": 20
+              }
+            ]
+          },
+          "Slots": [
+            "D2"
+          ],
+          "Use": "EXP_DAY_WATER"
+        }
+      ],
       "ChoiceBias": [],
       "EncounterFirstChoiceWeight": 1
     },
@@ -243,6 +336,40 @@
             "D5"
           ],
           "Use": "EXP_DAY"
+        },
+        {
+          "Note": "식량이 떨어져 가면 식량 많은 곳",
+          "When": {
+            "Checks": [
+              {
+                "Kind": "Resource",
+                "Key": "Food",
+                "Op": "LessOrEqual",
+                "Value": 20
+              }
+            ]
+          },
+          "Slots": [
+            "N4"
+          ],
+          "Use": "EXP_NIGHT_FOOD"
+        },
+        {
+          "Note": "물이 떨어져 가면 물 많은 곳",
+          "When": {
+            "Checks": [
+              {
+                "Kind": "Resource",
+                "Key": "Water",
+                "Op": "LessOrEqual",
+                "Value": 20
+              }
+            ]
+          },
+          "Slots": [
+            "N1"
+          ],
+          "Use": "EXP_NIGHT_WATER"
         }
       ],
       "ChoiceBias": [],
@@ -281,6 +408,40 @@
             "D5"
           ],
           "Use": "EXP_DAY"
+        },
+        {
+          "Note": "식량이 떨어져 가면 식량 많은 곳",
+          "When": {
+            "Checks": [
+              {
+                "Kind": "Resource",
+                "Key": "Food",
+                "Op": "LessOrEqual",
+                "Value": 20
+              }
+            ]
+          },
+          "Slots": [
+            "D2"
+          ],
+          "Use": "EXP_DAY_FOOD"
+        },
+        {
+          "Note": "물이 떨어져 가면 물 많은 곳",
+          "When": {
+            "Checks": [
+              {
+                "Kind": "Resource",
+                "Key": "Water",
+                "Op": "LessOrEqual",
+                "Value": 20
+              }
+            ]
+          },
+          "Slots": [
+            "N4"
+          ],
+          "Use": "EXP_NIGHT_WATER"
         }
       ],
       "ChoiceBias": [],
@@ -329,7 +490,24 @@
           "Slots": [
             "D5"
           ],
-          "Use": "EXP_DAY"
+          "Use": "EXP_DAY_FOOD"
+        },
+        {
+          "Note": "물이 떨어져 가면 물 많은 곳",
+          "When": {
+            "Checks": [
+              {
+                "Kind": "Resource",
+                "Key": "Water",
+                "Op": "LessOrEqual",
+                "Value": 20
+              }
+            ]
+          },
+          "Slots": [
+            "D2"
+          ],
+          "Use": "EXP_DAY_WATER"
         }
       ],
       "ChoiceBias": [
@@ -380,7 +558,42 @@
         "ACT_CARE_TEACHER|ACT_REST_NIGHT",
         "ACT_REST_NIGHT"
       ],
-      "Rules": [],
+      "Rules": [
+        {
+          "Note": "식량이 떨어져 가면 식량 많은 곳",
+          "When": {
+            "Checks": [
+              {
+                "Kind": "Resource",
+                "Key": "Food",
+                "Op": "LessOrEqual",
+                "Value": 20
+              }
+            ]
+          },
+          "Slots": [
+            "D5"
+          ],
+          "Use": "EXP_DAY_FOOD"
+        },
+        {
+          "Note": "물이 떨어져 가면 물 많은 곳",
+          "When": {
+            "Checks": [
+              {
+                "Kind": "Resource",
+                "Key": "Water",
+                "Op": "LessOrEqual",
+                "Value": 20
+              }
+            ]
+          },
+          "Slots": [
+            "D2"
+          ],
+          "Use": "EXP_DAY_WATER"
+        }
+      ],
       "ChoiceBias": [
         {
           "Ids": [
