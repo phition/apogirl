@@ -224,9 +224,11 @@ namespace ApoGirl.Tests.PlayMode
             var options = root.Q("dialogue-options");
             var text = root.Q<Label>("dialogue-text");
             var sawJosa = false;
+            var seen = new System.Collections.Generic.List<string>();
             for (var frame = 0; frame < 2000 && !task.IsCompleted; frame++)
             {
                 sawJosa |= text.text.Contains("한서진이 깬 걸");
+                if (seen.Count == 0 || seen[seen.Count - 1] != text.text) seen.Add(text.text);
                 if (options.childCount > 0)
                 {
                     var buttons = options.Query<Button>().ToList();
@@ -247,7 +249,7 @@ namespace ApoGirl.Tests.PlayMode
 
             Assert.IsTrue(task.IsCompleted, "대화가 끝나야 함");
             Assert.IsFalse(task.IsFaulted, task.Exception?.ToString());
-            Assert.IsTrue(sawJosa, "조사 자동 처리 (한서진 + 이/가)");
+            Assert.IsTrue(sawJosa, "조사 자동 처리 (한서진 + 이/가): " + string.Join(" / ", seen));
             Assert.AreEqual("ASK", picked);
             Assert.IsFalse(session.HasPendingEvent);
             Assert.IsTrue(session.State.Flags.Contains("ASKED_TEACHER_LEG"));
