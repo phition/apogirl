@@ -81,6 +81,15 @@ namespace ApoGirl.Core.Definitions
 
         /// <summary>허브의 선생님 한마디 (계획 단계).</summary>
         TeacherComment,
+
+        // ── M5 엔딩 공통 레이어 (문서 8.3): 구조 엔딩의 후일담 뒤에 하나씩 덧붙는다 ──
+        EndingTeacher,
+        EndingFriend,
+        EndingCure,
+        EndingTendency,
+
+        /// <summary>"1년의 기록"의 주요 장면: 조건을 만족하는 줄 전부.</summary>
+        EndingMoment,
     }
 
     /// <summary>조건으로 고르는 한 줄 (가장 높은 Priority 중 첫 번째). 문장은 UI 키 TextKey.</summary>
@@ -182,5 +191,8 @@ namespace ApoGirl.Core.Definitions
         public List<FacilityDef> Facilities = new List<FacilityDef>();
         public List<LineDef> Lines = new List<LineDef>();
         public PrologueDef Prologue = new PrologueDef();
+
+        /// <summary>M5: 엔딩 목록 (등록 순서 = 같은 우선순위·점수일 때의 순서).</summary>
+        public List<EndingDef> Endings = new List<EndingDef>();
     }
 }

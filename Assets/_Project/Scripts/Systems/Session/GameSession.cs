@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using ApoGirl.Core.Definitions;
 using ApoGirl.Core.Effects;
+using ApoGirl.Core.Endings;
 using ApoGirl.Core.Events;
 using ApoGirl.Core.Expedition;
 using ApoGirl.Core.Planning;
@@ -28,8 +29,9 @@ namespace ApoGirl.Systems.Session
         private bool _interactiveEvents;
         private bool _forcedEvent;
 
-        public GameSession(IDefinitionDatabase db, SaveService saves, IExpeditionRunner expeditionRunner = null)
+        public GameSession(IDefinitionDatabase db, SaveService saves, IExpeditionRunner expeditionRunner = null, EndingGallery gallery = null)
         {
+            Gallery = gallery;
             _db = db ?? throw new ArgumentNullException(nameof(db));
             _saves = saves ?? throw new ArgumentNullException(nameof(saves));
             _expedition = new DebugExpeditionRunner(expeditionRunner ?? new HeadlessExpeditionRunner(db));
@@ -56,6 +58,15 @@ namespace ApoGirl.Systems.Session
         public GameState State { get; private set; }
 
         public DebugExpeditionRunner DebugExpedition => _expedition;
+
+        /// <summary>엔딩 갤러리 (없으면 기록하지 않음).</summary>
+        public EndingGallery Gallery { get; }
+
+        /// <summary>이번 판의 엔딩 (게임이 끝난 뒤에만, 그 전에는 null).</summary>
+        public EndingResult Ending { get; private set; }
+
+        /// <summary>이번 엔딩을 갤러리에서 처음 봤는가.</summary>
+        public bool EndingIsNew { get; private set; }
 
         public bool HasGame => State != null;
 
@@ -279,6 +290,11 @@ namespace ApoGirl.Systems.Session
             {
                 // 강제 이벤트는 슬롯이 아니므로 정산·진행 없이 끝
                 _forcedEvent = false;
+                if (State.Status != GameStatus.Playing)
+                {
+                    ResolveEnding();
+                }
+
                 CheckEnded();
                 StateChanged?.Invoke();
                 return outcome;
@@ -289,6 +305,7 @@ namespace ApoGirl.Systems.Session
             if (_runner.IsGameOver)
             {
                 _executing = false;
+                ResolveEnding();
                 StateChanged?.Invoke();
                 GameEnded?.Invoke(State.Status);
                 return outcome;
@@ -301,6 +318,11 @@ namespace ApoGirl.Systems.Session
                 if (State.Status == GameStatus.Playing)
                 {
                     _saves.Save(SaveService.AutoSlot, State);
+                }
+
+                if (State.Status != GameStatus.Playing)
+                {
+                    ResolveEnding();
                 }
 
                 StateChanged?.Invoke();
@@ -366,9 +388,38 @@ namespace ApoGirl.Systems.Session
             StateChanged?.Invoke();
         }
 
+        /// <summary>디버그: 지금 상태로 판을 끝낸다 (구조 또는 원인을 지정한 게임오버). 계획 단계에서만.</summary>
+        public void DebugEndGame(GameStatus status, string endCause = "")
+        {
+            if (!IsPlanning || status == GameStatus.Playing)
+            {
+                return;
+            }
+
+            State.Status = status;
+            State.EndCause = status == GameStatus.GameOver ? (string.IsNullOrEmpty(endCause) ? WeekRunner.EndCauseHpZero : endCause) : "";
+            ResolveEnding();
+            StateChanged?.Invoke();
+            GameEnded?.Invoke(status);
+        }
+
+        /// <summary>엔딩 판정과 갤러리 기록 (판마다 한 번).</summary>
+        private void ResolveEnding()
+        {
+            if (Ending != null)
+            {
+                return;
+            }
+
+            Ending = EndingResolver.Resolve(State, _db);
+            EndingIsNew = Ending.Ending != null && Gallery != null && Gallery.Record(Ending.Ending.Id, State.Calendar.Week);
+        }
+
         private void Attach(GameState state)
         {
             State = state ?? throw new ArgumentNullException(nameof(state));
+            Ending = null;
+            EndingIsNew = false;
             _executing = false;
             _runner = new WeekRunner(state, _db, new SeededRandom(state.Rng), _expedition)
             {

@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace ApoGirl.Data
 {
-    /// <summary>M4 묶음 에셋: 특성·시설·일기/코멘트 줄·0막 프롤로그. 원본은 Content JSON (가져오기 도구가 채운다).</summary>
+    /// <summary>M4 묶음 에셋: 특성·시설·일기/코멘트 줄·0막 프롤로그 (M5: 엔딩). 원본은 Content JSON (가져오기 도구가 채운다).</summary>
     [CreateAssetMenu(menuName = "ApoGirl/Story Extras", fileName = "StoryExtras")]
     public sealed class StoryExtrasAsset : ScriptableObject
     {
@@ -12,6 +12,7 @@ namespace ApoGirl.Data
         [SerializeField] private List<FacilityDef> _facilities = new List<FacilityDef>();
         [SerializeField] private List<LineDef> _lines = new List<LineDef>();
         [SerializeField] private PrologueDef _prologue = new PrologueDef();
+        [SerializeField] private List<EndingDef> _endings = new List<EndingDef>();
 
         public DefinitionExtras ToDefinition()
         {
@@ -21,12 +22,14 @@ namespace ApoGirl.Data
                 Facilities = new List<FacilityDef>(_facilities),
                 Lines = new List<LineDef>(_lines),
                 Prologue = _prologue ?? new PrologueDef(),
+                Endings = new List<EndingDef>(_endings ?? new List<EndingDef>()),
             };
         }
 
 #if UNITY_EDITOR
-        public void EditorSet(List<TraitDef> traits, List<FacilityDef> facilities, List<LineDef> lines, PrologueDef prologue)
+        public void EditorSet(List<TraitDef> traits, List<FacilityDef> facilities, List<LineDef> lines, PrologueDef prologue, List<EndingDef> endings)
         {
+            _endings = endings;
             _traits = traits;
             _facilities = facilities;
             _lines = lines;

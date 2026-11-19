@@ -171,6 +171,10 @@ namespace ApoGirl.Core.Definitions
         public int DehydrationThreshold = 60;
         public int DehydrationHpLoss = 10;
 
+        // ── 정신 붕괴 (M5 배드 엔딩): 주간 정산 때 스트레스가 이 값 이상인 주가 연속 CollapseWeeks면 종료 ──
+        public int CollapseStress = 100;
+        public int CollapseWeeks = 3;
+
         // ── 휴식 ──
         public string DayRestActionId = "ACT_REST_DAY";
         public string NightRestActionId = "ACT_REST_NIGHT";

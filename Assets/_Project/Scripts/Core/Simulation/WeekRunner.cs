@@ -64,6 +64,12 @@ namespace ApoGirl.Core.Simulation
     {
         public const string EndCauseHpZero = "END_CAUSE_HP_ZERO";
 
+        // M5 배드 엔딩 원인 (EndingDef.EndCauses와 맞춘다)
+        public const string EndCauseExpedition = "END_CAUSE_EXPEDITION";
+        public const string EndCauseRaid = "END_CAUSE_RAID";
+        public const string EndCauseStarvation = "END_CAUSE_STARVATION";
+        public const string EndCauseCollapse = "END_CAUSE_COLLAPSE";
+
         private readonly GameState _state;
         private readonly IDefinitionDatabase _db;
         private readonly IRandomService _random;
@@ -241,7 +247,7 @@ namespace ApoGirl.Core.Simulation
             if (player.Vitals.Hp <= 0)
             {
                 _state.Status = GameStatus.GameOver;
-                _state.EndCause = EndCauseHpZero;
+                _state.EndCause = HpZeroCause(outcome);
             }
 
             outcome.StopForPresentation = outcome.Result != CheckResult.Success || action.IsExpedition || violation || IsGameOver || outcome.Raid != null;
@@ -358,6 +364,60 @@ namespace ApoGirl.Core.Simulation
             }
         }
 
+        /// <summary>체력이 0이 된 슬롯의 상황으로 종료 원인을 정한다.</summary>
+        private string HpZeroCause(SlotOutcome outcome)
+        {
+            if (outcome.Expedition != null)
+            {
+                return EndCauseExpedition;
+            }
+
+            if (outcome.Raid != null && !outcome.Raid.Repelled)
+            {
+                return EndCauseRaid;
+            }
+
+            var vitals = _state.Player.Vitals;
+            if (vitals.Hunger >= Balance.StarvationThreshold || vitals.Thirst >= Balance.DehydrationThreshold)
+            {
+                return EndCauseStarvation;
+            }
+
+            return EndCauseHpZero;
+        }
+
+        /// <summary>정신 붕괴: 정산 때 스트레스가 한계인 주가 이어지면 종료 (경고는 일기·코멘트 조건 BreakdownWeeks).</summary>
+        private void CheckBreakdown()
+        {
+            var player = _state.Player;
+            if (player.Vitals.Stress >= Balance.CollapseStress)
+            {
+                player.BreakdownWeeks++;
+                if (_state.Status == GameStatus.Playing && Balance.CollapseWeeks > 0 && player.BreakdownWeeks >= Balance.CollapseWeeks)
+                {
+                    _state.Status = GameStatus.GameOver;
+                    _state.EndCause = EndCauseCollapse;
+                }
+            }
+            else
+            {
+                player.BreakdownWeeks = 0;
+            }
+        }
+
+        private void RecordWeek(int week)
+        {
+            var player = _state.Player;
+            var record = new WeekRecord { Week = week, Hp = player.Vitals.Hp, Stress = player.Vitals.Stress, SleepDebt = player.SleepDebt };
+            foreach (StatType stat in Enum.GetValues(typeof(StatType)))
+            {
+                record.Stats[stat] = player.GetStat(stat);
+            }
+
+            _state.History.RemoveAll(r => r.Week == week);
+            _state.History.Add(record);
+        }
+
         private void ThrowIfEventPending()
         {
             if (HasPendingEvent)
@@ -384,6 +444,8 @@ namespace ApoGirl.Core.Simulation
                 EffectApplier.ChangeThreat(_state, Balance.ThreatWeekly, Balance, summary.Delta);
             }
 
+            CheckBreakdown();
+            RecordWeek(calendar.Week);
             var diary = LineRules.Pick(_state, _db, LineKind.Diary, new EventContext { Phase = DayPhase.Night, Day = CalendarState.DaysPerWeek });
             foreach (var outcome in _outcomes)
             {
@@ -398,7 +460,11 @@ namespace ApoGirl.Core.Simulation
                 _state.Diary.Add(new DiaryEntry { Week = calendar.Week, TextKey = summary.DiaryKey });
             }
 
-            if (calendar.Week >= CalendarState.TotalWeeks)
+            if (_state.Status != GameStatus.Playing)
+            {
+                // 정산 중 종료 (정신 붕괴): 주를 넘기지 않는다
+            }
+            else if (calendar.Week >= CalendarState.TotalWeeks)
             {
                 if (_state.Status == GameStatus.Playing)
                 {

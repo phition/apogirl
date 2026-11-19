@@ -12,6 +12,7 @@ namespace ApoGirl.Systems.Save
             {
                 yield return new V1ToV2();
                 yield return new V2ToV3();
+                yield return new V3ToV4();
             }
         }
 
@@ -25,6 +26,20 @@ namespace ApoGirl.Systems.Save
                 if (root["PlanPresets"] == null)
                 {
                     root["PlanPresets"] = new JArray();
+                }
+            }
+        }
+
+        /// <summary>v4: 주간 기록(History) 추가 (M5). 정신 붕괴 연속 주 수는 기본값 0.</summary>
+        private sealed class V3ToV4 : ISaveMigration
+        {
+            public int FromVersion => 3;
+
+            public void Migrate(JObject root)
+            {
+                if (root["History"] == null)
+                {
+                    root["History"] = new JArray();
                 }
             }
         }

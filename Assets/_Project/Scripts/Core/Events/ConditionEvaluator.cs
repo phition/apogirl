@@ -165,6 +165,30 @@ namespace ApoGirl.Core.Events
                     if (key == "Night") return exploration.NightExplorations;
                     return exploration.DayExplorations + exploration.NightExplorations;
                 case ValueKind.ActionCount: return ActionCountOf(state, key);
+                case ValueKind.NightRatio:
+                    var total = state.Exploration.DayExplorations + state.Exploration.NightExplorations;
+                    return total <= 0 ? 0 : state.Exploration.NightExplorations * 100 / total;
+                case ValueKind.DiaryCount: return state.Diary.Count;
+                case ValueKind.Companions:
+                    var joined = 0;
+                    foreach (var npc in state.Npcs.Values)
+                    {
+                        if (npc.Status == NpcStatus.Joined) joined++;
+                    }
+
+                    return joined;
+                case ValueKind.StatSpread: return StatExtreme(state, true) - StatExtreme(state, false);
+                case ValueKind.StatMin: return StatExtreme(state, false);
+                case ValueKind.BreakdownWeeks: return state.Player.BreakdownWeeks;
+                case ValueKind.ClueCount:
+                    if (string.IsNullOrEmpty(key)) return state.Clues.Count;
+                    var clues = 0;
+                    foreach (var clue in state.Clues)
+                    {
+                        if (clue.StartsWith(key, StringComparison.Ordinal)) clues++;
+                    }
+
+                    return clues;
                 default: throw new ArgumentOutOfRangeException(nameof(kind), kind, null);
             }
         }
@@ -185,6 +209,13 @@ namespace ApoGirl.Core.Events
                 case ValueKind.Defense:
                 case ValueKind.Threat:
                 case ValueKind.TeacherMobility:
+                case ValueKind.NightRatio:
+                case ValueKind.DiaryCount:
+                case ValueKind.Companions:
+                case ValueKind.StatSpread:
+                case ValueKind.StatMin:
+                case ValueKind.BreakdownWeeks:
+                case ValueKind.ClueCount:
                     return true;
                 case ValueKind.Expeditions:
                     return string.IsNullOrEmpty(key) || key == "Day" || key == "Night";
@@ -204,6 +235,18 @@ namespace ApoGirl.Core.Events
                 case CompareOp.Less: return value < target;
                 default: throw new ArgumentOutOfRangeException(nameof(op), op, null);
             }
+        }
+
+        private static int StatExtreme(GameState state, bool max)
+        {
+            var result = max ? int.MinValue : int.MaxValue;
+            foreach (StatType stat in Enum.GetValues(typeof(StatType)))
+            {
+                var value = state.Player.GetStat(stat);
+                result = max ? Math.Max(result, value) : Math.Min(result, value);
+            }
+
+            return result;
         }
 
         private static int ActionCountOf(GameState state, string actionId)

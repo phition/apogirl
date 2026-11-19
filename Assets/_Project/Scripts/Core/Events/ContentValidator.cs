@@ -97,7 +97,78 @@ namespace ApoGirl.Core.Events
                 CheckDialogue(ev, choiceIds, input, issues);
             }
 
+            CheckEndings(db, input, npcIds, issues);
             return issues;
+        }
+
+        /// <summary>M5: 엔딩 ID·조건·점수 키·문자열, 엔딩 레이어 줄.</summary>
+        private static void CheckEndings(IDefinitionDatabase db, ContentValidationInput input, HashSet<string> npcIds, List<ContentIssue> issues)
+        {
+            var ids = new HashSet<string>();
+            var hasBadFallback = false;
+            var hasRescueFallback = false;
+            foreach (var ending in db.Extras.Endings)
+            {
+                if (string.IsNullOrEmpty(ending.Id) || !ids.Add(ending.Id))
+                {
+                    Add(issues, IssueSeverity.Error, ending.Id, "엔딩 ID가 비었거나 중복");
+                    continue;
+                }
+
+                CheckCondition(db, ending.Id, ending.Condition, npcIds, issues);
+                foreach (var term in ending.Score)
+                {
+                    if (!ConditionEvaluator.IsValidKey(term.Kind, term.Key))
+                    {
+                        Add(issues, IssueSeverity.Error, ending.Id, $"점수 항목 키 오류: {term.Kind} '{term.Key}'");
+                    }
+                }
+
+                if (ending.CutKeys.Count == 0)
+                {
+                    Add(issues, IssueSeverity.Warning, ending.Id, "후일담 컷이 없음");
+                }
+
+                if (ending.Category != EndingCategory.Bad && ending.EndCauses.Count > 0)
+                {
+                    Add(issues, IssueSeverity.Warning, ending.Id, "EndCauses는 배드 엔딩에서만 쓰인다");
+                }
+
+                var unconditional = IsEmpty(ending.Condition);
+                if (ending.Category == EndingCategory.Bad && ending.EndCauses.Count == 0 && unconditional) hasBadFallback = true;
+                if (ending.Category != EndingCategory.Bad && unconditional) hasRescueFallback = true;
+
+                if (input?.UiKeys != null)
+                {
+                    if (!input.UiKeys.Contains(ending.TitleKey))
+                    {
+                        Add(issues, IssueSeverity.Error, ending.Id, "제목 문자열 없음: " + ending.TitleKey);
+                    }
+
+                    foreach (var key in ending.CutKeys)
+                    {
+                        if (!input.UiKeys.Contains(key))
+                        {
+                            Add(issues, IssueSeverity.Error, ending.Id, "후일담 문자열 없음: " + key);
+                        }
+                    }
+                }
+            }
+
+            if (db.Extras.Endings.Count > 0)
+            {
+                if (!hasBadFallback) Add(issues, IssueSeverity.Error, "ENDINGS", "원인·조건 없는 배드 엔딩(대체 엔딩)이 없음");
+                if (!hasRescueFallback) Add(issues, IssueSeverity.Error, "ENDINGS", "조건 없는 구조 엔딩(기본 엔딩)이 없음");
+            }
+
+            foreach (var line in db.Extras.Lines)
+            {
+                CheckCondition(db, line.Id, line.Condition, npcIds, issues);
+                if (input?.UiKeys != null && !string.IsNullOrEmpty(line.TextKey) && !input.UiKeys.Contains(line.TextKey))
+                {
+                    Add(issues, IssueSeverity.Error, line.Id, "대사 줄 문자열 없음: " + line.TextKey);
+                }
+            }
         }
 
         private static void CheckDialogue(EventDef ev, HashSet<string> choiceIds, ContentValidationInput input, List<ContentIssue> issues)

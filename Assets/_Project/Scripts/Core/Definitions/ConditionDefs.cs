@@ -34,6 +34,29 @@ namespace ApoGirl.Core.Definitions
 
         /// <summary>이 행동을 실행한 횟수 (Key = 행동 ID, 성공·실패 무관).</summary>
         ActionCount,
+
+        // ── M5 파생 수치 (엔딩 판정) ──
+
+        /// <summary>밤 탐험 비율 0~100 (탐험이 없으면 0).</summary>
+        NightRatio,
+
+        /// <summary>일기 수 (주간 정산마다 1줄).</summary>
+        DiaryCount,
+
+        /// <summary>거점에 합류한 NPC 수 (선생님 제외).</summary>
+        Companions,
+
+        /// <summary>능력치 최대 − 최소 (작을수록 고르게 키움).</summary>
+        StatSpread,
+
+        /// <summary>가장 낮은 능력치.</summary>
+        StatMin,
+
+        /// <summary>스트레스 한계로 버틴 연속 주 수 (정신 붕괴 경고).</summary>
+        BreakdownWeeks,
+
+        /// <summary>단서 수 (Key가 있으면 그 접두어로 시작하는 단서만).</summary>
+        ClueCount,
     }
 
     public enum CompareOp

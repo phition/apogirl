@@ -59,7 +59,8 @@ namespace ApoGirl.Presentation.App
             }
 
             var saveDirectory = Path.Combine(Application.persistentDataPath, "Saves");
-            Session = new GameSession(database.Build(), new SaveService(saveDirectory, new GameStateSerializer()))
+            var gallery = new EndingGallery(Application.persistentDataPath);
+            Session = new GameSession(database.Build(), new SaveService(saveDirectory, new GameStateSerializer()), null, gallery)
             {
                 UseRealtimeExpeditions = true,
                 InteractiveEvents = true,

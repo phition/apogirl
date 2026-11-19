@@ -9,7 +9,7 @@ namespace ApoGirl.Core.State
     public sealed class GameState
     {
         /// <summary>현재 세이브 포맷 버전. 마이그레이션 시 증가시킨다.</summary>
-        public const int CurrentSaveVersion = 3;
+        public const int CurrentSaveVersion = 4;
 
         public int SaveVersion { get; set; } = CurrentSaveVersion;
         public GameStatus Status { get; set; } = GameStatus.Playing;
@@ -44,6 +44,19 @@ namespace ApoGirl.Core.State
 
         /// <summary>플레이어가 저장한 루틴 프리셋 (문서 4.3). v2에서 추가.</summary>
         public List<PlanPreset> PlanPresets { get; set; } = new List<PlanPreset>();
+
+        /// <summary>주간 정산마다 남기는 기록 (엔딩 화면의 성장 그래프). v4에서 추가.</summary>
+        public List<WeekRecord> History { get; set; } = new List<WeekRecord>();
+    }
+
+    /// <summary>한 주가 끝났을 때의 모습.</summary>
+    public sealed class WeekRecord
+    {
+        public int Week { get; set; }
+        public Dictionary<StatType, int> Stats { get; set; } = new Dictionary<StatType, int>();
+        public int Hp { get; set; }
+        public int Stress { get; set; }
+        public int SleepDebt { get; set; }
     }
 
     /// <summary>주간 계획 프리셋: 14슬롯 행동 ID.</summary>
@@ -116,6 +129,9 @@ namespace ApoGirl.Core.State
 
         /// <summary>새벽 귀환 후 다음 휴식의 회복량 감소 (문서 6.3.2-(4)).</summary>
         public bool ReducedNextRest { get; set; }
+
+        /// <summary>주간 정산 때 스트레스가 한계였던 연속 주 수. 한계 주 수에 이르면 정신 붕괴 (M5).</summary>
+        public int BreakdownWeeks { get; set; }
     }
 
     /// <summary>0막 프롤로그에서 정해지는 인적 사항 (문서 7.1).</summary>
