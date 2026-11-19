@@ -115,6 +115,11 @@ SO 에셋과 문자열 테이블은 생성물이라 직접 고치지 않는다.
   - 보정 종류 추가: `RaidGuard`, `InfectionResist`, `TeacherCare`.
 - **동료 역할**: `Roles`(Id, Modifiers). 합류한 NPC에게 허브에서 지정한다. 조건은 `RoleCount`(Key = 역할 ID).
 - **정찰**: 플래그 `SCOUT_{지역 ID}`가 있으면 출정 준비 화면에 잠긴 방·조우 수가 나오고, 출정하면 사라진다.
+- **완치 판정**: 이벤트 선택지 `HasCheck` + `Check.BaseRate`로 확률을 둔다(4막 0.3). 성공 효과에 `TEACHER_CURED`를 세우면 병세 진행이 멈춘다.
+- **회차 요소**
+  - `StartBonuses`(Id, Effect): 엔딩을 하나라도 본 뒤 새 게임 시작 때 고른다. 문자열은 `bonus.{Id}.name/desc`.
+  - 2회차 새 게임에는 플래그 `NG_PLUS`가 서고, `BalanceConfig.NgPlusOpeningEventId`(창고 안의 7일)가 1막 시작 이벤트보다 먼저 나온다.
+- **같은 대본 공유**: 이벤트의 `DialogueNode`에 다른 이벤트의 노드 이름을 적으면 그 대본을 쓴다(예: 재감염 조기 발병).
 - **막 평가 카드**: 이벤트에 `ReviewAct`(막 번호)·`ReviewFromWeek`(그래프 시작 주)를 두면, 이벤트가 끝난 뒤 그래프와 한마디 카드가 뜬다.
   - 한마디는 `Lines`의 Kind `ActReview`.
 
