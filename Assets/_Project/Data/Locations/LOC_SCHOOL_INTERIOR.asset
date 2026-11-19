@@ -490,4 +490,95 @@ MonoBehaviour:
         Spread: 0
         Dormant: 0
     NightVariant:
-      Spawns: []
+      Spawns:
+      - EnemyId: ENEMY_WANDERER
+        Floor: 0
+        RoomId: 
+        X: 20
+        Count: 2
+        Spread: 6
+        Dormant: 0
+      - EnemyId: ENEMY_WANDERER
+        Floor: 0
+        RoomId: 
+        X: 60
+        Count: 2
+        Spread: 6
+        Dormant: 0
+      - EnemyId: ENEMY_WANDERER
+        Floor: 1
+        RoomId: 
+        X: 18
+        Count: 2
+        Spread: 5
+        Dormant: 0
+      - EnemyId: ENEMY_WANDERER
+        Floor: 1
+        RoomId: 
+        X: 42
+        Count: 3
+        Spread: 6
+        Dormant: 0
+      - EnemyId: ENEMY_LISTENER
+        Floor: 1
+        RoomId: 
+        X: 64
+        Count: 1
+        Spread: 0
+        Dormant: 0
+      - EnemyId: ENEMY_WANDERER
+        Floor: 2
+        RoomId: 
+        X: 30
+        Count: 2
+        Spread: 6
+        Dormant: 0
+      - EnemyId: ENEMY_LISTENER
+        Floor: 2
+        RoomId: 
+        X: 56
+        Count: 2
+        Spread: 5
+        Dormant: 0
+      - EnemyId: ENEMY_WANDERER
+        Floor: 3
+        RoomId: 
+        X: 24
+        Count: 3
+        Spread: 6
+        Dormant: 0
+      - EnemyId: ENEMY_WANDERER
+        Floor: 3
+        RoomId: 
+        X: 58
+        Count: 2
+        Spread: 5
+        Dormant: 0
+      - EnemyId: ENEMY_WANDERER
+        Floor: 0
+        RoomId: ROOM_1F_ROOM_OFFICE_0
+        X: 9
+        Count: 2
+        Spread: 4
+        Dormant: 0
+      - EnemyId: ENEMY_WANDERER
+        Floor: 1
+        RoomId: ROOM_2F_ROOM_CLASSROOM_2
+        X: 7
+        Count: 1
+        Spread: 0
+        Dormant: 0
+      - EnemyId: ENEMY_LISTENER
+        Floor: 2
+        RoomId: ROOM_3F_ROOM_CLASSROOM_5
+        X: 7
+        Count: 1
+        Spread: 0
+        Dormant: 0
+      - EnemyId: ENEMY_WANDERER
+        Floor: 3
+        RoomId: ROOM_4F_ROOM_CLASSROOM_3
+        X: 7
+        Count: 2
+        Spread: 3
+        Dormant: 0

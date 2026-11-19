@@ -919,6 +919,26 @@ MonoBehaviour:
     m_Key: exp.dusk
     m_Metadata:
       m_Items: []
+  - m_Id: 36308306378752
+    m_Key: exp.light_on
+    m_Metadata:
+      m_Items: []
+  - m_Id: 36308390264832
+    m_Key: exp.light_off
+    m_Metadata:
+      m_Items: []
+  - m_Id: 36308390264833
+    m_Key: exp.dawn
+    m_Metadata:
+      m_Items: []
+  - m_Id: 36308390264834
+    m_Key: exp.debug_invincible
+    m_Metadata:
+      m_Items: []
+  - m_Id: 36308390264835
+    m_Key: exp.debug_vision
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
