@@ -94,6 +94,17 @@ namespace ApoGirl.Tests.PlayMode
             Assert.AreEqual(door.X, director.X, 0.01f);
             Assert.AreEqual(door.Floor, director.Floor);
 
+            // 휴면 군집 근처에 큰 소음을 내면 깨어난다
+            Assert.Greater(director.Threat.Crowds.Count, 0, "낮 배치에 휴면 군집이 있어야 함");
+            var crowd = director.Threat.Crowds[0];
+            for (var i = 0; i < 20 && !crowd.Awake; i++)
+            {
+                director.DebugEmitNoise(crowd.AreaId, crowd.X, 7f);
+                yield return null;
+            }
+
+            Assert.IsTrue(crowd.Awake, "소음으로 군집 각성");
+
             // 첫 컨테이너를 강제로 열어 모두 가져간 뒤 탈출
             foreach (var target in director.Targets)
             {

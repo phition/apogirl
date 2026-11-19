@@ -146,5 +146,54 @@ namespace ApoGirl.Core.Definitions
         /// <summary>시계가 끝날 때까지 나오지 못했을 때 추가 피로·스트레스 (M2b-1 임시 규칙, M2b-2에서 황혼 각성으로 대체).</summary>
         public int StrandedFatigue = 10;
         public int StrandedStress = 10;
+
+        // ── 탐험 위협 (M2b-2, 문서 6.3.2·6.3.5) ──
+        /// <summary>소음 반경 (유닛): 웅크려 걷기 / 걷기 / 달리기 / 문 / 계단 / 수색(0.5초마다) / 버리기 / 밀치기.</summary>
+        public float CrouchNoise = 0.8f;
+        public float WalkNoise = 2.5f;
+        public float RunNoise = 7f;
+        public float DoorNoise = 4f;
+        public float StairsNoise = 3f;
+        public float SearchNoise = 1.5f;
+        public float DropNoise = 3f;
+        public float ShoveNoise = 7f;
+
+        /// <summary>과적 시 이동 소음 배율 (금속 덜컹거림).</summary>
+        public float OverweightNoiseMultiplier = 1.5f;
+
+        /// <summary>군집 각성 게이지: 임계값, 초당 감소, 소음 반경 1유닛당 증가, 근처 체류 초당 증가와 거리, 연쇄 각성 반경.</summary>
+        public float StirThreshold = 100f;
+        public float StirDecayPerSecond = 3f;
+        public float StirPerNoiseUnit = 9f;
+        public float PresenceStirPerSecond = 5f;
+        public float PresenceRange = 4f;
+        public float ChainWakeRadius = 12f;
+
+        public float SearchDuration = 6f;
+        public float PatrolRange = 4f;
+        public float AwarenessDecayPerSecond = 0.5f;
+        public float CrouchSightMultiplier = 0.6f;
+
+        /// <summary>이 거리 안에서 쫓아오는 좀비가 보고 있으면 숨을 수 없다.</summary>
+        public float HideBlockDistance = 4f;
+
+        public float ShoveRange = 1.3f;
+        public float ShoveStunSeconds = 2.5f;
+        public float ShovePush = 1.5f;
+        public float ShoveCooldown = 1.5f;
+
+        /// <summary>쓰러졌을 때 허브로 돌아가는 HP (중상, 사망 아님).</summary>
+        public int DownRemainingHp = 15;
+
+        /// <summary>활동성 배율 (문서 6.3.2-(2) 표). 인덱스 = ClockPhase (오전, 오후, 황혼, 초저녁, 한밤, 새벽).</summary>
+        public float[] ActivitySight = { 0.7f, 0.85f, 1f, 1.1f, 1.3f, 1f };
+        public float[] ActivityHearing = { 0.7f, 0.9f, 1.1f, 1.2f, 1.4f, 1f };
+        public float[] ActivitySpeed = { 0.8f, 0.9f, 1f, 1.1f, 1.25f, 1f };
+        public float[] ActivityStir = { 0.8f, 1.2f, 2f, 2f, 2f, 1f };
+
+        /// <summary>황혼 각성 이후 (낮 시계 종료 후 체류) 배율.</summary>
+        public float AwakenedSight = 1.3f;
+        public float AwakenedHearing = 1.4f;
+        public float AwakenedSpeed = 1.25f;
     }
 }

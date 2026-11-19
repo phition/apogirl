@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using ApoGirl.Core.Definitions;
 using ApoGirl.Core.Expedition;
 using ApoGirl.Exploration.Model;
 using ApoGirl.Presentation.Text;
@@ -33,6 +34,10 @@ namespace ApoGirl.Exploration.Runtime
         private readonly VisualElement _lootList;
         private readonly Label _message;
         private readonly Label _debug;
+        private readonly Label _activity;
+        private readonly Label _noise;
+        private readonly Label _hidden;
+        private readonly ProgressBar _stirBar;
         private PlacedItem _selected;
         private int _gridVersion = -1;
         private ExplorationTarget _shownContainer;
@@ -58,6 +63,10 @@ namespace ApoGirl.Exploration.Runtime
             _lootList = root.Q("loot-list");
             _message = root.Q<Label>("message");
             _debug = root.Q<Label>("debug-label");
+            _activity = root.Q<Label>("activity-label");
+            _noise = root.Q<Label>("noise-label");
+            _hidden = root.Q<Label>("hidden-label");
+            _stirBar = root.Q<ProgressBar>("stir-bar");
 
             root.Q<Label>("backpack-title").text = Loc.T("exp.backpack");
             root.Q<Label>("controls-label").text = Loc.T("exp.controls");
@@ -104,7 +113,23 @@ namespace ApoGirl.Exploration.Runtime
             _clockBar.EnableInClassList("late", clock.Phase == ClockPhase.Dusk || clock.Phase == ClockPhase.Dawn);
 
             _room.text = _director.LocationLabel;
-            _vitals.text = Loc.F("exp.vitals", _director.Request.Hp);
+            _vitals.text = Loc.F("exp.vitals", _director.Hp);
+            _vitals.EnableInClassList("danger", _director.Hp <= 30);
+            _activity.text = Loc.F("exp.activity", Loc.T("activity." + _director.Activity.Level));
+            _activity.EnableInClassList("danger", _director.Activity.Level >= ActivityLevel.Alert);
+            var noiseBars = Mathf.Clamp(Mathf.CeilToInt(_director.NoiseLevel / 1.8f), 0, 4);
+            _noise.text = Loc.T("exp.noise") + " " + new string('■', noiseBars) + new string('□', 4 - noiseBars);
+            _hidden.EnableInClassList("hidden", !_director.Hidden);
+            _hidden.text = Loc.T("exp.hidden");
+
+            var crowd = _director.Threat.NearestDormantCrowd(_director.Snapshot, 10f);
+            _stirBar.EnableInClassList("hidden", crowd == null);
+            if (crowd != null)
+            {
+                var balance = _director.Definitions.Balance;
+                _stirBar.value = crowd.Stirring / balance.StirThreshold * 100f;
+                _stirBar.title = Loc.T("exp.stirring");
+            }
             _weight.text = Loc.F("exp.weight", _director.Backpack.TotalWeight.ToString("0.0"), _director.CarryCapacity.ToString("0.0"));
             _weight.EnableInClassList("danger", _director.IsOverweight);
             _debug.text = _director.TimeScale > 1f ? "×" + _director.TimeScale.ToString("0") : "";
@@ -118,6 +143,12 @@ namespace ApoGirl.Exploration.Runtime
         {
             var target = _director.Nearest;
             _searchBar.AddToClassList("hidden");
+            if (_director.Hidden)
+            {
+                _prompt.text = Loc.T("exp.prompt_unhide");
+                return;
+            }
+
             if (target == null)
             {
                 _prompt.text = "";
@@ -128,13 +159,15 @@ namespace ApoGirl.Exploration.Runtime
             {
                 case TargetKind.Container:
                     var name = Loc.T("container." + target.Container.Kind);
+                    var canHide = target.Container.Kind == ContainerKind.Locker || target.Container.Kind == ContainerKind.Desk;
+                    var hideHint = canHide ? "  ·  " + Loc.T("exp.prompt_hide") : "";
                     if (target.Searched)
                     {
-                        _prompt.text = Loc.F(target.Contents.Count > 0 ? "exp.prompt_open" : "exp.prompt_empty", name);
+                        _prompt.text = Loc.F(target.Contents.Count > 0 ? "exp.prompt_open" : "exp.prompt_empty", name) + hideHint;
                     }
                     else
                     {
-                        _prompt.text = Loc.F("exp.prompt_search", name);
+                        _prompt.text = Loc.F("exp.prompt_search", name) + hideHint;
                         if (target.SearchProgress > 0f)
                         {
                             _searchBar.RemoveFromClassList("hidden");

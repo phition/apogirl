@@ -168,6 +168,49 @@ namespace ApoGirl.Core.Definitions
         public RoomTemplateDef FindTemplate(string id) => RoomTemplates.Find(t => t.Id == id);
     }
 
+    /// <summary>좀비 유형 (문서 6.3.5-(4)). 속도는 유닛/초, 시야는 유닛.</summary>
+    [Serializable]
+    public sealed class EnemyDef
+    {
+        public string Id = "";
+        public float WalkSpeed = 1f;
+        public float RunSpeed = 3.2f;
+        public float SightRange = 7f;
+
+        /// <summary>소음을 듣는 반경 배율 (청각 민감형은 2).</summary>
+        public float HearingMultiplier = 1f;
+
+        /// <summary>보고 있을 때 인지 게이지가 차는 속도 (초당, 1이면 가득).</summary>
+        public float AwarenessRate = 1.2f;
+
+        public int Damage = 12;
+        public float HitCooldown = 1.2f;
+        public float AttackRange = 0.7f;
+    }
+
+    /// <summary>
+    /// 좀비 배치. RoomId가 비어 있으면 해당 층 복도, 아니면 그 방 안 (방 기준 X).
+    /// Dormant 배치는 하나의 휴면 군집이 되어 각성 게이지를 공유한다 (문서 6.3.2-(3)).
+    /// </summary>
+    [Serializable]
+    public sealed class SpawnDef
+    {
+        public string EnemyId = "";
+        public int Floor;
+        public string RoomId = "";
+        public float X;
+        public int Count = 1;
+        public float Spread = 1.5f;
+        public bool Dormant;
+    }
+
+    /// <summary>시간대별 변형 (문서 6.3.8 DayVariant / NightVariant). M2b-2는 좀비 배치만.</summary>
+    [Serializable]
+    public sealed class LocationVariantDef
+    {
+        public List<SpawnDef> Spawns = new List<SpawnDef>();
+    }
+
     /// <summary>탐험 지역 (실시간 모드). ID는 같은 지역의 헤드리스 ExpeditionModelDef와 같다.</summary>
     [Serializable]
     public sealed class LocationDef
@@ -177,5 +220,7 @@ namespace ApoGirl.Core.Definitions
         public float DayRunSeconds = 360f;
         public float NightRunSeconds = 360f;
         public string DefaultLootTableId = "";
+        public LocationVariantDef DayVariant = new LocationVariantDef();
+        public LocationVariantDef NightVariant = new LocationVariantDef();
     }
 }

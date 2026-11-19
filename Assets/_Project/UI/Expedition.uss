@@ -85,3 +85,12 @@
     -unity-text-align: middle-center;
     font-size: 19px;
 }
+
+.exp-activity { -unity-text-align: middle-right; color: var(--text-dim); }
+.exp-activity.danger { color: var(--danger); }
+.exp-status-label.danger { color: var(--danger); }
+.exp-stir-bar { width: 320px; height: 16px; margin-bottom: 6px; }
+.exp-stir-bar .unity-progress-bar__background { background-color: rgba(0, 0, 0, 0.6); }
+.exp-stir-bar .unity-progress-bar__progress { background-color: #c9584f; }
+.exp-stir-bar .unity-progress-bar__title { font-size: 12px; color: var(--text); }
+.exp-hidden { color: #9ad0ff; -unity-font-style: bold; margin-bottom: 6px; }

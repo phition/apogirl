@@ -15,6 +15,7 @@ namespace ApoGirl.Data
         [SerializeField] private List<ItemDefinitionAsset> _items = new List<ItemDefinitionAsset>();
         [SerializeField] private List<LootTableAsset> _lootTables = new List<LootTableAsset>();
         [SerializeField] private List<LocationAsset> _locations = new List<LocationAsset>();
+        [SerializeField] private List<EnemyAsset> _enemies = new List<EnemyAsset>();
 
         /// <summary>빈 참조는 건너뛰고, 빈 ID·중복 ID는 예외로 알린다.</summary>
         public IDefinitionDatabase Build()
@@ -26,7 +27,8 @@ namespace ApoGirl.Data
                 _expeditionModels.Where(m => m != null).Select(m => m.ToDefinition()),
                 _items.Where(i => i != null).Select(i => i.ToDefinition()),
                 _lootTables.Where(t => t != null).Select(t => t.ToDefinition()),
-                _locations.Where(l => l != null).Select(l => l.ToDefinition()));
+                _locations.Where(l => l != null).Select(l => l.ToDefinition()),
+                _enemies.Where(e => e != null).Select(e => e.ToDefinition()));
         }
 
 #if UNITY_EDITOR
@@ -44,6 +46,12 @@ namespace ApoGirl.Data
             _items = items;
             _lootTables = lootTables;
             _locations = locations;
+        }
+
+        /// <summary>에디터 도구용: 좀비 유형 지정.</summary>
+        public void EditorSetEnemies(List<EnemyAsset> enemies)
+        {
+            _enemies = enemies;
         }
 #endif
     }

@@ -20,6 +20,8 @@ namespace ApoGirl.Core.Definitions
         bool TryGetLootTable(string id, out LootTableDef table);
 
         bool TryGetLocation(string id, out LocationDef location);
+
+        bool TryGetEnemy(string id, out EnemyDef enemy);
     }
 
     public static class DefinitionDatabaseExtensions
@@ -74,6 +76,7 @@ namespace ApoGirl.Core.Definitions
         private readonly Dictionary<string, ItemDef> _items = new Dictionary<string, ItemDef>();
         private readonly Dictionary<string, LootTableDef> _lootTables = new Dictionary<string, LootTableDef>();
         private readonly Dictionary<string, LocationDef> _locations = new Dictionary<string, LocationDef>();
+        private readonly Dictionary<string, EnemyDef> _enemies = new Dictionary<string, EnemyDef>();
 
         public InMemoryDefinitionDatabase(
             BalanceConfig balance,
@@ -81,7 +84,8 @@ namespace ApoGirl.Core.Definitions
             IEnumerable<ExpeditionModelDef> expeditionModels = null,
             IEnumerable<ItemDef> items = null,
             IEnumerable<LootTableDef> lootTables = null,
-            IEnumerable<LocationDef> locations = null)
+            IEnumerable<LocationDef> locations = null,
+            IEnumerable<EnemyDef> enemies = null)
         {
             Balance = balance ?? throw new ArgumentNullException(nameof(balance));
             foreach (var action in actions)
@@ -101,6 +105,7 @@ namespace ApoGirl.Core.Definitions
             RegisterAll(_items, items, i => i.Id);
             RegisterAll(_lootTables, lootTables, t => t.Id);
             RegisterAll(_locations, locations, l => l.Id);
+            RegisterAll(_enemies, enemies, e => e.Id);
         }
 
         public BalanceConfig Balance { get; }
@@ -122,6 +127,8 @@ namespace ApoGirl.Core.Definitions
         public bool TryGetLootTable(string id, out LootTableDef table) => _lootTables.TryGetValue(id ?? "", out table);
 
         public bool TryGetLocation(string id, out LocationDef location) => _locations.TryGetValue(id ?? "", out location);
+
+        public bool TryGetEnemy(string id, out EnemyDef enemy) => _enemies.TryGetValue(id ?? "", out enemy);
 
         private static void RegisterAll<T>(Dictionary<string, T> map, IEnumerable<T> values, Func<T, string> id)
         {
