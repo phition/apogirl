@@ -606,7 +606,13 @@ namespace ApoGirl.Exploration.Runtime
 
             // 화면 비율과 관계없이 가로 최소 MinVisibleWidth 유닛이 보이게 (멀리서 건물과 캐릭터를 함께 잡는 앵글)
             _camera.orthographicSize = Mathf.Clamp(MinVisibleWidth / (2f * Mathf.Max(0.1f, _camera.aspect)), MinOrthographicSize, MaxOrthographicSize);
-            var target = new Vector3(worldX, origin.y + _building.FloorHeight * 0.5f, -10f);
+            // 방이 화면에 다 들어오면 방 전체를 가운데에, 아니면 플레이어를 따라가되 공간 끝 너머 빈 곳은 덜 보이게
+            var halfWidth = _camera.orthographicSize * _camera.aspect;
+            var width = CurrentArea.Width;
+            var cameraX = width <= halfWidth * 2f
+                ? origin.x + width / 2f
+                : Mathf.Clamp(worldX, origin.x + halfWidth - 2f, origin.x + width - halfWidth + 2f);
+            var target = new Vector3(cameraX, origin.y + _building.FloorHeight * 0.5f, -10f);
             var cameraTransform = _camera.transform;
             cameraTransform.position = Vector3.Lerp(cameraTransform.position, target, Mathf.Clamp01(dt * 6f));
         }
