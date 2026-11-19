@@ -351,12 +351,15 @@ namespace ApoGirl.Exploration.Model
                     crowd.Stirring += _balance.PresenceStirPerSecond * mods.Stir * dt * (player.Crouching ? 0.5f : 1f);
                 }
 
-                crowd.Stirring = Math.Max(0f, crowd.Stirring - _balance.StirDecayPerSecond * dt);
+                // 임계 도달을 먼저 판정하고, 아니면 서서히 가라앉는다
                 if (crowd.Stirring >= _balance.StirThreshold)
                 {
                     var toward = player.AreaId == crowd.AreaId ? player.X : crowd.X;
                     WakeCrowd(crowd, toward, events);
+                    continue;
                 }
+
+                crowd.Stirring = Math.Max(0f, crowd.Stirring - _balance.StirDecayPerSecond * dt);
             }
 
             foreach (var zombie in _zombies)
