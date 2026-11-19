@@ -1,0 +1,20 @@
+{
+    "name": "ApoGirl.Presentation",
+    "rootNamespace": "ApoGirl.Presentation",
+    "references": [
+        "ApoGirl.Core",
+        "ApoGirl.Data",
+        "ApoGirl.Systems",
+        "Unity.TextMeshPro",
+        "Unity.InputSystem"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

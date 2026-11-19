@@ -1,0 +1,17 @@
+{
+    "name": "ApoGirl.Systems",
+    "rootNamespace": "ApoGirl.Systems",
+    "references": [
+        "ApoGirl.Core",
+        "ApoGirl.Data"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

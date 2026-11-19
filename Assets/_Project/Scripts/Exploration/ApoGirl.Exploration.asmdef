@@ -1,0 +1,19 @@
+{
+    "name": "ApoGirl.Exploration",
+    "rootNamespace": "ApoGirl.Exploration",
+    "references": [
+        "ApoGirl.Core",
+        "ApoGirl.Data",
+        "ApoGirl.Systems",
+        "Unity.InputSystem"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
