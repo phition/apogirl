@@ -112,3 +112,6 @@ InitTestScene*.unity*
 
 # Auto-generated cache in Assets folder
 /[Aa]ssets/[Ss]ceneDependencyCache*
+
+# 직접 생성한 그림을 넣는 임시 폴더 (가공 후 Assets로 옮김)
+/ArtInbox/
