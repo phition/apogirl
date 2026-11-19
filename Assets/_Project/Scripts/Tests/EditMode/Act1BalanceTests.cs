@@ -32,7 +32,7 @@ namespace ApoGirl.Tests.EditMode
             return new InMemoryDefinitionDatabase(
                 new BalanceConfig(), content.Actions, content.ExpeditionModels, content.Items, content.LootTables,
                 null, content.Enemies, content.Events, content.Npcs,
-                new DefinitionExtras { Traits = content.Traits, Facilities = content.Facilities, Lines = content.Lines, Prologue = content.Prologue ?? new PrologueDef() });
+                new DefinitionExtras { Traits = content.Traits, Facilities = content.Facilities, Lines = content.Lines, Prologue = content.Prologue ?? new PrologueDef(), Endings = content.Endings, Roles = content.Roles });
         }
 
         /// <summary>한 주 계획 (해금된 탐험 중 가장 좋은 곳을 고른다).</summary>
@@ -40,6 +40,7 @@ namespace ApoGirl.Tests.EditMode
         {
             string Pick(params string[] ids) => ids.FirstOrDefault(id => db.TryGetAction(id, out var a) && ApoGirl.Core.Planning.PlanEditing.IsUnlocked(state, db, a)) ?? "";
             var dayExpedition = Pick("ACT_EXP_DAY_STORE", "ACT_EXP_DAY_SCHOOL");
+            var secondExpedition = Pick("ACT_EXP_DAY_RESIDENTIAL", "ACT_EXP_DAY_SUBWAY", "ACT_EXP_DAY_STORE", "ACT_EXP_DAY_SCHOOL");
             var slots = state.Plan.Slots;
             for (var i = 0; i < slots.Count; i++)
             {
@@ -61,7 +62,8 @@ namespace ApoGirl.Tests.EditMode
                         break;
                     default:
                         id = day
-                            ? dayIndex == 1 || dayIndex == 4 ? dayExpedition
+                            ? dayIndex == 1 ? dayExpedition
+                            : dayIndex == 4 ? secondExpedition
                             : dayIndex == 3 ? Pick("ACT_SURV_RESTORE_POWER", "ACT_SURV_MAKE_CRUTCH", "ACT_SURV_BARRICADE")
                             : dayIndex == 6 ? "ACT_SURV_PURIFY_WATER" : "ACT_EDU_HUMANITIES"
                             : dayIndex == 5 ? Pick("ACT_NIGHT_TALK") : "ACT_REST_NIGHT";
@@ -91,7 +93,7 @@ namespace ApoGirl.Tests.EditMode
             }
         }
 
-        private static string Run(Strategy strategy, int seed, out GameState state)
+        private static string Run(Strategy strategy, int seed, out GameState state, int weeks = 13)
         {
             var db = Db();
             state = NewGameFactory.Create(db.Balance, seed);
@@ -100,7 +102,7 @@ namespace ApoGirl.Tests.EditMode
             state.Plan.Slots[0].Locked = true;
             var runner = new WeekRunner(state, db, new SeededRandom(state.Rng), new HeadlessExpeditionRunner(db));
             var log = new StringBuilder();
-            for (var week = 1; week <= 13 && state.Status == GameStatus.Playing; week++)
+            for (var week = 1; week <= weeks && state.Status == GameStatus.Playing; week++)
             {
                 if (week > 1)
                 {
@@ -125,7 +127,7 @@ namespace ApoGirl.Tests.EditMode
                                $"exp {state.Exploration.DayExplorations + state.Exploration.NightExplorations} downs {state.Exploration.Downs} raids {state.Exploration.Raids}/{state.Exploration.RaidsRepelled}");
             }
 
-            log.Insert(0, $"[{strategy} seed {seed}] status {state.Status} week {state.Calendar.Week} events {state.Events.Records.Count} review {state.Events.Records.ContainsKey("EVT_A1_REVIEW")}\n");
+            log.Insert(0, $"[{strategy} seed {seed}] status {state.Status} week {state.Calendar.Week} events {state.Events.Records.Count} review {state.Events.Records.ContainsKey("EVT_A1_REVIEW")}/{state.Events.Records.ContainsKey("EVT_A2_REVIEW")} npcs {string.Join(",", state.Npcs.Where(n => n.Value.Status == NpcStatus.Joined).Select(n => n.Key))} facilities {string.Join(",", state.Base.Facilities.Where(f => f.Value > 0).Select(f => f.Key))}\n");
             return log.ToString();
         }
 
@@ -153,6 +155,30 @@ namespace ApoGirl.Tests.EditMode
 
             Directory.CreateDirectory("Temp");
             File.WriteAllText("Temp/ApoGirlAct1Balance.txt", report.ToString());
+            Debug.Log(report.ToString());
+            Assert.IsEmpty(failures.ToString(), failures.ToString());
+        }
+
+        /// <summary>M6-2: 2막(26주)까지. 혼합·탐험 전략은 2막 평가에 도달해야 한다 (Temp/ApoGirlAct2Balance.txt).</summary>
+        [Test]
+        public void Act2_Strategies_ReachSecondReview()
+        {
+            var report = new StringBuilder();
+            var failures = new StringBuilder();
+            foreach (var strategy in new[] { Strategy.Expedition, Strategy.Mixed })
+            {
+                foreach (var seed in new[] { 11, 22, 33 })
+                {
+                    report.Append(Run(strategy, seed, out var state, 26));
+                    report.AppendLine($"  end cause: {state.EndCause} hp {state.Player.Vitals.Hp} infection {state.Player.Vitals.Infection} flags {state.Flags.Count}");
+                    if (state.Status != GameStatus.Playing) failures.AppendLine($"{strategy}/{seed}: 2막을 버티지 못함 ({state.EndCause}, {state.Calendar.Week}주)");
+                    if (!state.Events.Records.ContainsKey("EVT_A2_REVIEW")) failures.AppendLine($"{strategy}/{seed}: 2막 평가 미도달");
+                    if (!state.Flags.Contains("LOC_RESIDENTIAL")) failures.AppendLine($"{strategy}/{seed}: 주택가 미해금");
+                }
+            }
+
+            Directory.CreateDirectory("Temp");
+            File.WriteAllText("Temp/ApoGirlAct2Balance.txt", report.ToString());
             Debug.Log(report.ToString());
             Assert.IsEmpty(failures.ToString(), failures.ToString());
         }
