@@ -62,6 +62,15 @@ namespace ApoGirl.Tests.EditMode
             Assert.IsTrue(errors.Any(m => m.Contains("#choice:Z")), "데이터에 없는 Yarn 태그");
         }
 
+        /// <summary>실제 원본(JSON) 전체로 만든 DB (행동·아이템·전리품·적·특성 포함).</summary>
+        private static InMemoryDefinitionDatabase ShippedDb(ContentFile content)
+        {
+            return new InMemoryDefinitionDatabase(
+                new BalanceConfig(), content.Actions, content.ExpeditionModels, content.Items, content.LootTables,
+                null, content.Enemies, content.Events, content.Npcs,
+                new DefinitionExtras { Traits = content.Traits, Facilities = content.Facilities, Lines = content.Lines, Prologue = content.Prologue ?? new PrologueDef() });
+        }
+
         [Test]
         public void ShippedContent_HasNoErrors()
         {
@@ -74,7 +83,7 @@ namespace ApoGirl.Tests.EditMode
                 YarnScriptScanner.Scan(File.ReadAllText(file), nodes);
             }
 
-            var issues = ContentValidator.Validate(Db(content), new ContentValidationInput { YarnNodes = nodes });
+            var issues = ContentValidator.Validate(ShippedDb(content), new ContentValidationInput { YarnNodes = nodes });
             var errors = issues.Where(i => i.Severity == IssueSeverity.Error).ToList();
             Assert.IsEmpty(errors, string.Join("\n", errors));
         }
@@ -83,7 +92,7 @@ namespace ApoGirl.Tests.EditMode
         public void ShippedContent_SurvivesHeadlessYear()
         {
             var content = ContentJson.LoadFolder(ProjectPath(ContentJson.ContentFolder));
-            var db = Db(content);
+            var db = ShippedDb(content);
             var state = TestContent.NewGame(db, 99);
             var runner = new ApoGirl.Core.Simulation.WeekRunner(state, db, new ApoGirl.Core.Random.SeededRandom(state.Rng), new StubExpeditionRunner());
             for (var week = 0; week < 10 && state.Status == ApoGirl.Core.State.GameStatus.Playing; week++)

@@ -33,11 +33,7 @@ namespace ApoGirl.Tests.PlayMode
                     session.CompleteExpedition(new ExpeditionResult { Status = ExtractStatus.Extracted });
                 }
 
-                while (session.HasPendingEvent)
-                {
-                    var choice = session.PendingChoices.FirstOrDefault(c => c.Enabled);
-                    session.ResolveEvent(choice?.Id ?? "");
-                }
+                ResolveAll(session);
 
                 yield return null;
             }
@@ -150,6 +146,7 @@ namespace ApoGirl.Tests.PlayMode
             session.SetSlot(1, "ACT_EXP_NIGHT_SCHOOL");
             session.BeginWeek();
             session.Step(); // 1일차 낮
+            ResolveAll(session);
             var outcome = session.Step();
             Assert.IsTrue(outcome.AwaitingExpedition);
             Assert.AreEqual(ExpeditionTime.Night, outcome.ExpeditionRequest.TimeOfDay);
@@ -267,10 +264,33 @@ namespace ApoGirl.Tests.PlayMode
             var title = Object.FindAnyObjectByType<UIDocument>();
             Assert.IsNotNull(title.rootVisualElement.Q<Button>(className: "title-button"));
 
+            ApoGirl.Presentation.Screens.HubScreen.AutoPlayOpening = false;
             GameApp.Session.NewGame(seed);
             GameApp.GoTo(GameApp.HubScene);
             yield return WaitForScene(GameApp.HubScene);
             yield return null;
+
+            // 시작 이벤트는 바로 넘기고, 1주차 튜토리얼 고정 슬롯은 풀어 둔다 (각 테스트가 직접 계획을 짠다)
+            var session = GameApp.Session;
+            if (session.HasPendingOpening)
+            {
+                session.StartOpening();
+                ResolveAll(session);
+            }
+
+            session.State.Plan.Slots[0].Locked = false;
+            session.State.Plan.Slots[0].ActionId = "";
+            session.State.Flags.Add("LOC_SCHOOL_DAY");
+            session.State.Flags.Add("NIGHT_RUNS");
+        }
+
+        private static void ResolveAll(ApoGirl.Systems.Session.GameSession session)
+        {
+            for (var guard = 0; guard < 20 && session.HasPendingEvent; guard++)
+            {
+                var choice = session.PendingChoices.FirstOrDefault(c => c.Enabled);
+                session.ResolveEvent(choice?.Id ?? "");
+            }
         }
 
         private static IEnumerator WaitForScene(string name)

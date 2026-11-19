@@ -46,6 +46,9 @@ namespace ApoGirl.Presentation.Screens
         private ExpeditionPrepView _prep;
         private EventDialoguePlayer _dialoguePlayer;
 
+        /// <summary>테스트용: 허브 진입 시 시작 이벤트를 자동으로 띄우지 않는다.</summary>
+        public static bool AutoPlayOpening = true;
+
         /// <summary>Yarn 프로젝트 (Resources/Dialogue/ApoGirl.yarnproject).</summary>
         public const string YarnProjectResource = "Dialogue/ApoGirl";
 
@@ -94,7 +97,7 @@ namespace ApoGirl.Presentation.Screens
             {
                 ShowEnd();
             }
-            else if (_session.HasPendingOpening)
+            else if (_session.HasPendingOpening && AutoPlayOpening)
             {
                 StartCoroutine(OpeningRoutine());
             }
