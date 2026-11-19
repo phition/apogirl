@@ -93,6 +93,7 @@ ArtInbox/
 | **P1** | 없으면 게임이 어색한 것: 주인공·좀비 스프라이트, 자원 아이콘, 핵심 효과음, 허브·탐험 음악 |
 | **P2** | 있으면 크게 좋아지는 것: NPC 스프라이트, 아이템 아이콘, 환경음, 오프닝, 주요 엔딩 영상 |
 | **P3** | 마감용: 모든 엔딩 영상, 계절별 변형, 음성 |
+| **P4** | 예비: 아직 게임에 없지만 개발 방향에 따라 들어올 수 있는 것 (9장) |
 
 ---
 
@@ -528,6 +529,7 @@ ART_PROMPTS 6장의 21장에 하나를 더한다.
 | 음악 (5.5) | 15 | 5 |
 | 음성 (5.6) | 6 | 0 |
 | 영상 (6장) | 약 37 | 1 |
+| 예비 에셋 (9장, P4) | 아이콘 약 220 + 설비 그림 약 25 + 소리 약 25 | 0 |
 
 **3일 무제한 기간에 추천하는 순서**
 1. 일러스트 기준 시트 → 표정 (얼굴이 정해져야 스프라이트·영상이 같은 사람이 된다)
@@ -546,3 +548,262 @@ ART_PROMPTS 6장의 21장에 하나를 더한다.
 - **사운드:** 소리 관리자를 추가하고 볼륨을 맞춘다(음성 −6, 효과음 −10~−12, 음악 −18~−20 dBFS). 설정 화면에 음량 슬라이더를 넣는다.
 - **영상:** 오프닝·막 전환·엔딩에 영상 재생을 넣는다(건너뛰기 가능). 영상이 없으면 일러스트로 대체한다.
 - **출처 기록:** `Art/ThirdParty/Higgsfield/CREDITS.md`에 생성 모델과 날짜를 남긴다(스팀 AI 콘텐츠 공개용).
+
+---
+
+## 9. 예비 에셋 (P4: 앞으로 추가될 수 있는 것)
+
+지금 게임 데이터에는 없지만 개발 방향에 따라 들어올 수 있는 아이템·도구·제작품·설비다.
+
+- **언제 만드나:** P1~P3를 다 만든 뒤, 또는 무제한 기간이 남을 때 아이콘 묶음으로 한꺼번에 뽑아 둔다. 실제로 쓸지는 나중에 기획에서 정한다.
+- **아이콘 규칙:** 4.4와 같다. [F-UI] + `transparent background, item icon, three-quarter view`, 1:1, 512px 이상.
+- **세트로 요청:** 8~12개씩 묶어 "아래 N개를 같은 스타일의 아이콘 세트로, 하나씩 따로 투명 배경으로"라고 요청하면 그림체가 맞는다.
+- **파일 이름:** `item_` + 장차 쓸 아이템 ID(소문자)다. 실제로 추가할 때 아이템 ID를 이 이름에 맞춘다(예: `item_bag_duffel.png` → `ITEM_BAG_DUFFEL`).
+- **무기:** 총기는 넣지 않았다. 학교·생활 주변에서 구할 수 있는 둔기·도구 위주다. 날붙이도 깨끗한 상태로 그린다(0.4 안전 문구 그대로).
+- **겹치는 그림:** 무기와 도구로 같이 쓰일 수 있는 것(망치·렌치·삽·도끼)은 그림 하나를 같이 써도 된다.
+
+### 9.1 가방 (작은 것부터)
+
+배낭 격자 크기가 다른 가방들이다. 크기가 그림에서 바로 구분되게 만든다.
+
+| 파일 | 설명 | 크기 느낌 |
+|---|---|---|
+| `item_bag_pouch.png` | `small belt pouch / fanny pack` | 아주 작음 |
+| `item_bag_sling.png` | `crossbody sling bag` | 작음 |
+| `item_bag_school.png` (있음) | school backpack | 보통 |
+| `item_bag_tote.png` (있음) | shopping tote bag | 보통, 꺼내기 쉬움 |
+| `item_bag_duffel.png` | `sports duffel bag with a shoulder strap` | 큼, 손에 듦 |
+| `item_bag_hiking.png` (있음) | large hiking backpack | 큼 |
+| `item_bag_rucksack.png` | `large military-style rucksack with webbing straps` | 아주 큼 |
+| `item_bag_frame.png` | `external frame backpack with a sleeping bag and gear tied on` | 최대 |
+| `item_bag_suitcase.png` | `hard-shell rolling suitcase` | 큼, 시끄러움 (거점 운반용) |
+| `item_cart_shopping.png` | `shopping cart` | 운반 수레 (지역 간 이동용) |
+| `item_pouch_med.png` | `small red first aid pouch with velcro` | 확장 칸 |
+| `item_vest_utility.png` | `utility vest with many small pockets` | 퀵슬롯 확장 |
+
+> 메고 있는 가방을 탐험 스프라이트에 보여 줄 거라면 2.3 `player_gear_` 방식으로 `idle` 1장씩 만든다: `carrying a small sling bag` / `carrying a duffel bag` / `carrying a huge frame backpack`.
+
+### 9.2 근접 무기·방패·던질 것
+
+| 파일 | 설명 | 성격 |
+|---|---|---|
+| `item_weapon_umbrella.png` | `long black umbrella, closed` | 가벼움 |
+| `item_weapon_broom.png` | `school broom with plastic bristles` | 가벼움 |
+| `item_weapon_ruler.png` | `one-meter wooden classroom ruler` | 가벼움, 학교 |
+| `item_weapon_hockey.png` | `field hockey stick` | 보통 |
+| `item_weapon_golf.png` | `iron golf club` | 보통 |
+| `item_weapon_hammer.png` | `claw hammer` | 짧고 강함 (도구 겸용) |
+| `item_weapon_wrench.png` | `large red pipe wrench` | 짧고 강함 (도구 겸용) |
+| `item_weapon_tire_iron.png` | `cross-shaped tire iron` | 짧고 강함 |
+| `item_weapon_rebar.png` | `steel rebar with a taped grip` | 무거움 |
+| `item_weapon_spear.png` | `mop handle spear with a taped metal tip` | 김, 거리 유지 |
+| `item_weapon_extinguisher.png` | `red fire extinguisher` | 무거움, 분사로 기절 |
+| `item_weapon_fire_axe.png` | `red fire axe, clean` | 무거움 (문 부수기 겸용) |
+| `item_weapon_sledge.png` | `sledgehammer` | 아주 무거움, 시끄러움 |
+| `item_shield_trashlid.png` | `metal trash can lid with a rope handle` | 방패 |
+| `item_shield_board.png` | `blank school signboard with handles nailed on the back` | 방패 |
+| `item_shield_riot.png` | `clear police riot shield` | 방패 |
+| `item_slingshot.png` | `wooden slingshot` | 원거리, 조용함 |
+| `item_ammo_marbles.png` | `handful of glass marbles` | 새총 탄 |
+| `item_lure_bottle.png` | `empty glass bottle` | 던져서 소리로 유인 |
+| `item_lure_alarm.png` | `wind-up twin-bell alarm clock` | 시간 맞춰 울리는 유인 |
+| `item_lure_firecracker.png` | `string of red firecrackers` | 큰 소리 유인 |
+| `item_lure_phone.png` | `old smartphone with a cracked screen, ringing` | 소리 유인 |
+
+### 9.3 방어구·옷
+
+| 파일 | 설명 | 파일 | 설명 |
+|---|---|---|---|
+| `item_armor_helmet_bike.png` | bicycle helmet | `item_armor_hardhat.png` | yellow construction hard hat |
+| `item_armor_helmet_moto.png` | motorcycle helmet with visor | `item_armor_magazine.png` | thick magazines taped around a forearm |
+| `item_armor_leather.png` | leather motorcycle jacket | `item_armor_raincoat.png` | yellow raincoat |
+| `item_armor_wintercoat.png` | long padded winter coat | `item_armor_kneepads.png` | knee pads |
+| `item_gloves_work.png` | cotton work gloves with rubber palms | `item_gloves_rubber.png` | yellow kitchen rubber gloves |
+| `item_boots_rain.png` | rubber rain boots | `item_boots_work.png` | leather work boots |
+| `item_mask_dust.png` | white dust mask | `item_mask_gas.png` | gas mask with filter |
+| `item_scarf_wool.png` | wool scarf and beanie | | |
+
+### 9.4 음식·물
+
+**보관 식품·재료**
+
+| 파일 | 설명 | 파일 | 설명 |
+|---|---|---|---|
+| `item_rice_bag.png` | 10 kg sack of rice | `item_instant_rice.png` | microwavable rice bowl, plain package |
+| `item_ramen_pack.png` | five-pack of instant ramen, plain wrapper | `item_canned_tuna.png` | canned tuna |
+| `item_canned_ham.png` | canned luncheon meat | `item_canned_fruit.png` | canned peaches |
+| `item_canned_perilla.png` | small can of seasoned perilla leaves | `item_kimchi_jar.png` | glass jar of kimchi |
+| `item_gim.png` | pack of seasoned laver sheets | `item_dried_squid.png` | dried squid |
+| `item_crackers.png` | box of crackers | `item_chocolate.png` | chocolate bar |
+| `item_candy.png` | bag of hard candies | `item_energy_bar.png` | energy bar |
+| `item_honey.png` | jar of honey | `item_coffee_mix.png` | bundle of instant coffee mix sticks |
+| `item_tea.png` | box of tea bags | `item_sugar.png` | bag of sugar |
+| `item_salt.png` | salt container | `item_cooking_oil.png` | bottle of cooking oil |
+| `item_soy_sauce.png` | soy sauce bottle | `item_gochujang.png` | red tub of chili paste |
+| `item_flour.png` | bag of flour | `item_tteok.png` | pack of rice cakes |
+| `item_ration.png` | military ration pouch | `item_bread.png` | loaf of bread (상함) |
+| `item_milk.png` | milk carton (상함) | `item_eggs.png` | egg carton (상함) |
+| `item_potato.png` | potatoes | `item_sweet_potato.png` | sweet potatoes |
+| `item_cabbage.png` | napa cabbage | `item_lettuce.png` | lettuce |
+| `item_tomato.png` | cherry tomatoes | `item_food_spoiled.png` | spoiled food container with a green tint, not gross |
+
+**요리 (요리 숙련도용)**
+
+| 파일 | 설명 | 파일 | 설명 |
+|---|---|---|---|
+| `item_meal_jumeokbap.png` | rice balls wrapped in seaweed | `item_meal_ramyeon_pot.png` | ramyeon in a small pot with a lid |
+| `item_meal_kimchi_stew.png` | kimchi stew in an earthenware pot | `item_meal_army_stew.png` | stew with canned ham and ramen noodles |
+| `item_meal_sweet_potato.png` | roasted sweet potatoes in foil | `item_meal_porridge.png` | bowl of rice porridge (환자용) |
+| `item_meal_jeon.png` | Korean pancake on a plate | `item_meal_curry.png` | curry rice on a steel tray |
+
+**물·음료**
+
+| 파일 | 설명 | 파일 | 설명 |
+|---|---|---|---|
+| `item_water_dirty.png` | bottle of murky water | `item_water_rain.png` | bucket of rainwater |
+| `item_water_boiled.png` | dented kettle | `item_water_tablet.png` | blister pack of purification tablets |
+| `item_juice_box.png` | juice box with straw | `item_canned_coffee.png` | canned coffee |
+
+**텃밭**
+
+| 파일 | 설명 | 파일 | 설명 |
+|---|---|---|---|
+| `item_seed_pack.png` | generic seed packet (no text) | `item_seed_potato.png` | sprouting seed potatoes |
+| `item_fertilizer.png` | small bag of fertilizer | `item_watering_can.png` | watering can |
+
+### 9.5 의약품
+
+삼키는 약은 일반 상비약까지만 넣고, 수면제처럼 13장에 걸릴 수 있는 것은 넣지 않았다.
+
+| 파일 | 설명 | 파일 | 설명 |
+|---|---|---|---|
+| `item_cold_medicine.png` | cold medicine box | `item_fever_syrup.png` | fever reducer syrup bottle |
+| `item_disinfectant.png` | iodine disinfectant bottle | `item_gauze.png` | pack of gauze pads |
+| `item_splint.png` | padded splint | `item_burn_ointment.png` | ointment tube |
+| `item_eye_drops.png` | eye drop bottle | `item_thermometer.png` | digital thermometer |
+| `item_hot_pack.png` | disposable hand warmer (겨울) | `item_ice_pack.png` | instant ice pack (여름) |
+| `item_ors.png` | oral rehydration salt sachets | `item_iv_set.png` | IV drip bag and tube, clean |
+| `item_crutch.png` | pair of handmade wooden crutches wrapped in tape (선생님 여분) | `item_antiviral.png` | unlabeled pill bottle with a lab tag (연구 단서) |
+| `item_vaccine_sample.png` | small vial in a cold case (연구 단서) | `item_blood_pack.png` | `sealed medical transfusion bag with a blank blood-type label, clean, clinical, no stains` (M7 수혈 후보) |
+
+### 9.6 서바이벌·작업 도구
+
+| 파일 | 설명 | 파일 | 설명 |
+|---|---|---|---|
+| `item_tool_shovel.png` | shovel | `item_tool_folding_shovel.png` | folding camp shovel |
+| `item_tool_pickaxe.png` | pickaxe | `item_tool_hatchet.png` | hatchet |
+| `item_tool_saw.png` | hand saw | `item_tool_hacksaw.png` | hacksaw |
+| `item_tool_screwdriver.png` | screwdriver set | `item_tool_wrench.png` | adjustable wrench |
+| `item_tool_pliers.png` | pliers | `item_tool_bolt_cutter.png` | bolt cutter (자물쇠 끊기) |
+| `item_tool_multitool.png` | folding multitool | `item_tool_drill.png` | cordless drill |
+| `item_tool_lockpick.png` | hairpins and a small tension wrench | `item_tool_rope.png` | coil of rope |
+| `item_tool_ladder.png` | folding step ladder | `item_tool_binoculars.png` | binoculars (정찰) |
+| `item_tool_compass.png` | compass | `item_tool_map.png` | folded city map, no readable text |
+| `item_tool_walkie.png` | pair of walkie-talkies | `item_tool_crank_radio.png` | hand-crank emergency radio |
+| `item_tool_headlamp.png` | headlamp | `item_tool_lantern.png` | camping LED lantern |
+| `item_tool_candle.png` | candles | `item_tool_matches.png` | box of matches |
+| `item_tool_ferro.png` | fire starter rod | `item_tool_butane.png` | butane gas canister |
+| `item_tool_jerrycan.png` | jerry can | `item_tool_siphon.png` | siphon hose |
+| `item_tool_bucket.png` | plastic bucket | `item_tool_tarp.png` | folded blue tarp |
+| `item_tool_sleeping_bag.png` | rolled sleeping bag | `item_tool_blanket.png` | folded wool blanket |
+| `item_tool_sewing_kit.png` | sewing kit tin | `item_tool_whistle.png` | whistle |
+| `item_tool_fishing_rod.png` | fishing rod | `item_tool_sharpener.png` | sharpening stone |
+| `item_tool_solar_charger.png` | foldable solar charger | `item_tool_power_bank.png` | power bank |
+| `item_key_ring.png` | bundle of old keys | `item_keycard.png` | blank security keycard (연구동) |
+
+### 9.7 제작 재료
+
+| 파일 | 설명 | 파일 | 설명 |
+|---|---|---|---|
+| `item_mat_plank.png` | wooden planks | `item_mat_firewood.png` | bundle of firewood |
+| `item_mat_nails.png` | box of nails | `item_mat_screws.png` | jar of screws |
+| `item_mat_sheet_metal.png` | sheet of corrugated metal | `item_mat_wire.png` | coil of wire |
+| `item_mat_cable_ties.png` | bundle of cable ties | `item_mat_cloth.png` | pile of cloth rags |
+| `item_mat_pet_bottle.png` | empty plastic bottles | `item_mat_glass_jar.png` | empty glass jars |
+| `item_mat_charcoal.png` | charcoal pieces | `item_mat_sand.png` | bag of sand |
+| `item_mat_gravel.png` | bag of gravel | `item_mat_pvc_pipe.png` | PVC pipes |
+| `item_mat_hose.png` | garden hose | `item_mat_tire.png` | old tire |
+| `item_mat_electronics.png` | circuit boards and wires | `item_mat_motor.png` | small electric motor |
+| `item_mat_solar_cell.png` | loose solar cells | `item_mat_glue.png` | glue tube |
+| `item_mat_vinyl.png` | roll of plastic film | `item_mat_cardboard.png` | flattened cardboard |
+| `item_mat_brick.png` | bricks | `item_mat_cement.png` | bag of cement |
+
+### 9.8 제작품·거점 설비
+
+거점에 세울 수 있는 것들이다. 필요한 그림이 두세 가지다.
+
+- **아이콘** `icon_craft_*.png`: [F-UI]. 제작 목록·시설 칸에 쓴다.
+- **허브 그림** `hub_obj_*.png`: [F-ILLU] + `single object, transparent background, soft shadow`. 허브 배경 위에 겹쳐 지은 설비가 보이게 한다.
+- **탐험 소품** `prop_*.png`: 필요할 때만, 같은 설명에 [F-PIXEL]로 만든다.
+
+| 파일 이름 (공통 뒷부분) | 설비 | 프롬프트 |
+|---|---|---|
+| `water_filter` | 페트병 정수 필터 | `upside-down cut plastic bottle water filter with visible layers of gravel, sand, charcoal and cloth, clear water dripping into a glass jar below` |
+| `rain_collector` | 빗물 집수기 | `tarp funnel draining into a blue plastic barrel with a tap` |
+| `boil_station` | 끓임 정수대 | `large pot of water on a camping stove with a stack of clean bottles beside it` |
+| `workbench` | 작업대 | `sturdy workbench made of two school desks and a door board, a vise, scattered tools, pegboard behind` |
+| `stove_drum` | 드럼통 난로 | `wood-burning stove made from an oil drum with a chimney pipe going out a window, warm glow` |
+| `stove_rocket` | 깡통 로켓 스토브 | `small rocket stove made from tin cans and bricks, a pot on top` |
+| `cooking_station` | 조리대 | `camping gas stove on a table with a pot, ladle and spice jars` |
+| `solar_panel` | 태양광 패널 | `small solar panel leaning on the rooftop, cables running to a car battery` |
+| `bike_generator` | 자전거 발전기 | `stationary bicycle connected to a small generator with wires` |
+| `barricade_desks` | 책상 바리케이드 | `stacked school desks and chairs tied with rope blocking a corridor` |
+| `barricade_reinforced` | 강화 바리케이드 | `wooden planks and metal sheets nailed over a doorway` |
+| `alarm_cans` | 깡통 경보줄 | `string of empty tin cans hung across a hallway as a noise alarm` |
+| `gate_barrier` | 정문 차단 | `school gate blocked by shopping carts, desks and a tarp` |
+| `watchtower` | 옥상 망루 | `lookout post on the rooftop with a chair, binoculars and a beach umbrella` |
+| `radio_antenna` | 무전 안테나 | `homemade radio antenna mast on the rooftop with wires` |
+| `greenhouse` | 비닐 온실 | `small plastic-film greenhouse frame with seedlings` |
+| `garden_buckets` | 양동이 텃밭 | `vegetables growing in buckets and cut water bottles` |
+| `compost_bin` | 퇴비통 | `wooden compost bin with leaves` |
+| `drying_rack` | 건조대 | `mesh drying rack with sliced vegetables and fruit in the sun` |
+| `storage_jars` | 장독대 | `row of brown earthenware jars for kimchi storage` |
+| `bunk_bed` | 이층 침대 | `bunk bed built from planks with gym mats as mattresses` |
+| `shower_bucket` | 양동이 샤워 | `bucket shower hanging behind a shower curtain, no person` |
+| `first_aid_station` | 응급 처치대 | `nurse office bed with medical supplies neatly arranged on a cart` |
+| `heated_mat` | 온열 자리 | `makeshift warm corner with blankets, hot water bottles and a small heater` |
+| `study_corner` | 공부 자리 | `desk with a candle, textbooks and a notebook, a small chalkboard on the wall` |
+
+### 9.9 상태 아이콘 후보
+
+| 파일 | 설명 | 파일 | 설명 |
+|---|---|---|---|
+| `icon_status_wet.png` | dripping umbrella | `icon_status_cold.png` | shivering snowflake |
+| `icon_status_hot.png` | sun with a sweat drop | `icon_status_food_poison.png` | queasy swirl over a bowl |
+| `icon_status_well_fed.png` | full rice bowl | `icon_status_rested.png` | pillow with a small star |
+| `icon_status_inspired.png` | lit candle | `icon_status_lonely.png` | single empty chair |
+| `icon_status_arm_hurt.png` | arm sling | `icon_status_leg_hurt.png` | single crutch |
+| `icon_status_sick.png` | tissue box | `icon_status_morale.png` | small flag raised |
+
+### 9.10 함께 필요할 소리 (`seed_audio`)
+
+5장과 같이 효과음은 소리 하나만, `no music, no voice`를 붙인다.
+
+| 파일 | 길이 | 프롬프트 |
+|---|---|---|
+| `sfx_craft_hammer.wav` | 1.5s | `hammering nails into wood, three hits` |
+| `sfx_craft_saw.wav` | 2s | `hand saw cutting a wooden plank` |
+| `sfx_craft_drill.wav` | 1.5s | `cordless drill driving a screw` |
+| `sfx_dig_shovel.wav` | 1.5s | `shovel digging into soil` |
+| `sfx_pickaxe.wav` | 1s | `pickaxe striking concrete, small debris` |
+| `sfx_axe_chop.wav` | 1s | `hatchet chopping firewood` |
+| `sfx_bolt_cut.wav` | 1s | `bolt cutter snapping a padlock chain` |
+| `sfx_can_open.wav` | 1s | `pull-tab food can opening` |
+| `sfx_eat.wav` | 1.5s | `quiet eating with chopsticks from a metal bowl` |
+| `sfx_drink.wav` | 1s | `drinking water from a plastic bottle` |
+| `sfx_stove_light.wav` | 1.5s | `match strike then a small fire catching` |
+| `amb_stove_crackle.wav` | 20s, 반복 | `wood stove crackling softly, loopable` |
+| `amb_filter_drip.wav` | 10s, 반복 | `slow water drips into a glass jar, loopable` |
+| `amb_tarp_rain.wav` | 20s, 반복 | `rain falling on a plastic tarp, loopable` |
+| `amb_bike_generator.wav` | 10s, 반복 | `bicycle pedaling with a small generator whirring, loopable` |
+| `sfx_bottle_break.wav` | 1.5s | `glass bottle thrown and shattering on concrete in the distance` |
+| `sfx_alarm_clock.wav` | 3s | `old twin-bell alarm clock ringing in an empty room` |
+| `sfx_firecracker.wav` | 3s | `string of firecrackers popping in the distance` |
+| `sfx_cans_alarm.wav` | 1.5s | `string of tin cans rattling in a dark hallway` |
+| `sfx_walkie.wav` | 1s | `walkie-talkie squelch beep` |
+| `sfx_radio_crank.wav` | 2s | `hand-crank radio being wound` |
+| `sfx_extinguisher.wav` | 2s | `fire extinguisher spraying a burst of powder` |
+| `sfx_slingshot.wav` | 0.6s | `slingshot rubber snap and a marble whizz` |
+| `sfx_sew.wav` | 2s | `needle and thread pulling through thick fabric` |
+| `sfx_watering.wav` | 2s | `watering can pouring onto soil` |
+| `sfx_bag_swap.wav` | 1s | `heavy backpack set down, straps rustling` |
