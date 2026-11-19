@@ -38,10 +38,20 @@
 
 모든 이미지가 한 게임처럼 보이도록, 종류별 공식 하나를 **글자 그대로** 붙인다.
 
-**[F-ILLU] 일러스트**
+**[F-ILLU] 일러스트** — 인물은 비주얼노벨 그림체, 배경은 실사에 가까운 정밀한 한국 도시
 ```
-Korean indie visual novel illustration, soft painterly 2D, muted low-saturation palette, quiet post-apocalyptic school, gentle diffused light, subtle film grain, clean line art, melancholic but warm mood
+Korean indie visual novel illustration for the characters, clean line art, soft painterly 2D shading, muted low-saturation palette, melancholic but warm mood. Background: highly detailed semi-photorealistic background art, realistic contemporary Korean architecture and interiors, accurate perspective and scale, real materials and textures (weathered concrete, rusted railings, peeling paint, cracked asphalt, dusty glass), natural cinematic lighting with soft volumetric light, quiet post-apocalyptic city with weeds through cracks, subtle film grain, like a meticulously painted background plate for a feature animation film. The characters stay stylized 2D illustration and are lit to match the background.
 ```
+
+**[F-KOREA] 한국 건물** — 실외, 또는 창밖으로 거리가 보이는 그림에 [F-ILLU] 뒤에 붙인다
+```
+Korean details: realistic small provincial Korean city, four-story red-brick villas with piloti parking, numbered high-rise apartment towers in the distance (numbers unreadable), mixed-use commercial buildings with stacked signboards (faded or blank, no readable text), utility poles with tangled overhead wires, green-and-white convenience store awnings, pharmacy green cross signs, blue tin roofs and rooftop water tanks, metal window grilles, gas pipes on walls, yellow curb markings, glass bus shelters, ginkgo and cherry street trees, abandoned compact cars and scooters.
+```
+
+- **장소별 디테일**(학교 외관·교실·복도·옥상·급식실·편의점·주택가·지하철역·마트·파출소·정수장 등)은 [ART_PROMPTS.md](ART_PROMPTS.md) 0.1의 표에 있다. 해당 장소 문구를 하나 더 붙이면 건물이 더 한국답게 나온다.
+- **캐릭터 기준 시트·표정**은 [F-ILLU]의 첫 문장(인물 부분)만 붙인다. 배경 문장까지 넣으면 인물이 실사로 바뀔 수 있다.
+- **허브 오브젝트(9.8)처럼 사물만 있는 그림**은 반대로 `Background:` 문장만 붙인다. 실사풍 배경 위에 겹치므로 같은 질감이어야 한다.
+- 간판 글자는 엉터리 한글이 나오기 쉬우므로 항상 바랜 간판·빈 간판으로 둔다.
 
 **[F-PIXEL] 탐험 픽셀 아트**
 ```
@@ -733,7 +743,7 @@ ART_PROMPTS 6장의 21장에 하나를 더한다.
 거점에 세울 수 있는 것들이다. 필요한 그림이 두세 가지다.
 
 - **아이콘** `icon_craft_*.png`: [F-UI]. 제작 목록·시설 칸에 쓴다.
-- **허브 그림** `hub_obj_*.png`: [F-ILLU] + `single object, transparent background, soft shadow`. 허브 배경 위에 겹쳐 지은 설비가 보이게 한다.
+- **허브 그림** `hub_obj_*.png`: [F-ILLU]의 `Background:` 문장 + `single object, semi-photorealistic, transparent background, soft shadow`. 허브 배경 위에 겹쳐 지은 설비가 보이게 한다.
 - **탐험 소품** `prop_*.png`: 필요할 때만, 같은 설명에 [F-PIXEL]로 만든다.
 
 | 파일 이름 (공통 뒷부분) | 설비 | 프롬프트 |

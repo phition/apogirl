@@ -12,11 +12,64 @@
 
 ### 0.1 화풍 문구 (모든 프롬프트 앞에 붙인다)
 
+**인물은 비주얼노벨 일러스트, 배경은 실사에 가까운 정밀한 그림**으로 간다. 극장판 애니메이션처럼 그림체 인물이 사진처럼 정밀한 배경 안에 서 있는 느낌이다.
+
+`[화풍 문구]`는 아래 **인물 문구 + 배경 문구**를 합친 것이다. 그림 종류에 따라 이렇게 붙인다.
+
+| 그림 | 붙일 문구 |
+|---|---|
+| 인물이 있는 장면 (이벤트 컷, 엔딩, 타이틀) | 인물 문구 + 배경 문구 (+ 실외나 건물이 보이면 한국 건물 문구) |
+| 배경만 있는 그림 (허브 배경, 지역 카드) | 배경 문구 + 장소별 디테일 (+ 실외면 한국 건물 문구) |
+| 캐릭터 기준 시트·표정 | **인물 문구만** (단색 배경이라 배경 문구는 빼야 인물이 실사로 바뀌지 않는다) |
+
+**인물 문구**
 ```
-Style: Korean indie visual novel illustration, soft painterly 2D, muted low-saturation palette,
-quiet post-apocalyptic school, gentle diffused light, subtle film grain, clean line art,
-melancholic but warm mood, no text, no watermark.
+Style: Korean indie visual novel illustration for the characters, clean line art, soft painterly 2D shading,
+muted low-saturation palette, melancholic but warm mood, no text, no watermark.
 ```
+
+**배경 문구**
+```
+Background: highly detailed semi-photorealistic background art, realistic contemporary Korean architecture and interiors,
+accurate perspective and scale, real materials and textures (weathered concrete, rusted railings, peeling paint,
+cracked asphalt, dusty glass, scuffed linoleum), natural cinematic lighting with soft volumetric light and real shadows,
+quiet post-apocalyptic city with weeds growing through cracks and abandoned everyday objects, muted colors, subtle film grain,
+like a meticulously painted background plate for a feature animation film.
+The characters stay stylized 2D illustration and are lit to match the background.
+```
+
+**한국 건물 문구** (실외, 또는 창밖으로 거리가 보이는 그림에 배경 문구 뒤에)
+```
+Korean details: realistic small provincial Korean city, four-story red-brick villas with piloti parking underneath,
+numbered high-rise apartment towers in the distance (numbers unreadable), mixed-use commercial buildings covered with
+stacked signboards (faded or blank, no readable text), utility poles with tangled overhead wires and transformers,
+green-and-white convenience store awnings, pharmacy green cross signs, blue tin roofs and rooftop water tanks,
+metal security grilles on windows, gas meters and pipes on walls, yellow curb markings, glass bus shelters,
+ginkgo and cherry street trees, abandoned compact cars and scooters.
+```
+
+> 간판 글자는 생성 모델이 엉터리 한글을 쓰기 쉽다. 항상 **바랜 간판, 빈 간판, 읽을 수 없는 글자**로 둔다. 진짜 글자가 필요하면 나중에 따로 올린다.
+
+**장소별 디테일** (배경 문구 뒤에 해당 장소 하나를 붙인다)
+
+| 장소 | 문구 |
+|---|---|
+| 학교 외관 | `typical Korean public high school: five-story beige concrete building with long rows of aluminium windows, a round clock on the central facade, green waterproof-painted rooftop with stainless water tanks and an iron fence, dirt sports field with goal posts and a running track, sliding iron school gate, bicycle racks, a row of cherry trees along the wall` |
+| 교실 | `Korean high school classroom: rows of light wood desks with steel legs, green chalkboard with a wooden chalk tray, wall-mounted TV in the corner, student lockers at the back, fluorescent ceiling lights, sliding wooden doors with small glass windows, a cleaning cabinet, a bulletin board` |
+| 복도·계단 | `Korean school corridor: green epoxy or terrazzo floor, a long row of windows on one side, classroom sliding doors with blank class plates, red fire hydrant cabinet, stainless drinking fountain, stairwell with a metal handrail and emergency exit sign light` |
+| 옥상 | `Korean school rooftop: green waterproof paint, stainless water tanks on a steel frame, a stairwell hut with a metal door, high safety fence, view over villas and apartment towers` |
+| 급식실 | `Korean school cafeteria: long tables with attached stools, stainless serving counter with food pans, stacked steel trays, kitchen behind a pass-through window` |
+| 도서관 | `Korean school library: low wooden bookshelves, reading tables, a librarian desk, window blinds` |
+| 보건실 | `Korean school nurse office: two beds with curtains, white medicine cabinet, scale and height meter, small desk` |
+| 교무실 | `Korean staff room: rows of grey office desks with partitions, stacks of folders, a whiteboard schedule (blank), water dispenser` |
+| 창고 | `school sports storage room: mats, ball baskets, hurdles, a metal door with a thin line of light underneath` |
+| 편의점 | `Korean convenience store: narrow aisles, instant ramen and snack shelves, glass drink fridges along the wall, a hot water dispenser, folding plastic tables and parasols outside` |
+| 약국·의원 | `ground-floor pharmacy in a five-story mixed-use building, a small clinic on the second floor, narrow stairwell with a blank tenant directory` |
+| 주택가 | `narrow residential alley: red-brick villas, piloti parking, green-painted iron gates, potted plants and styrofoam vegetable boxes, laundry on balconies, gas pipes on walls, a small neighborhood playground` |
+| 지하철역 | `Korean subway station: white tiled walls, platform screen doors, yellow tactile paving, escalators, ticket gates, a closed kiosk` |
+| 대형마트 | `large Korean discount supermarket: multi-level parking structure with ramps, shopping cart corrals, tall warehouse-style shelves, blank price tags` |
+| 파출소 | `small Korean neighborhood police box: one-story building with blue and white trim, a patrol car parked in front, a bench outside` |
+| 정수장 | `water treatment plant: huge concrete settling tanks with green railings, large pipes and valves, a three-story research annex` |
 
 계절이 있는 그림은 끝에 하나를 붙인다.
 
@@ -32,7 +85,8 @@ melancholic but warm mood, no text, no watermark.
 ```
 gore, blood splatter, exposed wounds, visible amputation, corpses in detail, horror jump-scare face,
 sexualized pose, revealing clothing, fan service, text, logo, watermark, signature, extra fingers,
-oversaturated colors, photorealistic photo
+oversaturated colors, photorealistic human faces, live-action photo of people, 3D render look on characters,
+garbled text on signboards
 ```
 
 > **안전 규칙 (문서 13장)**
