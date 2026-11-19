@@ -1,0 +1,444 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using ApoGirl.Core.Definitions;
+using ApoGirl.Core.Expedition;
+using ApoGirl.Core.Planning;
+using ApoGirl.Core.Rules;
+using ApoGirl.Core.State;
+using ApoGirl.Presentation.Text;
+using ApoGirl.Systems.Session;
+using UnityEngine.UIElements;
+
+namespace ApoGirl.Presentation.Screens
+{
+    // 허브 화면 영역별 뷰. 규칙은 모르고, GameSession의 상태를 그리고 명령만 호출한다.
+
+    /// <summary>상단 바: 달력, 자원, 정전 표시.</summary>
+    internal sealed class TopBarView
+    {
+        private static readonly ResourceType[] Shown =
+        {
+            ResourceType.Food, ResourceType.Water, ResourceType.Medicine, ResourceType.Materials, ResourceType.Power,
+        };
+
+        private readonly GameSession _session;
+        private readonly Label _calendar;
+        private readonly Dictionary<ResourceType, Label> _resources = new Dictionary<ResourceType, Label>();
+        private readonly Label _blackout;
+
+        public TopBarView(VisualElement root, GameSession session)
+        {
+            _session = session;
+            _calendar = root.Q<Label>("calendar-label");
+            var container = root.Q("resources");
+            foreach (var type in Shown)
+            {
+                var label = new Label();
+                label.AddToClassList("resource");
+                container.Add(label);
+                _resources[type] = label;
+            }
+
+            _blackout = new Label(Loc.T("hub.blackout"));
+            _blackout.AddToClassList("blackout");
+            container.Add(_blackout);
+        }
+
+        public void Refresh()
+        {
+            var state = _session.State;
+            var calendar = state.Calendar;
+            var season = UiText.Season(CalendarRules.GetSeason(calendar.Week));
+            _calendar.text = _session.IsPlanning
+                ? Loc.F("hub.calendar_planning", calendar.Week, season)
+                : Loc.F("hub.calendar", calendar.Week, season, calendar.Day, UiText.Phase(calendar.Phase));
+
+            foreach (var pair in _resources)
+            {
+                pair.Value.text = UiText.Resource(pair.Key) + " " + state.Base.GetResource(pair.Key);
+            }
+
+            _blackout.EnableInClassList("hidden", !state.Base.IsBlackout());
+        }
+    }
+
+    /// <summary>좌측 스탯 패널.</summary>
+    internal sealed class StatusPanelView
+    {
+        private static readonly VitalType[] ShownVitals =
+        {
+            VitalType.Hp, VitalType.Fatigue, VitalType.Stress, VitalType.Hunger, VitalType.Thirst,
+        };
+
+        private readonly GameSession _session;
+        private readonly Dictionary<StatType, Label> _stats = new Dictionary<StatType, Label>();
+        private readonly Dictionary<ProficiencyType, Label> _proficiencies = new Dictionary<ProficiencyType, Label>();
+        private readonly Dictionary<VitalType, ProgressBar> _vitals = new Dictionary<VitalType, ProgressBar>();
+        private readonly Label _sleepDebt;
+        private readonly Label _conscience;
+        private readonly Label _derived;
+
+        public StatusPanelView(VisualElement root, GameSession session)
+        {
+            _session = session;
+            var panel = root.Q("status-panel");
+
+            panel.Add(Header("status.vitals"));
+            foreach (var vital in ShownVitals)
+            {
+                var bar = new ProgressBar { lowValue = 0, highValue = 100 };
+                bar.AddToClassList("vital-bar");
+                bar.AddToClassList("vital-" + vital.ToString().ToLowerInvariant());
+                panel.Add(bar);
+                _vitals[vital] = bar;
+            }
+
+            _sleepDebt = Row(panel);
+            _conscience = Row(panel);
+
+            panel.Add(Header("status.stats"));
+            foreach (StatType stat in Enum.GetValues(typeof(StatType)))
+            {
+                _stats[stat] = Row(panel);
+            }
+
+            _derived = Row(panel);
+            _derived.AddToClassList("derived");
+
+            panel.Add(Header("status.proficiency"));
+            foreach (ProficiencyType proficiency in Enum.GetValues(typeof(ProficiencyType)))
+            {
+                _proficiencies[proficiency] = Row(panel);
+            }
+        }
+
+        public void Refresh()
+        {
+            var state = _session.State;
+            var player = state.Player;
+            var balance = _session.Definitions.Balance;
+
+            foreach (var pair in _vitals)
+            {
+                var value = player.Vitals.GetVital(pair.Key);
+                pair.Value.value = value;
+                pair.Value.title = UiText.Vital(pair.Key) + " " + value;
+            }
+
+            _sleepDebt.text = Loc.T("status.sleep_debt") + "  " + Pips(player.SleepDebt, balance.SleepDebtMax);
+            _sleepDebt.EnableInClassList("danger", player.SleepDebt >= 3);
+            _conscience.text = Loc.T("status.conscience") + "  " + player.Conscience + " / " + balance.ConscienceMax;
+
+            foreach (var pair in _stats)
+            {
+                pair.Value.text = UiText.Stat(pair.Key) + "  " + player.GetStat(pair.Key);
+            }
+
+            _derived.text = Loc.T("status.combat") + " " + DerivedStats.CombatPower(state, balance)
+                            + "   " + Loc.T("status.stress_threshold") + " " + DerivedStats.StressThreshold(state, balance);
+
+            foreach (var pair in _proficiencies)
+            {
+                var level = player.ProficiencyLevel(pair.Key);
+                pair.Value.text = UiText.Proficiency(pair.Key) + "  " + Loc.F("status.level", level);
+                pair.Value.EnableInClassList("dim", level == 0);
+            }
+        }
+
+        private static Label Header(string key)
+        {
+            var label = new Label(Loc.T(key));
+            label.AddToClassList("section-header");
+            return label;
+        }
+
+        private static Label Row(VisualElement parent)
+        {
+            var label = new Label();
+            label.AddToClassList("status-row");
+            parent.Add(label);
+            return label;
+        }
+
+        private static string Pips(int value, int max)
+        {
+            return new string('■', Math.Max(0, value)) + new string('□', Math.Max(0, max - value));
+        }
+    }
+
+    /// <summary>우측 행동 팔레트: 카테고리 탭 + 행동 카드(미리보기).</summary>
+    internal sealed class PaletteView
+    {
+        private static readonly ActionCategory[] Tabs =
+        {
+            ActionCategory.Education, ActionCategory.Survival, ActionCategory.Rest, ActionCategory.Expedition,
+        };
+
+        private readonly GameSession _session;
+        private readonly VisualElement _tabs;
+        private readonly ScrollView _list;
+        private ActionCategory _category = ActionCategory.Education;
+
+        public PaletteView(VisualElement root, GameSession session)
+        {
+            _session = session;
+            _tabs = root.Q("palette-tabs");
+            _list = root.Q<ScrollView>("palette-list");
+            foreach (var category in Tabs)
+            {
+                var tab = new Button(() =>
+                {
+                    _category = category;
+                    Refresh();
+                }) { text = Loc.T("cat." + category), name = "tab-" + category };
+                tab.AddToClassList("tab");
+                _tabs.Add(tab);
+            }
+
+            root.Q<Label>("palette-hint").text = Loc.T("palette.hint");
+        }
+
+        public string SelectedActionId { get; private set; } = "";
+
+        public void Refresh()
+        {
+            foreach (var category in Tabs)
+            {
+                _tabs.Q("tab-" + category).EnableInClassList("selected", category == _category);
+            }
+
+            _list.Clear();
+            foreach (var action in _session.ActionsIn(_category))
+            {
+                _list.Add(BuildCard(action));
+            }
+        }
+
+        private VisualElement BuildCard(ActionDef action)
+        {
+            var preview = _session.Preview(action.Id);
+            var card = new Button(() =>
+            {
+                SelectedActionId = SelectedActionId == action.Id ? "" : action.Id;
+                Refresh();
+            });
+            card.AddToClassList("action-card");
+            card.EnableInClassList("selected", SelectedActionId == action.Id);
+            card.EnableInClassList("unaffordable", !preview.Affordable);
+
+            card.Add(Line(Loc.Action(action.Id), "action-name"));
+            if (preview.IsExpedition)
+            {
+                var key = preview.ExpeditionTime == ExpeditionTime.Day ? "palette.expedition_day" : "palette.expedition_night";
+                card.Add(Line(Loc.T(key), "action-info"));
+                return card;
+            }
+
+            var chance = preview.HasCheck
+                ? Loc.F("palette.chance", Math.Round(preview.SuccessChance * 100))
+                : Loc.T("palette.no_check");
+            if (!preview.Affordable)
+            {
+                chance = Loc.T("palette.unaffordable");
+            }
+
+            card.Add(Line(chance + "  ·  " + Loc.F("palette.cost", preview.FatigueCost, preview.StressCost), "action-info"));
+
+            var gains = preview.ExpectedGains.Where(g => g.Amount != 0)
+                .Select(g => UiText.Stat(g.Stat) + " " + UiText.Signed(g.Amount)).ToList();
+            if (gains.Count > 0)
+            {
+                card.Add(Line(Loc.F("palette.gains", string.Join("  ", gains)), "action-gains"));
+            }
+
+            return card;
+        }
+
+        private static Label Line(string text, string cssClass)
+        {
+            var label = new Label(text);
+            label.AddToClassList(cssClass);
+            return label;
+        }
+    }
+
+    /// <summary>하단 주간 플래너: 7일 × 낮/밤.</summary>
+    internal sealed class PlannerView
+    {
+        private readonly GameSession _session;
+        private readonly Func<string> _selectedAction;
+        private readonly Action<string> _notify;
+        private readonly Button[] _cells = new Button[WeekPlan.SlotCount];
+
+        public PlannerView(VisualElement root, GameSession session, Func<string> selectedAction, Action<string> notify)
+        {
+            _session = session;
+            _selectedAction = selectedAction;
+            _notify = notify;
+            var planner = root.Q("planner");
+
+            var header = new VisualElement();
+            header.AddToClassList("planner-row");
+            header.Add(Corner());
+            for (var day = 1; day <= CalendarState.DaysPerWeek; day++)
+            {
+                var label = new Label(Loc.F("planner.day_header", day));
+                label.AddToClassList("planner-day");
+                header.Add(label);
+            }
+
+            planner.Add(header);
+            foreach (var phase in new[] { DayPhase.Day, DayPhase.Night })
+            {
+                var row = new VisualElement();
+                row.AddToClassList("planner-row");
+                var rowLabel = new Label(UiText.Phase(phase));
+                rowLabel.AddToClassList("planner-phase");
+                row.Add(rowLabel);
+                for (var day = 1; day <= CalendarState.DaysPerWeek; day++)
+                {
+                    var index = CalendarRules.SlotIndex(day, phase);
+                    var cell = new Button(() => OnClick(index));
+                    cell.AddToClassList("slot");
+                    cell.RegisterCallback<PointerDownEvent>(evt =>
+                    {
+                        if (evt.button == 1)
+                        {
+                            OnClear(index);
+                        }
+                    });
+                    _cells[index] = cell;
+                    row.Add(cell);
+                }
+
+                planner.Add(row);
+            }
+        }
+
+        public void Refresh(ICollection<int> warnedSlots)
+        {
+            var state = _session.State;
+            var calendar = state.Calendar;
+            var current = calendar.WeekComplete ? WeekPlan.SlotCount : CalendarRules.SlotIndex(calendar.Day, calendar.Phase);
+            var executing = _session.IsExecuting;
+
+            for (var i = 0; i < _cells.Length; i++)
+            {
+                var slot = state.Plan.Slots[i];
+                var cell = _cells[i];
+                var empty = string.IsNullOrEmpty(slot.ActionId);
+                var text = empty ? Loc.T("planner.empty") : Loc.Action(slot.ActionId, "short");
+                if (slot.Locked)
+                {
+                    text += "\n" + Loc.T("planner.locked");
+                }
+                else if (slot.ForcedRest)
+                {
+                    text += "\n" + Loc.T("planner.forced");
+                }
+
+                cell.text = text;
+                cell.EnableInClassList("empty", empty);
+                cell.EnableInClassList("locked", slot.Locked);
+                cell.EnableInClassList("forced", slot.ForcedRest && !slot.Locked);
+                cell.EnableInClassList("warned", warnedSlots.Contains(i));
+                cell.EnableInClassList("done", executing && i < current);
+                cell.EnableInClassList("current", executing && i == current);
+                cell.SetEnabled(_session.IsPlanning);
+            }
+        }
+
+        private void OnClick(int index)
+        {
+            var actionId = _selectedAction();
+            if (string.IsNullOrEmpty(actionId))
+            {
+                _notify(Loc.T("plan.select_first"));
+                return;
+            }
+
+            Report(_session.SetSlot(index, actionId));
+        }
+
+        private void OnClear(int index)
+        {
+            if (_session.IsPlanning)
+            {
+                Report(_session.ClearSlot(index));
+            }
+        }
+
+        private void Report(PlanEditResult result)
+        {
+            switch (result)
+            {
+                case PlanEditResult.Locked:
+                    _notify(Loc.T("plan.edit_locked"));
+                    break;
+                case PlanEditResult.WrongSlot:
+                    _notify(Loc.T("plan.edit_wrong_slot"));
+                    break;
+            }
+        }
+
+        private static VisualElement Corner()
+        {
+            var corner = new VisualElement();
+            corner.AddToClassList("planner-phase");
+            return corner;
+        }
+    }
+
+    /// <summary>플래너 옆: 경고, 예상 수면 부채.</summary>
+    internal sealed class PlanSideView
+    {
+        private readonly GameSession _session;
+        private readonly ScrollView _warnings;
+        private readonly Label _forecast;
+
+        public PlanSideView(VisualElement root, GameSession session)
+        {
+            _session = session;
+            _warnings = root.Q<ScrollView>("warnings");
+            _forecast = root.Q<Label>("forecast");
+        }
+
+        /// <returns>경고가 걸린 슬롯 번호.</returns>
+        public HashSet<int> Refresh()
+        {
+            var warned = new HashSet<int>();
+            _warnings.Clear();
+            if (!_session.IsPlanning)
+            {
+                _forecast.text = "";
+                return warned;
+            }
+
+            var warnings = _session.Warnings();
+            foreach (var warning in warnings)
+            {
+                var label = new Label("※ " + UiText.Warning(warning));
+                label.AddToClassList("warning");
+                _warnings.Add(label);
+                if (warning.SlotIndex >= 0)
+                {
+                    warned.Add(warning.SlotIndex);
+                }
+            }
+
+            if (warnings.Count == 0)
+            {
+                var none = new Label(Loc.T("warn.none"));
+                none.AddToClassList("warning-none");
+                _warnings.Add(none);
+            }
+
+            var projection = _session.ProjectedSleepDebt();
+            var end = projection.Length > 0 ? projection[projection.Length - 1] : _session.State.Player.SleepDebt;
+            _forecast.text = Loc.F("plan.forecast", _session.State.Player.SleepDebt, end);
+            _forecast.EnableInClassList("danger", end >= 3);
+            return warned;
+        }
+    }
+}

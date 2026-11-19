@@ -53,10 +53,7 @@ namespace ApoGirl.Core.Simulation
             var routineBonus = UpdateRoutine(player, action, balance);
             if (affordable)
             {
-                var multiplier = ResultMultiplier(result, balance)
-                                 * TeachingMultiplier(state, action, balance)
-                                 * (1f + routineBonus)
-                                 * (1f - StatRules.StageValue(balance.SleepDebtEfficiencyPenalty, player.SleepDebt));
+                var multiplier = GainMultiplier(state, action, result, routineBonus, balance);
                 foreach (var gain in action.StatGains)
                 {
                     var current = player.GetStat(gain.Stat);
@@ -98,6 +95,27 @@ namespace ApoGirl.Core.Simulation
             }
         }
 
+        /// <summary>성장량 배율 = 결과 × 선생님 지도 × (1 + 연속 행동) × (1 − 수면 부채 효율 페널티).</summary>
+        public static float GainMultiplier(GameState state, ActionDef action, CheckResult result, float routineBonus, BalanceConfig balance)
+        {
+            return ResultMultiplier(result, balance)
+                   * TeachingMultiplier(state, action, balance)
+                   * (1f + routineBonus)
+                   * (1f - StatRules.StageValue(balance.SleepDebtEfficiencyPenalty, state.Player.SleepDebt));
+        }
+
+        /// <summary>지금 이 행동을 하면 받을 연속 행동 보너스 (상태를 바꾸지 않음).</summary>
+        public static float PeekRoutineBonus(PlayerState player, ActionDef action, BalanceConfig balance)
+        {
+            if (action.Category != ActionCategory.Education)
+            {
+                return 0f;
+            }
+
+            var streak = player.RoutineActionId == action.Id ? player.RoutineStreak + 1 : 0;
+            return RoutineBonus(player, streak, balance);
+        }
+
         /// <summary>교육이 아닌 낮 행동을 하면 연속 행동 기록이 끊긴다.</summary>
         public static void ResetRoutine(PlayerState player)
         {
@@ -123,9 +141,14 @@ namespace ApoGirl.Core.Simulation
                 player.RoutineStreak = 0;
             }
 
+            return RoutineBonus(player, player.RoutineStreak, balance);
+        }
+
+        private static float RoutineBonus(PlayerState player, int streak, BalanceConfig balance)
+        {
             var isJ = (player.Profile.PersonalityType ?? "").IndexOf('J') >= 0;
             var max = isJ ? balance.RoutineBonusMaxForJ : balance.RoutineBonusMax;
-            return Math.Min(max, player.RoutineStreak * balance.RoutineBonusPerStep);
+            return Math.Min(max, streak * balance.RoutineBonusPerStep);
         }
 
         private static float ResultMultiplier(CheckResult result, BalanceConfig balance)

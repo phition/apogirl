@@ -24,7 +24,7 @@ namespace ApoGirl.Systems.Save
         void Migrate(JObject root);
     }
 
-    /// <summary>GameState ↔ JSON. enum은 문자열, 기존 컬렉션은 덮어쓰기(Replace)로 처리한다.</summary>
+    /// <summary>GameState ↔ JSON. enum은 문자열, 기존 컬렉션은 덮어쓰기(Replace)로 처리한다. 기본 마이그레이션은 항상 포함.</summary>
     public sealed class GameStateSerializer
     {
         private readonly List<ISaveMigration> _migrations;
@@ -32,7 +32,11 @@ namespace ApoGirl.Systems.Save
 
         public GameStateSerializer(IEnumerable<ISaveMigration> migrations = null)
         {
-            _migrations = migrations?.ToList() ?? new List<ISaveMigration>();
+            _migrations = SaveMigrations.BuiltIn.ToList();
+            if (migrations != null)
+            {
+                _migrations.AddRange(migrations);
+            }
             _settings = new JsonSerializerSettings
             {
                 Formatting = Formatting.Indented,

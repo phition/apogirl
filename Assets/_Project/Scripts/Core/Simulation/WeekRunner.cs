@@ -188,6 +188,7 @@ namespace ApoGirl.Core.Simulation
             }
             else
             {
+                _state.LastWeekPlan = PlanEditing.CloneActions(_state.Plan);
                 calendar.Week++;
                 calendar.Day = 1;
                 calendar.Phase = DayPhase.Day;

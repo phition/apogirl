@@ -9,7 +9,7 @@ namespace ApoGirl.Core.State
     public sealed class GameState
     {
         /// <summary>현재 세이브 포맷 버전. 마이그레이션 시 증가시킨다.</summary>
-        public const int CurrentSaveVersion = 1;
+        public const int CurrentSaveVersion = 2;
 
         public int SaveVersion { get; set; } = CurrentSaveVersion;
         public GameStatus Status { get; set; } = GameStatus.Playing;
@@ -32,6 +32,19 @@ namespace ApoGirl.Core.State
         public ExplorationStats Exploration { get; set; } = new ExplorationStats();
         public List<DiaryEntry> Diary { get; set; } = new List<DiaryEntry>();
         public CarryOverState CarryOver { get; set; } = new CarryOverState();
+
+        /// <summary>지난주 계획 (행동 ID만, "지난주 복사"용). 첫 주에는 null.</summary>
+        public WeekPlan LastWeekPlan { get; set; }
+
+        /// <summary>플레이어가 저장한 루틴 프리셋 (문서 4.3). v2에서 추가.</summary>
+        public List<PlanPreset> PlanPresets { get; set; } = new List<PlanPreset>();
+    }
+
+    /// <summary>주간 계획 프리셋: 14슬롯 행동 ID.</summary>
+    public sealed class PlanPreset
+    {
+        public string Name { get; set; } = "";
+        public List<string> ActionIds { get; set; } = new List<string>();
     }
 
     /// <summary>다음 주로 넘어가는 규칙 효과.</summary>

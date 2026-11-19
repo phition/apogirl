@@ -20,6 +20,12 @@ namespace ApoGirl.Core.Rules
         /// </summary>
         public static float ComputeChance(GameState state, CheckDef check, BalanceConfig balance)
         {
+            return ComputeChance(state, check, balance, state.Player.Vitals.Fatigue, state.Player.Vitals.Stress);
+        }
+
+        /// <summary>피로·스트레스 값을 지정해 계산 (행동 비용을 먼저 반영한 미리보기용).</summary>
+        public static float ComputeChance(GameState state, CheckDef check, BalanceConfig balance, int fatigue, int stress)
+        {
             var player = state.Player;
             double chance = check.BaseRate;
             foreach (var weight in check.StatWeights)
@@ -32,8 +38,8 @@ namespace ApoGirl.Core.Rules
                 chance += player.ProficiencyLevel(check.Proficiency) * check.ProficiencyWeight;
             }
 
-            chance -= player.Vitals.Stress * balance.StressCheckPenaltyPerPoint;
-            chance -= player.Vitals.Fatigue * balance.FatigueCheckPenaltyPerPoint;
+            chance -= stress * balance.StressCheckPenaltyPerPoint;
+            chance -= fatigue * balance.FatigueCheckPenaltyPerPoint;
             chance -= StatRules.StageValue(balance.SleepDebtCheckPenalty, player.SleepDebt);
 
             return (float)Math.Min(Math.Max(chance, balance.CheckMinChance), balance.CheckMaxChance);

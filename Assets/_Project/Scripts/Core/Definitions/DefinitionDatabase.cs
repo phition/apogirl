@@ -8,6 +8,9 @@ namespace ApoGirl.Core.Definitions
     {
         BalanceConfig Balance { get; }
 
+        /// <summary>모든 행동 정의 (등록 순서).</summary>
+        IReadOnlyList<ActionDef> Actions { get; }
+
         bool TryGetAction(string id, out ActionDef action);
 
         bool TryGetExpeditionModel(string id, out ExpeditionModelDef model);
@@ -41,6 +44,7 @@ namespace ApoGirl.Core.Definitions
     {
         private readonly Dictionary<string, ActionDef> _actions = new Dictionary<string, ActionDef>();
         private readonly Dictionary<string, ExpeditionModelDef> _expeditionModels = new Dictionary<string, ExpeditionModelDef>();
+        private readonly List<ActionDef> _actionList = new List<ActionDef>();
 
         public InMemoryDefinitionDatabase(
             BalanceConfig balance,
@@ -51,6 +55,7 @@ namespace ApoGirl.Core.Definitions
             foreach (var action in actions)
             {
                 Register(_actions, action.Id, action);
+                _actionList.Add(action);
             }
 
             if (expeditionModels != null)
@@ -63,6 +68,8 @@ namespace ApoGirl.Core.Definitions
         }
 
         public BalanceConfig Balance { get; }
+
+        public IReadOnlyList<ActionDef> Actions => _actionList;
 
         public bool TryGetAction(string id, out ActionDef action)
         {

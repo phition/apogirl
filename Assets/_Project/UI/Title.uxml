@@ -1,0 +1,9 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" editor-extension-mode="False">
+    <Style src="Theme.uss" />
+    <ui:VisualElement name="screen" class="screen title-screen font-normal">
+        <ui:Label name="title-label" class="title-label" />
+        <ui:Label name="subtitle-label" class="subtitle-label" />
+        <ui:VisualElement name="title-buttons" class="title-buttons" />
+        <ui:Label name="title-message" class="title-message" />
+    </ui:VisualElement>
+</ui:UXML>
