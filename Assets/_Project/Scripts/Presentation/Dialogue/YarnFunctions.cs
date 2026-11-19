@@ -22,6 +22,7 @@ namespace ApoGirl.Presentation.Dialogue
             new Dictionary<string, Func<IConvertible[], IConvertible>>
             {
                 ["name"] = _ => Name(),
+                ["given"] = _ => Given(),
                 ["friend"] = _ => Friend(),
                 ["josa"] = p => Josa(Str(p, 0), Str(p, 1)),
                 ["flag"] = p => Flag(Str(p, 0)),
@@ -50,6 +51,16 @@ namespace ApoGirl.Presentation.Dialogue
         /// <summary>주인공 이름 (기본 한서진, D23).</summary>
         [YarnFunction("name")]
         public static string Name() => State?.Player.Profile.Name ?? "한서진";
+
+        /// <summary>부르는 이름: 별명 → 없으면 성을 뺀 이름 (세 글자 이름일 때). 예: 한서진 → 서진.</summary>
+        [YarnFunction("given")]
+        public static string Given()
+        {
+            var profile = State?.Player.Profile;
+            if (profile != null && !string.IsNullOrEmpty(profile.Nickname)) return profile.Nickname;
+            var name = Name();
+            return name.Length == 3 ? name.Substring(1) : name;
+        }
 
         /// <summary>친구 호칭 (D19: 연락처 이름 → 없으면 기본 이름).</summary>
         [YarnFunction("friend")]

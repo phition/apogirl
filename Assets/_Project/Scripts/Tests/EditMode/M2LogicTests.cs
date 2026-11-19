@@ -271,9 +271,13 @@ namespace ApoGirl.Tests.EditMode
             root["SaveVersion"] = 1;
             root.Remove("PlanPresets");
             root.Remove("LastWeekPlan");
+            root.Remove("Events");
+            root.Remove("Npcs");
 
             var loaded = serializer.Deserialize(root.ToString());
-            Assert.AreEqual(2, loaded.SaveVersion);
+            Assert.AreEqual(GameState.CurrentSaveVersion, loaded.SaveVersion);
+            Assert.IsNotNull(loaded.Events, "v3: 이벤트 기록");
+            Assert.IsNotNull(loaded.Npcs, "v3: NPC");
             Assert.IsNotNull(loaded.PlanPresets);
             Assert.IsNull(loaded.LastWeekPlan);
         }

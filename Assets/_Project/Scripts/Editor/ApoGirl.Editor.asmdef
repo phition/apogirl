@@ -8,7 +8,11 @@
         "Unity.Localization",
         "Unity.Localization.Editor",
         "UnityEditor.TestRunner",
-        "UnityEngine.TestRunner"
+        "UnityEngine.TestRunner",
+        "ApoGirl.Systems",
+        "ApoGirl.Presentation",
+        "YarnSpinner.Unity",
+        "YarnSpinner.Unity.Editor"
     ],
     "includePlatforms": [
         "Editor"
@@ -17,7 +21,9 @@
     "allowUnsafeCode": false,
     "overrideReferences": true,
     "precompiledReferences": [
-        "Newtonsoft.Json.dll"
+        "Newtonsoft.Json.dll",
+        "YarnSpinner.dll",
+        "YarnSpinner.Compiler.dll"
     ],
     "autoReferenced": false,
     "defineConstraints": [],

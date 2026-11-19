@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using ApoGirl.Core.Effects;
 using ApoGirl.Core.Planning;
@@ -57,6 +58,22 @@ namespace ApoGirl.Presentation.Text
             foreach (var level in delta.ProficiencyLevelUps)
             {
                 lines.Add(Loc.F("result.levelup", Proficiency(level)));
+            }
+
+            // M3: 관계·아이템 (숨김 수치는 보여주지 않는다, 문서 5.3)
+            AppendGroup(lines, delta.NpcAffinity, id => Loc.F("result.affinity", Loc.T("npc." + id)));
+            foreach (var change in delta.NpcStatusChanges)
+            {
+                var parts = change.Split(':');
+                if (parts.Length == 2)
+                {
+                    lines.Add(Loc.F("result.npc_status", Loc.T("npc." + parts[0]), Loc.T("npc.status." + parts[1])));
+                }
+            }
+
+            if (delta.ItemsGained.Count > 0)
+            {
+                lines.Add(Loc.F("result.items", string.Join("  ", delta.ItemsGained.Select(i => Loc.Item(i.ItemId) + " ×" + i.Count))));
             }
 
             return lines;

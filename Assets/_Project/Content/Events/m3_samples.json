@@ -1,0 +1,166 @@
+{
+  "Npcs": [
+    {
+      "Id": "NPC_SURVIVOR_A",
+      "DefaultRole": "scout",
+      "StartAffinity": 0,
+      "StartTrust": 0
+    }
+  ],
+  "Events": [
+    {
+      "Id": "EVT_CAL_MOCK_EXAM",
+      "Kind": "Calendar",
+      "Priority": 50,
+      "Condition": { "Month": 3, "DayOfMonth": 26, "Phase": "Day" },
+      "OnShow": {
+        "Hidden": [ { "Hidden": "SelfAwareness", "Amount": 2 } ]
+      },
+      "Choices": [
+        {
+          "Id": "SOLVE",
+          "Effect": {
+            "Stats": [ { "Stat": "Intellect", "Amount": 1 } ],
+            "Vitals": [ { "Vital": "Stress", "Amount": 2 } ],
+            "SetFlags": [ "MOCK_EXAM_SOLVED" ]
+          }
+        },
+        {
+          "Id": "TEAR",
+          "Effect": {
+            "Vitals": [ { "Vital": "Stress", "Amount": -6 } ],
+            "Hidden": [ { "Hidden": "Hope", "Amount": -1 } ],
+            "SetFlags": [ "MOCK_EXAM_TORN" ]
+          }
+        }
+      ]
+    },
+    {
+      "Id": "EVT_NIGHT_TEACHER_TALK_01",
+      "Kind": "Night",
+      "Priority": 10,
+      "Condition": {
+        "WeekMin": 1,
+        "Phase": "Night",
+        "ActionCategories": [ "Rest" ],
+        "Days": [ 2, 3, 4, 5, 6 ]
+      },
+      "Choices": [
+        {
+          "Id": "ASK",
+          "Effect": {
+            "Npcs": [ { "NpcId": "NPC_TEACHER", "Affinity": 3 } ],
+            "Hidden": [ { "Hidden": "Isolation", "Amount": -2 } ],
+            "SetFlags": [ "ASKED_TEACHER_LEG" ]
+          }
+        },
+        {
+          "Id": "FINE",
+          "Effect": {
+            "Hidden": [ { "Hidden": "Isolation", "Amount": 1 } ],
+            "Vitals": [ { "Vital": "Stress", "Amount": -3 } ]
+          }
+        }
+      ]
+    },
+    {
+      "Id": "EVT_CRISIS_FOOD_SPOIL",
+      "Kind": "Crisis",
+      "Weight": 1,
+      "Once": false,
+      "CooldownWeeks": 3,
+      "Condition": {
+        "WeekMin": 2,
+        "Seasons": [ "Spring", "Summer" ],
+        "Checks": [ { "Kind": "Resource", "Key": "Food", "Op": "GreaterOrEqual", "Value": 6 } ]
+      },
+      "Choices": [
+        {
+          "Id": "THROW",
+          "Effect": {
+            "Resources": [ { "Resource": "Food", "Amount": -3 } ]
+          }
+        },
+        {
+          "Id": "SALVAGE",
+          "HasCheck": true,
+          "Check": {
+            "BaseRate": 0.35,
+            "StatWeights": [ { "Stat": "Craft", "Weight": 0.006 } ],
+            "UsesProficiency": true,
+            "Proficiency": "Cooking",
+            "ProficiencyWeight": 0.08
+          },
+          "Effect": {
+            "Resources": [ { "Resource": "Food", "Amount": -1 } ]
+          },
+          "OnFailure": {
+            "Resources": [ { "Resource": "Food", "Amount": -3 } ],
+            "Vitals": [ { "Vital": "Hp", "Amount": -6 }, { "Vital": "Stress", "Amount": 5 } ]
+          }
+        }
+      ]
+    },
+    {
+      "Id": "EVT_NPC_SURVIVOR_A_01",
+      "Kind": "Story",
+      "Priority": 20,
+      "Condition": {
+        "WeekMin": 2,
+        "WeekMax": 8,
+        "ActionCategories": [ "Expedition" ],
+        "NpcStatuses": [ { "NpcId": "NPC_SURVIVOR_A", "Status": "Unknown" } ]
+      },
+      "OnShow": {
+        "Npcs": [ { "NpcId": "NPC_SURVIVOR_A", "SetStatus": "Met" } ]
+      },
+      "Choices": [
+        {
+          "Id": "INVITE",
+          "NextEventId": "EVT_NPC_SURVIVOR_A_02",
+          "Effect": {
+            "Npcs": [ { "NpcId": "NPC_SURVIVOR_A", "Affinity": 5, "Trust": 3 } ],
+            "Hidden": [ { "Hidden": "Humanity", "Amount": 3 } ],
+            "EndingTags": [ { "Tag": "TAG_COMMUNITY", "Amount": 1 } ]
+          }
+        },
+        {
+          "Id": "SHARE",
+          "Costs": [ { "Resource": "Food", "Amount": 2 } ],
+          "Effect": {
+            "Npcs": [ { "NpcId": "NPC_SURVIVOR_A", "Affinity": 3, "Trust": 1 } ],
+            "Hidden": [ { "Hidden": "Humanity", "Amount": 2 } ],
+            "SetFlags": [ "SURVIVOR_A_LEFT_WITH_FOOD" ]
+          }
+        },
+        {
+          "Id": "LEAVE",
+          "Effect": {
+            "Hidden": [ { "Hidden": "Isolation", "Amount": 2 } ],
+            "SetFlags": [ "SURVIVOR_A_IGNORED" ]
+          }
+        }
+      ]
+    },
+    {
+      "Id": "EVT_NPC_SURVIVOR_A_02",
+      "Kind": "Story",
+      "Condition": { "WeekMin": 99 },
+      "Choices": [
+        {
+          "Id": "ACCEPT",
+          "Effect": {
+            "Npcs": [ { "NpcId": "NPC_SURVIVOR_A", "SetStatus": "Joined", "SetRole": "scout", "Trust": 2 } ],
+            "Resources": [ { "Resource": "Intel", "Amount": 2 } ]
+          }
+        },
+        {
+          "Id": "DECLINE",
+          "Effect": {
+            "Npcs": [ { "NpcId": "NPC_SURVIVOR_A", "SetStatus": "Left", "Affinity": -2 } ]
+          }
+        }
+      ]
+    }
+  ]
+}
