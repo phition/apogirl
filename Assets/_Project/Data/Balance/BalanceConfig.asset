@@ -1,0 +1,105 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c574e70913cd4d940b9a68272c226f7f, type: 3}
+  m_Name: BalanceConfig
+  m_EditorClassIdentifier: ApoGirl.Data::ApoGirl.Data.BalanceConfigAsset
+  _config:
+    BaseStatValue: 10
+    StartingHp: 100
+    InitialResources:
+    - Resource: 0
+      Amount: 14
+    - Resource: 1
+      Amount: 20
+    - Resource: 2
+      Amount: 2
+    - Resource: 4
+      Amount: 5
+    StatMax: 999
+    VitalMax: 100
+    HiddenMax: 100
+    ConscienceMax: 10
+    SleepDebtMax: 5
+    ProficiencyMaxLevel: 5
+    GrowthBands:
+    - FromValue: 0
+      Multiplier: 1
+    - FromValue: 100
+      Multiplier: 0.5
+    - FromValue: 200
+      Multiplier: 0.25
+    GreatSuccessGainMultiplier: 1.5
+    FailureGainMultiplier: 0.5
+    TeacherDirectMultiplier: 1.5
+    TeacherGuidanceMultiplier: 1.15
+    RoutineBonusPerStep: 0.1
+    RoutineBonusMax: 0.3
+    RoutineBonusMaxForJ: 0.4
+    ProficiencyXpThresholds: 0a000000190000002d0000004600000064000000i
+    GreatSuccessBonusXp: 1
+    CheckMinChance: 0.05
+    CheckMaxChance: 0.95
+    GreatSuccessRatio: 0.15
+    StressCheckPenaltyPerPoint: 0.003
+    FatigueCheckPenaltyPerPoint: 0.002
+    SleepDebtEfficiencyPenalty:
+    - 0
+    - 0.1
+    - 0.1
+    - 0.1
+    - 0.1
+    - 0.1
+    SleepDebtCheckPenalty:
+    - 0
+    - 0
+    - 0
+    - 0.1
+    - 0.1
+    - 0.15
+    SleepDebtStressMultiplier:
+    - 1
+    - 1
+    - 1
+    - 1.25
+    - 1.25
+    - 1.5
+    SleepDebtForcedRestStage: 4
+    NightExpeditionSleepDebt: 1
+    ForcedRestViolationSleepDebt: 1
+    ConsecutiveExpeditionSleepDebt: 2
+    NightRestStreakToRepay: 2
+    NightRestRepayAmount: 1
+    ViolationFatigue: 10
+    ViolationStress: 8
+    DailyFood: 2
+    DailyWater: 2
+    WeeklyPower: 3
+    HungerRecovery: 20
+    HungerIncrease: 20
+    ThirstRecovery: 25
+    ThirstIncrease: 40
+    StarvationThreshold: 60
+    StarvationHpLoss: 5
+    DehydrationThreshold: 60
+    DehydrationHpLoss: 10
+    DayRestActionId: ACT_REST_DAY
+    NightRestActionId: ACT_REST_NIGHT
+    ReducedRestMultiplier: 0.5
+    DownLockedRestSlots: 4
+    CombatStrength: 0.4
+    CombatAgility: 0.3
+    CombatStamina: 0.1
+    CombatPerSelfDefenseLevel: 8
+    StressThresholdBase: 50
+    StressThresholdPerWillpower: 0.3
+    StressThresholdPerMindLevel: 5
+    StressThresholdCap: 90

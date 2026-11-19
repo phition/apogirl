@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd847650116da8948b82c9801686d8f4, type: 3}
+  m_Name: DefinitionDatabase
+  m_EditorClassIdentifier: ApoGirl.Data::ApoGirl.Data.DefinitionDatabaseAsset
+  _balance: {fileID: 11400000, guid: b4871859dd6c52f4fb0515e033523b58, type: 2}
+  _actions:
+  - {fileID: 11400000, guid: f5ca7a43e42d24746aa861d315604a36, type: 2}
+  - {fileID: 11400000, guid: 3fc8d798ad1d42e4881beab9c6d197ad, type: 2}
+  - {fileID: 11400000, guid: 7842b88ec7652904dae8421077af6f18, type: 2}
+  - {fileID: 11400000, guid: 8773425c6ad160042af0f6668783b57b, type: 2}
+  - {fileID: 11400000, guid: 3f322f7558ac3944592a6318a26d25ea, type: 2}
+  - {fileID: 11400000, guid: c0906245d1ff59e40a7c10b10eba620d, type: 2}
+  - {fileID: 11400000, guid: 4aee199902b56724c8709d2e88241c8e, type: 2}
+  - {fileID: 11400000, guid: 605ec6da904e2b8489216c756aab1823, type: 2}
+  - {fileID: 11400000, guid: 13ad9be307fc36b4f84dce2505a2ff35, type: 2}
+  _expeditionModels:
+  - {fileID: 11400000, guid: f349c531a1a9f244ea16fc7bea8390d4, type: 2}

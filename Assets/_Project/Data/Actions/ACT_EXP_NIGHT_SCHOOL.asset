@@ -1,0 +1,63 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dae23a582c039304a81c2bdd418cbc38, type: 3}
+  m_Name: ACT_EXP_NIGHT_SCHOOL
+  m_EditorClassIdentifier: ApoGirl.Data::ApoGirl.Data.ActionDefinitionAsset
+  _id: ACT_EXP_NIGHT_SCHOOL
+  _definition:
+    Id: ACT_EXP_NIGHT_SCHOOL
+    Category: 4
+    SlotTag: 2
+    ResourceCosts: []
+    FatigueCost: 0
+    StressCost: 0
+    HasCheck: 0
+    Check:
+      BaseRate: 0.5
+      StatWeights: []
+      UsesProficiency: 0
+      Proficiency: 0
+      ProficiencyWeight: 0.05
+    StatGains: []
+    HasProficiency: 0
+    Proficiency: 0
+    ProficiencyXp: 0
+    Teaching: 0
+    OnSuccess:
+      Stats: []
+      Vitals: []
+      Resources: []
+      Hidden: []
+      SleepDebt: 0
+      Conscience: 0
+      SetFlags: []
+      EndingTags: []
+    OnGreatSuccess:
+      Stats: []
+      Vitals: []
+      Resources: []
+      Hidden: []
+      SleepDebt: 0
+      Conscience: 0
+      SetFlags: []
+      EndingTags: []
+    OnFailure:
+      Stats: []
+      Vitals: []
+      Resources: []
+      Hidden: []
+      SleepDebt: 0
+      Conscience: 0
+      SetFlags: []
+      EndingTags: []
+    ExpeditionTime: 1
+    LocationId: LOC_SCHOOL_INTERIOR
