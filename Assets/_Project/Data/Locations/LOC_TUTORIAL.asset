@@ -76,7 +76,7 @@ MonoBehaviour:
       - Kind: 0
         Floor: 0
         X: 2
-        StartsLocked: 0
+        StartsLocked: 1
       - Kind: 1
         Floor: 0
         X: 44

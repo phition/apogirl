@@ -43,7 +43,11 @@ MonoBehaviour:
     OnShow:
       Stats: []
       Vitals: []
-      Resources: []
+      Resources:
+      - Resource: 0
+        Amount: 10
+      - Resource: 1
+        Amount: 6
       Hidden: []
       SleepDebt: 0
       Conscience: 0
