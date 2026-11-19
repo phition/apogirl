@@ -318,3 +318,21 @@ Button.selected { border-color: var(--accent); background-color: var(--accent-so
 .prep-info { color: var(--text-dim); margin-left: 8px; font-size: 14px; }
 .title-screen .overlay { position: absolute; }
 .title-screen .dialogue { position: absolute; }
+
+/* 입력 칸·드롭다운: 어두운 테마에서 글자가 보이도록 */
+.prologue-field > .unity-base-text-field__input,
+.prologue-field > .unity-base-popup-field__input,
+.prep-field > .unity-base-popup-field__input,
+.prep-quick > .unity-base-popup-field__input,
+.debug-dropdown > .unity-base-popup-field__input {
+    background-color: var(--panel-light);
+    border-color: var(--line);
+    color: var(--text);
+}
+
+.prologue-field .unity-text-element,
+.prep-field .unity-text-element,
+.prep-quick .unity-text-element,
+.debug-dropdown .unity-text-element {
+    color: var(--text);
+}
