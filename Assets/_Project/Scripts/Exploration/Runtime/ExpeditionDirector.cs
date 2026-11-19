@@ -26,6 +26,7 @@ namespace ApoGirl.Exploration.Runtime
         private const float PlayerWidth = 0.6f;
         private const float PlayerHeight = 1.7f;
         private const float MinOrthographicSize = 5f;
+        private const float MaxOrthographicSize = 8f;
         private const float MinVisibleWidth = 26f;
         private const float RoomSpacing = 30f;
         private const float EdgeMargin = 0.3f;
@@ -604,7 +605,7 @@ namespace ApoGirl.Exploration.Runtime
             _player.localScale = new Vector3(_facingRight ? PlayerWidth : -PlayerWidth, height, 1f);
 
             // 화면 비율과 관계없이 가로 최소 MinVisibleWidth 유닛이 보이게 (멀리서 건물과 캐릭터를 함께 잡는 앵글)
-            _camera.orthographicSize = Mathf.Max(MinOrthographicSize, MinVisibleWidth / (2f * Mathf.Max(0.1f, _camera.aspect)));
+            _camera.orthographicSize = Mathf.Clamp(MinVisibleWidth / (2f * Mathf.Max(0.1f, _camera.aspect)), MinOrthographicSize, MaxOrthographicSize);
             var target = new Vector3(worldX, origin.y + _building.FloorHeight * 0.5f, -10f);
             var cameraTransform = _camera.transform;
             cameraTransform.position = Vector3.Lerp(cameraTransform.position, target, Mathf.Clamp01(dt * 6f));
