@@ -823,6 +823,38 @@ MonoBehaviour:
     m_Key: room.ROOM_3F_ROOF_STAIRS
     m_Metadata:
       m_Items: []
+  - m_Id: 21762921480192
+    m_Key: exp.corridor
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21762984394752
+    m_Key: exp.near_door
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21762984394753
+    m_Key: exp.prompt_enter
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21762984394754
+    m_Key: exp.prompt_enter_again
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21762984394755
+    m_Key: exp.prompt_leave
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21762984394756
+    m_Key: roomname.ROOM_CLASSROOM
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21762984394757
+    m_Key: roomname.ROOM_RESTROOM
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21762984394758
+    m_Key: roomname.ROOM_OFFICE
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

@@ -16,144 +16,396 @@ MonoBehaviour:
   _definition:
     Id: 
     Layout:
-      Floors: 3
+      Floors: 4
       FloorHeight: 4
-      Width: 36
-      Rooms:
-      - Id: ROOM_1F_ENTRANCE
-        Floor: 0
-        X: 0
-        Width: 8
-      - Id: ROOM_1F_HALL
-        Floor: 0
-        X: 8
-        Width: 14
-      - Id: ROOM_1F_CLASS
-        Floor: 0
-        X: 22
-        Width: 14
-      - Id: ROOM_2F_CLASS
-        Floor: 1
-        X: 0
-        Width: 12
-      - Id: ROOM_2F_HALL
-        Floor: 1
-        X: 12
-        Width: 14
-      - Id: ROOM_2F_RESTROOM
-        Floor: 1
-        X: 26
-        Width: 10
-      - Id: ROOM_3F_CLASS
-        Floor: 2
-        X: 0
-        Width: 14
-      - Id: ROOM_3F_HALL
-        Floor: 2
-        X: 14
-        Width: 12
-      - Id: ROOM_3F_ROOF_STAIRS
-        Floor: 2
-        X: 26
-        Width: 10
+      CorridorLength: 80
       Connectors:
       - Kind: 0
         Floor: 0
-        X: 19
+        X: 4
         TargetFloor: 1
       - Kind: 0
         Floor: 1
-        X: 19
+        X: 2.6
         TargetFloor: 0
       - Kind: 0
         Floor: 1
-        X: 31
+        X: 4
         TargetFloor: 2
       - Kind: 0
         Floor: 2
-        X: 31
+        X: 2.6
         TargetFloor: 1
-      Containers:
-      - Id: C_1F_SHOES
-        Kind: 4
+      - Kind: 0
+        Floor: 2
+        X: 4
+        TargetFloor: 3
+      - Kind: 0
+        Floor: 3
+        X: 2.6
+        TargetFloor: 2
+      - Kind: 0
         Floor: 0
-        X: 5
-        SearchSeconds: 2.5
-        LootTableId: 
-      - Id: C_1F_LOCKER
-        Kind: 0
+        X: 76
+        TargetFloor: 1
+      - Kind: 0
+        Floor: 1
+        X: 74.6
+        TargetFloor: 0
+      - Kind: 0
+        Floor: 1
+        X: 76
+        TargetFloor: 2
+      - Kind: 0
+        Floor: 2
+        X: 74.6
+        TargetFloor: 1
+      - Kind: 0
+        Floor: 2
+        X: 76
+        TargetFloor: 3
+      - Kind: 0
+        Floor: 3
+        X: 74.6
+        TargetFloor: 2
+      Doors:
+      - RoomId: ROOM_1F_ROOM_OFFICE_0
+        TemplateId: ROOM_OFFICE
         Floor: 0
         X: 12
-        SearchSeconds: 3
-        LootTableId: LOOT_SCHOOL_LOCKER
-      - Id: C_1F_DESK
-        Kind: 1
+        Number: 0
+        LootTableId: 
+      - RoomId: ROOM_1F_ROOM_CLASSROOM_1
+        TemplateId: ROOM_CLASSROOM
         Floor: 0
+        X: 22
+        Number: 1
+        LootTableId: 
+      - RoomId: ROOM_1F_ROOM_CLASSROOM_2
+        TemplateId: ROOM_CLASSROOM
+        Floor: 0
+        X: 30
+        Number: 2
+        LootTableId: 
+      - RoomId: ROOM_1F_ROOM_CLASSROOM_3
+        TemplateId: ROOM_CLASSROOM
+        Floor: 0
+        X: 50
+        Number: 3
+        LootTableId: 
+      - RoomId: ROOM_1F_ROOM_CLASSROOM_4
+        TemplateId: ROOM_CLASSROOM
+        Floor: 0
+        X: 58
+        Number: 4
+        LootTableId: 
+      - RoomId: ROOM_1F_ROOM_CLASSROOM_5
+        TemplateId: ROOM_CLASSROOM
+        Floor: 0
+        X: 66
+        Number: 5
+        LootTableId: 
+      - RoomId: ROOM_1F_ROOM_RESTROOM_0
+        TemplateId: ROOM_RESTROOM
+        Floor: 0
+        X: 71.5
+        Number: 0
+        LootTableId: 
+      - RoomId: ROOM_2F_ROOM_CLASSROOM_1
+        TemplateId: ROOM_CLASSROOM
+        Floor: 1
+        X: 10
+        Number: 1
+        LootTableId: 
+      - RoomId: ROOM_2F_ROOM_CLASSROOM_2
+        TemplateId: ROOM_CLASSROOM
+        Floor: 1
+        X: 18
+        Number: 2
+        LootTableId: 
+      - RoomId: ROOM_2F_ROOM_CLASSROOM_3
+        TemplateId: ROOM_CLASSROOM
+        Floor: 1
         X: 26
-        SearchSeconds: 2
-        LootTableId: LOOT_SCHOOL_TEACHER
-      - Id: C_1F_LOCKER2
-        Kind: 0
-        Floor: 0
-        X: 33
-        SearchSeconds: 3
-        LootTableId: LOOT_SCHOOL_LOCKER
-      - Id: C_2F_DESK
-        Kind: 1
-        Floor: 1
-        X: 4
-        SearchSeconds: 2
+        Number: 3
         LootTableId: 
-      - Id: C_2F_LOCKER
-        Kind: 0
+      - RoomId: ROOM_2F_ROOM_CLASSROOM_4
+        TemplateId: ROOM_CLASSROOM
         Floor: 1
-        X: 9
-        SearchSeconds: 3
-        LootTableId: LOOT_SCHOOL_LOCKER
-      - Id: C_2F_CLEANING
-        Kind: 2
-        Floor: 1
-        X: 15
-        SearchSeconds: 3.5
+        X: 34
+        Number: 4
         LootTableId: 
-      - Id: C_2F_SINK
-        Kind: 2
+      - RoomId: ROOM_2F_ROOM_CLASSROOM_5
+        TemplateId: ROOM_CLASSROOM
         Floor: 1
-        X: 28
-        SearchSeconds: 3.5
+        X: 46
+        Number: 5
         LootTableId: 
-      - Id: C_3F_DESK
-        Kind: 1
+      - RoomId: ROOM_2F_ROOM_CLASSROOM_6
+        TemplateId: ROOM_CLASSROOM
+        Floor: 1
+        X: 54
+        Number: 6
+        LootTableId: 
+      - RoomId: ROOM_2F_ROOM_CLASSROOM_7
+        TemplateId: ROOM_CLASSROOM
+        Floor: 1
+        X: 62
+        Number: 7
+        LootTableId: 
+      - RoomId: ROOM_2F_ROOM_RESTROOM_0
+        TemplateId: ROOM_RESTROOM
+        Floor: 1
+        X: 70
+        Number: 0
+        LootTableId: 
+      - RoomId: ROOM_3F_ROOM_CLASSROOM_1
+        TemplateId: ROOM_CLASSROOM
         Floor: 2
-        X: 6
-        SearchSeconds: 2
-        LootTableId: LOOT_SCHOOL_TEACHER
-      - Id: C_3F_LOCKER
-        Kind: 0
-        Floor: 2
-        X: 11
-        SearchSeconds: 3
-        LootTableId: LOOT_SCHOOL_LOCKER
-      - Id: C_3F_CABINET
-        Kind: 2
+        X: 10
+        Number: 1
+        LootTableId: 
+      - RoomId: ROOM_3F_ROOM_CLASSROOM_2
+        TemplateId: ROOM_CLASSROOM
         Floor: 2
         X: 18
-        SearchSeconds: 3.5
+        Number: 2
         LootTableId: 
-      - Id: C_3F_BOX
-        Kind: 4
+      - RoomId: ROOM_3F_ROOM_CLASSROOM_3
+        TemplateId: ROOM_CLASSROOM
         Floor: 2
-        X: 28
-        SearchSeconds: 2.5
+        X: 26
+        Number: 3
         LootTableId: 
+      - RoomId: ROOM_3F_ROOM_CLASSROOM_4
+        TemplateId: ROOM_CLASSROOM
+        Floor: 2
+        X: 34
+        Number: 4
+        LootTableId: 
+      - RoomId: ROOM_3F_ROOM_CLASSROOM_5
+        TemplateId: ROOM_CLASSROOM
+        Floor: 2
+        X: 46
+        Number: 5
+        LootTableId: 
+      - RoomId: ROOM_3F_ROOM_CLASSROOM_6
+        TemplateId: ROOM_CLASSROOM
+        Floor: 2
+        X: 54
+        Number: 6
+        LootTableId: 
+      - RoomId: ROOM_3F_ROOM_CLASSROOM_7
+        TemplateId: ROOM_CLASSROOM
+        Floor: 2
+        X: 62
+        Number: 7
+        LootTableId: 
+      - RoomId: ROOM_3F_ROOM_RESTROOM_0
+        TemplateId: ROOM_RESTROOM
+        Floor: 2
+        X: 70
+        Number: 0
+        LootTableId: 
+      - RoomId: ROOM_4F_ROOM_CLASSROOM_1
+        TemplateId: ROOM_CLASSROOM
+        Floor: 3
+        X: 10
+        Number: 1
+        LootTableId: 
+      - RoomId: ROOM_4F_ROOM_CLASSROOM_2
+        TemplateId: ROOM_CLASSROOM
+        Floor: 3
+        X: 18
+        Number: 2
+        LootTableId: 
+      - RoomId: ROOM_4F_ROOM_CLASSROOM_3
+        TemplateId: ROOM_CLASSROOM
+        Floor: 3
+        X: 26
+        Number: 3
+        LootTableId: 
+      - RoomId: ROOM_4F_ROOM_CLASSROOM_4
+        TemplateId: ROOM_CLASSROOM
+        Floor: 3
+        X: 34
+        Number: 4
+        LootTableId: 
+      - RoomId: ROOM_4F_ROOM_CLASSROOM_5
+        TemplateId: ROOM_CLASSROOM
+        Floor: 3
+        X: 46
+        Number: 5
+        LootTableId: 
+      - RoomId: ROOM_4F_ROOM_CLASSROOM_6
+        TemplateId: ROOM_CLASSROOM
+        Floor: 3
+        X: 54
+        Number: 6
+        LootTableId: 
+      - RoomId: ROOM_4F_ROOM_CLASSROOM_7
+        TemplateId: ROOM_CLASSROOM
+        Floor: 3
+        X: 62
+        Number: 7
+        LootTableId: 
+      - RoomId: ROOM_4F_ROOM_RESTROOM_0
+        TemplateId: ROOM_RESTROOM
+        Floor: 3
+        X: 70
+        Number: 0
+        LootTableId: 
+      RoomTemplates:
+      - Id: ROOM_CLASSROOM
+        Width: 14
+        ExitX: 1.2
+        Containers:
+        - Id: TEACHER_DESK
+          Kind: 1
+          Floor: 0
+          X: 3.6
+          SearchSeconds: 2
+          LootTableId: LOOT_SCHOOL_TEACHER
+        - Id: DESKS_FRONT
+          Kind: 1
+          Floor: 0
+          X: 6.4
+          SearchSeconds: 2
+          LootTableId: 
+        - Id: DESKS_BACK
+          Kind: 1
+          Floor: 0
+          X: 9
+          SearchSeconds: 2
+          LootTableId: 
+        - Id: LOCKERS
+          Kind: 0
+          Floor: 0
+          X: 11.6
+          SearchSeconds: 3
+          LootTableId: LOOT_SCHOOL_LOCKER
+        - Id: CLEANING
+          Kind: 2
+          Floor: 0
+          X: 13.1
+          SearchSeconds: 3.5
+          LootTableId: 
+        DefaultLootTableId: LOOT_SCHOOL_GENERAL
+      - Id: ROOM_RESTROOM
+        Width: 8
+        ExitX: 1.2
+        Containers:
+        - Id: SINK
+          Kind: 2
+          Floor: 0
+          X: 4
+          SearchSeconds: 3.5
+          LootTableId: 
+        - Id: SUPPLY
+          Kind: 4
+          Floor: 0
+          X: 6.6
+          SearchSeconds: 2.5
+          LootTableId: 
+        DefaultLootTableId: LOOT_SCHOOL_GENERAL
+      - Id: ROOM_OFFICE
+        Width: 18
+        ExitX: 1.2
+        Containers:
+        - Id: DESK_1
+          Kind: 1
+          Floor: 0
+          X: 4
+          SearchSeconds: 2
+          LootTableId: 
+        - Id: DESK_2
+          Kind: 1
+          Floor: 0
+          X: 6.8
+          SearchSeconds: 2
+          LootTableId: 
+        - Id: DESK_3
+          Kind: 1
+          Floor: 0
+          X: 9.6
+          SearchSeconds: 2
+          LootTableId: 
+        - Id: DESK_4
+          Kind: 1
+          Floor: 0
+          X: 12.4
+          SearchSeconds: 2
+          LootTableId: 
+        - Id: FILES
+          Kind: 2
+          Floor: 0
+          X: 15.2
+          SearchSeconds: 3.5
+          LootTableId: 
+        - Id: FRIDGE
+          Kind: 3
+          Floor: 0
+          X: 17
+          SearchSeconds: 4
+          LootTableId: LOOT_SCHOOL_LOCKER
+        DefaultLootTableId: LOOT_SCHOOL_TEACHER
+      Containers:
+      - Id: C_1F_HALL_LOCKER_A
+        Kind: 0
+        Floor: 0
+        X: 8
+        SearchSeconds: 3
+        LootTableId: LOOT_SCHOOL_LOCKER
+      - Id: C_1F_HALL_LOCKER_B
+        Kind: 0
+        Floor: 0
+        X: 44.5
+        SearchSeconds: 3
+        LootTableId: LOOT_SCHOOL_LOCKER
+      - Id: C_2F_HALL_LOCKER_A
+        Kind: 0
+        Floor: 1
+        X: 8
+        SearchSeconds: 3
+        LootTableId: LOOT_SCHOOL_LOCKER
+      - Id: C_2F_HALL_LOCKER_B
+        Kind: 0
+        Floor: 1
+        X: 40
+        SearchSeconds: 3
+        LootTableId: LOOT_SCHOOL_LOCKER
+      - Id: C_3F_HALL_LOCKER_A
+        Kind: 0
+        Floor: 2
+        X: 8
+        SearchSeconds: 3
+        LootTableId: LOOT_SCHOOL_LOCKER
+      - Id: C_3F_HALL_LOCKER_B
+        Kind: 0
+        Floor: 2
+        X: 40
+        SearchSeconds: 3
+        LootTableId: LOOT_SCHOOL_LOCKER
+      - Id: C_4F_HALL_LOCKER_A
+        Kind: 0
+        Floor: 3
+        X: 8
+        SearchSeconds: 3
+        LootTableId: LOOT_SCHOOL_LOCKER
+      - Id: C_4F_HALL_LOCKER_B
+        Kind: 0
+        Floor: 3
+        X: 40
+        SearchSeconds: 3
+        LootTableId: LOOT_SCHOOL_LOCKER
       Exits:
       - Kind: 0
         Floor: 0
-        X: 1.5
+        X: 40
         StartsLocked: 0
       - Kind: 1
-        Floor: 2
-        X: 34.5
+        Floor: 3
+        X: 78.5
         StartsLocked: 1
     DayRunSeconds: 360
     NightRunSeconds: 360
