@@ -39,6 +39,8 @@ MonoBehaviour:
         Amount: -10
       - Vital: 2
         Amount: -5
+      - Vital: 0
+        Amount: 4
       Resources: []
       Hidden: []
       SleepDebt: 0
