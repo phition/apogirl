@@ -191,6 +191,7 @@ namespace ApoGirl.Exploration.Runtime
             document.sortingOrder = 10;
             document.visualTreeAsset = _hudLayout;
             _hud = new ExpeditionHud(document.rootVisualElement, this);
+            UpdateZombieViews();
         }
 
         private void Update()
