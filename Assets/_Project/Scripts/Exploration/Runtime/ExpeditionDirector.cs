@@ -1201,7 +1201,7 @@ namespace ApoGirl.Exploration.Runtime
             _camera.orthographic = true;
             _camera.depth = 10;
             _camera.clearFlags = CameraClearFlags.SolidColor;
-            _camera.backgroundColor = new Color(0.07f, 0.08f, 0.09f);
+            _camera.backgroundColor = SkyColor;
             if (FindAnyObjectByType<AudioListener>() == null)
             {
                 go.AddComponent<AudioListener>();
@@ -1640,9 +1640,16 @@ namespace ApoGirl.Exploration.Runtime
             ? Mathf.Pow(_ambientIntensity, 2.2f)
             : _ambientIntensity;
 
+        /// <summary>건물 바깥 배경(조명을 받지 않으므로 밝기에 맞춰 직접 어둡게 한다).</summary>
+        private static readonly Color SkyColor = new Color(0.07f, 0.08f, 0.09f);
+
         private void SetAmbient(float intensity, Color color)
         {
             _ambientIntensity = intensity;
+            if (_camera != null)
+            {
+                _camera.backgroundColor = FullVision ? SkyColor : Color.Lerp(Color.black, SkyColor, intensity);
+            }
             if (_light != null)
             {
                 _light.intensity = FullVision ? 1f : AmbientLightIntensity;
@@ -1666,7 +1673,7 @@ namespace ApoGirl.Exploration.Runtime
             if (keyboard.f5Key.wasPressedThisFrame)
             {
                 FullVision = !FullVision;
-                _light.intensity = FullVision ? 1f : AmbientLightIntensity;
+                SetAmbient(_ambientIntensity, _light.color);
                 _log.DebugUsed = true;
             }
 
