@@ -102,8 +102,8 @@ namespace ApoGirl.Core.Definitions
         /// <summary>밤 습격 (문서 5.5): 이 주차부터, 확률 = 기본 + (위협 − 방어) × 계수, 상한.</summary>
         public int RaidStartWeek = 4;
         public float RaidBaseChance = 0.02f;
-        public float RaidChancePerPoint = 0.004f;
-        public float RaidMaxChance = 0.25f;
+        public float RaidChancePerPoint = 0.002f; // M7-2: 0.004 → 0.002 (연 30회 → 목표 10~15회)
+        public float RaidMaxChance = 0.15f; // M7-2: 0.25 → 0.15
 
         /// <summary>습격 세기 = 위협 + 0~분산, 방어력 = 전투력 + 방어도 × 배율 + 경계 보정 + 0~분산.</summary>
         public int RaidStrengthVariance = 20;
@@ -198,14 +198,27 @@ namespace ApoGirl.Core.Definitions
         public int DehydrationThreshold = 60;
         public int DehydrationHpLoss = 10;
 
+        // ── M7-2 후반 압박 (M7-f, 문서 9.0 "자원 압박이 서서히 상승") ──
+
+        /// <summary>겨울(40~52주) 식량 소모 배율. 하루 소모를 소수점까지 누적해 나눠 쓴다 (2 × 1.3 → 주 18).</summary>
+        public float WinterFoodMultiplier = 1.3f;
+
+        /// <summary>겨울 주간 난방 연료. 모자라면 NoHeatStress.</summary>
+        public int WinterWeeklyFuel = 2;
+        public int NoHeatStress = 6;
+
+        /// <summary>주간 정산: 식량이 이 값을 넘으면 넘는 양의 FoodSpoilageRate만큼 상한다 (올림).</summary>
+        public int FoodSpoilageThreshold = 60;
+        public float FoodSpoilageRate = 0.2f;
+
         // ── M6 주인공 감염 (문서 3.1.1): 쓰러지면 물릴 수 있다. 응급 처치 성공 시 감염이 휴면 ──
         public float BiteChanceOnDownDay = 0.25f;
-        public float BiteChanceOnDownNight = 0.5f;
+        public float BiteChanceOnDownNight = 0.35f; // M7-2: 0.5 → 0.35 (밤만 전략 감염 사망 과다)
         public int BiteInfection = 30;
         public int BiteInfectionTreated = 8;
         public float FirstAidBaseChance = 0.15f;
         public float FirstAidPerMedicineLevel = 0.1f;
-        public int InfectionWeeklyGrowth = 6;
+        public int InfectionWeeklyGrowth = 5; // M7-2: 6 → 5
         public int InfectionGrowthReducePerMedicineLevel = 1;
         public int InfectionGrowthMin = 2;
 

@@ -36,7 +36,8 @@ namespace ApoGirl.Core.Rules
         /// </summary>
         public static void ApplyDaily(GameState state, BalanceConfig balance, StateDelta delta, int foodSaving = 0)
         {
-            var food = state.Calendar.Day % 2 == 0 ? Math.Max(0, balance.DailyFood - foodSaving) : balance.DailyFood;
+            var baseFood = DailyFoodNeed(state.Calendar.Week, state.Calendar.Day, balance);
+            var food = state.Calendar.Day % 2 == 0 ? Math.Max(0, baseFood - foodSaving) : baseFood;
             var ate = Consume(state, ResourceType.Food, food, VitalType.Hunger, balance.HungerRecovery, balance.HungerIncrease, balance, delta);
             var water = balance.DailyWater + (state.Base.Weather == WeatherType.Heat ? balance.HeatExtraWater : 0);
             var drank = Consume(state, ResourceType.Water, water, VitalType.Thirst, balance.ThirstRecovery, balance.ThirstIncrease, balance, delta);
@@ -58,15 +59,49 @@ namespace ApoGirl.Core.Rules
             }
         }
 
-        /// <summary>주간 정산: 전력은 복구 이후에만 소모 (복구 전 정전이 기본 상태).</summary>
-        public static void ApplyWeekly(GameState state, BalanceConfig balance, StateDelta delta)
+        /// <summary>그날의 기본 식량 소모. 겨울에는 배율을 하루 단위로 나눠 쓴다 (소수점 누적: 2 × 1.3 → 2,3,2,3,3,2,3).</summary>
+        public static int DailyFoodNeed(int week, int day, BalanceConfig balance)
         {
-            if (!state.Base.PowerRestored)
+            if (CalendarRules.GetSeason(week) != Season.Winter || balance.WinterFoodMultiplier <= 1f)
             {
-                return;
+                return balance.DailyFood;
             }
 
-            EffectApplier.ChangeResource(state, ResourceType.Power, -balance.WeeklyPower, delta);
+            var perDay = balance.DailyFood * (double)balance.WinterFoodMultiplier;
+            return (int)Math.Floor(perDay * day + 1e-6) - (int)Math.Floor(perDay * (day - 1) + 1e-6);
+        }
+
+        /// <summary>주간 정산: 전력(복구 이후만), 겨울 난방 연료, 식량 부패.</summary>
+        public static void ApplyWeekly(GameState state, BalanceConfig balance, StateDelta delta)
+        {
+            if (state.Base.PowerRestored)
+            {
+                EffectApplier.ChangeResource(state, ResourceType.Power, -balance.WeeklyPower, delta);
+            }
+
+            // M7-2: 겨울 난방
+            if (CalendarRules.GetSeason(state.Calendar.Week) == Season.Winter && balance.WinterWeeklyFuel > 0)
+            {
+                var fuel = state.Base.GetResource(ResourceType.Fuel);
+                EffectApplier.ChangeResource(state, ResourceType.Fuel, -Math.Min(fuel, balance.WinterWeeklyFuel), delta);
+                if (fuel < balance.WinterWeeklyFuel)
+                {
+                    EffectApplier.ChangeVital(state, VitalType.Stress, balance.NoHeatStress, balance, delta);
+                }
+            }
+
+            // M7-2: 보관량을 넘는 식량은 상한다
+            var spoiled = SpoiledFood(state.Base.GetResource(ResourceType.Food), balance);
+            if (spoiled > 0)
+            {
+                EffectApplier.ChangeResource(state, ResourceType.Food, -spoiled, delta);
+            }
+        }
+
+        public static int SpoiledFood(int food, BalanceConfig balance)
+        {
+            var excess = food - balance.FoodSpoilageThreshold;
+            return excess <= 0 || balance.FoodSpoilageRate <= 0f ? 0 : (int)Math.Ceiling(excess * balance.FoodSpoilageRate - 1e-6);
         }
 
         /// <summary>필요량을 다 채웠으면 true.</summary>

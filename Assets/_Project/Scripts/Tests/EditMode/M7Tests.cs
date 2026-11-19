@@ -5,6 +5,7 @@ using ApoGirl.Core.Events;
 using ApoGirl.Core.Expedition;
 using ApoGirl.Core.Random;
 using ApoGirl.Core.Rules;
+using ApoGirl.Core.Simulation;
 using ApoGirl.Core.State;
 using NUnit.Framework;
 
@@ -88,6 +89,43 @@ namespace ApoGirl.Tests.EditMode
             EventResolver.Choose(state, ev, "TREAT_SELF", Night, db.Balance, new SeededRandom(SeededRandom.CreateState(5)), new StateDelta());
             Assert.Less(state.Player.Vitals.Hp, 80, "직접 수혈은 체력 부담");
             Assert.Greater(state.Player.Vitals.Fatigue, 0);
+        }
+
+        // ── M7-2 후반 압박 ──
+
+        [Test]
+        public void WinterFood_SpreadsMultiplierOverWeek()
+        {
+            var balance = new BalanceConfig { DailyFood = 2, WinterFoodMultiplier = 1.3f };
+            var spring = Enumerable.Range(1, 7).Sum(d => UpkeepRules.DailyFoodNeed(10, d, balance));
+            var winter = Enumerable.Range(1, 7).Sum(d => UpkeepRules.DailyFoodNeed(45, d, balance));
+            Assert.AreEqual(14, spring);
+            Assert.AreEqual(18, winter, "2 × 1.3 × 7 = 18.2 → 18");
+            Assert.IsTrue(Enumerable.Range(1, 7).All(d => UpkeepRules.DailyFoodNeed(45, d, balance) is 2 or 3), "하루 2~3으로 나눠 쓴다");
+        }
+
+        [Test]
+        public void Weekly_SpoilsExcessFood_AndBurnsWinterFuel()
+        {
+            var balance = new BalanceConfig { FoodSpoilageThreshold = 60, FoodSpoilageRate = 0.2f, WinterWeeklyFuel = 2, NoHeatStress = 6 };
+            Assert.AreEqual(0, UpkeepRules.SpoiledFood(60, balance));
+            Assert.AreEqual(1, UpkeepRules.SpoiledFood(61, balance), "올림");
+            Assert.AreEqual(8, UpkeepRules.SpoiledFood(100, balance));
+
+            var state = NewGameFactory.Create(balance, 1);
+            state.Base.SetResource(ResourceType.Food, 100);
+            state.Base.SetResource(ResourceType.Fuel, 5);
+            state.Calendar.Week = 20;
+            UpkeepRules.ApplyWeekly(state, balance, new StateDelta());
+            Assert.AreEqual(92, state.Base.GetResource(ResourceType.Food));
+            Assert.AreEqual(5, state.Base.GetResource(ResourceType.Fuel), "겨울이 아니면 난방 없음");
+
+            state.Calendar.Week = 45;
+            state.Base.SetResource(ResourceType.Fuel, 1);
+            var stress = state.Player.Vitals.Stress;
+            UpkeepRules.ApplyWeekly(state, balance, new StateDelta());
+            Assert.AreEqual(0, state.Base.GetResource(ResourceType.Fuel));
+            Assert.AreEqual(stress + 6, state.Player.Vitals.Stress, "연료가 모자라면 추위 스트레스");
         }
 
         // ── 헤드리스 조우 ──

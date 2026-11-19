@@ -71,13 +71,13 @@
       "Night": { "Resources": [ { "Resource": "Food", "Min": 2, "Max": 3 } ], "BaseDownChance": 0.0, "Fatigue": 8, "StressMin": 6, "StressMax": 8 } },
     { "Id": "LOC_SCHOOL_INTERIOR",
       "Day": { "Resources": [ { "Resource": "Food", "Min": 6, "Max": 10 }, { "Resource": "Water", "Min": 4, "Max": 8 }, { "Resource": "Materials", "Min": 1, "Max": 3 } ], "BaseDownChance": 0.05, "Fatigue": 15, "StressMin": 6, "StressMax": 12, "ConscienceMax": 2 },
-      "Night": { "Resources": [ { "Resource": "Food", "Min": 8, "Max": 12 }, { "Resource": "Medicine", "Min": 0, "Max": 2 }, { "Resource": "Materials", "Min": 2, "Max": 4 } ], "BaseDownChance": 0.1, "Fatigue": 20, "StressMin": 15, "StressMax": 15, "DawnReturnChance": 0.2 } },
+      "Night": { "Resources": [ { "Resource": "Food", "Min": 8, "Max": 12 }, { "Resource": "Medicine", "Min": 0, "Max": 2 }, { "Resource": "Materials", "Min": 2, "Max": 4 }, { "Resource": "Water", "Min": 1, "Max": 3 } ], "BaseDownChance": 0.1, "Fatigue": 20, "StressMin": 15, "StressMax": 15, "DawnReturnChance": 0.2 } },
     { "Id": "LOC_STORE",
       "Day": { "Resources": [ { "Resource": "Food", "Min": 8, "Max": 12 }, { "Resource": "Water", "Min": 4, "Max": 7 }, { "Resource": "Fuel", "Min": 0, "Max": 1 } ], "BaseDownChance": 0.06, "Fatigue": 14, "StressMin": 6, "StressMax": 12, "ConscienceMax": 2 },
       "Night": { "Resources": [ { "Resource": "Food", "Min": 9, "Max": 14 }, { "Resource": "Water", "Min": 4, "Max": 8 }, { "Resource": "Materials", "Min": 1, "Max": 2 } ], "BaseDownChance": 0.11, "Fatigue": 18, "StressMin": 14, "StressMax": 16, "DawnReturnChance": 0.15 } },
     { "Id": "LOC_PHARMACY",
       "Day": { "Resources": [ { "Resource": "Medicine", "Min": 2, "Max": 4 }, { "Resource": "Water", "Min": 1, "Max": 3 } ], "BaseDownChance": 0.08, "Fatigue": 16, "StressMin": 8, "StressMax": 14, "ConscienceMax": 1 },
-      "Night": { "Resources": [ { "Resource": "Medicine", "Min": 4, "Max": 7 } ], "BaseDownChance": 0.15, "Fatigue": 20, "StressMin": 16, "StressMax": 18, "DawnReturnChance": 0.25 } }
+      "Night": { "Resources": [ { "Resource": "Medicine", "Min": 4, "Max": 7 }, { "Resource": "Water", "Min": 0, "Max": 2 } ], "BaseDownChance": 0.15, "Fatigue": 20, "StressMin": 16, "StressMax": 18, "DawnReturnChance": 0.25 } }
   ],
 
   "Enemies": [

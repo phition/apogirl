@@ -169,6 +169,23 @@
       "Use": "ACT_TREAT_INFECTION"
     },
     {
+      "Note": "감염이 깊으면 주 2회 처치",
+      "When": {
+        "Checks": [
+          {
+            "Kind": "Vital",
+            "Key": "Infection",
+            "Op": "GreaterOrEqual",
+            "Value": 50
+          }
+        ]
+      },
+      "Slots": [
+        "D6"
+      ],
+      "Use": "ACT_TREAT_INFECTION"
+    },
+    {
       "Note": "체력이 낮으면 탐험 칸을 휴식으로",
       "When": {
         "Checks": [
