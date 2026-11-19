@@ -422,6 +422,12 @@ namespace ApoGirl.Exploration.Runtime
             return shoved != null;
         }
 
+        /// <summary>손전등 켜기/끄기 (F). 어둠 속 수색이 빨라지는 대신 멀리서도 눈에 띈다.</summary>
+        public void ToggleFlashlight()
+        {
+            FlashlightOn = !FlashlightOn;
+        }
+
         /// <summary>디버그·테스트: 소음 발생.</summary>
         public void DebugEmitNoise(int areaId, float x, float radius)
         {
@@ -447,7 +453,7 @@ namespace ApoGirl.Exploration.Runtime
             HandleDebugKeys(keyboard);
             if (keyboard.fKey.wasPressedThisFrame)
             {
-                FlashlightOn = !FlashlightOn;
+                ToggleFlashlight();
             }
 
             if (keyboard.tabKey.wasPressedThisFrame)
