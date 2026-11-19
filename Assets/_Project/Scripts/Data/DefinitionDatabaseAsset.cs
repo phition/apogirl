@@ -22,5 +22,15 @@ namespace ApoGirl.Data
                 _actions.Where(a => a != null).Select(a => a.ToDefinition()),
                 _expeditionModels.Where(m => m != null).Select(m => m.ToDefinition()));
         }
+
+#if UNITY_EDITOR
+        /// <summary>에디터 도구용: 묶을 에셋 지정.</summary>
+        public void EditorSetContents(BalanceConfigAsset balance, List<ActionDefinitionAsset> actions, List<ExpeditionModelAsset> expeditionModels)
+        {
+            _balance = balance;
+            _actions = actions;
+            _expeditionModels = expeditionModels;
+        }
+#endif
     }
 }

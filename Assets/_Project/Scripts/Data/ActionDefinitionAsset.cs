@@ -15,5 +15,10 @@ namespace ApoGirl.Data
             _definition.Id = Id;
             return _definition;
         }
+
+#if UNITY_EDITOR
+        /// <summary>에디터 도구용: 정의 내용 지정.</summary>
+        public void EditorSetDefinition(ActionDef definition) => _definition = definition;
+#endif
     }
 }

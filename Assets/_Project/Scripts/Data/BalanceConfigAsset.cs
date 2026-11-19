@@ -10,5 +10,10 @@ namespace ApoGirl.Data
         [SerializeField] private BalanceConfig _config = new BalanceConfig();
 
         public BalanceConfig Config => _config;
+
+#if UNITY_EDITOR
+        /// <summary>에디터 도구용: 밸런스 값 지정.</summary>
+        public void EditorSetConfig(BalanceConfig config) => _config = config;
+#endif
     }
 }

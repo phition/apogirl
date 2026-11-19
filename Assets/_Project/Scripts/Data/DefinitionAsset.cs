@@ -12,5 +12,10 @@ namespace ApoGirl.Data
 
         /// <summary>세이브·참조에 쓰이는 고유 문자열 ID.</summary>
         public string Id => _id;
+
+#if UNITY_EDITOR
+        /// <summary>에디터 도구용: 에셋 생성 시 ID 지정.</summary>
+        public void EditorSetId(string id) => _id = id;
+#endif
     }
 }
