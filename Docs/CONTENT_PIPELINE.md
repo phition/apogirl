@@ -7,7 +7,10 @@ SO 에셋과 문자열 테이블은 생성물이라 직접 고치지 않는다.
 
 | 원본 | 위치 | 생성물 |
 |---|---|---|
-| 이벤트·NPC | `Assets/_Project/Content/Events/*.json` | `Data/Events/*.asset`, `Data/NPCs/*.asset`, 정의 DB 등록 |
+| 이벤트·NPC | `Assets/_Project/Content/Events/*.json`, `Content/Story/*.json` | `Data/Events/*.asset`, `Data/NPCs/*.asset`, 정의 DB 등록 |
+| 행동·아이템·전리품·탐험 모델·적 (M4) | `Content/Base/*.json` | `Data/Actions`, `Data/Items`, `Data/Loot`, `Data/Expeditions`, `Data/Enemies` |
+| 특성·시설·일기/코멘트·프롤로그 (M4) | `Content/Base/traits_facilities.json`, `Content/Story/lines.json`, `Content/Story/prologue.json` | `Data/StoryExtras.asset` |
+| 탐험 지역 레이아웃 (M4) | `Scripts/Editor/LocationBuilder.cs` (메뉴 Build Locations) | `Data/Locations/*.asset` |
 | 대사 | `Assets/_Project/Resources/Dialogue/**/*.yarn` | Yarn 프로젝트 `ApoGirl.yarnproject` → `Dialogue` 문자열 테이블 |
 | UI 문자열 | `Assets/_Project/Localization/Source/ko.json` | `UI`·`Actions`·`Items` 문자열 테이블 |
 
@@ -63,7 +66,17 @@ SO 에셋과 문자열 테이블은 생성물이라 직접 고치지 않는다.
 - **판정 결과에 따른 분기**: 선택지를 고르는 즉시 판정이 끝난다. 이어지는 대사에서 `<<if succeeded()>>`로 나눈다.
 - **카드 대체**: Yarn 노드가 없는 이벤트는 카드로 보인다. 이때 UI 키 `event.{ID}.title/body`와 선택지 `TextKey`가 필요하다.
 
-## 5. 테스트
+## 5. M4 추가 규칙
+
+- **행동 해금**: `ActionDef.Unlock`(조건)이 맞지 않으면 팔레트에 안 보인다. 지역 해금은 플래그 `LOC_SCHOOL_DAY`, `LOC_STORE`, `LOC_PHARMACY`, 밤 탐험은 `NIGHT_RUNS`.
+- **점진적 노출**: 이벤트가 `UI_STATS`, `UI_PROFICIENCY`, `UI_RESOURCES`, `UI_SLEEPDEBT`, `UI_DEFENSE` 플래그를 세우면 허브 패널이 열린다. 4주차부터는 습격·부채를 뺀 나머지가 자동으로 열린다.
+- **효과 확장**: `Defense`, `Threat`, `Facilities`, `AddTraits`, `Proficiencies`, `TeacherMobility`, `RestorePower`, `RaidStrength`(이벤트에서 즉시 습격 판정).
+- **조건 확장**: `Facility`, `Defense`, `Threat`, `TeacherMobility`, `Trait`, `Expeditions`(Key Day/Night), `ActionCount`, `IsBirthday`.
+- **탐험 조우**: `LocationVariantDef.Encounters`(LocationBuilder). 고르면 플래그 `ENC_{조우}_{선택지}`와 선택지 플래그·단서가 결과로 돌아온다. 문구는 UI 키 `enc.*`.
+- **일기·선생님 한마디**: `Lines`(Kind Diary/TeacherComment), 조건이 맞는 것 중 Priority가 가장 높은 것.
+- **프롤로그**: Yarn `PROLOGUE_START`(선택지 태그 `#choice:문항.선택지`, 입력 `<<input name|contact|birthday|personality>>`) → 생활기록부 카드 → `PROLOGUE_AFTER`.
+
+## 6. 테스트
 
 - EditMode `ContentPipelineTests`가 실제 원본(JSON + Yarn)을 검증하고, 10주 헤드리스 진행을 확인한다.
 - PlayMode `HubDialogue_RunsYarnNode_AndAppliesChoice`가 허브에서 대사 표시, 조사 처리, 선택 반영을 확인한다.
