@@ -6,6 +6,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using ApoGirl.Core.Definitions;
 using ApoGirl.Core.Effects;
+using ApoGirl.Core.Rules;
 using ApoGirl.Core.Simulation;
 using ApoGirl.Core.State;
 using ApoGirl.Presentation.Dialogue;
@@ -109,42 +110,7 @@ namespace ApoGirl.Presentation.Screens
         /// <summary>공통 효과 + 고른 선택지 효과를 합치고, 프로필 칸을 채운다.</summary>
         private GameEffect BuildEffect()
         {
-            var prologue = _session.Definitions.Extras.Prologue;
-            var effect = new GameEffect().MergeFrom(prologue.Common);
-            var personality = "";
-            foreach (var (questionId, optionId) in _picks)
-            {
-                var option = prologue.Questions.Find(q => q.Id == questionId)?.Options.Find(o => o.Id == optionId);
-                if (option == null)
-                {
-                    continue;
-                }
-
-                effect.MergeFrom(option.Effect);
-                if (questionId == "PERSONALITY")
-                {
-                    personality += optionId;
-                }
-
-                switch (option.ProfileField)
-                {
-                    case "BloodType":
-                        _profile.BloodType = Enum.TryParse<BloodType>(option.ProfileValue, out var blood) ? blood : BloodType.Unknown;
-                        break;
-                    case "GradeBandId":
-                        _profile.GradeBandId = option.ProfileValue;
-                        break;
-                    case "FavoriteSubjectId":
-                        _profile.FavoriteSubjectId = option.ProfileValue;
-                        break;
-                    case "ClubId":
-                        _profile.ClubId = option.ProfileValue;
-                        break;
-                }
-            }
-
-            _profile.PersonalityType = personality;
-            return effect;
+            return PrologueRules.BuildEffect(_session.Definitions.Extras.Prologue, _picks, _profile);
         }
 
         /// <summary>생활기록부 카드: 인적사항·성격·특기·성적 = 시작 스탯 시트 (문서 7.1).</summary>

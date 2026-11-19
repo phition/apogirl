@@ -1,0 +1,435 @@
+{
+  "RunsPerStrategy": 40,
+  "BaseSeed": 1000,
+  "MaxWeeks": 60,
+  "Groups": {
+    "EXP_DAY": {
+      "Pick": "Random",
+      "Actions": [
+        "ACT_EXP_DAY_SCHOOL",
+        "ACT_EXP_DAY_STORE",
+        "ACT_EXP_DAY_PHARMACY",
+        "ACT_EXP_DAY_RESIDENTIAL",
+        "ACT_EXP_DAY_SUBWAY",
+        "ACT_EXP_DAY_MART",
+        "ACT_EXP_DAY_POLICE",
+        "ACT_EXP_DAY_WATERWORKS"
+      ],
+      "Weights": [
+        1,
+        2,
+        2,
+        2,
+        2,
+        3,
+        2,
+        2
+      ]
+    },
+    "EXP_NIGHT": {
+      "Pick": "Random",
+      "Actions": [
+        "ACT_EXP_NIGHT_SCHOOL",
+        "ACT_EXP_NIGHT_STORE",
+        "ACT_EXP_NIGHT_PHARMACY",
+        "ACT_EXP_NIGHT_SUBWAY",
+        "ACT_EXP_NIGHT_MART",
+        "ACT_EXP_NIGHT_POLICE",
+        "ACT_EXP_NIGHT_WATERWORKS"
+      ],
+      "Weights": [
+        1,
+        2,
+        2,
+        2,
+        3,
+        2,
+        2
+      ]
+    },
+    "EDU": {
+      "Pick": "Random",
+      "Actions": [
+        "ACT_EDU_HUMANITIES",
+        "ACT_EDU_MEDICINE",
+        "ACT_EDU_SELFDEFENSE",
+        "ACT_EDU_SURVIVAL",
+        "ACT_EDU_ENGINEERING",
+        "ACT_EDU_COOKING",
+        "ACT_EDU_MIND"
+      ],
+      "Weights": [
+        2,
+        2,
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    "EDU_FOCUS": {
+      "Pick": "Random",
+      "Actions": [
+        "ACT_EDU_MEDICINE",
+        "ACT_EDU_HUMANITIES",
+        "ACT_EDU_ENGINEERING",
+        "ACT_EDU_SURVIVAL"
+      ],
+      "Weights": [
+        3,
+        2,
+        2,
+        1
+      ]
+    },
+    "BUILD": {
+      "Pick": "First",
+      "Actions": [
+        "ACT_SURV_RESTORE_POWER",
+        "ACT_SURV_MAKE_CRUTCH",
+        "ACT_SURV_BARRICADE"
+      ]
+    }
+  },
+  "CommonRules": [
+    {
+      "Note": "감염 증상이 보이면 처치부터",
+      "When": {
+        "Checks": [
+          {
+            "Kind": "Vital",
+            "Key": "Infection",
+            "Op": "GreaterOrEqual",
+            "Value": 25
+          }
+        ]
+      },
+      "Slots": [
+        "D3"
+      ],
+      "Use": "ACT_TREAT_INFECTION"
+    },
+    {
+      "Note": "체력이 낮으면 탐험 칸을 휴식으로",
+      "When": {
+        "Checks": [
+          {
+            "Kind": "Vital",
+            "Key": "Hp",
+            "Op": "LessOrEqual",
+            "Value": 35
+          }
+        ]
+      },
+      "Slots": [
+        "D2",
+        "D5"
+      ],
+      "Use": "ACT_REST_DAY"
+    },
+    {
+      "Note": "체력이 낮으면 밤 탐험 칸도 휴식으로",
+      "When": {
+        "Checks": [
+          {
+            "Kind": "Vital",
+            "Key": "Hp",
+            "Op": "LessOrEqual",
+            "Value": 35
+          }
+        ]
+      },
+      "Slots": [
+        "N1",
+        "N4"
+      ],
+      "Use": "ACT_REST_NIGHT"
+    },
+    {
+      "Note": "선생님이 다시 아프면 돌본다",
+      "When": {
+        "FlagsAll": [
+          "TEACHER_REINFECTED"
+        ]
+      },
+      "Slots": [
+        "N6"
+      ],
+      "Use": "ACT_CARE_TEACHER"
+    }
+  ],
+  "CommonChoiceBias": [],
+  "PrologueGroups": [
+    {
+      "QuestionId": "PERSONALITY",
+      "Sets": [
+        [
+          "E",
+          "I"
+        ],
+        [
+          "S",
+          "N"
+        ],
+        [
+          "T",
+          "F"
+        ],
+        [
+          "J",
+          "P"
+        ]
+      ]
+    }
+  ],
+  "Strategies": [
+    {
+      "Id": "DAY_ONLY",
+      "Description": "낮 탐험만 (주 2회: 2일·5일 낮)",
+      "Day": [
+        "EDU",
+        "EXP_DAY",
+        "EDU",
+        "BUILD|EDU",
+        "EXP_DAY",
+        "EDU",
+        "ACT_SURV_PURIFY_WATER"
+      ],
+      "Night": [
+        "ACT_REST_NIGHT",
+        "ACT_REST_NIGHT",
+        "ACT_NIGHT_TALK|ACT_REST_NIGHT",
+        "ACT_REST_NIGHT",
+        "ACT_REST_NIGHT",
+        "ACT_NIGHT_DIARY|ACT_REST_NIGHT",
+        "ACT_REST_NIGHT"
+      ],
+      "Rules": [],
+      "ChoiceBias": [],
+      "EncounterFirstChoiceWeight": 1
+    },
+    {
+      "Id": "NIGHT_ONLY",
+      "Description": "밤 탐험만 (주 2회: 1일·4일 밤, 밤 탐험 해금 전엔 낮 탐험)",
+      "Day": [
+        "EDU",
+        "ACT_REST_DAY",
+        "EDU",
+        "BUILD|EDU",
+        "ACT_REST_DAY",
+        "EDU",
+        "ACT_SURV_PURIFY_WATER"
+      ],
+      "Night": [
+        "EXP_NIGHT",
+        "ACT_REST_NIGHT",
+        "ACT_REST_NIGHT",
+        "EXP_NIGHT",
+        "ACT_REST_NIGHT",
+        "ACT_NIGHT_TALK|ACT_REST_NIGHT",
+        "ACT_REST_NIGHT"
+      ],
+      "Rules": [
+        {
+          "Note": "밤 탐험 해금 전에는 낮 탐험",
+          "When": {
+            "FlagsNone": [
+              "NIGHT_RUNS"
+            ]
+          },
+          "Slots": [
+            "D2",
+            "D5"
+          ],
+          "Use": "EXP_DAY"
+        }
+      ],
+      "ChoiceBias": [],
+      "EncounterFirstChoiceWeight": 1
+    },
+    {
+      "Id": "MIXED",
+      "Description": "낮 1 + 밤 1 (2일 낮·4일 밤, 해금 전엔 5일 낮)",
+      "Day": [
+        "EDU",
+        "EXP_DAY",
+        "EDU",
+        "BUILD|EDU",
+        "ACT_REST_DAY",
+        "EDU",
+        "ACT_SURV_PURIFY_WATER"
+      ],
+      "Night": [
+        "ACT_REST_NIGHT",
+        "ACT_REST_NIGHT",
+        "ACT_NIGHT_TALK|ACT_REST_NIGHT",
+        "EXP_NIGHT",
+        "ACT_REST_NIGHT",
+        "ACT_NIGHT_DIARY|ACT_REST_NIGHT",
+        "ACT_REST_NIGHT"
+      ],
+      "Rules": [
+        {
+          "Note": "밤 탐험 해금 전에는 5일 낮 탐험",
+          "When": {
+            "FlagsNone": [
+              "NIGHT_RUNS"
+            ]
+          },
+          "Slots": [
+            "D5"
+          ],
+          "Use": "EXP_DAY"
+        }
+      ],
+      "ChoiceBias": [],
+      "EncounterFirstChoiceWeight": 1
+    },
+    {
+      "Id": "EDUCATION",
+      "Description": "교육 위주 (낮 탐험 주 1회, 식량·물 20 이하면 2회, 밤 공부)",
+      "Day": [
+        "EDU_FOCUS",
+        "EXP_DAY",
+        "EDU_FOCUS",
+        "EDU",
+        "EDU_FOCUS",
+        "EDU",
+        "ACT_SURV_PURIFY_WATER"
+      ],
+      "Night": [
+        "ACT_REST_NIGHT",
+        "ACT_NIGHT_STUDY|ACT_REST_NIGHT",
+        "ACT_REST_NIGHT",
+        "ACT_NIGHT_STUDY|ACT_REST_NIGHT",
+        "ACT_REST_NIGHT",
+        "ACT_NIGHT_DIARY|ACT_REST_NIGHT",
+        "ACT_REST_NIGHT"
+      ],
+      "Rules": [
+        {
+          "Note": "식량·물이 떨어져 가면 5일 낮 탐험",
+          "When": {
+            "AnyChecks": [
+              {
+                "Kind": "Resource",
+                "Key": "Food",
+                "Op": "LessOrEqual",
+                "Value": 20
+              },
+              {
+                "Kind": "Resource",
+                "Key": "Water",
+                "Op": "LessOrEqual",
+                "Value": 20
+              }
+            ]
+          },
+          "Slots": [
+            "D5"
+          ],
+          "Use": "EXP_DAY"
+        }
+      ],
+      "ChoiceBias": [
+        {
+          "Ids": [
+            "TEACH",
+            "ASK_TEACH",
+            "TEACH_ME",
+            "SOLVE",
+            "TEXTBOOKS",
+            "BOOKS",
+            "LIBRARY",
+            "NOTEBOOK",
+            "WRITE",
+            "WRITE_DOWN",
+            "RECORDS",
+            "TAKE_BOOK",
+            "READ_OWN",
+            "TEST",
+            "MEDICINE",
+            "SEEK_CURE",
+            "FIX",
+            "PLAN"
+          ],
+          "Weight": 3
+        }
+      ],
+      "EncounterFirstChoiceWeight": 1
+    },
+    {
+      "Id": "CARE",
+      "Description": "돌봄·공동체 위주 (낮 탐험 주 2회, 밤 대화·돌봄, 사람을 받아들이는 선택)",
+      "Day": [
+        "EDU",
+        "EXP_DAY",
+        "EDU",
+        "BUILD|EDU",
+        "EXP_DAY",
+        "ACT_DAILY_ROOFTOP|EDU",
+        "ACT_SURV_PURIFY_WATER"
+      ],
+      "Night": [
+        "ACT_NIGHT_TALK|ACT_REST_NIGHT",
+        "ACT_REST_NIGHT",
+        "ACT_CARE_TEACHER|ACT_NIGHT_TALK|ACT_REST_NIGHT",
+        "ACT_REST_NIGHT",
+        "ACT_DAILY_TUTOR_DOHYEON|ACT_NIGHT_TALK|ACT_REST_NIGHT",
+        "ACT_CARE_TEACHER|ACT_REST_NIGHT",
+        "ACT_REST_NIGHT"
+      ],
+      "Rules": [],
+      "ChoiceBias": [
+        {
+          "Ids": [
+            "WELCOME",
+            "INVITE",
+            "SHARE",
+            "ACCEPT",
+            "CARE",
+            "HELP_GIFT",
+            "NURSE_CARE",
+            "HOLD_HAND",
+            "TRUST",
+            "FORGIVE",
+            "ALLY",
+            "RESCUE",
+            "TALK",
+            "LISTEN",
+            "LISTEN_MORE",
+            "PROMISE",
+            "COOK_TOGETHER",
+            "GO_TOGETHER",
+            "SHARE_BLANKET",
+            "SHARE_HEAT",
+            "MOVE_IN",
+            "THANK",
+            "SEEK_CURE",
+            "GIVE_TEACHER",
+            "ROOFTOP_ALL",
+            "TRADE",
+            "AGREE"
+          ],
+          "Weight": 3
+        },
+        {
+          "Ids": [
+            "REFUSE",
+            "IGNORE",
+            "DISTANCE",
+            "SEPARATE",
+            "DECLINE",
+            "LEAVE",
+            "THEFT",
+            "SILENT",
+            "QUIET"
+          ],
+          "Weight": 0.3
+        }
+      ],
+      "EncounterFirstChoiceWeight": 3
+    }
+  ]
+}

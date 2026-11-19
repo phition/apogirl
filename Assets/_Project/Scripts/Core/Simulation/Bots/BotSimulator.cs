@@ -1,0 +1,267 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using ApoGirl.Core.Definitions;
+using ApoGirl.Core.Effects;
+using ApoGirl.Core.Endings;
+using ApoGirl.Core.Expedition;
+using ApoGirl.Core.Planning;
+using ApoGirl.Core.Random;
+using ApoGirl.Core.Rules;
+using ApoGirl.Core.State;
+
+namespace ApoGirl.Core.Simulation.Bots
+{
+    /// <summary>주간 정산 직후의 상태 한 줄.</summary>
+    public sealed class BotWeekSample
+    {
+        public int Week;
+        public int Food;
+        public int Water;
+        public int Medicine;
+        public int Fuel;
+        public int Materials;
+        public int Hp;
+        public int Stress;
+        public int Fatigue;
+        public int Infection;
+        public int SleepDebt;
+        public int TeacherInfection;
+        public int Threat;
+        public int Defense;
+    }
+
+    /// <summary>탐험 한 번.</summary>
+    public sealed class BotExpeditionSample
+    {
+        public int Week;
+        public string ActionId = "";
+        public string LocationId = "";
+        public bool Night;
+        public ExtractStatus Status;
+        public int Food;
+        public int Water;
+        public int Medicine;
+        public int Materials;
+        public int Items;
+        public bool Bitten;
+    }
+
+    /// <summary>한 판의 결과.</summary>
+    public sealed class BotRunResult
+    {
+        public string StrategyId = "";
+        public int Seed;
+        public BloodType BloodType;
+        public string Personality = "";
+
+        public GameStatus Status;
+        public int EndWeek;
+        public string EndCause = "";
+        public string EndingId = "";
+        public EndingCategory? EndingCategory;
+
+        public int Raids;
+        public int RaidsRepelled;
+        public int Companions;
+        public int Events;
+
+        // 선생님·완치 갈래 (M7-0)
+        public bool TeacherReinfected;
+        public bool TeacherAlive;
+        public bool TeacherBloodKnown;
+        public bool NeededBloodPack;
+        public bool GotBloodPack;
+        public bool CureAttempted;
+        public bool TeacherCured;
+        public string FinalChoice = "";
+
+        public readonly List<BotWeekSample> Weeks = new List<BotWeekSample>();
+        public readonly List<BotExpeditionSample> Expeditions = new List<BotExpeditionSample>();
+
+        public bool Survived => Status == GameStatus.Rescued;
+    }
+
+    /// <summary>한 판을 프롤로그부터 구조(또는 사망)까지 화면 없이 돌린다.</summary>
+    public static class BotSimulator
+    {
+        /// <summary>엔딩 판정에 쓰는 마지막 선택 플래그 (보고서 표시용).</summary>
+        public static readonly string[] FinalChoiceFlags =
+        {
+            "TEACHER_LAST_LESSON", "TEACHER_ISOLATED", "TEACHER_EXPOSED", "CHOSE_TO_STAY", "TEACHER_LEFT_BEHIND",
+        };
+
+        public static BotRunResult Run(IDefinitionDatabase db, BotConfigDef config, BotStrategyDef strategy, int seed)
+        {
+            // 봇의 판단 난수는 게임 난수와 따로 둔다 (같은 시드면 전략끼리 세계가 같게 시작)
+            var botRandom = new SeededRandom(SeededRandom.CreateState(unchecked(seed * 7919 + StableHash(strategy.Id))));
+            var profile = new ProfileState();
+            var prologue = PrologueRules.BuildEffect(db.Extras.Prologue ?? new PrologueDef(), PickPrologue(db.Extras.Prologue, config, botRandom), profile);
+
+            var state = NewGameFactory.Create(db.Balance, seed, profile);
+            EffectApplier.Apply(state, prologue, db.Balance, new StateDelta());
+            var tutorial = db.Balance.TutorialActionId;
+            if (!string.IsNullOrEmpty(tutorial) && db.TryGetAction(tutorial, out _))
+            {
+                state.Plan.Slots[0].ActionId = tutorial;
+                state.Plan.Slots[0].Locked = true;
+            }
+
+            var result = new BotRunResult
+            {
+                StrategyId = strategy.Id, Seed = seed, BloodType = profile.BloodType, Personality = profile.PersonalityType,
+            };
+
+            var expeditions = new HeadlessExpeditionRunner(db, new BotEncounterChooser(strategy.EncounterFirstChoiceWeight));
+            var chooser = new BotEventChooser(config.CommonChoiceBias.Concat(strategy.ChoiceBias), botRandom);
+            var runner = new WeekRunner(state, db, new SeededRandom(state.Rng), expeditions, chooser);
+            runner.SlotResolved += outcome => Record(result, outcome);
+
+            var opening = db.Balance.OpeningEventId;
+            if (!string.IsNullOrEmpty(opening) && db.TryGetEvent(opening, out _))
+            {
+                runner.ForceEvent(opening);
+            }
+
+            while (state.Status == GameStatus.Playing && state.Calendar.Week <= config.MaxWeeks)
+            {
+                // 1주차도 튜토리얼 칸만 고정하고 나머지는 전략대로
+                BotPlanner.Plan(state, db, config, strategy, botRandom);
+
+                runner.PrepareWeek();
+                while (!runner.IsWeekComplete && !runner.IsGameOver)
+                {
+                    runner.ExecuteNextSlot();
+                }
+
+                if (runner.IsGameOver)
+                {
+                    break;
+                }
+
+                var week = state.Calendar.Week;
+                runner.FinishWeek();
+                result.Weeks.Add(Sample(state, week));
+            }
+
+            Finish(result, state, db);
+            return result;
+        }
+
+        private static void Record(BotRunResult result, SlotOutcome outcome)
+        {
+            var expedition = outcome.Expedition;
+            var request = outcome.ExpeditionRequest;
+            if (expedition == null || request == null)
+            {
+                return;
+            }
+
+            int Loot(ResourceType type) => expedition.ResourceLoot.Where(r => r.Resource == type).Sum(r => r.Amount);
+            result.Expeditions.Add(new BotExpeditionSample
+            {
+                Week = outcome.Week,
+                ActionId = outcome.ActionId,
+                LocationId = request.LocationId,
+                Night = request.TimeOfDay == ExpeditionTime.Night,
+                Status = expedition.Status,
+                Food = Loot(ResourceType.Food),
+                Water = Loot(ResourceType.Water),
+                Medicine = Loot(ResourceType.Medicine),
+                Materials = Loot(ResourceType.Materials),
+                Items = expedition.Loot.Sum(i => i.Count),
+                Bitten = outcome.Bite != null,
+            });
+        }
+
+        private static BotWeekSample Sample(GameState state, int week)
+        {
+            var b = state.Base;
+            var v = state.Player.Vitals;
+            return new BotWeekSample
+            {
+                Week = week,
+                Food = b.GetResource(ResourceType.Food),
+                Water = b.GetResource(ResourceType.Water),
+                Medicine = b.GetResource(ResourceType.Medicine),
+                Fuel = b.GetResource(ResourceType.Fuel),
+                Materials = b.GetResource(ResourceType.Materials),
+                Hp = v.Hp,
+                Stress = v.Stress,
+                Fatigue = v.Fatigue,
+                Infection = v.Infection,
+                SleepDebt = state.Player.SleepDebt,
+                TeacherInfection = state.Teacher.InfectionProgress,
+                Threat = b.Threat,
+                Defense = b.Defense,
+            };
+        }
+
+        private static void Finish(BotRunResult result, GameState state, IDefinitionDatabase db)
+        {
+            var ending = EndingResolver.Resolve(state, db);
+            result.Status = state.Status;
+            result.EndWeek = state.Calendar.Week;
+            result.EndCause = state.EndCause ?? "";
+            result.EndingId = ending.Ending?.Id ?? "";
+            result.EndingCategory = ending.Ending?.Category;
+            result.Raids = state.Exploration.Raids;
+            result.RaidsRepelled = state.Exploration.RaidsRepelled;
+            result.Companions = state.Npcs.Count(n => n.Value.Status == NpcStatus.Joined);
+            result.Events = state.Events.Records.Count;
+
+            var flags = state.Flags;
+            result.TeacherReinfected = state.Teacher.Reinfected;
+            result.TeacherAlive = state.Teacher.Alive;
+            result.TeacherBloodKnown = flags.Contains("TEACHER_BLOOD_KNOWN");
+            result.NeededBloodPack = flags.Contains("NEED_BLOOD_PACK");
+            result.GotBloodPack = flags.Contains("BLOOD_PACK") || flags.Contains("ENC_BLOOD_FRIDGE_TAKE");
+            result.CureAttempted = flags.Contains("CURE_ATTEMPTED");
+            result.TeacherCured = flags.Contains(InfectionRules.FlagTeacherCured);
+            result.FinalChoice = string.Join("+", FinalChoiceFlags.Where(flags.Contains));
+        }
+
+        /// <summary>프롤로그 선택: 묶음 문항은 묶음마다 하나, 나머지 문항은 선택지 하나를 무작위로.</summary>
+        public static List<(string Question, string Option)> PickPrologue(PrologueDef prologue, BotConfigDef config, IRandomService random)
+        {
+            var picks = new List<(string, string)>();
+            if (prologue == null)
+            {
+                return picks;
+            }
+
+            foreach (var question in prologue.Questions)
+            {
+                var group = config.PrologueGroups.FirstOrDefault(g => g.QuestionId == question.Id);
+                if (group != null)
+                {
+                    foreach (var set in group.Sets.Where(s => s.Count > 0))
+                    {
+                        picks.Add((question.Id, set[random.Range(0, set.Count - 1)]));
+                    }
+                }
+                else if (question.Options.Count > 0)
+                {
+                    picks.Add((question.Id, question.Options[random.Range(0, question.Options.Count - 1)].Id));
+                }
+            }
+
+            return picks;
+        }
+
+        /// <summary>실행마다 같은 값 (string.GetHashCode는 실행마다 달라질 수 있다).</summary>
+        public static int StableHash(string text)
+        {
+            unchecked
+            {
+                var hash = 17;
+                foreach (var c in text ?? "")
+                {
+                    hash = hash * 31 + c;
+                }
+
+                return hash;
+            }
+        }
+    }
+}
