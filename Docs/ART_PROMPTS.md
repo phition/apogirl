@@ -95,39 +95,34 @@ shoulder-length black hair, navy blazer, white shirt, navy tie), visual novel sp
 transparent background, soft rim light, [표정 문구]
 ```
 
-### 1.2 윤 선생님 (국어 교사, 멘토) — **[결정 필요] 성별·나이**
+### 1.2 윤 선생님 (국어 교사, 멘토) — **40대 중반 남성** (2026-11-19 결정, B안)
 
-문서에는 국어 교사라는 것과, 무릎 아래를 스스로 잘라내 목발을 짚는다는 것만 정해져 있다. 성별과 나이는 정해지지 않았다.
+설정
+- 학교에서 피난민을 돕다 다리를 물렸고, 스스로 무릎 아래를 잘라냈다(그림에서는 보이지 않게).
+- 프린세스 메이커 집사형의 무뚝뚝한 보호자. 말수는 적지만 아이를 끝까지 책임지려 한다.
 
-| 안 | 내용 | 느낌 |
-|---|---|---|
-| **A (추천)** | 30대 후반 여성 | 엄마도 언니도 아닌 '어른'. 엄격하지만 다정한 담임 같은 거리감 |
-| B | 40대 중반 남성 | 프린세스 메이커 집사의 전형. 무뚝뚝한 보호자 |
-| C | 50대 여성 | 정년이 가까운 베테랑. 더 차분하고 지친 어른 |
-
-**기준 시트** — 파일 `char_teacher_sheet.png` (A안 기준. B·C안이면 첫 줄만 바꾼다)
+**기준 시트** — 파일 `char_teacher_sheet.png`
 ```
 [화풍 문구]
-Character reference sheet of a Korean high school literature teacher, woman in her late 30s,
-short practical dark hair tied back, thin-framed glasses, kind but exhausted face, faint scar on the cheek,
-oversized grey cardigan over a white blouse, long dark trousers, one trouser leg folded and pinned below the knee,
-the leg is not visible, wooden crutches made from a mop handle and tape, bandaged hands,
+Character reference sheet of a Korean high school literature teacher, man in his mid 40s,
+short greying hair, light stubble, thin-framed glasses, stern but kind tired face, faint scar on the cheek,
+worn grey cardigan over a white shirt with rolled sleeves, long dark trousers,
+one trouser leg folded and pinned below the knee, the leg is not visible,
+wooden crutches made from a mop handle and tape, bandaged hands,
 front view and side view, full body, standing with crutches, plain grey background.
 ```
-- B안 첫 줄: `Korean high school literature teacher, man in his mid 40s, short greying hair, stubble,`
-- C안 첫 줄: `Korean high school literature teacher, woman in her early 50s, greying bob haircut,`
 
 **표정 7종** — 파일 `char_teacher_{표정}.png`. 앞부분은 1.1과 같은 방식이고, 선생님 설명으로 바꾼다.
 
 | 표정 | 문구 |
 |---|---|
 | `neutral` | `calm attentive expression` |
-| `smile` | `gentle warm smile` |
+| `smile` | `rare small smile, eyes softened` |
 | `stern` | `stern teacher expression, looking over glasses` |
 | `sad` | `sad, eyes downcast` |
 | `worried` | `worried, brows knitted` |
-| `laugh` | `laughing softly, eyes closed` |
-| `ill` (3막 이후, P3) | `pale, sweating, feverish, tired eyes, cardigan pulled tight, still trying to smile` |
+| `laugh` | `short dry laugh, looking away` |
+| `ill` (3막 이후, P3) | `pale, sweating, feverish, tired eyes, cardigan pulled tight, still trying to look composed` |
 
 ### 1.3 도현 (인근 중학교 3학년 남학생, 첫 NPC)
 
@@ -294,7 +289,7 @@ wide cinematic composition, lots of sky on the upper third for the title.
 
 ## 8. 체크리스트
 
-- [ ] P1: `title_key`, `char_seojin_sheet`, `char_teacher_sheet`(성별·나이 결정 후), `char_dohyeon_sheet`
+- [ ] P1: `title_key`, `char_seojin_sheet`, `char_teacher_sheet`(40대 남성), `char_dohyeon_sheet`
 - [ ] P2 캐릭터: 서진 표정 6, 선생님 표정 6, 도현 표정 5, 친구 시트+표정 4, 체육복 학생 1
 - [ ] P2 배경: 허브 5, 지역 카드 3, 이벤트 컷 8
 - [ ] P2 엔딩: 배드 5, 구조 10
