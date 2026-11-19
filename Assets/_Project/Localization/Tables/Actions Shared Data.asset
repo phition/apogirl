@@ -319,6 +319,22 @@ MonoBehaviour:
     m_Key: ACT_EXP_NIGHT_POLICE.short
     m_Metadata:
       m_Items: []
+  - m_Id: 180980756529152
+    m_Key: ACT_EXP_DAY_WATERWORKS.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 180980815249408
+    m_Key: ACT_EXP_DAY_WATERWORKS.short
+    m_Metadata:
+      m_Items: []
+  - m_Id: 180980815249409
+    m_Key: ACT_EXP_NIGHT_WATERWORKS.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 180980815249410
+    m_Key: ACT_EXP_NIGHT_WATERWORKS.short
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

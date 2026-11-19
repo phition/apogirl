@@ -2827,6 +2827,110 @@ MonoBehaviour:
     m_Key: enc.POLICE_REPORT.leave
     m_Metadata:
       m_Items: []
+  - m_Id: 180982430056448
+    m_Key: diary.a4_winter
+    m_Metadata:
+      m_Items: []
+  - m_Id: 180982484582400
+    m_Key: diary.a4_two_clocks
+    m_Metadata:
+      m_Items: []
+  - m_Id: 180982484582401
+    m_Key: diary.a4_research
+    m_Metadata:
+      m_Items: []
+  - m_Id: 180982484582402
+    m_Key: diary.a4_cured
+    m_Metadata:
+      m_Items: []
+  - m_Id: 180982484582403
+    m_Key: diary.a4_failed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 180982484582404
+    m_Key: tc.a4_plan
+    m_Metadata:
+      m_Items: []
+  - m_Id: 180982484582405
+    m_Key: tc.a4_cured
+    m_Metadata:
+      m_Items: []
+  - m_Id: 180982484582406
+    m_Key: line.m_research
+    m_Metadata:
+      m_Items: []
+  - m_Id: 180982484582407
+    m_Key: line.m_cure_try
+    m_Metadata:
+      m_Items: []
+  - m_Id: 180982484582408
+    m_Key: line.m_graduation
+    m_Metadata:
+      m_Items: []
+  - m_Id: 180982484582409
+    m_Key: line.m_night_before
+    m_Metadata:
+      m_Items: []
+  - m_Id: 180982484582410
+    m_Key: location.LOC_WATERWORKS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 180982484582411
+    m_Key: enc.RESEARCH_DATA.prompt
+    m_Metadata:
+      m_Items: []
+  - m_Id: 180982484582412
+    m_Key: enc.RESEARCH_DATA.take
+    m_Metadata:
+      m_Items: []
+  - m_Id: 180982484582413
+    m_Key: enc.RESEARCH_DATA.leave
+    m_Metadata:
+      m_Items: []
+  - m_Id: 180982484582414
+    m_Key: enc.RESEARCH_MEMO.prompt
+    m_Metadata:
+      m_Items: []
+  - m_Id: 180982484582415
+    m_Key: enc.RESEARCH_MEMO.take
+    m_Metadata:
+      m_Items: []
+  - m_Id: 180982484582416
+    m_Key: enc.RESEARCH_MEMO.leave
+    m_Metadata:
+      m_Items: []
+  - m_Id: 180982484582417
+    m_Key: title.bonus_pick
+    m_Metadata:
+      m_Items: []
+  - m_Id: 180982484582418
+    m_Key: title.bonus_none
+    m_Metadata:
+      m_Items: []
+  - m_Id: 180982484582419
+    m_Key: bonus.STRONG.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 180982484582420
+    m_Key: bonus.STRONG.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 180982484582421
+    m_Key: bonus.SCHOLAR.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 180982484582422
+    m_Key: bonus.SCHOLAR.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 180982484582423
+    m_Key: bonus.SUPPLIES.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 180982484582424
+    m_Key: bonus.SUPPLIES.desc
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

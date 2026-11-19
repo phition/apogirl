@@ -1,0 +1,366 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f481e505b008c204ba7d5b19f247582d, type: 3}
+  m_Name: LOC_WATERWORKS
+  m_EditorClassIdentifier: ApoGirl.Data::ApoGirl.Data.LocationAsset
+  _id: LOC_WATERWORKS
+  _definition:
+    Id: LOC_WATERWORKS
+    Layout:
+      Floors: 3
+      FloorHeight: 4
+      CorridorLength: 100
+      Connectors:
+      - Kind: 0
+        Floor: 0
+        X: 6
+        TargetFloor: 1
+      - Kind: 0
+        Floor: 1
+        X: 4.6
+        TargetFloor: 0
+      - Kind: 0
+        Floor: 1
+        X: 6
+        TargetFloor: 2
+      - Kind: 0
+        Floor: 2
+        X: 4.6
+        TargetFloor: 1
+      - Kind: 0
+        Floor: 0
+        X: 96
+        TargetFloor: 1
+      - Kind: 0
+        Floor: 1
+        X: 94.6
+        TargetFloor: 0
+      - Kind: 0
+        Floor: 1
+        X: 96
+        TargetFloor: 2
+      - Kind: 0
+        Floor: 2
+        X: 94.6
+        TargetFloor: 1
+      Doors:
+      - RoomId: ROOM_WATER_ARCHIVE_1
+        TemplateId: ROOM_WATER_ARCHIVE
+        Floor: 0
+        X: 40
+        Number: 1
+        LootTableId: 
+      - RoomId: ROOM_WATER_CONTROL_1
+        TemplateId: ROOM_WATER_CONTROL
+        Floor: 1
+        X: 20
+        Number: 1
+        LootTableId: 
+      - RoomId: ROOM_WATER_LAB_1
+        TemplateId: ROOM_WATER_LAB
+        Floor: 2
+        X: 20
+        Number: 1
+        LootTableId: 
+      - RoomId: ROOM_WATER_LAB_2
+        TemplateId: ROOM_WATER_LAB
+        Floor: 2
+        X: 56
+        Number: 2
+        LootTableId: 
+      RoomTemplates:
+      - Id: ROOM_WATER_ARCHIVE
+        Width: 16
+        DoorXs:
+        - 1.2
+        Windows: []
+        Containers:
+        - Id: ARCHIVE_A
+          Kind: 2
+          Floor: 0
+          X: 4
+          SearchSeconds: 3.5
+          LootTableId: 
+        - Id: ARCHIVE_B
+          Kind: 2
+          Floor: 0
+          X: 7
+          SearchSeconds: 3.5
+          LootTableId: 
+        - Id: ARCHIVE_DESK
+          Kind: 1
+          Floor: 0
+          X: 10.5
+          SearchSeconds: 2
+          LootTableId: 
+        - Id: SAMPLE_FRIDGE
+          Kind: 3
+          Floor: 0
+          X: 13.6
+          SearchSeconds: 4
+          LootTableId: LOOT_PHARMACY_STOCK
+        DefaultLootTableId: LOOT_WATER_LAB
+      - Id: ROOM_WATER_LAB
+        Width: 16
+        DoorXs:
+        - 1.2
+        - 14.8
+        Windows:
+        - X: 3
+          Width: 3.4
+        - X: 9
+          Width: 3.4
+        Containers:
+        - Id: BENCH_A
+          Kind: 1
+          Floor: 0
+          X: 4
+          SearchSeconds: 2
+          LootTableId: 
+        - Id: BENCH_B
+          Kind: 1
+          Floor: 0
+          X: 7
+          SearchSeconds: 2
+          LootTableId: 
+        - Id: REAGENT
+          Kind: 2
+          Floor: 0
+          X: 10.4
+          SearchSeconds: 3.5
+          LootTableId: 
+        - Id: LOCKER
+          Kind: 0
+          Floor: 0
+          X: 13.2
+          SearchSeconds: 3
+          LootTableId: 
+        DefaultLootTableId: LOOT_WATER_LAB
+      - Id: ROOM_WATER_CONTROL
+        Width: 14
+        DoorXs:
+        - 1.2
+        Windows:
+        - X: 3
+          Width: 3.4
+        Containers:
+        - Id: CONSOLE
+          Kind: 1
+          Floor: 0
+          X: 5
+          SearchSeconds: 2
+          LootTableId: 
+        - Id: PARTS
+          Kind: 4
+          Floor: 0
+          X: 8.4
+          SearchSeconds: 2.5
+          LootTableId: 
+        - Id: SUPPLY
+          Kind: 2
+          Floor: 0
+          X: 11.4
+          SearchSeconds: 3.5
+          LootTableId: 
+        DefaultLootTableId: LOOT_SUBWAY_OFFICE
+      Containers:
+      - Id: C_WATER_TANK_1
+        Kind: 4
+        Floor: 1
+        X: 46
+        SearchSeconds: 2.5
+        LootTableId: LOOT_SUBWAY_OFFICE
+      - Id: C_WATER_TANK_2
+        Kind: 4
+        Floor: 1
+        X: 55
+        SearchSeconds: 2.5
+        LootTableId: LOOT_SUBWAY_OFFICE
+      - Id: C_WATER_TANK_3
+        Kind: 4
+        Floor: 1
+        X: 64
+        SearchSeconds: 2.5
+        LootTableId: LOOT_SUBWAY_OFFICE
+      - Id: C_WATER_TANK_4
+        Kind: 4
+        Floor: 1
+        X: 73
+        SearchSeconds: 2.5
+        LootTableId: LOOT_SUBWAY_OFFICE
+      Exits:
+      - Kind: 0
+        Floor: 1
+        X: 3
+        StartsLocked: 0
+      - Kind: 1
+        Floor: 2
+        X: 98
+        StartsLocked: 1
+    DayRunSeconds: 480
+    NightRunSeconds: 450
+    DefaultLootTableId: LOOT_WATER_LAB
+    DayVariant:
+      Spawns:
+      - EnemyId: ENEMY_WANDERER
+        Floor: 1
+        RoomId: 
+        X: 50
+        Count: 12
+        Spread: 7
+        Dormant: 1
+      - EnemyId: ENEMY_WANDERER
+        Floor: 0
+        RoomId: 
+        X: 30
+        Count: 8
+        Spread: 5
+        Dormant: 1
+      - EnemyId: ENEMY_LISTENER
+        Floor: 0
+        RoomId: 
+        X: 50
+        Count: 3
+        Spread: 2
+        Dormant: 1
+      - EnemyId: ENEMY_WANDERER
+        Floor: 2
+        RoomId: 
+        X: 40
+        Count: 5
+        Spread: 4
+        Dormant: 1
+      - EnemyId: ENEMY_WATCHER
+        Floor: 2
+        RoomId: 
+        X: 78
+        Count: 1
+        Spread: 0
+        Dormant: 0
+      LockedRooms:
+      - ROOM_WATER_ARCHIVE_1
+      ForceableRooms: []
+      Encounters:
+      - Id: RESEARCH_MEMO
+        Floor: 2
+        RoomId: ROOM_WATER_LAB_2
+        X: 8
+        FlagsAll: []
+        FlagsNone:
+        - RESEARCH_MEMO
+        PromptKey: enc.RESEARCH_MEMO.prompt
+        Choices:
+        - Id: TAKE
+          TextKey: enc.RESEARCH_MEMO.take
+          SetFlags:
+          - RESEARCH_MEMO
+          AddClues:
+          - CURE_RESEARCH_LOG
+          - TRUTH_RESEARCH_MEMO
+          StressDelta: 0
+          Removes: 1
+        - Id: LEAVE
+          TextKey: enc.RESEARCH_MEMO.leave
+          SetFlags: []
+          AddClues: []
+          StressDelta: 0
+          Removes: 0
+    NightVariant:
+      Spawns:
+      - EnemyId: ENEMY_WANDERER
+        Floor: 1
+        RoomId: 
+        X: 50
+        Count: 4
+        Spread: 14
+        Dormant: 0
+      - EnemyId: ENEMY_WATCHER
+        Floor: 1
+        RoomId: 
+        X: 80
+        Count: 1
+        Spread: 0
+        Dormant: 0
+      - EnemyId: ENEMY_WANDERER
+        Floor: 0
+        RoomId: 
+        X: 24
+        Count: 2
+        Spread: 6
+        Dormant: 0
+      - EnemyId: ENEMY_LISTENER
+        Floor: 0
+        RoomId: 
+        X: 62
+        Count: 2
+        Spread: 6
+        Dormant: 0
+      - EnemyId: ENEMY_WANDERER
+        Floor: 2
+        RoomId: 
+        X: 40
+        Count: 3
+        Spread: 10
+        Dormant: 0
+      LockedRooms: []
+      ForceableRooms:
+      - ROOM_WATER_ARCHIVE_1
+      Encounters:
+      - Id: RESEARCH_DATA
+        Floor: 0
+        RoomId: ROOM_WATER_ARCHIVE_1
+        X: 12
+        FlagsAll: []
+        FlagsNone:
+        - RESEARCH_DATA
+        PromptKey: enc.RESEARCH_DATA.prompt
+        Choices:
+        - Id: TAKE
+          TextKey: enc.RESEARCH_DATA.take
+          SetFlags:
+          - RESEARCH_DATA
+          AddClues:
+          - CURE_RESEARCH_DATA
+          - TRUTH_RESEARCH_ORIGIN
+          StressDelta: 6
+          Removes: 1
+        - Id: LEAVE
+          TextKey: enc.RESEARCH_DATA.leave
+          SetFlags: []
+          AddClues: []
+          StressDelta: 0
+          Removes: 0
+      - Id: RESEARCH_MEMO
+        Floor: 2
+        RoomId: ROOM_WATER_LAB_2
+        X: 8
+        FlagsAll: []
+        FlagsNone:
+        - RESEARCH_MEMO
+        PromptKey: enc.RESEARCH_MEMO.prompt
+        Choices:
+        - Id: TAKE
+          TextKey: enc.RESEARCH_MEMO.take
+          SetFlags:
+          - RESEARCH_MEMO
+          AddClues:
+          - CURE_RESEARCH_LOG
+          - TRUTH_RESEARCH_MEMO
+          StressDelta: 0
+          Removes: 1
+        - Id: LEAVE
+          TextKey: enc.RESEARCH_MEMO.leave
+          SetFlags: []
+          AddClues: []
+          StressDelta: 0
+          Removes: 0
+    Tutorial: 0
