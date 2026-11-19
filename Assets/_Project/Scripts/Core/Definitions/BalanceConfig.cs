@@ -202,7 +202,7 @@ namespace ApoGirl.Core.Definitions
         public int BiteInfectionTreated = 8;
         public float FirstAidBaseChance = 0.15f;
         public float FirstAidPerMedicineLevel = 0.1f;
-        public int InfectionWeeklyGrowth = 8;
+        public int InfectionWeeklyGrowth = 6;
         public int InfectionGrowthReducePerMedicineLevel = 1;
         public int InfectionGrowthMin = 2;
 

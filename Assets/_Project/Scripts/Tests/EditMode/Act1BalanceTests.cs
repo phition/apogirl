@@ -76,6 +76,19 @@ namespace ApoGirl.Tests.EditMode
 
                 slots[i].ActionId = id;
             }
+
+            // 증상이 보이면 실제 플레이어처럼 처치부터 (M6 감염)
+            if (state.Player.Vitals.Infection >= 25 && db.TryGetAction("ACT_TREAT_INFECTION", out var treat)
+                && ApoGirl.Core.Planning.PlanEditing.IsUnlocked(state, db, treat))
+            {
+                foreach (var index in new[] { 2, 6 })
+                {
+                    if (!slots[index].Locked && ApoGirl.Core.Planning.PlanEditing.IsAllowedIn(treat, index))
+                    {
+                        slots[index].ActionId = treat.Id;
+                    }
+                }
+            }
         }
 
         private static string Run(Strategy strategy, int seed, out GameState state)
