@@ -64,6 +64,36 @@ namespace ApoGirl.Tests.PlayMode
             Assert.IsNotNull(director, "탐험 씬이 로드되어야 함");
             Assert.Greater(director.Targets.Count, 5, "건물에 계단·컨테이너·출구가 있어야 함");
 
+            // 복도 → 교실 → 복도: 방에 들어가면 템플릿 컨테이너가 생기고, 나오면 같은 문 앞으로 돌아온다
+            ExplorationTarget door = null;
+            foreach (var target in director.Targets)
+            {
+                if (target.Kind == TargetKind.Door)
+                {
+                    door = target;
+                    break;
+                }
+            }
+
+            Assert.IsNotNull(door);
+            var before = director.Targets.Count;
+            director.UseTarget(door);
+            Assert.IsTrue(director.InRoom);
+            Assert.Greater(director.Targets.Count, before, "방 내부 컨테이너 생성");
+            ExplorationTarget roomExit = null;
+            foreach (var target in director.CurrentArea.Targets)
+            {
+                if (target.Kind == TargetKind.RoomExit)
+                {
+                    roomExit = target;
+                }
+            }
+
+            director.UseTarget(roomExit);
+            Assert.IsFalse(director.InRoom);
+            Assert.AreEqual(door.X, director.X, 0.01f);
+            Assert.AreEqual(door.Floor, director.Floor);
+
             // 첫 컨테이너를 강제로 열어 모두 가져간 뒤 탈출
             foreach (var target in director.Targets)
             {

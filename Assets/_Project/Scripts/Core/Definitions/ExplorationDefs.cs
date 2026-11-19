@@ -89,16 +89,6 @@ namespace ApoGirl.Core.Definitions
         Alternate,
     }
 
-    /// <summary>방: 층과 가로 범위 [X, X + Width].</summary>
-    [Serializable]
-    public sealed class RoomDef
-    {
-        public string Id = "";
-        public int Floor;
-        public float X;
-        public float Width = 6f;
-    }
-
     /// <summary>계단·사다리: 같은 X 위치에서 TargetFloor로 이동.</summary>
     [Serializable]
     public sealed class ConnectorDef
@@ -131,17 +121,51 @@ namespace ApoGirl.Core.Definitions
         public bool StartsLocked;
     }
 
-    /// <summary>건물 단면 레이아웃 (수작업 템플릿, 문서 6.3.8). 0층이 1층(지상).</summary>
+    /// <summary>
+    /// 방 템플릿: 같은 종류의 방(일반 교실 등)은 내부 배치를 돌려 쓰고 전리품만 방마다 다르게 굴린다.
+    /// 컨테이너 X는 방 왼쪽 끝 기준. 방 출입문은 ExitX 위치.
+    /// </summary>
+    [Serializable]
+    public sealed class RoomTemplateDef
+    {
+        public string Id = "";
+        public float Width = 14f;
+        public float ExitX = 1.2f;
+        public List<ContainerDef> Containers = new List<ContainerDef>();
+        public string DefaultLootTableId = "";
+    }
+
+    /// <summary>복도의 문: 위치 → 방 템플릿. Number는 방 이름 표기용 (예: 2-3 교실의 3).</summary>
+    [Serializable]
+    public sealed class DoorDef
+    {
+        public string RoomId = "";
+        public string TemplateId = "";
+        public int Floor;
+        public float X;
+        public int Number;
+
+        /// <summary>비어 있지 않으면 이 방의 기본 전리품 테이블 (템플릿 기본값보다 우선).</summary>
+        public string LootTableId = "";
+    }
+
+    /// <summary>
+    /// 건물 레이아웃 (문서 6.3.3 단면 구조): 층마다 긴 복도, 복도를 따라 문 → 방(템플릿 내부).
+    /// 0층이 1층(지상). 복도의 Containers는 복도에 놓인 사물함 등.
+    /// </summary>
     [Serializable]
     public sealed class BuildingLayoutDef
     {
-        public int Floors = 3;
+        public int Floors = 4;
         public float FloorHeight = 4f;
-        public float Width = 36f;
-        public List<RoomDef> Rooms = new List<RoomDef>();
+        public float CorridorLength = 80f;
         public List<ConnectorDef> Connectors = new List<ConnectorDef>();
+        public List<DoorDef> Doors = new List<DoorDef>();
+        public List<RoomTemplateDef> RoomTemplates = new List<RoomTemplateDef>();
         public List<ContainerDef> Containers = new List<ContainerDef>();
         public List<ExitDef> Exits = new List<ExitDef>();
+
+        public RoomTemplateDef FindTemplate(string id) => RoomTemplates.Find(t => t.Id == id);
     }
 
     /// <summary>탐험 지역 (실시간 모드). ID는 같은 지역의 헤드리스 ExpeditionModelDef와 같다.</summary>

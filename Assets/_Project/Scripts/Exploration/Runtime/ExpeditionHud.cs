@@ -103,8 +103,7 @@ namespace ApoGirl.Exploration.Runtime
             _clockTime.text = $"{remaining / 60}:{remaining % 60:00}";
             _clockBar.EnableInClassList("late", clock.Phase == ClockPhase.Dusk || clock.Phase == ClockPhase.Dawn);
 
-            var room = _director.Building.RoomAt(_director.Floor, _director.X);
-            _room.text = Loc.F("exp.floor", _director.Floor + 1) + (room != null ? " · " + Loc.T("room." + room.Id) : "");
+            _room.text = _director.LocationLabel;
             _vitals.text = Loc.F("exp.vitals", _director.Request.Hp);
             _weight.text = Loc.F("exp.weight", _director.Backpack.TotalWeight.ToString("0.0"), _director.CarryCapacity.ToString("0.0"));
             _weight.EnableInClassList("danger", _director.IsOverweight);
@@ -149,6 +148,12 @@ namespace ApoGirl.Exploration.Runtime
                     break;
                 case TargetKind.Exit:
                     _prompt.text = Loc.T(target.Locked ? "exp.prompt_exit_locked" : "exp.prompt_exit");
+                    break;
+                case TargetKind.Door:
+                    _prompt.text = Loc.F(target.Room.Visited ? "exp.prompt_enter_again" : "exp.prompt_enter", target.Room.Label);
+                    break;
+                case TargetKind.RoomExit:
+                    _prompt.text = Loc.T("exp.prompt_leave");
                     break;
             }
         }

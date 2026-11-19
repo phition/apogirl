@@ -183,6 +183,18 @@ namespace ApoGirl.Tests.EditMode
 
         public static LocationDef CreateLocation()
         {
+            var classroom = new RoomTemplateDef
+            {
+                Id = "ROOM_CLASSROOM",
+                Width = 12,
+                Containers =
+                {
+                    new ContainerDef { Id = "DESK", Kind = ContainerKind.Desk, X = 4 },
+                    new ContainerDef { Id = "LOCKER", Kind = ContainerKind.Locker, X = 8 },
+                    new ContainerDef { Id = "CABINET", Kind = ContainerKind.Cabinet, X = 10 },
+                },
+            };
+
             return new LocationDef
             {
                 Id = Location,
@@ -190,7 +202,14 @@ namespace ApoGirl.Tests.EditMode
                 Layout = new BuildingLayoutDef
                 {
                     Floors = 1,
-                    Rooms = { new RoomDef { Id = "ROOM_A", Floor = 0, X = 0, Width = 10 } },
+                    CorridorLength = 30,
+                    RoomTemplates = { classroom },
+                    Doors =
+                    {
+                        new DoorDef { RoomId = "R1", TemplateId = "ROOM_CLASSROOM", Floor = 0, X = 8, Number = 1 },
+                        new DoorDef { RoomId = "R2", TemplateId = "ROOM_CLASSROOM", Floor = 0, X = 16, Number = 2 },
+                        new DoorDef { RoomId = "R3", TemplateId = "ROOM_CLASSROOM", Floor = 0, X = 24, Number = 3, LootTableId = "LOOT_EMPTY" },
+                    },
                     Containers = { new ContainerDef { Id = "C1", Floor = 0, X = 5 } },
                     Exits = { new ExitDef { Kind = ExitKind.Main, Floor = 0, X = 1 } },
                 },
