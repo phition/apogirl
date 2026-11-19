@@ -220,7 +220,7 @@ namespace ApoGirl.Core.Events
             return c == null || (c.WeekMin == 0 && c.WeekMax == 0 && c.Days.Count == 0 && c.Phase == PhaseFilter.Any && c.Seasons.Count == 0
                                  && c.Month == 0 && c.ActionCategories.Count == 0 && c.ActionIds.Count == 0 && c.FlagsAll.Count == 0
                                  && c.FlagsAny.Count == 0 && c.FlagsNone.Count == 0 && c.CluesAll.Count == 0 && c.Checks.Count == 0
-                                 && c.AnyChecks.Count == 0 && c.NpcStatuses.Count == 0);
+                                 && c.AnyChecks.Count == 0 && c.NpcStatuses.Count == 0 && !c.IsBirthday);
         }
 
         private static void Add(List<ContentIssue> issues, IssueSeverity severity, string id, string message)

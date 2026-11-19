@@ -57,6 +57,16 @@ namespace ApoGirl.Core.Expedition
         public bool ConsecutiveRun;
 
         public string WeatherId = "";
+
+        // ── M4 ──
+
+        /// <summary>출정 시점의 플래그 (탐험 조우 조건).</summary>
+        public HashSet<string> Flags = new HashSet<string>();
+
+        /// <summary>특성 배율 (키 = TraitModifierKind 이름: SearchSpeed, NoiseMultiplier, RunSpeed, StealthBonus).</summary>
+        public Dictionary<string, float> Modifiers = new Dictionary<string, float>();
+
+        public float Modifier(string key) => Modifiers.TryGetValue(key, out var value) ? value : 0f;
     }
 
     public sealed class ExpeditionResult
@@ -79,6 +89,14 @@ namespace ApoGirl.Core.Expedition
         public List<string> Clues = new List<string>();
         public float TimeSpent;
         public ExtractStatus Status;
+
+        // ── M4 ──
+
+        /// <summary>탐험 중 쓴 소모품 (하나당 한 항목).</summary>
+        public List<string> UsedItems = new List<string>();
+
+        /// <summary>주무기 내구도 소모량.</summary>
+        public int WeaponWear;
     }
 
     /// <summary>탐험 실행기. M1은 헤드리스 확률 모델, M2b부터 실시간 탐험 씬이 같은 계약을 구현한다.</summary>
@@ -89,14 +107,17 @@ namespace ApoGirl.Core.Expedition
 
     public static class ExpeditionRequestFactory
     {
-        public static ExpeditionRequest Create(GameState state, ActionDef action, int seed, bool consecutiveRun)
+        public static ExpeditionRequest Create(GameState state, ActionDef action, int seed, bool consecutiveRun, IDefinitionDatabase db = null)
         {
             var player = state.Player;
+            Rules.LoadoutRules.Sanitize(state);
             var request = new ExpeditionRequest
             {
                 LocationId = action.LocationId,
                 Seed = seed,
-                Loadout = state.Loadout,
+                Loadout = CloneLoadout(state.Loadout),
+                Flags = new HashSet<string>(state.Flags),
+                Modifiers = db != null ? Rules.TraitRules.ExplorationModifiers(state, db) : new Dictionary<string, float>(),
                 Stats = new Dictionary<StatType, int>(player.Stats),
                 TimeOfDay = action.ExpeditionTime,
                 Week = state.Calendar.Week,
@@ -114,6 +135,25 @@ namespace ApoGirl.Core.Expedition
             }
 
             return request;
+        }
+
+        /// <summary>출정 준비 화면에서 로드아웃을 바꾼 뒤 요청에 다시 반영한다.</summary>
+        public static void RefreshLoadout(ExpeditionRequest request, GameState state)
+        {
+            Rules.LoadoutRules.Sanitize(state);
+            request.Loadout = CloneLoadout(state.Loadout);
+        }
+
+        private static LoadoutState CloneLoadout(LoadoutState source)
+        {
+            return new LoadoutState
+            {
+                Backpack = source.Backpack,
+                MainWeapon = source.MainWeapon,
+                Tool = source.Tool,
+                Armor = source.Armor,
+                QuickSlots = new List<string>(source.QuickSlots),
+            };
         }
     }
 }

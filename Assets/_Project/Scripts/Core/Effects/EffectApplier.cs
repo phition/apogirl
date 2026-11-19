@@ -90,6 +90,71 @@ namespace ApoGirl.Core.Effects
             {
                 AddItem(state, item.ItemId, item.Count, delta);
             }
+
+            // ── M4 ──
+            ChangeDefense(state, effect.Defense, balance, delta);
+            ChangeThreat(state, effect.Threat, balance, delta);
+            foreach (var facility in effect.Facilities)
+            {
+                if (string.IsNullOrEmpty(facility.FacilityId))
+                {
+                    continue;
+                }
+
+                state.Base.Facilities.TryGetValue(facility.FacilityId, out var level);
+                if (facility.Level > level)
+                {
+                    state.Base.Facilities[facility.FacilityId] = facility.Level;
+                    delta.FacilitiesOpened.Add(facility.FacilityId);
+                }
+            }
+
+            foreach (var trait in effect.AddTraits)
+            {
+                if (!string.IsNullOrEmpty(trait) && !state.Player.Traits.Contains(trait))
+                {
+                    state.Player.Traits.Add(trait);
+                }
+            }
+
+            foreach (var set in effect.Proficiencies)
+            {
+                var proficiency = state.Player.GetProficiency(set.Proficiency);
+                if (proficiency.Level < set.Level)
+                {
+                    proficiency.Level = Math.Min(set.Level, balance.ProficiencyMaxLevel);
+                    var thresholds = balance.ProficiencyXpThresholds;
+                    var need = proficiency.Level - 1 < thresholds.Length ? thresholds[proficiency.Level - 1] : proficiency.Xp;
+                    proficiency.Xp = Math.Max(proficiency.Xp, need);
+                }
+            }
+
+            if (effect.TeacherMobility > state.Teacher.MobilityStage)
+            {
+                state.Teacher.MobilityStage = effect.TeacherMobility;
+            }
+
+            if (effect.RestorePower && !state.Base.PowerRestored)
+            {
+                state.Base.PowerRestored = true;
+                delta.PowerRestored = true;
+            }
+        }
+
+        public static int ChangeDefense(GameState state, int amount, BalanceConfig balance, StateDelta delta)
+        {
+            var before = state.Base.Defense;
+            state.Base.Defense = Clamp(before + amount, 0, balance.DefenseMax);
+            delta.Defense += state.Base.Defense - before;
+            return state.Base.Defense - before;
+        }
+
+        public static int ChangeThreat(GameState state, int amount, BalanceConfig balance, StateDelta delta)
+        {
+            var before = state.Base.Threat;
+            state.Base.Threat = Clamp(before + amount, 0, balance.ThreatMax);
+            delta.Threat += state.Base.Threat - before;
+            return state.Base.Threat - before;
         }
 
         /// <summary>윤 선생님 ID. 호감 변화는 Teacher.Affinity에 반영한다.</summary>

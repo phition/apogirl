@@ -168,7 +168,17 @@ namespace ApoGirl.Core.Events
             }
 
             EffectApplier.Apply(state, ev.OnShow, balance, delta);
+            if (ev.OnShow.RaidStrength > 0)
+            {
+                LastRaid = RaidRules.Resolve(state, ev.OnShow.RaidStrength, 0, true, balance, RaidRandom ?? new SeededRandom(state.Rng), delta);
+            }
         }
+
+        /// <summary>이벤트로 강제된 습격의 마지막 결과 (화면 표시용).</summary>
+        public static RaidResult LastRaid { get; set; }
+
+        /// <summary>테스트용 난수 주입 (null이면 게임 상태의 시드 난수).</summary>
+        public static IRandomService RaidRandom { get; set; }
 
         /// <summary>보여줄 선택지 (조건이 안 맞는 선택지는 숨김).</summary>
         public static List<EventChoiceView> Choices(GameState state, EventDef ev, EventContext context, BalanceConfig balance)
@@ -239,7 +249,12 @@ namespace ApoGirl.Core.Events
                 result.Result = CheckResolver.Roll(view.Chance, random, balance);
             }
 
-            EffectApplier.Apply(state, result.Result == CheckResult.Failure ? choice.OnFailure : choice.Effect, balance, delta);
+            var effect = result.Result == CheckResult.Failure ? choice.OnFailure : choice.Effect;
+            EffectApplier.Apply(state, effect, balance, delta);
+            if (effect.RaidStrength > 0)
+            {
+                LastRaid = RaidRules.Resolve(state, effect.RaidStrength, 0, true, balance, random, delta);
+            }
             result.NextEventId = choice.NextEventId ?? "";
             Record(state, ev, result);
             return result;

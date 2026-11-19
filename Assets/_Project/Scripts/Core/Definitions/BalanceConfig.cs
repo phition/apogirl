@@ -64,6 +64,51 @@ namespace ApoGirl.Core.Definitions
         /// <summary>슬롯이 끝날 때마다 랜덤 이벤트를 굴릴 확률 (상한 이내일 때).</summary>
         public float RandomEventChance = 0.3f;
 
+        // ── M4: 시작·습격·장비 ──
+
+        /// <summary>새 게임 1주차 1일 낮에 고정되는 튜토리얼 런 행동 (없으면 생략).</summary>
+        public string TutorialActionId = "ACT_EXP_TUTORIAL";
+
+        /// <summary>새 게임을 시작하면 허브에서 바로 띄우는 이벤트.</summary>
+        public string OpeningEventId = "EVT_A1_OPENING";
+
+        /// <summary>밤 습격 (문서 5.5): 이 주차부터, 확률 = 기본 + (위협 − 방어) × 계수, 상한.</summary>
+        public int RaidStartWeek = 3;
+        public float RaidBaseChance = 0.02f;
+        public float RaidChancePerPoint = 0.006f;
+        public float RaidMaxChance = 0.35f;
+
+        /// <summary>습격 세기 = 위협 + 0~분산, 방어력 = 전투력 + 방어도 × 배율 + 경계 보정 + 0~분산.</summary>
+        public int RaidStrengthVariance = 20;
+        public int RaidPowerVariance = 20;
+        public float RaidDefenseWeight = 2f;
+
+        /// <summary>습격 결과.</summary>
+        public int RaidRepelStress = 6;
+        public int RaidRepelDefenseLoss = 1;
+        public int RaidBreachStress = 18;
+        public int RaidBreachHp = 15;
+        public int RaidBreachFood = 4;
+        public int RaidBreachDefenseLoss = 3;
+        public int RaidThreatRelief = 8;
+
+        /// <summary>위협도: 탐험마다(낮/밤), 매주 자연 증가, 상한.</summary>
+        public int ThreatPerDayExpedition = 3;
+        public int ThreatPerNightExpedition = 2;
+        public int ThreatWeekly = 2;
+        public int ThreatMax = 100;
+        public int DefenseMax = 60;
+
+        /// <summary>배낭 없이 나갈 때의 주머니 격자.</summary>
+        public int PocketWidth = 3;
+        public int PocketHeight = 2;
+
+        /// <summary>쓰러졌을 때 잃는 것: 배낭 내용과 착용 장비 (M4 결정).</summary>
+        public bool DownLosesEquipment = true;
+
+        /// <summary>손전등 없이 휴대폰 불빛만 있을 때 밝기·거리 배율.</summary>
+        public float PhoneLightMultiplier = 0.55f;
+
         // ── 성장 ──
         public List<GrowthBand> GrowthBands = new List<GrowthBand>
         {

@@ -31,9 +31,10 @@ namespace ApoGirl.Core.Rules
     public static class UpkeepRules
     {
         /// <summary>매일 밤 처리: 식량·물 소모, 부족 시 허기·갈증 상승과 HP 감소.</summary>
-        public static void ApplyDaily(GameState state, BalanceConfig balance, StateDelta delta)
+        public static void ApplyDaily(GameState state, BalanceConfig balance, StateDelta delta, int foodSaving = 0)
         {
-            Consume(state, ResourceType.Food, balance.DailyFood, VitalType.Hunger, balance.HungerRecovery, balance.HungerIncrease, balance, delta);
+            var food = state.Calendar.Day % 2 == 0 ? Math.Max(0, balance.DailyFood - foodSaving) : balance.DailyFood;
+            Consume(state, ResourceType.Food, food, VitalType.Hunger, balance.HungerRecovery, balance.HungerIncrease, balance, delta);
             Consume(state, ResourceType.Water, balance.DailyWater, VitalType.Thirst, balance.ThirstRecovery, balance.ThirstIncrease, balance, delta);
 
             var vitals = state.Player.Vitals;

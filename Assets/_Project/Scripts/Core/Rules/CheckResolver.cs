@@ -46,10 +46,10 @@ namespace ApoGirl.Core.Rules
         }
 
         /// <summary>굴림값이 확률×대성공비율 미만이면 대성공, 확률 미만이면 성공.</summary>
-        public static CheckResult Roll(float chance, IRandomService random, BalanceConfig balance)
+        public static CheckResult Roll(float chance, IRandomService random, BalanceConfig balance, float greatBonus = 0f)
         {
             var roll = random.NextDouble();
-            if (roll < chance * balance.GreatSuccessRatio)
+            if (roll < chance * (balance.GreatSuccessRatio + greatBonus))
             {
                 return CheckResult.GreatSuccess;
             }

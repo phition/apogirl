@@ -103,6 +103,13 @@ namespace ApoGirl.Core.Events
                 if (NpcStatusOf(state, npc.NpcId) != npc.Status) return false;
             }
 
+            if (condition.IsBirthday)
+            {
+                var profile = state.Player.Profile;
+                var date = CalendarRules.DateOf(week, context.Day, balance);
+                if (profile.BirthMonth <= 0 || date.Month != profile.BirthMonth || date.Day != profile.BirthDay) return false;
+            }
+
             return true;
         }
 
@@ -147,6 +154,17 @@ namespace ApoGirl.Core.Events
                     }
 
                     return count;
+                case ValueKind.Facility: return state.Base.Facilities.TryGetValue(key ?? "", out var level) ? level : 0;
+                case ValueKind.Defense: return state.Base.Defense;
+                case ValueKind.Threat: return state.Base.Threat;
+                case ValueKind.TeacherMobility: return state.Teacher.MobilityStage;
+                case ValueKind.Trait: return state.Player.Traits.Contains(key ?? "") ? 1 : 0;
+                case ValueKind.Expeditions:
+                    var exploration = state.Exploration;
+                    if (key == "Day") return exploration.DayExplorations;
+                    if (key == "Night") return exploration.NightExplorations;
+                    return exploration.DayExplorations + exploration.NightExplorations;
+                case ValueKind.ActionCount: return ActionCountOf(state, key);
                 default: throw new ArgumentOutOfRangeException(nameof(kind), kind, null);
             }
         }
@@ -164,7 +182,12 @@ namespace ApoGirl.Core.Events
                 case ValueKind.SleepDebt:
                 case ValueKind.Conscience:
                 case ValueKind.TeacherAffinity:
+                case ValueKind.Defense:
+                case ValueKind.Threat:
+                case ValueKind.TeacherMobility:
                     return true;
+                case ValueKind.Expeditions:
+                    return string.IsNullOrEmpty(key) || key == "Day" || key == "Night";
                 default: return !string.IsNullOrEmpty(key);
             }
         }
@@ -181,6 +204,11 @@ namespace ApoGirl.Core.Events
                 case CompareOp.Less: return value < target;
                 default: throw new ArgumentOutOfRangeException(nameof(op), op, null);
             }
+        }
+
+        private static int ActionCountOf(GameState state, string actionId)
+        {
+            return state.Exploration.ActionCounts.TryGetValue(actionId ?? "", out var n) ? n : 0;
         }
 
         private static T Parse<T>(string key) where T : struct

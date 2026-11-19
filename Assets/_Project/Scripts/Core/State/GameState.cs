@@ -256,6 +256,12 @@ namespace ApoGirl.Core.State
         public int DayExplorations { get; set; }
         public int NightExplorations { get; set; }
         public int Downs { get; set; }
+
+        /// <summary>행동 ID → 실행 횟수 (M4: 해금·이벤트 조건용).</summary>
+        public Dictionary<string, int> ActionCounts { get; set; } = new Dictionary<string, int>();
+
+        public int Raids { get; set; }
+        public int RaidsRepelled { get; set; }
     }
 
     public sealed class NpcState

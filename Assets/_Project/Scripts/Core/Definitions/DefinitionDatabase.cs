@@ -31,6 +31,9 @@ namespace ApoGirl.Core.Definitions
         IReadOnlyList<NpcDef> Npcs { get; }
 
         bool TryGetNpc(string id, out NpcDef npc);
+
+        /// <summary>M4: 특성·시설·한 줄 대사·프롤로그.</summary>
+        DefinitionExtras Extras { get; }
     }
 
     public static class DefinitionDatabaseExtensions
@@ -100,8 +103,10 @@ namespace ApoGirl.Core.Definitions
             IEnumerable<LocationDef> locations = null,
             IEnumerable<EnemyDef> enemies = null,
             IEnumerable<EventDef> events = null,
-            IEnumerable<NpcDef> npcs = null)
+            IEnumerable<NpcDef> npcs = null,
+            DefinitionExtras extras = null)
         {
+            Extras = extras ?? new DefinitionExtras();
             Balance = balance ?? throw new ArgumentNullException(nameof(balance));
             foreach (var action in actions)
             {
@@ -161,6 +166,8 @@ namespace ApoGirl.Core.Definitions
         public bool TryGetEvent(string id, out EventDef ev) => _events.TryGetValue(id ?? "", out ev);
 
         public IReadOnlyList<NpcDef> Npcs => _npcList;
+
+        public DefinitionExtras Extras { get; }
 
         public bool TryGetNpc(string id, out NpcDef npc) => _npcs.TryGetValue(id ?? "", out npc);
 

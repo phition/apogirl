@@ -31,6 +31,32 @@ namespace ApoGirl.Core.Definitions
 
         /// <summary>추출 시 거점 자원으로 바뀌는 양. 비어 있으면 아이템 그대로 보관.</summary>
         public List<ResourceAmount> ResourceYield = new List<ResourceAmount>();
+
+        // ── 장비 (M4, 문서 5.6) ──
+        public EquipSlot Slot;
+
+        /// <summary>배낭: 격자 크기.</summary>
+        public int GridWidth;
+        public int GridHeight;
+
+        /// <summary>배낭·방어구: 이동 속도 배율, 이동 소음 배율 (1 = 변화 없음).</summary>
+        public float MoveSpeedMultiplier = 1f;
+        public float NoiseMultiplier = 1f;
+
+        /// <summary>무기: 한 번에 주는 타격(좀비 Toughness를 깎음), 공격 소음, 재사용 대기, 경직 시간.</summary>
+        public int WeaponPower;
+        public float AttackNoise = 6f;
+        public float AttackCooldown = 1f;
+        public float StunSeconds = 1.5f;
+
+        /// <summary>방어구: 받는 피해 감소율 (0~1).</summary>
+        public float DamageReduction;
+
+        public ToolKind Tool;
+
+        /// <summary>소모품: 탐험 중 사용 시 HP 회복, 스트레스 감소.</summary>
+        public int UseHp;
+        public int UseStress;
     }
 
     [Serializable]
@@ -208,6 +234,9 @@ namespace ApoGirl.Core.Definitions
         public int Damage = 12;
         public float HitCooldown = 1.2f;
         public float AttackRange = 0.7f;
+
+        /// <summary>무기 타격을 몇 번 버티는가 (WeaponPower 합계가 넘으면 쓰러짐).</summary>
+        public int Toughness = 3;
     }
 
     /// <summary>
@@ -231,6 +260,14 @@ namespace ApoGirl.Core.Definitions
     public sealed class LocationVariantDef
     {
         public List<SpawnDef> Spawns = new List<SpawnDef>();
+
+        /// <summary>이 시간대에 열 수 없는 방 (예: 약국 약품고는 낮에 셔터).</summary>
+        public List<string> LockedRooms = new List<string>();
+
+        /// <summary>쇠지렛대로만 열 수 있는 방 (큰 소음).</summary>
+        public List<string> ForceableRooms = new List<string>();
+
+        public List<EncounterDef> Encounters = new List<EncounterDef>();
     }
 
     /// <summary>탐험 지역 (실시간 모드). ID는 같은 지역의 헤드리스 ExpeditionModelDef와 같다.</summary>
@@ -244,5 +281,8 @@ namespace ApoGirl.Core.Definitions
         public string DefaultLootTableId = "";
         public LocationVariantDef DayVariant = new LocationVariantDef();
         public LocationVariantDef NightVariant = new LocationVariantDef();
+
+        /// <summary>튜토리얼 런 (화면 안내 표시).</summary>
+        public bool Tutorial;
     }
 }

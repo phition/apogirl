@@ -19,6 +19,13 @@ namespace ApoGirl.Core.Effects
         /// <summary>"NPC_ID:Status" 형식.</summary>
         public readonly List<string> NpcStatusChanges = new List<string>();
         public readonly List<ItemStack> ItemsGained = new List<ItemStack>();
+
+        // ── M4 ──
+        public readonly List<string> FacilitiesOpened = new List<string>();
+        public readonly List<ItemStack> ItemsLost = new List<ItemStack>();
+        public int Defense;
+        public int Threat;
+        public bool PowerRestored;
         public int SleepDebt;
         public int Conscience;
 
@@ -52,6 +59,11 @@ namespace ApoGirl.Core.Effects
             foreach (var pair in other.NpcAffinity) AddNpcAffinity(pair.Key, pair.Value);
             NpcStatusChanges.AddRange(other.NpcStatusChanges);
             ItemsGained.AddRange(other.ItemsGained);
+            FacilitiesOpened.AddRange(other.FacilitiesOpened);
+            ItemsLost.AddRange(other.ItemsLost);
+            Defense += other.Defense;
+            Threat += other.Threat;
+            PowerRestored |= other.PowerRestored;
             SleepDebt += other.SleepDebt;
             Conscience += other.Conscience;
         }

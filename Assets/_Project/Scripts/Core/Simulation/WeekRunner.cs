@@ -34,6 +34,9 @@ namespace ApoGirl.Core.Simulation
 
         public readonly StateDelta Delta = new StateDelta();
 
+        /// <summary>이 밤에 일어난 습격 (없으면 null).</summary>
+        public RaidResult Raid;
+
         /// <summary>이벤트 대기 중: ResolveEvent(choiceId)를 호출해야 슬롯이 끝난다.</summary>
         public bool AwaitingEvent;
 
@@ -142,7 +145,7 @@ namespace ApoGirl.Core.Simulation
 
             if (calendar.Phase == DayPhase.Night)
             {
-                UpkeepRules.ApplyDaily(_state, Balance, delta);
+                UpkeepRules.ApplyDaily(_state, Balance, delta, (int)TraitRules.Sum(_state, _db, TraitModifierKind.FoodSaving));
             }
 
             var actionId = string.IsNullOrEmpty(slot.ActionId) ? PlanPreparer.RestIdFor(index, Balance) : slot.ActionId;
@@ -170,7 +173,7 @@ namespace ApoGirl.Core.Simulation
 
             if (action.IsExpedition)
             {
-                outcome.ExpeditionRequest = ExpeditionRequestFactory.Create(_state, action, _random.NextSeed(), consecutive);
+                outcome.ExpeditionRequest = ExpeditionRequestFactory.Create(_state, action, _random.NextSeed(), consecutive, _db);
                 _pending = new PendingExpedition { Action = action, Index = index, Violation = violation, Outcome = outcome };
                 if (DeferExpeditions)
                 {
@@ -222,13 +225,26 @@ namespace ApoGirl.Core.Simulation
 
             player.LastSlotWasExpedition = action.IsExpedition;
 
+            // M4: 실행 횟수, 위협도, 밤 습격
+            _state.Exploration.ActionCounts.TryGetValue(action.Id, out var count);
+            _state.Exploration.ActionCounts[action.Id] = count + 1;
+            if (action.ThreatGain != 0)
+            {
+                EffectApplier.ChangeThreat(_state, action.ThreatGain, Balance, delta);
+            }
+
+            if (calendar.Phase == DayPhase.Night && !action.IsExpedition && player.Vitals.Hp > 0)
+            {
+                outcome.Raid = RaidRules.RollNight(_state, action, Balance, _random, delta);
+            }
+
             if (player.Vitals.Hp <= 0)
             {
                 _state.Status = GameStatus.GameOver;
                 _state.EndCause = EndCauseHpZero;
             }
 
-            outcome.StopForPresentation = outcome.Result != CheckResult.Success || action.IsExpedition || violation || IsGameOver;
+            outcome.StopForPresentation = outcome.Result != CheckResult.Success || action.IsExpedition || violation || IsGameOver || outcome.Raid != null;
 
             // 이벤트 판정은 달력을 넘기기 전 (지금 슬롯의 요일·낮밤 기준)
             EventDef ev = null;
@@ -361,8 +377,14 @@ namespace ApoGirl.Core.Simulation
             ThrowIfEventPending();
 
             var calendar = _state.Calendar;
-            var summary = new WeekSummary { Week = calendar.Week, DiaryKey = $"DIARY_W{calendar.Week:00}" };
+            var summary = new WeekSummary { Week = calendar.Week, DiaryKey = "" };
             UpkeepRules.ApplyWeekly(_state, Balance, summary.Delta);
+            if (calendar.Week >= Balance.RaidStartWeek - 1)
+            {
+                EffectApplier.ChangeThreat(_state, Balance.ThreatWeekly, Balance, summary.Delta);
+            }
+
+            var diary = LineRules.Pick(_state, _db, LineKind.Diary, new EventContext { Phase = DayPhase.Night, Day = CalendarState.DaysPerWeek });
             foreach (var outcome in _outcomes)
             {
                 summary.Slots.Add(outcome);
@@ -370,7 +392,11 @@ namespace ApoGirl.Core.Simulation
             }
 
             _outcomes.Clear();
-            _state.Diary.Add(new DiaryEntry { Week = calendar.Week, TextKey = summary.DiaryKey });
+            summary.DiaryKey = diary?.TextKey ?? $"DIARY_W{calendar.Week:00}";
+            if (!string.IsNullOrEmpty(summary.DiaryKey))
+            {
+                _state.Diary.Add(new DiaryEntry { Week = calendar.Week, TextKey = summary.DiaryKey });
+            }
 
             if (calendar.Week >= CalendarState.TotalWeeks)
             {
@@ -404,14 +430,18 @@ namespace ApoGirl.Core.Simulation
             {
                 _state.Exploration.NightExplorations++;
                 EffectApplier.ChangeSleepDebt(_state, Balance.NightExpeditionSleepDebt, Balance, delta);
+                EffectApplier.ChangeThreat(_state, Balance.ThreatPerNightExpedition, Balance, delta);
             }
             else
             {
                 _state.Exploration.DayExplorations++;
+                EffectApplier.ChangeThreat(_state, Balance.ThreatPerDayExpedition, Balance, delta);
             }
 
+            ApplyEquipment(outcome.ExpeditionRequest, result, delta);
+
             EffectApplier.ChangeVital(_state, VitalType.Fatigue, (int)Math.Round(result.FatigueDelta), Balance, delta);
-            var stress = (int)Math.Round(result.StressDelta);
+            var stress = (int)Math.Round(result.StressDelta * (1f + TraitRules.Sum(_state, _db, TraitModifierKind.ExpeditionStress)));
             EffectApplier.ChangeVital(_state, VitalType.Stress, StatRules.ScaleStress(stress, player.SleepDebt, Balance), Balance, delta);
             EffectApplier.ChangeVital(_state, VitalType.Hp, result.HpDelta, Balance, delta);
             EffectApplier.ChangeSleepDebt(_state, result.SleepDebtDelta, Balance, delta);
@@ -458,6 +488,40 @@ namespace ApoGirl.Core.Simulation
             }
 
             return CheckResult.Success;
+        }
+
+        /// <summary>장비: 쓰러지면 착용 장비·퀵슬롯 전부 분실 (M4 결정), 아니면 쓴 소모품만 빠지고 무기가 닳는다.</summary>
+        private void ApplyEquipment(ExpeditionRequest request, ExpeditionResult result, StateDelta delta)
+        {
+            var loadout = request?.Loadout;
+            if (loadout == null)
+            {
+                return;
+            }
+
+            if (result.Status == ExtractStatus.Down && Balance.DownLosesEquipment)
+            {
+                foreach (var id in LoadoutRules.EquippedIds(loadout))
+                {
+                    LoadoutRules.RemoveFromStorage(_state, id, 1, delta);
+                }
+
+                foreach (var id in loadout.QuickSlots)
+                {
+                    LoadoutRules.RemoveFromStorage(_state, id, 1, delta);
+                }
+
+                LoadoutRules.Sanitize(_state);
+                return;
+            }
+
+            foreach (var id in result.UsedItems)
+            {
+                LoadoutRules.RemoveFromStorage(_state, id, 1, delta);
+            }
+
+            LoadoutRules.WearItem(_state, _db, loadout.MainWeapon, result.WeaponWear, delta);
+            LoadoutRules.Sanitize(_state);
         }
 
         private void LockFollowingSlots(int index, int count)

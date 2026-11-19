@@ -12,6 +12,19 @@ namespace ApoGirl.Systems.Content
     {
         public List<NpcDef> Npcs = new List<NpcDef>();
         public List<EventDef> Events = new List<EventDef>();
+
+        // ── M4 ──
+        public List<ActionDef> Actions = new List<ActionDef>();
+        public List<ItemDef> Items = new List<ItemDef>();
+        public List<LootTableDef> LootTables = new List<LootTableDef>();
+        public List<ExpeditionModelDef> ExpeditionModels = new List<ExpeditionModelDef>();
+        public List<EnemyDef> Enemies = new List<EnemyDef>();
+        public List<TraitDef> Traits = new List<TraitDef>();
+        public List<FacilityDef> Facilities = new List<FacilityDef>();
+        public List<LineDef> Lines = new List<LineDef>();
+
+        /// <summary>여러 파일 중 하나에만 둔다 (마지막 것이 이긴다).</summary>
+        public PrologueDef Prologue;
     }
 
     /// <summary>
@@ -20,7 +33,7 @@ namespace ApoGirl.Systems.Content
     /// </summary>
     public static class ContentJson
     {
-        public const string ContentFolder = "Assets/_Project/Content/Events";
+        public const string ContentFolder = "Assets/_Project/Content";
 
         public static readonly JsonSerializerSettings Settings = new JsonSerializerSettings
         {
@@ -57,6 +70,18 @@ namespace ApoGirl.Systems.Content
                 var content = Parse(File.ReadAllText(file), Path.GetFileName(file));
                 merged.Npcs.AddRange(content.Npcs);
                 merged.Events.AddRange(content.Events);
+                merged.Actions.AddRange(content.Actions);
+                merged.Items.AddRange(content.Items);
+                merged.LootTables.AddRange(content.LootTables);
+                merged.ExpeditionModels.AddRange(content.ExpeditionModels);
+                merged.Enemies.AddRange(content.Enemies);
+                merged.Traits.AddRange(content.Traits);
+                merged.Facilities.AddRange(content.Facilities);
+                merged.Lines.AddRange(content.Lines);
+                if (content.Prologue != null)
+                {
+                    merged.Prologue = content.Prologue;
+                }
             }
 
             return merged;

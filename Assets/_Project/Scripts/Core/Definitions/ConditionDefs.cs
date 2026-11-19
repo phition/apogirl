@@ -19,6 +19,21 @@ namespace ApoGirl.Core.Definitions
         NpcTrust,
         EndingTag,
         ItemCount,
+
+        // ── M4 ──
+        Facility,
+        Defense,
+        Threat,
+        TeacherMobility,
+
+        /// <summary>특성 보유 (1/0).</summary>
+        Trait,
+
+        /// <summary>탐험 횟수 (Key: Day / Night / 비면 전체).</summary>
+        Expeditions,
+
+        /// <summary>이 행동을 실행한 횟수 (Key = 행동 ID, 성공·실패 무관).</summary>
+        ActionCount,
     }
 
     public enum CompareOp
@@ -104,5 +119,8 @@ namespace ApoGirl.Core.Definitions
         public List<ValueCheck> AnyChecks = new List<ValueCheck>();
 
         public List<NpcStatusCheck> NpcStatuses = new List<NpcStatusCheck>();
+
+        /// <summary>주인공 생일이 이 날에 포함될 때만 (학사력 생일 이벤트).</summary>
+        public bool IsBirthday;
     }
 }

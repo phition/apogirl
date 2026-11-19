@@ -65,8 +65,10 @@ namespace ApoGirl.Core.Planning
                 // 실제 해결 순서와 같게: 피로·스트레스 비용을 먼저 반영한 뒤 확률 계산
                 var fatigue = Math.Min(balance.VitalMax, player.Vitals.Fatigue + preview.FatigueCost);
                 var stress = Math.Min(balance.VitalMax, player.Vitals.Stress + preview.StressCost);
-                preview.SuccessChance = CheckResolver.ComputeChance(state, action.Check, balance, fatigue, stress);
-                preview.GreatSuccessChance = preview.SuccessChance * balance.GreatSuccessRatio;
+                var key = action.Check.UsesProficiency ? action.Check.Proficiency.ToString() : "";
+                var chance = CheckResolver.ComputeChance(state, action.Check, balance, fatigue, stress) + TraitRules.Sum(state, db, TraitModifierKind.CheckBonus, key);
+                preview.SuccessChance = Math.Min(Math.Max(chance, balance.CheckMinChance), balance.CheckMaxChance);
+                preview.GreatSuccessChance = preview.SuccessChance * (balance.GreatSuccessRatio + TraitRules.Sum(state, db, TraitModifierKind.GreatSuccessBonus));
             }
 
             if (!preview.Affordable)
@@ -76,7 +78,8 @@ namespace ApoGirl.Core.Planning
             }
 
             var multiplier = ActionResolver.GainMultiplier(
-                state, action, CheckResult.Success, ActionResolver.PeekRoutineBonus(player, action, balance), balance);
+                state, action, CheckResult.Success, ActionResolver.PeekRoutineBonus(player, action, balance), balance)
+                * ActionResolver.ExtraGainMultiplier(state, action, db);
             foreach (var gain in action.StatGains)
             {
                 var amount = StatRules.ScaleGain(player.GetStat(gain.Stat), gain.Amount, multiplier, balance);

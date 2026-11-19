@@ -43,7 +43,7 @@ namespace ApoGirl.Core.Simulation
             }
             else if (action.HasCheck)
             {
-                result = CheckResolver.Roll(CheckResolver.ComputeChance(state, action.Check, balance), random, balance);
+                result = CheckResolver.Roll(CheckChance(state, action, db), random, balance, TraitRules.Sum(state, db, TraitModifierKind.GreatSuccessBonus));
             }
             else
             {
@@ -53,7 +53,7 @@ namespace ApoGirl.Core.Simulation
             var routineBonus = UpdateRoutine(player, action, balance);
             if (affordable)
             {
-                var multiplier = GainMultiplier(state, action, result, routineBonus, balance);
+                var multiplier = GainMultiplier(state, action, result, routineBonus, balance) * ExtraGainMultiplier(state, action, db);
                 foreach (var gain in action.StatGains)
                 {
                     var current = player.GetStat(gain.Stat);
@@ -74,8 +74,40 @@ namespace ApoGirl.Core.Simulation
                 player.ReducedNextRest = false;
             }
 
+            if (action.IsRest)
+            {
+                recovery *= 1f + TraitRules.Sum(state, db, TraitModifierKind.RestRecovery);
+            }
+
             EffectApplier.Apply(state, EffectFor(action, result), balance, delta, recovery);
             return result;
+        }
+
+        /// <summary>판정 확률: 기본 공식 + 특성 보정 (M4).</summary>
+        public static float CheckChance(GameState state, ActionDef action, IDefinitionDatabase db)
+        {
+            var balance = db.Balance;
+            var chance = CheckResolver.ComputeChance(state, action.Check, balance);
+            var key = action.Check.UsesProficiency ? action.Check.Proficiency.ToString() : "";
+            chance += TraitRules.Sum(state, db, TraitModifierKind.CheckBonus, key);
+            return Math.Min(Math.Max(chance, balance.CheckMinChance), balance.CheckMaxChance);
+        }
+
+        /// <summary>특성(교육 성장)·시설 보정 배율 (M4).</summary>
+        public static float ExtraGainMultiplier(GameState state, ActionDef action, IDefinitionDatabase db)
+        {
+            var multiplier = 1f;
+            if (action.Category == ActionCategory.Education)
+            {
+                multiplier += TraitRules.Sum(state, db, TraitModifierKind.EducationGain);
+            }
+
+            if (!string.IsNullOrEmpty(action.BonusFacilityId) && state.Base.Facilities.TryGetValue(action.BonusFacilityId, out var level))
+            {
+                multiplier += level * action.BonusPerLevel;
+            }
+
+            return multiplier;
         }
 
         public static void AddProficiencyXp(GameState state, ProficiencyType type, int xp, BalanceConfig balance, StateDelta delta)

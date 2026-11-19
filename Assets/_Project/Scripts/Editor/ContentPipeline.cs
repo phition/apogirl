@@ -18,7 +18,7 @@ namespace ApoGirl.EditorTools
 {
     /// <summary>
     /// M3 콘텐츠 파이프라인.
-    /// 원본: Content/Events/*.json (이벤트·NPC) + Resources/Dialogue/**/*.yarn (대사).
+    /// 원본: Content/**/*.json (이벤트·NPC·행동·아이템·전리품·특성·시설·대사 줄·프롤로그) + Resources/Dialogue/**/*.yarn (대사).
     /// Import: JSON → Data/Events·Data/NPCs SO 에셋 + 정의 DB 등록 → Yarn 대사를 "Dialogue" 문자열 테이블로 동기화 → 검증.
     /// SO 에셋은 생성물이다 (직접 고치지 말고 JSON을 고칠 것).
     /// </summary>
@@ -51,12 +51,52 @@ namespace ApoGirl.EditorTools
 
             var database = AssetDatabase.LoadAssetAtPath<DefinitionDatabaseAsset>(DatabasePath);
             database.EditorSetStoryContents(events, npcs);
+
+            // M4: 행동·아이템·전리품·탐험 모델·적 (원본에 있는 종류만 갱신), 특성·시설·대사 줄·프롤로그 묶음
+            if (content.Actions.Count > 0 || content.Items.Count > 0)
+            {
+                var actions = Upsert<ActionDefinitionAsset, ActionDef>("Assets/_Project/Data/Actions", content.Actions, d => d.Id, (a, d) => a.EditorSetDefinition(d));
+                var items = Upsert<ItemDefinitionAsset, ItemDef>("Assets/_Project/Data/Items", content.Items, d => d.Id, (a, d) => a.EditorSetDefinition(d));
+                var loot = Upsert<LootTableAsset, LootTableDef>("Assets/_Project/Data/Loot", content.LootTables, d => d.Id, (a, d) => a.EditorSetDefinition(d));
+                var models = Upsert<ExpeditionModelAsset, ExpeditionModelDef>("Assets/_Project/Data/Expeditions", content.ExpeditionModels, d => d.Id, (a, d) => a.EditorSetDefinition(d));
+                var enemies = Upsert<EnemyAsset, EnemyDef>("Assets/_Project/Data/Enemies", content.Enemies, d => d.Id, (a, d) => a.EditorSetDefinition(d));
+                var extras = AssetDatabase.LoadAssetAtPath<StoryExtrasAsset>(ExtrasPath);
+                if (extras == null)
+                {
+                    extras = ScriptableObject.CreateInstance<StoryExtrasAsset>();
+                    AssetDatabase.CreateAsset(extras, ExtrasPath);
+                }
+
+                extras.EditorSet(content.Traits, content.Facilities, content.Lines, content.Prologue ?? new PrologueDef());
+                EditorUtility.SetDirty(extras);
+                database.EditorSetContent(actions, items, loot, models, enemies, extras);
+                Debug.Log($"[Content] 행동 {actions.Count}, 아이템 {items.Count}, 전리품 {loot.Count}, 모델 {models.Count}, 적 {enemies.Count}, 특성 {content.Traits.Count}, 시설 {content.Facilities.Count}, 대사 줄 {content.Lines.Count}");
+            }
+
             EditorUtility.SetDirty(database);
             AssetDatabase.SaveAssets();
             Debug.Log($"[Content] 이벤트 {events.Count}개, NPC {npcs.Count}개 가져옴");
 
             SyncDialogueTable();
             return Validate();
+        }
+
+        public const string ExtrasPath = "Assets/_Project/Data/StoryExtras.asset";
+
+        /// <summary>현재 정의 DB의 행동·아이템·전리품·탐험 모델·적을 JSON으로 내보낸다 (원본 이전용).</summary>
+        [MenuItem("ApoGirl/Content/Export Definitions To JSON")]
+        public static void ExportDefinitions()
+        {
+            var db = AssetDatabase.LoadAssetAtPath<DefinitionDatabaseAsset>(DatabasePath).Build();
+            var content = new ContentFile();
+            content.Actions.AddRange(db.Actions);
+            foreach (var guid in AssetDatabase.FindAssets("t:ItemDefinitionAsset")) content.Items.Add(AssetDatabase.LoadAssetAtPath<ItemDefinitionAsset>(AssetDatabase.GUIDToAssetPath(guid)).ToDefinition());
+            foreach (var guid in AssetDatabase.FindAssets("t:LootTableAsset")) content.LootTables.Add(AssetDatabase.LoadAssetAtPath<LootTableAsset>(AssetDatabase.GUIDToAssetPath(guid)).ToDefinition());
+            foreach (var guid in AssetDatabase.FindAssets("t:ExpeditionModelAsset")) content.ExpeditionModels.Add(AssetDatabase.LoadAssetAtPath<ExpeditionModelAsset>(AssetDatabase.GUIDToAssetPath(guid)).ToDefinition());
+            foreach (var guid in AssetDatabase.FindAssets("t:EnemyAsset")) content.Enemies.Add(AssetDatabase.LoadAssetAtPath<EnemyAsset>(AssetDatabase.GUIDToAssetPath(guid)).ToDefinition());
+            Directory.CreateDirectory("Temp/ContentExport");
+            File.WriteAllText("Temp/ContentExport/exported.json", ContentJson.Serialize(content));
+            Debug.Log("[Content] 내보냄: Temp/ContentExport/exported.json");
         }
 
         [MenuItem("ApoGirl/Content/Validate")]

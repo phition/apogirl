@@ -97,6 +97,21 @@ namespace ApoGirl.Core.Definitions
 
         public string LocationId = "";
 
+        // ── M4 ──
+
+        /// <summary>해금 조건 (맞지 않으면 팔레트에 보이지 않고 배치할 수 없다).</summary>
+        public ConditionDef Unlock = new ConditionDef();
+
+        /// <summary>밤 습격 방어 보정 (야간 경계 등).</summary>
+        public int RaidGuard;
+
+        /// <summary>시설 보정: 시설 레벨당 성장 배율 가산.</summary>
+        public string BonusFacilityId = "";
+        public float BonusPerLevel;
+
+        /// <summary>위협도 증가 (소음·냄새가 큰 행동, 탐험).</summary>
+        public int ThreatGain;
+
         public bool IsRest => Category == ActionCategory.Rest;
         public bool IsExpedition => Category == ActionCategory.Expedition;
     }

@@ -18,6 +18,7 @@ namespace ApoGirl.Data
         [SerializeField] private List<EnemyAsset> _enemies = new List<EnemyAsset>();
         [SerializeField] private List<EventDefinitionAsset> _events = new List<EventDefinitionAsset>();
         [SerializeField] private List<NpcDefinitionAsset> _npcs = new List<NpcDefinitionAsset>();
+        [SerializeField] private StoryExtrasAsset _extras;
 
         /// <summary>빈 참조는 건너뛰고, 빈 ID·중복 ID는 예외로 알린다.</summary>
         public IDefinitionDatabase Build()
@@ -32,7 +33,8 @@ namespace ApoGirl.Data
                 _locations.Where(l => l != null).Select(l => l.ToDefinition()),
                 _enemies.Where(e => e != null).Select(e => e.ToDefinition()),
                 _events.Where(e => e != null).Select(e => e.ToDefinition()),
-                _npcs.Where(n => n != null).Select(n => n.ToDefinition()));
+                _npcs.Where(n => n != null).Select(n => n.ToDefinition()),
+                _extras != null ? _extras.ToDefinition() : null);
         }
 
 #if UNITY_EDITOR
@@ -64,6 +66,27 @@ namespace ApoGirl.Data
             _events = events;
             _npcs = npcs;
         }
+
+        /// <summary>에디터 도구용: M4 콘텐츠 (행동·아이템·전리품·탐험 모델·적·묶음).</summary>
+        public void EditorSetContent(
+            List<ActionDefinitionAsset> actions, List<ItemDefinitionAsset> items, List<LootTableAsset> lootTables,
+            List<ExpeditionModelAsset> models, List<EnemyAsset> enemies, StoryExtrasAsset extras)
+        {
+            _actions = actions;
+            _items = items;
+            _lootTables = lootTables;
+            _expeditionModels = models;
+            _enemies = enemies;
+            _extras = extras;
+        }
+
+        /// <summary>에디터 도구용: 탐험 지역 목록.</summary>
+        public void EditorSetLocations(List<LocationAsset> locations)
+        {
+            _locations = locations;
+        }
+
+        public IReadOnlyList<LocationAsset> EditorLocations => _locations;
 #endif
     }
 }

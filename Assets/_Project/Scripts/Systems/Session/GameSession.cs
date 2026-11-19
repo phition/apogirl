@@ -103,10 +103,51 @@ namespace ApoGirl.Systems.Session
 
         // ── 게임 시작·저장 ──
 
-        public void NewGame(int seed, ProfileState profile = null)
+        public void NewGame(int seed, ProfileState profile = null, GameEffect prologue = null)
         {
-            Attach(NewGameFactory.Create(_db.Balance, seed, profile));
+            var state = NewGameFactory.Create(_db.Balance, seed, profile);
+            if (prologue != null)
+            {
+                EffectApplier.Apply(state, prologue, _db.Balance, new StateDelta());
+            }
+
+            // 1주차 1일 낮: 튜토리얼 런 고정 (문서 6.3.3)
+            var tutorial = _db.Balance.TutorialActionId;
+            if (!string.IsNullOrEmpty(tutorial) && _db.TryGetAction(tutorial, out _))
+            {
+                state.Plan.Slots[0].ActionId = tutorial;
+                state.Plan.Slots[0].Locked = true;
+                PlanPreparer.ApplyForcedRest(state, _db);
+            }
+
+            Attach(state);
         }
+
+        /// <summary>새 게임 직후 아직 보지 않은 시작 이벤트 (BalanceConfig.OpeningEventId).</summary>
+        public bool HasPendingOpening =>
+            HasGame && !string.IsNullOrEmpty(_db.Balance.OpeningEventId)
+                    && _db.TryGetEvent(_db.Balance.OpeningEventId, out _)
+                    && !State.Events.Records.ContainsKey(_db.Balance.OpeningEventId);
+
+        /// <summary>시작 이벤트를 띄운다 (계획 단계에서, 슬롯 밖).</summary>
+        public SlotOutcome StartOpening()
+        {
+            return DebugForceEvent(_db.Balance.OpeningEventId);
+        }
+
+        /// <summary>출정 준비 화면에서 로드아웃을 바꾼 뒤 대기 중인 탐험 요청에 반영한다.</summary>
+        public void RefreshPendingLoadout()
+        {
+            var request = _runner?.PendingRequest;
+            if (request != null)
+            {
+                ExpeditionRequestFactory.RefreshLoadout(request, State);
+                StateChanged?.Invoke();
+            }
+        }
+
+        /// <summary>계획 화면 팔레트: 지금 해금된 행동인가.</summary>
+        public bool IsUnlocked(ActionDef action) => PlanEditing.IsUnlocked(State, _db, action);
 
         public bool HasSave(string slot) => _saves.Exists(slot);
 

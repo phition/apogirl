@@ -30,5 +30,20 @@ namespace ApoGirl.Core.Definitions
 
         /// <summary>창고에 넣을 아이템.</summary>
         public List<ItemGrant> Items = new List<ItemGrant>();
+
+        // ── M4 ──
+        public int Defense;
+        public int Threat;
+        public List<FacilityChange> Facilities = new List<FacilityChange>();
+        public List<string> AddTraits = new List<string>();
+        public List<ProficiencySet> Proficiencies = new List<ProficiencySet>();
+
+        /// <summary>선생님 이동 단계를 최소 이 값으로 (0 = 변화 없음, 1 = 목발 …).</summary>
+        public int TeacherMobility;
+
+        public bool RestorePower;
+
+        /// <summary>0보다 크면 이 세기의 밤 습격을 즉시 판정한다 (이벤트 효과 전용).</summary>
+        public int RaidStrength;
     }
 }

@@ -18,6 +18,9 @@ namespace ApoGirl.Core.Planning
 
         UnknownAction,
 
+        /// <summary>아직 해금되지 않은 행동 (M4).</summary>
+        NotUnlocked,
+
         /// <summary>낮 전용 행동을 밤에 두는 등 슬롯 태그 불일치.</summary>
         WrongSlot,
     }
@@ -33,6 +36,24 @@ namespace ApoGirl.Core.Planning
             var calendar = state.Calendar;
             return state.Status == GameStatus.Playing && !calendar.WeekComplete
                                                       && calendar.Day == 1 && calendar.Phase == DayPhase.Day;
+        }
+
+        /// <summary>해금 조건 (ActionDef.Unlock). 행동 조건(ActionCategories)은 계획 시점에는 검사하지 않는다.</summary>
+        public static bool IsUnlocked(GameState state, IDefinitionDatabase db, ActionDef action)
+        {
+            if (action.Unlock == null)
+            {
+                return true;
+            }
+
+            try
+            {
+                return Events.ConditionEvaluator.IsMet(state, action.Unlock, Events.EventContext.FromCalendar(state), db.Balance);
+            }
+            catch (ArgumentException)
+            {
+                return false;
+            }
         }
 
         public static bool IsAllowedIn(ActionDef action, int slotIndex)
@@ -59,6 +80,11 @@ namespace ApoGirl.Core.Planning
             if (!IsAllowedIn(action, slotIndex))
             {
                 return PlanEditResult.WrongSlot;
+            }
+
+            if (!IsUnlocked(state, db, action))
+            {
+                return PlanEditResult.NotUnlocked;
             }
 
             state.Plan.Slots[slotIndex].ActionId = actionId;
@@ -166,7 +192,7 @@ namespace ApoGirl.Core.Planning
                 }
 
                 var id = i < ids.Count ? ids[i] : "";
-                var valid = !string.IsNullOrEmpty(id) && db.TryGetAction(id, out var action) && IsAllowedIn(action, i);
+                var valid = !string.IsNullOrEmpty(id) && db.TryGetAction(id, out var action) && IsAllowedIn(action, i) && IsUnlocked(state, db, action);
                 slots[i].ActionId = valid ? id : "";
             }
 
