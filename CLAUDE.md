@@ -18,7 +18,9 @@
 - 로컬 커밋만 한다. **사용자가 요청하기 전까지 push 하지 않는다.**
 
 ## 현재 단계
-- M0, M1, M2, **M2b(탐험 프로토타입: 뼈대·복도/방·위협/낮·밤/손전등·디버그·플레이 기록) 구현 완료** → 사용자 플레이로 "재미 검증"(문서 12장) 후 M3(콘텐츠 파이프라인).
+- M0, M1, M2, M2b(탐험 프로토타입), **M3(콘텐츠 파이프라인: 조건 엔진·이벤트/NPC·Yarn 대화·가져오기/검증 도구) 구현 완료** → 다음은 M4(버티컬 슬라이스, 1막).
+- 콘텐츠 작성법: [Docs/CONTENT_PIPELINE.md](Docs/CONTENT_PIPELINE.md). 이벤트는 `Content/Events/*.json` + `Resources/Dialogue/**/*.yarn` → 메뉴 `ApoGirl/Content/Import Events`.
+- 주 진행 중 이벤트: `GameSession.Step()`/`CompleteExpedition()`이 `AwaitingEvent`를 돌려주면 대화 → `ResolveEvent(choiceId)`. 허브 F1 디버그 패널에서 이벤트 강제 발생·자동 진행 전환.
 - 코어 진입점: `NewGameFactory.Create` → `WeekRunner`(`PrepareWeek` → `ExecuteNextSlot` × 14 → `FinishWeek`), 정의 DB는 `Assets/_Project/Data/DefinitionDatabase.asset`.
 
 ## Unity
