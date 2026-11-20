@@ -585,7 +585,7 @@ namespace ApoGirl.Core.Definitions
         public float DayRoomAmbient = 0.32f;
 
         /// <summary>복도 햇빛 줄기 밝기·간격(유닛), 방의 복도 쪽 창으로 새어 드는 빛 밝기 (조명 밝기는 선형 값이라 0.15도 꽤 밝다).</summary>
-        public float SunbeamIntensity = 0.7f;
+        public float SunbeamIntensity = 1.7f;
         public float SunbeamSpacing = 6f;
         public float RoomWindowLightIntensity = 0.15f;
 

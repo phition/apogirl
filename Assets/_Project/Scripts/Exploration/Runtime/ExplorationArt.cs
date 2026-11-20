@@ -8,7 +8,7 @@ namespace ApoGirl.Exploration.Runtime
     /// (Resources/Art/Exploration/{키}, 생성기: 메뉴 ApoGirl/Art/Build Exploration Sprites).
     /// 스프라이트가 없으면 그레이박스 사각형으로 대체해 아트 없이도 동작한다.
     /// </summary>
-    public static class ExplorationArt
+    public static partial class ExplorationArt
     {
         private const string Folder = "Art/Exploration/";
 
@@ -166,6 +166,21 @@ namespace ApoGirl.Exploration.Runtime
                 return BuildingView.Rect(parent, name, position, size, fallbackColor, order);
             }
 
+            // 테두리(9-슬라이스)가 있는 그림은 늘리지 않고 가운데 조각을 반복한다 (도트가 찌그러지지 않게)
+            if (sprite.border != Vector4.zero)
+            {
+                var sliced = new GameObject(name);
+                sliced.transform.SetParent(parent, false);
+                sliced.transform.localPosition = position;
+                var slicedRenderer = sliced.AddComponent<SpriteRenderer>();
+                slicedRenderer.sprite = sprite;
+                slicedRenderer.drawMode = SpriteDrawMode.Tiled;
+                slicedRenderer.tileMode = SpriteTileMode.Continuous;
+                slicedRenderer.size = new Vector2(Mathf.Round(size.x * PixelsPerUnit) / PixelsPerUnit, sprite.bounds.size.y);
+                slicedRenderer.sortingOrder = order;
+                return sliced;
+            }
+
             var go = new GameObject(name);
             go.transform.SetParent(parent, false);
             go.transform.localPosition = position;
@@ -195,6 +210,8 @@ namespace ApoGirl.Exploration.Runtime
         public static string CorridorWall(string locationId)
         {
             locationId ??= string.Empty;
+            var mapped = MappedWall(Map.Corridor, locationId, null);
+            if (mapped != null) return mapped;
             if (locationId.Contains("STORE")) return "wall_store";
             if (locationId.Contains("PHARMACY")) return "wall_pharmacy";
             if (locationId.Contains("RESIDENTIAL")) return "wall_room_outside";

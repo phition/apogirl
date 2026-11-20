@@ -25,7 +25,7 @@ namespace ApoGirl.Exploration.Runtime
         }
 
         /// <summary>줄기 너비(유닛)와 해가 가장 기울었을 때의 각도(도).</summary>
-        private const float BeamWidth = 2.1f;
+        private const float BeamWidth = 2.7f;
         private const float MaxSunAngle = 36f;
         private const float DuskAngle = -40f;
         private const float MoonAngle = 16f;
@@ -150,7 +150,7 @@ namespace ApoGirl.Exploration.Runtime
                 pool.transform.localPosition = new Vector3(anchor.x + reach, anchor.y - (_floorHeight - 0.2f) + 0.35f, 0f);
                 pool.transform.localScale = new Vector3(BeamWidth * 2.4f, 1.5f, 1f);
                 pool.color = _color;
-                pool.intensity = beamIntensity * 0.45f;
+                pool.intensity = beamIntensity * 0.5f;
             }
 
             var leakColor = _phase == Phase.Day || _phase == Phase.Dawn ? Color.Lerp(RoomLeak, _color, 0.35f) : _color;
@@ -246,13 +246,13 @@ namespace ApoGirl.Exploration.Runtime
             for (var y = 0; y < h; y++)
             {
                 var v = y / (float)(h - 1);            // 0 = 바닥 끝, 1 = 창
-                var along = Mathf.Lerp(0.5f, 1f, Mathf.Pow(v, 1.3f));
+                var along = Mathf.Lerp(0.72f, 1f, Mathf.Pow(v, 1.3f));
                 var ends = Mathf.SmoothStep(0f, 1f, v / 0.07f) * Mathf.SmoothStep(0f, 1f, (1f - v) / 0.05f);
                 var spread = Mathf.Lerp(1.25f, 0.8f, v); // 바닥 쪽으로 갈수록 조금 퍼진다
                 for (var x = 0; x < w; x++)
                 {
                     var u = (x / (float)(w - 1) - 0.5f) * 2f / spread;
-                    var core = Mathf.Exp(-u * u * 5.5f);          // 밝은 속
+                    var core = Mathf.Exp(-u * u * 3.6f);          // 밝은 속
                     var halo = Mathf.Exp(-u * u * 1.6f) * 0.35f;  // 넓고 옅은 가장자리
                     var edge = Mathf.SmoothStep(0f, 1f, (1f - Mathf.Abs(u)) / 0.25f);
                     var value = Mathf.Clamp01((core * 0.75f + halo) * along * ends * edge);

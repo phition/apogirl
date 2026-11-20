@@ -110,8 +110,22 @@ namespace ApoGirl.Exploration.Runtime
         private float _shoveAnim;
 
         /// <summary>무기 휘두르기·맨손 밀치기 동작 길이 (픽셀 아트 프레임을 이 시간에 나눠 보여 준다).</summary>
-        private const float AttackAnimSeconds = 0.4f;
-        private const float ShoveAnimSeconds = 0.4f;
+        private const float AttackAnimSeconds = 0.5f;
+        private const float ShoveAnimSeconds = 0.5f;
+
+        /// <summary>픽셀 아트 동작 빠르기 (초당 프레임). 코드 그림은 예전 빠르기를 쓴다.</summary>
+        private const float PixelIdleFps = 7f;
+        private const float PixelWalkFps = 18f;
+        private const float PixelRunFps = 26f;
+        private const float PixelSneakFps = 12f;
+        private const float PixelZombieWalkFps = 11f;
+        private const float PixelZombieChaseFps = 20f;
+        private const float PixelZombieIdleFps = 6f;
+
+        /// <summary>주인공 그림 접두어 (옷·무기에 따라, 예: player_padding_bat_)와 지금 프레임 키, 등에 멘 가방 그림.</summary>
+        private string _lookPrefix = "player_";
+        private string _playerFrameKey = "";
+        private SpriteRenderer _bagRenderer;
         private float _noiseMultiplier = 1f;
         private float _tutorialMoved;
         private float _tutorialCrouched;
@@ -447,9 +461,10 @@ namespace ApoGirl.Exploration.Runtime
                     {
                         other.Forced = true;
                         var doorRenderer = other.View != null ? other.View.GetComponent<SpriteRenderer>() : null;
-                        if (doorRenderer != null && ExplorationArt.Get("door_open") != null)
+                        var openDoor = ExplorationArt.Get(ExplorationArt.Door(Location.Id, target.Room.Template?.Id, true));
+                        if (doorRenderer != null && openDoor != null)
                         {
-                            doorRenderer.sprite = ExplorationArt.Get("door_open");
+                            doorRenderer.sprite = openDoor;
                             doorRenderer.color = Color.white;
                         }
                     }
@@ -489,7 +504,7 @@ namespace ApoGirl.Exploration.Runtime
                     {
                         target.Locked = false;
                         var exitRenderer = target.View != null ? target.View.GetComponent<SpriteRenderer>() : null;
-                        var openSprite = ExplorationArt.Get("prop_exit");
+                        var openSprite = ExplorationArt.Get(ExplorationArt.Exit(Location.Id, false));
                         if (exitRenderer != null && openSprite != null)
                         {
                             exitRenderer.sprite = openSprite;
@@ -676,6 +691,7 @@ namespace ApoGirl.Exploration.Runtime
             {
                 _hud?.ShowMessage("exp.weapon_broke");
                 _weapon = null;
+                RefreshLook();
             }
 
             return true;
@@ -763,6 +779,32 @@ namespace ApoGirl.Exploration.Runtime
             _moveMultiplier = (_backpackItem?.MoveSpeedMultiplier ?? 1f) * (_armor?.MoveSpeedMultiplier ?? 1f);
             _noiseMultiplier = (_backpackItem?.NoiseMultiplier ?? 1f) * (_armor?.NoiseMultiplier ?? 1f)
                                * Mathf.Max(0.2f, 1f + Request.Modifier("NoiseMultiplier"));
+            RefreshLook();
+        }
+
+        /// <summary>장비에 맞는 주인공 그림을 고른다 (옷 = 방어구, 손 = 주무기). 무기가 부서지면 다시 부른다.</summary>
+        private void RefreshLook()
+        {
+            var armor = ExplorationArt.ItemToken(_armor?.Id, "ITEM_ARMOR_", "uniform");
+            var weapon = ExplorationArt.ItemToken(_weapon?.Id, "ITEM_WEAPON_", "none");
+            _lookPrefix = ExplorationArt.PlayerPrefix(armor, weapon);
+        }
+
+        /// <summary>등에 멘 가방 (배낭 아이템이 있고 그 그림이 있을 때): 주인공 몸 뒤에 한 겹 더 그린다.</summary>
+        private void SetupBag()
+        {
+            var key = "bag_" + ExplorationArt.ItemToken(_backpackItem?.Id, "ITEM_BAG_", "");
+            var sprite = _backpackItem != null && _playerSprites ? ExplorationArt.Get(key) : null;
+            if (sprite == null)
+            {
+                return;
+            }
+
+            var go = new GameObject("PlayerBag");
+            go.transform.SetParent(_player, false);
+            _bagRenderer = go.AddComponent<SpriteRenderer>();
+            _bagRenderer.sprite = sprite;
+            _bagRenderer.sortingOrder = 9;
         }
 
         /// <summary>디버그·테스트: 소음 발생.</summary>
@@ -1088,7 +1130,7 @@ namespace ApoGirl.Exploration.Runtime
                 foreach (var doorX in template.DoorXs)
                 {
                     var corridorX = room.SpanX + doorX;
-                    var view = Prop(corridor, "Door_" + door.RoomId, "door_closed", corridorX, new Vector2(1.4f, 2.8f), BuildingView.DoorColor, 0);
+                    var view = Prop(corridor, "Door_" + door.RoomId, ExplorationArt.Door(Location.Id, template.Id, false), corridorX, new Vector2(1.4f, 2.8f), BuildingView.DoorColor, 0);
                     var target = new ExplorationTarget { Kind = TargetKind.Door, Area = corridor, X = corridorX, Room = room, LinkX = doorX, View = view };
                     var variant = Request.TimeOfDay == ExpeditionTime.Day ? Location.DayVariant : Location.NightVariant;
                     target.RoomLocked = variant.LockedRooms.Contains(door.RoomId);
@@ -1124,7 +1166,7 @@ namespace ApoGirl.Exploration.Runtime
             foreach (var exit in layout.Exits)
             {
                 var color = exit.StartsLocked ? new Color(0.3f, 0.3f, 0.3f) : new Color(0.35f, 0.6f, 0.38f);
-                var view = Prop(_corridors[exit.Floor], "Exit", exit.StartsLocked ? "prop_exit_locked" : "prop_exit", exit.X, new Vector2(1.6f, 3f), color, 0);
+                var view = Prop(_corridors[exit.Floor], "Exit", ExplorationArt.Exit(Location.Id, exit.StartsLocked), exit.X, new Vector2(1.6f, 3f), color, 0);
                 AddTarget(new ExplorationTarget { Kind = TargetKind.Exit, Area = _corridors[exit.Floor], X = exit.X, Exit = exit, Locked = exit.StartsLocked, View = view });
                 if (exit.Kind == ExitKind.Main && start == null)
                 {
@@ -1145,6 +1187,8 @@ namespace ApoGirl.Exploration.Runtime
             {
                 BuildingView.Rect(_player, "Facing", new Vector2(0.65f, 0.78f), new Vector2(0.35f, 0.05f), new Color(0.2f, 0.2f, 0.2f), 11);
             }
+
+            SetupBag();
         }
 
         /// <summary>방 내부는 처음 들어갈 때 만든다. 전리품은 방 시드로 굴려 같은 템플릿이라도 방마다 다르다.</summary>
@@ -1160,7 +1204,7 @@ namespace ApoGirl.Exploration.Runtime
             _lighting?.AddRoom(room);
             foreach (var doorX in room.Template.DoorXs)
             {
-                var exitView = Prop(room, "RoomExit", "door_closed", doorX, new Vector2(1.4f, 2.8f), BuildingView.DoorColor, 0);
+                var exitView = Prop(room, "RoomExit", ExplorationArt.Door(Location.Id, room.Template?.Id, false), doorX, new Vector2(1.4f, 2.8f), BuildingView.DoorColor, 0);
                 AddTarget(new ExplorationTarget { Kind = TargetKind.RoomExit, Area = room, X = doorX, Room = room, LinkX = room.SpanX + doorX, View = exitView });
             }
 
@@ -1193,34 +1237,63 @@ namespace ApoGirl.Exploration.Runtime
                 _shoveAnim = Mathf.Max(0f, _shoveAnim - dt);
             }
 
-            // 픽셀 아트는 동작마다 프레임 수가 다르다 (없으면 코드 그림 4프레임). 한 바퀴 빠르기는 그대로 둔다.
+            // 장비 차림별 그림 (_lookPrefix). 픽셀 아트는 동작마다 프레임 수가 달라 세어서 돌린다 (없으면 코드 그림 4프레임).
+            var look = _lookPrefix;
             if (_attackAnim > 0f)
             {
-                var swing = ExplorationArt.FrameCount("player_attack_", 0);
-                return swing > 0 ? "player_attack_" + Mathf.Clamp((int)((1f - _attackAnim / AttackAnimSeconds) * swing), 0, swing - 1) : "player_attack";
+                return ProgressFrame(look + "attack_", 1f - _attackAnim / AttackAnimSeconds) ?? look + "attack";
             }
 
             if (_shoveAnim > 0f)
             {
-                var push = ExplorationArt.FrameCount("player_shove_", 0);
-                if (push > 0)
+                var shove = ProgressFrame(look + "shove_", 1f - _shoveAnim / ShoveAnimSeconds);
+                if (shove != null)
                 {
-                    return "player_shove_" + Mathf.Clamp((int)((1f - _shoveAnim / ShoveAnimSeconds) * push), 0, push - 1);
+                    return shove;
                 }
             }
 
-            if (Hidden) return "player_crouch";
+            if (Hidden) return look + "crouch";
             if (_crouching)
             {
-                var sneak = ExplorationArt.FrameCount("player_crouch_", 0);
-                return _animMoving && sneak > 0 ? "player_crouch_" + (int)(_animTime * 2f * sneak) % sneak : "player_crouch";
+                return _animMoving ? LoopFrame(look + "crouch_", _animTime, PixelSneakFps) ?? look + "crouch" : look + "crouch";
             }
 
-            if (!_animMoving) return "player_idle";
-            var prefix = _animRunning ? "player_run_" : "player_walk_";
+            if (!_animMoving) return LoopFrame(look + "idle_", Time.time, PixelIdleFps) ?? look + "idle";
+            var prefix = look + (_animRunning ? "run_" : "walk_");
+            var pixel = LoopFrame(prefix, _animTime, _animRunning ? PixelRunFps : PixelWalkFps);
+            if (pixel != null)
+            {
+                return pixel;
+            }
+
             var count = ExplorationArt.FrameCount(prefix, 4);
-            var frame = (int)(_animTime * (_animRunning ? 12f : 7f) * count / 4f) % count;
+            var frame = (int)(_animTime * (_animRunning ? 12f : 7f)) % count;
             return prefix + frame;
+        }
+
+        /// <summary>픽셀 아트 프레임이 있으면 진행도(0~1)에 맞는 프레임 키, 없으면 null.</summary>
+        private static string ProgressFrame(string prefix, float progress)
+        {
+            if (!ExplorationArt.HasPixel(prefix + "0"))
+            {
+                return null;
+            }
+
+            var count = ExplorationArt.FrameCount(prefix, 1);
+            return prefix + Mathf.Clamp((int)(progress * count), 0, count - 1);
+        }
+
+        /// <summary>픽셀 아트 프레임이 있으면 시간에 맞춰 도는 프레임 키, 없으면 null.</summary>
+        private static string LoopFrame(string prefix, float time, float framesPerSecond, int offset = 0)
+        {
+            if (!ExplorationArt.HasPixel(prefix + "0"))
+            {
+                return null;
+            }
+
+            var count = ExplorationArt.FrameCount(prefix, 1);
+            return prefix + ((int)(time * framesPerSecond) + offset) % count;
         }
 
         /// <summary>스프라이트 소품 (피벗 = 바닥 가운데). 없으면 기존 사각형.</summary>
@@ -1253,9 +1326,11 @@ namespace ApoGirl.Exploration.Runtime
 
         private void CreateEncounter(ExplorationArea area, EncounterDef encounter)
         {
-            var key = !string.IsNullOrEmpty(encounter.SpriteKey) ? encounter.SpriteKey
-                : encounter.Id.Contains("NOTE") || encounter.Id.Contains("NOTICE") ? "prop_paper" : "person_student_crouch";
+            var key = ExplorationArt.Encounter(encounter.Id)
+                ?? (!string.IsNullOrEmpty(encounter.SpriteKey) ? encounter.SpriteKey
+                : encounter.Id.Contains("NOTE") || encounter.Id.Contains("NOTICE") ? "prop_paper" : "person_student_crouch");
             var view = Prop(area, "Encounter_" + encounter.Id, key, encounter.X, new Vector2(0.6f, 1.5f), new Color(0.55f, 0.62f, 0.75f), 9);
+            ExplorationArt.Animate(view, key, 6f);   // 숨 쉬는 사람 등 (프레임이 있을 때만)
             AddTarget(new ExplorationTarget { Kind = TargetKind.Encounter, Area = area, X = encounter.X, Encounter = encounter, View = view });
         }
 
@@ -1263,9 +1338,10 @@ namespace ApoGirl.Exploration.Runtime
         {
             var size = ContainerSize(container.Kind);
             // 방마다 다른 소품 (양호실 침대, 과학실 실험대 등): SpriteKey가 있으면 그 그림
-            var sprite = !string.IsNullOrEmpty(container.SpriteKey) && ExplorationArt.Get(container.SpriteKey) != null
+            var sprite = ExplorationArt.Container(Location.Id, area.Template?.Id, container)
+                ?? (!string.IsNullOrEmpty(container.SpriteKey) && ExplorationArt.Get(container.SpriteKey) != null
                 ? container.SpriteKey
-                : ContainerSprite(container.Kind);
+                : ContainerSprite(container.Kind));
             var view = Prop(area, "Container_" + container.Id, sprite, container.X, size, new Color(0.55f, 0.45f, 0.3f), 1);
             var target = new ExplorationTarget
             {
@@ -1419,8 +1495,22 @@ namespace ApoGirl.Exploration.Runtime
             {
                 _player.localPosition = new Vector3(worldX, origin.y + 0.15f, 0f);
                 _playerRenderer.flipX = !_facingRight;
-                _playerRenderer.sprite = ExplorationArt.Get(PlayerFrame(dt));
+                _playerFrameKey = PlayerFrame(dt);
+                _playerRenderer.sprite = ExplorationArt.Get(_playerFrameKey);
                 _playerRenderer.color = Hidden ? new Color(1f, 1f, 1f, 0.3f) : Color.white;
+                if (_bagRenderer != null)
+                {
+                    // 가방: 그 프레임의 등 위치에 붙인다 (자리 표에 없는 프레임에서는 숨긴다)
+                    var shown = ExplorationArt.TryGetBackAnchor(_playerFrameKey, out var back, out var lean);
+                    _bagRenderer.enabled = shown;
+                    if (shown)
+                    {
+                        _bagRenderer.flipX = !_facingRight;
+                        _bagRenderer.transform.localPosition = new Vector3(_facingRight ? back.x : -back.x, back.y, 0f);
+                        _bagRenderer.transform.localRotation = Quaternion.Euler(0f, 0f, _facingRight ? lean : -lean);
+                        _bagRenderer.color = _playerRenderer.color;
+                    }
+                }
             }
             else
             {
@@ -2170,9 +2260,11 @@ namespace ApoGirl.Exploration.Runtime
                         var running = unit.State == ZombieState.Chase;
                         var survivorPrefix = running ? "survivor_run_" : "survivor_walk_";
                         var survivorCount = ExplorationArt.FrameCount(survivorPrefix, 4);
-                        var frame = (int)(view.MoveTime * (running ? 12f : 7f) * survivorCount / 4f) % survivorCount;
-                        view.BodyRenderer.sprite = ExplorationArt.Get(unit.State == ZombieState.Stunned ? "survivor_stun"
-                            : !walking ? "survivor_idle" : survivorPrefix + frame);
+                        var frame = (int)(view.MoveTime * (running ? 12f : 7f)) % survivorCount;
+                        var survivorKey = unit.State == ZombieState.Stunned ? LoopFrame("survivor_stun_", Time.time, PixelZombieIdleFps, unit.Id * 3) ?? "survivor_stun"
+                            : !walking ? LoopFrame("survivor_idle_", Time.time, PixelIdleFps, unit.Id * 5) ?? "survivor_idle"
+                            : LoopFrame(survivorPrefix, view.MoveTime, running ? PixelRunFps : PixelWalkFps) ?? survivorPrefix + frame;
+                        view.BodyRenderer.sprite = ExplorationArt.Get(survivorKey);
                         view.Body.localPosition = new Vector3(origin.x + unit.X, origin.y + 0.15f, 0f);
                         view.Body.localScale = Vector3.one * (ExplorationArt.HasPixel("survivor_idle") ? 1f : SurvivorScale);
                     }
@@ -2199,15 +2291,18 @@ namespace ApoGirl.Exploration.Runtime
                     view.LastX = unit.X;
                     // 픽셀 아트는 동작마다 프레임 수가 다르다 (없으면 코드 그림 2프레임). 한 바퀴 빠르기는 그대로 둔다.
                     var chasing = unit.State == ZombieState.Chase;
+                    var kindPrefix = $"zombie_{view.Kind}_";
                     var poseName = dormant ? "dormant_" : chasing ? "chase_" : "walk_";
-                    var poseCount = ExplorationArt.FrameCount($"zombie_{view.Kind}_{poseName}", 2);
-                    var rate = (dormant ? 0.8f : chasing ? 7f : 4f) * poseCount / 2f;
-                    var phase = (int)((dormant ? Time.time * 0.8f : view.MoveTime * rate) + unit.Id) % poseCount;
-                    var pose = dormant ? "dormant_" + phase
-                        : unit.State == ZombieState.Stunned ? "stun"
-                        : chasing ? "chase_" + phase
-                        : "walk_" + (moved ? phase : 0);
-                    view.BodyRenderer.sprite = ExplorationArt.Get($"zombie_{view.Kind}_{pose}");
+                    var poseCount = ExplorationArt.FrameCount(kindPrefix + poseName, 2);
+                    var phase = (int)((dormant ? Time.time * 0.8f : view.MoveTime * (chasing ? 7f : 4f)) + unit.Id) % poseCount;
+
+                    // 픽셀 아트: 상태마다 16프레임 안팎 (잠든 숨·서성임·기절 비틀거림까지). 없으면 코드 그림 2프레임
+                    var zombieKey = unit.State == ZombieState.Stunned ? LoopFrame(kindPrefix + "stun_", Time.time, PixelZombieIdleFps * 1.6f, unit.Id * 3) ?? kindPrefix + "stun"
+                        : dormant ? LoopFrame(kindPrefix + "dormant_", Time.time, PixelZombieIdleFps * 0.6f, unit.Id * 7) ?? kindPrefix + "dormant_" + phase
+                        : chasing ? LoopFrame(kindPrefix + "chase_", view.MoveTime, PixelZombieChaseFps, unit.Id) ?? kindPrefix + "chase_" + phase
+                        : moved ? LoopFrame(kindPrefix + "walk_", view.MoveTime, PixelZombieWalkFps, unit.Id) ?? kindPrefix + "walk_" + phase
+                        : LoopFrame(kindPrefix + "idle_", Time.time, PixelZombieIdleFps, unit.Id * 5) ?? kindPrefix + "walk_0";
+                    view.BodyRenderer.sprite = ExplorationArt.Get(zombieKey);
                     view.Body.localPosition = new Vector3(origin.x + unit.X, origin.y + 0.15f, 0f);
                     view.BodyRenderer.color = unit.State == ZombieState.Stunned ? new Color(0.75f, 0.8f, 1f) : new Color(shade, shade, shade);
                     view.Body.localScale = Vector3.one;
