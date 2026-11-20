@@ -1,39 +1,83 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" editor-extension-mode="False">
     <Style src="Theme.uss" />
-    <ui:VisualElement name="screen" class="screen">
-        <ui:VisualElement name="top-bar" class="top-bar">
+    <!--
+        허브는 다섯 겹이다 (Docs/UI_REDESIGN_PROPOSAL.md).
+        0겹 장면(scene) → 1겹 상시 표시(hud-top·standing·teacher-box·dock·ticker)
+        → 2겹 서랍과 계획 보드(drawer-left·drawer-right·board) → 3겹 카드(overlay) → 4겹 대화(dialogue).
+    -->
+    <ui:VisualElement name="screen" class="screen hub">
+        <!-- 0겹: 장면 -->
+        <ui:VisualElement name="scene" class="scene">
+            <ui:VisualElement name="backdrop" class="backdrop">
+                <ui:Label name="backdrop-label" class="backdrop-label" />
+            </ui:VisualElement>
+            <ui:VisualElement name="scene-shade" class="scene-shade" picking-mode="Ignore" />
+        </ui:VisualElement>
+
+        <!-- 1겹: 상시 표시 -->
+        <ui:VisualElement name="hud-top" class="hud-top">
             <ui:Label name="calendar-label" class="calendar" />
             <ui:VisualElement name="resources" class="resources" />
-            <ui:Button name="save-button" class="top-button" />
-            <ui:Button name="menu-button" class="top-button" />
+            <ui:Button name="record-button" class="hud-button" />
+            <ui:Button name="base-button" class="hud-button" />
+            <ui:Button name="save-button" class="hud-button" />
+            <ui:Button name="menu-button" class="hud-button" />
         </ui:VisualElement>
 
-        <ui:VisualElement name="middle" class="middle">
-            <ui:ScrollView name="status-panel" class="panel status-panel" />
-            <ui:VisualElement name="center" class="center">
-                <ui:VisualElement name="backdrop" class="backdrop">
-                    <ui:Label name="backdrop-label" class="backdrop-label" />
-                </ui:VisualElement>
-                <ui:VisualElement name="teacher-box" class="teacher-box">
-                    <ui:Label name="teacher-name" class="teacher-name" />
-                    <ui:Label name="teacher-line" class="teacher-line" />
-                </ui:VisualElement>
-            </ui:VisualElement>
-            <ui:VisualElement name="palette" class="panel palette">
-                <ui:VisualElement name="palette-tabs" class="palette-tabs" />
-                <ui:Label name="palette-hint" class="palette-hint" />
-                <ui:ScrollView name="palette-list" class="palette-list" />
-            </ui:VisualElement>
+        <ui:VisualElement name="standing-area" class="standing-area">
+            <ui:VisualElement name="standing" class="standing" />
+            <ui:VisualElement name="vitals-mini" class="vitals-mini" />
         </ui:VisualElement>
 
-        <ui:VisualElement name="bottom" class="bottom">
-            <ui:VisualElement name="planner" class="panel planner" />
-            <ui:VisualElement name="plan-side" class="panel plan-side">
-                <ui:ScrollView name="warnings" class="warnings" />
-                <ui:Label name="forecast" class="forecast" />
-                <ui:VisualElement name="plan-buttons" class="button-row" />
-                <ui:VisualElement name="speed-buttons" class="button-row" />
-                <ui:Button name="run-button" class="run-button" />
+        <ui:VisualElement name="teacher-box" class="teacher-box">
+            <ui:Label name="teacher-name" class="teacher-name" />
+            <ui:Label name="teacher-line" class="teacher-line" />
+        </ui:VisualElement>
+
+        <ui:VisualElement name="ticker" class="ticker" picking-mode="Ignore" />
+
+        <ui:VisualElement name="dock" class="dock">
+            <ui:Button name="plan-open-button" class="dock-plan" />
+            <ui:VisualElement name="dock-slots" class="dock-slots" />
+            <ui:VisualElement name="speed-buttons" class="dock-speed" />
+            <ui:Button name="run-button" class="run-button" />
+        </ui:VisualElement>
+
+        <!-- 2겹: 서랍과 계획 보드 -->
+        <ui:VisualElement name="drawer-left" class="drawer drawer-left closed">
+            <ui:VisualElement class="drawer-head">
+                <ui:Label name="drawer-left-title" class="drawer-title" />
+                <ui:Button name="drawer-left-close" class="drawer-close" />
+            </ui:VisualElement>
+            <ui:ScrollView name="status-panel" class="drawer-body status-panel" />
+        </ui:VisualElement>
+
+        <ui:VisualElement name="drawer-right" class="drawer drawer-right closed">
+            <ui:VisualElement class="drawer-head">
+                <ui:Label name="drawer-right-title" class="drawer-title" />
+                <ui:Button name="drawer-right-close" class="drawer-close" />
+            </ui:VisualElement>
+            <ui:ScrollView name="base-panel" class="drawer-body base-panel" />
+        </ui:VisualElement>
+
+        <ui:VisualElement name="board" class="board closed">
+            <ui:VisualElement class="board-head">
+                <ui:Label name="board-title" class="board-title" />
+                <ui:Label name="board-hint" class="board-hint" />
+                <ui:Button name="board-close" class="drawer-close" />
+            </ui:VisualElement>
+            <ui:VisualElement class="board-body">
+                <ui:VisualElement name="palette" class="palette">
+                    <ui:VisualElement name="palette-tabs" class="palette-tabs" />
+                    <ui:Label name="palette-hint" class="palette-hint" />
+                    <ui:ScrollView name="palette-list" class="palette-list" />
+                </ui:VisualElement>
+                <ui:VisualElement name="planner" class="planner" />
+                <ui:VisualElement name="plan-side" class="plan-side">
+                    <ui:ScrollView name="warnings" class="warnings" />
+                    <ui:Label name="forecast" class="forecast" />
+                    <ui:VisualElement name="plan-buttons" class="button-row" />
+                </ui:VisualElement>
             </ui:VisualElement>
         </ui:VisualElement>
 
@@ -41,6 +85,7 @@
 
         <ui:VisualElement name="debug-panel" class="debug-panel hidden" />
 
+        <!-- 4겹: 대화 -->
         <ui:VisualElement name="dialogue" class="dialogue hidden">
             <ui:ScrollView name="dialogue-log" class="dialogue-log hidden" />
             <ui:VisualElement class="dialogue-tools">
@@ -56,6 +101,7 @@
             </ui:VisualElement>
         </ui:VisualElement>
 
+        <!-- 3겹: 카드 (결과·결산·세력 등, 전용 화면으로 나누기 전까지) -->
         <ui:VisualElement name="overlay" class="overlay hidden">
             <ui:VisualElement name="card" class="card">
                 <ui:Label name="card-title" class="card-title" />

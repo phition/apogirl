@@ -50,6 +50,12 @@ namespace ApoGirl.Presentation.Screens
         private ExpeditionPrepView _prep;
         private EventDialoguePlayer _dialoguePlayer;
         private VisualElement _teacherAvatar;
+        private HubLayers _layers;
+        private DockView _dock;
+        private MiniVitalsView _miniVitals;
+        private StandingView _standing;
+        private VisualElement _ticker;
+        private int _lastWarningCount = -1;
 
         /// <summary>테스트용: 허브 진입 시 시작 이벤트를 자동으로 띄우지 않는다.</summary>
         public static bool AutoPlayOpening = true;
@@ -74,6 +80,11 @@ namespace ApoGirl.Presentation.Screens
             _palette = new PaletteView(_root, _session);
             _planner = new PlannerView(_root, _session, () => _palette.SelectedActionId, ShowToast);
             _planSide = new PlanSideView(_root, _session);
+            _layers = new HubLayers(_root) { CanPlan = () => _session.IsPlanning };
+            _dock = new DockView(_root, _session, () => _layers.ToggleBoard());
+            _miniVitals = new MiniVitalsView(_root, _session, () => _layers.ToggleRecord());
+            _standing = new StandingView(_root.Q("standing"), () => _session.State, () => _session.Definitions.Balance);
+            _ticker = _root.Q("ticker");
             _card = new CardOverlay(_root);
             _debug = new DebugPanelView(_root.Q("debug-panel"), _session, ForceEvent, ShowEnd);
             _dialogueView = new DialogueView(_root)
@@ -168,6 +179,17 @@ namespace ApoGirl.Presentation.Screens
                 _debug.Toggle();
             }
 
+            var busy = _card.IsOpen || _dialogueView.IsOpen || (_ending != null && _ending.IsOpen);
+            if (!busy && keyboard.tabKey.wasPressedThisFrame)
+            {
+                _layers.ToggleBoard();
+            }
+
+            if (!busy && keyboard.escapeKey.wasPressedThisFrame)
+            {
+                _layers.CloseTop();
+            }
+
             if (keyboard.spaceKey.wasPressedThisFrame || keyboard.enterKey.wasPressedThisFrame)
             {
                 if (_ending != null && _ending.IsOpen)
@@ -187,6 +209,7 @@ namespace ApoGirl.Presentation.Screens
             _root.Q<Button>("save-button").clicked += ShowSaveCard;
             _root.Q<Button>("menu-button").text = Loc.T("hub.menu");
             _root.Q<Button>("menu-button").clicked += ShowMenuCard;
+            _root.Q<Button>("plan-open-button").clicked += () => _layers.ToggleBoard();
 
             _runButton = _root.Q<Button>("run-button");
             _runButton.clicked += () =>
@@ -227,7 +250,25 @@ namespace ApoGirl.Presentation.Screens
             _palette.Refresh();
             var warned = _planSide.Refresh();
             _planner.Refresh(warned);
+            _dock.Refresh(warned);
+            _miniVitals.Refresh();
             _debug.Refresh();
+
+            // 입상: 계획을 고치다 경고가 늘면 잠깐 놀란 얼굴
+            var warningCount = _session.IsPlanning ? _session.Warnings().Count : 0;
+            if (_session.IsPlanning && _lastWarningCount >= 0 && warningCount > _lastWarningCount)
+            {
+                _standing.React("surprised", 1.4f);
+            }
+            else
+            {
+                _standing.Refresh(warningCount > 0);
+            }
+
+            _lastWarningCount = _session.IsPlanning ? warningCount : -1;
+            var planButton = _root.Q<Button>("plan-open-button");
+            planButton.text = _session.IsPlanning ? Loc.T("hud.plan") : Loc.T("hud.plan_running");
+            planButton.SetEnabled(_session.IsPlanning);
 
             _runButton.text = _session.IsExecuting ? Loc.T("plan.running") : Loc.T("plan.run");
             _runButton.SetEnabled(_session.IsPlanning);
@@ -277,6 +318,7 @@ namespace ApoGirl.Presentation.Screens
         private IEnumerator RunWeek()
         {
             _pendingSummary = null;
+            _layers.CloseAll();
             _session.BeginWeek();
             while (_session.IsExecuting)
             {
@@ -327,6 +369,11 @@ namespace ApoGirl.Presentation.Screens
                 }
                 else
                 {
+                    if (!confined)
+                    {
+                        ShowTicker(outcome);
+                    }
+
                     var delay = ExecutionPacer.DelayAfter(outcome, _speed);
                     if (delay > 0f)
                     {
@@ -831,6 +878,37 @@ namespace ApoGirl.Presentation.Screens
                 button.AddToClassList("small-button");
                 button.SetEnabled(blocker == null);
                 _card.Extra.Add(button);
+            }
+        }
+
+        /// <summary>
+        /// 실행 중 평범한 칸: 카드로 멈추지 않고 장면 위에 결과 한 줄을 흘려보낸다 (최근 4줄, 몇 초 뒤 사라짐).
+        /// 대성공이면 입상이 밝게 웃는다.
+        /// </summary>
+        private void ShowTicker(SlotOutcome outcome)
+        {
+            if (string.IsNullOrEmpty(outcome.ActionId))
+            {
+                return;
+            }
+
+            var deltas = UiText.DeltaLines(outcome.Delta);
+            var detail = UiText.Result(outcome.Result) + (deltas.Count > 0 ? "  " + string.Join("  ", deltas.Take(3)) : "");
+            var line = new Label(Loc.F("hud.ticker", outcome.Day, UiText.Phase(outcome.Phase), Loc.Action(outcome.ActionId, "short"), detail));
+            line.AddToClassList("ticker-line");
+            line.EnableInClassList("great", outcome.Result == Core.Rules.CheckResult.GreatSuccess);
+            line.EnableInClassList("fail", outcome.Result == Core.Rules.CheckResult.Failure);
+            _ticker.Add(line);
+            while (_ticker.childCount > 4)
+            {
+                _ticker.RemoveAt(0);
+            }
+
+            line.schedule.Execute(() => line.AddToClassList("fading")).ExecuteLater(2600);
+            line.schedule.Execute(() => line.RemoveFromHierarchy()).ExecuteLater(3000);
+            if (outcome.Result == Core.Rules.CheckResult.GreatSuccess)
+            {
+                _standing.React("bright", 1.6f);
             }
         }
 

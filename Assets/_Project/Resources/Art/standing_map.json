@@ -1,0 +1,39 @@
+{
+  "Folder": "Standing",
+  "Order": [ "base", "outfit", "hair", "face", "mark", "bag", "weapon", "tool" ],
+  "Armor": [
+    { "Item": "ITEM_ARMOR_GUARD", "Key": "guard" },
+    { "Item": "ITEM_ARMOR_PADDING", "Key": "padding" },
+    { "Item": "ITEM_ARMOR_RIOT", "Key": "riot" }
+  ],
+  "SeasonOutfit": [
+    { "Season": "Summer", "Key": "summer" },
+    { "Season": "Winter", "Key": "winter" }
+  ],
+  "Hair": [
+    { "FromWeek": 14, "Key": "mid" },
+    { "FromWeek": 40, "Key": "long" }
+  ],
+  "Face": { "BlankStressRatio": 0.9, "TiredSleepDebt": 3, "TiredFatigue": 70, "SadStress": 60, "SmileStressBelow": 25 },
+  "Marks": { "DirtyBelow": 50, "ThinSatietyBelow": -50, "MaskSymptom": 2 },
+  "Bags": [
+    { "Item": "ITEM_BAG_SCHOOL", "Key": "bag_school" },
+    { "Item": "ITEM_BAG_HIKING", "Key": "bag_hiking" },
+    { "Item": "ITEM_BAG_TOTE", "Key": "bag_tote" }
+  ],
+  "Weapons": [
+    { "Item": "ITEM_WEAPON_MOP", "Key": "mop" },
+    { "Item": "ITEM_WEAPON_BAT", "Key": "bat" },
+    { "Item": "ITEM_WEAPON_PIPE", "Key": "pipe" },
+    { "Item": "ITEM_WEAPON_BATON", "Key": "baton" }
+  ],
+  "Tools": [
+    { "Item": "ITEM_TOOL_FLASHLIGHT", "Key": "flashlight" }
+  ],
+  "BagColors": [ "#8a5a36", "#4a6f9e", "#e39ab4", "#b8413b", "#e6c54f", "#6a9356" ],
+  "PortraitFallback": [
+    { "Face": "bright", "Portrait": "smile" },
+    { "Face": "tired", "Portrait": "worried" },
+    { "Face": "blank", "Portrait": "sad" }
+  ]
+}

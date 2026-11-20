@@ -55,28 +55,200 @@ Button.selected { border-color: var(--accent); background-color: var(--accent-so
     padding: 8px;
 }
 
-/* ── 상단 바 ── */
-.top-bar {
-    flex-direction: row;
+/* ── 허브: 다섯 겹 (Docs/UI_REDESIGN_PROPOSAL.md) ── */
+.screen.hub { padding: 0; }
+
+/* 0겹 장면: 화면 전체 */
+.scene { position: absolute; left: 0; top: 0; right: 0; bottom: 0; }
+.backdrop {
+    position: absolute; left: 0; top: 0; right: 0; bottom: 0;
+    background-color: #2b2e30;
     align-items: center;
-    height: 48px;
-    padding: 0 8px;
-    margin-bottom: 8px;
-    background-color: var(--panel);
-    border-radius: 6px;
+    justify-content: center;
+}
+.backdrop-label { color: var(--text-dim); }
+/* 장면의 아래쪽을 어둡게 눌러 1겹 글자가 읽히게 */
+.scene-shade {
+    position: absolute; left: 0; right: 0; bottom: 0; height: 40%;
+    background-color: rgba(8, 9, 12, 0.35);
 }
 
-.calendar { -unity-font-style: bold; font-size: 20px; min-width: 320px; }
-.resources { flex-direction: row; flex-grow: 1; align-items: center; }
-.resource { margin-right: 18px; }
+/* 1겹: 위쪽 띠 */
+.hud-top {
+    position: absolute; left: 0; top: 0; right: 0;
+    flex-direction: row;
+    align-items: center;
+    height: 52px;
+    padding: 0 14px;
+    background-color: rgba(18, 19, 22, 0.82);
+    border-bottom-width: 1px;
+    border-color: rgba(185, 163, 122, 0.25);
+}
+.calendar { -unity-font-style: bold; font-size: 20px; min-width: 300px; }
+.resources { flex-direction: row; flex-grow: 1; flex-shrink: 1; align-items: center; overflow: hidden; }
+.resource { margin-right: 16px; }
 .blackout { color: var(--warn); -unity-font-style: bold; }
-.top-button { min-width: 72px; }
+.hud-button { min-width: 84px; height: 34px; background-color: rgba(51, 55, 60, 0.9); }
+.hud-button.selected { background-color: var(--accent-soft); border-color: var(--accent); }
 
-/* ── 가운데 ── */
-.middle { flex-direction: row; flex-grow: 1; min-height: 0; }
-.status-panel { width: 300px; margin-right: 8px; }
-.center { flex-grow: 1; margin-right: 8px; }
-.palette { width: 380px; }
+/* 1겹: 주인공 입상 + 생명 수치 요약 (왼쪽 아래) */
+.standing-area {
+    position: absolute; left: 18px; bottom: 96px;
+    flex-direction: row;
+    align-items: flex-end;
+}
+.standing {
+    width: 380px;
+    height: 600px;
+}
+.standing.fallback {
+    width: 300px;
+    height: 400px;
+    border-width: 1px;
+    border-radius: 6px;
+    border-color: rgba(185, 163, 122, 0.45);
+    background-color: rgba(18, 19, 22, 0.6);
+}
+.standing-layer { position: absolute; left: 0; top: 0; right: 0; bottom: 0; }
+.vitals-mini {
+    width: 230px;
+    margin-left: 10px;
+    margin-bottom: 4px;
+    padding: 8px 10px;
+    background-color: rgba(18, 19, 22, 0.78);
+    border-radius: 6px;
+}
+.vitals-mini .vital-bar { height: 20px; margin: 2px 0; }
+.vitals-mini .unity-progress-bar__title { font-size: 14px; }
+.mini-flag { color: var(--danger); font-size: 14px; margin-top: 2px; }
+.mini-flag.warn { color: var(--warn); }
+
+/* 1겹: 선생님 한마디 (오른쪽 아래) */
+.teacher-box {
+    position: absolute; right: 18px; bottom: 96px;
+    width: 560px;
+    min-height: 92px;
+    padding: 12px 96px 12px 16px;
+    background-color: rgba(24, 26, 30, 0.88);
+    border-radius: 8px;
+    border-left-width: 4px;
+    border-color: var(--accent);
+}
+.teacher-name { -unity-font-style: bold; color: var(--accent); }
+.teacher-line { margin-top: 4px; }
+.teacher-avatar { position: absolute; right: 12px; top: 12px; width: 70px; height: 70px; }
+
+/* 1겹: 실행 중 흘러가는 결과 한 줄 */
+.ticker {
+    position: absolute; left: 30%; right: 30%; top: 72px;
+    align-items: center;
+}
+.ticker-line {
+    margin: 3px 0;
+    padding: 6px 16px;
+    background-color: rgba(18, 19, 22, 0.86);
+    border-radius: 14px;
+    border-width: 1px;
+    border-color: rgba(185, 163, 122, 0.35);
+    -unity-text-align: middle-center;
+    transition-property: opacity, translate;
+    transition-duration: 0.35s;
+}
+.ticker-line.great { border-color: var(--accent); color: #f0dfb8; }
+.ticker-line.fail { border-color: var(--danger); }
+.ticker-line.fading { opacity: 0; translate: 0 -10px; }
+
+/* 1겹: 맨 아래 14칸 도크 */
+.dock {
+    position: absolute; left: 0; right: 0; bottom: 0;
+    height: 84px;
+    flex-direction: row;
+    align-items: center;
+    padding: 0 14px;
+    background-color: rgba(18, 19, 22, 0.92);
+    border-top-width: 1px;
+    border-color: rgba(185, 163, 122, 0.25);
+}
+.dock-plan { width: 140px; height: 58px; -unity-font-style: bold; }
+.dock-plan.selected { background-color: var(--accent-soft); border-color: var(--accent); }
+.dock-slots { flex-direction: row; flex-grow: 1; height: 66px; margin: 0 10px; }
+.dock-day { flex-grow: 1; flex-basis: 0; margin: 0 3px; }
+.dock-day-label { font-size: 13px; color: var(--text-dim); -unity-text-align: middle-center; height: 16px; }
+.dock-cell {
+    flex-grow: 1;
+    flex-basis: 0;
+    margin: 1px 0;
+    padding: 0 4px;
+    font-size: 13px;
+    -unity-text-align: middle-center;
+    white-space: nowrap;
+    overflow: hidden;
+    border-radius: 3px;
+    background-color: rgba(51, 55, 60, 0.85);
+    border-width: 0;
+    color: var(--text);
+}
+.dock-cell.night { background-color: rgba(38, 42, 62, 0.9); }
+.dock-cell.empty { color: var(--text-dim); }
+.dock-cell.locked { background-color: var(--locked); }
+.dock-cell.forced { border-width: 1px; border-color: var(--warn); }
+.dock-cell.warned { border-width: 1px; border-color: var(--danger); }
+.dock-cell.done { opacity: 0.4; }
+.dock-cell.current { border-width: 2px; border-color: var(--accent); background-color: var(--accent-soft); }
+.dock-speed { flex-direction: row; margin-right: 8px; }
+.dock-speed .small-button { height: 30px; }
+.run-button {
+    width: 170px;
+    height: 58px;
+    -unity-font-style: bold;
+    background-color: var(--accent-soft);
+    border-color: var(--accent);
+}
+
+/* 2겹: 서랍 (왼쪽 = 생활기록부, 오른쪽 = 거점·사람) */
+.drawer {
+    position: absolute; top: 60px; bottom: 92px;
+    width: 440px;
+    padding: 10px 12px;
+    background-color: rgba(30, 32, 36, 0.96);
+    border-color: var(--line);
+    border-width: 1px;
+    transition-property: translate, opacity;
+    transition-duration: 0.22s;
+    transition-timing-function: ease-out-cubic;
+}
+.drawer-left { left: 0; border-left-width: 0; border-top-right-radius: 8px; border-bottom-right-radius: 8px; }
+.drawer-right { right: 0; border-right-width: 0; border-top-left-radius: 8px; border-bottom-left-radius: 8px; }
+.drawer-left.closed { translate: -460px 0; opacity: 0; }
+.drawer-right.closed { translate: 460px 0; opacity: 0; }
+.drawer-head, .board-head { flex-direction: row; align-items: center; margin-bottom: 6px; }
+.drawer-title, .board-title { -unity-font-style: bold; font-size: 20px; color: var(--accent); flex-grow: 1; }
+.drawer-close { width: 34px; height: 30px; padding: 0; }
+.drawer-body { flex-grow: 1; }
+
+/* 2겹: 계획 보드 (아래에서 올라온다) */
+.board {
+    position: absolute; left: 336px; right: 0; bottom: 84px;
+    height: 600px;
+    padding: 10px 14px;
+    background-color: rgba(26, 28, 32, 0.97);
+    border-top-width: 1px;
+    border-color: var(--accent-soft);
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    transition-property: translate, opacity;
+    transition-duration: 0.25s;
+    transition-timing-function: ease-out-cubic;
+}
+.board.closed { translate: 0 620px; opacity: 0; }
+/* 보드가 열리면 입상은 왼쪽에 그대로 두고, 선생님 한마디는 보드 위로 올린다 */
+.board-open .teacher-box { bottom: 700px; transition-property: bottom; transition-duration: 0.25s; }
+.board-open .vitals-mini { display: none; }
+.board-hint { color: var(--text-dim); font-size: 14px; margin-right: 10px; }
+.board-body { flex-direction: row; flex-grow: 1; min-height: 0; }
+.palette { width: 420px; margin-right: 12px; }
+.planner { flex-grow: 1; margin-right: 12px; }
+.plan-side { width: 360px; }
 
 .section-header {
     -unity-font-style: bold;
@@ -97,31 +269,6 @@ Button.selected { border-color: var(--accent); background-color: var(--accent-so
 .vital-stress .unity-progress-bar__progress { background-color: #8f5a54; }
 .vital-bar .unity-progress-bar__title { color: var(--text); font-size: 15px; }
 
-.backdrop {
-    flex-grow: 1;
-    background-color: #2b2e30;
-    border-radius: 6px;
-    border-width: 1px;
-    border-color: var(--line);
-    align-items: center;
-    justify-content: center;
-}
-
-.backdrop-label { color: var(--text-dim); }
-
-.teacher-box {
-    margin-top: 8px;
-    min-height: 84px;
-    padding: 10px 14px;
-    background-color: var(--panel);
-    border-radius: 6px;
-    border-left-width: 4px;
-    border-color: var(--accent);
-}
-
-.teacher-name { -unity-font-style: bold; color: var(--accent); }
-.teacher-line { margin-top: 4px; }
-
 .palette-tabs { flex-direction: row; }
 .tab { flex-grow: 1; flex-shrink: 1; flex-basis: 0; min-width: 0; margin-left: 1px; margin-right: 1px; }
 .palette-hint { color: var(--text-dim); font-size: 14px; margin: 4px 2px; }
@@ -138,11 +285,6 @@ Button.selected { border-color: var(--accent); background-color: var(--accent-so
 .action-name { -unity-font-style: bold; }
 .action-info { color: var(--text-dim); font-size: 15px; }
 .action-gains { color: var(--ok); font-size: 15px; }
-
-/* ── 하단 플래너 ── */
-.bottom { flex-direction: row; height: 280px; margin-top: 8px; }
-.planner { flex-grow: 1; margin-right: 8px; }
-.plan-side { width: 420px; }
 
 .planner-row { flex-direction: row; flex-grow: 1; }
 .planner-day, .planner-phase {
@@ -179,18 +321,10 @@ Button.selected { border-color: var(--accent); background-color: var(--accent-so
 .button-row { flex-direction: row; flex-wrap: wrap; }
 .small-button { font-size: 15px; padding: 2px 8px; }
 
-.run-button {
-    height: 40px;
-    margin-top: 4px;
-    -unity-font-style: bold;
-    background-color: var(--accent-soft);
-    border-color: var(--accent);
-}
-
 /* ── 토스트·디버그·오버레이 ── */
 .toast {
     position: absolute;
-    bottom: 280px;
+    bottom: 200px;
     left: 35%;
     right: 35%;
     padding: 8px 14px;
@@ -202,7 +336,7 @@ Button.selected { border-color: var(--accent); background-color: var(--accent-so
 .debug-panel {
     position: absolute;
     top: 70px;
-    right: 410px;
+    right: 600px;
     width: 260px;
     padding: 8px;
     background-color: rgba(20, 20, 30, 0.95);
@@ -413,16 +547,6 @@ Button.selected { border-color: var(--accent); background-color: var(--accent-so
     border-radius: 8px;
     border-width: 1px;
     border-color: var(--accent-soft);
-}
-
-.teacher-box { padding-right: 92px; }
-
-.teacher-avatar {
-    position: absolute;
-    right: 10px;
-    top: 8px;
-    width: 68px;
-    height: 68px;
 }
 
 .title-logo {

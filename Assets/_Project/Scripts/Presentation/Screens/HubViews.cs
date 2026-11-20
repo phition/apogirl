@@ -123,7 +123,7 @@ namespace ApoGirl.Presentation.Screens
         }
     }
 
-    /// <summary>좌측 스탯 패널.</summary>
+    /// <summary>생활기록부 서랍(생명 수치·능력치·숙련도)과 거점 서랍(시설·동료·세력).</summary>
     internal sealed class StatusPanelView
     {
         private static readonly VitalType[] ShownVitals =
@@ -195,13 +195,15 @@ namespace ApoGirl.Presentation.Screens
                 StoryArt.SetIcon(_proficiencies[proficiency], StoryArt.Icon("prof." + proficiency), 22f);
             }
 
-            panel.Add(_baseSection);
+            // 거점·동료·세력은 오른쪽 서랍 (없으면 같은 패널 아래에)
+            var basePanel = root.Q("base-panel") ?? panel;
+            basePanel.Add(_baseSection);
             _baseSection.Add(Header("status.base"));
             _baseInfo = Row(_baseSection);
             _baseInfo.style.whiteSpace = WhiteSpace.Normal;
             _baseSection.Add(_companions);
 
-            panel.Add(_factionSection);
+            basePanel.Add(_factionSection);
             _factionSection.Add(Header("status.factions"));
             _factionSection.Add(_factions);
         }

@@ -1,0 +1,231 @@
+using System;
+using System.Collections.Generic;
+using ApoGirl.Core.Definitions;
+using ApoGirl.Core.Rules;
+using ApoGirl.Core.State;
+using ApoGirl.Presentation.Art;
+using ApoGirl.Presentation.Text;
+using ApoGirl.Systems.Session;
+using UnityEngine.UIElements;
+
+namespace ApoGirl.Presentation.Screens
+{
+    // 허브의 겹 구조 (Docs/UI_REDESIGN_PROPOSAL.md): 2겹(서랍·계획 보드)을 여닫고, 1겹(도크·생명 수치 요약)을 그린다.
+
+    /// <summary>2겹 여닫기: 왼쪽 서랍(생활기록부), 오른쪽 서랍(거점·사람), 계획 보드. 단추의 선택 표시도 맞춘다.</summary>
+    internal sealed class HubLayers
+    {
+        private readonly VisualElement _left;
+        private readonly VisualElement _right;
+        private readonly VisualElement _board;
+        private readonly Button _recordButton;
+        private readonly Button _baseButton;
+        private readonly Button _planButton;
+        private readonly VisualElement _screen;
+
+        public HubLayers(VisualElement root)
+        {
+            _screen = root.Q("screen");
+            _left = root.Q("drawer-left");
+            _right = root.Q("drawer-right");
+            _board = root.Q("board");
+            _recordButton = root.Q<Button>("record-button");
+            _baseButton = root.Q<Button>("base-button");
+            _planButton = root.Q<Button>("plan-open-button");
+
+            root.Q<Label>("drawer-left-title").text = Loc.T("hud.record_title");
+            root.Q<Label>("drawer-right-title").text = Loc.T("hud.base_title");
+            root.Q<Label>("board-title").text = Loc.T("hud.board_title");
+            root.Q<Label>("board-hint").text = Loc.T("hud.board_hint");
+            foreach (var name in new[] { "drawer-left-close", "drawer-right-close", "board-close" })
+            {
+                root.Q<Button>(name).text = Loc.T("hud.close");
+            }
+
+            root.Q<Button>("drawer-left-close").clicked += () => Set(_left, false);
+            root.Q<Button>("drawer-right-close").clicked += () => Set(_right, false);
+            root.Q<Button>("board-close").clicked += () => Set(_board, false);
+            _recordButton.text = Loc.T("hud.record");
+            _baseButton.text = Loc.T("hud.base");
+            _recordButton.clicked += ToggleRecord;
+            _baseButton.clicked += ToggleBase;
+            Sync();
+        }
+
+        public bool BoardOpen => IsOpen(_board);
+
+        /// <summary>계획 보드를 열 수 있는가 (계획 단계에서만). 허브가 정한다.</summary>
+        public Func<bool> CanPlan { get; set; } = () => true;
+
+        public void ToggleBoard() => SetBoard(!BoardOpen);
+
+        public void SetBoard(bool open)
+        {
+            Set(_board, open && CanPlan());
+        }
+
+        public void ToggleRecord() => Set(_left, !IsOpen(_left));
+
+        public void ToggleBase() => Set(_right, !IsOpen(_right));
+
+        public void CloseAll()
+        {
+            Set(_board, false);
+            Set(_left, false);
+            Set(_right, false);
+        }
+
+        /// <summary>Esc: 맨 위에 열린 것 하나를 닫는다. 닫은 것이 있으면 true.</summary>
+        public bool CloseTop()
+        {
+            foreach (var element in new[] { _board, _right, _left })
+            {
+                if (IsOpen(element))
+                {
+                    Set(element, false);
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        private static bool IsOpen(VisualElement element) => element != null && !element.ClassListContains("closed");
+
+        private void Set(VisualElement element, bool open)
+        {
+            element?.EnableInClassList("closed", !open);
+            Sync();
+        }
+
+        private void Sync()
+        {
+            _recordButton?.EnableInClassList("selected", IsOpen(_left));
+            _baseButton?.EnableInClassList("selected", IsOpen(_right));
+            _planButton?.EnableInClassList("selected", IsOpen(_board));
+            _screen?.EnableInClassList("board-open", IsOpen(_board));
+        }
+    }
+
+    /// <summary>1겹 맨 아래: 이번 주 14칸을 한 줄로. 누르면 계획 보드가 열린다. 실행 중에는 지금 칸을 표시한다.</summary>
+    internal sealed class DockView
+    {
+        private readonly GameSession _session;
+        private readonly Button[] _cells = new Button[WeekPlan.SlotCount];
+
+        public DockView(VisualElement root, GameSession session, Action onOpen)
+        {
+            _session = session;
+            var slots = root.Q("dock-slots");
+            for (var day = 1; day <= CalendarState.DaysPerWeek; day++)
+            {
+                var column = new VisualElement();
+                column.AddToClassList("dock-day");
+                var label = new Label(Loc.F("hud.dock_day", day));
+                label.AddToClassList("dock-day-label");
+                column.Add(label);
+                foreach (var phase in new[] { DayPhase.Day, DayPhase.Night })
+                {
+                    var index = CalendarRules.SlotIndex(day, phase);
+                    var cell = new Button(onOpen);
+                    cell.AddToClassList("dock-cell");
+                    cell.EnableInClassList("night", phase == DayPhase.Night);
+                    _cells[index] = cell;
+                    column.Add(cell);
+                }
+
+                slots.Add(column);
+            }
+        }
+
+        public void Refresh(ICollection<int> warnedSlots)
+        {
+            var state = _session.State;
+            var calendar = state.Calendar;
+            var current = calendar.WeekComplete ? WeekPlan.SlotCount : CalendarRules.SlotIndex(calendar.Day, calendar.Phase);
+            var executing = _session.IsExecuting;
+            for (var i = 0; i < _cells.Length; i++)
+            {
+                var slot = state.Plan.Slots[i];
+                var cell = _cells[i];
+                var empty = string.IsNullOrEmpty(slot.ActionId);
+                cell.text = empty ? "·" : Loc.Action(slot.ActionId, "short");
+                cell.tooltip = empty ? Loc.T("planner.empty") : Loc.Action(slot.ActionId);
+                cell.EnableInClassList("empty", empty);
+                cell.EnableInClassList("locked", slot.Locked);
+                cell.EnableInClassList("forced", slot.ForcedRest && !slot.Locked);
+                cell.EnableInClassList("warned", warnedSlots.Contains(i));
+                cell.EnableInClassList("done", executing && i < current);
+                cell.EnableInClassList("current", executing && i == current);
+            }
+        }
+    }
+
+    /// <summary>1겹 입상 옆: 생명 수치 요약 (자세한 것은 생활기록부 서랍). 누르면 서랍이 열린다.</summary>
+    internal sealed class MiniVitalsView
+    {
+        private static readonly VitalType[] Shown = { VitalType.Hp, VitalType.Fatigue, VitalType.Stress, VitalType.Satiety, VitalType.Hydration };
+
+        private readonly GameSession _session;
+        private readonly Dictionary<VitalType, ProgressBar> _bars = new Dictionary<VitalType, ProgressBar>();
+        private readonly Label _injury;
+        private readonly Label _symptom;
+        private readonly Label _sleep;
+
+        public MiniVitalsView(VisualElement root, GameSession session, Action onOpen)
+        {
+            _session = session;
+            var panel = root.Q("vitals-mini");
+            panel.RegisterCallback<ClickEvent>(_ => onOpen());
+            foreach (var vital in Shown)
+            {
+                var centered = vital == VitalType.Satiety || vital == VitalType.Hydration;
+                var bar = new ProgressBar { lowValue = centered ? -100 : 0, highValue = 100 };
+                bar.AddToClassList("vital-bar");
+                bar.AddToClassList("vital-" + vital.ToString().ToLowerInvariant());
+                StoryArt.SetIcon(bar, StoryArt.Icon("vital." + vital), 20f);
+                panel.Add(bar);
+                _bars[vital] = bar;
+            }
+
+            _injury = Flag(panel, "");
+            _symptom = Flag(panel, "");
+            _sleep = Flag(panel, "warn");
+        }
+
+        public void Refresh()
+        {
+            var state = _session.State;
+            var player = state.Player;
+            var balance = _session.Definitions.Balance;
+            foreach (var pair in _bars)
+            {
+                var value = player.Vitals.GetVital(pair.Key);
+                pair.Value.value = value;
+                pair.Value.title = UiText.Vital(pair.Key) + " " + (pair.Key == VitalType.Satiety || pair.Key == VitalType.Hydration ? UiText.Signed(value) : value.ToString());
+            }
+
+            _injury.text = Loc.T("status.injured");
+            _injury.EnableInClassList("hidden", !InjuryRules.IsInjured(state, balance));
+            var symptom = InfectionRules.SymptomLevel(state);
+            _symptom.text = Loc.T("symptom." + symptom);
+            _symptom.EnableInClassList("hidden", symptom == 0);
+            _sleep.text = Loc.T("status.sleep_debt") + " " + player.SleepDebt;
+            _sleep.EnableInClassList("hidden", player.SleepDebt < 3);
+        }
+
+        private static Label Flag(VisualElement parent, string extraClass)
+        {
+            var label = new Label();
+            label.AddToClassList("mini-flag");
+            if (!string.IsNullOrEmpty(extraClass))
+            {
+                label.AddToClassList(extraClass);
+            }
+
+            label.AddToClassList("hidden");
+            parent.Add(label);
+            return label;
+        }
+    }
+}
