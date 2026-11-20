@@ -60,6 +60,7 @@ MonoBehaviour:
       Proficiencies: []
       TeacherMobility: 0
       RestorePower: 0
+      TreatInjury: 0
       CookDish: 0
       PurifyWater: 0
       PurifyRate: 1
@@ -129,6 +130,7 @@ MonoBehaviour:
         Proficiencies: []
         TeacherMobility: 0
         RestorePower: 0
+        TreatInjury: 0
         CookDish: 0
         PurifyWater: 0
         PurifyRate: 1
@@ -158,6 +160,7 @@ MonoBehaviour:
         Proficiencies: []
         TeacherMobility: 0
         RestorePower: 0
+        TreatInjury: 0
         CookDish: 0
         PurifyWater: 0
         PurifyRate: 1
@@ -228,6 +231,7 @@ MonoBehaviour:
         Proficiencies: []
         TeacherMobility: 0
         RestorePower: 0
+        TreatInjury: 0
         CookDish: 0
         PurifyWater: 0
         PurifyRate: 1
@@ -257,6 +261,7 @@ MonoBehaviour:
         Proficiencies: []
         TeacherMobility: 0
         RestorePower: 0
+        TreatInjury: 0
         CookDish: 0
         PurifyWater: 0
         PurifyRate: 1
@@ -318,6 +323,7 @@ MonoBehaviour:
         Proficiencies: []
         TeacherMobility: 0
         RestorePower: 0
+        TreatInjury: 0
         CookDish: 0
         PurifyWater: 0
         PurifyRate: 1
@@ -347,6 +353,7 @@ MonoBehaviour:
         Proficiencies: []
         TeacherMobility: 0
         RestorePower: 0
+        TreatInjury: 0
         CookDish: 0
         PurifyWater: 0
         PurifyRate: 1
