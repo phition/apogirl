@@ -196,24 +196,18 @@ namespace ApoGirl.Systems.Session
                 PendingStartBonus = null;
             }
 
-            // 1주차 1일 낮: 튜토리얼 런 고정 (문서 6.3.3)
-            var tutorial = _db.Balance.TutorialActionId;
-            if (!string.IsNullOrEmpty(tutorial) && _db.TryGetAction(tutorial, out _))
-            {
-                state.Plan.Slots[0].ActionId = tutorial;
-                state.Plan.Slots[0].Locked = true;
-                PlanPreparer.ApplyForcedRest(state, _db);
-            }
+            // 1주차: 창고에 갇혀 버티다가 마지막 날 탈출 (튜토리얼 런 고정, 문서 6.3.3)
+            TutorialWeekRules.Apply(state, _db);
 
             Attach(state);
         }
 
-        /// <summary>새 게임 직후 아직 보지 않은 시작 이벤트 (BalanceConfig.OpeningEventId).</summary>
+        /// <summary>새 게임 직후 아직 보지 않은 도입 이벤트 (BalanceConfig.IntroEventId, 창고에 갇힘).</summary>
         public bool HasPendingOpening => HasGame && NextOpeningEventId() != null;
 
         public const string NgPlusFlag = "NG_PLUS";
 
-        /// <summary>시작 이벤트를 띄운다 (계획 단계에서, 슬롯 밖). 2회차면 "창고 안의 7일"이 먼저.</summary>
+        /// <summary>도입 이벤트를 띄운다 (계획 단계에서, 슬롯 밖). 선생님이 문을 여는 장면은 탈출 전날 밤 끝에 따로 뜬다.</summary>
         public SlotOutcome StartOpening()
         {
             return DebugForceEvent(NextOpeningEventId());
@@ -222,12 +216,7 @@ namespace ApoGirl.Systems.Session
         private string NextOpeningEventId()
         {
             var balance = _db.Balance;
-            if (State.Flags.Contains(NgPlusFlag) && IsUnseen(balance.NgPlusOpeningEventId) && !IsSeen(balance.OpeningEventId))
-            {
-                return balance.NgPlusOpeningEventId;
-            }
-
-            return IsUnseen(balance.OpeningEventId) ? balance.OpeningEventId : null;
+            return IsUnseen(balance.IntroEventId) && !IsSeen(balance.OpeningEventId) ? balance.IntroEventId : null;
         }
 
         private bool IsUnseen(string eventId) =>

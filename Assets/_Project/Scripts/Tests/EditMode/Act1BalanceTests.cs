@@ -4,6 +4,7 @@ using System.Text;
 using ApoGirl.Core.Definitions;
 using ApoGirl.Core.Expedition;
 using ApoGirl.Core.Random;
+using ApoGirl.Core.Rules;
 using ApoGirl.Core.Simulation;
 using ApoGirl.Core.State;
 using ApoGirl.Systems.Content;
@@ -98,8 +99,7 @@ namespace ApoGirl.Tests.EditMode
             var db = Db();
             state = NewGameFactory.Create(db.Balance, seed);
             EffectHelpers.ApplyPrologueCommon(state, db);
-            state.Plan.Slots[0].ActionId = db.Balance.TutorialActionId;
-            state.Plan.Slots[0].Locked = true;
+            TutorialWeekRules.Apply(state, db);
             var runner = new WeekRunner(state, db, new SeededRandom(state.Rng), new HeadlessExpeditionRunner(db));
             var log = new StringBuilder();
             for (var week = 1; week <= weeks && state.Status == GameStatus.Playing; week++)

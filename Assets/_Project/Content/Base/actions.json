@@ -99,6 +99,9 @@
       "Unlock": { "FlagsNone": [ "ROOF_GARDEN" ], "Checks": [ { "Kind": "Facility", "Key": "ROOFTOP", "Op": "GreaterOrEqual", "Value": 1 } ] } },
     { "Id": "ACT_INTRUSION", "Category": "Survival", "SlotTag": "DayOnly", "FatigueCost": 0,
       "Unlock": { "FlagsAll": [ "SYSTEM_ONLY" ] } },
+    { "Id": "ACT_STORAGE_WAIT", "Category": "Rest", "SlotTag": "Both", "Confined": true,
+      "OnSuccess": { "Vitals": [ { "Vital": "Fatigue", "Amount": -8 }, { "Vital": "Stress", "Amount": 2 } ] },
+      "Unlock": { "FlagsAll": [ "SYSTEM_ONLY" ] } },
     { "Id": "ACT_SURV_CLEAN", "Category": "Survival", "SlotTag": "DayOnly", "FatigueCost": 5,
       "OnSuccess": { "Vitals": [ { "Vital": "Cleanliness", "Amount": 30 }, { "Vital": "Stress", "Amount": -3 } ], "Threat": -2 } },
     { "Id": "ACT_SURV_MAKE_CRUTCH", "Category": "Survival", "SlotTag": "DayOnly", "FatigueCost": 8, "StressCost": 2, "HasCheck": true,
@@ -120,7 +123,7 @@
       "Unlock": { "Checks": [ { "Kind": "Facility", "Key": "ROOFTOP", "Op": "GreaterOrEqual", "Value": 1 } ] } },
 
     { "Id": "ACT_EXP_TUTORIAL", "Category": "Expedition", "SlotTag": "DayOnly", "ExpeditionTime": "Day", "LocationId": "LOC_TUTORIAL",
-      "Unlock": { "Checks": [ { "Kind": "ActionCount", "Key": "ACT_EXP_TUTORIAL", "Op": "Equal", "Value": 0 } ], "WeekMax": 1 } },
+      "Unlock": { "FlagsAll": [ "SYSTEM_ONLY" ] } },
     { "Id": "ACT_EXP_DAY_SCHOOL", "Category": "Expedition", "SlotTag": "DayOnly", "ExpeditionTime": "Day", "LocationId": "LOC_SCHOOL_INTERIOR",
       "Unlock": { "FlagsAll": [ "LOC_SCHOOL_DAY" ] } },
     { "Id": "ACT_EXP_NIGHT_SCHOOL", "Category": "Expedition", "SlotTag": "NightOnly", "ExpeditionTime": "Night", "LocationId": "LOC_SCHOOL_INTERIOR",

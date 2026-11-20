@@ -271,7 +271,7 @@ namespace ApoGirl.Tests.PlayMode
             yield return WaitForScene(GameApp.HubScene);
             yield return null;
 
-            // 시작 이벤트는 바로 넘기고, 1주차 튜토리얼 고정 슬롯은 풀어 둔다 (각 테스트가 직접 계획을 짠다)
+            // 도입·선생님 장면은 바로 넘기고, 1주차 고정 슬롯(창고·탈출)은 풀어 둔다 (각 테스트가 직접 계획을 짠다)
             var session = GameApp.Session;
             if (session.HasPendingOpening)
             {
@@ -279,8 +279,15 @@ namespace ApoGirl.Tests.PlayMode
                 ResolveAll(session);
             }
 
-            session.State.Plan.Slots[0].Locked = false;
-            session.State.Plan.Slots[0].ActionId = "";
+            session.DebugForceEvent(session.Definitions.Balance.OpeningEventId);
+            ResolveAll(session);
+            foreach (var slot in session.State.Plan.Slots)
+            {
+                slot.Locked = false;
+                slot.ForcedRest = false;
+                slot.ActionId = "";
+            }
+
             session.State.Flags.Add("LOC_SCHOOL_DAY");
             session.State.Flags.Add("NIGHT_RUNS");
         }

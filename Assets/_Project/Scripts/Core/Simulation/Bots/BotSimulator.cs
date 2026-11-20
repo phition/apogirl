@@ -140,12 +140,7 @@ namespace ApoGirl.Core.Simulation.Bots
             var state = NewGameFactory.Create(db.Balance, seed, profile);
             state.Difficulty = string.IsNullOrEmpty(config.Difficulty) ? Rules.DifficultyRules.Standard : config.Difficulty;
             EffectApplier.Apply(state, prologue, db.Balance, new StateDelta());
-            var tutorial = db.Balance.TutorialActionId;
-            if (!string.IsNullOrEmpty(tutorial) && db.TryGetAction(tutorial, out _))
-            {
-                state.Plan.Slots[0].ActionId = tutorial;
-                state.Plan.Slots[0].Locked = true;
-            }
+            TutorialWeekRules.Apply(state, db);
 
             var result = new BotRunResult
             {
@@ -157,15 +152,15 @@ namespace ApoGirl.Core.Simulation.Bots
             var runner = new WeekRunner(state, db, new SeededRandom(state.Rng), expeditions, chooser);
             runner.SlotResolved += outcome => Record(result, outcome);
 
-            var opening = db.Balance.OpeningEventId;
-            if (!string.IsNullOrEmpty(opening) && db.TryGetEvent(opening, out _))
+            var intro = db.Balance.IntroEventId;
+            if (!string.IsNullOrEmpty(intro) && db.TryGetEvent(intro, out _))
             {
-                runner.ForceEvent(opening);
+                runner.ForceEvent(intro);
             }
 
             while (state.Status == GameStatus.Playing && state.Calendar.Week <= config.MaxWeeks)
             {
-                // 1주차도 튜토리얼 칸만 고정하고 나머지는 전략대로
+                // 1주차는 창고·탈출로 모두 잠겨 있다 (잠긴 칸은 전략이 건드리지 않음)
                 BotPlanner.Plan(state, db, config, strategy, botRandom);
 
                 runner.PrepareWeek();

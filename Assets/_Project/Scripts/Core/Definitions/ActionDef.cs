@@ -112,6 +112,11 @@ namespace ApoGirl.Core.Definitions
         /// <summary>위협도 증가 (소음·냄새가 큰 행동, 탐험).</summary>
         public int ThreatGain;
 
+        /// <summary>
+        /// 갇혀 있는 동안의 행동 (1주차 창고): 밤 습격이 없고, 이 행동 ID를 조건(ActionIds)으로 건 이벤트만 뜬다.
+        /// </summary>
+        public bool Confined;
+
         public bool IsRest => Category == ActionCategory.Rest;
         public bool IsExpedition => Category == ActionCategory.Expedition;
     }

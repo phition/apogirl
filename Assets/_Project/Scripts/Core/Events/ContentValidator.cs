@@ -50,6 +50,10 @@ namespace ApoGirl.Core.Events
             {
                 CheckCondition(db, ev.Id, ev.Condition, npcIds, issues);
                 CheckEffect(db, ev.Id + " OnShow", ev.OnShow, npcIds, issues);
+                if (!string.IsNullOrEmpty(ev.ThenEventId) && !db.TryGetEvent(ev.ThenEventId, out _))
+                {
+                    Add(issues, IssueSeverity.Error, ev.Id, "이어지는 이벤트 없음: " + ev.ThenEventId);
+                }
 
                 if (ev.IsRandom && ev.Weight <= 0f)
                 {

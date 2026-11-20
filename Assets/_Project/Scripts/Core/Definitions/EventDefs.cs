@@ -51,6 +51,9 @@ namespace ApoGirl.Core.Definitions
         /// <summary>이벤트가 시작될 때 바로 적용되는 효과.</summary>
         public GameEffect OnShow = new GameEffect();
 
+        /// <summary>끝나면 이어서 바로 시작할 이벤트 (선택지의 NextEventId가 없을 때, 조건 무시).</summary>
+        public string ThenEventId = "";
+
         /// <summary>비어 있으면 선택 없이 "계속"으로 끝나는 서술 이벤트.</summary>
         public List<EventChoiceDef> Choices = new List<EventChoiceDef>();
 

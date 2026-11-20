@@ -5,10 +5,9 @@
       "Kind": "Story",
       "Priority": 101,
       "Condition": {
-        "FlagsAll": [
-          "FORCED_ONLY"
-        ]
+        "ActionIds": [ "ACT_STORAGE_WAIT" ], "Days": [ 6 ], "Phase": "Night", "FlagsAll": [ "NG_PLUS" ]
       },
+      "ThenEventId": "EVT_A1_OPENING",
       "OnShow": {
         "AddClues": [
           "TRUTH_STORAGE_SOUNDS"

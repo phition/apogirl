@@ -140,15 +140,8 @@ namespace ApoGirl.Tests.EditMode
                 Assert.Greater(session.State.Base.GetResource(ResourceType.Food), foodBefore, "시작 보너스 적용");
                 Assert.IsNull(session.PendingStartBonus, "보너스는 한 번만");
 
+                // "창고 안의 7일" 회상은 1주차 6일 밤 끝, 문이 열리기 직전 (TutorialWeekTests)
                 Assert.IsTrue(session.HasPendingOpening);
-                session.InteractiveEvents = false;
-                session.StartOpening();
-                Assert.IsTrue(session.State.Events.Records.ContainsKey(db.Balance.NgPlusOpeningEventId), "창고 안의 7일이 먼저");
-                Assert.IsTrue(session.State.Clues.Contains("TRUTH_STORAGE_SOUNDS"));
-                Assert.IsTrue(session.HasPendingOpening, "그다음 1막 시작 이벤트");
-                session.StartOpening();
-                Assert.IsTrue(session.State.Events.Records.ContainsKey(db.Balance.OpeningEventId));
-                Assert.IsFalse(session.HasPendingOpening);
             }
             finally
             {
@@ -167,8 +160,7 @@ namespace ApoGirl.Tests.EditMode
             {
                 var state = NewGameFactory.Create(db.Balance, seed);
                 EffectApplier.Apply(state, db.Extras.Prologue.Common, db.Balance, new StateDelta());
-                state.Plan.Slots[0].ActionId = db.Balance.TutorialActionId;
-                state.Plan.Slots[0].Locked = true;
+                TutorialWeekRules.Apply(state, db);
                 var runner = new WeekRunner(state, db, new SeededRandom(state.Rng), new HeadlessExpeditionRunner(db));
                 while (state.Status == GameStatus.Playing)
                 {

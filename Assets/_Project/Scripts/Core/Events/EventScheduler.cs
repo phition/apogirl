@@ -21,8 +21,16 @@ namespace ApoGirl.Core.Events
             var balance = db.Balance;
             EventDef best = null;
             List<EventDef> randoms = null;
+
+            // 갇혀 있는 동안: 그 행동을 조건으로 건 이벤트만 (무작위 이벤트 없음)
+            var confined = !string.IsNullOrEmpty(context?.ActionId) && db.TryGetAction(context.ActionId, out var action) && action.Confined;
             foreach (var ev in db.Events)
             {
+                if (confined && (ev.IsRandom || !ev.Condition.ActionIds.Contains(context.ActionId)))
+                {
+                    continue;
+                }
+
                 if (!IsAvailable(state, ev) || !ConditionEvaluator.IsMet(state, ev.Condition, context, balance))
                 {
                     continue;

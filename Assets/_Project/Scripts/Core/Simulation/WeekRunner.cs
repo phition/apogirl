@@ -262,7 +262,7 @@ namespace ApoGirl.Core.Simulation
                 EffectApplier.ChangeThreat(_state, action.ThreatGain, Balance, delta);
             }
 
-            if (calendar.Phase == DayPhase.Night && !action.IsExpedition && player.Vitals.Hp > 0)
+            if (calendar.Phase == DayPhase.Night && !action.IsExpedition && !action.Confined && player.Vitals.Hp > 0)
             {
                 var companionGuard = (int)Math.Round(TraitRules.Sum(_state, _db, TraitModifierKind.RaidGuard));
                 outcome.Raid = RaidRules.RollNight(_state, action, Balance, _random, delta, companionGuard);
@@ -366,7 +366,8 @@ namespace ApoGirl.Core.Simulation
             }
 
             CheckGameOver();
-            if (!IsGameOver && !string.IsNullOrEmpty(result.NextEventId) && _db.TryGetEvent(result.NextEventId, out var next))
+            var nextId = string.IsNullOrEmpty(result.NextEventId) ? pending.Event.ThenEventId : result.NextEventId;
+            if (!IsGameOver && !string.IsNullOrEmpty(nextId) && _db.TryGetEvent(nextId, out var next))
             {
                 EventResolver.Begin(_state, next, pending.Context, Balance, pending.Outcome.Delta);
                 _pendingEvent = new PendingEventState
