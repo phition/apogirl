@@ -132,6 +132,10 @@ MonoBehaviour:
     - 0.15
     - 0.2
     - 0.25
+    HostileChancePerExposure: 0.06
+    ExposureDecayPerWeek: 1
+    MaxExposure: 6
+    IntrusionChancePerExposure: 0.02
     HostileWeightsByAct: 37000000230000000a0000002d000000280000000f000000200000002d0000001700000014000000320000001e000000i
     HostileCountMinByAct: 01000000010000000200000003000000i
     HostileCountMaxByAct: 01000000020000000300000003000000i
@@ -168,8 +172,8 @@ MonoBehaviour:
     IntrusionYieldStress: 10
     IntrusionHideStress: 6
     IntrusionInjuryWeeks: 2
-    RainBarrelWater: 8
-    RoofGardenFood: 5
+    RainBarrelWater: 10
+    RoofGardenFood: 7
     TrapPower: 25
     MaxTraps: 3
     AlarmPower: 10
@@ -181,7 +185,7 @@ MonoBehaviour:
     FoodSpoilageThreshold: 60
     FoodSpoilageRate: 0.2
     BiteChanceOnDownDay: 0.25
-    BiteChanceOnDownNight: 0.35
+    BiteChanceOnDownNight: 0.3
     BiteInfection: 30
     BiteInfectionTreated: 8
     FirstAidBaseChance: 0.15
