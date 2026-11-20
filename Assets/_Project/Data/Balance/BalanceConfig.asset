@@ -125,6 +125,35 @@ MonoBehaviour:
     StarvationHpLoss: 5
     DehydrationThreshold: 60
     DehydrationHpLoss: 10
+    DefaultDifficulty: STANDARD
+    Difficulties:
+    - Id: STORY
+      Consumption: 0.75
+      Harm: 0.6
+      HumanThreat: 0.7
+      Infection: 0.6
+      Yield: 1
+      WeeklyUndo: 1
+      Dispatch: 1
+      DispatchYield: 0.7
+    - Id: STANDARD
+      Consumption: 1
+      Harm: 1
+      HumanThreat: 1
+      Infection: 1
+      Yield: 1
+      WeeklyUndo: 0
+      Dispatch: 0
+      DispatchYield: 0.7
+    - Id: HARD
+      Consumption: 1
+      Harm: 1.4
+      HumanThreat: 1.3
+      Infection: 1.3
+      Yield: 0.9
+      WeeklyUndo: 0
+      Dispatch: 0
+      DispatchYield: 0.7
     HostileEnemyId: ENEMY_SURVIVOR
     HostileStartWeek: 5
     HostileChanceByAct:

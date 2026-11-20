@@ -3035,6 +3035,50 @@ MonoBehaviour:
     m_Key: exp.restocked.LOC_WATERWORKS
     m_Metadata:
       m_Items: []
+  - m_Id: 382558822219776
+    m_Key: title.difficulty_pick
+    m_Metadata:
+      m_Items: []
+  - m_Id: 382558885134336
+    m_Key: difficulty.STORY.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 382558885134337
+    m_Key: difficulty.STORY.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 382558885134338
+    m_Key: difficulty.STANDARD.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 382558885134339
+    m_Key: difficulty.STANDARD.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 382558885134340
+    m_Key: difficulty.HARD.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 382558885134341
+    m_Key: difficulty.HARD.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 382558885134342
+    m_Key: summary.undo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 382558885134343
+    m_Key: summary.undone
+    m_Metadata:
+      m_Items: []
+  - m_Id: 382558885134344
+    m_Key: prep.dispatch
+    m_Metadata:
+      m_Items: []
+  - m_Id: 382558885134345
+    m_Key: prep.dispatch_hint
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
