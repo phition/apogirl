@@ -225,7 +225,8 @@ namespace ApoGirl.Presentation.Screens
                 button.AddToClassList("faction-" + tier.ToString().ToLowerInvariant());
                 _factions.Add(button);
 
-                var bar = new ProgressBar { lowValue = FactionRules.MinStanding, highValue = FactionRules.MaxStanding, value = faction.Standing };
+                // ProgressBar는 음수 최솟값을 그리지 못해서 0~200으로 옮겨 그린다 (가운데 = 평판 0)
+                var bar = new ProgressBar { lowValue = 0, highValue = FactionRules.MaxStanding - FactionRules.MinStanding, value = faction.Standing - FactionRules.MinStanding };
                 bar.AddToClassList("faction-bar");
                 _factions.Add(bar);
 
