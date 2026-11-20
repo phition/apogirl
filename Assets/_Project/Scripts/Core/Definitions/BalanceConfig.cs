@@ -335,6 +335,9 @@ namespace ApoGirl.Core.Definitions
         /// <summary>비 오는 주에는 빗물통 없이도 양동이로 빗물(RawWater)을 조금 받는다.</summary>
         public int RainCollectWater = 5;
 
+        /// <summary>매주 학교 물탱크·화장실에서 받아 두는 생활용수 (RawWater, 정수해야 식수).</summary>
+        public int WeeklyRawWater = 5;
+
         /// <summary>옥상 텃밭 (플래그 ROOF_GARDEN): 겨울을 뺀 매주 식량.</summary>
         public int RoofGardenFood = 7;
 

@@ -98,6 +98,9 @@ namespace ApoGirl.Core.Rules
             }
 
             // 거점 생산: 빗물통(비 오는 주), 옥상 텃밭(겨울 제외)
+            // 생활용수: 물탱크·화장실에 남은 물 (그대로는 못 마신다)
+            EffectApplier.ChangeResource(state, ResourceType.RawWater, balance.WeeklyRawWater, delta);
+
             // 비 오는 주: 양동이로 받는 빗물 + 빗물통이 있으면 더
             if (state.Base.Weather == WeatherType.Rain)
             {

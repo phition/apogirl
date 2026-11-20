@@ -99,7 +99,7 @@ namespace ApoGirl.Tests.EditMode
             var water = state.Base.GetResource(ResourceType.Water);
             state.Player.Vitals.Cleanliness = 50;
             UpkeepRules.ApplyWeekly(state, balance, new StateDelta());
-            Assert.AreEqual(balance.RainCollectWater + balance.RainBarrelWater, state.Base.GetResource(ResourceType.RawWater));
+            Assert.AreEqual(balance.WeeklyRawWater + balance.RainCollectWater + balance.RainBarrelWater, state.Base.GetResource(ResourceType.RawWater));
             Assert.AreEqual(water, state.Base.GetResource(ResourceType.Water));
             Assert.AreEqual(50 - balance.CleanlinessWeeklyDecay, state.Player.Vitals.Cleanliness);
             Assert.AreEqual(balance.StartingCleanliness, NewGameFactory.Create(balance, 2).Player.Vitals.Cleanliness);
