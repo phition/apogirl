@@ -69,7 +69,7 @@ namespace ApoGirl.Core.Definitions
         public int InjuryMedicineCost = 1;
 
         /// <summary>탐험에서 얻는 의약품 배율 (헤드리스·실시간 공통, 소수는 확률 반올림). 배드 목표 50%에 맞춘 값.</summary>
-        public float MedicineYieldMultiplier = 1f;
+        public float MedicineYieldMultiplier = 0.5f;
 
         /// <summary>응급처치 숙련이 있고 탐험에서 이만큼 이상 잃었지만 부상까지 가지 않았으면 '응급 치료로 마무리' 서술.</summary>
         public int FirstAidNarrativeMinLoss = 15;
