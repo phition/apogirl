@@ -2883,6 +2883,7 @@ MonoBehaviour:
           RaidStrength: 0
           TeacherReinfect: 0
           TeacherInfection: 0
+          TraumaCare: 0
         ProfileField: 
         ProfileValue: 
       - Id: I
@@ -2914,6 +2915,7 @@ MonoBehaviour:
           RaidStrength: 0
           TeacherReinfect: 0
           TeacherInfection: 0
+          TraumaCare: 0
         ProfileField: 
         ProfileValue: 
       - Id: S
@@ -2945,6 +2947,7 @@ MonoBehaviour:
           RaidStrength: 0
           TeacherReinfect: 0
           TeacherInfection: 0
+          TraumaCare: 0
         ProfileField: 
         ProfileValue: 
       - Id: N
@@ -2974,6 +2977,7 @@ MonoBehaviour:
           RaidStrength: 0
           TeacherReinfect: 0
           TeacherInfection: 0
+          TraumaCare: 0
         ProfileField: 
         ProfileValue: 
       - Id: T
@@ -3005,6 +3009,7 @@ MonoBehaviour:
           RaidStrength: 0
           TeacherReinfect: 0
           TeacherInfection: 0
+          TraumaCare: 0
         ProfileField: 
         ProfileValue: 
       - Id: F
@@ -3034,6 +3039,7 @@ MonoBehaviour:
           RaidStrength: 0
           TeacherReinfect: 0
           TeacherInfection: 0
+          TraumaCare: 0
         ProfileField: 
         ProfileValue: 
       - Id: J
@@ -3063,6 +3069,7 @@ MonoBehaviour:
           RaidStrength: 0
           TeacherReinfect: 0
           TeacherInfection: 0
+          TraumaCare: 0
         ProfileField: 
         ProfileValue: 
       - Id: P
@@ -3092,6 +3099,7 @@ MonoBehaviour:
           RaidStrength: 0
           TeacherReinfect: 0
           TeacherInfection: 0
+          TraumaCare: 0
         ProfileField: 
         ProfileValue: 
     - Id: BLOOD
@@ -3122,6 +3130,7 @@ MonoBehaviour:
           RaidStrength: 0
           TeacherReinfect: 0
           TeacherInfection: 0
+          TraumaCare: 0
         ProfileField: BloodType
         ProfileValue: A
       - Id: B
@@ -3150,6 +3159,7 @@ MonoBehaviour:
           RaidStrength: 0
           TeacherReinfect: 0
           TeacherInfection: 0
+          TraumaCare: 0
         ProfileField: BloodType
         ProfileValue: B
       - Id: O
@@ -3178,6 +3188,7 @@ MonoBehaviour:
           RaidStrength: 0
           TeacherReinfect: 0
           TeacherInfection: 0
+          TraumaCare: 0
         ProfileField: BloodType
         ProfileValue: O
       - Id: AB
@@ -3206,6 +3217,7 @@ MonoBehaviour:
           RaidStrength: 0
           TeacherReinfect: 0
           TeacherInfection: 0
+          TraumaCare: 0
         ProfileField: BloodType
         ProfileValue: AB
       - Id: UNKNOWN
@@ -3235,6 +3247,7 @@ MonoBehaviour:
           RaidStrength: 0
           TeacherReinfect: 0
           TeacherInfection: 0
+          TraumaCare: 0
         ProfileField: BloodType
         ProfileValue: Unknown
     - Id: GRADE
@@ -3269,6 +3282,7 @@ MonoBehaviour:
           RaidStrength: 0
           TeacherReinfect: 0
           TeacherInfection: 0
+          TraumaCare: 0
         ProfileField: GradeBandId
         ProfileValue: TOP
       - Id: MIDDLE
@@ -3301,6 +3315,7 @@ MonoBehaviour:
           RaidStrength: 0
           TeacherReinfect: 0
           TeacherInfection: 0
+          TraumaCare: 0
         ProfileField: GradeBandId
         ProfileValue: MIDDLE
       - Id: LOW
@@ -3333,6 +3348,7 @@ MonoBehaviour:
           RaidStrength: 0
           TeacherReinfect: 0
           TeacherInfection: 0
+          TraumaCare: 0
         ProfileField: GradeBandId
         ProfileValue: LOW
       - Id: UNKNOWN
@@ -3365,6 +3381,7 @@ MonoBehaviour:
           RaidStrength: 0
           TeacherReinfect: 0
           TeacherInfection: 0
+          TraumaCare: 0
         ProfileField: GradeBandId
         ProfileValue: UNKNOWN
     - Id: SUBJECT
@@ -3402,6 +3419,7 @@ MonoBehaviour:
           RaidStrength: 0
           TeacherReinfect: 0
           TeacherInfection: 0
+          TraumaCare: 0
         ProfileField: FavoriteSubjectId
         ProfileValue: KOREAN
       - Id: MATH_SCI
@@ -3432,6 +3450,7 @@ MonoBehaviour:
           RaidStrength: 0
           TeacherReinfect: 0
           TeacherInfection: 0
+          TraumaCare: 0
         ProfileField: FavoriteSubjectId
         ProfileValue: MATH_SCI
       - Id: PE
@@ -3462,6 +3481,7 @@ MonoBehaviour:
           RaidStrength: 0
           TeacherReinfect: 0
           TeacherInfection: 0
+          TraumaCare: 0
         ProfileField: FavoriteSubjectId
         ProfileValue: PE
       - Id: TECH_HOME
@@ -3492,6 +3512,7 @@ MonoBehaviour:
           RaidStrength: 0
           TeacherReinfect: 0
           TeacherInfection: 0
+          TraumaCare: 0
         ProfileField: FavoriteSubjectId
         ProfileValue: TECH_HOME
       - Id: BIO
@@ -3522,6 +3543,7 @@ MonoBehaviour:
           RaidStrength: 0
           TeacherReinfect: 0
           TeacherInfection: 0
+          TraumaCare: 0
         ProfileField: FavoriteSubjectId
         ProfileValue: BIO
       - Id: NONE
@@ -3552,6 +3574,7 @@ MonoBehaviour:
           RaidStrength: 0
           TeacherReinfect: 0
           TeacherInfection: 0
+          TraumaCare: 0
         ProfileField: FavoriteSubjectId
         ProfileValue: NONE
     - Id: CLUB
@@ -3585,6 +3608,7 @@ MonoBehaviour:
           RaidStrength: 0
           TeacherReinfect: 0
           TeacherInfection: 0
+          TraumaCare: 0
         ProfileField: ClubId
         ProfileValue: TRACK
       - Id: COOKING
@@ -3616,6 +3640,7 @@ MonoBehaviour:
           RaidStrength: 0
           TeacherReinfect: 0
           TeacherInfection: 0
+          TraumaCare: 0
         ProfileField: ClubId
         ProfileValue: COOKING
       - Id: SCIENCE
@@ -3647,6 +3672,7 @@ MonoBehaviour:
           RaidStrength: 0
           TeacherReinfect: 0
           TeacherInfection: 0
+          TraumaCare: 0
         ProfileField: ClubId
         ProfileValue: SCIENCE
       - Id: LIBRARY
@@ -3678,6 +3704,7 @@ MonoBehaviour:
           RaidStrength: 0
           TeacherReinfect: 0
           TeacherInfection: 0
+          TraumaCare: 0
         ProfileField: ClubId
         ProfileValue: LIBRARY
       - Id: ART
@@ -3709,6 +3736,7 @@ MonoBehaviour:
           RaidStrength: 0
           TeacherReinfect: 0
           TeacherInfection: 0
+          TraumaCare: 0
         ProfileField: ClubId
         ProfileValue: ART
       - Id: BROADCAST
@@ -3740,6 +3768,7 @@ MonoBehaviour:
           RaidStrength: 0
           TeacherReinfect: 0
           TeacherInfection: 0
+          TraumaCare: 0
         ProfileField: ClubId
         ProfileValue: BROADCAST
       - Id: HEALTH
@@ -3771,6 +3800,7 @@ MonoBehaviour:
           RaidStrength: 0
           TeacherReinfect: 0
           TeacherInfection: 0
+          TraumaCare: 0
         ProfileField: ClubId
         ProfileValue: HEALTH
       - Id: HOME
@@ -3802,6 +3832,7 @@ MonoBehaviour:
           RaidStrength: 0
           TeacherReinfect: 0
           TeacherInfection: 0
+          TraumaCare: 0
         ProfileField: ClubId
         ProfileValue: HOME
     - Id: MIND
@@ -3837,6 +3868,7 @@ MonoBehaviour:
           RaidStrength: 0
           TeacherReinfect: 0
           TeacherInfection: 0
+          TraumaCare: 0
         ProfileField: 
         ProfileValue: 
       - Id: HURRY
@@ -3868,6 +3900,7 @@ MonoBehaviour:
           RaidStrength: 0
           TeacherReinfect: 0
           TeacherInfection: 0
+          TraumaCare: 0
         ProfileField: 
         ProfileValue: 
       - Id: TELL
@@ -3899,6 +3932,7 @@ MonoBehaviour:
           RaidStrength: 0
           TeacherReinfect: 0
           TeacherInfection: 0
+          TraumaCare: 0
         ProfileField: 
         ProfileValue: 
       - Id: FACE
@@ -3930,6 +3964,7 @@ MonoBehaviour:
           RaidStrength: 0
           TeacherReinfect: 0
           TeacherInfection: 0
+          TraumaCare: 0
         ProfileField: 
         ProfileValue: 
     - Id: PROMISE
@@ -3961,6 +3996,7 @@ MonoBehaviour:
           RaidStrength: 0
           TeacherReinfect: 0
           TeacherInfection: 0
+          TraumaCare: 0
         ProfileField: 
         ProfileValue: 
       - Id: LATER
@@ -3988,6 +4024,7 @@ MonoBehaviour:
           RaidStrength: 0
           TeacherReinfect: 0
           TeacherInfection: 0
+          TraumaCare: 0
         ProfileField: 
         ProfileValue: 
     Common:
@@ -4025,6 +4062,7 @@ MonoBehaviour:
       RaidStrength: 0
       TeacherReinfect: 0
       TeacherInfection: 0
+      TraumaCare: 0
   _endings:
   - Id: ENDING_BAD_EXPEDITION
     Category: 0
@@ -4885,6 +4923,7 @@ MonoBehaviour:
       RaidStrength: 0
       TeacherReinfect: 0
       TeacherInfection: 0
+      TraumaCare: 0
   - Id: SCHOLAR
     Effect:
       Stats:
@@ -4917,6 +4956,7 @@ MonoBehaviour:
       RaidStrength: 0
       TeacherReinfect: 0
       TeacherInfection: 0
+      TraumaCare: 0
   - Id: SUPPLIES
     Effect:
       Stats: []
@@ -4949,3 +4989,4 @@ MonoBehaviour:
       RaidStrength: 0
       TeacherReinfect: 0
       TeacherInfection: 0
+      TraumaCare: 0

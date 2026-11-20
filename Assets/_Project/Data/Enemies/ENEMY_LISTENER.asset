@@ -15,6 +15,7 @@ MonoBehaviour:
   _id: ENEMY_LISTENER
   _definition:
     Id: ENEMY_LISTENER
+    Kind: 0
     WalkSpeed: 0.8
     RunSpeed: 3
     SightRange: 4
@@ -24,3 +25,6 @@ MonoBehaviour:
     HitCooldown: 1.2
     AttackRange: 0.7
     Toughness: 3
+    SeesHiddenWithin: 0
+    PatrolRange: 0
+    CanBeDowned: 1

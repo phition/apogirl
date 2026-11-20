@@ -130,6 +130,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: e6a3c9c213481e642bcd64cd2057ea4a, type: 2}
   - {fileID: 11400000, guid: e75628b415011bf48b385cfe6dc11fcf, type: 2}
   - {fileID: 11400000, guid: e692e3f431a2bd1478d7a7e6975afa0a, type: 2}
+  - {fileID: 11400000, guid: 2353ea227e761644091ffcb1d6fb3991, type: 2}
   _events:
   - {fileID: 11400000, guid: 9a8b53d0de158504cb7c84096f6d8849, type: 2}
   - {fileID: 11400000, guid: c6293b1f41a650444a55eb73725e7d2c, type: 2}

@@ -198,6 +198,8 @@ MonoBehaviour:
           StressDelta: 5
           Removes: 1
         SpriteKey: 
+      HostileChanceMultiplier: 1
+      HostileSpots: []
     NightVariant:
       Spawns:
       - EnemyId: ENEMY_WANDERER
@@ -225,4 +227,7 @@ MonoBehaviour:
       ForceableRooms:
       - ROOM_STORE_OFFICE_1
       Encounters: []
+      HostileChanceMultiplier: 1
+      HostileSpots: []
     Tutorial: 0
+    DepletingContainers: 0

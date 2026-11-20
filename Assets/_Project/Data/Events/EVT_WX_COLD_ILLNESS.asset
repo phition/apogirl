@@ -70,6 +70,7 @@ MonoBehaviour:
       RaidStrength: 0
       TeacherReinfect: 0
       TeacherInfection: 0
+      TraumaCare: 0
     Choices:
     - Id: MEDICINE
       TextKey: event.EVT_WX_COLD_ILLNESS.medicine
@@ -126,6 +127,7 @@ MonoBehaviour:
         RaidStrength: 0
         TeacherReinfect: 0
         TeacherInfection: 0
+        TraumaCare: 0
       OnFailure:
         Stats: []
         Vitals: []
@@ -149,6 +151,7 @@ MonoBehaviour:
         RaidStrength: 0
         TeacherReinfect: 0
         TeacherInfection: 0
+        TraumaCare: 0
       NextEventId: 
     - Id: ENDURE
       TextKey: event.EVT_WX_COLD_ILLNESS.endure
@@ -205,6 +208,7 @@ MonoBehaviour:
         RaidStrength: 0
         TeacherReinfect: 0
         TeacherInfection: 0
+        TraumaCare: 0
       OnFailure:
         Stats: []
         Vitals: []
@@ -228,6 +232,7 @@ MonoBehaviour:
         RaidStrength: 0
         TeacherReinfect: 0
         TeacherInfection: 0
+        TraumaCare: 0
       NextEventId: 
     ReviewAct: 0
     ReviewFromWeek: 1

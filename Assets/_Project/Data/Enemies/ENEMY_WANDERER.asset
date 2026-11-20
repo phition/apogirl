@@ -15,6 +15,7 @@ MonoBehaviour:
   _id: ENEMY_WANDERER
   _definition:
     Id: ENEMY_WANDERER
+    Kind: 0
     WalkSpeed: 1
     RunSpeed: 3.2
     SightRange: 7
@@ -24,3 +25,6 @@ MonoBehaviour:
     HitCooldown: 1.2
     AttackRange: 0.7
     Toughness: 3
+    SeesHiddenWithin: 0
+    PatrolRange: 0
+    CanBeDowned: 1

@@ -52,3 +52,4 @@ MonoBehaviour:
     AgilityDownReduction: 0.001
     SleepDebtDownIncrease: 0.03
     ConsecutiveDownIncrease: 0.1
+    ContainersPerRun: 0

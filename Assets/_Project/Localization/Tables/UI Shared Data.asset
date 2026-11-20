@@ -2947,6 +2947,34 @@ MonoBehaviour:
     m_Key: enc.BLOOD_FRIDGE.leave
     m_Metadata:
       m_Items: []
+  - m_Id: 347641254002688
+    m_Key: result.hostile_Evicted
+    m_Metadata:
+      m_Items: []
+  - m_Id: 347641908314112
+    m_Key: result.hostile_Robbed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 347641908314113
+    m_Key: result.hostile_Beaten
+    m_Metadata:
+      m_Items: []
+  - m_Id: 347641908314114
+    m_Key: result.trauma
+    m_Metadata:
+      m_Items: []
+  - m_Id: 347641908314115
+    m_Key: exp.hostile.Evicted
+    m_Metadata:
+      m_Items: []
+  - m_Id: 347641908314116
+    m_Key: exp.hostile.Robbed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 347641908314117
+    m_Key: exp.hostile.Beaten
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

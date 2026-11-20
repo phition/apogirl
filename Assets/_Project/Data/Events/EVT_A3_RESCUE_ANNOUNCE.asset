@@ -67,6 +67,7 @@ MonoBehaviour:
       RaidStrength: 0
       TeacherReinfect: 0
       TeacherInfection: 0
+      TraumaCare: 0
     Choices:
     - Id: CHEER
       TextKey: 
@@ -126,6 +127,7 @@ MonoBehaviour:
         RaidStrength: 0
         TeacherReinfect: 0
         TeacherInfection: 0
+        TraumaCare: 0
       OnFailure:
         Stats: []
         Vitals: []
@@ -149,6 +151,7 @@ MonoBehaviour:
         RaidStrength: 0
         TeacherReinfect: 0
         TeacherInfection: 0
+        TraumaCare: 0
       NextEventId: 
     - Id: LOOK_TEACHER
       TextKey: 
@@ -204,6 +207,7 @@ MonoBehaviour:
         RaidStrength: 0
         TeacherReinfect: 0
         TeacherInfection: 0
+        TraumaCare: 0
       OnFailure:
         Stats: []
         Vitals: []
@@ -227,6 +231,7 @@ MonoBehaviour:
         RaidStrength: 0
         TeacherReinfect: 0
         TeacherInfection: 0
+        TraumaCare: 0
       NextEventId: 
     ReviewAct: 0
     ReviewFromWeek: 1

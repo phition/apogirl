@@ -63,6 +63,7 @@ MonoBehaviour:
       RaidStrength: 0
       TeacherReinfect: 0
       TeacherInfection: 0
+      TraumaCare: 0
     Choices: []
     ReviewAct: 3
     ReviewFromWeek: 27

@@ -96,6 +96,8 @@ MonoBehaviour:
       LockedRooms: []
       ForceableRooms: []
       Encounters: []
+      HostileChanceMultiplier: 0
+      HostileSpots: []
     NightVariant:
       Spawns:
       - EnemyId: ENEMY_WANDERER
@@ -108,4 +110,7 @@ MonoBehaviour:
       LockedRooms: []
       ForceableRooms: []
       Encounters: []
+      HostileChanceMultiplier: 1
+      HostileSpots: []
     Tutorial: 1
+    DepletingContainers: 0

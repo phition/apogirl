@@ -245,6 +245,8 @@ MonoBehaviour:
           StressDelta: 0
           Removes: 0
         SpriteKey: 
+      HostileChanceMultiplier: 1
+      HostileSpots: []
     NightVariant:
       Spawns:
       - EnemyId: ENEMY_WANDERER
@@ -328,4 +330,7 @@ MonoBehaviour:
           StressDelta: 0
           Removes: 0
         SpriteKey: prop_fridge
+      HostileChanceMultiplier: 1
+      HostileSpots: []
     Tutorial: 0
+    DepletingContainers: 0
