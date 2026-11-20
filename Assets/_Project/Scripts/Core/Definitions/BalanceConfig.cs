@@ -228,6 +228,16 @@ namespace ApoGirl.Core.Definitions
         public int ThirstRecovery = 25;
         public int ThirstIncrease = 40;
         public int StarvationThreshold = 60;
+
+        /// <summary>
+        /// 요리 (요리 수업 성공 시, 사용자 요청): 숙련이 오를수록 좋은 요리. 같은 재료로 하루 식사보다 허기·갈증을 더 낮춘다.
+        /// </summary>
+        public DishDef[] CookingDishes =
+        {
+            new DishDef { Id = "DISH_PORRIDGE", MinCookingLevel = 0, FoodCost = 1, WaterCost = 1, Hunger = 15, Thirst = 10 },
+            new DishDef { Id = "DISH_SOUP", MinCookingLevel = 2, FoodCost = 2, WaterCost = 2, Hunger = 25, Thirst = 25, Stress = 2 },
+            new DishDef { Id = "DISH_SET_MEAL", MinCookingLevel = 4, FoodCost = 2, WaterCost = 1, Hunger = 35, Thirst = 20, Stress = 5 },
+        };
         public int StarvationHpLoss = 5;
         public int DehydrationThreshold = 60;
         public int DehydrationHpLoss = 10;

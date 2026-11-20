@@ -23,6 +23,9 @@ namespace ApoGirl.Core.Effects
         // ── M4 ──
         public readonly List<string> FacilitiesOpened = new List<string>();
         public readonly List<ItemStack> ItemsLost = new List<ItemStack>();
+
+        /// <summary>이번에 만들어 먹은 요리 (DishDef.Id).</summary>
+        public readonly List<string> DishesCooked = new List<string>();
         public int Defense;
         public int Threat;
         public bool PowerRestored;
@@ -61,6 +64,7 @@ namespace ApoGirl.Core.Effects
             ItemsGained.AddRange(other.ItemsGained);
             FacilitiesOpened.AddRange(other.FacilitiesOpened);
             ItemsLost.AddRange(other.ItemsLost);
+            DishesCooked.AddRange(other.DishesCooked);
             Defense += other.Defense;
             Threat += other.Threat;
             PowerRestored |= other.PowerRestored;

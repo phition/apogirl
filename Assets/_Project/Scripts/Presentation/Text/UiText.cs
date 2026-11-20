@@ -79,6 +79,7 @@ namespace ApoGirl.Presentation.Text
             }
 
             if (delta.PowerRestored) lines.Add(Loc.T("result.power_restored"));
+            foreach (var dish in delta.DishesCooked) lines.Add(Loc.F("result.dish", Loc.T("dish." + dish)));
             if (delta.ItemsLost.Count > 0)
             {
                 lines.Add(Loc.F("result.items_lost", string.Join("  ", delta.ItemsLost.Select(i => Loc.Item(i.ItemId) + " ×" + i.Count))));

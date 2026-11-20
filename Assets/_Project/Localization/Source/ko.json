@@ -1,5 +1,9 @@
 {
   "UI": {
+    "result.dish": "요리 완성: {0}",
+    "dish.DISH_PORRIDGE": "주먹밥과 죽",
+    "dish.DISH_SOUP": "된장국",
+    "dish.DISH_SET_MEAL": "따뜻한 정식",
     "res.RawWater": "빗물(정수 필요)",
     "prof.Science": "과학·화학",
     "prof.Music": "음악",

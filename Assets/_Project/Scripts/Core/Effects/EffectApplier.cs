@@ -135,6 +135,12 @@ namespace ApoGirl.Core.Effects
                 state.Teacher.MobilityStage = effect.TeacherMobility;
             }
 
+            // 요리: 숙련에 맞는 요리를 만들어 먹는다 (재료 소모)
+            if (effect.CookDish > 0)
+            {
+                Rules.CookingRules.Cook(state, balance, effect.CookDish - 1, delta);
+            }
+
             // 정수: 빗물을 식수로 (비율만큼만 남는다)
             if (effect.PurifyWater > 0)
             {

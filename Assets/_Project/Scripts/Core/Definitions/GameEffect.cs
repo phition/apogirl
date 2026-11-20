@@ -43,6 +43,9 @@ namespace ApoGirl.Core.Definitions
 
         public bool RestorePower;
 
+        /// <summary>요리를 만든다 (0 = 안 함, 1 = 숙련에 맞는 요리, 2 = 한 단계 위). CookingRules.</summary>
+        public int CookDish;
+
         /// <summary>정수: 모아 둔 빗물(RawWater)을 최대 이만큼 식수로 바꾼다 (비율 PurifyRate, 나머지는 버려진다).</summary>
         public int PurifyWater;
         public float PurifyRate = 1f;
