@@ -320,18 +320,18 @@ namespace ApoGirl.Tests.EditMode
                 var p = s.Player;
                 switch (endingId)
                 {
-                    case "ENDING_DOCTOR":
+                    case "ENDING_DOCTOR": // M7-2 기준: 의학 Lv4, 지력 175, 인간성 55
                         p.Proficiency[ProficiencyType.Medicine] = new ProficiencyState { Level = 5 };
-                        p.Stats[StatType.Intellect] = 80;
-                        p.Hidden.Humanity = 50;
+                        p.Stats[StatType.Intellect] = 200;
+                        p.Hidden.Humanity = 60;
                         break;
                     case "ENDING_ENGINEER":
                         p.Proficiency[ProficiencyType.Engineering] = new ProficiencyState { Level = 4 };
-                        p.Stats[StatType.Craft] = 70;
+                        p.Stats[StatType.Craft] = 190; // M7-2 기준: 공학 Lv3, 손재주 175
                         break;
                     case "ENDING_GUARD":
                         p.Proficiency[ProficiencyType.SelfDefense] = new ProficiencyState { Level = 3 };
-                        p.Stats[StatType.Strength] = 70;
+                        p.Stats[StatType.Strength] = 90; // M7-2 기준: 근력 80, 민첩 45, 호신술 Lv1
                         p.Stats[StatType.Agility] = 60;
                         break;
                     case "ENDING_WRITER":
