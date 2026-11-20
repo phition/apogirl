@@ -19,15 +19,15 @@ MonoBehaviour:
     Condition:
       WeekMin: 0
       WeekMax: 0
-      Days: 06000000i
-      Phase: 2
+      Days: 
+      Phase: 0
       Seasons: 
       Month: 0
       DayOfMonth: 0
       ActionCategories: 
-      ActionIds:
-      - ACT_STORAGE_WAIT
-      FlagsAll: []
+      ActionIds: []
+      FlagsAll:
+      - FORCED_ONLY
       FlagsAny: []
       FlagsNone: []
       CluesAll: []
