@@ -119,7 +119,26 @@ namespace ApoGirl.Core.Simulation.Bots
 
         private static bool Usable(GameState state, IDefinitionDatabase db, string actionId, int slotIndex)
         {
-            return db.TryGetAction(actionId, out var action) && PlanEditing.IsUnlocked(state, db, action) && PlanEditing.IsAllowedIn(action, slotIndex);
+            return db.TryGetAction(actionId, out var action) && PlanEditing.IsUnlocked(state, db, action) && PlanEditing.IsAllowedIn(action, slotIndex)
+                   && !Exhausted(state, db, action);
+        }
+
+        /// <summary>상자가 고갈되는 지역(교실동)에 남은 상자가 1회분의 절반보다 적으면 가지 않는다 (빈 상자를 본 플레이어처럼).</summary>
+        public static bool Exhausted(GameState state, IDefinitionDatabase db, ActionDef action)
+        {
+            if (string.IsNullOrEmpty(action.LocationId) || !db.TryGetLocation(action.LocationId, out var location) || !location.DepletingContainers)
+            {
+                return false;
+            }
+
+            var perRun = db.TryGetExpeditionModel(action.LocationId, out var model) ? model.ContainersPerRun : 0;
+            if (perRun <= 0)
+            {
+                return false;
+            }
+
+            var remaining = HostileRules.AllContainerKeys(location).Count(k => !state.Exploration.LootedContainers.Contains(k));
+            return remaining * 2 < perRun;
         }
 
         /// <summary>가중치 목록에서 하나 (모두 0 이하면 0번).</summary>
