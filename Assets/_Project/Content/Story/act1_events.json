@@ -2,8 +2,20 @@
   "Events": [
     { "Id": "EVT_A1_TRAPPED", "Kind": "Story", "Priority": 100, "Condition": { "FlagsAll": [ "FORCED_ONLY" ] } },
 
-    { "Id": "EVT_A1_OPENING", "Kind": "Story", "Priority": 100,
-      "Condition": { "ActionIds": [ "ACT_STORAGE_WAIT" ], "Days": [ 6 ], "Phase": "Night" },
+    { "Id": "EVT_A1_STORAGE_D1", "Kind": "Story", "Priority": 90,
+      "Condition": { "ActionIds": [ "ACT_STORAGE_WAIT" ], "Days": [ 1 ], "Phase": "Night" } },
+    { "Id": "EVT_A1_STORAGE_D2", "Kind": "Story", "Priority": 90,
+      "Condition": { "ActionIds": [ "ACT_STORAGE_WAIT" ], "Days": [ 2 ], "Phase": "Night" } },
+    { "Id": "EVT_A1_STORAGE_D3", "Kind": "Story", "Priority": 90,
+      "Condition": { "ActionIds": [ "ACT_STORAGE_WAIT" ], "Days": [ 3 ], "Phase": "Night" } },
+    { "Id": "EVT_A1_STORAGE_D4", "Kind": "Story", "Priority": 90,
+      "Condition": { "ActionIds": [ "ACT_STORAGE_WAIT" ], "Days": [ 4 ], "Phase": "Night" } },
+    { "Id": "EVT_A1_STORAGE_D5", "Kind": "Story", "Priority": 90,
+      "Condition": { "ActionIds": [ "ACT_STORAGE_WAIT" ], "Days": [ 5 ], "Phase": "Night" } },
+    { "Id": "EVT_A1_STORAGE_D6", "Kind": "Story", "Priority": 90,
+      "Condition": { "ActionIds": [ "ACT_STORAGE_WAIT" ], "Days": [ 6 ], "Phase": "Night", "FlagsNone": [ "NG_PLUS" ] }, "ThenEventId": "EVT_A1_OPENING" },
+
+    { "Id": "EVT_A1_OPENING", "Kind": "Story", "Priority": 100, "Condition": { "FlagsAll": [ "FORCED_ONLY" ] },
       "OnShow": { "Facilities": [ { "FacilityId": "STORAGE", "Level": 1 } ], "SetFlags": [ "UI_BASIC" ], "Npcs": [ { "NpcId": "NPC_TEACHER", "Affinity": 5 } ] } },
 
     { "Id": "EVT_A1_TUTORIAL_DONE", "Kind": "Story", "Priority": 95, "Condition": { "ActionIds": [ "ACT_EXP_TUTORIAL" ] },

@@ -104,10 +104,10 @@ namespace ApoGirl.Core.Definitions
         /// <summary>새 게임을 시작하면 허브에서 바로 띄우는 도입 이벤트 (창고에 갇힘).</summary>
         public string IntroEventId = "EVT_A1_TRAPPED";
 
-        /// <summary>선생님이 창고 문을 여는 이벤트. 탈출 전날 밤 끝에 데이터 조건으로 뜬다.</summary>
+        /// <summary>선생님이 창고 문을 여는 이벤트. 탈출 전날 밤 끝, 그날의 갇힘 이벤트(EVT_A1_STORAGE_D6)에서 ThenEventId로 이어진다.</summary>
         public string OpeningEventId = "EVT_A1_OPENING";
 
-        /// <summary>2회차: 문이 열리기 직전의 회상 ("창고 안의 7일"). 데이터 조건(NG_PLUS)으로 뜨고 시작 이벤트로 이어진다.</summary>
+        /// <summary>2회차: 여섯째 날 갇힘 이벤트 대신 뜨는 회상 ("창고 안의 7일", 단서). 데이터 조건(NG_PLUS)으로 뜨고 시작 이벤트로 이어진다.</summary>
         public string NgPlusOpeningEventId = "EVT_NG_STORAGE_7DAYS";
 
         /// <summary>밤 습격 (문서 5.5): 이 주차부터, 확률 = 기본 + (위협 − 방어) × 계수, 상한.</summary>

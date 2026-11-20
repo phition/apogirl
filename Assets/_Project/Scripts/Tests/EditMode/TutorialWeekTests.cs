@@ -88,9 +88,11 @@ namespace ApoGirl.Tests.EditMode
             }
 
             Assert.IsEmpty(raids, "창고에 갇힌 밤에는 습격이 없다");
+            // 탈출 전: 하루가 끝날 때마다 그날의 갇힘 이벤트, 6일 밤 끝에 이어서 문이 열린다 (무작위 이벤트 없음)
             var beforeEscape = log.Where(e => e.Slot < 12).ToList();
-            Assert.AreEqual(1, beforeEscape.Count, "탈출 전에는 선생님이 문을 여는 장면만: " + string.Join(", ", beforeEscape));
-            Assert.AreEqual((11, db.Balance.OpeningEventId), beforeEscape[0], "6일 밤이 끝날 때");
+            var expected = Enumerable.Range(1, 6).Select(d => (d * 2 - 1, "EVT_A1_STORAGE_D" + d)).ToList();
+            expected.Add((11, db.Balance.OpeningEventId));
+            CollectionAssert.AreEqual(expected, beforeEscape, string.Join(", ", beforeEscape));
             Assert.IsTrue(log.Any(e => e.Slot == 12 && e.EventId == "EVT_A1_TUTORIAL_DONE"), "7일 낮 탈출 뒤 본관 창고 도착");
             Assert.AreEqual(1, state.Exploration.ActionCounts[db.Balance.TutorialActionId], "탈출은 한 번");
             Assert.IsTrue(state.Flags.Contains("LOC_SCHOOL_DAY"));
@@ -119,6 +121,8 @@ namespace ApoGirl.Tests.EditMode
                     order.AddRange(session.Step().Events.Select(e => e.EventId));
                 }
 
+                CollectionAssert.IsSubsetOf(Enumerable.Range(1, 5).Select(d => "EVT_A1_STORAGE_D" + d).ToList(), order, "2회차도 날마다");
+                CollectionAssert.DoesNotContain(order, "EVT_A1_STORAGE_D6", "여섯째 날은 회상으로 대신");
                 var ng = order.IndexOf(db.Balance.NgPlusOpeningEventId);
                 Assert.GreaterOrEqual(ng, 0, string.Join(", ", order));
                 Assert.AreEqual(db.Balance.OpeningEventId, order[ng + 1], "회상 다음 바로 문이 열린다");
