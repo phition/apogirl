@@ -3183,6 +3183,22 @@ MonoBehaviour:
     m_Key: roomname.ROOM_BROADCAST
     m_Metadata:
       m_Items: []
+  - m_Id: 424816003006464
+    m_Key: result.dish
+    m_Metadata:
+      m_Items: []
+  - m_Id: 424816070115328
+    m_Key: dish.DISH_PORRIDGE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 424816070115329
+    m_Key: dish.DISH_SOUP
+    m_Metadata:
+      m_Items: []
+  - m_Id: 424816070115330
+    m_Key: dish.DISH_SET_MEAL
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

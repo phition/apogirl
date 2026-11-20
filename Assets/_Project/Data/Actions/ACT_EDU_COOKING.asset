@@ -17,9 +17,7 @@ MonoBehaviour:
     Id: ACT_EDU_COOKING
     Category: 0
     SlotTag: 0
-    ResourceCosts:
-    - Resource: 0
-      Amount: 1
+    ResourceCosts: []
     FatigueCost: 4
     StressCost: 0
     HasCheck: 1
@@ -62,6 +60,7 @@ MonoBehaviour:
       Proficiencies: []
       TeacherMobility: 0
       RestorePower: 0
+      CookDish: 1
       PurifyWater: 0
       PurifyRate: 1
       RaidStrength: 0
@@ -97,6 +96,7 @@ MonoBehaviour:
       Proficiencies: []
       TeacherMobility: 0
       RestorePower: 0
+      CookDish: 2
       PurifyWater: 0
       PurifyRate: 1
       RaidStrength: 0
@@ -108,7 +108,9 @@ MonoBehaviour:
     OnFailure:
       Stats: []
       Vitals: []
-      Resources: []
+      Resources:
+      - Resource: 0
+        Amount: -1
       Hidden: []
       SleepDebt: 0
       Conscience: 0
@@ -125,6 +127,7 @@ MonoBehaviour:
       Proficiencies: []
       TeacherMobility: 0
       RestorePower: 0
+      CookDish: 0
       PurifyWater: 0
       PurifyRate: 1
       RaidStrength: 0

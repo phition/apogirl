@@ -133,6 +133,28 @@ MonoBehaviour:
     ThirstRecovery: 25
     ThirstIncrease: 40
     StarvationThreshold: 60
+    CookingDishes:
+    - Id: DISH_PORRIDGE
+      MinCookingLevel: 0
+      FoodCost: 1
+      WaterCost: 1
+      Hunger: 15
+      Thirst: 10
+      Stress: 0
+    - Id: DISH_SOUP
+      MinCookingLevel: 2
+      FoodCost: 2
+      WaterCost: 2
+      Hunger: 25
+      Thirst: 25
+      Stress: 2
+    - Id: DISH_SET_MEAL
+      MinCookingLevel: 4
+      FoodCost: 2
+      WaterCost: 1
+      Hunger: 35
+      Thirst: 20
+      Stress: 5
     StarvationHpLoss: 5
     DehydrationThreshold: 60
     DehydrationHpLoss: 10

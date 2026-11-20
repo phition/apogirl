@@ -63,6 +63,7 @@ MonoBehaviour:
       Proficiencies: []
       TeacherMobility: 0
       RestorePower: 0
+      CookDish: 0
       PurifyWater: 0
       PurifyRate: 1
       RaidStrength: 0
@@ -128,6 +129,7 @@ MonoBehaviour:
         Proficiencies: []
         TeacherMobility: 0
         RestorePower: 0
+        CookDish: 0
         PurifyWater: 0
         PurifyRate: 1
         RaidStrength: 0
@@ -156,6 +158,7 @@ MonoBehaviour:
         Proficiencies: []
         TeacherMobility: 0
         RestorePower: 0
+        CookDish: 0
         PurifyWater: 0
         PurifyRate: 1
         RaidStrength: 0
@@ -216,6 +219,7 @@ MonoBehaviour:
         Proficiencies: []
         TeacherMobility: 0
         RestorePower: 0
+        CookDish: 0
         PurifyWater: 0
         PurifyRate: 1
         RaidStrength: 0
@@ -244,6 +248,7 @@ MonoBehaviour:
         Proficiencies: []
         TeacherMobility: 0
         RestorePower: 0
+        CookDish: 0
         PurifyWater: 0
         PurifyRate: 1
         RaidStrength: 0
@@ -304,6 +309,7 @@ MonoBehaviour:
         Proficiencies: []
         TeacherMobility: 0
         RestorePower: 0
+        CookDish: 0
         PurifyWater: 0
         PurifyRate: 1
         RaidStrength: 0
@@ -332,6 +338,7 @@ MonoBehaviour:
         Proficiencies: []
         TeacherMobility: 0
         RestorePower: 0
+        CookDish: 0
         PurifyWater: 0
         PurifyRate: 1
         RaidStrength: 0
@@ -397,6 +404,7 @@ MonoBehaviour:
         Proficiencies: []
         TeacherMobility: 0
         RestorePower: 0
+        CookDish: 0
         PurifyWater: 0
         PurifyRate: 1
         RaidStrength: 0
@@ -425,6 +433,7 @@ MonoBehaviour:
         Proficiencies: []
         TeacherMobility: 0
         RestorePower: 0
+        CookDish: 0
         PurifyWater: 0
         PurifyRate: 1
         RaidStrength: 0
@@ -486,6 +495,7 @@ MonoBehaviour:
         Proficiencies: []
         TeacherMobility: 0
         RestorePower: 0
+        CookDish: 0
         PurifyWater: 0
         PurifyRate: 1
         RaidStrength: 0
@@ -514,6 +524,7 @@ MonoBehaviour:
         Proficiencies: []
         TeacherMobility: 0
         RestorePower: 0
+        CookDish: 0
         PurifyWater: 0
         PurifyRate: 1
         RaidStrength: 0
