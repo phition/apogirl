@@ -48,6 +48,18 @@ namespace ApoGirl.Presentation.Screens
             public bool Roof;
             public PropDef[] Props = Array.Empty<PropDef>();
             public string[] Actions = Array.Empty<string>();
+
+            /// <summary>이 방에 지어 놓은 설비 그림 (조건이 맞으면 방 패널의 방 그림 위에 겹친다).</summary>
+            public BuiltDef[] Built = Array.Empty<BuiltDef>();
+        }
+
+        [Serializable]
+        public sealed class BuiltDef
+        {
+            /// <summary>보이는 조건: 플래그 / 방어도 이상 (둘 다 비면 늘).</summary>
+            public string Flag = "";
+            public int MinDefense;
+            public string Image = "";
         }
 
         [Serializable]
@@ -421,6 +433,27 @@ namespace ApoGirl.Presentation.Screens
                 picture.AddToClassList("hub-room-art");
                 StoryArt.SetCover(picture, art);
                 _roomPanel.Add(picture);
+
+                // 지어 놓은 설비 (P4 허브 그림): 방 그림 아래쪽에 나란히
+                var shelf = new VisualElement { pickingMode = PickingMode.Ignore };
+                shelf.AddToClassList("hub-room-built");
+                foreach (var built in room.Def.Built)
+                {
+                    var state = _session.State;
+                    var shown = (string.IsNullOrEmpty(built.Flag) || state.Flags.Contains(built.Flag)) && state.Base.Defense >= built.MinDefense;
+                    var texture = shown ? StoryArt.Load(built.Image) : null;
+                    if (texture == null)
+                    {
+                        continue;
+                    }
+
+                    var item = new VisualElement { pickingMode = PickingMode.Ignore };
+                    item.AddToClassList("hub-room-built-item");
+                    StoryArt.SetContain(item, texture);
+                    shelf.Add(item);
+                }
+
+                picture.Add(shelf);
             }
 
             if (room.Open)
@@ -451,6 +484,11 @@ namespace ApoGirl.Presentation.Screens
                         ActionPicked?.Invoke(actionId);
                     }) { text = Loc.Action(id) };
                     button.AddToClassList("hub-room-action");
+                    var actionIcon = StoryArt.Icon("act." + id);
+                    if (actionIcon != null)
+                    {
+                        StoryArt.SetIcon(button, actionIcon, 26f);
+                    }
                     _roomPanel.Add(button);
                 }
 

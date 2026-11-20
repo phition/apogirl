@@ -280,6 +280,17 @@
     }
   ],
   "Icons": [
+    { "Key": "act.ACT_SURV_BARRICADE", "Image": "icon_craft_barricade_desks" },
+    { "Key": "act.ACT_SURV_REINFORCE", "Image": "icon_craft_barricade_reinforced" },
+    { "Key": "act.ACT_SURV_ALARM", "Image": "icon_craft_alarm_cans" },
+    { "Key": "act.ACT_SURV_RAIN_BARREL", "Image": "icon_craft_rain_collector" },
+    { "Key": "act.ACT_SURV_GARDEN", "Image": "icon_craft_garden_buckets" },
+    { "Key": "act.ACT_SURV_PURIFY_WATER", "Image": "icon_craft_water_filter" },
+    { "Key": "act.ACT_SURV_RESTORE_POWER", "Image": "icon_craft_bike_generator" },
+    { "Key": "act.ACT_EDU_COOKING", "Image": "icon_craft_cooking_station" },
+    { "Key": "act.ACT_SCOUT_RADIO", "Image": "icon_craft_radio_antenna" },
+    { "Key": "act.ACT_TREAT_WOUND", "Image": "icon_craft_first_aid_station" },
+    { "Key": "act.ACT_NIGHT_STUDY", "Image": "icon_craft_study_corner" },
     {
       "Key": "res.Food",
       "Image": "icon_res_food"

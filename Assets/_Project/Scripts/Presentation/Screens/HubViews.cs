@@ -457,6 +457,12 @@ namespace ApoGirl.Presentation.Screens
                 Refresh();
             });
             card.AddToClassList("action-card");
+            var icon = StoryArt.Icon("act." + action.Id);
+            if (icon != null)
+            {
+                // 거점 행동 아이콘 (P4 제작품 그림)
+                StoryArt.SetIcon(card, icon, 40f);
+            }
             card.EnableInClassList("selected", SelectedActionId == action.Id);
             card.EnableInClassList("unaffordable", !preview.Affordable);
 
