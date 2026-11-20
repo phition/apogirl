@@ -736,3 +736,48 @@ Button.selected { border-color: var(--accent); background-color: var(--accent-so
 .action-card.with-icon { padding-left: 56px; background-position-y: center; }
 .hub-room-action.with-icon { padding-left: 36px; }
 .hub-room-built.standalone { position: relative; left: 0; right: 0; bottom: 0; justify-content: flex-start; margin-bottom: 6px; }
+
+/* ── 3겹 세력 화면 (FactionView) ── */
+.fac-panel { width: 1400px; height: 860px; background-color: rgb(26, 28, 32); border-width: 1px; border-color: var(--accent-soft); border-radius: 10px; padding: 24px 28px; }
+.fac-head { flex-direction: row; margin-bottom: 18px; }
+.fac-portrait { width: 200px; height: 240px; border-radius: 8px; background-color: rgb(40, 42, 48); margin-right: 24px; align-items: center; justify-content: center; }
+.fac-initial { font-size: 96px; -unity-font-style: bold; color: var(--accent); }
+.fac-intro { flex-grow: 1; flex-shrink: 1; }
+.fac-title-row { flex-direction: row; align-items: center; margin-bottom: 6px; }
+.fac-name { font-size: 34px; -unity-font-style: bold; color: rgb(240, 236, 226); margin-right: 14px; }
+.fac-tier { padding: 3px 12px; border-radius: 12px; font-size: 15px; color: rgb(20, 20, 22); }
+.fac-desc { font-size: 17px; color: var(--text-dim); white-space: normal; margin-bottom: 12px; }
+.fac-status { font-size: 17px; white-space: normal; margin-top: 8px; }
+.fac-effect { font-size: 15px; color: var(--ok); white-space: normal; margin-top: 2px; }
+.fac-gauge { flex-direction: row; height: 34px; margin-top: 8px; border-radius: 4px; overflow: visible; }
+.fac-band { height: 22px; justify-content: flex-start; }
+.fac-band-label { font-size: 12px; color: rgb(20, 20, 22); -unity-text-align: middle-center; height: 22px; }
+.fac-marker { position: absolute; top: -4px; width: 4px; height: 30px; margin-left: -2px; background-color: rgb(245, 240, 230); border-radius: 2px; }
+.fac-marker-value { position: absolute; top: 30px; left: -20px; width: 44px; -unity-text-align: middle-center; font-size: 13px; color: rgb(245, 240, 230); }
+.tier-hostile { background-color: rgb(176, 72, 64); }
+.tier-wary { background-color: rgb(196, 140, 80); }
+.tier-neutral { background-color: rgb(150, 150, 140); }
+.tier-friendly { background-color: rgb(120, 168, 110); }
+.tier-allied { background-color: rgb(96, 150, 196); }
+.tier-gone { background-color: rgb(90, 90, 96); color: rgb(220, 220, 220); }
+.fac-body { flex-direction: row; flex-grow: 1; min-height: 0; }
+.fac-trades { flex-grow: 1; margin-right: 18px; }
+.fac-log { width: 380px; background-color: rgb(32, 34, 39); border-radius: 6px; padding: 10px 14px; }
+.fac-section { font-size: 18px; -unity-font-style: bold; color: var(--accent); margin-bottom: 8px; }
+.fac-dim { color: var(--text-dim); font-size: 15px; }
+.fac-trade { flex-direction: column; padding: 12px 14px; margin-bottom: 10px; background-color: rgb(34, 36, 41); border-width: 1px; border-color: var(--line); border-radius: 6px; }
+.fac-trade.blocked { opacity: 0.7; }
+.fac-trade-row { flex-direction: row; align-items: center; }
+.fac-side { flex-grow: 1; flex-basis: 0; }
+.fac-side-label { font-size: 13px; color: var(--text-dim); margin-bottom: 4px; }
+.fac-chips { flex-direction: row; flex-wrap: wrap; }
+.fac-chip { padding: 3px 10px 3px 30px; margin: 2px 6px 2px 0; background-color: rgb(46, 49, 55); border-radius: 12px; font-size: 16px; }
+.fac-chip.short { color: var(--danger); }
+.fac-arrow { font-size: 26px; color: var(--accent); margin: 0 16px; }
+.fac-trade-note { font-size: 13px; color: var(--text-dim); margin-top: 6px; }
+.fac-trade-desc { font-size: 15px; white-space: normal; margin-top: 2px; }
+.fac-trade-blocker { font-size: 15px; color: var(--warn); white-space: normal; margin-top: 2px; }
+.fac-trade-button { align-self: flex-end; min-width: 120px; height: 36px; margin-top: 6px; background-color: var(--accent-soft); border-color: var(--accent); }
+.fac-log-row { flex-direction: row; margin-bottom: 6px; }
+.fac-log-week { width: 70px; color: var(--text-dim); font-size: 14px; }
+.fac-log-text { flex-shrink: 1; font-size: 15px; white-space: normal; }

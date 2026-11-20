@@ -132,8 +132,14 @@ namespace ApoGirl.Systems.Session
         private string _weekSnapshot;
         private int _snapshotWeek;
 
-        /// <summary>이야기 중심: 방금 실행한 주를 되돌릴 수 있는가 (같은 주는 한 번).</summary>
-        public bool CanUndoWeek => HasGame && Difficulty.WeeklyUndo && _weekSnapshot != null && IsPlanning
+        /// <summary>
+        /// 되돌리기가 열렸는가: 한 번이라도 52주차까지 가서 엔딩을 봤다 (엔딩 갤러리에 52주차 기록이 있다).
+        /// 처음 1년은 되돌리지 않고 끝까지 가 보게 한다.
+        /// </summary>
+        public bool UndoUnlocked => Gallery != null && Gallery.Entries.Values.Any(e => e.FirstWeek >= CalendarState.TotalWeeks);
+
+        /// <summary>이야기 중심: 방금 실행한 주를 되돌릴 수 있는가 (같은 주는 한 번, 52주차 엔딩을 본 뒤에만).</summary>
+        public bool CanUndoWeek => HasGame && Difficulty.WeeklyUndo && UndoUnlocked && _weekSnapshot != null && IsPlanning
                                    && State.Status == GameStatus.Playing && State.LastUndoWeek != _snapshotWeek;
 
         /// <summary>이번 주를 시작 직전 상태로 되돌린다 (계획을 다시 짤 수 있다).</summary>

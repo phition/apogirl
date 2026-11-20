@@ -112,6 +112,20 @@
             </ui:VisualElement>
         </ui:VisualElement>
 
+        <ui:VisualElement name="faction-sheet" class="sheet faction-sheet hidden">
+            <ui:VisualElement class="fac-panel">
+                <ui:VisualElement class="fac-head">
+                    <ui:VisualElement name="fac-portrait" class="fac-portrait" />
+                    <ui:VisualElement name="fac-intro" class="fac-intro" />
+                    <ui:Button name="fac-close" class="drawer-close" />
+                </ui:VisualElement>
+                <ui:VisualElement class="fac-body">
+                    <ui:ScrollView name="fac-trades" class="fac-trades" />
+                    <ui:ScrollView name="fac-log" class="fac-log" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+        </ui:VisualElement>
+
         <!-- 4겹: 대화 -->
         <ui:VisualElement name="dialogue" class="dialogue hidden">
             <ui:ScrollView name="dialogue-log" class="dialogue-log hidden" />

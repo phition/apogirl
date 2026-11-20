@@ -49,6 +49,7 @@ namespace ApoGirl.Presentation.Screens
         private DialogueView _dialogueView;
         private ExpeditionPrepView _prep;
         private SettlementView _settlement;
+        private FactionView _faction;
         private EventDialoguePlayer _dialoguePlayer;
         private VisualElement _teacherAvatar;
         private HubLayers _layers;
@@ -114,6 +115,14 @@ namespace ApoGirl.Presentation.Screens
             _root.Q("teacher-box").Add(_teacherAvatar);
             _prep = new ExpeditionPrepView(_root, _session);
             _settlement = new SettlementView(_root, _session);
+            _faction = new FactionView(_root, _session)
+            {
+                Traded = message =>
+                {
+                    ShowToast(message);
+                    Refresh();
+                },
+            };
             var yarnProject = Resources.Load<Yarn.Unity.YarnProject>(YarnProjectResource);
             if (yarnProject != null && yarnProject.Program != null)
             {
@@ -198,6 +207,13 @@ namespace ApoGirl.Presentation.Screens
             }
 
             var busy = _card.IsOpen || _dialogueView.IsOpen || (_ending != null && _ending.IsOpen) || _settlement.IsOpen || _prep.IsOpen;
+
+            // Esc: 세력 화면이 열려 있으면 먼저 닫는다
+            if (_faction.IsOpen && keyboard.escapeKey.wasPressedThisFrame)
+            {
+                _faction.Hide();
+                return;
+            }
 
             // 대화 중에는 말하는 사람 초상이 왼쪽에 나오므로 입상·요약·선생님 한마디를 잠시 숨긴다
             _standingArea.EnableInClassList("hidden", _dialogueView.IsOpen);
@@ -844,101 +860,16 @@ namespace ApoGirl.Presentation.Screens
             }
         }
 
-        /// <summary>세력 카드: 소개, 지금 단계의 영향, 최근 일, 거래.</summary>
+        /// <summary>세력 화면 (3겹 전용): 얼굴·소개·평판 눈금·영향, 거래 카드, 최근 일.</summary>
         private void ShowFactionCard(string factionId)
         {
-            if (_card.IsOpen || _dialogueView.IsOpen || !FactionRules.TryGetDef(_session.Definitions, factionId, out var def)
-                || !_session.State.Factions.TryGetValue(factionId, out var faction))
+            if (_card.IsOpen || _dialogueView.IsOpen || !_session.IsPlanning)
             {
                 return;
             }
 
-            var tier = FactionRules.TierOf(faction.Standing);
-            var gone = FactionRules.IsGone(_session.State, def);
-            var lines = new List<string>
-            {
-                Loc.T("faction." + factionId + ".desc"),
-                "",
-                Loc.F("faction.card.tier", gone ? Loc.T("faction.tier.gone") : Loc.T("faction.tier." + tier), (faction.Standing > 0 ? "+" : "") + faction.Standing),
-                Loc.T(gone ? "faction." + factionId + ".status.gone" : "faction." + factionId + ".status." + tier),
-            };
-
-            var effects = gone ? new List<ApoGirl.Core.Definitions.FactionEffectDef>()
-                : def.Effects.Where(e => tier >= e.MinTier && tier <= e.MaxTier && !string.IsNullOrEmpty(e.TextKey)).ToList();
-            if (effects.Count > 0)
-            {
-                lines.Add("");
-                lines.Add(Loc.T("faction.card.effects"));
-                lines.AddRange(effects.Select(e => "· " + Loc.T(e.TextKey)));
-            }
-
-            if (faction.Log.Count > 0)
-            {
-                lines.Add("");
-                lines.Add(Loc.T("faction.card.log"));
-                foreach (var entry in faction.Log)
-                {
-                    var text = string.IsNullOrEmpty(entry.TextKey) ? Loc.T("faction.log.drift") : Loc.T(entry.TextKey);
-                    var amount = entry.Standing == 0 ? "" : " (" + (entry.Standing > 0 ? "+" : "") + entry.Standing + ")";
-                    lines.Add(Loc.F("faction.card.log_line", entry.Week, text + amount));
-                }
-            }
-
-            _card.Show(Loc.T("faction." + factionId + ".name"), string.Join("\n", lines), false, (Loc.T("common.close"), () => _card.Hide()));
-            foreach (var offer in def.Trades)
-            {
-                var offerId = offer.Id;
-                var blocker = _session.TradeBlocker(factionId, offerId);
-                var give = string.Join(", ", offer.Give.Select(r => UiText.Resource(r.Resource) + " " + r.Amount));
-                var get = string.Join(", ", offer.Get.Select(r => UiText.Resource(r.Resource) + " " + r.Amount));
-                var button = new Button(() =>
-                {
-                    if (_session.Trade(factionId, offerId))
-                    {
-                        _card.Hide();
-                        ShowToast(Loc.T("trade." + factionId + "." + offerId + ".log"));
-                        Refresh();
-                    }
-                })
-                {
-                    text = Loc.F(offer.Delayed ? "faction.trade.button_delayed" : "faction.trade.button", give, get),
-                    tooltip = blocker == null ? Loc.T("trade." + factionId + "." + offerId) : Loc.T(blocker),
-                };
-                button.AddToClassList("small-button");
-                button.SetEnabled(blocker == null);
-                _card.Extra.Add(button);
-            }
-        }
-
-        /// <summary>
-        /// 실행 중 평범한 칸: 카드로 멈추지 않고 장면 위에 결과 한 줄을 흘려보낸다 (최근 4줄, 몇 초 뒤 사라짐).
-        /// 대성공이면 입상이 밝게 웃는다.
-        /// </summary>
-        private void ShowTicker(SlotOutcome outcome)
-        {
-            if (string.IsNullOrEmpty(outcome.ActionId))
-            {
-                return;
-            }
-
-            var deltas = UiText.DeltaLines(outcome.Delta);
-            var detail = UiText.Result(outcome.Result) + (deltas.Count > 0 ? "  " + string.Join("  ", deltas.Take(3)) : "");
-            var line = new Label(Loc.F("hud.ticker", outcome.Day, UiText.Phase(outcome.Phase), Loc.Action(outcome.ActionId, "short"), detail));
-            line.AddToClassList("ticker-line");
-            line.EnableInClassList("great", outcome.Result == Core.Rules.CheckResult.GreatSuccess);
-            line.EnableInClassList("fail", outcome.Result == Core.Rules.CheckResult.Failure);
-            _ticker.Add(line);
-            while (_ticker.childCount > 4)
-            {
-                _ticker.RemoveAt(0);
-            }
-
-            line.schedule.Execute(() => line.AddToClassList("fading")).ExecuteLater(2600);
-            line.schedule.Execute(() => line.RemoveFromHierarchy()).ExecuteLater(3000);
-            if (outcome.Result == Core.Rules.CheckResult.GreatSuccess)
-            {
-                _standing.React("bright", 1.6f);
-            }
+            _layers.CloseAll();
+            _faction.Show(factionId);
         }
 
         private void ShowToast(string message)

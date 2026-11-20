@@ -59,6 +59,9 @@ namespace ApoGirl.Presentation.Art
             public EventEntry[] Events = Array.Empty<EventEntry>();
             public FlagEntry[] Backdrops = Array.Empty<FlagEntry>();
             public LocationEntry[] Locations = Array.Empty<LocationEntry>();
+
+            /// <summary>세력 대표 얼굴 (Location 칸에 세력 ID, Image는 Resources/Art 아래 경로).</summary>
+            public LocationEntry[] Factions = Array.Empty<LocationEntry>();
         }
 
         private static ArtMap _map;
@@ -199,6 +202,20 @@ namespace ApoGirl.Presentation.Art
             element.style.backgroundRepeat = new StyleBackgroundRepeat(new BackgroundRepeat(Repeat.NoRepeat, Repeat.NoRepeat));
             element.style.backgroundPositionX = new StyleBackgroundPosition(new BackgroundPosition(BackgroundPositionKeyword.Left, new Length(4, LengthUnit.Pixel)));
             element.style.backgroundPositionY = new StyleBackgroundPosition(new BackgroundPosition(BackgroundPositionKeyword.Center));
+        }
+
+        /// <summary>세력 대표 얼굴 (없으면 null).</summary>
+        public static Texture2D Faction(string factionId)
+        {
+            foreach (var entry in Map.Factions)
+            {
+                if (entry.Location == factionId)
+                {
+                    return Load(entry.Image);
+                }
+            }
+
+            return null;
         }
 
         public static Texture2D Ending(string endingId) => string.IsNullOrEmpty(endingId) ? null : Story("Endings/" + endingId);

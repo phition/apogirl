@@ -86,10 +86,10 @@ namespace ApoGirl.Tests.EditMode
             Assert.That(state.Base.GetResource(ResourceType.Food), Is.InRange(16, 17), "20 × 0.9(전체) × 0.9(식량) = 16.2 → 확률 반올림");
         }
 
-        private static GameSession Session(string directory, string difficulty, out InMemoryDefinitionDatabase db)
+        private static GameSession Session(string directory, string difficulty, out InMemoryDefinitionDatabase db, EndingGallery gallery = null)
         {
             db = TestContent.CreateDatabase();
-            var session = new GameSession(db, new SaveService(directory, new GameStateSerializer()));
+            var session = new GameSession(db, new SaveService(directory, new GameStateSerializer()), gallery: gallery);
             session.InteractiveEvents = false;
             session.PendingDifficulty = difficulty;
             session.NewGame(5);
@@ -115,7 +115,16 @@ namespace ApoGirl.Tests.EditMode
             var directory = Path.Combine(Path.GetTempPath(), "ApoGirlUndo_" + Guid.NewGuid().ToString("N"));
             try
             {
-                var session = Session(directory, DifficultyRules.Story, out _);
+                // 52주차까지 가서 엔딩을 본 적이 없으면 이야기 중심이라도 되돌릴 수 없다
+                var fresh = Session(directory, DifficultyRules.Story, out _, new EndingGallery(directory));
+                RunWeek(fresh);
+                Assert.IsFalse(fresh.UndoUnlocked);
+                Assert.IsFalse(fresh.CanUndoWeek, "52주차 엔딩을 보기 전에는 되돌리기가 없다");
+
+                var gallery = new EndingGallery(directory);
+                gallery.Record("ENDING_SURVIVOR", 52);
+                var session = Session(directory, DifficultyRules.Story, out _, gallery);
+                Assert.IsTrue(session.UndoUnlocked);
                 Assert.AreEqual(DifficultyRules.Story, session.State.Difficulty);
                 Assert.IsFalse(session.CanUndoWeek, "아직 실행한 주가 없다");
 
@@ -131,7 +140,7 @@ namespace ApoGirl.Tests.EditMode
                 RunWeek(session);
                 Assert.IsTrue(session.CanUndoWeek, "다음 주는 다시 되돌릴 수 있다");
 
-                var standard = Session(directory, DifficultyRules.Standard, out _);
+                var standard = Session(directory, DifficultyRules.Standard, out _, gallery);
                 RunWeek(standard);
                 Assert.IsFalse(standard.CanUndoWeek, "표준에는 되돌리기가 없다");
             }
