@@ -227,7 +227,7 @@ MonoBehaviour:
           AddClues: []
           StressDelta: 0
           Removes: 1
-        SpriteKey: 
+        SpriteKey: npc_nurse_hiding
       HostileChanceMultiplier: 1
       HostileSpots: []
     NightVariant:

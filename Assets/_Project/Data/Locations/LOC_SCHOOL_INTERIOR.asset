@@ -832,7 +832,7 @@ MonoBehaviour:
           AddClues: []
           StressDelta: 4
           Removes: 1
-        SpriteKey: 
+        SpriteKey: npc_dohyeon_hiding
       - Id: SCHOOL_NOTICE
         Floor: 0
         RoomId: ROOM_1F_ROOM_OFFICE_0
@@ -991,7 +991,7 @@ MonoBehaviour:
           AddClues: []
           StressDelta: 4
           Removes: 1
-        SpriteKey: 
+        SpriteKey: npc_dohyeon_hiding
       - Id: SCHOOL_NOTICE
         Floor: 0
         RoomId: ROOM_1F_ROOM_OFFICE_0

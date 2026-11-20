@@ -308,7 +308,7 @@ MonoBehaviour:
           AddClues: []
           StressDelta: 0
           Removes: 0
-        SpriteKey: 
+        SpriteKey: npc_mart_adults_idle
       - Id: RINGLEADER
         Floor: 1
         RoomId: ROOM_MART_OFFICE_2
@@ -332,7 +332,7 @@ MonoBehaviour:
           AddClues: []
           StressDelta: 6
           Removes: 0
-        SpriteKey: 
+        SpriteKey: npc_ringleader_sitting
       HostileChanceMultiplier: 1
       HostileSpots: []
     NightVariant:

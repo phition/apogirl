@@ -294,7 +294,7 @@ MonoBehaviour:
           AddClues: []
           StressDelta: 6
           Removes: 1
-        SpriteKey: 
+        SpriteKey: npc_bystander_sitting
       HostileChanceMultiplier: 1
       HostileSpots: []
     NightVariant:
