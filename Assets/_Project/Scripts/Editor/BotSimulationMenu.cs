@@ -32,10 +32,30 @@ namespace ApoGirl.EditorTools
             Run(5);
         }
 
+        /// <summary>M7-3: 난이도마다 따로 돌려 Temp/BotSim_{난이도}/에 쓴다.</summary>
+        [MenuItem("ApoGirl/Balance/Run Bot Simulation (All Difficulties)")]
+        public static void RunAllDifficulties()
+        {
+            var balance = AssetDatabase.LoadAssetAtPath<DefinitionDatabaseAsset>(ContentPipeline.DatabasePath)?.Build().Balance;
+            foreach (var difficulty in balance?.Difficulties ?? new DifficultyDef[0])
+            {
+                if (Run(-1, difficulty.Id, OutputFolder + "_" + difficulty.Id) == null)
+                {
+                    return;
+                }
+            }
+        }
+
         /// <summary>runsPerStrategy &lt; 0이면 설정값. 요약 문서 경로를 돌려준다 (취소·오류면 null).</summary>
-        public static string Run(int runsPerStrategy)
+        public static string Run(int runsPerStrategy, string difficulty = null, string outputFolder = null)
         {
             var config = BotConfigJson.Load(BotConfigJson.DefaultPath);
+            if (!string.IsNullOrEmpty(difficulty))
+            {
+                config.Difficulty = difficulty;
+            }
+
+            outputFolder ??= OutputFolder;
             var asset = AssetDatabase.LoadAssetAtPath<DefinitionDatabaseAsset>(ContentPipeline.DatabasePath);
             if (asset == null)
             {
@@ -78,15 +98,15 @@ namespace ApoGirl.EditorTools
             }
 
             watch.Stop();
-            var header = $"{DateTime.Now:yyyy-MM-dd HH:mm} · 전략 {config.Strategies.Count}종 × {runs}판 · 시드 {config.BaseSeed}~{config.BaseSeed + runs - 1} · {watch.Elapsed.TotalSeconds:0.0}초\n\n" +
+            var header = $"{DateTime.Now:yyyy-MM-dd HH:mm} · 난이도 {config.Difficulty} · 전략 {config.Strategies.Count}종 × {runs}판 · 시드 {config.BaseSeed}~{config.BaseSeed + runs - 1} · {watch.Elapsed.TotalSeconds:0.0}초\n\n" +
                          string.Join("\n", config.Strategies.Select(s => $"- **{s.Id}**: {s.Description}"));
-            Directory.CreateDirectory(OutputFolder);
+            Directory.CreateDirectory(outputFolder);
             foreach (var file in BotReport.Build(results, header))
             {
-                File.WriteAllText(Path.Combine(OutputFolder, file.Key), file.Value);
+                File.WriteAllText(Path.Combine(outputFolder, file.Key), file.Value);
             }
 
-            var summary = Path.Combine(OutputFolder, BotReport.SummaryFile);
+            var summary = Path.Combine(outputFolder, BotReport.SummaryFile);
             Debug.Log($"[BotSim] {results.Count}판 완료 ({watch.Elapsed.TotalSeconds:0.0}초) → {Path.GetFullPath(summary)}");
             return summary;
         }

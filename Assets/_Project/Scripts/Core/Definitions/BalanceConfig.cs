@@ -198,6 +198,21 @@ namespace ApoGirl.Core.Definitions
         public int DehydrationThreshold = 60;
         public int DehydrationHpLoss = 10;
 
+        // ── 난이도 (M7-3: M7-d 배율, M7-e 이야기 중심 편의) ──
+
+        public string DefaultDifficulty = "STANDARD";
+
+        public DifficultyDef[] Difficulties =
+        {
+            new DifficultyDef
+            {
+                Id = "STORY", Consumption = 0.75f, Harm = 0.6f, HumanThreat = 0.7f, Infection = 0.6f, Yield = 1f,
+                WeeklyUndo = true, Dispatch = true, DispatchYield = 0.7f,
+            },
+            new DifficultyDef { Id = "STANDARD" },
+            new DifficultyDef { Id = "HARD", Consumption = 1.25f, Harm = 1.4f, HumanThreat = 1.3f, Infection = 1.3f, Yield = 0.85f },
+        };
+
         // ── 적대적 생존자 (낮 탐험, M7 추가 요청) ──
 
         public string HostileEnemyId = "ENEMY_SURVIVOR";

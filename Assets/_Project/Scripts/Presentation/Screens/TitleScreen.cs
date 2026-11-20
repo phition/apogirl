@@ -36,12 +36,12 @@ namespace ApoGirl.Presentation.Screens
         {
             _buttons.Clear();
             _message.text = "";
-            Add(Loc.T("title.new_game"), () => ChooseBonus(() => StartCoroutine(RunPrologue())));
-            Add(Loc.T("title.quick_start"), () => ChooseBonus(() =>
+            Add(Loc.T("title.new_game"), () => ChooseDifficulty(() => ChooseBonus(() => StartCoroutine(RunPrologue()))));
+            Add(Loc.T("title.quick_start"), () => ChooseDifficulty(() => ChooseBonus(() =>
             {
                 _session.NewGame(Environment.TickCount, null, _session.Definitions.Extras.Prologue.Common);
                 GameApp.GoTo(GameApp.HubScene);
-            }));
+            })));
 
             var canContinue = _session.HasSave(SaveService.AutoSlot);
             Add(Loc.T("title.continue"), () => LoadAndEnter(SaveService.AutoSlot)).SetEnabled(canContinue);
@@ -99,6 +99,27 @@ namespace ApoGirl.Presentation.Screens
             }
 
             _message.text = any ? "" : Loc.T("title.no_saves");
+            Add(Loc.T("common.close"), ShowMain);
+        }
+
+        /// <summary>M7-3: 난이도를 고른다 (새 게임에서만, 이후 바꿀 수 없음).</summary>
+        private void ChooseDifficulty(Action next)
+        {
+            _buttons.Clear();
+            _message.text = Loc.T("title.difficulty_pick");
+            foreach (var difficulty in _session.Definitions.Balance.Difficulties)
+            {
+                var id = difficulty.Id;
+                var button = Add(Loc.T("difficulty." + id + ".name"), () =>
+                {
+                    _session.PendingDifficulty = id;
+                    next();
+                });
+                button.tooltip = Loc.T("difficulty." + id + ".desc");
+                button.RegisterCallback<PointerEnterEvent>(_ => _message.text = Loc.T("difficulty." + id + ".desc"));
+                button.RegisterCallback<FocusInEvent>(_ => _message.text = Loc.T("difficulty." + id + ".desc"));
+            }
+
             Add(Loc.T("common.close"), ShowMain);
         }
 

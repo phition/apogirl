@@ -18,6 +18,9 @@ namespace ApoGirl.Core.Simulation.Bots
         /// <summary>안전장치: 이 주를 넘기면 판을 끊는다.</summary>
         public int MaxWeeks = 60;
 
+        /// <summary>난이도 ID (BalanceConfig.Difficulties). 봇은 되돌리기·자동 수색을 쓰지 않는다.</summary>
+        public string Difficulty = "STANDARD";
+
         /// <summary>행동 묶음 (이름 → 후보). 칸·규칙의 후보에 행동 ID 대신 쓸 수 있다.</summary>
         public Dictionary<string, BotGroupDef> Groups = new Dictionary<string, BotGroupDef>();
 

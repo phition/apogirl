@@ -264,19 +264,28 @@ namespace ApoGirl.Presentation.Screens
                 {
                     // 출정 준비 (목적지·예보·로드아웃) → 실시간 탐험: 허브 UI를 숨기고 탐험 씬을 추가 로드 → 결과를 세션에 반영
                     var departed = false;
-                    _prep.Show(outcome.ExpeditionRequest, () => departed = true);
-                    while (!departed)
+                    var dispatched = false;
+                    _prep.Show(outcome.ExpeditionRequest, () => departed = true, () => dispatched = true);
+                    while (!departed && !dispatched)
                     {
                         yield return null;
                     }
 
-                    ExpeditionResult expeditionResult = null;
-                    _root.style.display = DisplayStyle.None;
-                    SetPanelRendererEnabled(false);
-                    yield return GameApp.RunExpedition(outcome.ExpeditionRequest, result => expeditionResult = result);
-                    _root.style.display = DisplayStyle.Flex;
-                    SetPanelRendererEnabled(true);
-                    outcome = _session.CompleteExpedition(expeditionResult);
+                    if (dispatched)
+                    {
+                        // 이야기 중심: 자동 수색 (헤드리스, 보상 감소)
+                        outcome = _session.DispatchExpedition();
+                    }
+                    else
+                    {
+                        ExpeditionResult expeditionResult = null;
+                        _root.style.display = DisplayStyle.None;
+                        SetPanelRendererEnabled(false);
+                        yield return GameApp.RunExpedition(outcome.ExpeditionRequest, result => expeditionResult = result);
+                        _root.style.display = DisplayStyle.Flex;
+                        SetPanelRendererEnabled(true);
+                        outcome = _session.CompleteExpedition(expeditionResult);
+                    }
                 }
 
                 while (_session.HasPendingEvent)
@@ -568,6 +577,25 @@ namespace ApoGirl.Presentation.Screens
             {
                 lines.Add("");
                 lines.Add(Loc.T("summary.autosaved"));
+            }
+
+            if (_session.CanUndoWeek)
+            {
+                // 이야기 중심: 이번 주를 시작 직전으로 되돌린다 (같은 주는 한 번)
+                _card.Show(Loc.F("summary.title", summary.Week), string.Join("\n", lines), true,
+                    (Loc.T("summary.next"), () =>
+                    {
+                        _card.Hide();
+                        onClosed();
+                    }),
+                    (Loc.T("summary.undo"), () =>
+                    {
+                        _card.Hide();
+                        _session.UndoWeek();
+                        ShowToast(Loc.T("summary.undone"));
+                        onClosed();
+                    }));
+                return;
             }
 
             _card.Show(Loc.F("summary.title", summary.Week), string.Join("\n", lines), true, (Loc.T("summary.next"), () =>

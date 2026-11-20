@@ -587,9 +587,10 @@ namespace ApoGirl.Core.Simulation
                 player.ReducedNextRest = true;
             }
 
+            var yieldMultiplier = DifficultyRules.Get(_state, Balance).Yield;
             foreach (var loot in result.ResourceLoot)
             {
-                EffectApplier.ChangeResource(_state, loot.Resource, loot.Amount, delta);
+                EffectApplier.ChangeResource(_state, loot.Resource, DifficultyRules.Scale(loot.Amount, yieldMultiplier), delta);
             }
 
             foreach (var item in result.Loot)

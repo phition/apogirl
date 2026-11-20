@@ -8,6 +8,7 @@ using ApoGirl.Core.Events;
 using ApoGirl.Core.Expedition;
 using ApoGirl.Core.Planning;
 using ApoGirl.Core.Random;
+using ApoGirl.Core.Rules;
 using ApoGirl.Core.Simulation;
 using ApoGirl.Core.State;
 using ApoGirl.Systems.Save;
@@ -120,9 +121,62 @@ namespace ApoGirl.Systems.Session
         /// <summary>엔딩을 하나라도 본 적 있는가 (회차 요소 해금).</summary>
         public bool IsNewGamePlus => Gallery != null && Gallery.Entries.Count > 0;
 
+        // ── 난이도 (M7-3) ──
+
+        /// <summary>다음 NewGame에 쓸 난이도 (null이면 밸런스 기본값). 한 번 쓰면 지운다.</summary>
+        public string PendingDifficulty { get; set; }
+
+        public DifficultyDef Difficulty => DifficultyRules.Get(State, _db.Balance);
+
+        private readonly GameStateSerializer _snapshotSerializer = new GameStateSerializer();
+        private string _weekSnapshot;
+        private int _snapshotWeek;
+
+        /// <summary>이야기 중심: 방금 실행한 주를 되돌릴 수 있는가 (같은 주는 한 번).</summary>
+        public bool CanUndoWeek => HasGame && Difficulty.WeeklyUndo && _weekSnapshot != null && IsPlanning
+                                   && State.Status == GameStatus.Playing && State.LastUndoWeek != _snapshotWeek;
+
+        /// <summary>이번 주를 시작 직전 상태로 되돌린다 (계획을 다시 짤 수 있다).</summary>
+        public bool UndoWeek()
+        {
+            if (!CanUndoWeek)
+            {
+                return false;
+            }
+
+            var restored = _snapshotSerializer.Deserialize(_weekSnapshot);
+            restored.LastUndoWeek = _snapshotWeek;
+            _weekSnapshot = null;
+            Attach(restored);
+            return true;
+        }
+
+        /// <summary>이야기 중심: 대기 중인 탐험을 직접 들어가지 않고 자동 수색으로 처리 (자원 보상 ×DispatchYield).</summary>
+        public bool CanDispatch => HasGame && Difficulty.Dispatch && PendingExpedition != null;
+
+        public SlotOutcome DispatchExpedition()
+        {
+            if (!CanDispatch)
+            {
+                throw new InvalidOperationException("자동 수색을 쓸 수 없음");
+            }
+
+            var result = _expedition.Run(PendingExpedition);
+            foreach (var loot in result.ResourceLoot)
+            {
+                loot.Amount = (int)Math.Round(loot.Amount * Difficulty.DispatchYield, MidpointRounding.AwayFromZero);
+            }
+
+            result.ResourceLoot.RemoveAll(r => r.Amount <= 0);
+            return CompleteExpedition(result);
+        }
+
         public void NewGame(int seed, ProfileState profile = null, GameEffect prologue = null)
         {
             var state = NewGameFactory.Create(_db.Balance, seed, profile);
+            var difficulty = DifficultyRules.Find(PendingDifficulty, _db.Balance) ?? DifficultyRules.Find(_db.Balance.DefaultDifficulty, _db.Balance);
+            state.Difficulty = difficulty?.Id ?? DifficultyRules.Standard;
+            PendingDifficulty = null;
             if (prologue != null)
             {
                 EffectApplier.Apply(state, prologue, _db.Balance, new StateDelta());
@@ -253,6 +307,13 @@ namespace ApoGirl.Systems.Session
             if (!IsPlanning)
             {
                 throw new InvalidOperationException("계획 단계가 아님");
+            }
+
+            // 이야기 중심: 주를 시작하기 직전 상태를 기억해 둔다 (주간 되돌리기)
+            if (Difficulty.WeeklyUndo)
+            {
+                _weekSnapshot = _snapshotSerializer.Serialize(State);
+                _snapshotWeek = State.Calendar.Week;
             }
 
             _runner.PrepareWeek();
@@ -540,6 +601,7 @@ namespace ApoGirl.Systems.Session
         private void Attach(GameState state)
         {
             State = state ?? throw new ArgumentNullException(nameof(state));
+            _weekSnapshot = null;
             Ending = null;
             EndingIsNew = false;
             _executing = false;

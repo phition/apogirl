@@ -114,7 +114,7 @@ namespace ApoGirl.Core.Rules
             }
 
             var chance = balance.RaidBaseChance + (state.Base.Threat - state.Base.Defense) * balance.RaidChancePerPoint;
-            chance = Math.Min(Math.Max(chance, 0f), balance.RaidMaxChance);
+            chance = Math.Min(Math.Max(chance, 0f), balance.RaidMaxChance) * DifficultyRules.Get(state, balance).HumanThreat;
             return state.Base.Weather == WeatherType.Rain ? chance * balance.RainRaidMultiplier : chance;
         }
 

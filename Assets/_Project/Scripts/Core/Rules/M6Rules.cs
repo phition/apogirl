@@ -85,6 +85,7 @@ namespace ApoGirl.Core.Rules
                          - state.Player.ProficiencyLevel(ProficiencyType.Medicine) * balance.InfectionGrowthReducePerMedicineLevel
                          - (int)Math.Round(TraitRules.Sum(state, db, TraitModifierKind.InfectionResist));
             growth = Math.Max(balance.InfectionGrowthMin, growth);
+            growth = DifficultyRules.Scale(growth, DifficultyRules.Get(state, balance).Infection);
             EffectApplier.ChangeVital(state, VitalType.Infection, growth, balance, delta);
             return state.Player.Vitals.Infection >= balance.VitalMax;
         }
@@ -103,7 +104,7 @@ namespace ApoGirl.Core.Rules
                          - state.Player.ProficiencyLevel(ProficiencyType.Medicine) * balance.TeacherInfectionReducePerMedicineLevel
                          - (int)Math.Round(TraitRules.Sum(state, db, TraitModifierKind.TeacherCare))
                          + (state.Base.Weather == WeatherType.Cold ? balance.TeacherInfectionColdBonus : 0);
-            ChangeTeacherInfection(state, Math.Max(balance.TeacherInfectionMinWeekly, growth), balance);
+            ChangeTeacherInfection(state, DifficultyRules.Scale(Math.Max(balance.TeacherInfectionMinWeekly, growth), DifficultyRules.Get(state, balance).Infection), balance);
         }
 
         public static void ChangeTeacherInfection(GameState state, int amount, BalanceConfig balance)

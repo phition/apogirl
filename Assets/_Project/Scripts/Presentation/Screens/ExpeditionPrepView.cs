@@ -28,7 +28,7 @@ namespace ApoGirl.Presentation.Screens
             _card = card;
         }
 
-        public void Show(ExpeditionRequest request, Action onDepart)
+        public void Show(ExpeditionRequest request, Action onDepart, Action onDispatch = null)
         {
             var db = _session.Definitions;
             var day = request.TimeOfDay == ExpeditionTime.Day;
@@ -63,13 +63,27 @@ namespace ApoGirl.Presentation.Screens
             }
 
             lines.Add(Loc.T("prep.loss_warning"));
-            _card.Show(Loc.T("prep.title"), string.Join("\n", lines), false,
-                (Loc.T("prep.depart"), () =>
+            (string, Action) depart = (Loc.T("prep.depart"), () =>
+            {
+                _session.RefreshPendingLoadout();
+                _card.Hide();
+                onDepart();
+            });
+            if (onDispatch != null && _session.CanDispatch)
+            {
+                // 이야기 중심: 직접 들어가지 않고 자동 수색
+                lines.Add(Loc.F("prep.dispatch_hint", Math.Round(_session.Difficulty.DispatchYield * 100)));
+                _card.Show(Loc.T("prep.title"), string.Join("\n", lines), false, depart, (Loc.T("prep.dispatch"), () =>
                 {
                     _session.RefreshPendingLoadout();
                     _card.Hide();
-                    onDepart();
+                    onDispatch();
                 }));
+            }
+            else
+            {
+                _card.Show(Loc.T("prep.title"), string.Join("\n", lines), false, depart);
+            }
 
             BuildLoadout(_card.Extra);
         }

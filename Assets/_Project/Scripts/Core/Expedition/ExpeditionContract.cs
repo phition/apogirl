@@ -82,6 +82,10 @@ namespace ApoGirl.Core.Expedition
         /// <summary>출정 시점의 노출도 (낮에 자주 나갈수록 생존자가 더 자주 나온다).</summary>
         public int DayExposure;
 
+        /// <summary>난이도 배율: 피해·쓰러짐, 사람 위협 (생존자 등장).</summary>
+        public float HarmMultiplier = 1f;
+        public float HumanThreatMultiplier = 1f;
+
         /// <summary>판 시드 (지역마다 처음부터 빈 상자를 정한다).</summary>
         public int WorldSeed;
 
@@ -179,6 +183,13 @@ namespace ApoGirl.Core.Expedition
             LocationDef location = null;
             var hasLocation = db != null && db.TryGetLocation(action.LocationId, out location);
             request.DayExposure = state.Exploration.DayExposure;
+            if (db != null)
+            {
+                var difficulty = Rules.DifficultyRules.Get(state, db.Balance);
+                request.HarmMultiplier = difficulty.Harm;
+                request.HumanThreatMultiplier = difficulty.HumanThreat;
+            }
+
             HostileRules.Assign(request, hasLocation ? location : null, db?.Balance);
             request.WorldSeed = state.Rng.Seed;
             request.Restocked = state.Flags.Contains(ContainerRules.RestockFlag(action.LocationId));

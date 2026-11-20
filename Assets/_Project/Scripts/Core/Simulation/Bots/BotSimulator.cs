@@ -138,6 +138,7 @@ namespace ApoGirl.Core.Simulation.Bots
             var prologue = PrologueRules.BuildEffect(db.Extras.Prologue ?? new PrologueDef(), PickPrologue(db.Extras.Prologue, config, botRandom), profile);
 
             var state = NewGameFactory.Create(db.Balance, seed, profile);
+            state.Difficulty = string.IsNullOrEmpty(config.Difficulty) ? Rules.DifficultyRules.Standard : config.Difficulty;
             EffectApplier.Apply(state, prologue, db.Balance, new StateDelta());
             var tutorial = db.Balance.TutorialActionId;
             if (!string.IsNullOrEmpty(tutorial) && db.TryGetAction(tutorial, out _))

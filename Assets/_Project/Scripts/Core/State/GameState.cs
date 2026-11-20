@@ -18,6 +18,12 @@ namespace ApoGirl.Core.State
         public string EndCause { get; set; } = "";
 
         public RandomState Rng { get; set; } = new RandomState();
+
+        /// <summary>난이도 ID (BalanceConfig.Difficulties). 새 게임에서 정하고 바꾸지 않는다.</summary>
+        public string Difficulty { get; set; } = "STANDARD";
+
+        /// <summary>마지막으로 되돌린 주 (같은 주는 한 번만 되돌린다, 이야기 중심).</summary>
+        public int LastUndoWeek { get; set; }
         public CalendarState Calendar { get; set; } = new CalendarState();
         public PlayerState Player { get; set; } = new PlayerState();
         public MentorState Teacher { get; set; } = new MentorState();

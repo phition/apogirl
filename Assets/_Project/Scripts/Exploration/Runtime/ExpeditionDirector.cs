@@ -1570,7 +1570,7 @@ namespace ApoGirl.Exploration.Runtime
 
             if (events.Damage > 0 && !Invincible)
             {
-                var damage = Mathf.Max(1, Mathf.RoundToInt(events.Damage * (1f - Mathf.Clamp01(_armor?.DamageReduction ?? 0f))));
+                var damage = Mathf.Max(1, Mathf.RoundToInt(events.Damage * Request.HarmMultiplier * (1f - Mathf.Clamp01(_armor?.DamageReduction ?? 0f))));
                 _log.DamageTaken += damage;
                 Hp = Math.Max(0, Hp - damage);
                 _hud?.ShowMessage("exp.hurt");

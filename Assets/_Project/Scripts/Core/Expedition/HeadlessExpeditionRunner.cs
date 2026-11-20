@@ -32,7 +32,7 @@ namespace ApoGirl.Core.Expedition
                              - agility * model.AgilityDownReduction
                              + request.SleepDebt * model.SleepDebtDownIncrease
                              + (request.ConsecutiveRun ? model.ConsecutiveDownIncrease : 0f);
-            downChance = Math.Min(Math.Max(downChance, 0f), 0.95f);
+            downChance = Math.Min(Math.Max(downChance * request.HarmMultiplier, 0f), 0.95f);
 
             var result = new ExpeditionResult
             {
