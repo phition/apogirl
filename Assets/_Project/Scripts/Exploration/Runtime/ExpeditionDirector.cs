@@ -2115,7 +2115,7 @@ namespace ApoGirl.Exploration.Runtime
                         view.BodyRenderer.sprite = ExplorationArt.Get(unit.State == ZombieState.Stunned ? "survivor_stun"
                             : !walking ? "survivor_idle" : survivorPrefix + frame);
                         view.Body.localPosition = new Vector3(origin.x + unit.X, origin.y + 0.15f, 0f);
-                        view.Body.localScale = Vector3.one * SurvivorScale;
+                        view.Body.localScale = Vector3.one * (ExplorationArt.HasPixel("survivor_idle") ? 1f : SurvivorScale);
                     }
                     else
                     {

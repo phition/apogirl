@@ -23,6 +23,25 @@ namespace ApoGirl.Exploration.Runtime
         /// <summary>
         /// 픽셀 아트에 있는 프레임 수 (prefix + 0, 1, 2 …가 이어지는 만큼). 픽셀 아트가 없으면 fallback (코드 그림 프레임 수).
         /// </summary>
+        /// <summary>픽셀 아트(ExplorationPixel)에 그 키가 있는지. 픽셀 아트는 정수배가 아닌 크기로 늘리지 않는다.</summary>
+        public static bool HasPixel(string key)
+        {
+            if (string.IsNullOrEmpty(key))
+            {
+                return false;
+            }
+
+            if (!PixelKeys.TryGetValue(key, out var has))
+            {
+                has = Resources.Load<Sprite>(PixelFolder + key) != null;
+                PixelKeys[key] = has;
+            }
+
+            return has;
+        }
+
+        private static readonly Dictionary<string, bool> PixelKeys = new Dictionary<string, bool>();
+
         public static int FrameCount(string prefix, int fallback)
         {
             if (!Frames.TryGetValue(prefix, out var count))
