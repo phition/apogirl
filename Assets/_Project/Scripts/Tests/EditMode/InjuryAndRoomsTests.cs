@@ -85,10 +85,13 @@ namespace ApoGirl.Tests.EditMode
             ActionResolver.Resolve(state, purify, db, new SeededRandom(SeededRandom.CreateState(1)), new StateDelta());
             Assert.AreEqual(0, state.Base.GetResource(ResourceType.Water), "빗물이 없으면 정수할 게 없다");
 
-            state.Base.SetResource(ResourceType.RawWater, 5);
+            Assert.IsFalse(ApoGirl.Core.Planning.PlanEditing.IsUnlocked(state, db, purify), "빗물이 없으면 계획에도 없다");
+
+            // 한 번에 최대 12까지: 성공 80% · 대성공 100% · 실패 50%가 식수로
+            state.Base.SetResource(ResourceType.RawWater, 15);
             ActionResolver.Resolve(state, purify, db, new SeededRandom(SeededRandom.CreateState(1)), new StateDelta());
-            Assert.AreEqual(0, state.Base.GetResource(ResourceType.RawWater));
-            Assert.That(state.Base.GetResource(ResourceType.Water), Is.InRange(2, 5));
+            Assert.AreEqual(3, state.Base.GetResource(ResourceType.RawWater));
+            Assert.That(state.Base.GetResource(ResourceType.Water), Is.EqualTo(6).Or.EqualTo(10).Or.EqualTo(12));
 
             // 빗물통은 식수가 아니라 빗물을 모은다, 청결은 주마다 떨어진다
             state.Flags.Add(UpkeepRules.FlagRainBarrels);

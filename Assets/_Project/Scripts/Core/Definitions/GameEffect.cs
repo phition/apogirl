@@ -43,6 +43,10 @@ namespace ApoGirl.Core.Definitions
 
         public bool RestorePower;
 
+        /// <summary>정수: 모아 둔 빗물(RawWater)을 최대 이만큼 식수로 바꾼다 (비율 PurifyRate, 나머지는 버려진다).</summary>
+        public int PurifyWater;
+        public float PurifyRate = 1f;
+
         /// <summary>0보다 크면 이 세기의 밤 습격을 즉시 판정한다 (이벤트 효과 전용).</summary>
         public int RaidStrength;
 

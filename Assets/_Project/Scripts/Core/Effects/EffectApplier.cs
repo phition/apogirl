@@ -135,6 +135,17 @@ namespace ApoGirl.Core.Effects
                 state.Teacher.MobilityStage = effect.TeacherMobility;
             }
 
+            // 정수: 빗물을 식수로 (비율만큼만 남는다)
+            if (effect.PurifyWater > 0)
+            {
+                var raw = Math.Min(effect.PurifyWater, state.Base.GetResource(ResourceType.RawWater));
+                if (raw > 0)
+                {
+                    ChangeResource(state, ResourceType.RawWater, -raw, delta);
+                    ChangeResource(state, ResourceType.Water, (int)Math.Round(raw * effect.PurifyRate, MidpointRounding.AwayFromZero), delta);
+                }
+            }
+
             if (effect.RestorePower && !state.Base.PowerRestored)
             {
                 state.Base.PowerRestored = true;
