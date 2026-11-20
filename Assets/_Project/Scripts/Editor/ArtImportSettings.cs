@@ -6,6 +6,7 @@ namespace ApoGirl.EditorTools
 {
     /// <summary>
     /// 받은 그림(M6-5)의 가져오기 설정 (Resources/Art 아래 폴더별).
+    /// - ExplorationPixel: 픽셀 아트(PixelLab), PPU 36, 나머지는 ExplorationHD와 같다.
     /// - ExplorationHD: 스프라이트, PPU 72 (코드 그림 18 PPU의 4배 픽셀 = 같은 세계 크기), 점 필터, 무압축, 피벗은 같은 키의 코드 그림을 따른다.
     /// - Story·Portraits·UI: UI Toolkit 배경용 텍스처 (밉맵 없음, 최대 2048).
     /// </summary>
@@ -13,6 +14,10 @@ namespace ApoGirl.EditorTools
     {
         private const string Root = "Assets/_Project/Resources/Art/";
         private const string HdFolder = Root + "ExplorationHD/";
+        private const string PixelFolder = Root + "ExplorationPixel/";
+
+        /// <summary>픽셀 아트 (PixelLab, M6-5): 캐릭터 64px = 1.78유닛.</summary>
+        public const float PixelPixelsPerUnit = 36f;
         private const string GeneratedFolder = Root + "Exploration/";
         public const float HdPixelsPerUnit = 72f;
 
@@ -28,11 +33,11 @@ namespace ApoGirl.EditorTools
             importer.mipmapEnabled = false;
             importer.npotScale = TextureImporterNPOTScale.None;
 
-            if (path.StartsWith(HdFolder))
+            if (path.StartsWith(HdFolder) || path.StartsWith(PixelFolder))
             {
                 importer.textureType = TextureImporterType.Sprite;
                 importer.spriteImportMode = SpriteImportMode.Single;
-                importer.spritePixelsPerUnit = HdPixelsPerUnit;
+                importer.spritePixelsPerUnit = path.StartsWith(PixelFolder) ? PixelPixelsPerUnit : HdPixelsPerUnit;
                 importer.filterMode = FilterMode.Point;
                 importer.textureCompression = TextureImporterCompression.Uncompressed;
                 importer.alphaIsTransparency = true;

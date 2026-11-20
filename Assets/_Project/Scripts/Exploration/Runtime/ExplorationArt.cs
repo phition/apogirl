@@ -4,7 +4,8 @@ using UnityEngine;
 namespace ApoGirl.Exploration.Runtime
 {
     /// <summary>
-    /// 탐험 화면 스프라이트 저장소 (Resources/Art/Exploration/{키}). 생성기: 메뉴 ApoGirl/Art/Build Exploration Sprites.
+    /// 탐험 화면 스프라이트 저장소. 찾는 순서: 픽셀 아트(ExplorationPixel, PixelLab·M6-5) → 받은 그림(ExplorationHD) → 코드 그림
+    /// (Resources/Art/Exploration/{키}, 생성기: 메뉴 ApoGirl/Art/Build Exploration Sprites).
     /// 스프라이트가 없으면 그레이박스 사각형으로 대체해 아트 없이도 동작한다.
     /// </summary>
     public static class ExplorationArt
@@ -13,7 +14,30 @@ namespace ApoGirl.Exploration.Runtime
 
         /// <summary>받은 그림 (M6-5, 같은 세계 크기의 4배 픽셀). 없으면 코드 그림.</summary>
         private const string HdFolder = "Art/ExplorationHD/";
+        /// <summary>픽셀 아트 (M6-5, PPU 36 = 캐릭터 64px). 동작마다 프레임 수가 달라 FrameCount로 센다.</summary>
+        private const string PixelFolder = "Art/ExplorationPixel/";
+
         private static readonly Dictionary<string, Sprite> Cache = new Dictionary<string, Sprite>();
+        private static readonly Dictionary<string, int> Frames = new Dictionary<string, int>();
+
+        /// <summary>
+        /// 픽셀 아트에 있는 프레임 수 (prefix + 0, 1, 2 …가 이어지는 만큼). 픽셀 아트가 없으면 fallback (코드 그림 프레임 수).
+        /// </summary>
+        public static int FrameCount(string prefix, int fallback)
+        {
+            if (!Frames.TryGetValue(prefix, out var count))
+            {
+                count = 0;
+                while (count < 32 && Resources.Load<Sprite>(PixelFolder + prefix + count) != null)
+                {
+                    count++;
+                }
+
+                Frames[prefix] = count;
+            }
+
+            return count > 0 ? count : Mathf.Max(1, fallback);
+        }
 
         public static Sprite Get(string key)
         {
@@ -24,11 +48,21 @@ namespace ApoGirl.Exploration.Runtime
 
             if (!Cache.TryGetValue(key, out var sprite))
             {
-                sprite = Resources.Load<Sprite>(HdFolder + key);
+                var family = HdFamily(key);
+                sprite = Resources.Load<Sprite>(PixelFolder + key);
+                if (sprite == null && family != null)
+                {
+                    sprite = Resources.Load<Sprite>(PixelFolder + family);
+                }
+
                 if (sprite == null)
                 {
-                    var family = HdFamily(key);
-                    sprite = family != null ? Resources.Load<Sprite>(HdFolder + family) : null;
+                    sprite = Resources.Load<Sprite>(HdFolder + key);
+                }
+
+                if (sprite == null && family != null)
+                {
+                    sprite = Resources.Load<Sprite>(HdFolder + family);
                 }
 
                 if (sprite == null)
@@ -48,6 +82,7 @@ namespace ApoGirl.Exploration.Runtime
         private static string HdFamily(string key)
         {
             if (key.StartsWith("player_")) return "player_idle";
+            if (key.StartsWith("survivor_")) return "survivor_idle";
             if (key.StartsWith("zombie_"))
             {
                 var kind = key.Substring("zombie_".Length);

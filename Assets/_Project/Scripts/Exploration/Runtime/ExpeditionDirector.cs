@@ -107,6 +107,7 @@ namespace ApoGirl.Exploration.Runtime
         private bool _animRunning;
         private float _animTime;
         private float _attackAnim;
+        private const float AttackAnimSeconds = 0.3f;
         private float _noiseMultiplier = 1f;
         private float _tutorialMoved;
         private float _tutorialCrouched;
@@ -654,7 +655,7 @@ namespace ApoGirl.Exploration.Runtime
             }
 
             _attackTimer = Mathf.Max(0.3f, _weapon.AttackCooldown);
-            _attackAnim = 0.25f;
+            _attackAnim = AttackAnimSeconds;
             EmitNoise(CurrentArea, X, _weapon.AttackNoise);
             Sfx("sfx_swing");
             var hit = _threat.Strike(Snapshot, _facingRight ? 1 : -1, _weapon.WeaponPower, _weapon.StunSeconds, _balance.ShoveRange + 0.3f);
@@ -1186,11 +1187,25 @@ namespace ApoGirl.Exploration.Runtime
                 _attackAnim = Mathf.Max(0f, _attackAnim - dt);
             }
 
-            if (_attackAnim > 0f) return "player_attack";
-            if (_crouching || Hidden) return "player_crouch";
+            // 픽셀 아트는 동작마다 프레임 수가 다르다 (없으면 코드 그림 4프레임). 한 바퀴 빠르기는 그대로 둔다.
+            if (_attackAnim > 0f)
+            {
+                var swing = ExplorationArt.FrameCount("player_attack_", 0);
+                return swing > 0 ? "player_attack_" + Mathf.Clamp((int)((1f - _attackAnim / AttackAnimSeconds) * swing), 0, swing - 1) : "player_attack";
+            }
+
+            if (Hidden) return "player_crouch";
+            if (_crouching)
+            {
+                var sneak = ExplorationArt.FrameCount("player_crouch_", 0);
+                return _animMoving && sneak > 0 ? "player_crouch_" + (int)(_animTime * 2f * sneak) % sneak : "player_crouch";
+            }
+
             if (!_animMoving) return "player_idle";
-            var frame = (int)(_animTime * (_animRunning ? 12f : 7f)) % 4;
-            return (_animRunning ? "player_run_" : "player_walk_") + frame;
+            var prefix = _animRunning ? "player_run_" : "player_walk_";
+            var count = ExplorationArt.FrameCount(prefix, 4);
+            var frame = (int)(_animTime * (_animRunning ? 12f : 7f) * count / 4f) % count;
+            return prefix + frame;
         }
 
         /// <summary>스프라이트 소품 (피벗 = 바닥 가운데). 없으면 기존 사각형.</summary>
@@ -2094,9 +2109,11 @@ namespace ApoGirl.Exploration.Runtime
                     {
                         if (walking) view.BodyRenderer.flipX = unit.X < view.LastX;
                         var running = unit.State == ZombieState.Chase;
-                        var frame = (int)(view.MoveTime * (running ? 12f : 7f)) % 4;
+                        var survivorPrefix = running ? "survivor_run_" : "survivor_walk_";
+                        var survivorCount = ExplorationArt.FrameCount(survivorPrefix, 4);
+                        var frame = (int)(view.MoveTime * (running ? 12f : 7f) * survivorCount / 4f) % survivorCount;
                         view.BodyRenderer.sprite = ExplorationArt.Get(unit.State == ZombieState.Stunned ? "survivor_stun"
-                            : !walking ? "survivor_idle" : (running ? "survivor_run_" : "survivor_walk_") + frame);
+                            : !walking ? "survivor_idle" : survivorPrefix + frame);
                         view.Body.localPosition = new Vector3(origin.x + unit.X, origin.y + 0.15f, 0f);
                         view.Body.localScale = Vector3.one * SurvivorScale;
                     }
@@ -2121,10 +2138,15 @@ namespace ApoGirl.Exploration.Runtime
                     }
 
                     view.LastX = unit.X;
-                    var phase = (int)((dormant ? Time.time * 0.8f : view.MoveTime * (unit.State == ZombieState.Chase ? 7f : 4f)) + unit.Id) % 2;
+                    // 픽셀 아트는 동작마다 프레임 수가 다르다 (없으면 코드 그림 2프레임). 한 바퀴 빠르기는 그대로 둔다.
+                    var chasing = unit.State == ZombieState.Chase;
+                    var poseName = dormant ? "dormant_" : chasing ? "chase_" : "walk_";
+                    var poseCount = ExplorationArt.FrameCount($"zombie_{view.Kind}_{poseName}", 2);
+                    var rate = (dormant ? 0.8f : chasing ? 7f : 4f) * poseCount / 2f;
+                    var phase = (int)((dormant ? Time.time * 0.8f : view.MoveTime * rate) + unit.Id) % poseCount;
                     var pose = dormant ? "dormant_" + phase
                         : unit.State == ZombieState.Stunned ? "stun"
-                        : unit.State == ZombieState.Chase ? "chase_" + phase
+                        : chasing ? "chase_" + phase
                         : "walk_" + (moved ? phase : 0);
                     view.BodyRenderer.sprite = ExplorationArt.Get($"zombie_{view.Kind}_{pose}");
                     view.Body.localPosition = new Vector3(origin.x + unit.X, origin.y + 0.15f, 0f);
