@@ -115,6 +115,9 @@ namespace ApoGirl.Core.Definitions
 
         /// <summary>M6: 막 평가 카드의 선생님 한마디 (가장 높은 우선순위 하나).</summary>
         ActReview,
+
+        /// <summary>2~4막 보강: '그 뒤의 이야기' (세력·동료 후일담). 묶음(Group)마다 조건에 맞는 가장 높은 우선순위 하나.</summary>
+        EndingEpilogue,
     }
 
     /// <summary>조건으로 고르는 한 줄 (가장 높은 Priority 중 첫 번째). 문장은 UI 키 TextKey.</summary>
@@ -126,6 +129,9 @@ namespace ApoGirl.Core.Definitions
         public ConditionDef Condition = new ConditionDef();
         public int Priority;
         public string TextKey = "";
+
+        /// <summary>EndingEpilogue 묶음 (예: FAC_SAGEORI, NPC_DOHYEON). 같은 묶음에서는 한 줄만.</summary>
+        public string Group = "";
     }
 
     /// <summary>0막 프롤로그 문항 하나 (Yarn 노드 PROLOGUE_{Id}에서 #choice:선택지ID로 고른다).</summary>

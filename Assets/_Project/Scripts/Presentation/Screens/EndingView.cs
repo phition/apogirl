@@ -67,6 +67,10 @@ namespace ApoGirl.Presentation.Screens
             {
                 ShowCut(_result.CutKeys[_step]);
             }
+            else if (_step == _result.CutKeys.Count && _result.EpilogueKeys.Count > 0)
+            {
+                ShowEpilogue();
+            }
             else
             {
                 ShowRecord();
@@ -99,7 +103,33 @@ namespace ApoGirl.Presentation.Screens
             var text = new Label(StoryText.T(key, _state));
             text.AddToClassList("ending-cut");
             _stage.Add(text);
-            var counter = new Label($"{_step + 1} / {_result.CutKeys.Count}");
+            var counter = new Label($"{_step + 1} / {TotalPages}");
+            counter.AddToClassList("ending-counter");
+            _stage.Add(counter);
+            KoreanFont.ApplyDeep(_stage);
+            FadeIn(_stage);
+        }
+
+        /// <summary>컷 수 + '그 뒤의 이야기' 한 장.</summary>
+        private int TotalPages => _result.CutKeys.Count + (_result.EpilogueKeys.Count > 0 ? 1 : 0);
+
+        /// <summary>그 뒤의 이야기: 세력·동료 후일담을 한 장에 모아 보여 준다.</summary>
+        private void ShowEpilogue()
+        {
+            _stage.Clear();
+            var header = new Label(Loc.T("ending.epilogue"));
+            header.AddToClassList("ending-category");
+            _stage.Add(header);
+            foreach (var key in _result.EpilogueKeys)
+            {
+                var line = new Label(StoryText.T(key, _state));
+                line.AddToClassList("ending-epilogue-line");
+                line.style.whiteSpace = WhiteSpace.Normal;
+                line.style.marginTop = 8;
+                _stage.Add(line);
+            }
+
+            var counter = new Label($"{_step + 1} / {TotalPages}");
             counter.AddToClassList("ending-counter");
             _stage.Add(counter);
             KoreanFont.ApplyDeep(_stage);
@@ -141,6 +171,15 @@ namespace ApoGirl.Presentation.Screens
             {
                 AddSection(scroll, Loc.T("ending.moments"));
                 foreach (var key in _result.MomentKeys)
+                {
+                    AddLine(scroll, "· " + StoryText.T(key, _state), "ending-record-line");
+                }
+            }
+
+            if (_result.EpilogueKeys.Count > 0)
+            {
+                AddSection(scroll, Loc.T("ending.epilogue"));
+                foreach (var key in _result.EpilogueKeys)
                 {
                     AddLine(scroll, "· " + StoryText.T(key, _state), "ending-record-line");
                 }

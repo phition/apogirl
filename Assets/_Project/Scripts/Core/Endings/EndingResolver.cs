@@ -18,6 +18,9 @@ namespace ApoGirl.Core.Endings
         /// <summary>"1년의 기록"의 주요 장면 (UI 문자열 키).</summary>
         public readonly List<string> MomentKeys = new List<string>();
 
+        /// <summary>'그 뒤의 이야기': 세력·동료 후일담 (묶음마다 한 줄, 정의 순서). 구조 엔딩만.</summary>
+        public readonly List<string> EpilogueKeys = new List<string>();
+
         /// <summary>판정에 쓴 점수 (디버그 표시용).</summary>
         public float Score;
 
@@ -89,6 +92,33 @@ namespace ApoGirl.Core.Endings
                     {
                         result.CutKeys.Add(line.TextKey);
                     }
+                }
+
+                // 그 뒤의 이야기: 묶음마다 조건에 맞는 가장 높은 우선순위 한 줄 (묶음은 처음 나온 순서)
+                var groups = new List<string>();
+                var bestByGroup = new Dictionary<string, LineDef>();
+                foreach (var line in db.Extras.Lines)
+                {
+                    if (line.Kind != LineKind.EndingEpilogue || string.IsNullOrEmpty(line.TextKey) || !IsMet(state, line.Condition, context, db.Balance))
+                    {
+                        continue;
+                    }
+
+                    var group = line.Group ?? "";
+                    if (!bestByGroup.TryGetValue(group, out var current))
+                    {
+                        groups.Add(group);
+                        bestByGroup[group] = line;
+                    }
+                    else if (line.Priority > current.Priority)
+                    {
+                        bestByGroup[group] = line;
+                    }
+                }
+
+                foreach (var group in groups)
+                {
+                    result.EpilogueKeys.Add(bestByGroup[group].TextKey);
                 }
             }
 

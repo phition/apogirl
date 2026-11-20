@@ -177,6 +177,26 @@ namespace ApoGirl.Tests.EditMode
         }
 
         [Test]
+        public void Epilogue_PicksOneLinePerGroup_OnlyForRescue()
+        {
+            var db = ContentDb();
+            var state = NewState(db, 52);
+            state.Status = GameStatus.Rescued;
+            state.Factions["FAC_SAGEORI"].Known = true;
+            state.Flags.Add("SAGEORI_ALLY_FINALE");
+            state.Npcs["NPC_DOHYEON"] = new NpcState { Status = NpcStatus.Joined };
+            state.Flags.Add("DH_MOTHER_FOUND");
+            var result = ApoGirl.Core.Endings.EndingResolver.Resolve(state, db);
+            CollectionAssert.Contains(result.EpilogueKeys, "line.ep_sageori_ally", "같이 막았으면 그 결말");
+            CollectionAssert.DoesNotContain(result.EpilogueKeys, "line.ep_sageori_default", "묶음마다 한 줄");
+            CollectionAssert.Contains(result.EpilogueKeys, "line.ep_dohyeon_mother");
+            CollectionAssert.DoesNotContain(result.EpilogueKeys, "line.ep_mart_default", "모르는 세력은 없음");
+
+            state.Status = GameStatus.GameOver;
+            Assert.IsEmpty(ApoGirl.Core.Endings.EndingResolver.Resolve(state, db).EpilogueKeys, "배드 엔딩에는 없음");
+        }
+
+        [Test]
         public void EncounterFlags_ChangeStanding()
         {
             var db = ContentDb();

@@ -103,8 +103,8 @@
       "Condition": { "WeekMin": 50, "Phase": "Night", "FlagsNone": [ "HR_FAREWELL" ], "NpcStatuses": [ { "NpcId": "NPC_RINGLEADER", "Status": "Joined" } ] },
       "OnShow": { "SetFlags": [ "HR_FAREWELL" ] },
       "Choices": [
-        { "Id": "MEET_AGAIN", "Effect": { "Hidden": [ { "Hidden": "TraumaRecovery", "Amount": 2 } ], "Npcs": [ { "NpcId": "NPC_RINGLEADER", "Affinity": 2 } ] } },
-        { "Id": "CLOSE", "Effect": { "Hidden": [ { "Hidden": "SelfAwareness", "Amount": 2 } ] } }
+        { "Id": "MEET_AGAIN", "Effect": { "SetFlags": [ "HR_MEET_AGAIN" ], "Hidden": [ { "Hidden": "TraumaRecovery", "Amount": 2 } ], "Npcs": [ { "NpcId": "NPC_RINGLEADER", "Affinity": 2 } ] } },
+        { "Id": "CLOSE", "Effect": { "SetFlags": [ "HR_CLOSED" ], "Hidden": [ { "Hidden": "SelfAwareness", "Amount": 2 } ] } }
       ] },
 
     { "Id": "EVT_A4_FIRST_SNOW", "Kind": "Story", "Priority": 36,

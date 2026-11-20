@@ -393,3 +393,12 @@ Button.selected { border-color: var(--accent); background-color: var(--accent-so
 /* ── M6 허브 표시 ── */
 .companion-button { -unity-text-align: middle-left; margin: 1px 0; white-space: normal; }
 .rescue-countdown { color: var(--accent); -unity-font-style: bold; }
+
+/* 엔딩: 그 뒤의 이야기 (세력·동료 후일담) */
+.ending-epilogue-line {
+    color: var(--text);
+    font-size: 20px;
+    white-space: normal;
+    -unity-text-align: middle-center;
+    max-width: 1040px;
+}

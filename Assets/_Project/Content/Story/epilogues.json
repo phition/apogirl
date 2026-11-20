@@ -1,0 +1,70 @@
+{
+  "Lines": [
+    { "Id": "EP_SAGEORI_DEFAULT", "Kind": "EndingEpilogue", "Group": "FAC_SAGEORI", "Priority": 0, "TextKey": "line.ep_sageori_default",
+      "Condition": { "Checks": [ { "Kind": "FactionKnown", "Key": "FAC_SAGEORI", "Op": "Equal", "Value": 1 } ] } },
+    { "Id": "EP_SAGEORI_TRUCE", "Kind": "EndingEpilogue", "Group": "FAC_SAGEORI", "Priority": 30, "TextKey": "line.ep_sageori_truce",
+      "Condition": { "Checks": [ { "Kind": "FactionKnown", "Key": "FAC_SAGEORI", "Op": "Equal", "Value": 1 }, { "Kind": "FactionStanding", "Key": "FAC_SAGEORI", "Op": "GreaterOrEqual", "Value": -19 } ] } },
+    { "Id": "EP_SAGEORI_HOSTILE", "Kind": "EndingEpilogue", "Group": "FAC_SAGEORI", "Priority": 40, "TextKey": "line.ep_sageori_hostile",
+      "Condition": { "FlagsAll": [ "SAGEORI_FINALE_HOSTILE" ] } },
+    { "Id": "EP_SAGEORI_JUN", "Kind": "EndingEpilogue", "Group": "FAC_SAGEORI", "Priority": 45, "TextKey": "line.ep_sageori_jun",
+      "Condition": { "FlagsAll": [ "JUN_MEDIATED" ] } },
+    { "Id": "EP_SAGEORI_ALLY", "Kind": "EndingEpilogue", "Group": "FAC_SAGEORI", "Priority": 50, "TextKey": "line.ep_sageori_ally",
+      "Condition": { "FlagsAll": [ "SAGEORI_ALLY_FINALE" ] } },
+
+    { "Id": "EP_MART_DEFAULT", "Kind": "EndingEpilogue", "Group": "FAC_MART", "Priority": 0, "TextKey": "line.ep_mart_default",
+      "Condition": { "Checks": [ { "Kind": "FactionKnown", "Key": "FAC_MART", "Op": "Equal", "Value": 1 } ] } },
+    { "Id": "EP_MART_LEFT", "Kind": "EndingEpilogue", "Group": "FAC_MART", "Priority": 20, "TextKey": "line.ep_mart_left",
+      "Condition": { "FlagsAll": [ "MART_LEFT" ] } },
+    { "Id": "EP_MART_ABANDONED", "Kind": "EndingEpilogue", "Group": "FAC_MART", "Priority": 40, "TextKey": "line.ep_mart_abandoned",
+      "Condition": { "FlagsAll": [ "MART_ABANDONED" ] } },
+    { "Id": "EP_MART_FRIEND", "Kind": "EndingEpilogue", "Group": "FAC_MART", "Priority": 50, "TextKey": "line.ep_mart_friend",
+      "Condition": { "FlagsAll": [ "MART_LEFT" ], "FlagsNone": [ "MART_ABANDONED" ], "Checks": [ { "Kind": "FactionTier", "Key": "FAC_MART", "Op": "GreaterOrEqual", "Value": 3 } ] } },
+
+    { "Id": "EP_UBC_DEFAULT", "Kind": "EndingEpilogue", "Group": "FAC_UBC", "Priority": 0, "TextKey": "line.ep_ubc_default",
+      "Condition": { "Checks": [ { "Kind": "FactionKnown", "Key": "FAC_UBC", "Op": "Equal", "Value": 1 } ] } },
+    { "Id": "EP_UBC_RELAY", "Kind": "EndingEpilogue", "Group": "FAC_UBC", "Priority": 30, "TextKey": "line.ep_ubc_relay",
+      "Condition": { "FlagsAll": [ "UBC_RELAY" ] } },
+    { "Id": "EP_UBC_MINGYU", "Kind": "EndingEpilogue", "Group": "FAC_UBC", "Priority": 40, "TextKey": "line.ep_ubc_mingyu",
+      "Condition": { "FlagsAll": [ "UBC_RUNNER_SAVED" ] } },
+    { "Id": "EP_UBC_ALLIED", "Kind": "EndingEpilogue", "Group": "FAC_UBC", "Priority": 50, "TextKey": "line.ep_ubc_allied",
+      "Condition": { "Checks": [ { "Kind": "FactionKnown", "Key": "FAC_UBC", "Op": "Equal", "Value": 1 }, { "Kind": "FactionTier", "Key": "FAC_UBC", "Op": "GreaterOrEqual", "Value": 4 } ] } },
+
+    { "Id": "EP_DOHYEON", "Kind": "EndingEpilogue", "Group": "NPC_DOHYEON", "Priority": 0, "TextKey": "line.ep_dohyeon",
+      "Condition": { "NpcStatuses": [ { "NpcId": "NPC_DOHYEON", "Status": "Joined" } ] } },
+    { "Id": "EP_DOHYEON_MOTHER", "Kind": "EndingEpilogue", "Group": "NPC_DOHYEON", "Priority": 50, "TextKey": "line.ep_dohyeon_mother",
+      "Condition": { "FlagsAll": [ "DH_MOTHER_FOUND" ], "NpcStatuses": [ { "NpcId": "NPC_DOHYEON", "Status": "Joined" } ] } },
+
+    { "Id": "EP_NURSE", "Kind": "EndingEpilogue", "Group": "NPC_NURSE", "Priority": 0, "TextKey": "line.ep_nurse",
+      "Condition": { "NpcStatuses": [ { "NpcId": "NPC_NURSE", "Status": "Joined" } ] } },
+    { "Id": "EP_NURSE_LEG", "Kind": "EndingEpilogue", "Group": "NPC_NURSE", "Priority": 30, "TextKey": "line.ep_nurse_leg",
+      "Condition": { "FlagsAll": [ "PROSTHETIC_DONE" ], "NpcStatuses": [ { "NpcId": "NPC_NURSE", "Status": "Joined" } ] } },
+
+    { "Id": "EP_BYSTANDER", "Kind": "EndingEpilogue", "Group": "NPC_BYSTANDER", "Priority": 0, "TextKey": "line.ep_bystander",
+      "Condition": { "NpcStatuses": [ { "NpcId": "NPC_BYSTANDER", "Status": "Joined" } ] } },
+    { "Id": "EP_BYSTANDER_FRIEND", "Kind": "EndingEpilogue", "Group": "NPC_BYSTANDER", "Priority": 30, "TextKey": "line.ep_bystander_friend",
+      "Condition": { "FlagsAll": [ "BY_FAREWELL" ], "NpcStatuses": [ { "NpcId": "NPC_BYSTANDER", "Status": "Joined" } ] } },
+
+    { "Id": "EP_RINGLEADER", "Kind": "EndingEpilogue", "Group": "NPC_RINGLEADER", "Priority": 0, "TextKey": "line.ep_ringleader",
+      "Condition": { "NpcStatuses": [ { "NpcId": "NPC_RINGLEADER", "Status": "Joined" } ] } },
+    { "Id": "EP_RINGLEADER_AGAIN", "Kind": "EndingEpilogue", "Group": "NPC_RINGLEADER", "Priority": 30, "TextKey": "line.ep_ringleader_again",
+      "Condition": { "FlagsAll": [ "HR_MEET_AGAIN" ], "NpcStatuses": [ { "NpcId": "NPC_RINGLEADER", "Status": "Joined" } ] } },
+    { "Id": "EP_RINGLEADER_CLOSED", "Kind": "EndingEpilogue", "Group": "NPC_RINGLEADER", "Priority": 30, "TextKey": "line.ep_ringleader_closed",
+      "Condition": { "FlagsAll": [ "HR_CLOSED" ], "NpcStatuses": [ { "NpcId": "NPC_RINGLEADER", "Status": "Joined" } ] } },
+
+    { "Id": "EP_JUN", "Kind": "EndingEpilogue", "Group": "JUN", "Priority": 0, "TextKey": "line.ep_jun",
+      "Condition": { "FlagsAll": [ "JUN_JOINS" ] } },
+
+    { "Id": "M_OUTING", "Kind": "EndingMoment", "Priority": 0, "TextKey": "line.m_outing",
+      "Condition": { "FlagsAny": [ "OUTING_SPRING_DONE", "OUTING_SUMMER_DONE", "OUTING_AUTUMN_DONE", "OUTING_WINTER_DONE" ] } },
+    { "Id": "M_TRIP", "Kind": "EndingMoment", "Priority": 0, "TextKey": "line.m_trip", "Condition": { "FlagsAll": [ "TRIP_RETURNED" ] } },
+    { "Id": "M_SAGEORI", "Kind": "EndingMoment", "Priority": 0, "TextKey": "line.m_sageori", "Condition": { "FlagsAll": [ "SAGEORI_MARKED" ] } },
+    { "Id": "M_RADIO", "Kind": "EndingMoment", "Priority": 0, "TextKey": "line.m_radio", "Condition": { "FlagsAll": [ "UBC_CALL" ] } },
+    { "Id": "M_NURSE", "Kind": "EndingMoment", "Priority": 0, "TextKey": "line.m_nurse",
+      "Condition": { "NpcStatuses": [ { "NpcId": "NPC_NURSE", "Status": "Joined" } ] } },
+    { "Id": "M_PROSTHETIC", "Kind": "EndingMoment", "Priority": 0, "TextKey": "line.m_prosthetic", "Condition": { "FlagsAll": [ "PROSTHETIC_DONE" ] } },
+    { "Id": "M_MART", "Kind": "EndingMoment", "Priority": 0, "TextKey": "line.m_mart", "Condition": { "FlagsAny": [ "MART_ALLY", "MART_TRADE" ] } },
+    { "Id": "M_MINGYU", "Kind": "EndingMoment", "Priority": 0, "TextKey": "line.m_mingyu", "Condition": { "FlagsAll": [ "UBC_RUNNER_SAVED" ] } },
+    { "Id": "M_RINGLEADER", "Kind": "EndingMoment", "Priority": 0, "TextKey": "line.m_ringleader", "Condition": { "FlagsAll": [ "BULLY_RESCUED" ] } },
+    { "Id": "M_LAST_STAND", "Kind": "EndingMoment", "Priority": 0, "TextKey": "line.m_last_stand", "Condition": { "FlagsAll": [ "A4_RAID" ] } }
+  ]
+}
