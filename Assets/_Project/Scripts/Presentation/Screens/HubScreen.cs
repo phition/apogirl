@@ -225,7 +225,9 @@ namespace ApoGirl.Presentation.Screens
                 _root.Q("speed-" + speed).EnableInClassList("selected", speed == _speed);
             }
 
-            _teacherLine.text = TeacherLine(warned.Count > 0);
+            // 선생님을 만나기 전 (1주차 창고): 혼잣말
+            _root.Q<Label>("teacher-name").text = _session.HasMetTeacher ? Loc.T("hub.teacher_name") : Loc.T("hub.alone_name");
+            _teacherLine.text = _session.HasMetTeacher ? TeacherLine(warned.Count > 0) : Loc.T(_session.IsExecuting ? "hub.alone_running" : "hub.alone_line");
         }
 
         private string TeacherLine(bool hasWarnings)

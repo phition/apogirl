@@ -219,6 +219,9 @@ namespace ApoGirl.Systems.Session
             return IsUnseen(balance.IntroEventId) && !IsSeen(balance.OpeningEventId) ? balance.IntroEventId : null;
         }
 
+        /// <summary>선생님이 창고 문을 열었는가 (그 전에는 허브에 선생님이 보이지 않는다).</summary>
+        public bool HasMetTeacher => HasGame && IsSeen(_db.Balance.OpeningEventId);
+
         private bool IsUnseen(string eventId) =>
             !string.IsNullOrEmpty(eventId) && _db.TryGetEvent(eventId, out _) && !State.Events.Records.ContainsKey(eventId);
 

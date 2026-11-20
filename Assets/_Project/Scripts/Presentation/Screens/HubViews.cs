@@ -229,7 +229,12 @@ namespace ApoGirl.Presentation.Screens
             _debtSection.EnableInClassList("hidden", !Disclosure.Has(state, "UI_SLEEPDEBT"));
 
             var facilities = state.Base.Facilities.Where(f => f.Value > 0).Select(f => Loc.T("facility." + f.Key)).ToList();
-            var people = new List<string> { Loc.F("status.teacher", state.Teacher.Affinity, Loc.T("mobility." + Math.Min(state.Teacher.MobilityStage, 2))) };
+            var people = new List<string>();
+            if (_session.HasMetTeacher)
+            {
+                people.Add(Loc.F("status.teacher", state.Teacher.Affinity, Loc.T("mobility." + Math.Min(state.Teacher.MobilityStage, 2))));
+            }
+
             var stage = InfectionRules.TeacherStage(state, balance);
             if (stage > 0)
             {
