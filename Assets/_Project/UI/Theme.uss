@@ -458,8 +458,8 @@ Button.selected { border-color: var(--accent); background-color: var(--accent-so
 .gallery-card.with-art { min-height: 96px; }
 
 /* UI 아이콘 (M6-5): 글자 왼쪽에 아이콘 (StoryArt.SetIcon이 배경 그림을 깐다) */
-.with-icon { padding-left: 26px; }
-.tab.with-icon { padding-left: 22px; }
-.companion-button.with-icon { padding-left: 32px; min-height: 30px; }
-.calendar.with-icon { padding-left: 30px; }
-.vital-bar.with-icon { padding-left: 22px; }
+.with-icon { padding-left: 32px; min-height: 24px; }
+.tab.with-icon { padding-left: 28px; }
+.companion-button.with-icon { padding-left: 38px; min-height: 32px; }
+.calendar.with-icon { padding-left: 36px; }
+.vital-bar.with-icon { padding-left: 28px; }

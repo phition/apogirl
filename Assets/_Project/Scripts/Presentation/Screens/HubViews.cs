@@ -94,7 +94,7 @@ namespace ApoGirl.Presentation.Screens
             var state = _session.State;
             var calendar = state.Calendar;
             var season = UiText.Season(CalendarRules.GetSeason(calendar.Week));
-            StoryArt.SetIcon(_calendar, StoryArt.Icon("season." + CalendarRules.GetSeason(calendar.Week)), 22f);
+            StoryArt.SetIcon(_calendar, StoryArt.Icon("season." + CalendarRules.GetSeason(calendar.Week)), 28f);
             _calendar.text = _session.IsPlanning
                 ? Loc.F("hub.calendar_planning", calendar.Week, season)
                 : Loc.F("hub.calendar", calendar.Week, season, calendar.Day, UiText.Phase(calendar.Phase));
@@ -157,7 +157,7 @@ namespace ApoGirl.Presentation.Screens
                 var bar = new ProgressBar { lowValue = centered ? -100 : 0, highValue = 100 };
                 bar.AddToClassList("vital-bar");
                 bar.AddToClassList("vital-" + vital.ToString().ToLowerInvariant());
-                StoryArt.SetIcon(bar, StoryArt.Icon("vital." + vital), 16f);
+                StoryArt.SetIcon(bar, StoryArt.Icon("vital." + vital), 22f);
                 panel.Add(bar);
                 _vitals[vital] = bar;
             }
@@ -168,20 +168,20 @@ namespace ApoGirl.Presentation.Screens
 
             _symptom = Row(panel);
             _symptom.AddToClassList("danger");
-            StoryArt.SetIcon(_symptom, StoryArt.Icon("status.symptom"), 16f);
+            StoryArt.SetIcon(_symptom, StoryArt.Icon("status.symptom"), 22f);
 
             panel.Add(_debtSection);
             _sleepDebt = Row(_debtSection);
             _conscience = Row(_debtSection);
-            StoryArt.SetIcon(_sleepDebt, StoryArt.Icon("status.sleep_debt"), 16f);
-            StoryArt.SetIcon(_conscience, StoryArt.Icon("status.conscience"), 16f);
+            StoryArt.SetIcon(_sleepDebt, StoryArt.Icon("status.sleep_debt"), 22f);
+            StoryArt.SetIcon(_conscience, StoryArt.Icon("status.conscience"), 22f);
 
             panel.Add(_statsSection);
             _statsSection.Add(Header("status.stats"));
             foreach (StatType stat in Enum.GetValues(typeof(StatType)))
             {
                 _stats[stat] = Row(_statsSection);
-                StoryArt.SetIcon(_stats[stat], StoryArt.Icon("stat." + stat), 16f);
+                StoryArt.SetIcon(_stats[stat], StoryArt.Icon("stat." + stat), 22f);
             }
 
             _derived = Row(_statsSection);
@@ -192,7 +192,7 @@ namespace ApoGirl.Presentation.Screens
             foreach (ProficiencyType proficiency in Enum.GetValues(typeof(ProficiencyType)))
             {
                 _proficiencies[proficiency] = Row(_profSection);
-                StoryArt.SetIcon(_proficiencies[proficiency], StoryArt.Icon("prof." + proficiency), 16f);
+                StoryArt.SetIcon(_proficiencies[proficiency], StoryArt.Icon("prof." + proficiency), 22f);
             }
 
             panel.Add(_baseSection);
@@ -281,7 +281,7 @@ namespace ApoGirl.Presentation.Screens
                 };
                 button.AddToClassList("small-button");
                 button.AddToClassList("companion-button");
-                StoryArt.SetIcon(button, StoryArt.Icon("npc." + npcId), 24f);
+                StoryArt.SetIcon(button, StoryArt.Icon("npc." + npcId), 28f);
                 button.SetEnabled(_session.IsPlanning && roles.Count > 0);
                 _companions.Add(button);
             }
@@ -408,7 +408,7 @@ namespace ApoGirl.Presentation.Screens
                     Refresh();
                 }) { text = Loc.T("cat." + category), name = "tab-" + category };
                 tab.AddToClassList("tab");
-                StoryArt.SetIcon(tab, StoryArt.Icon("cat." + category), 16f);
+                StoryArt.SetIcon(tab, StoryArt.Icon("cat." + category), 22f);
                 _tabs.Add(tab);
             }
 

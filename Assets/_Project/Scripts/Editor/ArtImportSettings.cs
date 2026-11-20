@@ -47,6 +47,8 @@ namespace ApoGirl.EditorTools
                 return;
             }
 
+            // UI 아이콘은 128~256 px 그림을 16~28 px로 줄여 그리므로 밉맵으로 계단 현상을 줄인다
+            importer.mipmapEnabled = path.StartsWith(Root + "UI/");
             importer.textureType = TextureImporterType.Default;
             importer.alphaIsTransparency = path.EndsWith(".png");
             importer.maxTextureSize = 2048;

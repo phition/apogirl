@@ -180,7 +180,7 @@ namespace ApoGirl.Presentation.Art
         }
 
         /// <summary>글자 왼쪽에 작은 아이콘을 깐다 (클래스 with-icon이 왼쪽 여백을 준다). null이면 아이콘을 지운다.</summary>
-        public static void SetIcon(VisualElement element, Texture2D icon, float size = 18f)
+        public static void SetIcon(VisualElement element, Texture2D icon, float size = 24f)
         {
             if (element == null)
             {
