@@ -80,6 +80,8 @@ namespace ApoGirl.Tests.EditMode
                 slots[i].ActionId = id;
             }
 
+            EffectHelpers.ApplyCareRules(state, db);
+
             // 증상이 보이면 실제 플레이어처럼 처치부터 (M6 감염)
             if (state.Player.Vitals.Infection >= 25 && db.TryGetAction("ACT_TREAT_INFECTION", out var treat)
                 && ApoGirl.Core.Planning.PlanEditing.IsUnlocked(state, db, treat))
@@ -211,6 +213,31 @@ namespace ApoGirl.Tests.EditMode
 
     internal static class EffectHelpers
     {
+        /// <summary>실제 플레이어처럼: 다치면 약으로 치료, 지저분하면 청소, 빗물이 없으면 정수 대신 청소.</summary>
+        public static void ApplyCareRules(GameState state, IDefinitionDatabase db)
+        {
+            var slots = state.Plan.Slots;
+            bool Usable(string id, int index) => db.TryGetAction(id, out var a) && ApoGirl.Core.Planning.PlanEditing.IsUnlocked(state, db, a)
+                                                 && ApoGirl.Core.Planning.PlanEditing.IsAllowedIn(a, index) && !slots[index].Locked;
+            for (var i = 0; i < slots.Count; i++)
+            {
+                if (slots[i].ActionId == "ACT_SURV_PURIFY_WATER" && state.Base.GetResource(ResourceType.RawWater) < 5 && Usable("ACT_SURV_CLEAN", i))
+                {
+                    slots[i].ActionId = "ACT_SURV_CLEAN";
+                }
+            }
+
+            if (state.Player.Vitals.Cleanliness <= 35 && Usable("ACT_SURV_CLEAN", 6))
+            {
+                slots[6].ActionId = "ACT_SURV_CLEAN";
+            }
+
+            if (state.Base.GetResource(ResourceType.Medicine) >= 2 && Usable("ACT_TREAT_WOUND", 0))
+            {
+                slots[0].ActionId = "ACT_TREAT_WOUND";
+            }
+        }
+
         public static void ApplyPrologueCommon(GameState state, IDefinitionDatabase db)
         {
             ApoGirl.Core.Effects.EffectApplier.Apply(state, db.Extras.Prologue.Common, db.Balance, new ApoGirl.Core.Effects.StateDelta());

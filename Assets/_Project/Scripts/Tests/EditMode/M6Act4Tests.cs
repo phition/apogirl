@@ -214,6 +214,8 @@ namespace ApoGirl.Tests.EditMode
 
                 slots[i].ActionId = id;
             }
+
+            EffectHelpers.ApplyCareRules(state, db);
         }
     }
 }

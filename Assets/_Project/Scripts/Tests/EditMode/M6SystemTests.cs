@@ -36,6 +36,7 @@ namespace ApoGirl.Tests.EditMode
         {
             var db = TestContent.CreateDatabase(b => { b.BiteChanceOnDownDay = 1f; b.FirstAidBaseChance = 0f; b.FirstAidPerMedicineLevel = 0f; });
             var state = TestContent.NewGame(db);
+            state.Player.Vitals.Cleanliness = db.Balance.VitalMax; // 깨끗하면 물림 감염 기본값 그대로
             state.Plan.Slots[0].ActionId = TestContent.DayExpedition;
             var expedition = new StubExpeditionRunner { Handler = _ => new ExpeditionResult { Status = ExtractStatus.Down, HpDelta = -10 } };
             var runner = Runner(state, db, expedition);

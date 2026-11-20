@@ -26,12 +26,16 @@ namespace ApoGirl.Core.Rules
         public static int WoundInfection(GameState state, BalanceConfig balance) =>
             balance.WoundInfectionBase + (int)Math.Round(balance.WoundInfectionDirty * Dirt(state, balance), MidpointRounding.AwayFromZero);
 
+        /// <summary>부상이 되는 체력 손실 (최대 체력 × 비율, 올림. 0.3 × 100 = 30).</summary>
+        public static int Threshold(BalanceConfig balance) =>
+            Math.Max(1, (int)Math.Ceiling(balance.InjuryHpFraction * balance.VitalMax - 1e-3));
+
         /// <summary>사건 전 체력과 지금 체력을 비교해 부상을 판정한다. 새로 다쳤으면 상처 감염량(1 이상), 아니면 0.</summary>
         public static int CheckIncident(GameState state, int hpBefore, BalanceConfig balance, StateDelta delta)
         {
             var hp = state.Player.Vitals.Hp;
             var lost = hpBefore - hp;
-            if (lost <= 0 || hp <= 0 || lost < balance.InjuryHpFraction * balance.VitalMax)
+            if (lost <= 0 || hp <= 0 || lost < Threshold(balance))
             {
                 return 0;
             }
