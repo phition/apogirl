@@ -966,7 +966,7 @@ namespace ApoGirl.Exploration.Runtime
             }
 
             var player = session.State.Player;
-            return new ExpeditionRequest
+            var request = new ExpeditionRequest
             {
                 LocationId = _debugLocationId,
                 Seed = Environment.TickCount,
@@ -975,6 +975,9 @@ namespace ApoGirl.Exploration.Runtime
                 Hp = player.Vitals.Hp,
                 Week = session.State.Calendar.Week,
             };
+            request.LootedContainers.UnionWith(session.State.Exploration.LootedContainers);
+            session.DebugExpedition.ApplyForcedHostile(request);
+            return request;
         }
 
         private void BuildWorld()

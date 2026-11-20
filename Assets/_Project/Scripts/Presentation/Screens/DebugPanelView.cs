@@ -78,6 +78,13 @@ namespace ApoGirl.Presentation.Screens
                 Refresh();
             });
 
+            Add("debug.force_hostile", () =>
+            {
+                var expedition = _session.DebugExpedition;
+                expedition.ForceHostile = (expedition.ForceHostile + 1) % 4;
+                Refresh();
+            });
+
             Add("debug.expedition_mode", () =>
             {
                 _session.UseRealtimeExpeditions = !_session.UseRealtimeExpeditions;
@@ -122,7 +129,11 @@ namespace ApoGirl.Presentation.Screens
         public void Refresh()
         {
             var forced = _session.DebugExpedition.ForceNext;
+            var hostile = _session.DebugExpedition.ForceHostile;
             _status.text = "seed " + _session.State.Rng.Seed + " · next expedition: " + (forced?.ToString() ?? "-")
+                           + " · survivor " + (hostile > 0 ? "T" + hostile : "-")
+                           + " · trauma " + _session.State.Player.AssaultTrauma
+                           + " · looted " + _session.State.Exploration.LootedContainers.Count
                            + " · planning " + _session.IsPlanning
                            + " · expedition " + (_session.UseRealtimeExpeditions ? "realtime" : "headless")
                            + " · events " + (_session.InteractiveEvents ? "interactive" : "auto")

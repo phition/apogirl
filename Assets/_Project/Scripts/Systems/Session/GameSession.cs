@@ -271,6 +271,7 @@ namespace ApoGirl.Systems.Session
             var outcome = _runner.ExecuteNextSlot();
             if (outcome.AwaitingExpedition)
             {
+                _expedition.ApplyForcedHostile(outcome.ExpeditionRequest);
                 StateChanged?.Invoke();
                 ExpeditionStarted?.Invoke(outcome.ExpeditionRequest);
                 return outcome;
@@ -604,8 +605,22 @@ namespace ApoGirl.Systems.Session
         /// <summary>null이면 정상 실행. 지정하면 다음 탐험 1회에만 적용.</summary>
         public ExtractStatus? ForceNext { get; set; }
 
+        /// <summary>디버그: 다음 낮 탐험에 적대적 생존자를 이 성향으로 (0 = 정상 판정). 1회만.</summary>
+        public int ForceHostile { get; set; }
+
+        /// <summary>강제 성향이 있으면 요청에 싣고 지운다 (낮 탐험만). 실시간·헤드리스 모두 출발 전에 부른다.</summary>
+        public void ApplyForcedHostile(ExpeditionRequest request)
+        {
+            if (ForceHostile > 0 && request != null && request.TimeOfDay == ExpeditionTime.Day)
+            {
+                request.HostileTemperament = ForceHostile;
+                ForceHostile = 0;
+            }
+        }
+
         public ExpeditionResult Run(ExpeditionRequest request)
         {
+            ApplyForcedHostile(request);
             var forced = ForceNext;
             ForceNext = null;
             var result = _inner.Run(request);

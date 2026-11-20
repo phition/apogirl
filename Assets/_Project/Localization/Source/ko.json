@@ -153,6 +153,7 @@
     "debug.week_last": "51주차로",
     "debug.force_down": "다음 탐험: 쓰러짐",
     "debug.force_ok": "다음 탐험: 성공",
+    "debug.force_hostile": "다음 낮 탐험: 생존자 (누를 때마다 위협→강탈→구타→없음)",
     "result.expedition_Extracted": "무사히 돌아왔다.",
     "result.expedition_Stranded": "해가 진 뒤에야 깨어난 놈들 사이를 빠져나왔다.",
     "result.expedition_Down": "쓰러졌다. 배낭을 잃고 가까스로 돌아왔다.",
