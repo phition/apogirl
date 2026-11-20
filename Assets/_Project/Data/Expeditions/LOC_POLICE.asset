@@ -17,6 +17,9 @@ MonoBehaviour:
     Id: LOC_POLICE
     Day:
       Resources:
+      - Resource: 8
+        Min: 1
+        Max: 3
       - Resource: 5
         Min: 2
         Max: 4
@@ -34,6 +37,9 @@ MonoBehaviour:
       EncounterChance: 0.5
     Night:
       Resources:
+      - Resource: 8
+        Min: 0
+        Max: 2
       - Resource: 5
         Min: 3
         Max: 5

@@ -17,6 +17,9 @@ MonoBehaviour:
     Id: LOC_SUBWAY
     Day:
       Resources:
+      - Resource: 8
+        Min: 2
+        Max: 5
       - Resource: 5
         Min: 2
         Max: 4
@@ -40,6 +43,9 @@ MonoBehaviour:
       EncounterChance: 0.5
     Night:
       Resources:
+      - Resource: 8
+        Min: 1
+        Max: 4
       - Resource: 5
         Min: 3
         Max: 6

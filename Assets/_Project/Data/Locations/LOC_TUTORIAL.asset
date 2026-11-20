@@ -27,6 +27,7 @@ MonoBehaviour:
         X: 12
         Number: 1
         LootTableId: 
+        SearchFlag: 
       RoomTemplates:
       - Id: ROOM_PE_STORAGE
         Width: 12
@@ -40,19 +41,23 @@ MonoBehaviour:
           X: 4
           SearchSeconds: 2.5
           LootTableId: LOOT_TUTORIAL_GEAR
+          SpriteKey: 
         - Id: BALL_CART
           Kind: 4
           Floor: 0
           X: 7
           SearchSeconds: 2.5
           LootTableId: 
+          SpriteKey: 
         - Id: SHELF
           Kind: 2
           Floor: 0
           X: 10
           SearchSeconds: 3.5
           LootTableId: 
+          SpriteKey: 
         DefaultLootTableId: LOOT_TUTORIAL
+        WallDecor: 
       Containers:
       - Id: C_TUT_LOCKER_A
         Kind: 0
@@ -60,18 +65,21 @@ MonoBehaviour:
         X: 26
         SearchSeconds: 3
         LootTableId: LOOT_TUTORIAL
+        SpriteKey: 
       - Id: C_TUT_LOCKER_B
         Kind: 0
         Floor: 0
         X: 34
         SearchSeconds: 3
         LootTableId: LOOT_TUTORIAL
+        SpriteKey: 
       - Id: C_TUT_DESK
         Kind: 1
         Floor: 0
         X: 40
         SearchSeconds: 2
         LootTableId: LOOT_TUTORIAL
+        SpriteKey: 
       Exits:
       - Kind: 0
         Floor: 0

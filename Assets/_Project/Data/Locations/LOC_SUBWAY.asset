@@ -35,24 +35,28 @@ MonoBehaviour:
         X: 14
         Number: 1
         LootTableId: 
+        SearchFlag: 
       - RoomId: ROOM_SUBWAY_KIOSK_1
         TemplateId: ROOM_SUBWAY_KIOSK
         Floor: 1
         X: 66
         Number: 1
         LootTableId: 
+        SearchFlag: 
       - RoomId: ROOM_SUBWAY_RESTROOM_1
         TemplateId: ROOM_SUBWAY_RESTROOM
         Floor: 1
         X: 82
         Number: 1
         LootTableId: 
+        SearchFlag: 
       - RoomId: ROOM_SUBWAY_OFFICE_2
         TemplateId: ROOM_SUBWAY_OFFICE
         Floor: 0
         X: 70
         Number: 2
         LootTableId: 
+        SearchFlag: 
       RoomTemplates:
       - Id: ROOM_SUBWAY_OFFICE
         Width: 14
@@ -68,19 +72,23 @@ MonoBehaviour:
           X: 4
           SearchSeconds: 2
           LootTableId: 
+          SpriteKey: 
         - Id: OFFICE_CABINET
           Kind: 2
           Floor: 0
           X: 7.4
           SearchSeconds: 3.5
           LootTableId: 
+          SpriteKey: 
         - Id: OFFICE_LOCKER
           Kind: 0
           Floor: 0
           X: 11
           SearchSeconds: 3
           LootTableId: 
+          SpriteKey: 
         DefaultLootTableId: LOOT_SUBWAY_OFFICE
+        WallDecor: 
       - Id: ROOM_SUBWAY_KIOSK
         Width: 10
         DoorXs:
@@ -93,19 +101,23 @@ MonoBehaviour:
           X: 3.8
           SearchSeconds: 2.5
           LootTableId: 
+          SpriteKey: 
         - Id: KIOSK_FRIDGE
           Kind: 3
           Floor: 0
           X: 6.6
           SearchSeconds: 4
           LootTableId: LOOT_STORE_FRIDGE
+          SpriteKey: 
         - Id: KIOSK_BOX
           Kind: 4
           Floor: 0
           X: 8.6
           SearchSeconds: 2.5
           LootTableId: 
+          SpriteKey: 
         DefaultLootTableId: LOOT_SUBWAY_KIOSK
+        WallDecor: 
       - Id: ROOM_SUBWAY_RESTROOM
         Width: 8
         DoorXs:
@@ -118,13 +130,16 @@ MonoBehaviour:
           X: 4.2
           SearchSeconds: 3.5
           LootTableId: 
+          SpriteKey: 
         - Id: SUPPLY
           Kind: 4
           Floor: 0
           X: 6.6
           SearchSeconds: 2.5
           LootTableId: 
+          SpriteKey: 
         DefaultLootTableId: LOOT_SUBWAY_KIOSK
+        WallDecor: 
       Containers:
       - Id: C_SUB_LOCKER_1
         Kind: 0
@@ -132,36 +147,42 @@ MonoBehaviour:
         X: 34
         SearchSeconds: 3
         LootTableId: LOOT_SUBWAY_KIOSK
+        SpriteKey: 
       - Id: C_SUB_LOCKER_2
         Kind: 0
         Floor: 1
         X: 36
         SearchSeconds: 3
         LootTableId: LOOT_SUBWAY_KIOSK
+        SpriteKey: 
       - Id: C_SUB_LOCKER_3
         Kind: 0
         Floor: 1
         X: 38
         SearchSeconds: 3
         LootTableId: LOOT_SUBWAY_KIOSK
+        SpriteKey: 
       - Id: C_SUB_LOCKER_4
         Kind: 0
         Floor: 1
         X: 40
         SearchSeconds: 3
         LootTableId: LOOT_SUBWAY_KIOSK
+        SpriteKey: 
       - Id: C_SUB_BENCH_A
         Kind: 4
         Floor: 0
         X: 20
         SearchSeconds: 2.5
         LootTableId: LOOT_SUBWAY_KIOSK
+        SpriteKey: 
       - Id: C_SUB_BENCH_B
         Kind: 4
         Floor: 0
         X: 88
         SearchSeconds: 2.5
         LootTableId: LOOT_SUBWAY_OFFICE
+        SpriteKey: 
       Exits:
       - Kind: 0
         Floor: 1

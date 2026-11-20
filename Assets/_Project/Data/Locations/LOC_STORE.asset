@@ -27,12 +27,14 @@ MonoBehaviour:
         X: 24
         Number: 1
         LootTableId: 
+        SearchFlag: 
       - RoomId: ROOM_STORE_OFFICE_1
         TemplateId: ROOM_STORE_OFFICE
         Floor: 0
         X: 14
         Number: 1
         LootTableId: 
+        SearchFlag: 
       RoomTemplates:
       - Id: ROOM_STORE_STOCK
         Width: 12
@@ -46,25 +48,30 @@ MonoBehaviour:
           X: 3.6
           SearchSeconds: 2.5
           LootTableId: 
+          SpriteKey: 
         - Id: STOCK_2
           Kind: 4
           Floor: 0
           X: 6
           SearchSeconds: 2.5
           LootTableId: 
+          SpriteKey: 
         - Id: STOCK_3
           Kind: 4
           Floor: 0
           X: 8.4
           SearchSeconds: 2.5
           LootTableId: 
+          SpriteKey: 
         - Id: WALKIN
           Kind: 3
           Floor: 0
           X: 10.6
           SearchSeconds: 4
           LootTableId: LOOT_STORE_FRIDGE
+          SpriteKey: 
         DefaultLootTableId: LOOT_STORE_STOCK
+        WallDecor: 
       - Id: ROOM_STORE_OFFICE
         Width: 8
         DoorXs:
@@ -77,13 +84,16 @@ MonoBehaviour:
           X: 3.8
           SearchSeconds: 2
           LootTableId: 
+          SpriteKey: 
         - Id: OFFICE_LOCKER
           Kind: 0
           Floor: 0
           X: 6.4
           SearchSeconds: 3
           LootTableId: 
+          SpriteKey: 
         DefaultLootTableId: LOOT_STORE_OFFICE
+        WallDecor: 
       Containers:
       - Id: C_SHELF_1
         Kind: 4
@@ -91,48 +101,56 @@ MonoBehaviour:
         X: 5
         SearchSeconds: 2.5
         LootTableId: LOOT_STORE_SHELF
+        SpriteKey: 
       - Id: C_SHELF_2
         Kind: 4
         Floor: 0
         X: 6.6
         SearchSeconds: 2.5
         LootTableId: LOOT_STORE_SHELF
+        SpriteKey: 
       - Id: C_SHELF_3
         Kind: 4
         Floor: 0
         X: 8.2
         SearchSeconds: 2.5
         LootTableId: LOOT_STORE_SHELF
+        SpriteKey: 
       - Id: C_SHELF_4
         Kind: 4
         Floor: 0
         X: 9.8
         SearchSeconds: 2.5
         LootTableId: LOOT_STORE_SHELF
+        SpriteKey: 
       - Id: C_SHELF_5
         Kind: 4
         Floor: 0
         X: 11.4
         SearchSeconds: 2.5
         LootTableId: LOOT_STORE_SHELF
+        SpriteKey: 
       - Id: C_SHELF_6
         Kind: 4
         Floor: 0
         X: 13
         SearchSeconds: 2.5
         LootTableId: LOOT_STORE_SHELF
+        SpriteKey: 
       - Id: C_COUNTER
         Kind: 1
         Floor: 0
         X: 37
         SearchSeconds: 2
         LootTableId: LOOT_STORE_COUNTER
+        SpriteKey: 
       - Id: C_DRINK_FRIDGE
         Kind: 3
         Floor: 0
         X: 39
         SearchSeconds: 4
         LootTableId: LOOT_STORE_FRIDGE
+        SpriteKey: 
       Exits:
       - Kind: 0
         Floor: 0

@@ -15,6 +15,14 @@ MonoBehaviour:
   _config:
     BaseStatValue: 10
     StartingHp: 100
+    InjuryHpFraction: 0.3
+    InjuredFlag: INJURED
+    WoundInfectionBase: 0
+    WoundInfectionDirty: 10
+    WoundCleanThreshold: 50
+    BiteDirtyBonus: 0.5
+    StartingCleanliness: 70
+    CleanlinessWeeklyDecay: 15
     InitialResources:
     - Resource: 0
       Amount: 14
@@ -205,6 +213,8 @@ MonoBehaviour:
     IntrusionHideStress: 6
     IntrusionInjuryWeeks: 2
     RainBarrelWater: 10
+    RainCollectWater: 5
+    WeeklyRawWater: 5
     RoofGardenFood: 7
     TrapPower: 25
     MaxTraps: 3

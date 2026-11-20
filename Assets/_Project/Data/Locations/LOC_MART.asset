@@ -35,24 +35,28 @@ MonoBehaviour:
         X: 90
         Number: 1
         LootTableId: 
+        SearchFlag: 
       - RoomId: ROOM_MART_WAREHOUSE_1
         TemplateId: ROOM_MART_WAREHOUSE
         Floor: 1
         X: 20
         Number: 1
         LootTableId: 
+        SearchFlag: 
       - RoomId: ROOM_MART_WAREHOUSE_2
         TemplateId: ROOM_MART_WAREHOUSE
         Floor: 1
         X: 50
         Number: 2
         LootTableId: 
+        SearchFlag: 
       - RoomId: ROOM_MART_OFFICE_2
         TemplateId: ROOM_MART_OFFICE
         Floor: 1
         X: 80
         Number: 2
         LootTableId: 
+        SearchFlag: 
       RoomTemplates:
       - Id: ROOM_MART_WAREHOUSE
         Width: 20
@@ -67,37 +71,44 @@ MonoBehaviour:
           X: 3.8
           SearchSeconds: 2.5
           LootTableId: 
+          SpriteKey: 
         - Id: PALLET_2
           Kind: 4
           Floor: 0
           X: 6.6
           SearchSeconds: 2.5
           LootTableId: 
+          SpriteKey: 
         - Id: PALLET_3
           Kind: 4
           Floor: 0
           X: 9.4
           SearchSeconds: 2.5
           LootTableId: 
+          SpriteKey: 
         - Id: PALLET_4
           Kind: 4
           Floor: 0
           X: 12.2
           SearchSeconds: 2.5
           LootTableId: 
+          SpriteKey: 
         - Id: COLD_STORE
           Kind: 3
           Floor: 0
           X: 15
           SearchSeconds: 4
           LootTableId: LOOT_STORE_FRIDGE
+          SpriteKey: 
         - Id: TOOL_RACK
           Kind: 2
           Floor: 0
           X: 17.4
           SearchSeconds: 3.5
           LootTableId: LOOT_SUBWAY_OFFICE
+          SpriteKey: 
         DefaultLootTableId: LOOT_MART_WAREHOUSE
+        WallDecor: 
       - Id: ROOM_MART_OFFICE
         Width: 12
         DoorXs:
@@ -112,19 +123,23 @@ MonoBehaviour:
           X: 4
           SearchSeconds: 2
           LootTableId: 
+          SpriteKey: 
         - Id: OFFICE_SAFE
           Kind: 2
           Floor: 0
           X: 7
           SearchSeconds: 3.5
           LootTableId: 
+          SpriteKey: 
         - Id: OFFICE_LOCKER
           Kind: 0
           Floor: 0
           X: 10
           SearchSeconds: 3
           LootTableId: 
+          SpriteKey: 
         DefaultLootTableId: LOOT_STORE_OFFICE
+        WallDecor: 
       Containers:
       - Id: C_MART_SHELF_1
         Kind: 4
@@ -132,78 +147,91 @@ MonoBehaviour:
         X: 8
         SearchSeconds: 2.5
         LootTableId: LOOT_MART_SHELF
+        SpriteKey: 
       - Id: C_MART_SHELF_2
         Kind: 4
         Floor: 0
         X: 11.2
         SearchSeconds: 2.5
         LootTableId: LOOT_STORE_SHELF
+        SpriteKey: 
       - Id: C_MART_SHELF_3
         Kind: 4
         Floor: 0
         X: 14.4
         SearchSeconds: 2.5
         LootTableId: LOOT_STORE_SHELF
+        SpriteKey: 
       - Id: C_MART_SHELF_4
         Kind: 4
         Floor: 0
         X: 17.6
         SearchSeconds: 2.5
         LootTableId: LOOT_MART_SHELF
+        SpriteKey: 
       - Id: C_MART_SHELF_5
         Kind: 4
         Floor: 0
         X: 20.8
         SearchSeconds: 2.5
         LootTableId: LOOT_STORE_SHELF
+        SpriteKey: 
       - Id: C_MART_SHELF_6
         Kind: 4
         Floor: 0
         X: 24
         SearchSeconds: 2.5
         LootTableId: LOOT_STORE_SHELF
+        SpriteKey: 
       - Id: C_MART_SHELF_7
         Kind: 4
         Floor: 0
         X: 27.2
         SearchSeconds: 2.5
         LootTableId: LOOT_MART_SHELF
+        SpriteKey: 
       - Id: C_MART_SHELF_8
         Kind: 4
         Floor: 0
         X: 30.4
         SearchSeconds: 2.5
         LootTableId: LOOT_STORE_SHELF
+        SpriteKey: 
       - Id: C_MART_SHELF_9
         Kind: 4
         Floor: 0
         X: 33.6
         SearchSeconds: 2.5
         LootTableId: LOOT_STORE_SHELF
+        SpriteKey: 
       - Id: C_MART_SHELF_10
         Kind: 4
         Floor: 0
         X: 36.8
         SearchSeconds: 2.5
         LootTableId: LOOT_MART_SHELF
+        SpriteKey: 
       - Id: C_MART_FOODCOURT_A
         Kind: 3
         Floor: 0
         X: 52
         SearchSeconds: 4
         LootTableId: LOOT_STORE_FRIDGE
+        SpriteKey: 
       - Id: C_MART_FOODCOURT_B
         Kind: 4
         Floor: 0
         X: 60
         SearchSeconds: 2.5
         LootTableId: LOOT_MART_SHELF
+        SpriteKey: 
       - Id: C_MART_CHECKOUT
         Kind: 1
         Floor: 0
         X: 74
         SearchSeconds: 2
         LootTableId: LOOT_STORE_COUNTER
+        SpriteKey: 
       Exits:
       - Kind: 0
         Floor: 0

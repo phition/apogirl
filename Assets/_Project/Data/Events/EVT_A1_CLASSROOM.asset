@@ -28,7 +28,8 @@ MonoBehaviour:
       ActionIds:
       - ACT_EXP_DAY_SCHOOL
       - ACT_EXP_NIGHT_SCHOOL
-      FlagsAll: []
+      FlagsAll:
+      - SEARCHED_1F_END
       FlagsAny: []
       FlagsNone: []
       CluesAll: []
@@ -68,6 +69,8 @@ MonoBehaviour:
       Proficiencies: []
       TeacherMobility: 0
       RestorePower: 0
+      PurifyWater: 0
+      PurifyRate: 1
       RaidStrength: 0
       TeacherReinfect: 0
       TeacherInfection: 0
@@ -115,7 +118,8 @@ MonoBehaviour:
           Amount: 1
         SleepDebt: 0
         Conscience: 0
-        SetFlags: []
+        SetFlags:
+        - CLASSROOM_MOVED_IN
         ClearFlags: []
         AddClues: []
         EndingTags: []
@@ -128,6 +132,8 @@ MonoBehaviour:
         Proficiencies: []
         TeacherMobility: 0
         RestorePower: 0
+        PurifyWater: 0
+        PurifyRate: 1
         RaidStrength: 0
         TeacherReinfect: 0
         TeacherInfection: 0
@@ -154,6 +160,8 @@ MonoBehaviour:
         Proficiencies: []
         TeacherMobility: 0
         RestorePower: 0
+        PurifyWater: 0
+        PurifyRate: 1
         RaidStrength: 0
         TeacherReinfect: 0
         TeacherInfection: 0
@@ -196,7 +204,9 @@ MonoBehaviour:
         Hidden: []
         SleepDebt: 0
         Conscience: 0
-        SetFlags: []
+        SetFlags:
+        - STAYED_STORAGE
+        - UI_DEFENSE
         ClearFlags: []
         AddClues: []
         EndingTags: []
@@ -209,6 +219,8 @@ MonoBehaviour:
         Proficiencies: []
         TeacherMobility: 0
         RestorePower: 0
+        PurifyWater: 0
+        PurifyRate: 1
         RaidStrength: 0
         TeacherReinfect: 0
         TeacherInfection: 0
@@ -235,6 +247,8 @@ MonoBehaviour:
         Proficiencies: []
         TeacherMobility: 0
         RestorePower: 0
+        PurifyWater: 0
+        PurifyRate: 1
         RaidStrength: 0
         TeacherReinfect: 0
         TeacherInfection: 0

@@ -1,0 +1,155 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dae23a582c039304a81c2bdd418cbc38, type: 3}
+  m_Name: ACT_EDU_MUSIC
+  m_EditorClassIdentifier: ApoGirl.Data::ApoGirl.Data.ActionDefinitionAsset
+  _id: ACT_EDU_MUSIC
+  _definition:
+    Id: ACT_EDU_MUSIC
+    Category: 0
+    SlotTag: 0
+    ResourceCosts: []
+    FatigueCost: 3
+    StressCost: 0
+    HasCheck: 1
+    Check:
+      BaseRate: 0.6
+      StatWeights:
+      - Stat: 6
+        Weight: 0.004
+      UsesProficiency: 1
+      Proficiency: 8
+      ProficiencyWeight: 0.05
+    StatGains:
+    - Stat: 6
+      Amount: 2
+    - Stat: 5
+      Amount: 1
+    HasProficiency: 1
+    Proficiency: 8
+    ProficiencyXp: 1
+    Teaching: 2
+    OnSuccess:
+      Stats: []
+      Vitals:
+      - Vital: 2
+        Amount: -6
+      Resources: []
+      Hidden: []
+      SleepDebt: 0
+      Conscience: 0
+      SetFlags: []
+      ClearFlags: []
+      AddClues: []
+      EndingTags: []
+      Npcs: []
+      Items: []
+      Defense: 0
+      Threat: 0
+      Facilities: []
+      AddTraits: []
+      Proficiencies: []
+      TeacherMobility: 0
+      RestorePower: 0
+      PurifyWater: 0
+      PurifyRate: 1
+      RaidStrength: 0
+      TeacherReinfect: 0
+      TeacherInfection: 0
+      TraumaCare: 0
+      Traps: 0
+      IntrusionResponse: 
+    OnGreatSuccess:
+      Stats: []
+      Vitals:
+      - Vital: 2
+        Amount: -10
+      Resources: []
+      Hidden: []
+      SleepDebt: 0
+      Conscience: 0
+      SetFlags: []
+      ClearFlags: []
+      AddClues: []
+      EndingTags: []
+      Npcs: []
+      Items: []
+      Defense: 0
+      Threat: 0
+      Facilities: []
+      AddTraits: []
+      Proficiencies: []
+      TeacherMobility: 0
+      RestorePower: 0
+      PurifyWater: 0
+      PurifyRate: 1
+      RaidStrength: 0
+      TeacherReinfect: 0
+      TeacherInfection: 0
+      TraumaCare: 1
+      Traps: 0
+      IntrusionResponse: 
+    OnFailure:
+      Stats: []
+      Vitals: []
+      Resources: []
+      Hidden: []
+      SleepDebt: 0
+      Conscience: 0
+      SetFlags: []
+      ClearFlags: []
+      AddClues: []
+      EndingTags: []
+      Npcs: []
+      Items: []
+      Defense: 0
+      Threat: 0
+      Facilities: []
+      AddTraits: []
+      Proficiencies: []
+      TeacherMobility: 0
+      RestorePower: 0
+      PurifyWater: 0
+      PurifyRate: 1
+      RaidStrength: 0
+      TeacherReinfect: 0
+      TeacherInfection: 0
+      TraumaCare: 0
+      Traps: 0
+      IntrusionResponse: 
+    ExpeditionTime: 0
+    LocationId: 
+    Unlock:
+      WeekMin: 0
+      WeekMax: 0
+      Days: 
+      Phase: 0
+      Seasons: 
+      Month: 0
+      DayOfMonth: 0
+      ActionCategories: 
+      ActionIds: []
+      FlagsAll: []
+      FlagsAny:
+      - CLASSROOM_MOVED_IN
+      - ACT1_DONE
+      FlagsNone: []
+      CluesAll: []
+      Checks: []
+      AnyChecks: []
+      NpcStatuses: []
+      IsBirthday: 0
+    RaidGuard: 0
+    BonusFacilityId: 
+    BonusPerLevel: 0
+    ThreatGain: 0
+    Confined: 0

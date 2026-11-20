@@ -35,24 +35,28 @@ MonoBehaviour:
         X: 40
         Number: 1
         LootTableId: 
+        SearchFlag: 
       - RoomId: ROOM_PH_CLINIC_1
         TemplateId: ROOM_PH_CLINIC
         Floor: 1
         X: 30
         Number: 1
         LootTableId: 
+        SearchFlag: 
       - RoomId: ROOM_PH_CLINIC_2
         TemplateId: ROOM_PH_CLINIC
         Floor: 1
         X: 44
         Number: 2
         LootTableId: 
+        SearchFlag: 
       - RoomId: ROOM_PH_STOCKROOM_1
         TemplateId: ROOM_PH_STOCKROOM
         Floor: 1
         X: 10
         Number: 1
         LootTableId: 
+        SearchFlag: 
       RoomTemplates:
       - Id: ROOM_PH_DISPENSARY
         Width: 12
@@ -66,19 +70,23 @@ MonoBehaviour:
           X: 4
           SearchSeconds: 3.5
           LootTableId: 
+          SpriteKey: 
         - Id: DISP_DESK
           Kind: 1
           Floor: 0
           X: 7
           SearchSeconds: 2
           LootTableId: 
+          SpriteKey: 
         - Id: DISP_FRIDGE
           Kind: 3
           Floor: 0
           X: 10
           SearchSeconds: 4
           LootTableId: LOOT_PHARMACY_STOCK
+          SpriteKey: 
         DefaultLootTableId: LOOT_PHARMACY_SHELF
+        WallDecor: 
       - Id: ROOM_PH_CLINIC
         Width: 12
         DoorXs:
@@ -93,19 +101,23 @@ MonoBehaviour:
           X: 4
           SearchSeconds: 2
           LootTableId: 
+          SpriteKey: 
         - Id: CLINIC_CABINET
           Kind: 2
           Floor: 0
           X: 7.5
           SearchSeconds: 3.5
           LootTableId: 
+          SpriteKey: 
         - Id: CLINIC_LOCKER
           Kind: 0
           Floor: 0
           X: 10.4
           SearchSeconds: 3
           LootTableId: 
+          SpriteKey: 
         DefaultLootTableId: LOOT_PHARMACY_CLINIC
+        WallDecor: 
       - Id: ROOM_PH_STOCKROOM
         Width: 10
         DoorXs:
@@ -118,19 +130,23 @@ MonoBehaviour:
           X: 3.6
           SearchSeconds: 3.5
           LootTableId: 
+          SpriteKey: 
         - Id: STOCK_B
           Kind: 2
           Floor: 0
           X: 6
           SearchSeconds: 3.5
           LootTableId: 
+          SpriteKey: 
         - Id: STOCK_C
           Kind: 4
           Floor: 0
           X: 8.4
           SearchSeconds: 2.5
           LootTableId: 
+          SpriteKey: 
         DefaultLootTableId: LOOT_PHARMACY_STOCK
+        WallDecor: 
       Containers:
       - Id: C_PH_SHELF_1
         Kind: 2
@@ -138,42 +154,49 @@ MonoBehaviour:
         X: 14
         SearchSeconds: 3.5
         LootTableId: LOOT_PHARMACY_SHELF
+        SpriteKey: 
       - Id: C_PH_SHELF_2
         Kind: 2
         Floor: 0
         X: 17
         SearchSeconds: 3.5
         LootTableId: LOOT_PHARMACY_SHELF
+        SpriteKey: 
       - Id: C_PH_SHELF_3
         Kind: 2
         Floor: 0
         X: 20
         SearchSeconds: 3.5
         LootTableId: LOOT_PHARMACY_SHELF
+        SpriteKey: 
       - Id: C_PH_SHELF_4
         Kind: 2
         Floor: 0
         X: 23
         SearchSeconds: 3.5
         LootTableId: LOOT_PHARMACY_SHELF
+        SpriteKey: 
       - Id: C_PH_SHELF_5
         Kind: 2
         Floor: 0
         X: 26
         SearchSeconds: 3.5
         LootTableId: LOOT_PHARMACY_SHELF
+        SpriteKey: 
       - Id: C_PH_COUNTER
         Kind: 1
         Floor: 0
         X: 34
         SearchSeconds: 2
         LootTableId: LOOT_PHARMACY_SHELF
+        SpriteKey: 
       - Id: C_PH_WAITING_DESK
         Kind: 1
         Floor: 1
         X: 25
         SearchSeconds: 2
         LootTableId: LOOT_PHARMACY_CLINIC
+        SpriteKey: 
       Exits:
       - Kind: 0
         Floor: 0

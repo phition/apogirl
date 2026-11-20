@@ -35,24 +35,28 @@ MonoBehaviour:
         X: 16
         Number: 1
         LootTableId: 
+        SearchFlag: 
       - RoomId: ROOM_POLICE_CELL_1
         TemplateId: ROOM_POLICE_CELL
         Floor: 0
         X: 36
         Number: 1
         LootTableId: 
+        SearchFlag: 
       - RoomId: ROOM_POLICE_ARMORY_1
         TemplateId: ROOM_POLICE_ARMORY
         Floor: 1
         X: 14
         Number: 1
         LootTableId: 
+        SearchFlag: 
       - RoomId: ROOM_POLICE_OFFICE_2
         TemplateId: ROOM_POLICE_OFFICE
         Floor: 1
         X: 30
         Number: 2
         LootTableId: 
+        SearchFlag: 
       RoomTemplates:
       - Id: ROOM_POLICE_OFFICE
         Width: 16
@@ -70,25 +74,30 @@ MonoBehaviour:
           X: 4
           SearchSeconds: 2
           LootTableId: 
+          SpriteKey: 
         - Id: DESK_B
           Kind: 1
           Floor: 0
           X: 7
           SearchSeconds: 2
           LootTableId: 
+          SpriteKey: 
         - Id: FILES
           Kind: 2
           Floor: 0
           X: 11
           SearchSeconds: 3.5
           LootTableId: 
+          SpriteKey: 
         - Id: LOCKER
           Kind: 0
           Floor: 0
           X: 14
           SearchSeconds: 3
           LootTableId: 
+          SpriteKey: 
         DefaultLootTableId: LOOT_POLICE_OFFICE
+        WallDecor: 
       - Id: ROOM_POLICE_ARMORY
         Width: 10
         DoorXs:
@@ -101,19 +110,23 @@ MonoBehaviour:
           X: 3.6
           SearchSeconds: 3
           LootTableId: 
+          SpriteKey: 
         - Id: RACK_B
           Kind: 0
           Floor: 0
           X: 6
           SearchSeconds: 3
           LootTableId: 
+          SpriteKey: 
         - Id: CRATE
           Kind: 4
           Floor: 0
           X: 8.4
           SearchSeconds: 2.5
           LootTableId: 
+          SpriteKey: 
         DefaultLootTableId: LOOT_POLICE_ARMORY
+        WallDecor: 
       - Id: ROOM_POLICE_CELL
         Width: 10
         DoorXs:
@@ -126,7 +139,9 @@ MonoBehaviour:
           X: 5
           SearchSeconds: 2.5
           LootTableId: 
+          SpriteKey: 
         DefaultLootTableId: LOOT_HOUSE_ROOM
+        WallDecor: 
       Containers:
       - Id: C_POLICE_FRONT_DESK
         Kind: 1
@@ -134,6 +149,7 @@ MonoBehaviour:
         X: 10
         SearchSeconds: 2
         LootTableId: LOOT_POLICE_OFFICE
+        SpriteKey: 
       Exits:
       - Kind: 0
         Floor: 0

@@ -17,6 +17,9 @@ MonoBehaviour:
     Id: LOC_STORE
     Day:
       Resources:
+      - Resource: 8
+        Min: 1
+        Max: 3
       - Resource: 0
         Min: 18
         Max: 28
@@ -37,6 +40,9 @@ MonoBehaviour:
       EncounterChance: 0.5
     Night:
       Resources:
+      - Resource: 8
+        Min: 1
+        Max: 3
       - Resource: 0
         Min: 20
         Max: 31

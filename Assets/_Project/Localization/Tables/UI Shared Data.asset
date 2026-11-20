@@ -3091,6 +3091,98 @@ MonoBehaviour:
     m_Key: hub.alone_running
     m_Metadata:
       m_Items: []
+  - m_Id: 421717267988480
+    m_Key: container.prop_bed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 421717347680256
+    m_Key: container.prop_medcabinet
+    m_Metadata:
+      m_Items: []
+  - m_Id: 421717347680257
+    m_Key: container.prop_labbench
+    m_Metadata:
+      m_Items: []
+  - m_Id: 421717347680258
+    m_Key: container.prop_chemshelf
+    m_Metadata:
+      m_Items: []
+  - m_Id: 421717347680259
+    m_Key: container.prop_piano
+    m_Metadata:
+      m_Items: []
+  - m_Id: 421717347680260
+    m_Key: container.prop_instrument
+    m_Metadata:
+      m_Items: []
+  - m_Id: 421717347680261
+    m_Key: container.prop_kitchen
+    m_Metadata:
+      m_Items: []
+  - m_Id: 421717347680262
+    m_Key: container.prop_stove
+    m_Metadata:
+      m_Items: []
+  - m_Id: 421717347680263
+    m_Key: container.prop_computer
+    m_Metadata:
+      m_Items: []
+  - m_Id: 421717347680264
+    m_Key: container.prop_rack
+    m_Metadata:
+      m_Items: []
+  - m_Id: 421717347680265
+    m_Key: container.prop_console
+    m_Metadata:
+      m_Items: []
+  - m_Id: 421931714363392
+    m_Key: res.RawWater
+    m_Metadata:
+      m_Items: []
+  - m_Id: 421931777277952
+    m_Key: prof.Science
+    m_Metadata:
+      m_Items: []
+  - m_Id: 421931777277953
+    m_Key: prof.Music
+    m_Metadata:
+      m_Items: []
+  - m_Id: 421931777277954
+    m_Key: status.injured
+    m_Metadata:
+      m_Items: []
+  - m_Id: 421931777277955
+    m_Key: result.injured
+    m_Metadata:
+      m_Items: []
+  - m_Id: 421931777277956
+    m_Key: result.injured_dirty
+    m_Metadata:
+      m_Items: []
+  - m_Id: 421931777277957
+    m_Key: roomname.ROOM_NURSE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 421931777277958
+    m_Key: roomname.ROOM_SCIENCE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 421931777277959
+    m_Key: roomname.ROOM_MUSIC
+    m_Metadata:
+      m_Items: []
+  - m_Id: 421931777277960
+    m_Key: roomname.ROOM_HOMEEC
+    m_Metadata:
+      m_Items: []
+  - m_Id: 421931777277961
+    m_Key: roomname.ROOM_COMPUTER
+    m_Metadata:
+      m_Items: []
+  - m_Id: 421931777277962
+    m_Key: roomname.ROOM_BROADCAST
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

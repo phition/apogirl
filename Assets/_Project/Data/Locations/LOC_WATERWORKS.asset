@@ -59,24 +59,28 @@ MonoBehaviour:
         X: 40
         Number: 1
         LootTableId: 
+        SearchFlag: 
       - RoomId: ROOM_WATER_CONTROL_1
         TemplateId: ROOM_WATER_CONTROL
         Floor: 1
         X: 20
         Number: 1
         LootTableId: 
+        SearchFlag: 
       - RoomId: ROOM_WATER_LAB_1
         TemplateId: ROOM_WATER_LAB
         Floor: 2
         X: 20
         Number: 1
         LootTableId: 
+        SearchFlag: 
       - RoomId: ROOM_WATER_LAB_2
         TemplateId: ROOM_WATER_LAB
         Floor: 2
         X: 56
         Number: 2
         LootTableId: 
+        SearchFlag: 
       RoomTemplates:
       - Id: ROOM_WATER_ARCHIVE
         Width: 16
@@ -90,25 +94,30 @@ MonoBehaviour:
           X: 4
           SearchSeconds: 3.5
           LootTableId: 
+          SpriteKey: 
         - Id: ARCHIVE_B
           Kind: 2
           Floor: 0
           X: 7
           SearchSeconds: 3.5
           LootTableId: 
+          SpriteKey: 
         - Id: ARCHIVE_DESK
           Kind: 1
           Floor: 0
           X: 10.5
           SearchSeconds: 2
           LootTableId: 
+          SpriteKey: 
         - Id: SAMPLE_FRIDGE
           Kind: 3
           Floor: 0
           X: 13.6
           SearchSeconds: 4
           LootTableId: LOOT_PHARMACY_STOCK
+          SpriteKey: 
         DefaultLootTableId: LOOT_WATER_LAB
+        WallDecor: 
       - Id: ROOM_WATER_LAB
         Width: 16
         DoorXs:
@@ -126,25 +135,30 @@ MonoBehaviour:
           X: 4
           SearchSeconds: 2
           LootTableId: 
+          SpriteKey: 
         - Id: BENCH_B
           Kind: 1
           Floor: 0
           X: 7
           SearchSeconds: 2
           LootTableId: 
+          SpriteKey: 
         - Id: REAGENT
           Kind: 2
           Floor: 0
           X: 10.4
           SearchSeconds: 3.5
           LootTableId: 
+          SpriteKey: 
         - Id: LOCKER
           Kind: 0
           Floor: 0
           X: 13.2
           SearchSeconds: 3
           LootTableId: 
+          SpriteKey: 
         DefaultLootTableId: LOOT_WATER_LAB
+        WallDecor: 
       - Id: ROOM_WATER_CONTROL
         Width: 14
         DoorXs:
@@ -159,19 +173,23 @@ MonoBehaviour:
           X: 5
           SearchSeconds: 2
           LootTableId: 
+          SpriteKey: 
         - Id: PARTS
           Kind: 4
           Floor: 0
           X: 8.4
           SearchSeconds: 2.5
           LootTableId: 
+          SpriteKey: 
         - Id: SUPPLY
           Kind: 2
           Floor: 0
           X: 11.4
           SearchSeconds: 3.5
           LootTableId: 
+          SpriteKey: 
         DefaultLootTableId: LOOT_SUBWAY_OFFICE
+        WallDecor: 
       Containers:
       - Id: C_WATER_TANK_1
         Kind: 4
@@ -179,24 +197,28 @@ MonoBehaviour:
         X: 46
         SearchSeconds: 2.5
         LootTableId: LOOT_SUBWAY_OFFICE
+        SpriteKey: 
       - Id: C_WATER_TANK_2
         Kind: 4
         Floor: 1
         X: 55
         SearchSeconds: 2.5
         LootTableId: LOOT_SUBWAY_OFFICE
+        SpriteKey: 
       - Id: C_WATER_TANK_3
         Kind: 4
         Floor: 1
         X: 64
         SearchSeconds: 2.5
         LootTableId: LOOT_SUBWAY_OFFICE
+        SpriteKey: 
       - Id: C_WATER_TANK_4
         Kind: 4
         Floor: 1
         X: 73
         SearchSeconds: 2.5
         LootTableId: LOOT_SUBWAY_OFFICE
+        SpriteKey: 
       Exits:
       - Kind: 0
         Floor: 1

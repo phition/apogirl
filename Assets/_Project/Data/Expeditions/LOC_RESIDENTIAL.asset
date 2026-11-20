@@ -17,6 +17,9 @@ MonoBehaviour:
     Id: LOC_RESIDENTIAL
     Day:
       Resources:
+      - Resource: 8
+        Min: 2
+        Max: 5
       - Resource: 0
         Min: 14
         Max: 23
@@ -40,6 +43,9 @@ MonoBehaviour:
       EncounterChance: 0.5
     Night:
       Resources:
+      - Resource: 8
+        Min: 1
+        Max: 3
       - Resource: 0
         Min: 6
         Max: 14

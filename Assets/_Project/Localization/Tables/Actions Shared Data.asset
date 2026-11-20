@@ -399,6 +399,138 @@ MonoBehaviour:
     m_Key: ACT_STORAGE_WAIT.short
     m_Metadata:
       m_Items: []
+  - m_Id: 416695390060544
+    m_Key: res.RawWater
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416695448780800
+    m_Key: prof.Science
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416695448780801
+    m_Key: prof.Music
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416695448780802
+    m_Key: ACT_TREAT_WOUND.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416695448780803
+    m_Key: ACT_TREAT_WOUND.short
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416695448780804
+    m_Key: ACT_EDU_SCIENCE.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416695448780805
+    m_Key: ACT_EDU_SCIENCE.short
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416695448780806
+    m_Key: ACT_EDU_MUSIC.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416695448780807
+    m_Key: ACT_EDU_MUSIC.short
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416695448780808
+    m_Key: status.injured
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416695448780809
+    m_Key: result.injured
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416695448780810
+    m_Key: result.injured_dirty
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416695448780811
+    m_Key: roomname.ROOM_NURSE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416695448780812
+    m_Key: roomname.ROOM_SCIENCE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416695448780813
+    m_Key: roomname.ROOM_MUSIC
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416695448780814
+    m_Key: roomname.ROOM_HOMEEC
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416695448780815
+    m_Key: roomname.ROOM_COMPUTER
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416695448780816
+    m_Key: roomname.ROOM_BROADCAST
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416695448780817
+    m_Key: ITEM_ANTISEPTIC.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416695448780818
+    m_Key: ITEM_GAUZE.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416695448780819
+    m_Key: ITEM_ETHANOL.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416695448780820
+    m_Key: ITEM_CHEMICALS.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416695452975104
+    m_Key: ITEM_ALCOHOL_LAMP.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416695452975105
+    m_Key: ITEM_INSTRUMENT_WIRE.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416695452975106
+    m_Key: ITEM_STAND_PARTS.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416695452975107
+    m_Key: ITEM_RICE.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416695452975108
+    m_Key: ITEM_GAS_CANISTER.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416695452975109
+    m_Key: ITEM_SEWING_KIT.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416695452975110
+    m_Key: ITEM_ELECTRONICS.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416695452975111
+    m_Key: ITEM_CABLE.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416695452975112
+    m_Key: ITEM_FUEL_CAN.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416695452975113
+    m_Key: ITEM_RADIO_PARTS.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 416695452975114
+    m_Key: ITEM_TAP_WATER.name
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

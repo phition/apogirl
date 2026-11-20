@@ -17,6 +17,9 @@ MonoBehaviour:
     Id: LOC_WATERWORKS
     Day:
       Resources:
+      - Resource: 8
+        Min: 6
+        Max: 12
       - Resource: 1
         Min: 18
         Max: 31
@@ -34,6 +37,9 @@ MonoBehaviour:
       EncounterChance: 0.5
     Night:
       Resources:
+      - Resource: 8
+        Min: 4
+        Max: 9
       - Resource: 2
         Min: 2
         Max: 4

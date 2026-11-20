@@ -60,6 +60,8 @@ MonoBehaviour:
       Proficiencies: []
       TeacherMobility: 0
       RestorePower: 0
+      PurifyWater: 0
+      PurifyRate: 1
       RaidStrength: 0
       TeacherReinfect: 0
       TeacherInfection: 0
@@ -123,6 +125,8 @@ MonoBehaviour:
         Proficiencies: []
         TeacherMobility: 0
         RestorePower: 0
+        PurifyWater: 0
+        PurifyRate: 1
         RaidStrength: 0
         TeacherReinfect: 0
         TeacherInfection: 0
@@ -149,6 +153,8 @@ MonoBehaviour:
         Proficiencies: []
         TeacherMobility: 0
         RestorePower: 0
+        PurifyWater: 0
+        PurifyRate: 1
         RaidStrength: 0
         TeacherReinfect: 0
         TeacherInfection: 0
@@ -206,6 +212,8 @@ MonoBehaviour:
         Proficiencies: []
         TeacherMobility: 0
         RestorePower: 0
+        PurifyWater: 0
+        PurifyRate: 1
         RaidStrength: 0
         TeacherReinfect: 0
         TeacherInfection: 0
@@ -232,6 +240,8 @@ MonoBehaviour:
         Proficiencies: []
         TeacherMobility: 0
         RestorePower: 0
+        PurifyWater: 0
+        PurifyRate: 1
         RaidStrength: 0
         TeacherReinfect: 0
         TeacherInfection: 0

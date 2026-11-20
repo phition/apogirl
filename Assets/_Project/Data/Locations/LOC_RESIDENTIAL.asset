@@ -35,30 +35,35 @@ MonoBehaviour:
         X: 12
         Number: 101
         LootTableId: 
+        SearchFlag: 
       - RoomId: ROOM_HOUSE_102
         TemplateId: ROOM_HOUSE
         Floor: 0
         X: 46
         Number: 102
         LootTableId: 
+        SearchFlag: 
       - RoomId: ROOM_HOUSE_201
         TemplateId: ROOM_HOUSE
         Floor: 1
         X: 12
         Number: 201
         LootTableId: 
+        SearchFlag: 
       - RoomId: ROOM_HOUSE_202
         TemplateId: ROOM_HOUSE
         Floor: 1
         X: 30
         Number: 202
         LootTableId: 
+        SearchFlag: 
       - RoomId: ROOM_HOUSE_203
         TemplateId: ROOM_HOUSE
         Floor: 1
         X: 52
         Number: 203
         LootTableId: 
+        SearchFlag: 
       RoomTemplates:
       - Id: ROOM_HOUSE
         Width: 14
@@ -74,25 +79,30 @@ MonoBehaviour:
           X: 4
           SearchSeconds: 3.5
           LootTableId: LOOT_HOUSE_KITCHEN
+          SpriteKey: 
         - Id: FRIDGE
           Kind: 3
           Floor: 0
           X: 6.4
           SearchSeconds: 4
           LootTableId: LOOT_HOUSE_KITCHEN
+          SpriteKey: 
         - Id: DRAWER
           Kind: 1
           Floor: 0
           X: 9.2
           SearchSeconds: 2
           LootTableId: 
+          SpriteKey: 
         - Id: CLOSET
           Kind: 0
           Floor: 0
           X: 12
           SearchSeconds: 3
           LootTableId: 
+          SpriteKey: 
         DefaultLootTableId: LOOT_HOUSE_ROOM
+        WallDecor: 
       Containers:
       - Id: C_RES_MAILBOX
         Kind: 4
@@ -100,12 +110,14 @@ MonoBehaviour:
         X: 28
         SearchSeconds: 2.5
         LootTableId: LOOT_HOUSE_ROOM
+        SpriteKey: 
       - Id: C_RES_RECYCLE
         Kind: 4
         Floor: 0
         X: 64
         SearchSeconds: 2.5
         LootTableId: LOOT_HOUSE_KITCHEN
+        SpriteKey: 
       Exits:
       - Kind: 0
         Floor: 0

@@ -123,6 +123,66 @@ MonoBehaviour:
     m_Key: ITEM_WEAPON_BATON.name
     m_Metadata:
       m_Items: []
+  - m_Id: 409775543435264
+    m_Key: ITEM_ANTISEPTIC.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 409775610544128
+    m_Key: ITEM_GAUZE.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 409775610544129
+    m_Key: ITEM_ETHANOL.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 409775610544130
+    m_Key: ITEM_CHEMICALS.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 409775610544131
+    m_Key: ITEM_ALCOHOL_LAMP.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 409775610544132
+    m_Key: ITEM_INSTRUMENT_WIRE.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 409775610544133
+    m_Key: ITEM_STAND_PARTS.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 409775610544134
+    m_Key: ITEM_RICE.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 409775610544135
+    m_Key: ITEM_GAS_CANISTER.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 409775610544136
+    m_Key: ITEM_SEWING_KIT.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 409775610544137
+    m_Key: ITEM_ELECTRONICS.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 409775610544138
+    m_Key: ITEM_CABLE.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 409775610544139
+    m_Key: ITEM_FUEL_CAN.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 409775610544140
+    m_Key: ITEM_RADIO_PARTS.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 409775610544141
+    m_Key: ITEM_TAP_WATER.name
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
