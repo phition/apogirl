@@ -67,6 +67,8 @@ namespace ApoGirl.Core.Simulation.Bots
 
         public int Raids;
         public int RaidsRepelled;
+        public int Intrusions;
+        public int IntrusionsLost;
         public int Companions;
         public int Events;
 
@@ -245,6 +247,8 @@ namespace ApoGirl.Core.Simulation.Bots
             result.EndingCategory = ending.Ending?.Category;
             result.Raids = state.Exploration.Raids;
             result.RaidsRepelled = state.Exploration.RaidsRepelled;
+            result.Intrusions = state.Exploration.Intrusions;
+            result.IntrusionsLost = state.Exploration.IntrusionsLost;
             result.Companions = state.Npcs.Count(n => n.Value.Status == NpcStatus.Joined);
             result.Events = state.Events.Records.Count;
 

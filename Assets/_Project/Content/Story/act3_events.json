@@ -1700,6 +1700,37 @@
           }
         }
       ]
+    },
+    {
+      "Id": "EVT_DAY_INTRUSION",
+      "Kind": "Story",
+      "Priority": 0,
+      "Once": false,
+      "Condition": {
+        "FlagsAll": [
+          "SYSTEM_ONLY"
+        ]
+      },
+      "Choices": [
+        {
+          "Id": "FIGHT",
+          "Effect": {
+            "IntrusionResponse": "Fight"
+          }
+        },
+        {
+          "Id": "HIDE",
+          "Effect": {
+            "IntrusionResponse": "Hide"
+          }
+        },
+        {
+          "Id": "YIELD",
+          "Effect": {
+            "IntrusionResponse": "Yield"
+          }
+        }
+      ]
     }
   ],
   "Npcs": [

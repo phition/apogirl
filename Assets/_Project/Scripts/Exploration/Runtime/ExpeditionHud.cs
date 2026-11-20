@@ -110,7 +110,7 @@ namespace ApoGirl.Exploration.Runtime
         }
 
         /// <summary>이미 조합한 문장을 잠시 보여준다.</summary>
-        public void ShowText(string text)
+        public void ShowText(string text, int milliseconds = 1600)
         {
             if (_holdMessage)
             {
@@ -126,7 +126,7 @@ namespace ApoGirl.Exploration.Runtime
                 {
                     _message.AddToClassList("hidden");
                 }
-            }).ExecuteLater(1600);
+            }).ExecuteLater(milliseconds);
         }
 
         /// <summary>문장을 런이 끝날 때까지 띄워 둔다 (생존자 대치 암전 중). 다른 메시지가 덮지 않는다.</summary>

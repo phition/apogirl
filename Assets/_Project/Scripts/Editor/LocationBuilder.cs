@@ -230,6 +230,9 @@ namespace ApoGirl.EditorTools
                     Walk("ENEMY_WANDERER", 3, "", 78f, 1, 0f),
                 },
                 Encounters = { Dohyeon(), Notice() },
+
+                // 교실동에는 적대적 생존자가 나오지 않는다
+                HostileChanceMultiplier = 0f,
             };
             var night = new LocationVariantDef
             {
@@ -257,8 +260,9 @@ namespace ApoGirl.EditorTools
                 Layout = layout, DayRunSeconds = 360f, NightRunSeconds = 360f, DefaultLootTableId = "LOOT_SCHOOL_GENERAL",
                 DayVariant = day, NightVariant = night,
 
-                // 교실동은 무한 파밍 불가: 한 번 뒤진 상자는 다음 출정에도 비어 있다
+                // 교실동은 무한 파밍 불가: 한 번 뒤진 상자는 다음 출정에도 비어 있고, 매달 복구도 없다
                 DepletingContainers = true,
+                Restocks = false,
             };
         }
 

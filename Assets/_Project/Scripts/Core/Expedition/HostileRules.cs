@@ -14,14 +14,25 @@ namespace ApoGirl.Core.Expedition
         /// <summary>등장 판정 난수 (출정 시드에서 따로 뽑아 다른 굴림을 흔들지 않는다).</summary>
         private const int RollSalt = 0x40571E;
 
-        /// <summary>이번 출정의 생존자 성향 (0 = 없음, 1~3). 밤 탐험·시작 주 이전·배율 0이면 0.</summary>
-        public static int Roll(ExpeditionRequest request, LocationDef location, BalanceConfig balance)
+        /// <summary>요청에 생존자 성향·수를 정해 싣는다 (낮 탐험만).</summary>
+        public static void Assign(ExpeditionRequest request, LocationDef location, BalanceConfig balance)
         {
+            request.HostileTemperament = Roll(request, location, balance, out var count);
+            request.HostileCount = count;
+        }
+
+        /// <summary>이번 출정의 생존자 성향 (0 = 없음, 1~3). 밤 탐험·시작 주 이전·배율 0이면 0.</summary>
+        public static int Roll(ExpeditionRequest request, LocationDef location, BalanceConfig balance) => Roll(request, location, balance, out _);
+
+        public static int Roll(ExpeditionRequest request, LocationDef location, BalanceConfig balance, out int count)
+        {
+            count = 0;
             if (balance == null || request == null || request.TimeOfDay != ExpeditionTime.Day || request.Week < balance.HostileStartWeek)
             {
                 return 0;
             }
 
+            var act = ActIndex(request.Week);
             var chance = Chance(request.Week, balance) * (location?.DayVariant?.HostileChanceMultiplier ?? 1f);
             if (chance <= 0f)
             {
@@ -34,9 +45,18 @@ namespace ApoGirl.Core.Expedition
                 return 0;
             }
 
-            var weights = new[] { balance.HostileWeightThreaten, balance.HostileWeightRob, balance.HostileWeightBeat };
-            var total = 0;
-            foreach (var w in weights) total += Math.Max(0, w);
+            var weights = new int[3];
+            for (var i = 0; i < 3; i++)
+            {
+                var index = act * 3 + i;
+                weights[i] = balance.HostileWeightsByAct != null && index < balance.HostileWeightsByAct.Length ? Math.Max(0, balance.HostileWeightsByAct[index]) : 1;
+            }
+
+            var min = At(balance.HostileCountMinByAct, act, 1);
+            var max = Math.Max(min, At(balance.HostileCountMaxByAct, act, min));
+            count = Math.Max(1, random.Range(min, max));
+
+            var total = weights[0] + weights[1] + weights[2];
             if (total <= 0)
             {
                 return 1;
@@ -45,7 +65,7 @@ namespace ApoGirl.Core.Expedition
             var pick = random.Range(0, total - 1);
             for (var i = 0; i < weights.Length; i++)
             {
-                pick -= Math.Max(0, weights[i]);
+                pick -= weights[i];
                 if (pick < 0)
                 {
                     return i + 1;
@@ -55,14 +75,24 @@ namespace ApoGirl.Core.Expedition
             return weights.Length;
         }
 
-        /// <summary>막별 기본 확률 (1~13 / 14~26 / 27~39 / 40~52주).</summary>
+        /// <summary>막 번호 0~3 (1~13 / 14~26 / 27~39 / 40~52주).</summary>
+        public static int ActIndex(int week) => week <= 13 ? 0 : week <= 26 ? 1 : week <= 39 ? 2 : 3;
+
+        /// <summary>막별 기본 확률.</summary>
         public static float Chance(int week, BalanceConfig balance)
         {
-            if (week < balance.HostileStartWeek) return 0f;
-            if (week <= 13) return balance.HostileChanceAct1;
-            if (week <= 26) return balance.HostileChanceAct2;
-            if (week <= 39) return balance.HostileChanceAct3;
-            return balance.HostileChanceAct4;
+            if (week < balance.HostileStartWeek || balance.HostileChanceByAct == null || balance.HostileChanceByAct.Length == 0)
+            {
+                return 0f;
+            }
+
+            var act = Math.Min(ActIndex(week), balance.HostileChanceByAct.Length - 1);
+            return balance.HostileChanceByAct[act];
+        }
+
+        private static int At(int[] values, int index, int fallback)
+        {
+            return values != null && values.Length > 0 ? values[Math.Min(index, values.Length - 1)] : fallback;
         }
 
         public static HostileOutcome OutcomeFor(int temperament)

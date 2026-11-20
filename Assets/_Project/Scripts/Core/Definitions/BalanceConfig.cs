@@ -206,15 +206,14 @@ namespace ApoGirl.Core.Definitions
         public int HostileStartWeek = 5;
 
         /// <summary>낮 탐험 1회 등장 확률: 1막(1~13주) / 2막 / 3막 / 4막. 지역 변형의 HostileChanceMultiplier를 곱한다.</summary>
-        public float HostileChanceAct1 = 0.10f;
-        public float HostileChanceAct2 = 0.15f;
-        public float HostileChanceAct3 = 0.20f;
-        public float HostileChanceAct4 = 0.25f;
+        public float[] HostileChanceByAct = { 0.10f, 0.15f, 0.20f, 0.25f };
 
-        /// <summary>성향 가중치: 1단계 위협 / 2단계 강탈 / 3단계 강탈+구타.</summary>
-        public int HostileWeightThreaten = 50;
-        public int HostileWeightRob = 35;
-        public int HostileWeightBeat = 15;
+        /// <summary>막별 성향 가중치 (위협, 강탈, 강탈+구타) × 4막. 막이 갈수록 거칠어진다.</summary>
+        public int[] HostileWeightsByAct = { 55, 35, 10, 45, 40, 15, 32, 45, 23, 20, 50, 30 };
+
+        /// <summary>막별 생존자 수 (한 무리는 같은 성향).</summary>
+        public int[] HostileCountMinByAct = { 1, 1, 2, 3 };
+        public int[] HostileCountMaxByAct = { 1, 2, 3, 3 };
 
         /// <summary>구타: 체력 손실 (돌아올 때 최소 1은 남긴다), 추가 스트레스, 트라우마 회복 숨김 수치 감소.</summary>
         public int BeatenHpLoss = 40;
@@ -230,8 +229,64 @@ namespace ApoGirl.Core.Definitions
         /// <summary>다시 맞지 않고 이만큼 주가 지나면 1단계 회복 (돌봄 행동이 주 수를 앞당긴다: GameEffect.TraumaCare).</summary>
         public int TraumaRecoveryWeeks = 6;
 
-        /// <summary>헤드리스 탐험: 생존자가 있을 때 붙잡힐 확률.</summary>
+        /// <summary>헤드리스 탐험: 생존자가 있을 때 붙잡힐 확률 (한 명 더 있을 때마다 +PerExtra, 최대 Max).</summary>
         public float HeadlessHostileCaughtChance = 0.5f;
+        public float HeadlessHostileCaughtPerExtra = 0.1f;
+        public float HeadlessHostileCaughtMax = 0.8f;
+
+        // ── 탐험 상자: 기본 빈 상자, 고갈, 매달 복구 ──
+
+        /// <summary>모든 지역에서 처음부터 비어 있는 상자 비율 (판 시드로 정해지고 복구되지 않는다).</summary>
+        public float BaseEmptyContainerRate = 0.3f;
+
+        /// <summary>매달 첫 주: 복구되는 지역(교실동 제외)에서 뒤진 상자 중 다시 채워지는 비율.</summary>
+        public float RestockFraction = 0.5f;
+
+        // ── 낮 침입 (깡패, 3막부터) ──
+
+        public int IntrusionStartWeek = 27;
+        public float IntrusionWeeklyChanceAct3 = 0.12f;
+        public float IntrusionWeeklyChanceAct4 = 0.18f;
+        public string IntrusionEventId = "EVT_DAY_INTRUSION";
+        public string IntrusionActionId = "ACT_INTRUSION";
+
+        /// <summary>깡패 세기 = 기본 (+4막 보너스) + 0~편차.</summary>
+        public int IntrusionStrength = 55;
+        public int IntrusionStrengthAct4Bonus = 15;
+        public int IntrusionStrengthVariance = 20;
+
+        /// <summary>빼앗기는 식량·물·약 비율: 맞서다 짐 / 숨었다 들킴 / 숨어서 넘김(뒤지고 감) / 내줌.</summary>
+        public float IntrusionLossLost = 0.25f;
+        public float IntrusionLossHidden = 0.1f;
+        public float IntrusionLossYield = 0.15f;
+
+        public float IntrusionHideBaseChance = 0.35f;
+        public float IntrusionHideAlarmBonus = 0.3f;
+        public float IntrusionHidePerDefense = 0.004f;
+
+        public int IntrusionWinStress = 8;
+        public int IntrusionLoseHp = 15;
+        public int IntrusionLoseStress = 15;
+        public int IntrusionYieldStress = 10;
+        public int IntrusionHideStress = 6;
+
+        /// <summary>대비가 부족하면 학교에 있던 동료 한 명이 다쳐 이만큼 주 동안 역할을 못 한다.</summary>
+        public int IntrusionInjuryWeeks = 2;
+
+        // ── 거점 방어 작업 ──
+
+        /// <summary>함정: 습격·침입 1회에 하나를 써서 방어력 +TrapPower (최대 MaxTraps개).</summary>
+        public int TrapPower = 25;
+        public int MaxTraps = 3;
+
+        /// <summary>깡통 경보장치 (플래그 ALARM_INSTALLED): 방어력 +AlarmPower.</summary>
+        public int AlarmPower = 10;
+
+        /// <summary>출입구 보강 (플래그 ENTRANCE_REINFORCED): 방어 상한.</summary>
+        public int ReinforcedDefenseMax = 80;
+
+        /// <summary>창문 가림막 (플래그 WINDOW_COVERS): 위협 증가 배율.</summary>
+        public float CoveredThreatMultiplier = 0.7f;
 
         // ── M7-2 후반 압박 (M7-f, 문서 9.0 "자원 압박이 서서히 상승") ──
 

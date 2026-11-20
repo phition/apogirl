@@ -310,7 +310,10 @@ namespace ApoGirl.Core.Definitions
         /// <summary>튜토리얼 런 (화면 안내 표시).</summary>
         public bool Tutorial;
 
-        /// <summary>한 번 뒤진 상자는 다음 출정에도 비어 있다 (교실동: 무한 파밍 방지).</summary>
-        public bool DepletingContainers;
+        /// <summary>한 번 뒤진 상자는 다음 출정에도 비어 있다 (모든 지역 기본).</summary>
+        public bool DepletingContainers = true;
+
+        /// <summary>매달 첫 주에 뒤진 상자의 일부가 다시 채워진다 (교실동은 false: 무한 파밍 방지).</summary>
+        public bool Restocks = true;
     }
 }

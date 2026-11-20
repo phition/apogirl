@@ -148,8 +148,8 @@ namespace ApoGirl.Core.Simulation.Bots
             // 전략별 개요
             sb.AppendLine("## 전략별 개요");
             sb.AppendLine();
-            sb.AppendLine("| 전략 | 판 | 생존 | 평균 사망 주 | 탐험/주 (낮·밤) | 쓰러짐률 낮·밤 | 수면 부채 평균·최대 | 습격 (막음) | 동료 | 완치 시도·성공 | 생존자 쫓김·강탈·구타 (낮 탐험당) |");
-            sb.AppendLine("|---|---|---|---|---|---|---|---|---|---|---|");
+            sb.AppendLine("| 전략 | 판 | 생존 | 평균 사망 주 | 탐험/주 (낮·밤) | 쓰러짐률 낮·밤 | 수면 부채 평균·최대 | 습격 (막음) | 동료 | 완치 시도·성공 | 생존자 쫓김·강탈·구타 (낮 탐험당) | 낮 침입 (크게 당함) |");
+            sb.AppendLine("|---|---|---|---|---|---|---|---|---|---|---|---|");
             foreach (var g in runs.GroupBy(r => r.StrategyId))
             {
                 var list = g.ToList();
@@ -162,7 +162,8 @@ namespace ApoGirl.Core.Simulation.Bots
                               $"| {F(day.Count / (float)weeks)} · {F(night.Count / (float)weeks)} | {Rate(day)} · {Rate(night)} " +
                               $"| {F(debts.Average())} · {debts.Max()} | {F(list.Average(r => r.Raids))} ({F(list.Average(r => r.RaidsRepelled))}) " +
                               $"| {F(list.Average(r => r.Companions))} | {P(list.Count(r => r.CureAttempted), list.Count)} · {P(list.Count(r => r.TeacherCured), list.Count)} " +
-                              $"| {P(day.Count(e => e.Hostile == HostileOutcome.Evicted), day.Count)} · {P(day.Count(e => e.Hostile == HostileOutcome.Robbed), day.Count)} · {P(day.Count(e => e.Hostile == HostileOutcome.Beaten), day.Count)} |");
+                              $"| {P(day.Count(e => e.Hostile == HostileOutcome.Evicted), day.Count)} · {P(day.Count(e => e.Hostile == HostileOutcome.Robbed), day.Count)} · {P(day.Count(e => e.Hostile == HostileOutcome.Beaten), day.Count)} " +
+                              $"| {F(list.Average(r => r.Intrusions))} ({F(list.Average(r => r.IntrusionsLost))}) |");
             }
 
             sb.AppendLine();

@@ -37,7 +37,7 @@ namespace ApoGirl.Core.Rules
             {
                 foreach (var npc in state.Npcs.Values)
                 {
-                    if (npc.Status != NpcStatus.Joined || string.IsNullOrEmpty(npc.Role))
+                    if (npc.Status != NpcStatus.Joined || string.IsNullOrEmpty(npc.Role) || npc.InjuredWeeks > 0)
                     {
                         continue;
                     }
@@ -132,14 +132,12 @@ namespace ApoGirl.Core.Rules
 
         public static RaidResult Resolve(GameState state, int threat, int guard, bool scripted, BalanceConfig balance, IRandomService random, StateDelta delta)
         {
+            var strength = threat + random.Range(0, Math.Max(0, balance.RaidStrengthVariance));
             var result = new RaidResult
             {
                 Scripted = scripted,
-                Strength = threat + random.Range(0, Math.Max(0, balance.RaidStrengthVariance)),
-                Power = balance.RaidBasePower + DerivedStats.CombatPower(state, balance)
-                        + (int)Math.Round(state.Base.Defense * balance.RaidDefenseWeight)
-                        + guard
-                        + random.Range(0, Math.Max(0, balance.RaidPowerVariance)),
+                Strength = strength,
+                Power = DefenseRules.Power(state, balance, guard, random, true),
             };
             result.Repelled = result.Power >= result.Strength;
 

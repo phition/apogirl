@@ -71,7 +71,8 @@
         "StressMin": 18,
         "StressMax": 22,
         "DawnReturnChance": 0.3
-      }
+      },
+      "ContainersPerRun": 9
     }
   ],
   "LootTables": [

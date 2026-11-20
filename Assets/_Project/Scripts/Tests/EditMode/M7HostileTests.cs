@@ -35,8 +35,20 @@ namespace ApoGirl.Tests.EditMode
             Assert.That(Rate(45), Is.InRange(0.21f, 0.29f), "4막 25%");
 
             var picks = Enumerable.Range(1, 20000).Select(s => HostileRules.Roll(DayRequest(45, s), null, balance)).Where(t => t > 0).ToList();
-            Assert.That(picks.Count(t => t == 1) / (float)picks.Count, Is.InRange(0.44f, 0.56f), "1단계 50%");
-            Assert.That(picks.Count(t => t == 3) / (float)picks.Count, Is.InRange(0.11f, 0.19f), "3단계 15%");
+            Assert.That(picks.Count(t => t == 1) / (float)picks.Count, Is.InRange(0.15f, 0.25f), "4막 1단계 20%");
+            Assert.That(picks.Count(t => t == 3) / (float)picks.Count, Is.InRange(0.25f, 0.35f), "4막 3단계 30%");
+            var early = Enumerable.Range(1, 20000).Select(s => HostileRules.Roll(DayRequest(8, s), null, balance)).Where(t => t > 0).ToList();
+            Assert.That(early.Count(t => t == 1) / (float)early.Count, Is.InRange(0.49f, 0.61f), "1막 1단계 55%");
+
+            // 수: 1막 1명, 4막 3명
+            var request = DayRequest(45, 1);
+            for (var s = 1; request.HostileTemperament == 0; s++)
+            {
+                request = DayRequest(45, s);
+                HostileRules.Assign(request, null, balance);
+            }
+
+            Assert.AreEqual(3, request.HostileCount);
         }
 
         [Test]
@@ -178,7 +190,7 @@ namespace ApoGirl.Tests.EditMode
         [Test]
         public void Depleting_HeadlessYieldShrinksAsContainersRunOut_AndWeekRunnerRemembers()
         {
-            var db = TestContent.CreateDatabase();
+            var db = TestContent.CreateDatabase(b => b.BaseEmptyContainerRate = 0f);
             var model = db.GetExpeditionModel(TestContent.Location);
             model.Day.BaseDownChance = 0f;
             model.ContainersPerRun = 4;

@@ -40,6 +40,12 @@ namespace ApoGirl.Core.Simulation
         /// <summary>M6: 탐험에서 물렸다면 결과 (없으면 null).</summary>
         public BiteResult Bite;
 
+        /// <summary>낮 침입으로 이 슬롯의 행동이 취소되었다 (침입 이벤트로 대응).</summary>
+        public bool IntrusionTriggered;
+
+        /// <summary>낮 침입 대응 결과 (없으면 null).</summary>
+        public IntrusionResult Intrusion;
+
         /// <summary>이벤트 대기 중: ResolveEvent(choiceId)를 호출해야 슬롯이 끝난다.</summary>
         public bool AwaitingEvent;
 
@@ -58,6 +64,9 @@ namespace ApoGirl.Core.Simulation
         public readonly StateDelta Delta = new StateDelta();
         public string DiaryKey = "";
         public GameStatus StatusAfter;
+
+        /// <summary>이번 정산에서 물자가 다시 채워진 지역 (매달 첫 주).</summary>
+        public readonly List<string> Restocked = new List<string>();
     }
 
     /// <summary>
@@ -160,10 +169,20 @@ namespace ApoGirl.Core.Simulation
 
             var actionId = string.IsNullOrEmpty(slot.ActionId) ? PlanPreparer.RestIdFor(index, Balance) : slot.ActionId;
             var action = _db.GetAction(actionId);
+
+            // 낮 침입 (3막부터): 그날 낮 행동을 취소하고 침입 이벤트로 대응한다
+            if (calendar.Phase == DayPhase.Day && _db.TryGetAction(Balance.IntrusionActionId, out var intrusionAction)
+                && _db.TryGetEvent(Balance.IntrusionEventId, out _) && IntrusionRules.Roll(_state, Balance, _random))
+            {
+                outcome.IntrusionTriggered = true;
+                action = intrusionAction;
+                actionId = action.Id;
+            }
+
             outcome.ActionId = actionId;
 
             var consecutive = action.IsExpedition && player.LastSlotWasExpedition;
-            var violation = slot.ForcedRest && !action.IsRest;
+            var violation = slot.ForcedRest && !action.IsRest && !outcome.IntrusionTriggered;
             if (violation)
             {
                 outcome.ForcedRestViolated = true;
@@ -262,7 +281,9 @@ namespace ApoGirl.Core.Simulation
             var context = new EventContext { Phase = calendar.Phase, Day = calendar.Day, ActionId = action.Id, ActionCategory = action.Category };
             if (!IsGameOver)
             {
-                ev = EventScheduler.Pick(_state, _db, context, _random);
+                ev = outcome.IntrusionTriggered && _db.TryGetEvent(Balance.IntrusionEventId, out var intrusion)
+                    ? intrusion
+                    : EventScheduler.Pick(_state, _db, context, _random);
             }
 
             Advance();
@@ -335,6 +356,15 @@ namespace ApoGirl.Core.Simulation
         {
             var result = EventResolver.Choose(_state, pending.Event, choiceId, pending.Context, Balance, _random, pending.Outcome.Delta);
             pending.Outcome.Events.Add(result);
+
+            // 낮 침입 대응: 고른 선택지의 대응 방식으로 판정
+            var chosen = pending.Event.Choices.Find(c => c.Id == result.ChoiceId);
+            var effect = chosen == null ? null : result.Result == CheckResult.Failure ? chosen.OnFailure : chosen.Effect;
+            if (effect != null && !string.IsNullOrEmpty(effect.IntrusionResponse))
+            {
+                pending.Outcome.Intrusion = IntrusionRules.Resolve(_state, _db, effect.IntrusionResponse, Balance, _random, pending.Outcome.Delta);
+            }
+
             CheckGameOver();
             if (!IsGameOver && !string.IsNullOrEmpty(result.NextEventId) && _db.TryGetEvent(result.NextEventId, out var next))
             {
@@ -460,6 +490,7 @@ namespace ApoGirl.Core.Simulation
 
             InfectionRules.WeeklyTeacher(_state, _db);
             AssaultTraumaRules.Care(_state, 1, Balance);
+            IntrusionRules.HealWeekly(_state);
             RecordWeek(calendar.Week);
             var diary = LineRules.Pick(_state, _db, LineKind.Diary, new EventContext { Phase = DayPhase.Night, Day = CalendarState.DaysPerWeek });
             foreach (var outcome in _outcomes)
@@ -490,6 +521,13 @@ namespace ApoGirl.Core.Simulation
             {
                 _state.LastWeekPlan = PlanEditing.CloneActions(_state.Plan);
                 calendar.Week++;
+
+                // 매달 첫 주: 교실동을 뺀 지역의 물자가 일부 다시 채워진다
+                if (ContainerRules.MonthStarted(calendar.Week - 1, calendar.Week, Balance))
+                {
+                    summary.Restocked.AddRange(ContainerRules.Restock(_state, _db, _random, Balance));
+                }
+
                 calendar.Day = 1;
                 calendar.Phase = DayPhase.Day;
                 calendar.WeekComplete = false;
@@ -567,6 +605,9 @@ namespace ApoGirl.Core.Simulation
 
             // M6: 정찰 정보는 한 번 쓰면 사라진다
             _state.Flags.Remove(ScoutRules.FlagFor(action.LocationId));
+
+            // 복구 뒤 첫 방문: '흔적'은 한 번만 보여 준다
+            _state.Flags.Remove(ContainerRules.RestockFlag(action.LocationId));
 
             // M6: 물림 (쓰러짐 또는 물림 부상) → 응급 처치 판정 (문서 3.1.1)
             outcome.Bite = InfectionRules.RollBite(

@@ -133,7 +133,8 @@
         "StressMin": 16,
         "StressMax": 20,
         "DawnReturnChance": 0.25
-      }
+      },
+      "ContainersPerRun": 15
     },
     {
       "Id": "LOC_POLICE",
@@ -179,7 +180,8 @@
         "StressMin": 14,
         "StressMax": 18,
         "DawnReturnChance": 0.2
-      }
+      },
+      "ContainersPerRun": 7
     }
   ],
   "LootTables": [

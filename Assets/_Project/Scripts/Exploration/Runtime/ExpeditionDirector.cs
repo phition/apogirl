@@ -348,6 +348,12 @@ namespace ApoGirl.Exploration.Runtime
             document.visualTreeAsset = _hudLayout;
             _hud = new ExpeditionHud(document.rootVisualElement, this);
             UpdateZombieViews();
+
+            // 물자가 다시 채워진 뒤 첫 방문: 누군가 머물다 간 흔적
+            if (Request.Restocked)
+            {
+                _hud.ShowText(Loc.T("exp.restocked." + Location.Id), 4500);
+            }
         }
 
         private void Update()
@@ -1444,6 +1450,7 @@ namespace ApoGirl.Exploration.Runtime
             var random = new SeededRandom(SeededRandom.CreateState(Request.Seed ^ 0x5A1));
             ExplorationArea area;
             float x;
+            var count = Math.Max(1, Request.HostileCount);
             if (variant.HostileSpots.Count > 0)
             {
                 var spot = variant.HostileSpots[random.Range(0, variant.HostileSpots.Count - 1)];
@@ -1461,17 +1468,22 @@ namespace ApoGirl.Exploration.Runtime
                     : area.Width * (0.1f + 0.3f * (float)random.NextDouble());
             }
 
-            var unit = _threat.AddZombie(enemy, AreaId(area), x);
-            var sprites = ExplorationArt.Get("survivor_idle") != null;
-            var body = sprites
-                ? ExplorationArt.Place(_world, "Survivor_" + unit.Id, "survivor_idle", Vector2.zero, 6, Vector2.zero, Color.white)
-                : BuildingView.Rect(_world, "Survivor_" + unit.Id, Vector2.zero, Vector2.one, SurvivorTint, 6);
-            var marker = BuildingView.Rect(_world, "Awareness_" + unit.Id, Vector2.zero, Vector2.one, Color.yellow, 12);
-            _zombieViews.Add(new ZombieView
+            // 한 무리: 첫 사람 근처에 나머지가 선다
+            for (var i = 0; i < count; i++)
             {
-                Unit = unit, Body = body.transform, BodyRenderer = body.GetComponent<SpriteRenderer>(), Marker = marker.transform,
-                MarkerRenderer = marker.GetComponent<SpriteRenderer>(), Kind = "survivor", Sprites = sprites, Survivor = true, LastX = unit.X,
-            });
+                var offset = i == 0 ? 0f : (i % 2 == 1 ? 1f : -1f) * (1.5f + 1.2f * (i / 2));
+                var unit = _threat.AddZombie(enemy, AreaId(area), x + offset);
+                var sprites = ExplorationArt.Get("survivor_idle") != null;
+                var body = sprites
+                    ? ExplorationArt.Place(_world, "Survivor_" + unit.Id, "survivor_idle", Vector2.zero, 6, Vector2.zero, Color.white)
+                    : BuildingView.Rect(_world, "Survivor_" + unit.Id, Vector2.zero, Vector2.one, SurvivorTint, 6);
+                var marker = BuildingView.Rect(_world, "Awareness_" + unit.Id, Vector2.zero, Vector2.one, Color.yellow, 12);
+                _zombieViews.Add(new ZombieView
+                {
+                    Unit = unit, Body = body.transform, BodyRenderer = body.GetComponent<SpriteRenderer>(), Marker = marker.transform,
+                    MarkerRenderer = marker.GetComponent<SpriteRenderer>(), Kind = "survivor", Sprites = sprites, Survivor = true, LastX = unit.X,
+                });
+            }
         }
 
         /// <summary>생존자 그림이 없을 때의 사각형 색.</summary>
@@ -1480,9 +1492,17 @@ namespace ApoGirl.Exploration.Runtime
         /// <summary>어른이라 주인공보다 조금 크게 그린다.</summary>
         private const float SurvivorScale = 1.12f;
 
-        /// <summary>상자 고갈 지역: 이미 뒤진 상자면 비운 채 수색 완료로 둔다. 반환: 비웠는가.</summary>
+        /// <summary>
+        /// 상자 비우기. 처음부터 빈 상자(판 시드)는 겉보기는 같고 뒤져 봐야 비어 있다는 걸 안다.
+        /// 고갈 지역에서 이미 뒤진 상자는 수색 완료로 둔다. 반환: 내용물을 넣지 않는가.
+        /// </summary>
         private bool Deplete(ExplorationTarget target, string key)
         {
+            if (!Location.Tutorial && ContainerRules.BaselineEmpty(Request.WorldSeed, key, _balance.BaseEmptyContainerRate))
+            {
+                return true;
+            }
+
             if (!Location.DepletingContainers)
             {
                 return false;

@@ -57,6 +57,12 @@ namespace ApoGirl.Core.Definitions
         /// <summary>폭행 트라우마 회복을 앞당기는 주 수 (선생님과의 대화·마음 돌보기).</summary>
         public int TraumaCare;
 
+        /// <summary>함정 설치 개수 (상한 MaxTraps).</summary>
+        public int Traps;
+
+        /// <summary>낮 침입 대응 (Fight / Hide / Yield). 거점이 IntrusionRules로 판정한다.</summary>
+        public string IntrusionResponse = "";
+
         /// <summary>다른 효과를 이 효과에 더한다 (목록은 이어 붙이고, 수치는 더하고, 단계·세기는 큰 쪽).</summary>
         public GameEffect MergeFrom(GameEffect other)
         {
@@ -88,6 +94,8 @@ namespace ApoGirl.Core.Definitions
             TeacherReinfect |= other.TeacherReinfect;
             TeacherInfection += other.TeacherInfection;
             TraumaCare += other.TraumaCare;
+            Traps += other.Traps;
+            if (!string.IsNullOrEmpty(other.IntrusionResponse)) IntrusionResponse = other.IntrusionResponse;
             return this;
         }
     }

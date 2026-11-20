@@ -221,6 +221,9 @@ namespace ApoGirl.Core.State
         public int Defense { get; set; }
         public int Threat { get; set; }
 
+        /// <summary>설치한 함정 수 (습격·침입 1회에 하나씩 쓴다).</summary>
+        public int Traps { get; set; }
+
         /// <summary>1막 전력 복구 이벤트 전에는 정전이 기본 상태 (문서 5.4).</summary>
         public bool PowerRestored { get; set; }
 
@@ -293,6 +296,10 @@ namespace ApoGirl.Core.State
         public int HostileRobberies { get; set; }
         public int HostileBeatings { get; set; }
 
+        /// <summary>낮 침입 횟수와 그중 대비가 부족해 크게 당한 횟수.</summary>
+        public int Intrusions { get; set; }
+        public int IntrusionsLost { get; set; }
+
         /// <summary>뒤진 상자 키 "지역ID/키" (DepletingContainers 지역만, 교실동 무한 파밍 방지).</summary>
         public HashSet<string> LootedContainers { get; set; } = new HashSet<string>();
     }
@@ -303,6 +310,9 @@ namespace ApoGirl.Core.State
         public int Affinity { get; set; }
         public int Trust { get; set; }
         public string Role { get; set; } = "";
+
+        /// <summary>낮 침입으로 다쳐 역할을 못 하는 남은 주 수.</summary>
+        public int InjuredWeeks { get; set; }
     }
 
     public sealed class EventLogState

@@ -90,14 +90,23 @@ namespace ApoGirl.Core.Expedition
             var available = HostileRules.AllContainerKeys(location).Where(k => !request.LootedContainers.Contains(k)).ToList();
             var random = new SeededRandom(SeededRandom.CreateState(request.Seed ^ 0xDE91E7));
             var picked = Math.Min(model.ContainersPerRun, available.Count);
+            var rate = location.Tutorial ? 0f : _db.Balance.BaseEmptyContainerRate;
+            var filled = 0;
             for (var i = 0; i < picked; i++)
             {
                 var index = random.Range(i, available.Count - 1);
                 (available[i], available[index]) = (available[index], available[i]);
+                if (ContainerRules.BaselineEmpty(request.WorldSeed, available[i], rate))
+                {
+                    continue; // 처음부터 빈 상자: 기록하지 않는다 (복구 대상 아님)
+                }
+
+                filled++;
                 result.SearchedContainers.Add(available[i]);
             }
 
-            var fraction = (float)picked / model.ContainersPerRun;
+            // 모델 수확은 '모든 상자가 차 있을 때' 기준: 실제로 찬 상자 비율만큼만 얻는다
+            var fraction = (float)filled / model.ContainersPerRun;
             if (fraction >= 1f)
             {
                 return;
@@ -121,7 +130,9 @@ namespace ApoGirl.Core.Expedition
 
             var balance = _db.Balance;
             var random = new SeededRandom(SeededRandom.CreateState(request.Seed ^ 0x40571F));
-            if (random.NextDouble() < balance.HeadlessHostileCaughtChance)
+            var caught = Math.Min(balance.HeadlessHostileCaughtMax,
+                balance.HeadlessHostileCaughtChance + Math.Max(0, request.HostileCount - 1) * balance.HeadlessHostileCaughtPerExtra);
+            if (random.NextDouble() < caught)
             {
                 HostileRules.Apply(result, HostileRules.OutcomeFor(request.HostileTemperament), request.Hp, balance);
             }

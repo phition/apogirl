@@ -508,6 +508,21 @@ namespace ApoGirl.Presentation.Screens
                 lines.Add(Loc.F(outcome.Raid.Repelled ? "result.raid_repelled" : "result.raid_breached", outcome.Raid.Strength, outcome.Raid.Power));
             }
 
+            if (outcome.Intrusion != null)
+            {
+                var intrusion = outcome.Intrusion;
+                lines.Add(Loc.F("result.intrusion_" + intrusion.Response + (intrusion.Held ? "_held" : "_lost"), intrusion.Strength, intrusion.Power));
+                if (!string.IsNullOrEmpty(intrusion.InjuredNpcId))
+                {
+                    lines.Add(Loc.F("result.intrusion_injured", Loc.T("npc." + intrusion.InjuredNpcId)));
+                }
+            }
+
+            if (outcome.Expedition != null && outcome.ExpeditionRequest != null && outcome.ExpeditionRequest.Restocked)
+            {
+                lines.Add(Loc.T("result.restocked"));
+            }
+
             if (outcome.Expedition != null)
             {
                 lines.Add(outcome.Expedition.Hostile != HostileOutcome.None

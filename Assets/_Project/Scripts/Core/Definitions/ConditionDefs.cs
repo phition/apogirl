@@ -82,6 +82,9 @@ namespace ApoGirl.Core.Definitions
 
         /// <summary>주인공이 혈액형 Key(받는 사람)에게 수혈할 수 있으면 1. 주인공 혈액형을 모르면 0 (D16).</summary>
         BloodCompatible,
+
+        /// <summary>설치한 함정 수.</summary>
+        Traps,
     }
 
     public enum CompareOp

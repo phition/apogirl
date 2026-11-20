@@ -76,6 +76,15 @@ namespace ApoGirl.Core.Expedition
         /// <summary>이번 출정에 나오는 적대적 생존자의 성향 (0 = 없음, 1 위협 / 2 강탈 / 3 강탈+구타). HostileRules가 정한다.</summary>
         public int HostileTemperament;
 
+        /// <summary>생존자 수 (한 무리, 같은 성향).</summary>
+        public int HostileCount;
+
+        /// <summary>판 시드 (지역마다 처음부터 빈 상자를 정한다).</summary>
+        public int WorldSeed;
+
+        /// <summary>지난 방문 뒤 물자가 다시 채워졌다 (들어가면 '누군가 머물다 간 흔적').</summary>
+        public bool Restocked;
+
         /// <summary>이 지역에서 이미 뒤진 상자 키 (DepletingContainers 지역만). 키는 HostileRules.ContainerKey.</summary>
         public HashSet<string> LootedContainers = new HashSet<string>();
     }
@@ -166,7 +175,9 @@ namespace ApoGirl.Core.Expedition
             // 적대적 생존자 (낮만) · 상자 고갈 (교실동)
             LocationDef location = null;
             var hasLocation = db != null && db.TryGetLocation(action.LocationId, out location);
-            request.HostileTemperament = HostileRules.Roll(request, hasLocation ? location : null, db?.Balance);
+            HostileRules.Assign(request, hasLocation ? location : null, db?.Balance);
+            request.WorldSeed = state.Rng.Seed;
+            request.Restocked = state.Flags.Contains(ContainerRules.RestockFlag(action.LocationId));
             if (hasLocation && location.DepletingContainers)
             {
                 var prefix = action.LocationId + "/";

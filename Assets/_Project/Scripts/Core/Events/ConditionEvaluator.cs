@@ -202,6 +202,7 @@ namespace ApoGirl.Core.Events
 
                     return roles;
                 case ValueKind.Flag: return state.Flags.Contains(key) ? 1 : 0;
+                case ValueKind.Traps: return state.Base.Traps;
                 case ValueKind.BloodCompatible:
                     return Enum.TryParse<BloodType>(key, out var recipient) && BloodRules.CanDonate(state.Player.Profile.BloodType, recipient) ? 1 : 0;
                 default: throw new ArgumentOutOfRangeException(nameof(kind), kind, null);
@@ -234,6 +235,7 @@ namespace ApoGirl.Core.Events
                 case ValueKind.TeacherInfection:
                 case ValueKind.TeacherStage:
                 case ValueKind.WeeksToRescue:
+                case ValueKind.Traps:
                     return true;
                 case ValueKind.Weather:
                     return Enum.TryParse<WeatherType>(key, out _);

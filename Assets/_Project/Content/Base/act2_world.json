@@ -125,7 +125,8 @@
         "StressMin": 16,
         "StressMax": 18,
         "DawnReturnChance": 0.2
-      }
+      },
+      "ContainersPerRun": 11
     },
     {
       "Id": "LOC_SUBWAY",
@@ -181,7 +182,8 @@
         "StressMin": 16,
         "StressMax": 20,
         "DawnReturnChance": 0.25
-      }
+      },
+      "ContainersPerRun": 8
     }
   ],
   "LootTables": [

@@ -157,12 +157,17 @@ namespace ApoGirl.Core.Effects
             {
                 ApoGirl.Core.Rules.AssaultTraumaRules.Care(state, effect.TraumaCare, balance);
             }
+
+            if (effect.Traps != 0)
+            {
+                state.Base.Traps = Clamp(state.Base.Traps + effect.Traps, 0, balance.MaxTraps);
+            }
         }
 
         public static int ChangeDefense(GameState state, int amount, BalanceConfig balance, StateDelta delta)
         {
             var before = state.Base.Defense;
-            state.Base.Defense = Clamp(before + amount, 0, balance.DefenseMax);
+            state.Base.Defense = Clamp(before + amount, 0, ApoGirl.Core.Rules.DefenseRules.Max(state, balance));
             delta.Defense += state.Base.Defense - before;
             return state.Base.Defense - before;
         }
@@ -170,6 +175,11 @@ namespace ApoGirl.Core.Effects
         public static int ChangeThreat(GameState state, int amount, BalanceConfig balance, StateDelta delta)
         {
             var before = state.Base.Threat;
+            if (amount > 0 && state.Flags.Contains(ApoGirl.Core.Rules.DefenseRules.FlagWindowCovers))
+            {
+                amount = Math.Max(1, (int)Math.Round(amount * balance.CoveredThreatMultiplier));
+            }
+
             state.Base.Threat = Clamp(before + amount, 0, balance.ThreatMax);
             delta.Threat += state.Base.Threat - before;
             return state.Base.Threat - before;
