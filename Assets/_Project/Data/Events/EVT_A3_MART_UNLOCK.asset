@@ -72,7 +72,11 @@ MonoBehaviour:
       TraumaCare: 0
       Traps: 0
       IntrusionResponse: 
-      Factions: []
+      Factions:
+      - FactionId: FAC_MART
+        Standing: 0
+        Reveal: 1
+        LogKey: faction.FAC_MART.log.rumor
     ThenEventId: 
     Choices: []
     ReviewAct: 0

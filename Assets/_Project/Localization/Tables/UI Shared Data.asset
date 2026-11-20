@@ -3563,6 +3563,122 @@ MonoBehaviour:
     m_Key: faction.FAC_UBC.log.static
     m_Metadata:
       m_Items: []
+  - m_Id: 471624523726848
+    m_Key: faction.FAC_UBC.log.answer
+    m_Metadata:
+      m_Items: []
+  - m_Id: 471624586641408
+    m_Key: faction.FAC_UBC.log.call
+    m_Metadata:
+      m_Items: []
+  - m_Id: 471624586641409
+    m_Key: faction.FAC_UBC.log.parts
+    m_Metadata:
+      m_Items: []
+  - m_Id: 471624586641410
+    m_Key: faction.FAC_UBC.log.saved
+    m_Metadata:
+      m_Items: []
+  - m_Id: 471624586641411
+    m_Key: faction.FAC_UBC.log.searched
+    m_Metadata:
+      m_Items: []
+  - m_Id: 471624586641412
+    m_Key: faction.FAC_UBC.log.route
+    m_Metadata:
+      m_Items: []
+  - m_Id: 471624586641413
+    m_Key: faction.FAC_UBC.log.decline
+    m_Metadata:
+      m_Items: []
+  - m_Id: 471624586641414
+    m_Key: faction.FAC_MART.log.rumor
+    m_Metadata:
+      m_Items: []
+  - m_Id: 471624586641415
+    m_Key: faction.FAC_MART.log.first_trade
+    m_Metadata:
+      m_Items: []
+  - m_Id: 471624586641416
+    m_Key: faction.FAC_MART.log.ally
+    m_Metadata:
+      m_Items: []
+  - m_Id: 471624586641417
+    m_Key: faction.FAC_MART.log.refuse
+    m_Metadata:
+      m_Items: []
+  - m_Id: 471624599224320
+    m_Key: faction.FAC_MART.log.medicine
+    m_Metadata:
+      m_Items: []
+  - m_Id: 471624599224321
+    m_Key: faction.FAC_MART.log.defended
+    m_Metadata:
+      m_Items: []
+  - m_Id: 471624599224322
+    m_Key: faction.FAC_MART.log.defended_hurt
+    m_Metadata:
+      m_Items: []
+  - m_Id: 471624599224323
+    m_Key: faction.FAC_MART.log.mediated
+    m_Metadata:
+      m_Items: []
+  - m_Id: 471624599224324
+    m_Key: faction.FAC_MART.log.abandoned
+    m_Metadata:
+      m_Items: []
+  - m_Id: 471624599224325
+    m_Key: faction.FAC_MART.log.warned
+    m_Metadata:
+      m_Items: []
+  - m_Id: 471624599224326
+    m_Key: faction.FAC_SAGEORI.log.mart_fight
+    m_Metadata:
+      m_Items: []
+  - m_Id: 471624599224327
+    m_Key: faction.FAC_SAGEORI.log.raise_paid
+    m_Metadata:
+      m_Items: []
+  - m_Id: 471624599224328
+    m_Key: faction.FAC_SAGEORI.log.respect
+    m_Metadata:
+      m_Items: []
+  - m_Id: 471624599224329
+    m_Key: faction.FAC_SAGEORI.log.pushback_fail
+    m_Metadata:
+      m_Items: []
+  - m_Id: 471624599224330
+    m_Key: faction.FAC_SAGEORI.log.broke
+    m_Metadata:
+      m_Items: []
+  - m_Id: 471624599224331
+    m_Key: faction.FAC_SAGEORI.log.warning
+    m_Metadata:
+      m_Items: []
+  - m_Id: 471624599224332
+    m_Key: faction.FAC_SAGEORI.log.late_pay
+    m_Metadata:
+      m_Items: []
+  - m_Id: 471624599224333
+    m_Key: faction.FAC_SAGEORI.log.jun_treated
+    m_Metadata:
+      m_Items: []
+  - m_Id: 471624599224334
+    m_Key: faction.FAC_SAGEORI.log.jun_fed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 471624599224335
+    m_Key: faction.FAC_SAGEORI.log.intrusion_fight
+    m_Metadata:
+      m_Items: []
+  - m_Id: 471624599224336
+    m_Key: faction.FAC_SAGEORI.log.intrusion_hide
+    m_Metadata:
+      m_Items: []
+  - m_Id: 471624599224337
+    m_Key: faction.FAC_SAGEORI.log.intrusion_yield
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

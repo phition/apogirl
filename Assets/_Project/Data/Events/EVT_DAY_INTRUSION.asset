@@ -131,7 +131,11 @@ MonoBehaviour:
         TraumaCare: 0
         Traps: 0
         IntrusionResponse: Fight
-        Factions: []
+        Factions:
+        - FactionId: FAC_SAGEORI
+          Standing: -5
+          Reveal: 1
+          LogKey: faction.FAC_SAGEORI.log.intrusion_fight
       OnFailure:
         Stats: []
         Vitals: []
@@ -222,7 +226,11 @@ MonoBehaviour:
         TraumaCare: 0
         Traps: 0
         IntrusionResponse: Hide
-        Factions: []
+        Factions:
+        - FactionId: FAC_SAGEORI
+          Standing: 0
+          Reveal: 1
+          LogKey: faction.FAC_SAGEORI.log.intrusion_hide
       OnFailure:
         Stats: []
         Vitals: []
@@ -313,7 +321,11 @@ MonoBehaviour:
         TraumaCare: 0
         Traps: 0
         IntrusionResponse: Yield
-        Factions: []
+        Factions:
+        - FactionId: FAC_SAGEORI
+          Standing: 5
+          Reveal: 1
+          LogKey: faction.FAC_SAGEORI.log.intrusion_yield
       OnFailure:
         Stats: []
         Vitals: []

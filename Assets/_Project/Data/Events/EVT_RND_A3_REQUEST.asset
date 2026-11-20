@@ -135,7 +135,11 @@ MonoBehaviour:
         TraumaCare: 0
         Traps: 0
         IntrusionResponse: 
-        Factions: []
+        Factions:
+        - FactionId: FAC_UBC
+          Standing: 3
+          Reveal: 0
+          LogKey: 
       OnFailure:
         Stats: []
         Vitals: []

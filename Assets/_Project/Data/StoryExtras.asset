@@ -5304,16 +5304,17 @@ MonoBehaviour:
       TextKey: faction.FAC_SAGEORI.effect.wary
     - MinTier: 2
       MaxTier: 4
-      RaidChanceMultiplier: 0.8
-      IntrusionMultiplier: 0.6
-      HostileMultiplier: 0.6
+      RaidChanceMultiplier: 0.9
+      IntrusionMultiplier: 0.75
+      HostileMultiplier: 0.8
       RaidStrengthBonus: 0
       WeeklyResources:
       - Resource: 0
-        Amount: -2
+        Amount: -3
       WeeklyStress: 0
       TextKey: faction.FAC_SAGEORI.effect.truce
     Trades: []
+    TradeIntervalWeeks: 1
     FlagReactions: []
   - Id: FAC_MART
     StartStanding: 0
@@ -5362,7 +5363,7 @@ MonoBehaviour:
       MinTier: 2
       Give:
       - Resource: 5
-        Amount: 3
+        Amount: 4
       Get:
       - Resource: 0
         Amount: 3
@@ -5375,14 +5376,14 @@ MonoBehaviour:
         Amount: 1
       Get:
       - Resource: 0
-        Amount: 5
+        Amount: 4
       StandingChange: 3
       Delayed: 0
     - Id: FOOD_FUEL
       MinTier: 3
       Give:
       - Resource: 0
-        Amount: 3
+        Amount: 4
       Get:
       - Resource: 3
         Amount: 2
@@ -5392,12 +5393,13 @@ MonoBehaviour:
       MinTier: 4
       Give:
       - Resource: 5
-        Amount: 2
+        Amount: 3
       Get:
       - Resource: 1
-        Amount: 6
+        Amount: 5
       StandingChange: 1
       Delayed: 0
+    TradeIntervalWeeks: 2
     FlagReactions:
     - Flag: ENC_MART_GROUP_TALK
       Standing: 5
@@ -5424,7 +5426,7 @@ MonoBehaviour:
       TextKey: faction.FAC_UBC.effect.distant
     - MinTier: 3
       MaxTier: 4
-      RaidChanceMultiplier: 0.9
+      RaidChanceMultiplier: 0.95
       IntrusionMultiplier: 1
       HostileMultiplier: 1
       RaidStrengthBonus: 0
@@ -5445,7 +5447,7 @@ MonoBehaviour:
       MinTier: 3
       Give:
       - Resource: 3
-        Amount: 1
+        Amount: 2
       Get:
       - Resource: 2
         Amount: 1
@@ -5455,10 +5457,11 @@ MonoBehaviour:
       MinTier: 3
       Give:
       - Resource: 5
-        Amount: 2
+        Amount: 3
       Get:
       - Resource: 1
         Amount: 4
       StandingChange: 2
       Delayed: 1
+    TradeIntervalWeeks: 2
     FlagReactions: []

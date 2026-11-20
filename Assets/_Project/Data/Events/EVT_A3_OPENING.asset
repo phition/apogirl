@@ -137,7 +137,11 @@ MonoBehaviour:
         TraumaCare: 0
         Traps: 0
         IntrusionResponse: 
-        Factions: []
+        Factions:
+        - FactionId: FAC_UBC
+          Standing: 20
+          Reveal: 1
+          LogKey: faction.FAC_UBC.log.answer
       OnFailure:
         Stats: []
         Vitals: []
@@ -230,7 +234,11 @@ MonoBehaviour:
         TraumaCare: 0
         Traps: 0
         IntrusionResponse: 
-        Factions: []
+        Factions:
+        - FactionId: FAC_UBC
+          Standing: 3
+          Reveal: 1
+          LogKey: 
       OnFailure:
         Stats: []
         Vitals: []

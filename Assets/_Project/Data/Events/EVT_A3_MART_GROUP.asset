@@ -138,7 +138,11 @@ MonoBehaviour:
         TraumaCare: 0
         Traps: 0
         IntrusionResponse: 
-        Factions: []
+        Factions:
+        - FactionId: FAC_MART
+          Standing: 10
+          Reveal: 1
+          LogKey: faction.FAC_MART.log.first_trade
       OnFailure:
         Stats: []
         Vitals: []
@@ -234,7 +238,11 @@ MonoBehaviour:
         TraumaCare: 0
         Traps: 0
         IntrusionResponse: 
-        Factions: []
+        Factions:
+        - FactionId: FAC_MART
+          Standing: 30
+          Reveal: 1
+          LogKey: faction.FAC_MART.log.ally
       OnFailure:
         Stats: []
         Vitals: []
@@ -327,7 +335,11 @@ MonoBehaviour:
         TraumaCare: 0
         Traps: 0
         IntrusionResponse: 
-        Factions: []
+        Factions:
+        - FactionId: FAC_MART
+          Standing: -10
+          Reveal: 1
+          LogKey: faction.FAC_MART.log.refuse
       OnFailure:
         Stats: []
         Vitals: []
