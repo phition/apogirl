@@ -438,6 +438,11 @@ MonoBehaviour:
     AwakenedSpeed: 1.25
     NightAmbientIntensity: 0.12
     DawnAmbientIntensity: 0.45
+    DayCorridorAmbient: 0.8
+    DayRoomAmbient: 0.32
+    SunbeamIntensity: 0.7
+    SunbeamSpacing: 6
+    RoomWindowLightIntensity: 0.15
     DarknessVisibility: 0.6
     FlashlightExposure: 1.5
     DarkSearchMultiplier: 1.6
