@@ -72,6 +72,10 @@ namespace ApoGirl.Core.Rules
             }
         }
 
+        /// <summary>떠난 세력 (GoneFlag가 켜짐).</summary>
+        public static bool IsGone(GameState state, FactionDef def) =>
+            def != null && !string.IsNullOrEmpty(def.GoneFlag) && state.Flags.Contains(def.GoneFlag);
+
         public static FactionState Get(GameState state, string id)
         {
             if (!state.Factions.TryGetValue(id, out var faction))
@@ -140,7 +144,7 @@ namespace ApoGirl.Core.Rules
 
             foreach (var def in list)
             {
-                if (!state.Factions.TryGetValue(def.Id, out var faction) || !faction.Known)
+                if (!state.Factions.TryGetValue(def.Id, out var faction) || !faction.Known || IsGone(state, def))
                 {
                     continue;
                 }
@@ -200,7 +204,7 @@ namespace ApoGirl.Core.Rules
                 }
 
                 faction.Pending.Clear();
-                if (!faction.Known)
+                if (!faction.Known || IsGone(state, def))
                 {
                     continue;
                 }
@@ -274,6 +278,11 @@ namespace ApoGirl.Core.Rules
             if (!TryGetDef(db, factionId, out var def) || !state.Factions.TryGetValue(factionId, out var faction) || !faction.Known)
             {
                 return "faction.trade.unknown";
+            }
+
+            if (IsGone(state, def))
+            {
+                return "faction.trade.gone";
             }
 
             var offer = def.Trades.Find(t => t.Id == offerId);

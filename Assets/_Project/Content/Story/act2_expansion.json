@@ -70,8 +70,8 @@
       "Condition": { "WeekMin": 18, "Phase": "Night", "FlagsAll": [ "BYSTANDER_TALKED" ], "FlagsNone": [ "BY_LETTER" ], "NpcStatuses": [ { "NpcId": "NPC_BYSTANDER", "Status": "Joined" } ] },
       "OnShow": { "SetFlags": [ "BY_LETTER" ] },
       "Choices": [
-        { "Id": "READ", "Effect": { "Hidden": [ { "Hidden": "TraumaRecovery", "Amount": 2 } ], "Npcs": [ { "NpcId": "NPC_BYSTANDER", "Affinity": 3 } ] } },
-        { "Id": "RETURN", "Effect": { "Hidden": [ { "Hidden": "SelfAwareness", "Amount": 1 } ], "Npcs": [ { "NpcId": "NPC_BYSTANDER", "Trust": 4 } ] } }
+        { "Id": "READ", "Effect": { "SetFlags": [ "BY_LETTER_READ" ], "Hidden": [ { "Hidden": "TraumaRecovery", "Amount": 2 } ], "Npcs": [ { "NpcId": "NPC_BYSTANDER", "Affinity": 3 } ] } },
+        { "Id": "RETURN", "Effect": { "SetFlags": [ "BY_LETTER_RETURNED" ], "Hidden": [ { "Hidden": "SelfAwareness", "Amount": 1 } ], "Npcs": [ { "NpcId": "NPC_BYSTANDER", "Trust": 4 } ] } }
       ] },
     { "Id": "EVT_BY_04_MAP", "Kind": "Story", "Priority": 41,
       "Condition": { "WeekMin": 21, "Phase": "Day", "FlagsAll": [ "BY_LETTER" ], "FlagsNone": [ "BY_MAP" ], "NpcStatuses": [ { "NpcId": "NPC_BYSTANDER", "Status": "Joined" } ] },

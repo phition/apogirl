@@ -15,6 +15,7 @@
       "Id": "FAC_MART",
       "StartStanding": 0,
       "TradeIntervalWeeks": 2,
+      "GoneFlag": "MART_LEFT",
       "DriftAfterWeeks": 6, "WeeklyDrift": 2, "DriftTarget": 0,
       "Effects": [
         { "MinTier": "Hostile", "MaxTier": "Wary", "HostileMultiplier": 1.2, "TextKey": "faction.FAC_MART.effect.cold" },

@@ -748,15 +748,17 @@ namespace ApoGirl.Presentation.Screens
             }
 
             var tier = FactionRules.TierOf(faction.Standing);
+            var gone = FactionRules.IsGone(_session.State, def);
             var lines = new List<string>
             {
                 Loc.T("faction." + factionId + ".desc"),
                 "",
-                Loc.F("faction.card.tier", Loc.T("faction.tier." + tier), (faction.Standing > 0 ? "+" : "") + faction.Standing),
-                Loc.T("faction." + factionId + ".status." + tier),
+                Loc.F("faction.card.tier", gone ? Loc.T("faction.tier.gone") : Loc.T("faction.tier." + tier), (faction.Standing > 0 ? "+" : "") + faction.Standing),
+                Loc.T(gone ? "faction." + factionId + ".status.gone" : "faction." + factionId + ".status." + tier),
             };
 
-            var effects = def.Effects.Where(e => tier >= e.MinTier && tier <= e.MaxTier && !string.IsNullOrEmpty(e.TextKey)).ToList();
+            var effects = gone ? new List<ApoGirl.Core.Definitions.FactionEffectDef>()
+                : def.Effects.Where(e => tier >= e.MinTier && tier <= e.MaxTier && !string.IsNullOrEmpty(e.TextKey)).ToList();
             if (effects.Count > 0)
             {
                 lines.Add("");

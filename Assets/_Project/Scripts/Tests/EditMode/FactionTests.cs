@@ -161,6 +161,22 @@ namespace ApoGirl.Tests.EditMode
         }
 
         [Test]
+        public void GoneFaction_StopsEffectsAndTrades()
+        {
+            var db = ContentDb();
+            var state = NewState(db);
+            var mart = state.Factions["FAC_MART"];
+            mart.Known = true;
+            mart.Standing = -30;
+            Assert.AreEqual(1.2f, FactionRules.HostileMultiplier(state, db), 1e-5, "사이가 나쁘면 적대적 생존자 증가");
+            state.Flags.Add("MART_LEFT");
+            Assert.AreEqual(1f, FactionRules.HostileMultiplier(state, db), 1e-5, "떠난 세력은 영향 없음");
+            mart.Standing = 40;
+            state.Base.SetResource(ResourceType.Medicine, 3);
+            Assert.AreEqual("faction.trade.gone", FactionRules.TradeBlocker(state, db, "FAC_MART", "MEDICINE_FOOD"));
+        }
+
+        [Test]
         public void EncounterFlags_ChangeStanding()
         {
             var db = ContentDb();

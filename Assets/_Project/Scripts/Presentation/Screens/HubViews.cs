@@ -214,11 +214,14 @@ namespace ApoGirl.Presentation.Screens
 
                 any = true;
                 var tier = FactionRules.TierOf(faction.Standing);
+                var gone = FactionRules.IsGone(state, def);
                 var factionId = def.Id;
+                var statusKey = gone ? "faction." + def.Id + ".status.gone" : "faction." + def.Id + ".status." + tier;
                 var button = new Button(() => FactionClicked?.Invoke(factionId))
                 {
-                    text = Loc.F("status.faction", Loc.T("faction." + def.Id + ".name"), Loc.T("faction.tier." + tier), (faction.Standing > 0 ? "+" : "") + faction.Standing),
-                    tooltip = Loc.T("faction." + def.Id + ".status." + tier),
+                    text = Loc.F("status.faction", Loc.T("faction." + def.Id + ".name"), gone ? Loc.T("faction.tier.gone") : Loc.T("faction.tier." + tier),
+                        (faction.Standing > 0 ? "+" : "") + faction.Standing),
+                    tooltip = Loc.T(statusKey),
                 };
                 button.AddToClassList("small-button");
                 button.AddToClassList("companion-button");
@@ -231,7 +234,7 @@ namespace ApoGirl.Presentation.Screens
                 _factions.Add(bar);
 
                 var status = Row(_factions);
-                status.text = Loc.T("faction." + def.Id + ".status." + tier);
+                status.text = Loc.T(statusKey);
                 status.AddToClassList("dim");
                 status.style.whiteSpace = WhiteSpace.Normal;
             }

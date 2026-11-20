@@ -38,6 +38,9 @@ namespace ApoGirl.Core.Definitions
         /// <summary>거래 주기 (주). 1 = 매주, 2 = 격주 (운반조가 2주에 한 번 돈다).</summary>
         public int TradeIntervalWeeks = 1;
 
+        /// <summary>이 플래그가 켜지면 세력이 떠난 것으로 본다: 영향·거래·멀어짐이 멈추고 허브에 '떠남'으로 보인다.</summary>
+        public string GoneFlag = "";
+
         /// <summary>이 플래그가 처음 켜지면 평판이 바뀐다 (탐험 조우 선택 "ENC_{조우}_{선택}" 등).</summary>
         public List<FactionFlagReaction> FlagReactions = new List<FactionFlagReaction>();
     }

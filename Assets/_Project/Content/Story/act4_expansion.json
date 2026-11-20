@@ -1,0 +1,132 @@
+{
+  "Events": [
+    { "Id": "EVT_A4_SAGEORI_TRUCE_END", "Kind": "Story", "Priority": 66,
+      "Condition": { "WeekMin": 46, "WeekMax": 48, "Phase": "Day", "FlagsNone": [ "SAGEORI_ENDGAME" ],
+        "Checks": [ { "Kind": "FactionKnown", "Key": "FAC_SAGEORI", "Op": "Equal", "Value": 1 }, { "Kind": "FactionStanding", "Key": "FAC_SAGEORI", "Op": "GreaterOrEqual", "Value": -19 } ] },
+      "OnShow": { "SetFlags": [ "SAGEORI_ENDGAME" ] },
+      "Choices": [
+        { "Id": "STAND_TOGETHER", "Effect": { "SetFlags": [ "SAGEORI_ALLY_FINALE" ], "Stats": [ { "Stat": "Leadership", "Amount": 1 } ],
+            "Factions": [ { "FactionId": "FAC_SAGEORI", "Standing": 15, "LogKey": "faction.FAC_SAGEORI.log.stand_together" } ] } },
+        { "Id": "GIVE_SUPPLIES", "Costs": [ { "Resource": "Food", "Amount": 5 } ],
+          "Effect": { "SetFlags": [ "SAGEORI_GIFT" ], "Hidden": [ { "Hidden": "Humanity", "Amount": 1 } ],
+            "Factions": [ { "FactionId": "FAC_SAGEORI", "Standing": 10, "LogKey": "faction.FAC_SAGEORI.log.gift" } ] } },
+        { "Id": "ALONE", "Effect": { "Stats": [ { "Stat": "Willpower", "Amount": 1 } ] } }
+      ] },
+    { "Id": "EVT_A4_SAGEORI_ULTIMATUM", "Kind": "Story", "Priority": 66,
+      "Condition": { "WeekMin": 46, "WeekMax": 48, "Phase": "Day", "FlagsNone": [ "SAGEORI_ENDGAME" ],
+        "Checks": [ { "Kind": "FactionKnown", "Key": "FAC_SAGEORI", "Op": "Equal", "Value": 1 }, { "Kind": "FactionStanding", "Key": "FAC_SAGEORI", "Op": "LessOrEqual", "Value": -20 } ] },
+      "OnShow": { "SetFlags": [ "SAGEORI_ENDGAME" ], "Vitals": [ { "Vital": "Stress", "Amount": 6 } ] },
+      "Choices": [
+        { "Id": "JUN", "Condition": { "FlagsAll": [ "JUN_SAVED" ] },
+          "Effect": { "SetFlags": [ "JUN_MEDIATED" ], "Hidden": [ { "Hidden": "Hope", "Amount": 2 } ],
+            "Factions": [ { "FactionId": "FAC_SAGEORI", "Standing": 30, "LogKey": "faction.FAC_SAGEORI.log.jun_mediated" } ] } },
+        { "Id": "NEGOTIATE", "HasCheck": true, "Check": { "BaseRate": 0.35, "StatWeights": [ { "Stat": "Leadership", "Weight": 0.007 } ] },
+          "Effect": { "SetFlags": [ "SAGEORI_TRUCE_LATE" ], "Stats": [ { "Stat": "Leadership", "Amount": 2 } ],
+            "Factions": [ { "FactionId": "FAC_SAGEORI", "Standing": 30, "LogKey": "faction.FAC_SAGEORI.log.truce_late" } ] },
+          "OnFailure": { "SetFlags": [ "SAGEORI_FINALE_HOSTILE" ], "Vitals": [ { "Vital": "Stress", "Amount": 6 } ],
+            "Factions": [ { "FactionId": "FAC_SAGEORI", "Standing": -10, "LogKey": "faction.FAC_SAGEORI.log.ultimatum_fail" } ] } },
+        { "Id": "DEFY", "Effect": { "SetFlags": [ "SAGEORI_FINALE_HOSTILE" ], "Stats": [ { "Stat": "Willpower", "Amount": 2 } ],
+            "Factions": [ { "FactionId": "FAC_SAGEORI", "Standing": -10, "LogKey": "faction.FAC_SAGEORI.log.defy" } ] } }
+      ] },
+
+    { "Id": "EVT_A4_FINALE_RAID_ALLY", "Kind": "Story", "Priority": 100,
+      "Condition": { "WeekMin": 49, "WeekMax": 49, "Days": [ 6 ], "Phase": "Night", "FlagsAll": [ "SAGEORI_ALLY_FINALE" ] },
+      "OnShow": { "RaidStrength": 80, "SetFlags": [ "A4_RAID" ] } },
+    { "Id": "EVT_A4_FINALE_RAID_KANGCHEOL", "Kind": "Story", "Priority": 100,
+      "Condition": { "WeekMin": 49, "WeekMax": 49, "Days": [ 6 ], "Phase": "Night", "FlagsAll": [ "SAGEORI_FINALE_HOSTILE" ], "FlagsNone": [ "SAGEORI_ALLY_FINALE" ] },
+      "OnShow": { "RaidStrength": 105, "SetFlags": [ "A4_RAID" ] } },
+    { "Id": "EVT_A4_SAGEORI_AFTER", "Kind": "Story", "Priority": 64,
+      "Condition": { "WeekMin": 50, "Phase": "Day", "FlagsAll": [ "A4_RAID", "SAGEORI_ENDGAME" ], "FlagsNone": [ "SAGEORI_AFTER" ] },
+      "OnShow": { "SetFlags": [ "SAGEORI_AFTER" ] },
+      "Choices": [
+        { "Id": "TAKE_JUN", "Condition": { "FlagsAny": [ "JUN_SAVED", "JUN_FED" ] },
+          "Effect": { "SetFlags": [ "JUN_JOINS" ], "Hidden": [ { "Hidden": "Humanity", "Amount": 2 }, { "Hidden": "Hope", "Amount": 1 } ] } },
+        { "Id": "FAREWELL", "Effect": { "Hidden": [ { "Hidden": "SelfAwareness", "Amount": 1 } ] } }
+      ] },
+
+    { "Id": "EVT_A4_MART_LEAVES", "Kind": "Story", "Priority": 62,
+      "Condition": { "WeekMin": 44, "WeekMax": 47, "Phase": "Day", "FlagsNone": [ "MART_LEFT" ],
+        "Checks": [ { "Kind": "FactionKnown", "Key": "FAC_MART", "Op": "Equal", "Value": 1 } ] },
+      "OnShow": { "SetFlags": [ "MART_LEFT" ], "Factions": [ { "FactionId": "FAC_MART", "LogKey": "faction.FAC_MART.log.left" } ] },
+      "Choices": [
+        { "Id": "THANK", "Condition": { "Checks": [ { "Kind": "FactionTier", "Key": "FAC_MART", "Op": "GreaterOrEqual", "Value": 3 } ] },
+          "Effect": { "Resources": [ { "Resource": "Food", "Amount": 8 }, { "Resource": "Fuel", "Amount": 2 } ], "Hidden": [ { "Hidden": "Hope", "Amount": 2 } ] } },
+        { "Id": "SEE_OFF", "Effect": { "Hidden": [ { "Hidden": "Humanity", "Amount": 1 } ] } }
+      ] },
+
+    { "Id": "EVT_A4_MINGYU_VISIT", "Kind": "Story", "Priority": 50,
+      "Condition": { "WeekMin": 42, "Phase": "Day", "FlagsAll": [ "UBC_RUNNER_SAVED" ], "FlagsNone": [ "MINGYU_VISIT" ] },
+      "OnShow": { "SetFlags": [ "MINGYU_VISIT" ], "Resources": [ { "Resource": "Medicine", "Amount": 2 }, { "Resource": "Food", "Amount": 3 } ],
+        "Factions": [ { "FactionId": "FAC_UBC", "Standing": 5, "LogKey": "faction.FAC_UBC.log.mingyu" } ] } },
+    { "Id": "EVT_A4_UBC_RELAY", "Kind": "Night", "Priority": 55,
+      "Condition": { "WeekMin": 46, "Phase": "Night", "FlagsAll": [ "RESCUE_ANNOUNCED", "UBC_CALL" ], "FlagsNone": [ "UBC_RELAY" ],
+        "Checks": [ { "Kind": "FactionStanding", "Key": "FAC_UBC", "Op": "GreaterOrEqual", "Value": 30 } ] },
+      "OnShow": { "SetFlags": [ "UBC_RELAY" ], "Hidden": [ { "Hidden": "Hope", "Amount": 2 } ],
+        "Factions": [ { "FactionId": "FAC_UBC", "Standing": 5, "LogKey": "faction.FAC_UBC.log.relay" } ] },
+      "Choices": [
+        { "Id": "SEND_NAMES", "Effect": { "SetFlags": [ "RESCUE_NAMES_SENT" ], "Hidden": [ { "Hidden": "SelfAwareness", "Amount": 1 } ] } },
+        { "Id": "THANK", "Effect": { "Vitals": [ { "Vital": "Stress", "Amount": -6 } ] } }
+      ] },
+    { "Id": "EVT_A4_DH_MOTHER", "Kind": "Night", "Priority": 58,
+      "Condition": { "WeekMin": 45, "Phase": "Night", "FlagsAll": [ "UBC_CALL" ], "FlagsNone": [ "DH_MOTHER" ],
+        "NpcStatuses": [ { "NpcId": "NPC_DOHYEON", "Status": "Joined" } ],
+        "Checks": [ { "Kind": "FactionStanding", "Key": "FAC_UBC", "Op": "GreaterOrEqual", "Value": 30 } ] },
+      "OnShow": { "SetFlags": [ "DH_MOTHER", "DH_MOTHER_FOUND" ], "Hidden": [ { "Hidden": "Hope", "Amount": 3 } ],
+        "Npcs": [ { "NpcId": "NPC_DOHYEON", "Affinity": 10 } ], "Factions": [ { "FactionId": "FAC_UBC", "Standing": 5, "LogKey": "faction.FAC_UBC.log.dh_mother" } ] } },
+    { "Id": "EVT_A4_UBC_LAST_SHOW", "Kind": "Night", "Priority": 60,
+      "Condition": { "WeekMin": 51, "Phase": "Night", "FlagsAll": [ "DJ_CONTACT" ], "FlagsNone": [ "UBC_LAST_SHOW" ] },
+      "OnShow": { "SetFlags": [ "UBC_LAST_SHOW" ], "Vitals": [ { "Vital": "Stress", "Amount": -8 } ], "Hidden": [ { "Hidden": "Hope", "Amount": 1 } ],
+        "Factions": [ { "FactionId": "FAC_UBC", "Standing": 3 } ] } },
+
+    { "Id": "EVT_DH_08_FAREWELL", "Kind": "Night", "Priority": 46,
+      "Condition": { "WeekMin": 50, "Phase": "Night", "FlagsNone": [ "DH_FAREWELL" ], "NpcStatuses": [ { "NpcId": "NPC_DOHYEON", "Status": "Joined" } ] },
+      "OnShow": { "SetFlags": [ "DH_FAREWELL" ] },
+      "Choices": [
+        { "Id": "PROMISE", "Effect": { "Npcs": [ { "NpcId": "NPC_DOHYEON", "Affinity": 4 } ], "Hidden": [ { "Hidden": "Hope", "Amount": 1 } ] } },
+        { "Id": "GIFT", "Effect": { "Npcs": [ { "NpcId": "NPC_DOHYEON", "Affinity": 6 } ], "Hidden": [ { "Hidden": "Humanity", "Amount": 1 } ] } }
+      ] },
+    { "Id": "EVT_NURSE_06_FAREWELL", "Kind": "Night", "Priority": 46,
+      "Condition": { "WeekMin": 50, "Phase": "Night", "FlagsNone": [ "NURSE_FAREWELL" ], "NpcStatuses": [ { "NpcId": "NPC_NURSE", "Status": "Joined" } ] },
+      "OnShow": { "SetFlags": [ "NURSE_FAREWELL" ], "Npcs": [ { "NpcId": "NPC_NURSE", "Affinity": 4 } ] },
+      "Choices": [
+        { "Id": "ASK_FUTURE", "Effect": { "Hidden": [ { "Hidden": "SelfAwareness", "Amount": 2 } ] } },
+        { "Id": "THANK", "Effect": { "Hidden": [ { "Hidden": "TraumaRecovery", "Amount": 2 } ] } }
+      ] },
+    { "Id": "EVT_BY_05_FAREWELL", "Kind": "Night", "Priority": 46,
+      "Condition": { "WeekMin": 50, "Phase": "Night", "FlagsAll": [ "BY_LETTER" ], "FlagsNone": [ "BY_FAREWELL" ], "NpcStatuses": [ { "NpcId": "NPC_BYSTANDER", "Status": "Joined" } ] },
+      "OnShow": { "SetFlags": [ "BY_FAREWELL" ] },
+      "Choices": [
+        { "Id": "FRIEND", "Effect": { "Hidden": [ { "Hidden": "TraumaRecovery", "Amount": 3 } ], "Npcs": [ { "NpcId": "NPC_BYSTANDER", "Affinity": 6 } ] } },
+        { "Id": "NOD", "Effect": { "Hidden": [ { "Hidden": "SelfAwareness", "Amount": 1 } ] } }
+      ] },
+    { "Id": "EVT_HR_05_FAREWELL", "Kind": "Night", "Priority": 46,
+      "Condition": { "WeekMin": 50, "Phase": "Night", "FlagsNone": [ "HR_FAREWELL" ], "NpcStatuses": [ { "NpcId": "NPC_RINGLEADER", "Status": "Joined" } ] },
+      "OnShow": { "SetFlags": [ "HR_FAREWELL" ] },
+      "Choices": [
+        { "Id": "MEET_AGAIN", "Effect": { "Hidden": [ { "Hidden": "TraumaRecovery", "Amount": 3 } ], "Npcs": [ { "NpcId": "NPC_RINGLEADER", "Affinity": 5 } ] } },
+        { "Id": "CLOSE", "Effect": { "Hidden": [ { "Hidden": "SelfAwareness", "Amount": 3 } ] } }
+      ] },
+
+    { "Id": "EVT_A4_FIRST_SNOW", "Kind": "Story", "Priority": 36,
+      "Condition": { "WeekMin": 41, "Phase": "Day", "FlagsNone": [ "FIRST_SNOW" ] },
+      "OnShow": { "SetFlags": [ "FIRST_SNOW" ], "Hidden": [ { "Hidden": "Hope", "Amount": 1 } ], "Vitals": [ { "Vital": "Stress", "Amount": -4 } ] } },
+    { "Id": "EVT_CAL_DONGJI", "Kind": "Calendar", "Priority": 72, "Condition": { "Month": 12, "DayOfMonth": 22 },
+      "Choices": [
+        { "Id": "PORRIDGE", "Costs": [ { "Resource": "Food", "Amount": 2 } ],
+          "Effect": { "Vitals": [ { "Vital": "Satiety", "Amount": 20 }, { "Vital": "Stress", "Amount": -6 } ], "Npcs": [ { "NpcId": "NPC_TEACHER", "Affinity": 2 } ] } },
+        { "Id": "LONG_NIGHT", "Effect": { "Hidden": [ { "Hidden": "SelfAwareness", "Amount": 1 } ] } }
+      ] },
+    { "Id": "EVT_CAL_SEOLLAL", "Kind": "Calendar", "Priority": 72, "Condition": { "Month": 2, "DayOfMonth": 6 },
+      "Choices": [
+        { "Id": "SEBAE", "Effect": { "Npcs": [ { "NpcId": "NPC_TEACHER", "Affinity": 4 } ], "Hidden": [ { "Hidden": "Hope", "Amount": 2 } ] } },
+        { "Id": "TTEOKGUK", "Costs": [ { "Resource": "Food", "Amount": 2 } ],
+          "Effect": { "Vitals": [ { "Vital": "Satiety", "Amount": 20 }, { "Vital": "Stress", "Amount": -8 } ], "Hidden": [ { "Hidden": "Hope", "Amount": 1 } ] } }
+      ] },
+    { "Id": "EVT_CAL_DAEBOREUM", "Kind": "Calendar", "Priority": 72, "Condition": { "Month": 2, "DayOfMonth": 20, "Phase": "Day" },
+      "OnShow": { "Vitals": [ { "Vital": "Stress", "Amount": -5 } ] },
+      "Choices": [
+        { "Id": "WISH", "Effect": { "Hidden": [ { "Hidden": "Hope", "Amount": 2 } ] } },
+        { "Id": "SELL_HEAT", "Effect": { "Vitals": [ { "Vital": "Stress", "Amount": -4 } ], "Stats": [ { "Stat": "Empathy", "Amount": 1 } ] } }
+      ] }
+  ]
+}

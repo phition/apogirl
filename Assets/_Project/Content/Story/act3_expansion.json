@@ -25,7 +25,7 @@
       ] },
 
     { "Id": "EVT_A3_MART_RADIO", "Kind": "Night", "Priority": 47,
-      "Condition": { "WeekMin": 31, "Phase": "Night", "FlagsAny": [ "MART_ALLY", "MART_TRADE" ], "FlagsNone": [ "MART_RADIO" ] },
+      "Condition": { "WeekMin": 31, "Phase": "Night", "FlagsAny": [ "MART_ALLY", "MART_TRADE" ], "FlagsNone": [ "MART_RADIO", "MART_LEFT" ] },
       "OnShow": { "SetFlags": [ "MART_RADIO" ] },
       "Choices": [
         { "Id": "WARN_US", "Effect": { "Defense": 4, "Factions": [ { "FactionId": "FAC_MART", "Standing": 3 } ] } },
@@ -35,7 +35,7 @@
       ] },
 
     { "Id": "EVT_A3_MART_SPLIT", "Kind": "Story", "Priority": 58,
-      "Condition": { "WeekMin": 34, "Phase": "Day", "FlagsAll": [ "MART_RADIO" ], "FlagsNone": [ "MART_SPLIT" ] },
+      "Condition": { "WeekMin": 34, "Phase": "Day", "FlagsAll": [ "MART_RADIO" ], "FlagsNone": [ "MART_SPLIT", "MART_LEFT" ] },
       "OnShow": { "SetFlags": [ "MART_SPLIT" ], "Threat": 3 },
       "Choices": [
         { "Id": "HELP_DEFEND", "HasCheck": true, "Check": { "BaseRate": 0.45, "StatWeights": [ { "Stat": "Strength", "Weight": 0.005 }, { "Stat": "Agility", "Weight": 0.003 } ] },

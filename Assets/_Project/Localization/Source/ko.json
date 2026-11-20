@@ -901,7 +901,22 @@
     "faction.FAC_SAGEORI.log.jun_fed": "다친 준에게 먹을 것을 쥐여 보냈다",
     "faction.FAC_SAGEORI.log.intrusion_fight": "쳐들어온 우비들과 맞섰다",
     "faction.FAC_SAGEORI.log.intrusion_hide": "쳐들어온 우비들을 피해 숨었다",
-    "faction.FAC_SAGEORI.log.intrusion_yield": "쳐들어온 우비들에게 물자를 내줬다"
+    "faction.FAC_SAGEORI.log.intrusion_yield": "쳐들어온 우비들에게 물자를 내줬다",
+    "faction.tier.gone": "떠남",
+    "faction.trade.gone": "이미 떠난 세력이다.",
+    "faction.FAC_MART.status.gone": "남쪽으로 떠났다. 다른 헬기를 기다린다고 했다.",
+    "faction.FAC_SAGEORI.status.gone": "사거리에 더는 우비가 보이지 않는다.",
+    "faction.FAC_UBC.status.gone": "방송이 끊겼다.",
+    "faction.FAC_SAGEORI.log.stand_together": "마지막 한파 날 담장에 같이 서기로 했다",
+    "faction.FAC_SAGEORI.log.gift": "강철에게 겨울 식량을 나눠 줬다",
+    "faction.FAC_SAGEORI.log.jun_mediated": "준이 강철 앞을 막아섰다",
+    "faction.FAC_SAGEORI.log.truce_late": "구조 명단을 약속하고 최후통첩을 거뒀다",
+    "faction.FAC_SAGEORI.log.ultimatum_fail": "최후통첩 앞에서 설득하지 못했다",
+    "faction.FAC_SAGEORI.log.defy": "학교를 비우라는 최후통첩을 거부했다",
+    "faction.FAC_MART.log.left": "트럭을 타고 남쪽으로 떠났다",
+    "faction.FAC_UBC.log.mingyu": "민규가 자전거로 약품 상자를 가져왔다",
+    "faction.FAC_UBC.log.relay": "구조대 채널을 연결해 줬다",
+    "faction.FAC_UBC.log.dh_mother": "도현의 어머니를 찾아 무전을 이어 줬다"
   },
   "Actions": {
     "ACT_REST_DAY.name": "낮잠",

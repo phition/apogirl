@@ -5,7 +5,16 @@
       "Kind": "Story",
       "Priority": 101,
       "Condition": {
-        "ActionIds": [ "ACT_STORAGE_WAIT" ], "Days": [ 6 ], "Phase": "Night", "FlagsAll": [ "NG_PLUS" ]
+        "ActionIds": [
+          "ACT_STORAGE_WAIT"
+        ],
+        "Days": [
+          6
+        ],
+        "Phase": "Night",
+        "FlagsAll": [
+          "NG_PLUS"
+        ]
       },
       "ThenEventId": "EVT_A1_OPENING",
       "OnShow": {
@@ -698,7 +707,11 @@
         "Days": [
           6
         ],
-        "Phase": "Night"
+        "Phase": "Night",
+        "FlagsNone": [
+          "SAGEORI_ALLY_FINALE",
+          "SAGEORI_FINALE_HOSTILE"
+        ]
       },
       "OnShow": {
         "RaidStrength": 95,
