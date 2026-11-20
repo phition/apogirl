@@ -3939,6 +3939,42 @@ MonoBehaviour:
     m_Key: hud.dock_day
     m_Metadata:
       m_Items: []
+  - m_Id: 663777485012992
+    m_Key: hubroom.ENTRANCE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 663778210627584
+    m_Key: hubroom.HOMEEC
+    m_Metadata:
+      m_Items: []
+  - m_Id: 663778210627585
+    m_Key: hubroom.MUSIC
+    m_Metadata:
+      m_Items: []
+  - m_Id: 663778210627586
+    m_Key: hubroom.COMPUTER
+    m_Metadata:
+      m_Items: []
+  - m_Id: 663778210627587
+    m_Key: hub.room_locked
+    m_Metadata:
+      m_Items: []
+  - m_Id: 663778210627588
+    m_Key: hub.room_shelter
+    m_Metadata:
+      m_Items: []
+  - m_Id: 663778210627589
+    m_Key: hub.room_none
+    m_Metadata:
+      m_Items: []
+  - m_Id: 663778210627590
+    m_Key: plan.pick_slot
+    m_Metadata:
+      m_Items: []
+  - m_Id: 668795525152768
+    m_Key: hubroom.CLASSROOM
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
