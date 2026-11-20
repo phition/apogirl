@@ -187,7 +187,7 @@ namespace ApoGirl.EditorTools
                 CS("CHEM", ContainerKind.Cabinet, 9.6f, "prop_chemshelf"), CS("PREP", ContainerKind.Cabinet, 11.6f, "prop_cabinet")));
             layout.RoomTemplates.Add(Special("ROOM_MUSIC", "wall_music", "LOOT_SCHOOL_MUSIC",
                 CS("PIANO", ContainerKind.Desk, 4.0f, "prop_piano"), CS("INSTRUMENTS", ContainerKind.Cabinet, 7.6f, "prop_instrument"),
-                CS("LOCKERS", ContainerKind.Locker, 10.0f, "prop_locker", "LOOT_SCHOOL_LOCKER"), CS("STANDS", ContainerKind.Box, 11.8f, "prop_box")));
+                CS("LOCKERS", ContainerKind.Locker, 10.0f, "prop_locker", "LOOT_SCHOOL_LOCKER"), CS("STANDS", ContainerKind.Box, 11.2f, "prop_box")));
             layout.RoomTemplates.Add(Special("ROOM_HOMEEC", "wall_kitchen", "LOOT_SCHOOL_HOMEEC",
                 CS("COUNTER", ContainerKind.Desk, 3.8f, "prop_kitchen"), CS("STOVE", ContainerKind.Desk, 6.6f, "prop_stove"),
                 CS("FRIDGE", ContainerKind.Fridge, 9.2f, "prop_fridge"), CS("PANTRY", ContainerKind.Cabinet, 11.4f, "prop_cabinet")));
@@ -196,7 +196,7 @@ namespace ApoGirl.EditorTools
                 CS("PC_3", ContainerKind.Desk, 8.4f, "prop_computer"), CS("RACK", ContainerKind.Cabinet, 11.2f, "prop_rack")));
             layout.RoomTemplates.Add(Special("ROOM_BROADCAST", "wall_onair", "LOOT_SCHOOL_BROADCAST",
                 CS("CONSOLE", ContainerKind.Desk, 4.2f, "prop_console"), CS("RACK", ContainerKind.Cabinet, 7.6f, "prop_rack"),
-                CS("FUEL", ContainerKind.Box, 9.8f, "prop_box"), CS("LOCKER", ContainerKind.Locker, 11.8f, "prop_locker", "LOOT_SCHOOL_LOCKER")));
+                CS("FUEL", ContainerKind.Box, 9.6f, "prop_box"), CS("LOCKER", ContainerKind.Locker, 11.1f, "prop_locker", "LOOT_SCHOOL_LOCKER")));
 
             Stairs(layout, 3f);
             Stairs(layout, 121f);
