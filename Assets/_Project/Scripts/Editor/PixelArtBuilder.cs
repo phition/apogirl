@@ -50,6 +50,7 @@ namespace ApoGirl.EditorTools
             count += BuildSurvivor();
             count += BuildPeople();
             count += BuildProps();
+            count += BuildSchoolRooms();
             count += BuildWalls();
             count += BuildThirdParty();
             AssetDatabase.Refresh();
@@ -492,6 +493,211 @@ namespace ApoGirl.EditorTools
             Fill(lamp, 0, 0, 19, 2, C(120, 120, 116));
             HLine(lamp, 1, 18, 0, C(230, 232, 220));
             Save("prop_ceiling_lamp", Finish(lamp), 0.5f, 1f); n++;
+
+            return n;
+        }
+
+        // ── 교실동 특수실 소품·벽 장식 (양호실·과학실·음악실·가사 실습실·컴퓨터실·방송실) ──
+
+        private static int BuildSchoolRooms()
+        {
+            var n = 0;
+            var metal = C(150, 154, 158);
+            var dark = C(52, 54, 58);
+            var wood = C(146, 108, 68);
+
+            // 양호실 침대 (흰 시트, 철제 다리, 커튼 봉)
+            var bed = New(30, 22);
+            Fill(bed, 1, 6, 28, 9, C(220, 222, 220)); // 매트리스
+            Fill(bed, 1, 10, 7, 12, C(236, 238, 236)); // 베개
+            Fill(bed, 8, 9, 28, 11, C(170, 196, 214)); // 이불
+            HLine(bed, 0, 29, 5, metal);
+            VLine(bed, 1, 0, 5, metal);
+            VLine(bed, 28, 0, 5, metal);
+            VLine(bed, 0, 5, 14, metal); // 머리판
+            Fill(bed, 0, 15, 1, 21, C(190, 210, 200)); // 커튼
+            Save("prop_bed", Finish(bed), 0.5f, 0f); n++;
+
+            // 과학실 실험대 (검은 상판, 개수대, 비커)
+            var bench = New(28, 18);
+            Fill(bench, 0, 9, 27, 11, C(40, 42, 46)); // 상판
+            Fill(bench, 1, 0, 26, 8, C(196, 200, 196)); // 하부장
+            VLine(bench, 13, 1, 7, C(150, 152, 150));
+            bench.SetPixel(7, 4, dark);
+            bench.SetPixel(19, 4, dark);
+            Fill(bench, 4, 12, 6, 15, C(170, 210, 220)); // 비커
+            Fill(bench, 4, 12, 6, 13, C(110, 190, 120)); // 약품
+            Fill(bench, 20, 12, 21, 16, C(180, 214, 224)); // 시험관
+            VLine(bench, 24, 12, 17, metal); // 수도꼭지
+            HLine(bench, 22, 24, 17, metal);
+            Save("prop_labbench", Finish(bench), 0.5f, 0f); n++;
+
+            // 약품장 (유리문, 갈색 병)
+            var chem = New(18, 32);
+            Fill(chem, 0, 0, 17, 31, C(120, 98, 72));
+            Fill(chem, 2, 12, 15, 29, C(150, 178, 186));
+            for (var y = 14; y <= 26; y += 6)
+            {
+                HLine(chem, 2, 15, y - 1, C(100, 82, 60));
+                for (var x = 3; x <= 13; x += 3) Fill(chem, x, y, x + 1, y + 3, (x + y) % 2 == 0 ? C(120, 70, 40) : C(90, 140, 90));
+            }
+
+            Fill(chem, 2, 2, 15, 10, C(136, 112, 84));
+            chem.SetPixel(8, 6, dark);
+            Save("prop_chemshelf", Finish(chem), 0.5f, 0f); n++;
+
+            // 음악실 업라이트 피아노
+            var piano = New(28, 22);
+            Fill(piano, 0, 0, 27, 21, C(40, 30, 28));
+            Fill(piano, 1, 10, 26, 12, C(236, 232, 220)); // 흰 건반
+            for (var x = 2; x <= 25; x += 3) Fill(piano, x, 11, x, 12, C(20, 18, 18)); // 검은 건반
+            Fill(piano, 2, 14, 25, 20, C(58, 44, 40));
+            Fill(piano, 10, 16, 17, 19, C(220, 214, 196)); // 악보
+            VLine(piano, 2, 0, 9, C(30, 22, 20));
+            VLine(piano, 25, 0, 9, C(30, 22, 20));
+            Save("prop_piano", Finish(piano), 0.5f, 0f); n++;
+
+            // 악기장 (기타 넥, 북)
+            var instr = New(20, 30);
+            Fill(instr, 0, 0, 19, 29, wood);
+            Fill(instr, 1, 1, 18, 28, C(120, 88, 56));
+            Fill(instr, 3, 14, 8, 22, C(196, 150, 80)); // 기타 몸통
+            VLine(instr, 6, 22, 27, C(80, 56, 36)); // 넥
+            Fill(instr, 11, 3, 17, 9, C(170, 60, 50)); // 북
+            HLine(instr, 11, 17, 9, C(230, 220, 200));
+            HLine(instr, 1, 18, 12, C(90, 66, 42)); // 선반
+            Save("prop_instrument", Finish(instr), 0.5f, 0f); n++;
+
+            // 가사 실습실 조리대 (도마, 냄비)
+            var kitchen = New(26, 20);
+            Fill(kitchen, 0, 0, 25, 10, C(200, 196, 184));
+            Fill(kitchen, 0, 11, 25, 12, C(170, 172, 176)); // 스테인리스 상판
+            VLine(kitchen, 12, 1, 9, C(160, 156, 146));
+            kitchen.SetPixel(6, 6, dark);
+            kitchen.SetPixel(18, 6, dark);
+            Fill(kitchen, 3, 13, 10, 14, C(196, 150, 96)); // 도마
+            Fill(kitchen, 16, 13, 22, 18, metal); // 냄비
+            HLine(kitchen, 15, 23, 18, dark);
+            Save("prop_kitchen", Finish(kitchen), 0.5f, 0f); n++;
+
+            // 가스레인지
+            var stove = New(20, 18);
+            Fill(stove, 0, 0, 19, 11, C(220, 220, 214));
+            Fill(stove, 2, 2, 17, 8, C(60, 62, 66)); // 오븐 창
+            Fill(stove, 0, 12, 19, 13, C(60, 60, 64));
+            Fill(stove, 3, 14, 7, 15, C(40, 40, 44)); // 화구
+            Fill(stove, 12, 14, 16, 15, C(40, 40, 44));
+            Fill(stove, 13, 15, 15, 17, C(110, 112, 116)); // 주전자
+            Save("prop_stove", Finish(stove), 0.5f, 0f); n++;
+
+            // 컴퓨터실 책상 (모니터, 본체)
+            var pc = New(24, 22);
+            Fill(pc, 1, 9, 22, 10, C(186, 184, 176)); // 상판
+            VLine(pc, 2, 0, 8, dark);
+            VLine(pc, 21, 0, 8, dark);
+            Fill(pc, 16, 0, 20, 8, C(210, 208, 200)); // 본체
+            pc.SetPixel(18, 6, C(80, 200, 120));
+            Fill(pc, 4, 12, 13, 19, C(40, 42, 46)); // 모니터
+            Fill(pc, 5, 13, 12, 18, C(30, 46, 60));
+            VLine(pc, 8, 11, 11, dark);
+            HLine(pc, 4, 12, 11, C(90, 92, 96)); // 키보드
+            Save("prop_computer", Finish(pc), 0.5f, 0f); n++;
+
+            // 서버·장비 랙 (컴퓨터실·방송실)
+            var rack = New(18, 32);
+            Fill(rack, 0, 0, 17, 31, C(36, 38, 42));
+            for (var y = 3; y <= 27; y += 4)
+            {
+                Fill(rack, 2, y, 15, y + 2, C(58, 62, 68));
+                rack.SetPixel(13, y + 1, y % 8 == 3 ? C(90, 220, 120) : C(230, 170, 60));
+            }
+
+            Save("prop_rack", Finish(rack), 0.5f, 0f); n++;
+
+            // 방송실 조정 콘솔 (페이더, 마이크)
+            var console = New(28, 20);
+            Fill(console, 0, 0, 27, 8, C(70, 72, 78));
+            Fill(console, 0, 9, 27, 11, C(50, 52, 58)); // 경사 상판
+            for (var x = 2; x <= 24; x += 3) VLine(console, x, 9, 11, x % 2 == 0 ? C(210, 210, 200) : C(200, 90, 70));
+            VLine(console, 22, 12, 17, metal); // 마이크 스탠드
+            Fill(console, 21, 17, 23, 19, C(30, 30, 34));
+            Fill(console, 3, 12, 12, 15, C(30, 34, 40)); // 레벨 미터
+            for (var x = 4; x <= 11; x++) console.SetPixel(x, 13, x < 9 ? C(90, 220, 120) : C(230, 80, 60));
+            Save("prop_console", Finish(console), 0.5f, 0f); n++;
+
+            // ── 뒷벽 장식 (피벗 왼쪽 아래, 칠판처럼) ──
+
+            // 양호실: 적십자 게시판
+            var cross = New(34, 22);
+            Fill(cross, 0, 0, 33, 21, C(214, 210, 196));
+            Fill(cross, 1, 1, 32, 20, C(236, 234, 224));
+            Fill(cross, 6, 9, 14, 12, C(200, 50, 50));
+            Fill(cross, 9, 6, 11, 15, C(200, 50, 50));
+            for (var y = 6; y <= 16; y += 3) HLine(cross, 18, 29, y, C(150, 150, 150)); // 안내문
+            Save("wall_redcross", Finish(cross), 0f, 0f); n++;
+
+            // 과학실: 주기율표
+            var periodic = New(46, 26);
+            Fill(periodic, 0, 0, 45, 25, C(220, 220, 210));
+            for (var row = 0; row < 6; row++)
+            {
+                for (var col = 0; col < 14; col++)
+                {
+                    var edge = col < 2 || col > 9;
+                    if (!edge && row < 2) continue;
+                    var c = col < 2 ? C(220, 140, 120) : col > 11 ? C(140, 180, 220) : edge ? C(230, 210, 120) : C(170, 210, 160);
+                    Fill(periodic, 2 + col * 3, 3 + row * 3, 3 + col * 3, 4 + row * 3, c);
+                }
+            }
+
+            Save("wall_periodic", Finish(periodic), 0f, 0f); n++;
+
+            // 음악실: 오선지 게시판
+            var staff = New(40, 22);
+            Fill(staff, 0, 0, 39, 21, C(120, 90, 60));
+            Fill(staff, 1, 1, 38, 20, C(236, 232, 214));
+            for (var y = 5; y <= 17; y += 3) HLine(staff, 3, 36, y, C(70, 70, 70));
+            foreach (var (x, y) in new[] { (7, 8), (12, 11), (17, 14), (22, 11), (27, 8), (32, 14) })
+            {
+                Fill(staff, x, y, x + 1, y + 1, C(30, 30, 30));
+                VLine(staff, x + 1, y + 1, y + 5, C(30, 30, 30));
+            }
+
+            Save("wall_music", Finish(staff), 0f, 0f); n++;
+
+            // 가사 실습실: 벽걸이 선반 (컵·조리 도구)
+            var shelf = New(36, 18);
+            Fill(shelf, 0, 0, 35, 2, wood);
+            Fill(shelf, 0, 9, 35, 11, wood);
+            for (var x = 3; x <= 31; x += 5) Fill(shelf, x, 3, x + 2, 6, (x / 5) % 2 == 0 ? C(220, 220, 214) : C(200, 120, 90)); // 컵
+            for (var x = 4; x <= 30; x += 6)
+            {
+                VLine(shelf, x, 12, 17, metal); // 국자·뒤집개
+                Fill(shelf, x - 1, 12, x + 1, 13, metal);
+            }
+
+            Save("wall_kitchen", Finish(shelf), 0f, 0f); n++;
+
+            // 컴퓨터실: 화이트보드
+            var white = New(44, 24);
+            Fill(white, 0, 0, 43, 23, C(170, 172, 176));
+            Fill(white, 1, 2, 42, 22, C(240, 242, 244));
+            HLine(white, 0, 43, 1, C(130, 132, 136)); // 펜 받침
+            for (var i = 0; i < 6; i++) HLine(white, 4, 4 + 8 + (i * 7) % 20, 18 - i * 3, C(60, 90, 170)); // 코드처럼 쓴 줄
+            Save("wall_whiteboard", Finish(white), 0f, 0f); n++;
+
+            // 방송실: ON AIR 표시등 + 흡음판
+            var onair = New(40, 24);
+            Fill(onair, 0, 0, 39, 15, C(90, 84, 80));
+            for (var x = 1; x <= 37; x += 4)
+            {
+                for (var y = 1; y <= 13; y += 4) Fill(onair, x, y, x + 2, y + 2, C(110, 104, 98)); // 흡음판
+            }
+
+            Fill(onair, 10, 17, 29, 23, C(40, 20, 20));
+            Fill(onair, 11, 18, 28, 22, C(200, 50, 40)); // 불 꺼진 ON AIR
+            HLine(onair, 13, 26, 20, C(240, 200, 190));
+            Save("wall_onair", Finish(onair), 0f, 0f); n++;
 
             return n;
         }

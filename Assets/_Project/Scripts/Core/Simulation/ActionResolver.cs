@@ -79,7 +79,8 @@ namespace ApoGirl.Core.Simulation
                 recovery *= 1f + TraitRules.Sum(state, db, TraitModifierKind.RestRecovery);
             }
 
-            EffectApplier.Apply(state, EffectFor(action, result), balance, delta, recovery);
+            // 비용을 못 냈으면 아무 효과도 없다 (빗물 없이 정수해도 실패 보상을 받지 않게)
+            EffectApplier.Apply(state, affordable ? EffectFor(action, result) : null, balance, delta, recovery);
             return result;
         }
 

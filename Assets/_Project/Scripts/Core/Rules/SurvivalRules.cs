@@ -76,9 +76,11 @@ namespace ApoGirl.Core.Rules
             return DifficultyRules.DailyShare(balance.DailyFood, multiplier, day);
         }
 
-        /// <summary>주간 정산: 전력(복구 이후만), 겨울 난방 연료, 식량 부패.</summary>
+        /// <summary>주간 정산: 청결 저하, 전력(복구 이후만), 겨울 난방 연료, 식량 부패.</summary>
         public static void ApplyWeekly(GameState state, BalanceConfig balance, StateDelta delta)
         {
+            EffectApplier.ChangeVital(state, VitalType.Cleanliness, -balance.CleanlinessWeeklyDecay, balance, delta);
+
             if (state.Base.PowerRestored)
             {
                 EffectApplier.ChangeResource(state, ResourceType.Power, -balance.WeeklyPower, delta);
@@ -98,7 +100,7 @@ namespace ApoGirl.Core.Rules
             // 거점 생산: 빗물통(비 오는 주), 옥상 텃밭(겨울 제외)
             if (state.Flags.Contains(FlagRainBarrels) && state.Base.Weather == WeatherType.Rain)
             {
-                EffectApplier.ChangeResource(state, ResourceType.Water, balance.RainBarrelWater, delta);
+                EffectApplier.ChangeResource(state, ResourceType.RawWater, balance.RainBarrelWater, delta);
             }
 
             if (state.Flags.Contains(FlagRoofGarden) && CalendarRules.GetSeason(state.Calendar.Week) != Season.Winter)

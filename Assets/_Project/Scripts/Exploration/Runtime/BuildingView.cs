@@ -89,14 +89,17 @@ namespace ApoGirl.Exploration.Runtime
             Rect(root, "Void", new Vector2(-30f, -20f), new Vector2(room.Width + 60f, 40f), new Color(0.05f, 0.05f, 0.06f), -7);
             ExplorationArt.Tiled(root, "Interior", ExplorationArt.InteriorWall(room.Template.Id), new Vector2(0f, 0.15f), new Vector2(room.Width, h - 0.3f), -5,
                 RoomColors[colorIndex % RoomColors.Length]);
-            if (room.Template.Id.Contains("CLASSROOM"))
+            // 뒷벽 장식: 템플릿 WallDecor (양호실 적십자, 과학실 주기율표 등), 없으면 교실은 칠판
+            var decorKey = !string.IsNullOrEmpty(room.Template.WallDecor) ? room.Template.WallDecor
+                : room.Template.Id.Contains("CLASSROOM") ? "prop_chalkboard" : "";
+            var decor = string.IsNullOrEmpty(decorKey) ? null : ExplorationArt.Get(decorKey);
+            if (decor != null)
             {
-                // 칠판: 창문과 겹치지 않는 가장 넓은 벽면 가운데. 들어갈 자리가 없으면 걸지 않는다
-                var board = ExplorationArt.Get("prop_chalkboard");
-                var boardWidth = board != null ? board.bounds.size.x : 6f;
-                if (TryFindWallGap(room, boardWidth + 0.6f, out var gapCenter))
+                // 창문과 겹치지 않는 가장 넓은 벽면 가운데. 들어갈 자리가 없으면 걸지 않는다
+                var decorWidth = decor.bounds.size.x;
+                if (TryFindWallGap(room, decorWidth + 0.6f, out var gapCenter))
                 {
-                    ExplorationArt.Place(root, "Chalkboard", "prop_chalkboard", new Vector2(gapCenter - boardWidth * 0.5f, 1.5f), -4, Vector2.zero, Color.clear);
+                    ExplorationArt.Place(root, "WallDecor", decorKey, new Vector2(gapCenter - decorWidth * 0.5f, 1.5f), -4, Vector2.zero, Color.clear);
                 }
             }
 

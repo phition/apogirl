@@ -1191,7 +1191,11 @@ namespace ApoGirl.Exploration.Runtime
         private ExplorationTarget CreateContainer(ExplorationArea area, ContainerDef container)
         {
             var size = ContainerSize(container.Kind);
-            var view = Prop(area, "Container_" + container.Id, ContainerSprite(container.Kind), container.X, size, new Color(0.55f, 0.45f, 0.3f), 1);
+            // 방마다 다른 소품 (양호실 침대, 과학실 실험대 등): SpriteKey가 있으면 그 그림
+            var sprite = !string.IsNullOrEmpty(container.SpriteKey) && ExplorationArt.Get(container.SpriteKey) != null
+                ? container.SpriteKey
+                : ContainerSprite(container.Kind);
+            var view = Prop(area, "Container_" + container.Id, sprite, container.X, size, new Color(0.55f, 0.45f, 0.3f), 1);
             var target = new ExplorationTarget
             {
                 Kind = TargetKind.Container,

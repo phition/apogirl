@@ -30,11 +30,11 @@
       ] },
 
     { "Id": "EVT_A1_CLASSROOM", "Kind": "Story", "Priority": 70,
-      "Condition": { "WeekMin": 2, "ActionIds": [ "ACT_EXP_DAY_SCHOOL", "ACT_EXP_NIGHT_SCHOOL" ], "Checks": [ { "Kind": "Facility", "Key": "CLASSROOM", "Op": "Equal", "Value": 0 } ] },
+      "Condition": { "WeekMin": 2, "ActionIds": [ "ACT_EXP_DAY_SCHOOL", "ACT_EXP_NIGHT_SCHOOL" ], "FlagsAll": [ "SEARCHED_1F_END" ], "Checks": [ { "Kind": "Facility", "Key": "CLASSROOM", "Op": "Equal", "Value": 0 } ] },
       "OnShow": { "Facilities": [ { "FacilityId": "CLASSROOM", "Level": 1 } ], "SetFlags": [ "UI_RESOURCES" ] },
       "Choices": [
-        { "Id": "MOVE_IN", "Effect": { "Vitals": [ { "Vital": "Stress", "Amount": -6 } ], "Threat": 3, "Hidden": [ { "Hidden": "Hope", "Amount": 1 } ] } },
-        { "Id": "STAY_STORAGE", "Effect": { "Defense": 4 } }
+        { "Id": "MOVE_IN", "Effect": { "Vitals": [ { "Vital": "Stress", "Amount": -6 } ], "Threat": 3, "Hidden": [ { "Hidden": "Hope", "Amount": 1 } ], "SetFlags": [ "CLASSROOM_MOVED_IN" ] } },
+        { "Id": "STAY_STORAGE", "Effect": { "Defense": 4, "SetFlags": [ "STAYED_STORAGE", "UI_DEFENSE" ] } }
       ] },
 
     { "Id": "EVT_A1_CRUTCH_PLAN", "Kind": "Night", "Priority": 40,

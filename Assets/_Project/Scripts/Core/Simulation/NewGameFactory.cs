@@ -40,6 +40,7 @@ namespace ApoGirl.Core.Simulation
             }
 
             state.Player.Vitals.Hp = balance.StartingHp;
+            state.Player.Vitals.Cleanliness = balance.StartingCleanliness;
 
             foreach (ResourceType resource in Enum.GetValues(typeof(ResourceType)))
             {

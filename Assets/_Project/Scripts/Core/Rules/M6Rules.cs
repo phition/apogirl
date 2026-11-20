@@ -63,6 +63,8 @@ namespace ApoGirl.Core.Rules
             var firstAid = balance.FirstAidBaseChance + medicine * balance.FirstAidPerMedicineLevel;
             var result = new BiteResult { Treated = random.NextDouble() < firstAid };
             result.InfectionGain = result.Treated ? balance.BiteInfectionTreated : balance.BiteInfection;
+            // 청결이 낮으면 상처가 더 쉽게 덧난다
+            result.InfectionGain = (int)Math.Round(result.InfectionGain * (1f + balance.BiteDirtyBonus * InjuryRules.Dirt(state, balance)), MidpointRounding.AwayFromZero);
             EffectApplier.ChangeVital(state, VitalType.Infection, result.InfectionGain, balance, delta);
             if (state.Flags.Add(FlagBitten))
             {

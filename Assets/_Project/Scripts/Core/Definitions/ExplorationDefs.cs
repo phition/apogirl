@@ -136,6 +136,9 @@ namespace ApoGirl.Core.Definitions
 
         /// <summary>비어 있으면 지역 기본 테이블.</summary>
         public string LootTableId = "";
+
+        /// <summary>비어 있지 않으면 종류 기본 그림 대신 쓸 스프라이트 키 (예: prop_bed).</summary>
+        public string SpriteKey = "";
     }
 
     [Serializable]
@@ -179,6 +182,9 @@ namespace ApoGirl.Core.Definitions
         public List<WindowDef> Windows = new List<WindowDef>();
         public List<ContainerDef> Containers = new List<ContainerDef>();
         public string DefaultLootTableId = "";
+
+        /// <summary>뒷벽 장식 스프라이트 (비면 교실은 칠판, 나머지는 없음).</summary>
+        public string WallDecor = "";
     }
 
     /// <summary>복도에 붙은 방 하나: X = 방 왼쪽 끝의 복도 위치(SpanX). Number는 방 이름 표기용 (예: 2-3 교실의 3).</summary>
@@ -195,6 +201,9 @@ namespace ApoGirl.Core.Definitions
 
         /// <summary>비어 있지 않으면 이 방의 기본 전리품 테이블 (템플릿 기본값보다 우선).</summary>
         public string LootTableId = "";
+
+        /// <summary>이 방의 상자를 하나라도 뒤지면 세우는 플래그 (예: 1층 끝 교실 → 거처 이벤트).</summary>
+        public string SearchFlag = "";
     }
 
     /// <summary>

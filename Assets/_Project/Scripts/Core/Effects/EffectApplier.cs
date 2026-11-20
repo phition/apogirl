@@ -22,6 +22,15 @@ namespace ApoGirl.Core.Effects
                 ChangeStat(state, stat.Stat, stat.Amount, balance, delta);
             }
 
+            // 플래그 해제를 먼저: 부상 치료(INJURED 해제)와 같은 효과의 체력 회복이 막히지 않게
+            foreach (var flag in effect.ClearFlags)
+            {
+                if (!string.IsNullOrEmpty(flag) && state.Flags.Remove(flag))
+                {
+                    delta.FlagsCleared.Add(flag);
+                }
+            }
+
             foreach (var vital in effect.Vitals)
             {
                 var amount = vital.Amount;
@@ -51,14 +60,6 @@ namespace ApoGirl.Core.Effects
                 if (!string.IsNullOrEmpty(flag) && state.Flags.Add(flag))
                 {
                     delta.FlagsSet.Add(flag);
-                }
-            }
-
-            foreach (var flag in effect.ClearFlags)
-            {
-                if (!string.IsNullOrEmpty(flag) && state.Flags.Remove(flag))
-                {
-                    delta.FlagsCleared.Add(flag);
                 }
             }
 
@@ -254,6 +255,12 @@ namespace ApoGirl.Core.Effects
 
         public static int ChangeVital(GameState state, VitalType type, int amount, BalanceConfig balance, StateDelta delta)
         {
+            // 부상 중에는 체력이 회복되지 않는다 (휴식·음식·이벤트 모두)
+            if (type == VitalType.Hp && amount > 0 && Rules.InjuryRules.IsInjured(state, balance))
+            {
+                return 0;
+            }
+
             var vitals = state.Player.Vitals;
             var before = vitals.GetVital(type);
             var after = Clamp(before + amount, 0, balance.VitalMax);

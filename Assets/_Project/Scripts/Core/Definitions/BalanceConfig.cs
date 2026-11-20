@@ -57,6 +57,25 @@ namespace ApoGirl.Core.Definitions
         public int BaseStatValue = 10;
         public int StartingHp = 100;
 
+        // ── 부상·청결 (사용자 요청) ──
+
+        /// <summary>한 사건(슬롯 하나·이벤트 선택 하나)에서 최대 체력의 이 비율 이상을 잃으면 '부상'.</summary>
+        public float InjuryHpFraction = 0.3f;
+
+        /// <summary>부상 상태 플래그. 이 동안 체력이 회복되지 않고, 의약품 치료로만 풀린다.</summary>
+        public string InjuredFlag = "INJURED";
+
+        /// <summary>부상 때 상처 감염: 기본 + 더러움(1 − 청결/최대) × 추가.</summary>
+        public int WoundInfectionBase = 2;
+        public int WoundInfectionDirty = 10;
+
+        /// <summary>물림 감염도 더러울수록 늘어난다: × (1 + 더러움 × 이 값).</summary>
+        public float BiteDirtyBonus = 0.5f;
+
+        /// <summary>청결: 시작값, 주마다 떨어지는 양. 청소·정수 같은 위생 활동으로 오른다.</summary>
+        public int StartingCleanliness = 70;
+        public int CleanlinessWeeklyDecay = 15;
+
         public List<ResourceAmount> InitialResources = new List<ResourceAmount>
         {
             new ResourceAmount(ResourceType.Food, 14),
@@ -310,7 +329,7 @@ namespace ApoGirl.Core.Definitions
 
         // ── 거점 생산 ──
 
-        /// <summary>빗물통 (플래그 RAIN_BARRELS): 비 오는 주마다 주간 정산 때 물.</summary>
+        /// <summary>빗물통 (플래그 RAIN_BARRELS): 비 오는 주마다 주간 정산 때 빗물(RawWater, 정수해야 식수).</summary>
         public int RainBarrelWater = 10;
 
         /// <summary>옥상 텃밭 (플래그 ROOF_GARDEN): 겨울을 뺀 매주 식량.</summary>

@@ -23,6 +23,12 @@ namespace ApoGirl.Core.State
         Cooking,
         Humanities,
         Mind,
+
+        /// <summary>과학 (정수·약품 효율, 거처를 교실로 삼으면 열린다).</summary>
+        Science,
+
+        /// <summary>음악 (스트레스·트라우마 회복).</summary>
+        Music,
     }
 
     /// <summary>거점 자원 (문서 5.4).</summary>
@@ -36,6 +42,9 @@ namespace ApoGirl.Core.State
         Materials,
         Ammo,
         Intel,
+
+        /// <summary>빗물·받아 둔 물. 그대로는 마실 수 없고 정수해야 식수(Water)가 된다.</summary>
+        RawWater,
     }
 
     /// <summary>하루 안의 시간대. 1일 = 낮 슬롯 1 + 밤 슬롯 1 (문서 4.1).</summary>

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using ApoGirl.Core.Definitions;
+using ApoGirl.Core.Effects;
 using ApoGirl.Core.Random;
 using ApoGirl.Core.Rules;
 using ApoGirl.Core.State;
@@ -14,6 +15,37 @@ namespace ApoGirl.Core.Expedition
     /// </summary>
     public static class ContainerRules
     {
+        /// <summary>뒤진 상자 키가 속한 방들의 SearchFlag를 세운다 (예: 1층 끝 교실 → 거처 이벤트).</summary>
+        public static void ApplyRoomFlags(LocationDef location, IEnumerable<string> searchedKeys, GameState state, StateDelta delta)
+        {
+            var layout = location?.Layout;
+            if (layout == null || searchedKeys == null)
+            {
+                return;
+            }
+
+            var prefix = location.Id + "/R";
+            foreach (var key in searchedKeys)
+            {
+                if (key == null || !key.StartsWith(prefix, StringComparison.Ordinal))
+                {
+                    continue;
+                }
+
+                var dot = key.IndexOf('.', prefix.Length);
+                if (dot < 0 || !int.TryParse(key.Substring(prefix.Length, dot - prefix.Length), out var doorIndex) || doorIndex < 0 || doorIndex >= layout.Doors.Count)
+                {
+                    continue;
+                }
+
+                var flag = layout.Doors[doorIndex].SearchFlag;
+                if (!string.IsNullOrEmpty(flag) && state.Flags.Add(flag))
+                {
+                    delta.FlagsSet.Add(flag);
+                }
+            }
+        }
+
         public const string RestockFlagPrefix = "RESTOCKED_";
 
         /// <summary>이 지역의 물자가 다시 채워졌고 아직 들어가 보지 않았다.</summary>

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using ApoGirl.Core.Expedition;
+using ApoGirl.Core.Rules;
 using ApoGirl.Core.Simulation;
 using ApoGirl.Core.State;
 using ApoGirl.Data;
@@ -529,6 +530,11 @@ namespace ApoGirl.Presentation.Screens
                 {
                     lines.Add(Loc.F("result.intrusion_injured", Loc.T("npc." + intrusion.InjuredNpcId)));
                 }
+            }
+
+            if (outcome.WoundInfection > 0)
+            {
+                lines.Add(Loc.T(InjuryRules.Dirt(_session.State, _session.Definitions.Balance) >= 0.6f ? "result.injured_dirty" : "result.injured"));
             }
 
             if (outcome.Expedition != null && outcome.ExpeditionRequest != null && outcome.ExpeditionRequest.Restocked)

@@ -29,12 +29,18 @@ namespace ApoGirl.Presentation.Screens
     {
         private static readonly ResourceType[] Shown =
         {
-            ResourceType.Food, ResourceType.Water, ResourceType.Medicine, ResourceType.Materials, ResourceType.Power, ResourceType.Fuel,
+            ResourceType.Food, ResourceType.Water, ResourceType.RawWater, ResourceType.Medicine, ResourceType.Materials, ResourceType.Power, ResourceType.Fuel,
         };
 
         /// <summary>1~3주차엔 식량·물만 (문서 5.3 점진적 노출). UI_RESOURCES 이후 전부.</summary>
         private static bool Visible(GameState state, ResourceType type)
         {
+            // 빗물(정수 필요)은 받아 둔 게 있을 때만 식수 옆에 따로 보인다
+            if (type == ResourceType.RawWater)
+            {
+                return state.Base.GetResource(ResourceType.RawWater) > 0;
+            }
+
             return type == ResourceType.Food || type == ResourceType.Water || Disclosure.Has(state, "UI_RESOURCES");
         }
 
@@ -116,7 +122,7 @@ namespace ApoGirl.Presentation.Screens
     {
         private static readonly VitalType[] ShownVitals =
         {
-            VitalType.Hp, VitalType.Fatigue, VitalType.Stress, VitalType.Hunger, VitalType.Thirst,
+            VitalType.Hp, VitalType.Fatigue, VitalType.Stress, VitalType.Cleanliness, VitalType.Hunger, VitalType.Thirst,
         };
 
         private readonly GameSession _session;
@@ -146,6 +152,10 @@ namespace ApoGirl.Presentation.Screens
                 panel.Add(bar);
                 _vitals[vital] = bar;
             }
+
+            _injury = Row(panel);
+            _injury.AddToClassList("danger");
+            _injury.style.whiteSpace = WhiteSpace.Normal;
 
             _symptom = Row(panel);
             _symptom.AddToClassList("danger");
@@ -179,6 +189,7 @@ namespace ApoGirl.Presentation.Screens
         }
 
         private readonly Label _symptom;
+        private readonly Label _injury;
         private readonly VisualElement _companions = new VisualElement();
 
         /// <summary>합류한 동료: 누르면 역할이 차례로 바뀐다 (계획 단계에서만).</summary>
@@ -220,7 +231,7 @@ namespace ApoGirl.Presentation.Screens
                 var value = player.Vitals.GetVital(pair.Key);
                 pair.Value.value = value;
                 pair.Value.title = UiText.Vital(pair.Key) + " " + value;
-                var basic = pair.Key == VitalType.Hp || pair.Key == VitalType.Stress || pair.Key == VitalType.Fatigue;
+                var basic = pair.Key == VitalType.Hp || pair.Key == VitalType.Stress || pair.Key == VitalType.Fatigue || pair.Key == VitalType.Cleanliness;
                 pair.Value.EnableInClassList("hidden", !basic && !Disclosure.Has(state, "UI_RESOURCES"));
             }
 
@@ -242,6 +253,11 @@ namespace ApoGirl.Presentation.Screens
             }
 
             _baseInfo.text = Loc.F("status.facilities", facilities.Count > 0 ? string.Join(", ", facilities) : "-") + "\n" + string.Join("\n", people);
+
+            // 부상: 의약품으로 치료하기 전까지 체력이 회복되지 않는다
+            var injured = InjuryRules.IsInjured(state, balance);
+            _injury.text = Loc.T("status.injured");
+            _injury.EnableInClassList("hidden", !injured);
 
             // M6: 증상 (감염도 숫자는 숨긴다, 문서 5.3)
             var symptom = InfectionRules.SymptomLevel(state);

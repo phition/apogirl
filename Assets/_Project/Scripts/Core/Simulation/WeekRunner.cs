@@ -54,6 +54,12 @@ namespace ApoGirl.Core.Simulation
 
         /// <summary>UI가 멈춰서 연출해야 하는 슬롯 (대성공·실패·탐험·위반·게임 종료). 나머지는 빠른 진행.</summary>
         public bool StopForPresentation;
+
+        /// <summary>이번 슬롯(또는 이벤트)에서 새로 부상을 입었으면 상처 감염량 (아니면 0).</summary>
+        public int WoundInfection;
+
+        /// <summary>행동 직전 체력 (하루 소모 뒤). 부상 판정 기준.</summary>
+        internal int HpBefore;
     }
 
     /// <summary>주간 정산 결과.</summary>
@@ -167,6 +173,7 @@ namespace ApoGirl.Core.Simulation
                 UpkeepRules.ApplyDaily(_state, Balance, delta, (int)TraitRules.Sum(_state, _db, TraitModifierKind.FoodSaving));
             }
 
+            outcome.HpBefore = player.Vitals.Hp;
             var actionId = string.IsNullOrEmpty(slot.ActionId) ? PlanPreparer.RestIdFor(index, Balance) : slot.ActionId;
             var action = _db.GetAction(actionId);
 
@@ -274,7 +281,11 @@ namespace ApoGirl.Core.Simulation
                 _state.EndCause = HpZeroCause(outcome);
             }
 
-            outcome.StopForPresentation = outcome.Result != CheckResult.Success || action.IsExpedition || violation || IsGameOver || outcome.Raid != null;
+            // 부상: 이 슬롯(탐험·습격 포함)에서 체력을 크게 잃었으면
+            outcome.WoundInfection = InjuryRules.CheckIncident(_state, outcome.HpBefore, Balance, delta);
+
+            outcome.StopForPresentation = outcome.Result != CheckResult.Success || action.IsExpedition || violation || IsGameOver || outcome.Raid != null
+                                          || outcome.WoundInfection > 0;
 
             // 이벤트 판정은 달력을 넘기기 전 (지금 슬롯의 요일·낮밤 기준)
             EventDef ev = null;
@@ -354,6 +365,7 @@ namespace ApoGirl.Core.Simulation
 
         private void ApplyChoice(PendingEventState pending, string choiceId)
         {
+            var hpBefore = _state.Player.Vitals.Hp;
             var result = EventResolver.Choose(_state, pending.Event, choiceId, pending.Context, Balance, _random, pending.Outcome.Delta);
             pending.Outcome.Events.Add(result);
 
@@ -363,6 +375,13 @@ namespace ApoGirl.Core.Simulation
             if (effect != null && !string.IsNullOrEmpty(effect.IntrusionResponse))
             {
                 pending.Outcome.Intrusion = IntrusionRules.Resolve(_state, _db, effect.IntrusionResponse, Balance, _random, pending.Outcome.Delta);
+            }
+
+            // 부상: 이벤트 선택(침입 대응 등)으로 체력을 크게 잃었으면
+            var wound = InjuryRules.CheckIncident(_state, hpBefore, Balance, pending.Outcome.Delta);
+            if (wound > 0)
+            {
+                pending.Outcome.WoundInfection = wound;
             }
 
             CheckGameOver();
@@ -573,6 +592,12 @@ namespace ApoGirl.Core.Simulation
             foreach (var key in result.SearchedContainers)
             {
                 _state.Exploration.LootedContainers.Add(key);
+            }
+
+            // 특정 방을 뒤졌다는 표시 (예: 1층 끝 교실 → 거처 이벤트)
+            if (_db.TryGetLocation(action.LocationId, out var searchedLocation))
+            {
+                ContainerRules.ApplyRoomFlags(searchedLocation, result.SearchedContainers, _state, delta);
             }
 
             EffectApplier.ChangeVital(_state, VitalType.Fatigue, (int)Math.Round(result.FatigueDelta), Balance, delta);

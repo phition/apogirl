@@ -120,7 +120,13 @@ namespace ApoGirl.Core.Simulation.Bots
         private static bool Usable(GameState state, IDefinitionDatabase db, string actionId, int slotIndex)
         {
             return db.TryGetAction(actionId, out var action) && PlanEditing.IsUnlocked(state, db, action) && PlanEditing.IsAllowedIn(action, slotIndex)
-                   && !Exhausted(state, db, action);
+                   && !Exhausted(state, db, action) && Affordable(state, action);
+        }
+
+        /// <summary>지금 가진 자원으로 비용을 낼 수 있는가 (빗물 없이 정수, 약 없이 치료를 두지 않는다).</summary>
+        private static bool Affordable(GameState state, ActionDef action)
+        {
+            return action.ResourceCosts.All(cost => state.Base.GetResource(cost.Resource) >= cost.Amount);
         }
 
         /// <summary>상자가 고갈되는 지역(교실동)에 남은 상자가 1회분의 절반보다 적으면 가지 않는다 (빈 상자를 본 플레이어처럼).</summary>

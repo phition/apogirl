@@ -57,6 +57,14 @@ namespace ApoGirl.EditorTools
 
         // ── 공통 도우미 ──
 
+        /// <summary>방마다 다른 그림의 상자 (SpriteKey).</summary>
+        private static ContainerDef CS(string id, ContainerKind kind, float x, string sprite, string loot = "")
+        {
+            var container = C(id, kind, 0, x, loot);
+            container.SpriteKey = sprite;
+            return container;
+        }
+
         private static ContainerDef C(string id, ContainerKind kind, int floor, float x, string loot = "")
         {
             var seconds = kind == ContainerKind.Locker ? 3f : kind == ContainerKind.Desk ? 2f : kind == ContainerKind.Cabinet ? 3.5f : kind == ContainerKind.Fridge ? 4f : 2.5f;
@@ -143,7 +151,7 @@ namespace ApoGirl.EditorTools
                 Id = "ROOM_RESTROOM", Width = 8f, DefaultLootTableId = "LOOT_SCHOOL_GENERAL",
                 DoorXs = new List<float> { 1.2f },
                 Windows = new List<WindowDef> { new WindowDef(3.2f, 1.6f) },
-                Containers = { C("SINK", ContainerKind.Cabinet, 0, 4.2f), C("SUPPLY", ContainerKind.Box, 0, 6.6f) },
+                Containers = { C("SINK", ContainerKind.Cabinet, 0, 4.2f, "LOOT_SCHOOL_SINK"), C("SUPPLY", ContainerKind.Box, 0, 6.6f) },
             });
             layout.RoomTemplates.Add(new RoomTemplateDef
             {
@@ -158,22 +166,62 @@ namespace ApoGirl.EditorTools
                 },
             });
 
+            // 특수실 (사용자 요청): 방마다 소품·뒷벽 장식·전리품이 다르다. 문 하나, 창 하나(뒷벽 장식 자리)
+            RoomTemplateDef Special(string id, string decor, string loot, params ContainerDef[] containers)
+            {
+                var template = new RoomTemplateDef
+                {
+                    Id = id, Width = 14f, DefaultLootTableId = loot, WallDecor = decor,
+                    DoorXs = new List<float> { 1.2f, 12.8f },
+                    Windows = new List<WindowDef> { new WindowDef(2.6f, 2.6f) },
+                };
+                template.Containers.AddRange(containers);
+                return template;
+            }
+
+            layout.RoomTemplates.Add(Special("ROOM_NURSE", "wall_redcross", "LOOT_SCHOOL_NURSE",
+                CS("BED_1", ContainerKind.Desk, 3.8f, "prop_bed"), CS("BED_2", ContainerKind.Desk, 6.6f, "prop_bed"),
+                CS("MEDCAB", ContainerKind.Cabinet, 9.4f, "prop_medcabinet"), CS("FRIDGE", ContainerKind.Fridge, 11.6f, "prop_fridge")));
+            layout.RoomTemplates.Add(Special("ROOM_SCIENCE", "wall_periodic", "LOOT_SCHOOL_SCIENCE",
+                CS("BENCH_1", ContainerKind.Desk, 3.8f, "prop_labbench"), CS("BENCH_2", ContainerKind.Desk, 6.8f, "prop_labbench"),
+                CS("CHEM", ContainerKind.Cabinet, 9.6f, "prop_chemshelf"), CS("PREP", ContainerKind.Cabinet, 11.6f, "prop_cabinet")));
+            layout.RoomTemplates.Add(Special("ROOM_MUSIC", "wall_music", "LOOT_SCHOOL_MUSIC",
+                CS("PIANO", ContainerKind.Desk, 4.0f, "prop_piano"), CS("INSTRUMENTS", ContainerKind.Cabinet, 7.6f, "prop_instrument"),
+                CS("LOCKERS", ContainerKind.Locker, 10.0f, "prop_locker", "LOOT_SCHOOL_LOCKER"), CS("STANDS", ContainerKind.Box, 11.8f, "prop_box")));
+            layout.RoomTemplates.Add(Special("ROOM_HOMEEC", "wall_kitchen", "LOOT_SCHOOL_HOMEEC",
+                CS("COUNTER", ContainerKind.Desk, 3.8f, "prop_kitchen"), CS("STOVE", ContainerKind.Desk, 6.6f, "prop_stove"),
+                CS("FRIDGE", ContainerKind.Fridge, 9.2f, "prop_fridge"), CS("PANTRY", ContainerKind.Cabinet, 11.4f, "prop_cabinet")));
+            layout.RoomTemplates.Add(Special("ROOM_COMPUTER", "wall_whiteboard", "LOOT_SCHOOL_COMPUTER",
+                CS("PC_1", ContainerKind.Desk, 3.6f, "prop_computer"), CS("PC_2", ContainerKind.Desk, 6.0f, "prop_computer"),
+                CS("PC_3", ContainerKind.Desk, 8.4f, "prop_computer"), CS("RACK", ContainerKind.Cabinet, 11.2f, "prop_rack")));
+            layout.RoomTemplates.Add(Special("ROOM_BROADCAST", "wall_onair", "LOOT_SCHOOL_BROADCAST",
+                CS("CONSOLE", ContainerKind.Desk, 4.2f, "prop_console"), CS("RACK", ContainerKind.Cabinet, 7.6f, "prop_rack"),
+                CS("FUEL", ContainerKind.Box, 9.8f, "prop_box"), CS("LOCKER", ContainerKind.Locker, 11.8f, "prop_locker", "LOOT_SCHOOL_LOCKER")));
+
             Stairs(layout, 3f);
             Stairs(layout, 121f);
 
             void R(string template, int floor, float spanX, int number) =>
                 Room(layout, $"ROOM_{floor + 1}F_{template}_{number}", template, floor, spanX, number);
 
+            // 1층: 교무실·양호실·가사 실습실, 끝 교실(1-5)은 거처 이벤트의 계기
             R("ROOM_OFFICE", 0, 6f, 0);
-            R("ROOM_CLASSROOM", 0, 24f, 1);
+            R("ROOM_NURSE", 0, 24f, 1);
             R("ROOM_CLASSROOM", 0, 38f, 2);
-            R("ROOM_CLASSROOM", 0, 60f, 3);
+            R("ROOM_HOMEEC", 0, 60f, 3);
             R("ROOM_CLASSROOM", 0, 74f, 4);
             R("ROOM_CLASSROOM", 0, 88f, 5);
+            layout.Doors[layout.Doors.Count - 1].SearchFlag = "SEARCHED_1F_END";
             R("ROOM_RESTROOM", 0, 102f, 0);
+
+            // 2층 끝: 컴퓨터실·과학실, 3층 끝: 음악실, 4층 끝: 방송실
+            var specials = new Dictionary<(int Floor, int Number), string>
+            {
+                { (1, 6), "ROOM_COMPUTER" }, { (1, 7), "ROOM_SCIENCE" }, { (2, 7), "ROOM_MUSIC" }, { (3, 7), "ROOM_BROADCAST" },
+            };
             for (var f = 1; f < layout.Floors; f++)
             {
-                for (var i = 0; i < 7; i++) R("ROOM_CLASSROOM", f, 6f + 14f * i, i + 1);
+                for (var i = 0; i < 7; i++) R(specials.TryGetValue((f, i + 1), out var special) ? special : "ROOM_CLASSROOM", f, 6f + 14f * i, i + 1);
                 R("ROOM_RESTROOM", f, 104f, 0);
             }
 
