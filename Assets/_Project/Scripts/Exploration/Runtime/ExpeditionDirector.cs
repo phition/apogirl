@@ -1327,12 +1327,17 @@ namespace ApoGirl.Exploration.Runtime
             flash.transform.SetParent(_world, false);
             _flashlight = flash.AddComponent<Light2D>();
             _flashlight.lightType = Light2D.LightType.Point;
-            _flashlight.pointLightInnerRadius = 1f;
-            _flashlight.pointLightOuterRadius = 10f;
-            _flashlight.pointLightInnerAngle = 40f;
-            _flashlight.pointLightOuterAngle = 70f;
-            _flashlight.intensity = 1.2f;
-            _flashlight.color = new Color(1f, 0.95f, 0.8f);
+            // 손전등은 세 겹으로: 본 빛(부드러운 원뿔) + 뜨거운 가운데(좁고 멀리) + 넓게 번진 빛(가깝고 옅게).
+            // 겹쳐서 가운데가 가장 밝고 가장자리·먼 곳으로 자연스럽게 어두워진다.
+            _flashlight.pointLightInnerRadius = 0.4f;
+            _flashlight.pointLightOuterRadius = 11f;
+            _flashlight.pointLightInnerAngle = 14f;
+            _flashlight.pointLightOuterAngle = 58f;
+            _flashlight.falloffIntensity = 0.75f;
+            _flashlight.intensity = 0.85f;
+            _flashlight.color = new Color(1f, 0.94f, 0.8f);
+            _flashlightHot = ChildCone(flash.transform, "FlashlightHot", 0.3f, 13f, 4f, 20f, 0.6f, 0.55f, new Color(1f, 0.97f, 0.88f));
+            _flashlightSpill = ChildCone(flash.transform, "FlashlightSpill", 0.2f, 5.5f, 70f, 150f, 0.9f, 0.22f, new Color(1f, 0.9f, 0.75f));
 
             // 어둠 속에서도 자기 주변은 희미하게 보이게
             var glow = new GameObject("SelfGlow");
@@ -1360,6 +1365,25 @@ namespace ApoGirl.Exploration.Runtime
 
             _areaFactor = _lighting.AmbientFactor(CurrentArea);
             SetAmbient(_ambientIntensity, _light.color);
+        }
+
+        private Light2D _flashlightHot;
+        private Light2D _flashlightSpill;
+
+        private static Light2D ChildCone(Transform parent, string name, float innerRadius, float outerRadius, float innerAngle, float outerAngle, float falloff, float intensity, Color color)
+        {
+            var go = new GameObject(name);
+            go.transform.SetParent(parent, false);
+            var light = go.AddComponent<Light2D>();
+            light.lightType = Light2D.LightType.Point;
+            light.pointLightInnerRadius = innerRadius;
+            light.pointLightOuterRadius = outerRadius;
+            light.pointLightInnerAngle = innerAngle;
+            light.pointLightOuterAngle = outerAngle;
+            light.falloffIntensity = falloff;
+            light.intensity = intensity;
+            light.color = color;
+            return light;
         }
 
         private static void EnsureEventSystem()
@@ -1408,9 +1432,18 @@ namespace ApoGirl.Exploration.Runtime
             var center = new Vector3(worldX, origin.y + 1.4f, 0f);
             if (_flashlight != null)
             {
-                _flashlight.enabled = IsDark && FlashlightOn && !Hidden;
-                _flashlight.transform.localPosition = center;
-                _flashlight.transform.localRotation = Quaternion.Euler(0f, 0f, _facingRight ? -90f : 90f);
+                var flashOn = IsDark && FlashlightOn && !Hidden;
+                _flashlight.enabled = flashOn;
+                if (_flashlightHot != null) _flashlightHot.enabled = flashOn;
+                if (_flashlightSpill != null) _flashlightSpill.enabled = flashOn;
+
+                // 손에 든 빛: 걸을 때 살짝 흔들리고(뛰면 더), 아주 조금 떨린다
+                var swayAmount = _animMoving ? (_animRunning ? 3.2f : 1.6f) : 0.35f;
+                var sway = Mathf.Sin(Time.time * (_animMoving ? (_animRunning ? 13f : 8f) : 1.7f)) * swayAmount;
+                var flicker = 1f + (Mathf.PerlinNoise(Time.time * 9f, 0.37f) - 0.5f) * 0.05f;
+                _flashlight.intensity = 0.85f * flicker;
+                _flashlight.transform.localPosition = center + new Vector3(_facingRight ? 0.25f : -0.25f, -0.25f, 0f);
+                _flashlight.transform.localRotation = Quaternion.Euler(0f, 0f, (_facingRight ? -90f : 90f) + sway - (_crouching ? 0f : 3f) * (_facingRight ? 1f : -1f));
             }
 
             if (_selfLight != null)
@@ -1423,7 +1456,11 @@ namespace ApoGirl.Exploration.Runtime
             }
 
             // 화면 비율과 관계없이 가로 최소 MinVisibleWidth 유닛이 보이게 (멀리서 건물과 캐릭터를 함께 잡는 앵글)
-            _camera.orthographicSize = Mathf.Clamp(MinVisibleWidth / (2f * Mathf.Max(0.1f, _camera.aspect)), MinOrthographicSize, MaxOrthographicSize);
+            var wantedSize = Mathf.Clamp(MinVisibleWidth / (2f * Mathf.Max(0.1f, _camera.aspect)), MinOrthographicSize, MaxOrthographicSize);
+
+            // 도트가 고르게 보이도록 그림 1픽셀 = 화면 정수 픽셀이 되게 맞춘다 (1080p·4K에서 2배·4배, 7.5유닛)
+            var pixelScale = Mathf.Max(1, Mathf.RoundToInt(_camera.pixelHeight / (2f * wantedSize * ExplorationArt.PixelsPerUnit)));
+            _camera.orthographicSize = _camera.pixelHeight / (2f * ExplorationArt.PixelsPerUnit * pixelScale);
             // 방이 화면에 다 들어오면 방 전체를 가운데에, 아니면 플레이어를 따라가되 공간 끝 너머 빈 곳은 덜 보이게.
             // 문틈으로 살피는 동안에는 문 너머 공간을 비춘다.
             var wantedArea = PeekTarget != null ? PeekArea : CurrentArea;
@@ -1461,13 +1498,20 @@ namespace ApoGirl.Exploration.Runtime
                 : Mathf.Clamp(focusX, viewOrigin.x + halfWidth - 2f, viewOrigin.x + width - halfWidth + 2f);
             var target = new Vector3(cameraX, viewOrigin.y + _building.FloorHeight * 0.5f, -10f);
             var cameraTransform = _camera.transform;
-            cameraTransform.position = cut || dt >= 1000f ? target : Vector3.Lerp(cameraTransform.position, target, Mathf.Clamp01(dt * 6f));
+            var cameraPosition = cut || dt >= 1000f ? target : Vector3.Lerp(cameraTransform.position, target, Mathf.Clamp01(dt * 6f));
+
+            // 화면 픽셀 격자에 맞춰 놓는다 (움직일 때 도트가 떨리지 않게)
+            var grid = ExplorationArt.PixelsPerUnit * pixelScale;
+            cameraPosition.x = Mathf.Round(cameraPosition.x * grid) / grid;
+            cameraPosition.y = Mathf.Round(cameraPosition.y * grid) / grid;
+            cameraTransform.position = cameraPosition;
 
             // 보이는 공간의 밝기 (낮: 복도는 햇빛, 문 안 방은 어둡게). 문을 지나면 잠깐 동안 눈이 적응하듯 바뀐다.
             if (_lighting != null)
             {
                 var wanted = _lighting.AmbientFactor(_shownArea ?? CurrentArea);
                 _areaFactor = cut || dt >= 1000f ? wanted : Mathf.MoveTowards(_areaFactor, wanted, dt * 2.5f);
+                _lighting.Tick(dt, Clock != null && Request.TimeOfDay == ExpeditionTime.Day ? Clock.Normalized : 0f);
                 if (_light != null && !FullVision)
                 {
                     _light.intensity = AmbientLightIntensity;

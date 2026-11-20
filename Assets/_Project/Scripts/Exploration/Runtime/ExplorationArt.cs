@@ -17,6 +17,9 @@ namespace ApoGirl.Exploration.Runtime
         /// <summary>픽셀 아트 (M6-5, PPU 36 = 캐릭터 64px). 동작마다 프레임 수가 달라 FrameCount로 센다.</summary>
         private const string PixelFolder = "Art/ExplorationPixel/";
 
+        /// <summary>픽셀 아트의 유닛당 픽셀 (가져오기 설정 ArtImportSettings.PixelPixelsPerUnit과 같다). 카메라 정수 배율 계산에 쓴다.</summary>
+        public const float PixelsPerUnit = 36f;
+
         private static readonly Dictionary<string, Sprite> Cache = new Dictionary<string, Sprite>();
         private static readonly Dictionary<string, int> Frames = new Dictionary<string, int>();
 
