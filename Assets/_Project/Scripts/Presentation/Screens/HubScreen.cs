@@ -532,6 +532,12 @@ namespace ApoGirl.Presentation.Screens
                 }
             }
 
+            if (outcome.FirstAidPatched)
+            {
+                var skilled = _session.State.Player.ProficiencyLevel(ProficiencyType.Medicine) >= _session.Definitions.Balance.FirstAidSkilledLevel;
+                lines.Add(Loc.T(skilled ? "result.first_aid_skilled" : "result.first_aid"));
+            }
+
             if (outcome.WoundInfection > 0)
             {
                 lines.Add(Loc.T(_session.State.Player.Vitals.Cleanliness < _session.Definitions.Balance.WoundCleanThreshold ? "result.injured_dirty" : "result.injured"));

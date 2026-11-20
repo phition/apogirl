@@ -58,6 +58,9 @@ namespace ApoGirl.Core.Simulation
         /// <summary>이번 슬롯(또는 이벤트)에서 새로 부상을 입었으면 상처 감염량 (아니면 0).</summary>
         public int WoundInfection;
 
+        /// <summary>탐험에서 다쳤지만 응급 치료로 마무리했다 (응급처치 숙련, 부상까지는 아님).</summary>
+        public bool FirstAidPatched;
+
         /// <summary>행동 직전 체력 (하루 소모 뒤). 부상 판정 기준.</summary>
         internal int HpBefore;
     }
@@ -283,6 +286,7 @@ namespace ApoGirl.Core.Simulation
 
             // 부상: 이 슬롯(탐험·습격 포함)에서 체력을 크게 잃었으면
             outcome.WoundInfection = InjuryRules.CheckIncident(_state, outcome.HpBefore, Balance, delta);
+            outcome.FirstAidPatched = action.IsExpedition && outcome.WoundInfection == 0 && InjuryRules.PatchedUp(_state, outcome.HpBefore, Balance);
 
             outcome.StopForPresentation = outcome.Result != CheckResult.Success || action.IsExpedition || violation || IsGameOver || outcome.Raid != null
                                           || outcome.WoundInfection > 0;

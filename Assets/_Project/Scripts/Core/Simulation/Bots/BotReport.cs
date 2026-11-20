@@ -18,14 +18,14 @@ namespace ApoGirl.Core.Simulation.Bots
 
         private static readonly CultureInfo Inv = CultureInfo.InvariantCulture;
 
-        /// <summary>M7-c 엔딩 분포 목표 (봇 기준, 표준 난이도. 2026-11-20 배드 25% 중심으로 상향). 묶음 이름 → (최소, 최대, 해당 구분).</summary>
+        /// <summary>M7-c 엔딩 분포 목표 (봇 기준, 표준 난이도. 2026-11-20 배드 50% 중심으로 상향 (부상 도입 뒤)). 묶음 이름 → (최소, 최대, 해당 구분).</summary>
         public static readonly (string Name, float Min, float Max, EndingCategory[] Categories)[] EndingTargets =
         {
             ("기본 (일반·균형)", 0.25f, 0.40f, new[] { EndingCategory.Normal, EndingCategory.Balanced }),
             ("특화", 0.25f, 0.35f, new[] { EndingCategory.Specialized }),
             ("관계·서사", 0.08f, 0.18f, new[] { EndingCategory.Relationship, EndingCategory.Narrative }),
             ("히든", 0.01f, 0.05f, new[] { EndingCategory.Hidden }),
-            ("배드", 0.20f, 0.30f, new[] { EndingCategory.Bad }),
+            ("배드", 0.45f, 0.55f, new[] { EndingCategory.Bad }),
         };
 
         private static readonly (string Name, Func<BotWeekSample, int> Get)[] WeekMetrics =

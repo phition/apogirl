@@ -80,6 +80,12 @@ namespace ApoGirl.Presentation.Text
 
             if (delta.PowerRestored) lines.Add(Loc.T("result.power_restored"));
             foreach (var dish in delta.DishesCooked) lines.Add(Loc.F("result.dish", Loc.T("dish." + dish)));
+            foreach (var flag in delta.FlagsCleared)
+            {
+                // 지워진 플래그 중 알려 줄 것 (예: 부상 치유)
+                var text = Loc.Lookup(Loc.UiTable, "flag_cleared." + flag);
+                if (!string.IsNullOrEmpty(text)) lines.Add(text);
+            }
             if (delta.ItemsLost.Count > 0)
             {
                 lines.Add(Loc.F("result.items_lost", string.Join("  ", delta.ItemsLost.Select(i => Loc.Item(i.ItemId) + " ×" + i.Count))));

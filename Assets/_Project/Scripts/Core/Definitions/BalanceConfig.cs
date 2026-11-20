@@ -62,6 +62,18 @@ namespace ApoGirl.Core.Definitions
         /// <summary>한 사건(슬롯 하나·이벤트 선택 하나)에서 최대 체력의 이 비율 이상을 잃으면 '부상'.</summary>
         public float InjuryHpFraction = 0.3f;
 
+        /// <summary>응급처치·의학 숙련 1레벨마다 부상 기준이 이만큼 높아진다 (30% → Lv 2면 40%).</summary>
+        public float InjuryHpFractionPerMedicineLevel = 0.05f;
+
+        /// <summary>부상 중 휴식하면 의약품이 있을 때 반드시 이만큼 써서 부상을 치유한다.</summary>
+        public int RestInjuryMedicine = 1;
+
+        /// <summary>응급처치 숙련이 있고 탐험에서 이만큼 이상 잃었지만 부상까지 가지 않았으면 '응급 치료로 마무리' 서술.</summary>
+        public int FirstAidNarrativeMinLoss = 15;
+
+        /// <summary>이 숙련 이상이면 응급 치료 서술이 능숙한 쪽으로 바뀐다.</summary>
+        public int FirstAidSkilledLevel = 3;
+
         /// <summary>부상 상태 플래그. 이 동안 체력이 회복되지 않고, 의약품 치료로만 풀린다.</summary>
         public string InjuredFlag = "INJURED";
 

@@ -1,5 +1,8 @@
 {
   "UI": {
+    "result.first_aid": "약간 다쳤지만, 응급 치료로 잘 마무리했다.",
+    "result.first_aid_skilled": "약간 다쳤지만, 손에 익은 응급 치료로 금방 마무리했다. 흉터도 남지 않을 것 같다.",
+    "flag_cleared.INJURED": "부상을 치료했다. 이제 쉬면 낫는다.",
     "band.SATED": "든든함",
     "band.FULL": "배부름",
     "band.NORMAL": "보통",

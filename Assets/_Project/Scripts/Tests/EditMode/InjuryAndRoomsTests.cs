@@ -35,7 +35,8 @@ namespace ApoGirl.Tests.EditMode
             Assert.IsTrue(InjuryRules.IsInjured(state, balance));
             Assert.AreEqual(10, state.Player.Vitals.Infection);
 
-            // 부상 중에는 휴식으로도 체력이 오르지 않는다
+            // 부상 중에는 휴식으로도 체력이 오르지 않는다 (의약품이 없으면)
+            state.Base.SetResource(ResourceType.Medicine, 0);
             ActionResolver.Resolve(state, db.GetAction(balance.NightRestActionId), db, new SeededRandom(SeededRandom.CreateState(1)), delta);
             Assert.AreEqual(70, state.Player.Vitals.Hp);
 
@@ -62,6 +63,59 @@ namespace ApoGirl.Tests.EditMode
         }
 
         [Test]
+        public void MedicineSkill_RaisesInjuryThreshold_AndHealsWithoutMedicine()
+        {
+            var db = M6Act4Tests.ShippedDb();
+            var balance = db.Balance;
+            Assert.AreEqual(30, InjuryRules.Threshold(balance, 0));
+            Assert.AreEqual(40, InjuryRules.Threshold(balance, 2), "Lv 2면 40%");
+            Assert.AreEqual(55, InjuryRules.Threshold(balance, 5));
+
+            var state = NewGameFactory.Create(balance, 1);
+            state.Player.Proficiency[ProficiencyType.Medicine] = new ProficiencyState { Level = 2, Xp = balance.ProficiencyXpThresholds[1] };
+            state.Player.Vitals.Hp = 65;
+            Assert.AreEqual(0, InjuryRules.CheckIncident(state, 100, balance, new StateDelta()), "35를 잃어도 Lv 2면 부상 아님");
+            Assert.IsTrue(InjuryRules.PatchedUp(state, 100, balance), "대신 응급 치료로 마무리");
+            state.Player.Vitals.Hp = 60;
+            Assert.Greater(InjuryRules.CheckIncident(state, 100, balance, new StateDelta()), 0, "40이면 부상");
+
+            // 응급처치 수업 성공: 의약품 없이도 부상이 풀린다
+            var lesson = db.GetAction("ACT_EDU_MEDICINE");
+            state.Base.SetResource(ResourceType.Medicine, 0);
+            var healed = false;
+            for (var seed = 1; seed <= 20 && !healed; seed++)
+            {
+                state.Flags.Add(balance.InjuredFlag);
+                var result = ActionResolver.Resolve(state, lesson, db, new SeededRandom(SeededRandom.CreateState(seed)), new StateDelta());
+                Assert.AreEqual(result == CheckResult.Failure, InjuryRules.IsInjured(state, balance), "성공하면 치유, 실패하면 그대로");
+                healed = result != CheckResult.Failure;
+            }
+
+            Assert.IsTrue(healed);
+        }
+
+        [Test]
+        public void Rest_WithMedicine_AlwaysTreatsInjury()
+        {
+            var db = M6Act4Tests.ShippedDb();
+            var balance = db.Balance;
+            var state = NewGameFactory.Create(balance, 1);
+            state.Flags.Add(balance.InjuredFlag);
+            state.Player.Vitals.Hp = 50;
+            state.Base.SetResource(ResourceType.Medicine, 3);
+            var delta = new StateDelta();
+            ActionResolver.Resolve(state, db.GetAction(balance.NightRestActionId), db, new SeededRandom(SeededRandom.CreateState(1)), delta);
+            Assert.IsFalse(InjuryRules.IsInjured(state, balance), "의약품이 있으면 휴식 때 반드시 써서 치유");
+            Assert.AreEqual(2, state.Base.GetResource(ResourceType.Medicine));
+            Assert.Greater(state.Player.Vitals.Hp, 50, "치유한 뒤 휴식 회복은 그대로");
+            Assert.Contains(balance.InjuredFlag, delta.FlagsCleared);
+
+            // 다치지 않았으면 의약품을 쓰지 않는다
+            ActionResolver.Resolve(state, db.GetAction(balance.NightRestActionId), db, new SeededRandom(SeededRandom.CreateState(1)), new StateDelta());
+            Assert.AreEqual(2, state.Base.GetResource(ResourceType.Medicine));
+        }
+
+        [Test]
         public void WeekRunner_ExpeditionWithBigLoss_SetsInjury()
         {
             var db = TestContent.CreateDatabase();
@@ -74,6 +128,17 @@ namespace ApoGirl.Tests.EditMode
             Assert.Greater(outcome.WoundInfection, 0);
             Assert.IsTrue(InjuryRules.IsInjured(state, db.Balance));
             Assert.IsTrue(outcome.StopForPresentation, "부상은 결과 카드로 보여 준다");
+
+            // 응급처치 숙련이 있으면 조금 다친 탐험은 '응급 치료로 마무리'
+            var state2 = TestContent.NewGame(db);
+            state2.Player.Proficiency[ProficiencyType.Medicine] = new ProficiencyState { Level = 1, Xp = 10 };
+            state2.Plan.Slots[0].ActionId = TestContent.DayExpedition;
+            var stub2 = new StubExpeditionRunner { Handler = _ => new ExpeditionResult { Status = ExtractStatus.Extracted, HpDelta = -20 } };
+            var runner2 = new WeekRunner(state2, db, new SeededRandom(state2.Rng), stub2);
+            runner2.PrepareWeek();
+            var patched = runner2.ExecuteNextSlot();
+            Assert.IsTrue(patched.FirstAidPatched);
+            Assert.AreEqual(0, patched.WoundInfection);
         }
 
         [Test]
