@@ -47,7 +47,23 @@ namespace ApoGirl.EditorTools
                 importer.ReadTextureSettings(settings);
                 settings.spriteMeshType = SpriteMeshType.FullRect;
                 settings.spriteAlignment = (int)SpriteAlignment.Custom;
-                settings.spritePivot = PivotFor(Path.GetFileNameWithoutExtension(path));
+                var key = Path.GetFileNameWithoutExtension(path);
+                settings.spritePivot = PivotFor(key);
+
+                // 픽셀 아트 표 (sprite_meta.json): 그림마다 기준점·테두리(조각 반복용)를 따로 정할 수 있다
+                if (path.StartsWith(PixelFolder) && TryGetMeta(key, out var meta))
+                {
+                    if (meta.Pivot != null && meta.Pivot.Length == 2)
+                    {
+                        settings.spritePivot = new Vector2(meta.Pivot[0], meta.Pivot[1]);
+                    }
+
+                    if (meta.Border != null && meta.Border.Length == 4)
+                    {
+                        settings.spriteBorder = new Vector4(meta.Border[0], meta.Border[1], meta.Border[2], meta.Border[3]);
+                    }
+                }
+
                 importer.SetTextureSettings(settings);
                 return;
             }
@@ -85,6 +101,54 @@ namespace ApoGirl.EditorTools
 
         private const string AudioRoot = "Assets/_Project/Resources/Audio/";
 
+        [System.Serializable]
+        private sealed class SpriteMeta
+        {
+            public string Key = "";
+
+            /// <summary>기준점 (0~1, x·y). 비면 코드 그림을 따르거나 아래 가운데.</summary>
+            public float[] Pivot;
+
+            /// <summary>테두리 픽셀 (왼쪽·아래·오른쪽·위). 있으면 늘리지 않고 가운데 조각을 반복해 그린다 (창문).</summary>
+            public float[] Border;
+        }
+
+        [System.Serializable]
+        private sealed class SpriteMetaFile
+        {
+            public SpriteMeta[] Sprites = System.Array.Empty<SpriteMeta>();
+        }
+
+        private const string MetaPath = PixelFolder + "sprite_meta.json";
+        private static System.Collections.Generic.Dictionary<string, SpriteMeta> _meta;
+        private static System.DateTime _metaTime;
+
+        private static bool TryGetMeta(string key, out SpriteMeta meta)
+        {
+            meta = null;
+            if (!File.Exists(MetaPath))
+            {
+                return false;
+            }
+
+            var time = File.GetLastWriteTimeUtc(MetaPath);
+            if (_meta == null || time != _metaTime)
+            {
+                _meta = new System.Collections.Generic.Dictionary<string, SpriteMeta>();
+                _metaTime = time;
+                var file = JsonUtility.FromJson<SpriteMetaFile>(File.ReadAllText(MetaPath));
+                if (file != null)
+                {
+                    foreach (var entry in file.Sprites)
+                    {
+                        _meta[entry.Key] = entry;
+                    }
+                }
+            }
+
+            return _meta.TryGetValue(key, out meta);
+        }
+
         /// <summary>같은 키(또는 대표 프레임)의 코드 그림 피벗. 없으면 아래 가운데.</summary>
         private static Vector2 PivotFor(string key)
         {
@@ -99,7 +163,8 @@ namespace ApoGirl.EditorTools
                 return settings.spriteAlignment == (int)SpriteAlignment.Custom ? settings.spritePivot : AlignmentPivot((SpriteAlignment)settings.spriteAlignment);
             }
 
-            return new Vector2(0.5f, 0f);
+            // 코드 그림에 없는 새 키: 벽 타일·땅은 왼쪽 아래(타일 반복·벽 장식 배치 기준), 나머지는 아래 가운데
+            return key.StartsWith("wall_") || key == "ground" ? Vector2.zero : new Vector2(0.5f, 0f);
         }
 
         private static Vector2 AlignmentPivot(SpriteAlignment alignment)

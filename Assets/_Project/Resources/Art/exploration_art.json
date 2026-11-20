@@ -1,0 +1,1124 @@
+{
+ "Interior": [
+  {
+   "Location": "",
+   "Template": "ROOM_NURSE",
+   "Key": "wall_nurse"
+  },
+  {
+   "Location": "",
+   "Template": "ROOM_SCIENCE",
+   "Key": "wall_science"
+  },
+  {
+   "Location": "",
+   "Template": "ROOM_MUSIC",
+   "Key": "wall_musicroom"
+  },
+  {
+   "Location": "",
+   "Template": "ROOM_HOMEEC",
+   "Key": "wall_homeec"
+  },
+  {
+   "Location": "",
+   "Template": "ROOM_COMPUTER",
+   "Key": "wall_computer"
+  },
+  {
+   "Location": "",
+   "Template": "ROOM_BROADCAST",
+   "Key": "wall_broadcast"
+  },
+  {
+   "Location": "",
+   "Template": "ROOM_PE_STORAGE",
+   "Key": "wall_storage"
+  },
+  {
+   "Location": "",
+   "Template": "ROOM_HOUSE",
+   "Key": "wall_house"
+  },
+  {
+   "Location": "",
+   "Template": "RESTROOM",
+   "Key": "wall_restroom"
+  },
+  {
+   "Location": "",
+   "Template": "ROOM_SUBWAY",
+   "Key": "wall_subway"
+  },
+  {
+   "Location": "",
+   "Template": "ROOM_MART_WAREHOUSE",
+   "Key": "wall_warehouse"
+  },
+  {
+   "Location": "",
+   "Template": "ROOM_MART_OFFICE",
+   "Key": "wall_office"
+  },
+  {
+   "Location": "",
+   "Template": "ROOM_STORE_STOCK",
+   "Key": "wall_warehouse"
+  },
+  {
+   "Location": "",
+   "Template": "ROOM_POLICE",
+   "Key": "wall_police"
+  },
+  {
+   "Location": "",
+   "Template": "ROOM_WATER",
+   "Key": "wall_water"
+  }
+ ],
+ "Corridor": [
+  {
+   "Location": "LOC_RESIDENTIAL",
+   "Template": "",
+   "Key": "wall_house_corridor"
+  },
+  {
+   "Location": "LOC_SUBWAY",
+   "Template": "",
+   "Key": "wall_subway"
+  },
+  {
+   "Location": "LOC_MART",
+   "Template": "",
+   "Key": "wall_mart"
+  },
+  {
+   "Location": "LOC_POLICE",
+   "Template": "",
+   "Key": "wall_police"
+  },
+  {
+   "Location": "LOC_WATERWORKS",
+   "Template": "",
+   "Key": "wall_water"
+  },
+  {
+   "Location": "LOC_TUTORIAL",
+   "Template": "",
+   "Key": "wall_storage"
+  }
+ ],
+ "RoomOutside": [
+  {
+   "Location": "LOC_STORE",
+   "Template": "",
+   "Key": "wall_store"
+  },
+  {
+   "Location": "LOC_PHARMACY",
+   "Template": "",
+   "Key": "wall_pharmacy"
+  },
+  {
+   "Location": "LOC_RESIDENTIAL",
+   "Template": "",
+   "Key": "wall_house_corridor"
+  },
+  {
+   "Location": "LOC_SUBWAY",
+   "Template": "",
+   "Key": "wall_subway"
+  },
+  {
+   "Location": "LOC_MART",
+   "Template": "",
+   "Key": "wall_mart"
+  },
+  {
+   "Location": "LOC_POLICE",
+   "Template": "",
+   "Key": "wall_police"
+  },
+  {
+   "Location": "LOC_WATERWORKS",
+   "Template": "",
+   "Key": "wall_water"
+  },
+  {
+   "Location": "LOC_TUTORIAL",
+   "Template": "",
+   "Key": "wall_storage"
+  }
+ ],
+ "Doors": [
+  {
+   "Location": "LOC_SCHOOL",
+   "Template": "",
+   "Closed": "door_school_closed",
+   "Open": "door_school_open"
+  },
+  {
+   "Location": "LOC_TUTORIAL",
+   "Template": "",
+   "Closed": "door_metal_closed",
+   "Open": "door_metal_open"
+  },
+  {
+   "Location": "LOC_RESIDENTIAL",
+   "Template": "",
+   "Closed": "door_house_closed",
+   "Open": "door_house_open"
+  },
+  {
+   "Location": "LOC_STORE",
+   "Template": "",
+   "Closed": "door_store_closed",
+   "Open": "door_store_open"
+  },
+  {
+   "Location": "LOC_PHARMACY",
+   "Template": "",
+   "Closed": "door_store_closed",
+   "Open": "door_store_open"
+  },
+  {
+   "Location": "LOC_MART",
+   "Template": "",
+   "Closed": "door_store_closed",
+   "Open": "door_store_open"
+  },
+  {
+   "Location": "LOC_SUBWAY",
+   "Template": "",
+   "Closed": "door_metal_closed",
+   "Open": "door_metal_open"
+  },
+  {
+   "Location": "LOC_POLICE",
+   "Template": "",
+   "Closed": "door_metal_closed",
+   "Open": "door_metal_open"
+  },
+  {
+   "Location": "LOC_WATERWORKS",
+   "Template": "",
+   "Closed": "door_metal_closed",
+   "Open": "door_metal_open"
+  }
+ ],
+ "Exits": [
+  {
+   "Location": "LOC_STORE",
+   "Open": "prop_exit_glass",
+   "Locked": "prop_exit_glass_locked"
+  },
+  {
+   "Location": "LOC_PHARMACY",
+   "Open": "prop_exit_glass",
+   "Locked": "prop_exit_glass_locked"
+  },
+  {
+   "Location": "LOC_MART",
+   "Open": "prop_exit_glass",
+   "Locked": "prop_exit_glass_locked"
+  }
+ ],
+ "Containers": [
+  {
+   "Location": "LOC_TUTORIAL",
+   "Template": "",
+   "Id": "MAT_PILE",
+   "Kind": "",
+   "Key": "prop_matpile"
+  },
+  {
+   "Location": "LOC_TUTORIAL",
+   "Template": "",
+   "Id": "BALL_CART",
+   "Kind": "",
+   "Key": "prop_ballcart"
+  },
+  {
+   "Location": "LOC_TUTORIAL",
+   "Template": "",
+   "Id": "SHELF",
+   "Kind": "",
+   "Key": "prop_shelf"
+  },
+  {
+   "Location": "LOC_SCHOOL",
+   "Template": "",
+   "Id": "TEACHER_DESK",
+   "Kind": "",
+   "Key": "prop_teacherdesk"
+  },
+  {
+   "Location": "LOC_SCHOOL",
+   "Template": "ROOM_OFFICE",
+   "Id": "",
+   "Kind": "Desk",
+   "Key": "office_desk"
+  },
+  {
+   "Location": "LOC_SCHOOL",
+   "Template": "ROOM_OFFICE",
+   "Id": "FILES",
+   "Kind": "",
+   "Key": "prop_filecabinet"
+  },
+  {
+   "Location": "LOC_SCHOOL",
+   "Template": "RESTROOM",
+   "Id": "SINK",
+   "Kind": "",
+   "Key": "prop_sink"
+  },
+  {
+   "Location": "LOC_SCHOOL",
+   "Template": "RESTROOM",
+   "Id": "SUPPLY",
+   "Kind": "",
+   "Key": "prop_supplybox"
+  },
+  {
+   "Location": "LOC_SCHOOL",
+   "Template": "ROOM_MUSIC",
+   "Id": "STANDS",
+   "Kind": "",
+   "Key": "prop_musicstand"
+  },
+  {
+   "Location": "LOC_SCHOOL",
+   "Template": "ROOM_BROADCAST",
+   "Id": "FUEL",
+   "Kind": "",
+   "Key": "decor_gascan"
+  },
+  {
+   "Location": "LOC_STORE",
+   "Template": "",
+   "Id": "STOCK_",
+   "Kind": "",
+   "Key": "prop_store_stock"
+  },
+  {
+   "Location": "LOC_STORE",
+   "Template": "",
+   "Id": "WALKIN",
+   "Kind": "",
+   "Key": "prop_coldstore"
+  },
+  {
+   "Location": "LOC_STORE",
+   "Template": "",
+   "Id": "OFFICE_DESK",
+   "Kind": "",
+   "Key": "prop_store_officedesk"
+  },
+  {
+   "Location": "LOC_STORE",
+   "Template": "",
+   "Id": "",
+   "Kind": "Box",
+   "Key": "prop_store_shelf"
+  },
+  {
+   "Location": "LOC_STORE",
+   "Template": "",
+   "Id": "",
+   "Kind": "Desk",
+   "Key": "prop_store_counter"
+  },
+  {
+   "Location": "LOC_STORE",
+   "Template": "",
+   "Id": "",
+   "Kind": "Fridge",
+   "Key": "prop_store_fridge"
+  },
+  {
+   "Location": "LOC_PHARMACY",
+   "Template": "",
+   "Id": "DISP_SHELF",
+   "Kind": "",
+   "Key": "prop_ph_shelf"
+  },
+  {
+   "Location": "LOC_PHARMACY",
+   "Template": "",
+   "Id": "DISP_DESK",
+   "Kind": "",
+   "Key": "prop_ph_counter"
+  },
+  {
+   "Location": "LOC_PHARMACY",
+   "Template": "",
+   "Id": "DISP_FRIDGE",
+   "Kind": "",
+   "Key": "prop_ph_fridge"
+  },
+  {
+   "Location": "LOC_PHARMACY",
+   "Template": "",
+   "Id": "CLINIC_DESK",
+   "Kind": "",
+   "Key": "prop_ph_clinicdesk"
+  },
+  {
+   "Location": "LOC_PHARMACY",
+   "Template": "",
+   "Id": "CLINIC_CABINET",
+   "Kind": "",
+   "Key": "prop_medcabinet"
+  },
+  {
+   "Location": "LOC_PHARMACY",
+   "Template": "",
+   "Id": "STOCK_C",
+   "Kind": "",
+   "Key": "prop_ph_box"
+  },
+  {
+   "Location": "LOC_PHARMACY",
+   "Template": "ROOM_PH_STOCKROOM",
+   "Id": "",
+   "Kind": "Cabinet",
+   "Key": "prop_ph_stockcab"
+  },
+  {
+   "Location": "LOC_PHARMACY",
+   "Template": "",
+   "Id": "",
+   "Kind": "Cabinet",
+   "Key": "prop_ph_shelf"
+  },
+  {
+   "Location": "LOC_PHARMACY",
+   "Template": "",
+   "Id": "",
+   "Kind": "Desk",
+   "Key": "prop_ph_counter"
+  },
+  {
+   "Location": "LOC_PHARMACY",
+   "Template": "",
+   "Id": "",
+   "Kind": "Fridge",
+   "Key": "prop_ph_fridge"
+  },
+  {
+   "Location": "LOC_PHARMACY",
+   "Template": "",
+   "Id": "",
+   "Kind": "Box",
+   "Key": "prop_ph_box"
+  },
+  {
+   "Location": "LOC_RESIDENTIAL",
+   "Template": "",
+   "Id": "KITCHEN",
+   "Kind": "",
+   "Key": "prop_house_kitchen"
+  },
+  {
+   "Location": "LOC_RESIDENTIAL",
+   "Template": "",
+   "Id": "FRIDGE",
+   "Kind": "",
+   "Key": "prop_house_fridge"
+  },
+  {
+   "Location": "LOC_RESIDENTIAL",
+   "Template": "",
+   "Id": "DRAWER",
+   "Kind": "",
+   "Key": "prop_house_drawer"
+  },
+  {
+   "Location": "LOC_RESIDENTIAL",
+   "Template": "",
+   "Id": "CLOSET",
+   "Kind": "",
+   "Key": "prop_house_closet"
+  },
+  {
+   "Location": "LOC_RESIDENTIAL",
+   "Template": "",
+   "Id": "",
+   "Kind": "Box",
+   "Key": "prop_house_boxes"
+  },
+  {
+   "Location": "LOC_SUBWAY",
+   "Template": "",
+   "Id": "OFFICE_DESK",
+   "Kind": "",
+   "Key": "prop_sub_desk"
+  },
+  {
+   "Location": "LOC_SUBWAY",
+   "Template": "",
+   "Id": "OFFICE_CABINET",
+   "Kind": "",
+   "Key": "prop_filecabinet"
+  },
+  {
+   "Location": "LOC_SUBWAY",
+   "Template": "",
+   "Id": "KIOSK_SHELF",
+   "Kind": "",
+   "Key": "prop_sub_kioskshelf"
+  },
+  {
+   "Location": "LOC_SUBWAY",
+   "Template": "",
+   "Id": "KIOSK_FRIDGE",
+   "Kind": "",
+   "Key": "prop_sub_kioskfridge"
+  },
+  {
+   "Location": "LOC_SUBWAY",
+   "Template": "",
+   "Id": "KIOSK_BOX",
+   "Kind": "",
+   "Key": "prop_sub_box"
+  },
+  {
+   "Location": "LOC_SUBWAY",
+   "Template": "",
+   "Id": "SINK",
+   "Kind": "",
+   "Key": "prop_sink"
+  },
+  {
+   "Location": "LOC_SUBWAY",
+   "Template": "",
+   "Id": "SUPPLY",
+   "Kind": "",
+   "Key": "prop_supplybox"
+  },
+  {
+   "Location": "LOC_SUBWAY",
+   "Template": "",
+   "Id": "",
+   "Kind": "Locker",
+   "Key": "prop_sub_coinlocker"
+  },
+  {
+   "Location": "LOC_SUBWAY",
+   "Template": "",
+   "Id": "",
+   "Kind": "Box",
+   "Key": "prop_sub_box"
+  },
+  {
+   "Location": "LOC_MART",
+   "Template": "",
+   "Id": "PALLET_",
+   "Kind": "",
+   "Key": "prop_mart_pallet"
+  },
+  {
+   "Location": "LOC_MART",
+   "Template": "",
+   "Id": "COLD_STORE",
+   "Kind": "",
+   "Key": "prop_coldstore"
+  },
+  {
+   "Location": "LOC_MART",
+   "Template": "",
+   "Id": "TOOL_RACK",
+   "Kind": "",
+   "Key": "prop_mart_toolrack"
+  },
+  {
+   "Location": "LOC_MART",
+   "Template": "",
+   "Id": "OFFICE_DESK",
+   "Kind": "",
+   "Key": "prop_mart_desk"
+  },
+  {
+   "Location": "LOC_MART",
+   "Template": "",
+   "Id": "OFFICE_SAFE",
+   "Kind": "",
+   "Key": "prop_mart_safe"
+  },
+  {
+   "Location": "LOC_MART",
+   "Template": "",
+   "Id": "",
+   "Kind": "Box",
+   "Key": "prop_mart_shelf"
+  },
+  {
+   "Location": "LOC_MART",
+   "Template": "",
+   "Id": "",
+   "Kind": "Desk",
+   "Key": "prop_mart_checkout"
+  },
+  {
+   "Location": "LOC_MART",
+   "Template": "",
+   "Id": "",
+   "Kind": "Fridge",
+   "Key": "prop_store_fridge"
+  },
+  {
+   "Location": "LOC_POLICE",
+   "Template": "",
+   "Id": "DESK_",
+   "Kind": "",
+   "Key": "prop_pol_desk"
+  },
+  {
+   "Location": "LOC_POLICE",
+   "Template": "",
+   "Id": "FILES",
+   "Kind": "",
+   "Key": "prop_pol_files"
+  },
+  {
+   "Location": "LOC_POLICE",
+   "Template": "",
+   "Id": "RACK_",
+   "Kind": "",
+   "Key": "prop_pol_gearlocker"
+  },
+  {
+   "Location": "LOC_POLICE",
+   "Template": "",
+   "Id": "CRATE",
+   "Kind": "",
+   "Key": "prop_pol_crate"
+  },
+  {
+   "Location": "LOC_POLICE",
+   "Template": "",
+   "Id": "BUNK",
+   "Kind": "",
+   "Key": "prop_pol_bunk"
+  },
+  {
+   "Location": "LOC_POLICE",
+   "Template": "",
+   "Id": "",
+   "Kind": "Desk",
+   "Key": "prop_pol_frontdesk"
+  },
+  {
+   "Location": "LOC_WATERWORKS",
+   "Template": "",
+   "Id": "ARCHIVE_DESK",
+   "Kind": "",
+   "Key": "office_desk"
+  },
+  {
+   "Location": "LOC_WATERWORKS",
+   "Template": "",
+   "Id": "ARCHIVE_",
+   "Kind": "",
+   "Key": "prop_wat_archive"
+  },
+  {
+   "Location": "LOC_WATERWORKS",
+   "Template": "",
+   "Id": "SAMPLE_FRIDGE",
+   "Kind": "",
+   "Key": "prop_wat_samplefridge"
+  },
+  {
+   "Location": "LOC_WATERWORKS",
+   "Template": "",
+   "Id": "BENCH_",
+   "Kind": "",
+   "Key": "prop_wat_bench"
+  },
+  {
+   "Location": "LOC_WATERWORKS",
+   "Template": "",
+   "Id": "REAGENT",
+   "Kind": "",
+   "Key": "prop_wat_reagent"
+  },
+  {
+   "Location": "LOC_WATERWORKS",
+   "Template": "",
+   "Id": "CONSOLE",
+   "Kind": "",
+   "Key": "prop_wat_console"
+  },
+  {
+   "Location": "LOC_WATERWORKS",
+   "Template": "",
+   "Id": "PARTS",
+   "Kind": "",
+   "Key": "prop_wat_parts"
+  },
+  {
+   "Location": "LOC_WATERWORKS",
+   "Template": "",
+   "Id": "",
+   "Kind": "Box",
+   "Key": "prop_wat_parts"
+  }
+ ],
+ "Encounters": [
+  {
+   "Id": "FRIEND_TRACE",
+   "Key": "enc_friend_bag"
+  },
+  {
+   "Id": "LOCKED_HOUSE",
+   "Key": "enc_locked_door"
+  },
+  {
+   "Id": "LAST_BROADCAST",
+   "Key": "enc_radio"
+  },
+  {
+   "Id": "POLICE_REPORT",
+   "Key": "enc_police_report"
+  },
+  {
+   "Id": "RESEARCH_DATA",
+   "Key": "enc_research_data"
+  },
+  {
+   "Id": "RESEARCH_MEMO",
+   "Key": "enc_research_memo"
+  }
+ ],
+ "Decor": [
+  {
+   "Location": "LOC_SCHOOL",
+   "Template": "CLASSROOM",
+   "Floor": [
+    "decor_bookshelf",
+    "decor_books",
+    "decor_bag",
+    "decor_chair_fallen",
+    "decor_ball",
+    "decor_papers",
+    "decor_bucket"
+   ],
+   "Wall": [
+    "decor_motto",
+    "decor_timetable",
+    "decor_clock",
+    "decor_worldmap",
+    "decor_speaker",
+    "decor_calendar"
+   ],
+   "FloorDensity": 0.12,
+   "WallDensity": 0.13
+  },
+  {
+   "Location": "LOC_SCHOOL",
+   "Template": "RESTROOM",
+   "Floor": [
+    "decor_bucket",
+    "decor_wetfloor",
+    "decor_trashbin"
+   ],
+   "Wall": [
+    "decor_mirror",
+    "decor_vent",
+    "decor_switch"
+   ],
+   "FloorDensity": 0.15,
+   "WallDensity": 0.18
+  },
+  {
+   "Location": "LOC_SCHOOL",
+   "Template": "*",
+   "Floor": [
+    "decor_books",
+    "decor_stool",
+    "decor_papers",
+    "decor_trashbin",
+    "decor_plant_dead",
+    "decor_chair_fallen",
+    "decor_lantern"
+   ],
+   "Wall": [
+    "decor_clock",
+    "decor_calendar",
+    "decor_poster_a",
+    "decor_speaker",
+    "decor_frame",
+    "decor_switch",
+    "decor_poster_safety"
+   ],
+   "FloorDensity": 0.12,
+   "WallDensity": 0.13
+  },
+  {
+   "Location": "LOC_SCHOOL",
+   "Template": "",
+   "Floor": [
+    "decor_shoerack",
+    "decor_extinguisher",
+    "decor_trashbin",
+    "decor_plant_dead",
+    "decor_bucket",
+    "decor_chair_fallen",
+    "decor_books",
+    "decor_bag",
+    "decor_papers",
+    "decor_debris",
+    "decor_umbrella",
+    "decor_watercooler",
+    "decor_shoes",
+    "decor_barricade",
+    "decor_candle"
+   ],
+   "Wall": [
+    "decor_noticeboard",
+    "decor_evacmap",
+    "decor_poster_safety",
+    "decor_poster_event",
+    "decor_clock",
+    "decor_speaker",
+    "decor_poster_a",
+    "decor_poster_b",
+    "decor_switch",
+    "decor_exitsign"
+   ],
+   "FloorDensity": 0.12,
+   "WallDensity": 0.13
+  },
+  {
+   "Location": "LOC_TUTORIAL",
+   "Template": "*",
+   "Floor": [
+    "decor_vaultbox",
+    "decor_ball",
+    "decor_cone",
+    "decor_bucket"
+   ],
+   "Wall": [
+    "decor_clock",
+    "decor_poster_event"
+   ],
+   "FloorDensity": 0.15,
+   "WallDensity": 0.1
+  },
+  {
+   "Location": "LOC_TUTORIAL",
+   "Template": "",
+   "Floor": [
+    "decor_vaultbox",
+    "decor_ball",
+    "decor_cone",
+    "decor_shoerack",
+    "decor_extinguisher"
+   ],
+   "Wall": [
+    "decor_clock",
+    "decor_poster_event",
+    "decor_evacmap"
+   ],
+   "FloorDensity": 0.12,
+   "WallDensity": 0.1
+  },
+  {
+   "Location": "LOC_STORE",
+   "Template": "*",
+   "Floor": [
+    "decor_crates",
+    "decor_bottlecrate",
+    "decor_bucket",
+    "decor_trashbin",
+    "decor_water"
+   ],
+   "Wall": [
+    "decor_calendar",
+    "decor_elecbox",
+    "decor_switch"
+   ],
+   "FloorDensity": 0.12,
+   "WallDensity": 0.13
+  },
+  {
+   "Location": "LOC_STORE",
+   "Template": "",
+   "Floor": [
+    "decor_baskets",
+    "decor_crates",
+    "decor_bottlecrate",
+    "decor_wetfloor",
+    "decor_trashbin",
+    "decor_water",
+    "decor_papers",
+    "decor_glass",
+    "decor_newspapers",
+    "decor_vending",
+    "decor_displayfreezer"
+   ],
+   "Wall": [
+    "decor_store_sign",
+    "decor_poster_a",
+    "decor_cctv",
+    "decor_clock",
+    "decor_aircon"
+   ],
+   "FloorDensity": 0.14,
+   "WallDensity": 0.14
+  },
+  {
+   "Location": "LOC_PHARMACY",
+   "Template": "*",
+   "Floor": [
+    "decor_exambed",
+    "decor_stool",
+    "decor_trashbin",
+    "decor_papers",
+    "decor_plant"
+   ],
+   "Wall": [
+    "decor_firstaid",
+    "decor_clock",
+    "decor_calendar",
+    "decor_frame"
+   ],
+   "FloorDensity": 0.12,
+   "WallDensity": 0.13
+  },
+  {
+   "Location": "LOC_PHARMACY",
+   "Template": "",
+   "Floor": [
+    "decor_plant",
+    "decor_sanitizer",
+    "decor_bench",
+    "decor_trashbin",
+    "decor_papers",
+    "decor_watercooler",
+    "decor_glass"
+   ],
+   "Wall": [
+    "decor_poster_safety",
+    "decor_firstaid",
+    "decor_clock",
+    "decor_calendar",
+    "decor_cctv"
+   ],
+   "FloorDensity": 0.12,
+   "WallDensity": 0.13
+  },
+  {
+   "Location": "LOC_RESIDENTIAL",
+   "Template": "*",
+   "Floor": [
+    "decor_sofa",
+    "decor_tvstand",
+    "decor_diningtable",
+    "decor_teddy",
+    "decor_vase",
+    "decor_smalltable",
+    "decor_plant",
+    "decor_lantern"
+   ],
+   "Wall": [
+    "decor_frame",
+    "decor_calendar",
+    "decor_clock",
+    "decor_mirror",
+    "decor_aircon"
+   ],
+   "FloorDensity": 0.16,
+   "WallDensity": 0.14
+  },
+  {
+   "Location": "LOC_RESIDENTIAL",
+   "Template": "",
+   "Floor": [
+    "decor_shoes",
+    "decor_umbrella",
+    "decor_plant_dead",
+    "decor_bag",
+    "decor_newspapers",
+    "decor_teddy",
+    "decor_trashbin",
+    "decor_extinguisher"
+   ],
+   "Wall": [
+    "decor_elecbox",
+    "decor_poster_b",
+    "decor_switch",
+    "decor_vent"
+   ],
+   "FloorDensity": 0.12,
+   "WallDensity": 0.13
+  },
+  {
+   "Location": "LOC_SUBWAY",
+   "Template": "*",
+   "Floor": [
+    "decor_stool",
+    "decor_bucket",
+    "decor_newspapers",
+    "decor_trashbin"
+   ],
+   "Wall": [
+    "decor_clock",
+    "decor_elecbox",
+    "decor_calendar",
+    "decor_phone"
+   ],
+   "FloorDensity": 0.12,
+   "WallDensity": 0.13
+  },
+  {
+   "Location": "LOC_SUBWAY",
+   "Template": "",
+   "Floor": [
+    "decor_bench",
+    "decor_turnstile",
+    "decor_vending",
+    "decor_trashbin",
+    "decor_newspapers",
+    "decor_cone",
+    "decor_wetfloor",
+    "decor_bag",
+    "decor_papers"
+   ],
+   "Wall": [
+    "decor_subway_map",
+    "decor_exitsign",
+    "decor_cctv",
+    "decor_poster_a",
+    "decor_evacmap",
+    "decor_phone"
+   ],
+   "FloorDensity": 0.13,
+   "WallDensity": 0.13
+  },
+  {
+   "Location": "LOC_MART",
+   "Template": "*",
+   "Floor": [
+    "decor_crates",
+    "decor_toolbox",
+    "decor_gascan",
+    "decor_rope",
+    "decor_bottlecrate",
+    "decor_stool"
+   ],
+   "Wall": [
+    "decor_elecbox",
+    "decor_warning",
+    "decor_calendar",
+    "decor_switch"
+   ],
+   "FloorDensity": 0.12,
+   "WallDensity": 0.13
+  },
+  {
+   "Location": "LOC_MART",
+   "Template": "",
+   "Floor": [
+    "decor_cart",
+    "decor_baskets",
+    "decor_displayfreezer",
+    "decor_crates",
+    "decor_wetfloor",
+    "decor_water",
+    "decor_glass",
+    "decor_papers",
+    "decor_cone"
+   ],
+   "Wall": [
+    "decor_store_sign",
+    "decor_cctv",
+    "decor_exitsign",
+    "decor_aircon",
+    "decor_poster_a"
+   ],
+   "FloorDensity": 0.14,
+   "WallDensity": 0.12
+  },
+  {
+   "Location": "LOC_POLICE",
+   "Template": "*",
+   "Floor": [
+    "decor_stool",
+    "decor_papers",
+    "decor_toolbox",
+    "decor_trashbin"
+   ],
+   "Wall": [
+    "decor_calendar",
+    "decor_frame",
+    "decor_police_board",
+    "decor_switch"
+   ],
+   "FloorDensity": 0.12,
+   "WallDensity": 0.13
+  },
+  {
+   "Location": "LOC_POLICE",
+   "Template": "",
+   "Floor": [
+    "decor_bench",
+    "decor_cone",
+    "decor_plant",
+    "decor_trashbin",
+    "decor_watercooler",
+    "decor_umbrella"
+   ],
+   "Wall": [
+    "decor_police_board",
+    "decor_clock",
+    "decor_cctv",
+    "decor_evacmap",
+    "decor_phone"
+   ],
+   "FloorDensity": 0.12,
+   "WallDensity": 0.13
+  },
+  {
+   "Location": "LOC_WATERWORKS",
+   "Template": "*",
+   "Floor": [
+    "decor_stool",
+    "decor_toolbox",
+    "decor_gascan",
+    "decor_bucket"
+   ],
+   "Wall": [
+    "decor_warning",
+    "decor_clock",
+    "decor_elecbox",
+    "decor_calendar"
+   ],
+   "FloorDensity": 0.12,
+   "WallDensity": 0.13
+  },
+  {
+   "Location": "LOC_WATERWORKS",
+   "Template": "",
+   "Floor": [
+    "decor_pipes",
+    "decor_pump",
+    "decor_tank",
+    "decor_valve",
+    "decor_cone",
+    "decor_toolbox",
+    "decor_bucket"
+   ],
+   "Wall": [
+    "decor_warning",
+    "decor_elecbox",
+    "decor_vent",
+    "decor_evacmap"
+   ],
+   "FloorDensity": 0.13,
+   "WallDensity": 0.12
+  }
+ ]
+}

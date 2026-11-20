@@ -78,7 +78,65 @@ namespace ApoGirl.Exploration.Runtime
                 _pools.Add(pool);
             }
 
+            AddDust(corridor);
             _snapped = false;
+        }
+
+        private static Material _dustMaterial;
+
+        /// <summary>
+        /// 떠다니는 먼지: 1픽셀짜리 알갱이가 복도에 천천히 떠다닌다. 조명을 받는 재질이라 햇빛 줄기·손전등 빛 안에서만 반짝이고
+        /// 그늘에서는 거의 보이지 않는다.
+        /// </summary>
+        private void AddDust(ExplorationArea corridor)
+        {
+            if (_dustMaterial == null)
+            {
+                var shader = Shader.Find("Universal Render Pipeline/2D/Sprite-Lit-Default");
+                if (shader == null)
+                {
+                    return;
+                }
+
+                _dustMaterial = new Material(shader) { hideFlags = HideFlags.HideAndDontSave };
+            }
+
+            var go = new GameObject("Dust");
+            go.transform.SetParent(_world, false);
+            go.transform.localPosition = new Vector3(corridor.Origin.x + corridor.Width * 0.5f, corridor.Origin.y + _floorHeight * 0.5f, 0f);
+            var particles = go.AddComponent<ParticleSystem>();
+            particles.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
+            var count = Mathf.Clamp(Mathf.RoundToInt(corridor.Width * 1.6f), 20, 400);
+            var main = particles.main;
+            main.loop = true;
+            main.prewarm = true;
+            main.startLifetime = new ParticleSystem.MinMaxCurve(7f, 13f);
+            main.startSpeed = 0f;
+            main.startSize = new ParticleSystem.MinMaxCurve(1f / ExplorationArt.PixelsPerUnit, 2f / ExplorationArt.PixelsPerUnit);
+            main.startColor = new Color(1f, 0.98f, 0.92f, 0.5f);
+            main.maxParticles = count;
+            main.simulationSpace = ParticleSystemSimulationSpace.Local;
+            var emission = particles.emission;
+            emission.rateOverTime = count / 10f;
+            var shape = particles.shape;
+            shape.shapeType = ParticleSystemShapeType.Box;
+            shape.scale = new Vector3(corridor.Width, _floorHeight - 0.6f, 0.01f);
+            var velocity = particles.velocityOverLifetime;
+            velocity.enabled = true;
+            velocity.x = new ParticleSystem.MinMaxCurve(-0.07f, 0.07f);
+            velocity.y = new ParticleSystem.MinMaxCurve(-0.05f, 0.02f);
+            velocity.z = new ParticleSystem.MinMaxCurve(0f, 0f);
+            var fade = particles.colorOverLifetime;
+            fade.enabled = true;
+            var gradient = new Gradient();
+            gradient.SetKeys(
+                new[] { new GradientColorKey(Color.white, 0f), new GradientColorKey(Color.white, 1f) },
+                new[] { new GradientAlphaKey(0f, 0f), new GradientAlphaKey(1f, 0.25f), new GradientAlphaKey(1f, 0.7f), new GradientAlphaKey(0f, 1f) });
+            fade.color = gradient;
+            var renderer = go.GetComponent<ParticleSystemRenderer>();
+            renderer.sharedMaterial = _dustMaterial;
+            renderer.sortingOrder = -1;
+            particles.Play();
         }
 
         /// <summary>방 (처음 들어갈 때 만든다): 복도 쪽 창마다 창 아래로 번지는 희미한 빛.</summary>

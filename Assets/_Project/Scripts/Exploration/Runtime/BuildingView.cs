@@ -302,11 +302,11 @@ namespace ApoGirl.Exploration.Runtime
         private static void Scatter(Transform parent, ExplorationArt.DecorRule rule, float width, float baseY, List<(float, float)> blockedFloor, List<(float, float)> blockedWall, int seed)
         {
             var random = new System.Random(seed);
-            ScatterRow(parent, rule.Floor, rule.FloorDensity, width, baseY + 0.15f, 0f, -2, blockedFloor, random);
+            ScatterRow(parent, rule.Floor, rule.FloorDensity, width, baseY + 0.15f, 0f, -2, blockedFloor, random, blockedWall);
             ScatterRow(parent, rule.Wall, rule.WallDensity, width, baseY + 1.75f, 0.5f, -4, blockedWall, random);
         }
 
-        private static void ScatterRow(Transform parent, string[] keys, float density, float width, float y, float yJitter, int order, List<(float, float)> blocked, System.Random random)
+        private static void ScatterRow(Transform parent, string[] keys, float density, float width, float y, float yJitter, int order, List<(float, float)> blocked, System.Random random, List<(float, float)> tallBlocked = null)
         {
             if (keys == null || keys.Length == 0 || density <= 0f)
             {
@@ -330,6 +330,19 @@ namespace ApoGirl.Exploration.Runtime
                         {
                             free = false;
                             break;
+                        }
+                    }
+
+                    // 키 큰 바닥 장식(자판기 등)은 창문·벽 장식 자리도 피한다
+                    if (free && tallBlocked != null && sprite.bounds.size.y > 1.5f)
+                    {
+                        foreach (var (from, to) in tallBlocked)
+                        {
+                            if (x + half > from && x - half < to)
+                            {
+                                free = false;
+                                break;
+                            }
                         }
                     }
 
