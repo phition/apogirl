@@ -87,13 +87,13 @@
         "Resources": [
           {
             "Resource": "Food",
-            "Min": 11,
-            "Max": 18
+            "Min": 14,
+            "Max": 23
           },
           {
             "Resource": "Water",
-            "Min": 7,
-            "Max": 13
+            "Min": 9,
+            "Max": 16
           },
           {
             "Resource": "Materials",
@@ -116,8 +116,8 @@
         "Resources": [
           {
             "Resource": "Food",
-            "Min": 5,
-            "Max": 11
+            "Min": 6,
+            "Max": 14
           }
         ],
         "BaseDownChance": 0.16,
@@ -144,13 +144,13 @@
           },
           {
             "Resource": "Food",
-            "Min": 5,
-            "Max": 11
+            "Min": 6,
+            "Max": 14
           },
           {
             "Resource": "Water",
-            "Min": 2,
-            "Max": 5
+            "Min": 3,
+            "Max": 6
           }
         ],
         "BaseDownChance": 0.09,

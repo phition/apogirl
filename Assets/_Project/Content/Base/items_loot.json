@@ -1,9 +1,9 @@
 {
   "Items": [
-    { "Id": "ITEM_CANNED_FOOD", "Weight": 0.4, "Noise": 0.08, "Value": 3, "ResourceYield": [ { "Resource": "Food", "Amount": 4 } ] },
+    { "Id": "ITEM_CANNED_FOOD", "Weight": 0.4, "Noise": 0.08, "Value": 3, "ResourceYield": [ { "Resource": "Food", "Amount": 5 } ] },
     { "Id": "ITEM_SNACK", "Weight": 0.2, "Noise": 0.04, "Value": 1, "ResourceYield": [ { "Resource": "Food", "Amount": 2 } ], "Slot": "Consumable", "UseStress": 5 },
     { "Id": "ITEM_INSTANT_NOODLE", "Weight": 0.15, "Noise": 0.04, "Value": 1, "ResourceYield": [ { "Resource": "Food", "Amount": 2 } ] },
-    { "Id": "ITEM_WATER_BOTTLE", "Height": 2, "Weight": 0.6, "Noise": 0.12, "Value": 2, "ResourceYield": [ { "Resource": "Water", "Amount": 4 } ] },
+    { "Id": "ITEM_WATER_BOTTLE", "Height": 2, "Weight": 0.6, "Noise": 0.12, "Value": 2, "ResourceYield": [ { "Resource": "Water", "Amount": 5 } ] },
     { "Id": "ITEM_DRINK", "Weight": 0.35, "Noise": 0.08, "Value": 1, "ResourceYield": [ { "Resource": "Water", "Amount": 2 } ], "Slot": "Consumable", "UseStress": 3, "UseHp": 3 },
     { "Id": "ITEM_BANDAGE", "Weight": 0.1, "Noise": 0.02, "Value": 2, "ResourceYield": [ { "Resource": "Medicine", "Amount": 1 } ], "Slot": "Consumable", "UseHp": 20 },
     { "Id": "ITEM_PAINKILLER", "Weight": 0.05, "Noise": 0.01, "Value": 4, "Grade": "Rare", "ResourceYield": [ { "Resource": "Medicine", "Amount": 1 } ], "Slot": "Consumable", "UseHp": 5, "UseStress": 15 },
@@ -67,19 +67,19 @@
 
   "ExpeditionModels": [
     { "Id": "LOC_TUTORIAL",
-      "Day": { "Resources": [ { "Resource": "Food", "Min": 13, "Max": 16 }, { "Resource": "Water", "Min": 13, "Max": 16 }, { "Resource": "Materials", "Min": 2, "Max": 2 } ], "BaseDownChance": 0.0, "Fatigue": 8, "StressMin": 4, "StressMax": 6 },
-      "Night": { "Resources": [ { "Resource": "Food", "Min": 4, "Max": 5 } ], "BaseDownChance": 0.0, "Fatigue": 8, "StressMin": 6, "StressMax": 8 } },
+      "Day": { "Resources": [ { "Resource": "Food", "Min": 16, "Max": 20 }, { "Resource": "Water", "Min": 16, "Max": 20 }, { "Resource": "Materials", "Min": 2, "Max": 2 } ], "BaseDownChance": 0.0, "Fatigue": 8, "StressMin": 4, "StressMax": 6 },
+      "Night": { "Resources": [ { "Resource": "Food", "Min": 5, "Max": 6 } ], "BaseDownChance": 0.0, "Fatigue": 8, "StressMin": 6, "StressMax": 8 } },
     { "Id": "LOC_SCHOOL_INTERIOR",
-      "Day": { "Resources": [ { "Resource": "Food", "Min": 11, "Max": 18 }, { "Resource": "Water", "Min": 7, "Max": 14 }, { "Resource": "Materials", "Min": 1, "Max": 3 } ], "BaseDownChance": 0.05, "Fatigue": 15, "StressMin": 6, "StressMax": 12, "ConscienceMax": 2 },
-      "Night": { "Resources": [ { "Resource": "Food", "Min": 14, "Max": 22 }, { "Resource": "Medicine", "Min": 0, "Max": 2 }, { "Resource": "Materials", "Min": 2, "Max": 4 }, { "Resource": "Water", "Min": 2, "Max": 5 } ], "BaseDownChance": 0.1, "Fatigue": 20, "StressMin": 15, "StressMax": 15, "DawnReturnChance": 0.2 },
+      "Day": { "Resources": [ { "Resource": "Food", "Min": 14, "Max": 23 }, { "Resource": "Water", "Min": 9, "Max": 18 }, { "Resource": "Materials", "Min": 1, "Max": 3 } ], "BaseDownChance": 0.05, "Fatigue": 15, "StressMin": 6, "StressMax": 12, "ConscienceMax": 2 },
+      "Night": { "Resources": [ { "Resource": "Food", "Min": 18, "Max": 28 }, { "Resource": "Medicine", "Min": 0, "Max": 2 }, { "Resource": "Materials", "Min": 2, "Max": 4 }, { "Resource": "Water", "Min": 3, "Max": 6 } ], "BaseDownChance": 0.1, "Fatigue": 20, "StressMin": 15, "StressMax": 15, "DawnReturnChance": 0.2 },
       "ContainersPerRun": 10 },
     { "Id": "LOC_STORE",
-      "Day": { "Resources": [ { "Resource": "Food", "Min": 14, "Max": 22 }, { "Resource": "Water", "Min": 7, "Max": 13 }, { "Resource": "Fuel", "Min": 0, "Max": 1 } ], "BaseDownChance": 0.06, "Fatigue": 14, "StressMin": 6, "StressMax": 12, "ConscienceMax": 2 },
-      "Night": { "Resources": [ { "Resource": "Food", "Min": 16, "Max": 25 }, { "Resource": "Water", "Min": 11, "Max": 18 }, { "Resource": "Materials", "Min": 1, "Max": 2 } ], "BaseDownChance": 0.11, "Fatigue": 18, "StressMin": 14, "StressMax": 16, "DawnReturnChance": 0.15 },
+      "Day": { "Resources": [ { "Resource": "Food", "Min": 18, "Max": 28 }, { "Resource": "Water", "Min": 9, "Max": 16 }, { "Resource": "Fuel", "Min": 0, "Max": 1 } ], "BaseDownChance": 0.06, "Fatigue": 14, "StressMin": 6, "StressMax": 12, "ConscienceMax": 2 },
+      "Night": { "Resources": [ { "Resource": "Food", "Min": 20, "Max": 31 }, { "Resource": "Water", "Min": 14, "Max": 23 }, { "Resource": "Materials", "Min": 1, "Max": 2 } ], "BaseDownChance": 0.11, "Fatigue": 18, "StressMin": 14, "StressMax": 16, "DawnReturnChance": 0.15 },
       "ContainersPerRun": 7 },
     { "Id": "LOC_PHARMACY",
-      "Day": { "Resources": [ { "Resource": "Medicine", "Min": 2, "Max": 4 }, { "Resource": "Water", "Min": 2, "Max": 5 } ], "BaseDownChance": 0.08, "Fatigue": 16, "StressMin": 8, "StressMax": 14, "ConscienceMax": 1 },
-      "Night": { "Resources": [ { "Resource": "Medicine", "Min": 4, "Max": 7 }, { "Resource": "Water", "Min": 0, "Max": 4 } ], "BaseDownChance": 0.15, "Fatigue": 20, "StressMin": 16, "StressMax": 18, "DawnReturnChance": 0.25 },
+      "Day": { "Resources": [ { "Resource": "Medicine", "Min": 2, "Max": 4 }, { "Resource": "Water", "Min": 3, "Max": 6 } ], "BaseDownChance": 0.08, "Fatigue": 16, "StressMin": 8, "StressMax": 14, "ConscienceMax": 1 },
+      "Night": { "Resources": [ { "Resource": "Medicine", "Min": 4, "Max": 7 }, { "Resource": "Water", "Min": 0, "Max": 5 } ], "BaseDownChance": 0.15, "Fatigue": 20, "StressMin": 16, "StressMax": 18, "DawnReturnChance": 0.25 },
       "ContainersPerRun": 9 }
   ],
 

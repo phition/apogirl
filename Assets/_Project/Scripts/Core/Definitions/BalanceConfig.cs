@@ -276,10 +276,10 @@ namespace ApoGirl.Core.Definitions
         // ── 거점 생산 ──
 
         /// <summary>빗물통 (플래그 RAIN_BARRELS): 비 오는 주마다 주간 정산 때 물.</summary>
-        public int RainBarrelWater = 8;
+        public int RainBarrelWater = 10;
 
         /// <summary>옥상 텃밭 (플래그 ROOF_GARDEN): 겨울을 뺀 매주 식량.</summary>
-        public int RoofGardenFood = 5;
+        public int RoofGardenFood = 7;
 
         // ── 거점 방어 작업 ──
 
