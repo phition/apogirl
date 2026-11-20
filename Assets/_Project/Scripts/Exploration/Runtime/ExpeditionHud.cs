@@ -112,17 +112,42 @@ namespace ApoGirl.Exploration.Runtime
         /// <summary>이미 조합한 문장을 잠시 보여준다.</summary>
         public void ShowText(string text)
         {
+            if (_holdMessage)
+            {
+                return;
+            }
+
             _message.text = text;
             _message.RemoveFromClassList("hidden");
-            _message.schedule.Execute(() => _message.AddToClassList("hidden")).ExecuteLater(1600);
+            var token = ++_messageToken;
+            _message.schedule.Execute(() =>
+            {
+                if (token == _messageToken && !_holdMessage)
+                {
+                    _message.AddToClassList("hidden");
+                }
+            }).ExecuteLater(1600);
         }
+
+        /// <summary>문장을 런이 끝날 때까지 띄워 둔다 (생존자 대치 암전 중). 다른 메시지가 덮지 않는다.</summary>
+        public void ShowHold(string text)
+        {
+            _holdMessage = true;
+            _messageToken++;
+            _message.text = text;
+            _message.RemoveFromClassList("hidden");
+        }
+
+        private int _messageToken;
+        private bool _holdMessage;
 
         /// <summary>단독 실행 종료 표시.</summary>
         public void ShowEnd(ExpeditionResult result)
         {
             var loot = string.Join("  ", result.ResourceLoot.Select(r => UiText.Resource(r.Resource) + " +" + r.Amount)
                 .Concat(result.Loot.Select(i => Loc.Item(i.ItemId) + " ×" + i.Count)));
-            _message.text = Loc.T("exp.status." + result.Status) + "\n" + loot;
+            var status = result.Hostile != HostileOutcome.None ? Loc.T("result.hostile_" + result.Hostile) : Loc.T("exp.status." + result.Status);
+            _message.text = status + (loot.Length > 0 ? "\n" + loot : "");
             _message.RemoveFromClassList("hidden");
         }
 

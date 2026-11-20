@@ -1504,7 +1504,7 @@ namespace ApoGirl.Exploration.Runtime
             _confrontTimer = 0f;
             CloseContainer();
             _log.HostileOutcome = _hostileOutcome.ToString();
-            _hud?.ShowText(Loc.T("exp.hostile." + _hostileOutcome));
+            _hud?.ShowHold(Loc.T("exp.hostile." + _hostileOutcome));
         }
 
         private void TickConfrontation(float dt)
