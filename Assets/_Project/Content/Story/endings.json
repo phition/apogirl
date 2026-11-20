@@ -170,7 +170,7 @@
             "Kind": "Hidden",
             "Key": "TraumaRecovery",
             "Op": "GreaterOrEqual",
-            "Value": 32
+            "Value": 25
           },
           {
             "Kind": "Hidden",
@@ -215,7 +215,7 @@
             "Kind": "Stat",
             "Key": "Intellect",
             "Op": "GreaterOrEqual",
-            "Value": 175
+            "Value": 190
           },
           {
             "Kind": "Hidden",
@@ -259,13 +259,13 @@
             "Kind": "Proficiency",
             "Key": "Engineering",
             "Op": "GreaterOrEqual",
-            "Value": 3
+            "Value": 2
           },
           {
             "Kind": "Stat",
             "Key": "Craft",
             "Op": "GreaterOrEqual",
-            "Value": 175
+            "Value": 185
           }
         ]
       },
@@ -298,7 +298,7 @@
             "Kind": "Stat",
             "Key": "Strength",
             "Op": "GreaterOrEqual",
-            "Value": 80
+            "Value": 35
           },
           {
             "Kind": "Stat",
@@ -348,7 +348,7 @@
             "Kind": "Stat",
             "Key": "Leadership",
             "Op": "GreaterOrEqual",
-            "Value": 95
+            "Value": 85
           },
           {
             "Kind": "Companions",
@@ -396,7 +396,7 @@
             "Kind": "Proficiency",
             "Key": "Humanities",
             "Op": "GreaterOrEqual",
-            "Value": 4
+            "Value": 3
           },
           {
             "Kind": "DiaryCount",
@@ -482,7 +482,7 @@
           {
             "Kind": "Companions",
             "Op": "GreaterOrEqual",
-            "Value": 3
+            "Value": 4
           },
           {
             "Kind": "Hidden",
@@ -584,7 +584,7 @@
             "Kind": "Hidden",
             "Key": "TraumaRecovery",
             "Op": "LessOrEqual",
-            "Value": 12
+            "Value": 6
           },
           {
             "Kind": "Hidden",

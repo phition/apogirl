@@ -21,10 +21,11 @@ namespace ApoGirl.Core.Simulation.Bots
         /// <summary>M7-c 엔딩 분포 목표 (봇 기준, 표준 난이도. 2026-11-20 배드 50% 중심으로 상향 (부상 도입 뒤)). 묶음 이름 → (최소, 최대, 해당 구분).</summary>
         public static readonly (string Name, float Min, float Max, EndingCategory[] Categories)[] EndingTargets =
         {
-            ("기본 (일반·균형)", 0.25f, 0.40f, new[] { EndingCategory.Normal, EndingCategory.Balanced }),
-            ("특화", 0.25f, 0.35f, new[] { EndingCategory.Specialized }),
-            ("관계·서사", 0.08f, 0.18f, new[] { EndingCategory.Relationship, EndingCategory.Narrative }),
-            ("히든", 0.01f, 0.05f, new[] { EndingCategory.Hidden }),
+            // 배드 50% 뒤 나머지 절반을 예전 비율대로 (2026-11-20)
+            ("기본 (일반·균형)", 0.15f, 0.25f, new[] { EndingCategory.Normal, EndingCategory.Balanced }),
+            ("특화", 0.15f, 0.25f, new[] { EndingCategory.Specialized }),
+            ("관계·서사", 0.06f, 0.12f, new[] { EndingCategory.Relationship, EndingCategory.Narrative }),
+            ("히든", 0.01f, 0.03f, new[] { EndingCategory.Hidden }),
             ("배드", 0.45f, 0.55f, new[] { EndingCategory.Bad }),
         };
 
