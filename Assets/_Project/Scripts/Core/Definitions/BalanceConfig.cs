@@ -581,11 +581,11 @@ namespace ApoGirl.Core.Definitions
         /// 낮 공간별 밝기 배율 (M6-5, 그림만 — 시야·수색 규칙은 그대로): 복도는 햇빛 줄기가 살도록 조금 낮추고,
         /// 전기가 끊긴 방 안은 어둡게.
         /// </summary>
-        public float DayCorridorAmbient = 0.8f;
+        public float DayCorridorAmbient = 0.72f;
         public float DayRoomAmbient = 0.32f;
 
         /// <summary>복도 햇빛 줄기 밝기·간격(유닛), 방의 복도 쪽 창으로 새어 드는 빛 밝기 (조명 밝기는 선형 값이라 0.15도 꽤 밝다).</summary>
-        public float SunbeamIntensity = 1.7f;
+        public float SunbeamIntensity = 2.3f;
         public float SunbeamSpacing = 6f;
         public float RoomWindowLightIntensity = 0.15f;
 

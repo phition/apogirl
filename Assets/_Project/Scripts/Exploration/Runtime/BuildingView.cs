@@ -154,7 +154,14 @@ namespace ApoGirl.Exploration.Runtime
             foreach (var window in room.Template.Windows)
             {
                 // 복도 쪽 벽(앞면)의 창: 반투명 유리라 뒤 벽의 칠판 앞에 겹쳐 그린다
-                ExplorationArt.Stretched(root, "Window", "prop_window", new Vector2(window.X, WindowBottom), new Vector2(window.Width, WindowHeight), -2, WindowColor);
+                var glass = ExplorationArt.Stretched(root, "Window", "prop_window", new Vector2(window.X, WindowBottom), new Vector2(window.Width, WindowHeight), -2, WindowColor);
+
+                // 방 안에서는 창이 화면 앞쪽 벽에 있다: 반투명하게 그려 뒤 벽(칠판·장식)이 비쳐 보이게
+                var glassRenderer = glass.GetComponent<SpriteRenderer>();
+                if (glassRenderer != null && ExplorationArt.Get("prop_window") != null)
+                {
+                    glassRenderer.color = new Color(1f, 1f, 1f, 0.55f);
+                }
             }
         }
 
