@@ -1,0 +1,64 @@
+{
+  "Events": [
+    { "Id": "EVT_OUTING_SPRING", "Kind": "Story", "Priority": 95, "Condition": { "ActionIds": [ "ACT_OUTING_SPRING" ] },
+      "Choices": [
+        { "Id": "CHERRY", "Effect": { "Vitals": [ { "Vital": "Stress", "Amount": -15 } ], "Hidden": [ { "Hidden": "Hope", "Amount": 1 } ], "Npcs": [ { "NpcId": "NPC_TEACHER", "Affinity": 2 } ] } },
+        { "Id": "ROOFTOP", "Condition": { "Checks": [ { "Kind": "Facility", "Key": "ROOFTOP", "Op": "GreaterOrEqual", "Value": 1 } ] },
+          "Effect": { "Vitals": [ { "Vital": "Stress", "Amount": -12 } ], "Hidden": [ { "Hidden": "TraumaRecovery", "Amount": 1 } ], "Npcs": [ { "NpcId": "NPC_TEACHER", "Affinity": 2 } ] } },
+        { "Id": "STREAM", "HasCheck": true, "Check": { "BaseRate": 0.6, "StatWeights": [ { "Stat": "Agility", "Weight": 0.006 } ] },
+          "Effect": { "Vitals": [ { "Vital": "Stress", "Amount": -20 } ], "Resources": [ { "Resource": "Food", "Amount": 2 } ], "Hidden": [ { "Hidden": "Hope", "Amount": 2 } ] },
+          "OnFailure": { "Vitals": [ { "Vital": "Hp", "Amount": -8 }, { "Vital": "Stress", "Amount": 4 } ] } }
+      ] },
+
+    { "Id": "EVT_OUTING_SUMMER", "Kind": "Story", "Priority": 95, "Condition": { "ActionIds": [ "ACT_OUTING_SUMMER" ] },
+      "Choices": [
+        { "Id": "POOL", "Effect": { "Vitals": [ { "Vital": "Stress", "Amount": -15 }, { "Vital": "Cleanliness", "Amount": 20 } ], "Npcs": [ { "NpcId": "NPC_TEACHER", "Affinity": 2 } ] } },
+        { "Id": "NIGHT_SKY", "Condition": { "Checks": [ { "Kind": "Facility", "Key": "ROOFTOP", "Op": "GreaterOrEqual", "Value": 1 } ] },
+          "Effect": { "Vitals": [ { "Vital": "Stress", "Amount": -12 }, { "Vital": "Fatigue", "Amount": -5 } ], "Hidden": [ { "Hidden": "Hope", "Amount": 1 } ], "Npcs": [ { "NpcId": "NPC_TEACHER", "Affinity": 2 } ] } },
+        { "Id": "CREEK", "HasCheck": true, "Check": { "BaseRate": 0.6, "StatWeights": [ { "Stat": "Stamina", "Weight": 0.006 } ] },
+          "Effect": { "Vitals": [ { "Vital": "Stress", "Amount": -20 } ], "Resources": [ { "Resource": "RawWater", "Amount": 6 } ], "Hidden": [ { "Hidden": "Hope", "Amount": 2 } ] },
+          "OnFailure": { "Vitals": [ { "Vital": "Hp", "Amount": -8 }, { "Vital": "Stress", "Amount": 4 } ] } }
+      ] },
+
+    { "Id": "EVT_OUTING_AUTUMN", "Kind": "Story", "Priority": 95, "Condition": { "ActionIds": [ "ACT_OUTING_AUTUMN" ] },
+      "Choices": [
+        { "Id": "LEAVES", "Effect": { "Vitals": [ { "Vital": "Stress", "Amount": -12 } ], "Stats": [ { "Stat": "Empathy", "Amount": 1 } ], "Npcs": [ { "NpcId": "NPC_TEACHER", "Affinity": 2 } ] } },
+        { "Id": "MAPLE", "HasCheck": true, "Check": { "BaseRate": 0.6, "StatWeights": [ { "Stat": "Stamina", "Weight": 0.006 } ] },
+          "Effect": { "Vitals": [ { "Vital": "Stress", "Amount": -20 } ], "Resources": [ { "Resource": "Food", "Amount": 2 } ], "Hidden": [ { "Hidden": "Hope", "Amount": 2 } ] },
+          "OnFailure": { "Vitals": [ { "Vital": "Hp", "Amount": -8 }, { "Vital": "Stress", "Amount": 4 } ] } },
+        { "Id": "BBQ", "Condition": { "Checks": [ { "Kind": "FactionTier", "Key": "FAC_MART", "Op": "GreaterOrEqual", "Value": 3 } ] },
+          "Costs": [ { "Resource": "Food", "Amount": 2 } ],
+          "Effect": { "Vitals": [ { "Vital": "Stress", "Amount": -18 } ], "Hidden": [ { "Hidden": "Humanity", "Amount": 1 } ],
+            "Factions": [ { "FactionId": "FAC_MART", "Standing": 8, "LogKey": "faction.FAC_MART.log.bbq" } ] } }
+      ] },
+
+    { "Id": "EVT_OUTING_WINTER", "Kind": "Story", "Priority": 95, "Condition": { "ActionIds": [ "ACT_OUTING_WINTER" ] },
+      "Choices": [
+        { "Id": "SNOWMAN", "Effect": { "Vitals": [ { "Vital": "Stress", "Amount": -15 } ], "Hidden": [ { "Hidden": "Hope", "Amount": 1 } ], "Npcs": [ { "NpcId": "NPC_TEACHER", "Affinity": 2 } ] } },
+        { "Id": "SUNRISE", "Condition": { "Checks": [ { "Kind": "Facility", "Key": "ROOFTOP", "Op": "GreaterOrEqual", "Value": 1 } ] },
+          "Effect": { "Vitals": [ { "Vital": "Stress", "Amount": -12 } ], "Stats": [ { "Stat": "Willpower", "Amount": 1 } ], "Npcs": [ { "NpcId": "NPC_TEACHER", "Affinity": 2 } ] } },
+        { "Id": "SLED", "HasCheck": true, "Check": { "BaseRate": 0.6, "StatWeights": [ { "Stat": "Agility", "Weight": 0.006 } ] },
+          "Effect": { "Vitals": [ { "Vital": "Stress", "Amount": -22 } ], "Hidden": [ { "Hidden": "Hope", "Amount": 2 } ] },
+          "OnFailure": { "Vitals": [ { "Vital": "Hp", "Amount": -10 }, { "Vital": "Stress", "Amount": 4 } ] } }
+      ] },
+
+    { "Id": "EVT_TRIP_DEPART", "Kind": "Story", "Priority": 96, "Condition": { "ActionIds": [ "ACT_SCHOOL_TRIP" ] },
+      "Choices": [
+        { "Id": "HILL", "HasCheck": true, "Check": { "BaseRate": 0.65, "StatWeights": [ { "Stat": "Stamina", "Weight": 0.006 } ] },
+          "Effect": { "Vitals": [ { "Vital": "Stress", "Amount": -10 } ], "SetFlags": [ "TRIP_HILL" ] },
+          "OnFailure": { "Vitals": [ { "Vital": "Hp", "Amount": -10 } ], "SetFlags": [ "TRIP_HILL", "TRIP_ROUGH" ] } },
+        { "Id": "SEA", "Condition": { "Checks": [ { "Kind": "FactionTier", "Key": "FAC_MART", "Op": "GreaterOrEqual", "Value": 4 } ] },
+          "Effect": { "Vitals": [ { "Vital": "Stress", "Amount": -15 } ], "SetFlags": [ "TRIP_SEA" ],
+            "Factions": [ { "FactionId": "FAC_MART", "Standing": 5, "LogKey": "faction.FAC_MART.log.truck" } ] } }
+      ] },
+    { "Id": "EVT_TRIP_NIGHT", "Kind": "Night", "Priority": 96, "Condition": { "ActionIds": [ "ACT_TRIP_NIGHT" ] },
+      "OnShow": { "Hidden": [ { "Hidden": "Hope", "Amount": 2 } ], "Npcs": [ { "NpcId": "NPC_TEACHER", "Affinity": 3 } ], "SetFlags": [ "TRIP_NIGHT_DONE" ] },
+      "Choices": [
+        { "Id": "FUTURE", "Effect": { "Hidden": [ { "Hidden": "SelfAwareness", "Amount": 1 } ] } },
+        { "Id": "STARS", "Effect": { "Vitals": [ { "Vital": "Stress", "Amount": -6 } ] } }
+      ] },
+    { "Id": "EVT_TRIP_RETURN", "Kind": "Story", "Priority": 96,
+      "Condition": { "WeekMin": 30, "Phase": "Day", "FlagsAll": [ "TRIP_NIGHT_DONE" ], "FlagsNone": [ "TRIP_RETURNED" ] },
+      "OnShow": { "SetFlags": [ "TRIP_RETURNED" ] } }
+  ]
+}

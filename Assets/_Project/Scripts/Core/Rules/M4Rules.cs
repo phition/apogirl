@@ -98,6 +98,9 @@ namespace ApoGirl.Core.Rules
 
         /// <summary>이벤트로 강제된 습격 (막 마무리 등).</summary>
         public bool Scripted;
+
+        /// <summary>거점을 비운 밤의 습격 (수학여행 중).</summary>
+        public bool Away;
     }
 
     /// <summary>밤 습격 (문서 5.5): 방어도 vs 위협도 vs 전투력.</summary>
@@ -106,7 +109,10 @@ namespace ApoGirl.Core.Rules
         public const string FlagRepelled = "LAST_RAID_REPELLED";
         public const string FlagBreached = "LAST_RAID_BREACHED";
 
-        public static float Chance(GameState state, BalanceConfig balance)
+        /// <summary>거점을 비운 밤(수학여행)에 습격이 왔다 (돌아오는 장면이 갈린다).</summary>
+        public const string FlagWhileAway = "RAID_WHILE_AWAY";
+
+        public static float Chance(GameState state, BalanceConfig balance, IDefinitionDatabase db = null)
         {
             if (state.Calendar.Week < balance.RaidStartWeek)
             {
@@ -114,34 +120,43 @@ namespace ApoGirl.Core.Rules
             }
 
             var chance = balance.RaidBaseChance + (state.Base.Threat - state.Base.Defense) * balance.RaidChancePerPoint;
-            chance = Math.Min(Math.Max(chance, 0f), balance.RaidMaxChance) * DifficultyRules.Get(state, balance).HumanThreat;
+            chance = Math.Min(Math.Max(chance, 0f), balance.RaidMaxChance) * DifficultyRules.Get(state, balance).HumanThreat
+                     * FactionRules.RaidChanceMultiplier(state, db);
             return state.Base.Weather == WeatherType.Rain ? chance * balance.RainRaidMultiplier : chance;
         }
 
         /// <summary>밤 슬롯마다: 확률로 습격이 오면 판정. 위협 후보가 0이면 난수를 쓰지 않는다.</summary>
-        public static RaidResult RollNight(GameState state, ActionDef action, BalanceConfig balance, IRandomService random, StateDelta delta, int companionGuard = 0)
+        public static RaidResult RollNight(GameState state, ActionDef action, BalanceConfig balance, IRandomService random, StateDelta delta, int companionGuard = 0, IDefinitionDatabase db = null)
         {
-            var chance = Chance(state, balance);
+            var chance = Chance(state, balance, db);
             if (chance <= 0f || random.NextDouble() >= chance)
             {
                 return null;
             }
 
-            return Resolve(state, state.Base.Threat, (action?.RaidGuard ?? 0) + companionGuard, false, balance, random, delta);
+            // 세력 영향 (사거리 파가 적대면 더 세게 온다)
+            var threat = state.Base.Threat + FactionRules.RaidStrengthBonus(state, db);
+            return Resolve(state, threat, (action?.RaidGuard ?? 0) + companionGuard, false, balance, random, delta, action?.AwayFromBase ?? false);
         }
 
-        public static RaidResult Resolve(GameState state, int threat, int guard, bool scripted, BalanceConfig balance, IRandomService random, StateDelta delta)
+        public static RaidResult Resolve(GameState state, int threat, int guard, bool scripted, BalanceConfig balance, IRandomService random, StateDelta delta, bool away = false)
         {
             var strength = threat + random.Range(0, Math.Max(0, balance.RaidStrengthVariance));
             var result = new RaidResult
             {
                 Scripted = scripted,
                 Strength = strength,
-                Power = DefenseRules.Power(state, balance, guard, random, true),
+                Power = DefenseRules.Power(state, balance, guard, random, true, away),
+                Away = away,
             };
             result.Repelled = result.Power >= result.Strength;
 
             state.Exploration.Raids++;
+            if (away)
+            {
+                state.Flags.Add(FlagWhileAway);
+            }
+
             state.Flags.Remove(FlagRepelled);
             state.Flags.Remove(FlagBreached);
             if (result.Repelled)
@@ -155,7 +170,11 @@ namespace ApoGirl.Core.Rules
             {
                 state.Flags.Add(FlagBreached);
                 EffectApplier.ChangeVital(state, VitalType.Stress, balance.RaidBreachStress, balance, delta);
-                EffectApplier.ChangeVital(state, VitalType.Hp, -balance.RaidBreachHp, balance, delta);
+                if (!away)
+                {
+                    EffectApplier.ChangeVital(state, VitalType.Hp, -balance.RaidBreachHp, balance, delta);
+                }
+
                 EffectApplier.ChangeResource(state, ResourceType.Food, -balance.RaidBreachFood, delta);
                 EffectApplier.ChangeDefense(state, -balance.RaidBreachDefenseLoss, balance, delta);
             }

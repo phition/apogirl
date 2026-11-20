@@ -115,6 +115,15 @@ namespace ApoGirl.Core.Planning
             slot.Locked = true;
         }
 
+        /// <summary>이 칸을 정해진 행동으로 잠근다 (수학여행 밤 등).</summary>
+        public static void LockAction(WeekPlan plan, int slotIndex, string actionId)
+        {
+            var slot = plan.Slots[slotIndex];
+            slot.ActionId = actionId;
+            slot.ForcedRest = false;
+            slot.Locked = true;
+        }
+
         internal static bool IsExpedition(IDefinitionDatabase db, string actionId)
         {
             return !string.IsNullOrEmpty(actionId) && db.TryGetAction(actionId, out var action) && action.IsExpedition;

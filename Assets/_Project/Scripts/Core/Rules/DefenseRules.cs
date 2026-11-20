@@ -35,10 +35,11 @@ namespace ApoGirl.Core.Rules
         }
 
         /// <summary>거점 방어력 (습격과 같은 계산 + 경보·함정).</summary>
-        public static int Power(GameState state, BalanceConfig balance, int guard, IRandomService random, bool consumeTrap)
+        public static int Power(GameState state, BalanceConfig balance, int guard, IRandomService random, bool consumeTrap, bool away = false)
         {
-            return balance.RaidBasePower + DerivedStats.CombatPower(state, balance)
-                   + (int)Math.Round(state.Base.Defense * balance.RaidDefenseWeight)
+            // 거점을 비웠으면 주인공 전투력이 빠지고 방어도도 일부만 (지키는 사람이 없다)
+            return balance.RaidBasePower + (away ? 0 : DerivedStats.CombatPower(state, balance))
+                   + (int)Math.Round(state.Base.Defense * balance.RaidDefenseWeight * (away ? balance.AwayDefenseFactor : 1f))
                    + guard
                    + ExtraPower(state, balance, consumeTrap)
                    + random.Range(0, Math.Max(0, balance.RaidPowerVariance));
@@ -83,7 +84,7 @@ namespace ApoGirl.Core.Rules
         }
 
         /// <summary>낮 슬롯 하나의 확률 (주 확률을 7일로 나눈다). 확률 0이면 난수를 쓰지 않는다.</summary>
-        public static bool Roll(GameState state, BalanceConfig balance, IRandomService random)
+        public static bool Roll(GameState state, BalanceConfig balance, IRandomService random, IDefinitionDatabase db = null)
         {
             var weekly = WeeklyChance(state.Calendar.Week, balance);
             if (weekly <= 0f)
@@ -93,7 +94,7 @@ namespace ApoGirl.Core.Rules
 
             // 낮에 자주 나가 눈에 띄었으면 뒤를 밟혀 더 자주 온다
             weekly += state.Exploration.DayExposure * balance.IntrusionChancePerExposure;
-            weekly *= DifficultyRules.Get(state, balance).HumanThreat;
+            weekly *= DifficultyRules.Get(state, balance).HumanThreat * FactionRules.IntrusionMultiplier(state, db);
 
             if (weekly >= 1f)
             {

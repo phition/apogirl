@@ -228,6 +228,9 @@ namespace ApoGirl.Core.Definitions
 
         /// <summary>M6: 회차 시작 보너스 (엔딩을 하나라도 보면 새 게임에서 하나를 고른다).</summary>
         public List<StartBonusDef> StartBonuses = new List<StartBonusDef>();
+
+        /// <summary>2~4막 보강: 외부 세력.</summary>
+        public List<FactionDef> Factions = new List<FactionDef>();
     }
 
     /// <summary>회차 시작 보너스 (문서 8.2). 이름·설명은 UI 키 "bonus.{Id}.name/desc".</summary>

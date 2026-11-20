@@ -9,7 +9,7 @@ namespace ApoGirl.Core.State
     public sealed class GameState
     {
         /// <summary>현재 세이브 포맷 버전. 마이그레이션 시 증가시킨다.</summary>
-        public const int CurrentSaveVersion = 5;
+        public const int CurrentSaveVersion = 6;
 
         public int SaveVersion { get; set; } = CurrentSaveVersion;
         public GameStatus Status { get; set; } = GameStatus.Playing;
@@ -53,6 +53,35 @@ namespace ApoGirl.Core.State
 
         /// <summary>주간 정산마다 남기는 기록 (엔딩 화면의 성장 그래프). v4에서 추가.</summary>
         public List<WeekRecord> History { get; set; } = new List<WeekRecord>();
+
+        /// <summary>세력 ID → 평판·접촉 기록. v6에서 추가.</summary>
+        public Dictionary<string, FactionState> Factions { get; set; } = new Dictionary<string, FactionState>();
+    }
+
+    /// <summary>외부 세력과의 관계.</summary>
+    public sealed class FactionState
+    {
+        public bool Known { get; set; }
+        public int Standing { get; set; }
+
+        /// <summary>마지막으로 평판이 움직인 주 (멀어짐 계산).</summary>
+        public int LastContactWeek { get; set; }
+
+        /// <summary>마지막 거래 주 (세력마다 주 1회).</summary>
+        public int LastTradeWeek { get; set; }
+
+        /// <summary>최근 일 (새것이 앞, 최대 FactionLogSize).</summary>
+        public List<FactionLogEntry> Log { get; set; } = new List<FactionLogEntry>();
+
+        /// <summary>무전 거래로 다음 주에 도착할 자원 (ResourceType 이름 → 양).</summary>
+        public Dictionary<string, int> Pending { get; set; } = new Dictionary<string, int>();
+    }
+
+    public sealed class FactionLogEntry
+    {
+        public int Week { get; set; }
+        public string TextKey { get; set; } = "";
+        public int Standing { get; set; }
     }
 
     /// <summary>한 주가 끝났을 때의 모습.</summary>

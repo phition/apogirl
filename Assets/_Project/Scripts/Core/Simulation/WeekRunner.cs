@@ -109,6 +109,7 @@ namespace ApoGirl.Core.Simulation
             _db = db ?? throw new ArgumentNullException(nameof(db));
             _random = random ?? throw new ArgumentNullException(nameof(random));
             _expeditionRunner = expeditionRunner ?? throw new ArgumentNullException(nameof(expeditionRunner));
+            FactionRules.EnsureInitialized(_state, _db);
         }
 
         public event Action<SlotOutcome> SlotResolved;
@@ -182,7 +183,7 @@ namespace ApoGirl.Core.Simulation
 
             // 낮 침입 (3막부터): 그날 낮 행동을 취소하고 침입 이벤트로 대응한다
             if (calendar.Phase == DayPhase.Day && _db.TryGetAction(Balance.IntrusionActionId, out var intrusionAction)
-                && _db.TryGetEvent(Balance.IntrusionEventId, out _) && IntrusionRules.Roll(_state, Balance, _random))
+                && _db.TryGetEvent(Balance.IntrusionEventId, out _) && IntrusionRules.Roll(_state, Balance, _random, _db))
             {
                 outcome.IntrusionTriggered = true;
                 action = intrusionAction;
@@ -275,7 +276,17 @@ namespace ApoGirl.Core.Simulation
             if (calendar.Phase == DayPhase.Night && !action.IsExpedition && !action.Confined && player.Vitals.Hp > 0)
             {
                 var companionGuard = (int)Math.Round(TraitRules.Sum(_state, _db, TraitModifierKind.RaidGuard));
-                outcome.Raid = RaidRules.RollNight(_state, action, Balance, _random, delta, companionGuard);
+                outcome.Raid = RaidRules.RollNight(_state, action, Balance, _random, delta, companionGuard, _db);
+            }
+
+            // 수학여행처럼 뒤 칸까지 쓰는 행동: 뒤 칸을 정해진 행동으로 잠근다
+            if (action.LockNextSlots > 0 && !string.IsNullOrEmpty(action.LockActionId) && _db.TryGetAction(action.LockActionId, out _))
+            {
+                var index = CalendarRules.SlotIndex(calendar.Day, calendar.Phase);
+                for (var k = 1; k <= action.LockNextSlots && index + k < WeekPlan.SlotCount; k++)
+                {
+                    PlanPreparer.LockAction(_state.Plan, index + k, action.LockActionId);
+                }
             }
 
             if (player.Vitals.Hp <= 0)
@@ -498,6 +509,7 @@ namespace ApoGirl.Core.Simulation
             var calendar = _state.Calendar;
             var summary = new WeekSummary { Week = calendar.Week, DiaryKey = "" };
             UpkeepRules.ApplyWeekly(_state, Balance, summary.Delta);
+            FactionRules.ApplyWeekly(_state, _db, Balance, summary.Delta);
             if (calendar.Week >= Balance.RaidStartWeek - 1)
             {
                 EffectApplier.ChangeThreat(_state, Balance.ThreatWeekly, Balance, summary.Delta);
@@ -652,6 +664,9 @@ namespace ApoGirl.Core.Simulation
             {
                 _state.Clues.Add(clue);
             }
+
+            // 조우 선택 플래그에 세력이 반응한다 (예: 더불어 마트와 거래 → 평판 +)
+            FactionRules.OnFlagsSet(_state, _db, result.Flags, delta);
 
             // M6: 정찰 정보는 한 번 쓰면 사라진다
             _state.Flags.Remove(ScoutRules.FlagFor(action.LocationId));

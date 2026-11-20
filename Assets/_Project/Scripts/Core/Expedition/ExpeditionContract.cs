@@ -187,7 +187,7 @@ namespace ApoGirl.Core.Expedition
             {
                 var difficulty = Rules.DifficultyRules.Get(state, db.Balance);
                 request.HarmMultiplier = difficulty.Harm;
-                request.HumanThreatMultiplier = difficulty.HumanThreat;
+                request.HumanThreatMultiplier = difficulty.HumanThreat * Rules.FactionRules.HostileMultiplier(state, db);
             }
 
             HostileRules.Assign(request, hasLocation ? location : null, db?.Balance);

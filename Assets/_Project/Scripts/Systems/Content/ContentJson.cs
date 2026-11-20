@@ -30,6 +30,9 @@ namespace ApoGirl.Systems.Content
         public List<RoleDef> Roles = new List<RoleDef>();
         public List<StartBonusDef> StartBonuses = new List<StartBonusDef>();
 
+        // ── 2~4막 보강 ──
+        public List<FactionDef> Factions = new List<FactionDef>();
+
         /// <summary>여러 파일 중 하나에만 둔다 (마지막 것이 이긴다).</summary>
         public PrologueDef Prologue;
     }
@@ -88,6 +91,7 @@ namespace ApoGirl.Systems.Content
                 merged.Endings.AddRange(content.Endings);
                 merged.Roles.AddRange(content.Roles);
                 merged.StartBonuses.AddRange(content.StartBonuses);
+                merged.Factions.AddRange(content.Factions);
                 if (content.Prologue != null)
                 {
                     merged.Prologue = content.Prologue;

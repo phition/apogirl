@@ -98,6 +98,11 @@ namespace ApoGirl.Core.Effects
                 AddItem(state, item.ItemId, item.Count, delta);
             }
 
+            foreach (var faction in effect.Factions)
+            {
+                Rules.FactionRules.Change(state, faction, delta);
+            }
+
             // ── M4 ──
             ChangeDefense(state, effect.Defense, balance, delta);
             ChangeThreat(state, effect.Threat, balance, delta);

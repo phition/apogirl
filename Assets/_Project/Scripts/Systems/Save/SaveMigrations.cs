@@ -14,6 +14,7 @@ namespace ApoGirl.Systems.Save
                 yield return new V2ToV3();
                 yield return new V3ToV4();
                 yield return new V4ToV5();
+                yield return new V5ToV6();
             }
         }
 
@@ -67,6 +68,20 @@ namespace ApoGirl.Systems.Save
                 {
                     vitals["Hydration"] = -(vitals.Value<int?>("Thirst") ?? 0);
                     vitals.Remove("Thirst");
+                }
+            }
+        }
+
+        /// <summary>v6: 세력(Factions) 추가 (2~4막 보강). 처음 평판은 게임이 불러올 때 채운다.</summary>
+        private sealed class V5ToV6 : ISaveMigration
+        {
+            public int FromVersion => 5;
+
+            public void Migrate(JObject root)
+            {
+                if (root["Factions"] == null)
+                {
+                    root["Factions"] = new JObject();
                 }
             }
         }

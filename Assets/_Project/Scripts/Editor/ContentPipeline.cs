@@ -88,10 +88,10 @@ namespace ApoGirl.EditorTools
                     AssetDatabase.CreateAsset(extras, ExtrasPath);
                 }
 
-                extras.EditorSet(content.Traits, content.Facilities, content.Lines, content.Prologue ?? new PrologueDef(), content.Endings, content.Roles, content.StartBonuses);
+                extras.EditorSet(content.Traits, content.Facilities, content.Lines, content.Prologue ?? new PrologueDef(), content.Endings, content.Roles, content.StartBonuses, content.Factions);
                 EditorUtility.SetDirty(extras);
                 database.EditorSetContent(actions, items, loot, models, enemies, extras);
-                Debug.Log($"[Content] 행동 {actions.Count}, 아이템 {items.Count}, 전리품 {loot.Count}, 모델 {models.Count}, 적 {enemies.Count}, 특성 {content.Traits.Count}, 시설 {content.Facilities.Count}, 대사 줄 {content.Lines.Count}, 엔딩 {content.Endings.Count}, 역할 {content.Roles.Count}");
+                Debug.Log($"[Content] 행동 {actions.Count}, 아이템 {items.Count}, 전리품 {loot.Count}, 모델 {models.Count}, 적 {enemies.Count}, 특성 {content.Traits.Count}, 시설 {content.Facilities.Count}, 대사 줄 {content.Lines.Count}, 엔딩 {content.Endings.Count}, 역할 {content.Roles.Count}, 세력 {content.Factions.Count}");
             }
 
             SyncBalance();

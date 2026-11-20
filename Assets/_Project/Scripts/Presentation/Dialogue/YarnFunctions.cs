@@ -31,6 +31,7 @@ namespace ApoGirl.Presentation.Dialogue
                 ["affinity"] = p => (float)Affinity(Str(p, 0)),
                 ["week"] = _ => (float)Week(),
                 ["seen"] = p => (float)Seen(Str(p, 0)),
+                ["joined"] = p => Joined(Str(p, 0)),
                 ["hidden"] = p => (float)Hidden(Str(p, 0)),
                 ["succeeded"] = _ => Succeeded(),
                 ["great_success"] = _ => GreatSuccess(),
@@ -110,6 +111,11 @@ namespace ApoGirl.Presentation.Dialogue
         [YarnFunction("seen")]
         public static int Seen(string eventId) =>
             State != null && State.Events.Records.TryGetValue(eventId, out var record) ? record.Count : 0;
+
+        /// <summary>이 NPC가 거점에 합류해 있는지 (소풍·수학여행에 같이 가는 동료 대사).</summary>
+        [YarnFunction("joined")]
+        public static bool Joined(string npcId) =>
+            State != null && State.Npcs.TryGetValue(npcId ?? "", out var npc) && npc.Status == NpcStatus.Joined;
 
         /// <summary>방금 고른 선택지의 판정이 실패가 아니었는지.</summary>
         [YarnFunction("succeeded")]

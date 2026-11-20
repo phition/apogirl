@@ -188,6 +188,54 @@ namespace ApoGirl.Presentation.Screens
             _baseInfo = Row(_baseSection);
             _baseInfo.style.whiteSpace = WhiteSpace.Normal;
             _baseSection.Add(_companions);
+
+            panel.Add(_factionSection);
+            _factionSection.Add(Header("status.factions"));
+            _factionSection.Add(_factions);
+        }
+
+        /// <summary>세력 이름을 누르면 (허브가 세력 카드를 연다).</summary>
+        public Action<string> FactionClicked { get; set; }
+
+        private readonly VisualElement _factionSection = new VisualElement();
+        private readonly VisualElement _factions = new VisualElement();
+
+        /// <summary>알게 된 세력: 이름 · 단계 평판, 아래 한 줄 근황.</summary>
+        private void RefreshFactions(GameState state)
+        {
+            _factions.Clear();
+            var any = false;
+            foreach (var def in _session.Definitions.Extras.Factions)
+            {
+                if (!state.Factions.TryGetValue(def.Id, out var faction) || !faction.Known)
+                {
+                    continue;
+                }
+
+                any = true;
+                var tier = FactionRules.TierOf(faction.Standing);
+                var factionId = def.Id;
+                var button = new Button(() => FactionClicked?.Invoke(factionId))
+                {
+                    text = Loc.F("status.faction", Loc.T("faction." + def.Id + ".name"), Loc.T("faction.tier." + tier), (faction.Standing > 0 ? "+" : "") + faction.Standing),
+                    tooltip = Loc.T("faction." + def.Id + ".status." + tier),
+                };
+                button.AddToClassList("small-button");
+                button.AddToClassList("companion-button");
+                button.AddToClassList("faction-" + tier.ToString().ToLowerInvariant());
+                _factions.Add(button);
+
+                var bar = new ProgressBar { lowValue = FactionRules.MinStanding, highValue = FactionRules.MaxStanding, value = faction.Standing };
+                bar.AddToClassList("faction-bar");
+                _factions.Add(bar);
+
+                var status = Row(_factions);
+                status.text = Loc.T("faction." + def.Id + ".status." + tier);
+                status.AddToClassList("dim");
+                status.style.whiteSpace = WhiteSpace.Normal;
+            }
+
+            _factionSection.EnableInClassList("hidden", !any);
         }
 
         private readonly Label _symptom;
@@ -274,6 +322,7 @@ namespace ApoGirl.Presentation.Screens
             _symptom.EnableInClassList("hidden", symptom == 0);
 
             RefreshCompanions(state);
+            RefreshFactions(state);
 
             _sleepDebt.text = Loc.T("status.sleep_debt") + "  " + Pips(player.SleepDebt, balance.SleepDebtMax);
             _sleepDebt.EnableInClassList("danger", player.SleepDebt >= 3);

@@ -73,6 +73,11 @@ namespace ApoGirl.Core.Definitions
         /// <summary>낮 침입 대응 (Fight / Hide / Yield). 거점이 IntrusionRules로 판정한다.</summary>
         public string IntrusionResponse = "";
 
+        // ── 2~4막 보강 ──
+
+        /// <summary>세력 평판 변화·알게 됨.</summary>
+        public List<FactionChange> Factions = new List<FactionChange>();
+
         /// <summary>다른 효과를 이 효과에 더한다 (목록은 이어 붙이고, 수치는 더하고, 단계·세기는 큰 쪽).</summary>
         public GameEffect MergeFrom(GameEffect other)
         {
@@ -105,6 +110,7 @@ namespace ApoGirl.Core.Definitions
             TeacherInfection += other.TeacherInfection;
             TraumaCare += other.TraumaCare;
             Traps += other.Traps;
+            Factions.AddRange(other.Factions);
             if (!string.IsNullOrEmpty(other.IntrusionResponse)) IntrusionResponse = other.IntrusionResponse;
             return this;
         }

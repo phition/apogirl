@@ -418,6 +418,9 @@ namespace ApoGirl.Core.Definitions
 
         /// <summary>함정: 습격·침입 1회에 하나를 써서 방어력 +TrapPower (최대 MaxTraps개).</summary>
         public int TrapPower = 25;
+
+        /// <summary>거점을 비운 밤(수학여행)의 습격: 방어도 반영 비율 (주인공 전투력은 빠진다).</summary>
+        public float AwayDefenseFactor = 0.5f;
         public int MaxTraps = 3;
 
         /// <summary>깡통 경보장치 (플래그 ALARM_INSTALLED): 방어력 +AlarmPower.</summary>

@@ -85,6 +85,15 @@ namespace ApoGirl.Core.Definitions
 
         /// <summary>설치한 함정 수.</summary>
         Traps,
+
+        /// <summary>세력 평판 (Key = 세력 ID, 모르면 처음 평판).</summary>
+        FactionStanding,
+
+        /// <summary>세력을 알게 됐으면 1.</summary>
+        FactionKnown,
+
+        /// <summary>세력 평판 단계 (FactionTier: 적대 0 … 동맹 4).</summary>
+        FactionTier,
     }
 
     public enum CompareOp

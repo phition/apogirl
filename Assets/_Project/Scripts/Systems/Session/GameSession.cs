@@ -276,6 +276,13 @@ namespace ApoGirl.Systems.Session
         /// <summary>M6: 합류한 동료의 역할을 바꾼다 (계획 단계에서만, 빈 문자열 = 역할 없음).</summary>
         public bool SetNpcRole(string npcId, string roleId) => EditBool(() => Core.Rules.RoleRules.Assign(State, _db, npcId, roleId));
 
+        /// <summary>세력 거래 (계획 단계, 세력마다 주 1회). 할 수 없으면 false.</summary>
+        public bool Trade(string factionId, string offerId) => EditBool(() => FactionRules.Trade(State, _db, factionId, offerId, new StateDelta()));
+
+        /// <summary>거래할 수 없는 이유 (UI 키), 할 수 있으면 null.</summary>
+        public string TradeBlocker(string factionId, string offerId) =>
+            IsPlanning ? FactionRules.TradeBlocker(State, _db, factionId, offerId) : "faction.trade.planning";
+
         public bool SavePreset(string name) => EditBool(() => PlanEditing.SavePreset(State, name));
 
         public bool ApplyPreset(string name) => EditBool(() => PlanEditing.ApplyPreset(State, _db, name));

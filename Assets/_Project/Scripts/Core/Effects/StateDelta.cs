@@ -26,6 +26,11 @@ namespace ApoGirl.Core.Effects
 
         /// <summary>이번에 만들어 먹은 요리 (DishDef.Id).</summary>
         public readonly List<string> DishesCooked = new List<string>();
+
+        /// <summary>세력 평판 변화 (세력 ID → 양), 새로 알게 된 세력, 단계가 바뀐 세력 ("ID:Tier").</summary>
+        public readonly Dictionary<string, int> FactionStanding = new Dictionary<string, int>();
+        public readonly List<string> FactionsRevealed = new List<string>();
+        public readonly List<string> FactionTierChanges = new List<string>();
         public int Defense;
         public int Threat;
         public bool PowerRestored;
@@ -41,6 +46,8 @@ namespace ApoGirl.Core.Effects
         public void AddHidden(HiddenType type, int amount) => Add(Hidden, type, amount);
 
         public void AddNpcAffinity(string npcId, int amount) => Add(NpcAffinity, npcId, amount);
+
+        public void AddFactionStanding(string factionId, int amount) => Add(FactionStanding, factionId, amount);
 
         public int StatChange(StatType type) => Stats.TryGetValue(type, out var v) ? v : 0;
 
@@ -65,6 +72,9 @@ namespace ApoGirl.Core.Effects
             FacilitiesOpened.AddRange(other.FacilitiesOpened);
             ItemsLost.AddRange(other.ItemsLost);
             DishesCooked.AddRange(other.DishesCooked);
+            foreach (var pair in other.FactionStanding) AddFactionStanding(pair.Key, pair.Value);
+            FactionsRevealed.AddRange(other.FactionsRevealed);
+            FactionTierChanges.AddRange(other.FactionTierChanges);
             Defense += other.Defense;
             Threat += other.Threat;
             PowerRestored |= other.PowerRestored;

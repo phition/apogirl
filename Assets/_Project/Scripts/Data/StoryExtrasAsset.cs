@@ -15,6 +15,7 @@ namespace ApoGirl.Data
         [SerializeField] private List<EndingDef> _endings = new List<EndingDef>();
         [SerializeField] private List<RoleDef> _roles = new List<RoleDef>();
         [SerializeField] private List<StartBonusDef> _startBonuses = new List<StartBonusDef>();
+        [SerializeField] private List<FactionDef> _factions = new List<FactionDef>();
 
         public DefinitionExtras ToDefinition()
         {
@@ -27,12 +28,14 @@ namespace ApoGirl.Data
                 Endings = new List<EndingDef>(_endings ?? new List<EndingDef>()),
                 Roles = new List<RoleDef>(_roles ?? new List<RoleDef>()),
                 StartBonuses = new List<StartBonusDef>(_startBonuses ?? new List<StartBonusDef>()),
+                Factions = new List<FactionDef>(_factions ?? new List<FactionDef>()),
             };
         }
 
 #if UNITY_EDITOR
-        public void EditorSet(List<TraitDef> traits, List<FacilityDef> facilities, List<LineDef> lines, PrologueDef prologue, List<EndingDef> endings, List<RoleDef> roles, List<StartBonusDef> startBonuses)
+        public void EditorSet(List<TraitDef> traits, List<FacilityDef> facilities, List<LineDef> lines, PrologueDef prologue, List<EndingDef> endings, List<RoleDef> roles, List<StartBonusDef> startBonuses, List<FactionDef> factions)
         {
+            _factions = factions;
             _startBonuses = startBonuses;
             _roles = roles;
             _endings = endings;

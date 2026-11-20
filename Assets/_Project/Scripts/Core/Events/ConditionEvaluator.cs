@@ -203,6 +203,10 @@ namespace ApoGirl.Core.Events
                     return roles;
                 case ValueKind.Flag: return state.Flags.Contains(key) ? 1 : 0;
                 case ValueKind.Traps: return state.Base.Traps;
+                case ValueKind.FactionStanding: return state.Factions.TryGetValue(key ?? "", out var faction) ? faction.Standing : 0;
+                case ValueKind.FactionKnown: return state.Factions.TryGetValue(key ?? "", out var known) && known.Known ? 1 : 0;
+                case ValueKind.FactionTier:
+                    return (int)Rules.FactionRules.TierOf(state.Factions.TryGetValue(key ?? "", out var tiered) ? tiered.Standing : 0);
                 case ValueKind.BloodCompatible:
                     return Enum.TryParse<BloodType>(key, out var recipient) && BloodRules.CanDonate(state.Player.Profile.BloodType, recipient) ? 1 : 0;
                 default: throw new ArgumentOutOfRangeException(nameof(kind), kind, null);

@@ -1,0 +1,29 @@
+{
+  "Actions": [
+    { "Id": "ACT_OUTING_SPRING", "Category": "Daily", "SlotTag": "DayOnly", "FatigueCost": 3,
+      "ResourceCosts": [ { "Resource": "Food", "Amount": 1 }, { "Resource": "Water", "Amount": 1 } ],
+      "OnSuccess": { "SetFlags": [ "OUTING_SPRING_DONE" ] },
+      "Unlock": { "WeekMin": 4, "WeekMax": 7, "FlagsNone": [ "OUTING_SPRING_DONE" ] } },
+    { "Id": "ACT_OUTING_SUMMER", "Category": "Daily", "SlotTag": "DayOnly", "FatigueCost": 3,
+      "ResourceCosts": [ { "Resource": "Food", "Amount": 1 }, { "Resource": "Water", "Amount": 1 } ],
+      "OnSuccess": { "SetFlags": [ "OUTING_SUMMER_DONE" ] },
+      "Unlock": { "WeekMin": 18, "WeekMax": 22, "FlagsNone": [ "OUTING_SUMMER_DONE" ] } },
+    { "Id": "ACT_OUTING_AUTUMN", "Category": "Daily", "SlotTag": "DayOnly", "FatigueCost": 3,
+      "ResourceCosts": [ { "Resource": "Food", "Amount": 1 }, { "Resource": "Water", "Amount": 1 } ],
+      "OnSuccess": { "SetFlags": [ "OUTING_AUTUMN_DONE" ] },
+      "Unlock": { "WeekMin": 34, "WeekMax": 37, "FlagsNone": [ "OUTING_AUTUMN_DONE" ] } },
+    { "Id": "ACT_OUTING_WINTER", "Category": "Daily", "SlotTag": "DayOnly", "FatigueCost": 3,
+      "ResourceCosts": [ { "Resource": "Food", "Amount": 1 }, { "Resource": "Water", "Amount": 1 } ],
+      "OnSuccess": { "SetFlags": [ "OUTING_WINTER_DONE" ] },
+      "Unlock": { "WeekMin": 44, "WeekMax": 48, "FlagsNone": [ "OUTING_WINTER_DONE" ] } },
+
+    { "Id": "ACT_SCHOOL_TRIP", "Category": "Daily", "SlotTag": "DayOnly", "FatigueCost": 6,
+      "ResourceCosts": [ { "Resource": "Food", "Amount": 2 }, { "Resource": "Water", "Amount": 2 } ],
+      "LockNextSlots": 1, "LockActionId": "ACT_TRIP_NIGHT",
+      "OnSuccess": { "SetFlags": [ "TRIP_DONE" ] },
+      "Unlock": { "WeekMin": 30, "WeekMax": 33, "FlagsNone": [ "TRIP_DONE" ] } },
+    { "Id": "ACT_TRIP_NIGHT", "Category": "Rest", "SlotTag": "NightOnly", "AwayFromBase": true,
+      "OnSuccess": { "Vitals": [ { "Vital": "Fatigue", "Amount": -10 }, { "Vital": "Stress", "Amount": -8 } ] },
+      "Unlock": { "FlagsAll": [ "SYSTEM_ONLY" ] } }
+  ]
+}

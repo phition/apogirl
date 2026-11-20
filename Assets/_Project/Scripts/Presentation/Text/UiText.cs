@@ -80,6 +80,8 @@ namespace ApoGirl.Presentation.Text
 
             if (delta.PowerRestored) lines.Add(Loc.T("result.power_restored"));
             foreach (var dish in delta.DishesCooked) lines.Add(Loc.F("result.dish", Loc.T("dish." + dish)));
+            foreach (var faction in delta.FactionsRevealed) lines.Add(Loc.F("result.faction_known", Loc.T("faction." + faction + ".name")));
+            AppendGroup(lines, delta.FactionStanding, id => Loc.F("result.faction", Loc.T("faction." + id + ".name")));
             foreach (var flag in delta.FlagsCleared)
             {
                 // 지워진 플래그 중 알려 줄 것 (예: 부상 치유)

@@ -67,7 +67,7 @@ namespace ApoGirl.Presentation.Screens
             _root.Q("screen").AddToClassList(FontClasses[_fontIndex]);
 
             _topBar = new TopBarView(_root, _session);
-            _status = new StatusPanelView(_root, _session);
+            _status = new StatusPanelView(_root, _session) { FactionClicked = ShowFactionCard };
             _palette = new PaletteView(_root, _session);
             _planner = new PlannerView(_root, _session, () => _palette.SelectedActionId, ShowToast);
             _planSide = new PlanSideView(_root, _session);
@@ -735,6 +735,70 @@ namespace ApoGirl.Presentation.Screens
                     ShowPresetListCard();
                 }));
                 _card.Extra.Add(row);
+            }
+        }
+
+        /// <summary>세력 카드: 소개, 지금 단계의 영향, 최근 일, 거래.</summary>
+        private void ShowFactionCard(string factionId)
+        {
+            if (_card.IsOpen || _dialogueView.IsOpen || !FactionRules.TryGetDef(_session.Definitions, factionId, out var def)
+                || !_session.State.Factions.TryGetValue(factionId, out var faction))
+            {
+                return;
+            }
+
+            var tier = FactionRules.TierOf(faction.Standing);
+            var lines = new List<string>
+            {
+                Loc.T("faction." + factionId + ".desc"),
+                "",
+                Loc.F("faction.card.tier", Loc.T("faction.tier." + tier), (faction.Standing > 0 ? "+" : "") + faction.Standing),
+                Loc.T("faction." + factionId + ".status." + tier),
+            };
+
+            var effects = def.Effects.Where(e => tier >= e.MinTier && tier <= e.MaxTier && !string.IsNullOrEmpty(e.TextKey)).ToList();
+            if (effects.Count > 0)
+            {
+                lines.Add("");
+                lines.Add(Loc.T("faction.card.effects"));
+                lines.AddRange(effects.Select(e => "· " + Loc.T(e.TextKey)));
+            }
+
+            if (faction.Log.Count > 0)
+            {
+                lines.Add("");
+                lines.Add(Loc.T("faction.card.log"));
+                foreach (var entry in faction.Log)
+                {
+                    var text = string.IsNullOrEmpty(entry.TextKey) ? Loc.T("faction.log.drift") : Loc.T(entry.TextKey);
+                    var amount = entry.Standing == 0 ? "" : " (" + (entry.Standing > 0 ? "+" : "") + entry.Standing + ")";
+                    lines.Add(Loc.F("faction.card.log_line", entry.Week, text + amount));
+                }
+            }
+
+            _card.Show(Loc.T("faction." + factionId + ".name"), string.Join("\n", lines), false, (Loc.T("common.close"), () => _card.Hide()));
+            foreach (var offer in def.Trades)
+            {
+                var offerId = offer.Id;
+                var blocker = _session.TradeBlocker(factionId, offerId);
+                var give = string.Join(", ", offer.Give.Select(r => UiText.Resource(r.Resource) + " " + r.Amount));
+                var get = string.Join(", ", offer.Get.Select(r => UiText.Resource(r.Resource) + " " + r.Amount));
+                var button = new Button(() =>
+                {
+                    if (_session.Trade(factionId, offerId))
+                    {
+                        _card.Hide();
+                        ShowToast(Loc.T("trade." + factionId + "." + offerId + ".log"));
+                        Refresh();
+                    }
+                })
+                {
+                    text = Loc.F(offer.Delayed ? "faction.trade.button_delayed" : "faction.trade.button", give, get),
+                    tooltip = blocker == null ? Loc.T("trade." + factionId + "." + offerId) : Loc.T(blocker),
+                };
+                button.AddToClassList("small-button");
+                button.SetEnabled(blocker == null);
+                _card.Extra.Add(button);
             }
         }
 

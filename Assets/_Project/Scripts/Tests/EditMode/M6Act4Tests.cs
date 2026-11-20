@@ -32,7 +32,7 @@ namespace ApoGirl.Tests.EditMode
                 new DefinitionExtras
                 {
                     Traits = content.Traits, Facilities = content.Facilities, Lines = content.Lines, Prologue = content.Prologue ?? new PrologueDef(),
-                    Endings = content.Endings, Roles = content.Roles, StartBonuses = content.StartBonuses,
+                    Endings = content.Endings, Roles = content.Roles, StartBonuses = content.StartBonuses, Factions = content.Factions,
                 });
         }
 

@@ -117,6 +117,15 @@ namespace ApoGirl.Core.Definitions
         /// </summary>
         public bool Confined;
 
+        /// <summary>
+        /// 이 행동 뒤 칸 몇 개를 LockActionId로 잠근다 (수학여행: 낮을 고르면 그날 밤도 '여행 중').
+        /// </summary>
+        public int LockNextSlots;
+        public string LockActionId = "";
+
+        /// <summary>거점을 비운 칸 (여행 중인 밤): 밤 습격 때 주인공 전투력 없이 방어도 일부로만 막고, 주인공은 다치지 않는다.</summary>
+        public bool AwayFromBase;
+
         public bool IsRest => Category == ActionCategory.Rest;
         public bool IsExpedition => Category == ActionCategory.Expedition;
     }
