@@ -123,7 +123,11 @@ namespace ApoGirl.Tests.EditMode
             Assert.AreEqual(1, state.Base.GetResource(ResourceType.Medicine));
             Assert.AreEqual(4, state.Base.GetResource(ResourceType.Food));
             Assert.AreEqual(33, mart.Standing);
-            Assert.AreEqual("faction.trade.weekly", FactionRules.TradeBlocker(state, db, "FAC_MART", "MEDICINE_FOOD"), "세력마다 주 1회");
+            Assert.AreEqual("faction.trade.weekly", FactionRules.TradeBlocker(state, db, "FAC_MART", "MEDICINE_FOOD"), "더불어 마트는 2주에 한 번");
+            state.Calendar.Week++;
+            Assert.AreEqual("faction.trade.weekly", FactionRules.TradeBlocker(state, db, "FAC_MART", "MEDICINE_FOOD"));
+            state.Calendar.Week++;
+            Assert.IsNull(FactionRules.TradeBlocker(state, db, "FAC_MART", "MEDICINE_FOOD"), "2주 뒤에는 다시");
 
             // UBC 무전 거래: 다음 주 정산 때 도착
             var ubc = state.Factions["FAC_UBC"];

@@ -35,6 +35,9 @@ namespace ApoGirl.Core.Definitions
 
         public List<TradeOfferDef> Trades = new List<TradeOfferDef>();
 
+        /// <summary>거래 주기 (주). 1 = 매주, 2 = 격주 (운반조가 2주에 한 번 돈다).</summary>
+        public int TradeIntervalWeeks = 1;
+
         /// <summary>이 플래그가 처음 켜지면 평판이 바뀐다 (탐험 조우 선택 "ENC_{조우}_{선택}" 등).</summary>
         public List<FactionFlagReaction> FlagReactions = new List<FactionFlagReaction>();
     }

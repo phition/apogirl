@@ -287,7 +287,7 @@ namespace ApoGirl.Core.Rules
                 return "faction.trade.tier";
             }
 
-            if (faction.LastTradeWeek == state.Calendar.Week && state.Calendar.Week > 0)
+            if (faction.LastTradeWeek > 0 && state.Calendar.Week - faction.LastTradeWeek < Math.Max(1, def.TradeIntervalWeeks))
             {
                 return "faction.trade.weekly";
             }

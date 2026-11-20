@@ -814,7 +814,7 @@
     "faction.trade.button_delayed": "거래: {0} 주고 {1} 받기 (다음 주 도착)",
     "faction.trade.unknown": "거래할 수 없다.",
     "faction.trade.tier": "아직 이 거래를 할 만큼 가깝지 않다.",
-    "faction.trade.weekly": "이번 주에는 이미 거래했다.",
+    "faction.trade.weekly": "아직 다음 거래 때가 아니다. (운반은 2주에 한 번)",
     "faction.trade.short": "내줄 물자가 모자라다.",
     "faction.trade.planning": "거래는 주간 계획 중에만 할 수 있다.",
     "faction.FAC_SAGEORI.name": "사거리 파",

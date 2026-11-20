@@ -14,6 +14,7 @@
     {
       "Id": "FAC_MART",
       "StartStanding": 0,
+      "TradeIntervalWeeks": 2,
       "DriftAfterWeeks": 6, "WeeklyDrift": 2, "DriftTarget": 0,
       "Effects": [
         { "MinTier": "Hostile", "MaxTier": "Wary", "HostileMultiplier": 1.2, "TextKey": "faction.FAC_MART.effect.cold" },
@@ -35,6 +36,7 @@
     {
       "Id": "FAC_UBC",
       "StartStanding": 20,
+      "TradeIntervalWeeks": 2,
       "DriftAfterWeeks": 4, "WeeklyDrift": 3, "DriftTarget": 10,
       "Effects": [
         { "MinTier": "Hostile", "MaxTier": "Neutral", "TextKey": "faction.FAC_UBC.effect.distant" },
