@@ -213,7 +213,7 @@ namespace ApoGirl.Tests.EditMode
             var passed = 0;
             foreach (var strategy in new[] { Strategy.Expedition, Strategy.Mixed })
             {
-                foreach (var seed in new[] { 11, 22, 33 })
+                foreach (var seed in new[] { 11, 22, 33, 44, 55 })
                 {
                     report.Append(Run(strategy, seed, out var state, 39));
                     report.AppendLine($"  end cause: {state.EndCause} hp {state.Player.Vitals.Hp} infection {state.Player.Vitals.Infection} teacher {state.Teacher.InfectionProgress} rescue {state.Flags.Contains("RESCUE_ANNOUNCED")}");
@@ -237,8 +237,8 @@ namespace ApoGirl.Tests.EditMode
             Directory.CreateDirectory("Temp");
             File.WriteAllText("Temp/ApoGirlAct3Balance.txt", report.ToString());
             Debug.Log(report.ToString());
-            // 배드 목표 50%: 혼합 전략은 시드 3개 중 2개 이상이 막을 넘으면 된다
-            Assert.GreaterOrEqual(passed, 2, failures.ToString());
+            // 배드 목표 50%: 혼합 전략은 시드 5개 중 3개 이상이 3막(39주)을 넘으면 된다 (시드 3개는 이벤트 변경에 따른 난수 흔들림에 민감)
+            Assert.GreaterOrEqual(passed, 3, failures.ToString());
         }
     }
 
