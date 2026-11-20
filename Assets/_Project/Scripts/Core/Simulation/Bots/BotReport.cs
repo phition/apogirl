@@ -32,6 +32,9 @@ namespace ApoGirl.Core.Simulation.Bots
         {
             ("food", w => w.Food),
             ("water", w => w.Water),
+            ("raw_water", w => w.RawWater),
+            ("cleanliness", w => w.Cleanliness),
+            ("injured", w => w.Injured),
             ("medicine", w => w.Medicine),
             ("fuel", w => w.Fuel),
             ("materials", w => w.Materials),

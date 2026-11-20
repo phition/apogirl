@@ -19,6 +19,9 @@ namespace ApoGirl.Core.Simulation.Bots
         public int Week;
         public int Food;
         public int Water;
+        public int RawWater;
+        public int Cleanliness;
+        public int Injured;
         public int Medicine;
         public int Fuel;
         public int Materials;
@@ -219,6 +222,9 @@ namespace ApoGirl.Core.Simulation.Bots
                 Week = week,
                 Food = b.GetResource(ResourceType.Food),
                 Water = b.GetResource(ResourceType.Water),
+                RawWater = b.GetResource(ResourceType.RawWater),
+                Cleanliness = v.Cleanliness,
+                Injured = state.Flags.Contains("INJURED") ? 1 : 0,
                 Medicine = b.GetResource(ResourceType.Medicine),
                 Fuel = b.GetResource(ResourceType.Fuel),
                 Materials = b.GetResource(ResourceType.Materials),
