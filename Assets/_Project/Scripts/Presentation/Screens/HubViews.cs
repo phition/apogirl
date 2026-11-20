@@ -408,7 +408,7 @@ namespace ApoGirl.Presentation.Screens
                     Refresh();
                 }) { text = Loc.T("cat." + category), name = "tab-" + category };
                 tab.AddToClassList("tab");
-                StoryArt.SetIcon(tab, StoryArt.Icon("cat." + category), 22f);
+                StoryArt.SetIcon(tab, StoryArt.Icon("cat." + category), 18f);
                 _tabs.Add(tab);
             }
 
@@ -520,6 +520,7 @@ namespace ApoGirl.Presentation.Screens
                     var index = CalendarRules.SlotIndex(day, phase);
                     var cell = new Button(() => OnClick(index));
                     cell.AddToClassList("slot");
+                    cell.AddToClassList("no-click-sound");
                     cell.RegisterCallback<PointerDownEvent>(evt =>
                     {
                         if (evt.button == 1)
@@ -577,7 +578,13 @@ namespace ApoGirl.Presentation.Screens
                 return;
             }
 
-            Report(_session.SetSlot(index, actionId));
+            var placed = _session.SetSlot(index, actionId);
+            if (placed == PlanEditResult.Ok)
+            {
+                Audio.Sound.Play("Sfx/ui_slot_place", Audio.SoundCategory.Ui);
+            }
+
+            Report(placed);
         }
 
         private void OnClear(int index)

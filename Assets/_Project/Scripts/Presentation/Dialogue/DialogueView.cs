@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using ApoGirl.Presentation.Art;
+using ApoGirl.Presentation.Audio;
 using ApoGirl.Presentation.Text;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -86,6 +87,7 @@ namespace ApoGirl.Presentation.Dialogue
             _speaker.text = "";
             _log.AddToClassList("hidden");
             _layer.RemoveFromClassList("hidden");
+            Sound.Play("Sfx/ui_page_turn", SoundCategory.Ui);
         }
 
         public void Close()
@@ -94,6 +96,7 @@ namespace ApoGirl.Presentation.Dialogue
             _layer.AddToClassList("hidden");
             _portrait.AddToClassList("hidden");
             SetScene(null);
+            Sound.StopVoice();
         }
 
         /// <summary>대화 뒤에 깔 사건 그림 (null이면 지운다).</summary>
@@ -129,6 +132,7 @@ namespace ApoGirl.Presentation.Dialogue
             StoryArt.SetCover(_portrait, portrait);
             _portrait.EnableInClassList("hidden", portrait == null);
             _history.Add(string.IsNullOrEmpty(speaker) ? text : speaker + ": " + text);
+            Sound.OnLine(speaker, text);
             _full = text ?? "";
             _advance = new TaskCompletionSource<bool>();
             _next.AddToClassList("hidden");

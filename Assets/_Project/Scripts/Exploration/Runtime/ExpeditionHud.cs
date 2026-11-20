@@ -79,6 +79,7 @@ namespace ApoGirl.Exploration.Runtime
             _stirBar = root.Q<ProgressBar>("stir-bar");
             _worldLabels = root.Q("world-labels");
             _root = root;
+            Presentation.Audio.Sound.AttachUiClicks(root);
             _equip = root.Q<Label>("equip-label");
             _tutorial = root.Q<Label>("tutorial-label");
             _encounterPanel = root.Q("encounter-panel");

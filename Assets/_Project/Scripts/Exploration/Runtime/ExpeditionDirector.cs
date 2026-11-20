@@ -398,6 +398,7 @@ namespace ApoGirl.Exploration.Runtime
 
             UpdateViews(dt);
             UpdateZombieViews();
+            UpdateSounds();
             UpdateWindowSilhouettes();
             _hud.Refresh();
         }
@@ -415,16 +416,19 @@ namespace ApoGirl.Exploration.Runtime
             switch (target.Kind)
             {
                 case TargetKind.Connector:
+                    Sfx("sfx_step_run");
                     EmitNoise(CurrentArea, X, _balance.StairsNoise);
                     MoveTo(_corridors[target.Connector.TargetFloor], target.X);
                     EmitNoise(CurrentArea, X, _balance.StairsNoise);
                     break;
                 case TargetKind.Door when target.RoomLocked:
+                    Sfx("sfx_door_locked");
                     _hud?.ShowMessage("exp.room_shuttered");
                     break;
                 case TargetKind.Door when target.Forceable && !target.Forced:
                     if (_toolKind != ToolKind.Crowbar)
                     {
+                        Sfx("sfx_door_locked");
                         _hud?.ShowMessage("exp.room_locked_need_crowbar");
                         break;
                     }
@@ -442,12 +446,14 @@ namespace ApoGirl.Exploration.Runtime
                     }
 
                     EmitNoise(CurrentArea, X, _balance.ShoveNoise);
+                    Sfx("sfx_door_force");
                     _hud?.ShowMessage("exp.forced_open");
                     break;
                 case TargetKind.Encounter:
                     OpenEncounter = target;
                     break;
                 case TargetKind.Door:
+                    Sfx("sfx_door_open", 0.8f);
                     EnsureRoomBuilt(target.Room);
                     EmitNoise(CurrentArea, X, _balance.DoorNoise);
                     MoveTo(target.Room, target.LinkX);
@@ -464,6 +470,7 @@ namespace ApoGirl.Exploration.Runtime
 
                     break;
                 case TargetKind.RoomExit:
+                    Sfx("sfx_door_open", 0.8f);
                     EmitNoise(CurrentArea, X, _balance.DoorNoise);
                     MoveTo(_corridors[target.Room.Floor], target.LinkX);
                     EmitNoise(CurrentArea, X, _balance.DoorNoise);
@@ -484,10 +491,12 @@ namespace ApoGirl.Exploration.Runtime
                             target.Tint(new Color(0.35f, 0.6f, 0.38f));
                         }
                         EmitNoise(CurrentArea, X, _balance.ShoveNoise);
+                        Sfx("sfx_door_force");
                         _hud?.ShowMessage("exp.forced_open");
                     }
                     else if (target.Locked)
                     {
+                        Sfx("sfx_door_locked");
                         _hud?.ShowMessage("exp.exit_locked");
                     }
                     else
@@ -532,6 +541,7 @@ namespace ApoGirl.Exploration.Runtime
             }
 
             container.Contents.RemoveAt(contentIndex);
+            Sfx("sfx_pickup", 0.8f);
             return true;
         }
 
@@ -600,6 +610,7 @@ namespace ApoGirl.Exploration.Runtime
 
             _shoveTimer = _balance.ShoveCooldown;
             var shoved = _threat.Shove(Snapshot, _facingRight ? 1 : -1);
+            Sfx("sfx_push");
             EmitNoise(CurrentArea, X, _balance.ShoveNoise);
             if (shoved != null)
             {
@@ -619,6 +630,7 @@ namespace ApoGirl.Exploration.Runtime
             }
 
             FlashlightOn = !FlashlightOn;
+            Sfx("sfx_flashlight");
         }
 
         /// <summary>
@@ -640,6 +652,7 @@ namespace ApoGirl.Exploration.Runtime
             _attackTimer = Mathf.Max(0.3f, _weapon.AttackCooldown);
             _attackAnim = 0.25f;
             EmitNoise(CurrentArea, X, _weapon.AttackNoise);
+            Sfx("sfx_swing");
             var hit = _threat.Strike(Snapshot, _facingRight ? 1 : -1, _weapon.WeaponPower, _weapon.StunSeconds, _balance.ShoveRange + 0.3f);
             if (hit == null)
             {
@@ -647,6 +660,7 @@ namespace ApoGirl.Exploration.Runtime
             }
 
             _weaponWear++;
+            Sfx("sfx_hit");
             _hud?.ShowMessage(hit.IsDown ? "exp.zombie_down" : "exp.hit");
             if (_weaponDurability > 0 && _weaponWear >= _weaponDurability)
             {
@@ -841,6 +855,7 @@ namespace ApoGirl.Exploration.Runtime
                     _moveNoiseTimer = MoveNoiseInterval;
                     var radius = _crouching ? _balance.CrouchNoise : running ? _balance.RunNoise : _balance.WalkNoise;
                     EmitNoise(CurrentArea, X, IsOverweight ? radius * _balance.OverweightNoiseMultiplier : radius);
+                    Sfx(running && !_crouching ? "sfx_step_run" : "sfx_step_tile", _crouching ? 0.25f : running ? 0.7f : 0.45f);
                 }
 
                 Nearest = FindNearest();
@@ -859,6 +874,7 @@ namespace ApoGirl.Exploration.Runtime
                     {
                         _searchNoiseTimer = SearchNoiseInterval;
                         EmitNoise(CurrentArea, X, _balance.SearchNoise);
+                        Sfx("sfx_search", 0.6f);
                     }
 
                     var searchRate = 1f + Request.Modifier("SearchSpeed");
@@ -940,6 +956,12 @@ namespace ApoGirl.Exploration.Runtime
             }
 
             IsFinished = true;
+            Presentation.Audio.Sound.StopAllLoops();
+            if (status != ExtractStatus.Down)
+            {
+                Sfx("sfx_extract");
+            }
+
             var hpDelta = status == ExtractStatus.Down
                 ? Math.Min(0, _balance.DownRemainingHp - _startHp)
                 : Hp - _startHp;
@@ -1592,8 +1614,11 @@ namespace ApoGirl.Exploration.Runtime
                 _log.DamageTaken += damage;
                 Hp = Math.Max(0, Hp - damage);
                 _hud?.ShowMessage("exp.hurt");
+                Sfx("sfx_z_grab", 0.7f);
+                Sfx("sfx_hurt");
                 if (Hp <= 0)
                 {
+                    Sfx("sfx_down");
                     Finish(ExtractStatus.Down);
                     return;
                 }
@@ -1607,6 +1632,7 @@ namespace ApoGirl.Exploration.Runtime
             }
             else if (events.WokenCrowds.Count > 0)
             {
+                Sfx("sfx_noise_sting", 0.8f);
                 _hud?.ShowMessage("exp.crowd_woke");
             }
         }
@@ -1616,6 +1642,8 @@ namespace ApoGirl.Exploration.Runtime
             DuskAwakened = true;
             _threat.AwakenAll();
             SetAmbient(0.2f, new Color(0.75f, 0.6f, 0.65f));
+            Sfx("sfx_timer_warning");
+            Presentation.Audio.Sound.Play("Sfx/sfx_z_horde_far", Presentation.Audio.SoundCategory.Ambience);
             _hud?.ShowMessage("exp.dusk");
         }
 
@@ -1796,6 +1824,7 @@ namespace ApoGirl.Exploration.Runtime
         {
             DawnReturn = true;
             SetAmbient(_balance.DawnAmbientIntensity, new Color(0.85f, 0.8f, 0.9f));
+            Sfx("sfx_timer_warning");
             _hud?.ShowMessage("exp.dawn");
         }
 
@@ -1941,6 +1970,59 @@ namespace ApoGirl.Exploration.Runtime
             {
                 NoiseLevel = Mathf.Max(NoiseLevel, radius);
             }
+        }
+
+        // ── 소리 (M6-5) ──
+
+        private readonly Dictionary<int, ZombieState> _heardStates = new Dictionary<int, ZombieState>();
+
+        /// <summary>주인공 자리에서 나는 소리.</summary>
+        private static void Sfx(string clip, float volume = 1f)
+        {
+            Presentation.Audio.Sound.Play("Sfx/" + clip, Presentation.Audio.SoundCategory.Sfx, volume);
+        }
+
+        /// <summary>
+        /// 매 프레임: 같은 구역 좀비가 쫓기 시작하면 유형별 경계 소리, 기절하면 비틀 소리.
+        /// 반복 소리 — 숨으면 숨소리, 쫓기면 심장 소리, 같은 구역에 잠든 무리가 있으면 숨소리 무리.
+        /// </summary>
+        private void UpdateSounds()
+        {
+            var chased = false;
+            var dormantNear = false;
+            foreach (var view in _zombieViews)
+            {
+                var unit = view.Unit;
+                var here = unit.AreaId >= 0 && unit.AreaId < _areasById.Count && _areasById[unit.AreaId] == CurrentArea;
+                _heardStates.TryGetValue(unit.Id, out var before);
+                if (here && !view.Survivor && unit.State != before)
+                {
+                    if (unit.State == ZombieState.Chase && before != ZombieState.Chase)
+                    {
+                        Presentation.Audio.Sound.PlayNear($"Sfx/sfx_z_{view.Kind}_alert", unit.X - X);
+                    }
+                    else if (unit.State == ZombieState.Stunned)
+                    {
+                        Presentation.Audio.Sound.PlayNear("Sfx/sfx_z_stun", unit.X - X, 12f, Presentation.Audio.SoundCategory.Sfx, 0.7f);
+                    }
+                }
+
+                _heardStates[unit.Id] = unit.State;
+                chased |= here && unit.State == ZombieState.Chase;
+                dormantNear |= here && unit.State == ZombieState.Dormant && Mathf.Abs(unit.X - X) < 14f;
+            }
+
+            if (Hidden) Presentation.Audio.Sound.Loop("hide", "Sfx/sfx_hide_breath", Presentation.Audio.SoundCategory.Sfx, 0.5f);
+            else Presentation.Audio.Sound.StopLoop("hide");
+            if (chased) Presentation.Audio.Sound.Loop("tension", "Sfx/sfx_heartbeat", Presentation.Audio.SoundCategory.Sfx, 0.7f);
+            else Presentation.Audio.Sound.StopLoop("tension");
+            if (dormantNear) Presentation.Audio.Sound.Loop("crowd", "Sfx/sfx_z_dormant_crowd", Presentation.Audio.SoundCategory.Ambience);
+            else Presentation.Audio.Sound.StopLoop("crowd");
+        }
+
+        private void OnDestroy()
+        {
+            Presentation.Audio.Sound.StopAllLoops();
         }
 
         private void UpdateZombieViews()

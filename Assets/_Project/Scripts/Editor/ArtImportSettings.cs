@@ -57,6 +57,29 @@ namespace ApoGirl.EditorTools
             importer.filterMode = FilterMode.Bilinear;
         }
 
+        /// <summary>
+        /// 받은 소리 (Resources/Audio): 효과음은 짧아서 불러올 때 풀어 두고(바로 재생), 음성은 압축한 채 메모리에 둔다.
+        /// </summary>
+        private void OnPreprocessAudio()
+        {
+            var path = assetPath.Replace('\\', '/');
+            if (!path.StartsWith(AudioRoot))
+            {
+                return;
+            }
+
+            var importer = (AudioImporter)assetImporter;
+            importer.forceToMono = true;
+            var settings = importer.defaultSampleSettings;
+            settings.compressionFormat = AudioCompressionFormat.Vorbis;
+            settings.quality = 0.7f;
+            settings.loadType = path.StartsWith(AudioRoot + "Voice/") ? AudioClipLoadType.CompressedInMemory : AudioClipLoadType.DecompressOnLoad;
+            importer.defaultSampleSettings = settings;
+            importer.loadInBackground = path.StartsWith(AudioRoot + "Voice/");
+        }
+
+        private const string AudioRoot = "Assets/_Project/Resources/Audio/";
+
         /// <summary>같은 키(또는 대표 프레임)의 코드 그림 피벗. 없으면 아래 가운데.</summary>
         private static Vector2 PivotFor(string key)
         {

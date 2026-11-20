@@ -1,0 +1,21 @@
+{
+  "Volumes": [
+    { "Category": "Ui", "Volume": 0.35 },
+    { "Category": "Sfx", "Volume": 0.5 },
+    { "Category": "Voice", "Volume": 0.9 },
+    { "Category": "Ambience", "Volume": 0.25 }
+  ],
+  "Events": [
+    { "Event": "EVT_A1_RAID_WARNING", "Clip": "Sfx/ui_raid_alarm" },
+    { "Event": "EVT_A1_FINALE", "Clip": "Sfx/ui_raid_alarm" },
+    { "Event": "EVT_A4_FINALE_RAID", "Clip": "Sfx/ui_raid_alarm" },
+    { "Event": "EVT_A4_FINALE_RAID_ALLY", "Clip": "Sfx/ui_raid_alarm" },
+    { "Event": "EVT_A4_FINALE_RAID_KANGCHEOL", "Clip": "Sfx/ui_raid_alarm" }
+  ],
+  "Lines": [
+    { "Speaker": "DJ", "Starts": "새벽시 어딘가에서", "Clip": "Voice/vo_dj_hello" },
+    { "Speaker": "DJ", "Starts": "오늘의 활동 예보", "Clip": "Voice/vo_dj_forecast" },
+    { "Speaker": "DJ", "Starts": "내일도 살아 있어요", "Clip": "Voice/vo_dj_goodnight" },
+    { "Speaker": "구조대", "Starts": "새벽시 일대 생존자에게", "Clip": "Voice/vo_rescue_announce" }
+  ]
+}

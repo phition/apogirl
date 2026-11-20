@@ -27,6 +27,8 @@ namespace ApoGirl.Presentation.Screens
             KoreanFont.Apply(root);
             root.Q<Label>("title-label").text = Loc.T("title.game");
 
+            Audio.Sound.AttachUiClicks(root);
+
             // 그림 (M6-5): 키 아트 배경, 로고가 있으면 제목 글자 대신
             Art.StoryArt.SetCover(root.Q("screen"), Art.StoryArt.Story("title_key"));
             var logo = Art.StoryArt.Story("logo_title");

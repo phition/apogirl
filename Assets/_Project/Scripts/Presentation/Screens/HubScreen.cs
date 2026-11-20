@@ -8,6 +8,7 @@ using ApoGirl.Core.State;
 using ApoGirl.Data;
 using ApoGirl.Presentation.App;
 using ApoGirl.Presentation.Art;
+using ApoGirl.Presentation.Audio;
 using ApoGirl.Presentation.Dialogue;
 using ApoGirl.Presentation.Text;
 using ApoGirl.Systems.Save;
@@ -79,6 +80,7 @@ namespace ApoGirl.Presentation.Screens
             {
                 PortraitFor = speaker => StoryArt.Portrait(speaker, YarnFunctions.Name(), _session.State),
             };
+            Sound.AttachUiClicks(_root);
             _teacherAvatar = new VisualElement { name = "teacher-avatar", pickingMode = PickingMode.Ignore };
             _teacherAvatar.AddToClassList("teacher-avatar");
             _root.Q("teacher-box").Add(_teacherAvatar);
@@ -376,6 +378,7 @@ namespace ApoGirl.Presentation.Screens
             if (_dialoguePlayer != null && _dialoguePlayer.HasNode(ev.Node))
             {
                 _dialogueView.SetScene(StoryArt.EventImage(ev.Id));
+                Sound.OnEvent(ev.Id);
                 var task = _dialoguePlayer.Run(ev.Node, choices, Choose, destroyCancellationToken);
                 while (!task.IsCompleted)
                 {
@@ -532,6 +535,16 @@ namespace ApoGirl.Presentation.Screens
             if (outcome.ConsecutiveExpedition)
             {
                 lines.Add(Loc.T("result.consecutive"));
+            }
+
+            // 소리 (M6-5): 습격이면 경보, 아니면 성공·실패
+            if (outcome.Raid != null)
+            {
+                Sound.Play("Sfx/ui_raid_alarm", SoundCategory.Sfx);
+            }
+            else
+            {
+                Sound.Play(outcome.Result == Core.Rules.CheckResult.Failure ? "Sfx/ui_failure" : "Sfx/ui_success", SoundCategory.Ui);
             }
 
             if (outcome.Raid != null)
