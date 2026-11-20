@@ -55,6 +55,8 @@ namespace ApoGirl.Presentation.Screens
         private MiniVitalsView _miniVitals;
         private StandingView _standing;
         private VisualElement _ticker;
+        private VisualElement _standingArea;
+        private VisualElement _teacherBox;
         private int _lastWarningCount = -1;
 
         /// <summary>테스트용: 허브 진입 시 시작 이벤트를 자동으로 띄우지 않는다.</summary>
@@ -85,6 +87,8 @@ namespace ApoGirl.Presentation.Screens
             _miniVitals = new MiniVitalsView(_root, _session, () => _layers.ToggleRecord());
             _standing = new StandingView(_root.Q("standing"), () => _session.State, () => _session.Definitions.Balance);
             _ticker = _root.Q("ticker");
+            _standingArea = _root.Q("standing-area");
+            _teacherBox = _root.Q("teacher-box");
             _card = new CardOverlay(_root);
             _debug = new DebugPanelView(_root.Q("debug-panel"), _session, ForceEvent, ShowEnd);
             _dialogueView = new DialogueView(_root)
@@ -180,6 +184,10 @@ namespace ApoGirl.Presentation.Screens
             }
 
             var busy = _card.IsOpen || _dialogueView.IsOpen || (_ending != null && _ending.IsOpen);
+
+            // 대화 중에는 말하는 사람 초상이 왼쪽에 나오므로 입상·요약·선생님 한마디를 잠시 숨긴다
+            _standingArea.EnableInClassList("hidden", _dialogueView.IsOpen);
+            _teacherBox.EnableInClassList("hidden", _dialogueView.IsOpen);
             if (!busy && keyboard.tabKey.wasPressedThisFrame)
             {
                 _layers.ToggleBoard();
