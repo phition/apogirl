@@ -295,7 +295,9 @@ namespace ApoGirl.Presentation.Screens
                     yield return PlayPendingEvent();
                 }
 
-                if (outcome.StopForPresentation)
+                // 창고에 갇혀 있는 날: 그날의 대사가 곧 연출이라 결과 카드는 생략한다 (끝난 판은 그대로 보여 줌)
+                var confined = !_session.IsEnded && _session.Definitions.TryGetAction(outcome.ActionId ?? "", out var slotAction) && slotAction.Confined;
+                if (outcome.StopForPresentation && !confined)
                 {
                     var closed = false;
                     ShowResult(outcome, () => closed = true);
