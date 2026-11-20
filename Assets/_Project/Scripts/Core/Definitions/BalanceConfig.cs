@@ -299,7 +299,8 @@ namespace ApoGirl.Core.Definitions
             new DifficultyDef
             {
                 Id = "STORY", Consumption = 0.75f, Harm = 0.6f, HumanThreat = 0.7f, Infection = 0.6f, Yield = 1f,
-                FoodYield = 1.2f, WaterYield = 1.2f, MedicineYield = 1f,
+                // 수확은 표준보다 조금 넉넉하게 (봇 배드 약 10%, 2026-11-20)
+                FoodYield = 1.1f, WaterYield = 1.1f, MedicineYield = 0.85f,
                 WeeklyUndo = true, Dispatch = true, DispatchYield = 0.7f,
             },
             // 표준: 배드 목표 45~55%에 맞춰 의약품 ×0.75 (2026-11-20)
@@ -308,7 +309,8 @@ namespace ApoGirl.Core.Definitions
             new DifficultyDef
             {
                 Id = "HARD", Consumption = 1f, Harm = 1.4f, HumanThreat = 1.3f, Infection = 1.3f, Yield = 0.9f,
-                FoodYield = 0.9f, WaterYield = 0.9f, MedicineYield = 0.6f,
+                // 수확은 표준보다 조금 박하게 (봇 배드 약 84%, 2026-11-20)
+                FoodYield = 0.95f, WaterYield = 0.95f, MedicineYield = 0.7f,
             },
         };
 
