@@ -91,7 +91,12 @@ namespace ApoGirl.Core.Rules
                 return false;
             }
 
-            var daily = 1.0 - Math.Pow(1.0 - Math.Min(weekly, 0.99f), 1.0 / CalendarState.DaysPerWeek);
+            if (weekly >= 1f)
+            {
+                return true; // 시험용: 매일
+            }
+
+            var daily = 1.0 - Math.Pow(1.0 - weekly, 1.0 / CalendarState.DaysPerWeek);
             return random.NextDouble() < daily;
         }
 

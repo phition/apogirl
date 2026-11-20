@@ -111,7 +111,7 @@ namespace ApoGirl.Tests.EditMode
         public void Intrusion_CancelsDaySlot_AndForcesTheEvent()
         {
             var db = M6Act4Tests.ShippedDb();
-            db.Balance.IntrusionWeeklyChanceAct3 = 0.99f;
+            db.Balance.IntrusionWeeklyChanceAct3 = 1f;
             var state = NewGameFactory.Create(db.Balance, 9);
             state.Calendar.Week = 30;
             var outcomes = new List<SlotOutcome>();
@@ -121,7 +121,7 @@ namespace ApoGirl.Tests.EditMode
             while (!runner.IsWeekComplete && !runner.IsGameOver) runner.ExecuteNextSlot();
 
             var intrusion = outcomes.FirstOrDefault(o => o.IntrusionTriggered);
-            Assert.IsNotNull(intrusion, "주 99%면 이번 주에 침입이 있다");
+            Assert.IsNotNull(intrusion, "확률 1이면 첫 낮에 침입");
             Assert.AreEqual(DayPhase.Day, intrusion.Phase);
             Assert.AreEqual(db.Balance.IntrusionActionId, intrusion.ActionId, "그날 낮 행동은 취소");
             Assert.IsNotNull(intrusion.Intrusion, "침입 이벤트에서 대응을 골랐다");
