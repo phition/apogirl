@@ -36,18 +36,18 @@ namespace ApoGirl.Tests.EditMode
             Assert.AreEqual(12, state.Player.Vitals.Infection);
 
             // 부상 중에는 휴식으로도 체력이 오르지 않는다
-            ActionResolver.Resolve(state, db.GetAction(balance.NightRestActionId), db, new SeededRandom(1), delta);
+            ActionResolver.Resolve(state, db.GetAction(balance.NightRestActionId), db, new SeededRandom(SeededRandom.CreateState(1)), delta);
             Assert.AreEqual(70, state.Player.Vitals.Hp);
 
             // 의약품이 없으면 치료되지 않는다
             var treat = db.GetAction("ACT_TREAT_WOUND");
             Assert.IsTrue(PlanEditing.IsUnlocked(state, db, treat), "부상이면 치료 행동이 열린다");
             state.Base.SetResource(ResourceType.Medicine, 0);
-            ActionResolver.Resolve(state, treat, db, new SeededRandom(1), delta);
+            ActionResolver.Resolve(state, treat, db, new SeededRandom(SeededRandom.CreateState(1)), delta);
             Assert.IsTrue(InjuryRules.IsInjured(state, balance), "약 없이는 낫지 않는다");
 
             state.Base.SetResource(ResourceType.Medicine, 2);
-            ActionResolver.Resolve(state, treat, db, new SeededRandom(1), delta);
+            ActionResolver.Resolve(state, treat, db, new SeededRandom(SeededRandom.CreateState(1)), delta);
             Assert.IsFalse(InjuryRules.IsInjured(state, balance));
             Assert.AreEqual(80, state.Player.Vitals.Hp, "치료하면서 회복 +10");
             Assert.AreEqual(0, state.Base.GetResource(ResourceType.Medicine));
@@ -82,11 +82,11 @@ namespace ApoGirl.Tests.EditMode
             var purify = db.GetAction("ACT_SURV_PURIFY_WATER");
             state.Base.SetResource(ResourceType.Water, 0);
             state.Base.SetResource(ResourceType.RawWater, 0);
-            ActionResolver.Resolve(state, purify, db, new SeededRandom(1), new StateDelta());
+            ActionResolver.Resolve(state, purify, db, new SeededRandom(SeededRandom.CreateState(1)), new StateDelta());
             Assert.AreEqual(0, state.Base.GetResource(ResourceType.Water), "빗물이 없으면 정수할 게 없다");
 
             state.Base.SetResource(ResourceType.RawWater, 5);
-            ActionResolver.Resolve(state, purify, db, new SeededRandom(1), new StateDelta());
+            ActionResolver.Resolve(state, purify, db, new SeededRandom(SeededRandom.CreateState(1)), new StateDelta());
             Assert.AreEqual(0, state.Base.GetResource(ResourceType.RawWater));
             Assert.That(state.Base.GetResource(ResourceType.Water), Is.InRange(2, 5));
 
