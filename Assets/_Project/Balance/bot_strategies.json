@@ -472,7 +472,7 @@
     },
     {
       "Id": "EDUCATION",
-      "Description": "교육 위주 (낮 탐험 주 1회, 식량·물 20 이하면 2회, 밤 공부)",
+      "Description": "교육 위주 (낮 1 + 밤 1, 의학·인문 위주, 밤 공부. 밤 탐험 해금 전엔 식량·물 부족 시 낮 2회)",
       "Day": [
         "EDU_FOCUS",
         "EXP_DAY",
@@ -486,15 +486,18 @@
         "ACT_REST_NIGHT",
         "ACT_NIGHT_STUDY|ACT_REST_NIGHT",
         "ACT_REST_NIGHT",
-        "ACT_NIGHT_STUDY|ACT_REST_NIGHT",
+        "EXP_NIGHT|ACT_NIGHT_STUDY|ACT_REST_NIGHT",
         "ACT_REST_NIGHT",
         "ACT_NIGHT_DIARY|ACT_REST_NIGHT",
         "ACT_REST_NIGHT"
       ],
       "Rules": [
         {
-          "Note": "식량·물이 떨어져 가면 5일 낮 탐험",
+          "Note": "밤 탐험 해금 전: 식량·물이 떨어져 가면 5일 낮 탐험",
           "When": {
+            "FlagsNone": [
+              "NIGHT_RUNS"
+            ],
             "AnyChecks": [
               {
                 "Kind": "Resource",
@@ -531,6 +534,23 @@
             "D2"
           ],
           "Use": "EXP_DAY_WATER"
+        },
+        {
+          "Note": "식량이 떨어져 가면 밤에 식량 많은 곳",
+          "When": {
+            "Checks": [
+              {
+                "Kind": "Resource",
+                "Key": "Food",
+                "Op": "LessOrEqual",
+                "Value": 20
+              }
+            ]
+          },
+          "Slots": [
+            "N4"
+          ],
+          "Use": "EXP_NIGHT_FOOD"
         }
       ],
       "ChoiceBias": [
@@ -562,13 +582,13 @@
     },
     {
       "Id": "CARE",
-      "Description": "돌봄·공동체 위주 (낮 탐험 주 2회, 밤 대화·돌봄, 사람을 받아들이는 선택)",
+      "Description": "돌봄·공동체 위주 (낮 1 + 밤 1, 밤 대화·돌봄, 사람을 받아들이는 선택. 밤 탐험 해금 전엔 낮 2회)",
       "Day": [
         "EDU",
         "EXP_DAY",
         "EDU",
         "BUILD|EDU",
-        "EXP_DAY",
+        "ACT_REST_DAY",
         "ACT_DAILY_ROOFTOP|EDU",
         "ACT_SURV_PURIFY_WATER"
       ],
@@ -576,28 +596,23 @@
         "ACT_NIGHT_TALK|ACT_REST_NIGHT",
         "ACT_REST_NIGHT",
         "ACT_CARE_TEACHER|ACT_NIGHT_TALK|ACT_REST_NIGHT",
+        "EXP_NIGHT|ACT_REST_NIGHT",
         "ACT_REST_NIGHT",
-        "ACT_DAILY_TUTOR_DOHYEON|ACT_NIGHT_TALK|ACT_REST_NIGHT",
-        "ACT_CARE_TEACHER|ACT_REST_NIGHT",
+        "ACT_CARE_TEACHER|ACT_DAILY_TUTOR_DOHYEON|ACT_REST_NIGHT",
         "ACT_REST_NIGHT"
       ],
       "Rules": [
         {
-          "Note": "식량이 떨어져 가면 식량 많은 곳",
+          "Note": "밤 탐험 해금 전에는 5일 낮 탐험",
           "When": {
-            "Checks": [
-              {
-                "Kind": "Resource",
-                "Key": "Food",
-                "Op": "LessOrEqual",
-                "Value": 20
-              }
+            "FlagsNone": [
+              "NIGHT_RUNS"
             ]
           },
           "Slots": [
             "D5"
           ],
-          "Use": "EXP_DAY_FOOD"
+          "Use": "EXP_DAY"
         },
         {
           "Note": "물이 떨어져 가면 물 많은 곳",
@@ -615,6 +630,23 @@
             "D2"
           ],
           "Use": "EXP_DAY_WATER"
+        },
+        {
+          "Note": "식량이 떨어져 가면 밤에 식량 많은 곳",
+          "When": {
+            "Checks": [
+              {
+                "Kind": "Resource",
+                "Key": "Food",
+                "Op": "LessOrEqual",
+                "Value": 20
+              }
+            ]
+          },
+          "Slots": [
+            "N4"
+          ],
+          "Use": "EXP_NIGHT_FOOD"
         }
       ],
       "ChoiceBias": [
