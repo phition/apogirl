@@ -17,3 +17,9 @@
 | 라디오 목소리 | `Resources/Audio/Voice/` | `text2speech_v2` / `inworld_text_to_speech` |
 
 게임에 넣을 때 한 손질: 크기 줄이기·JPG/PNG 변환(`art_import.py`), 효과음 앞뒤 잡음 자르기·모노·최댓값 −3 dBFS 맞춤(`audio_import.py`).
+
+## PixelLab (2026-11-20)
+
+탐험 픽셀 아트 일부(주인공·좀비·생존자 동작 프레임, 벽 타일)는 PixelLab(pixellab.ai) API로 만들었다:
+`image-to-pixelart`, `animate-with-text-v3`, `create-image-pixen`. 게임용 사본은 `Assets/_Project/Resources/Art/ExplorationPixel/`.
+나머지 픽셀 소품·조우 인물은 위 Higgsfield 그림을 로컬에서 줄이고 색을 줄인 것이다.
