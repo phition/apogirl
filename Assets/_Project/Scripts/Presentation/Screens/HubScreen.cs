@@ -364,7 +364,7 @@ namespace ApoGirl.Presentation.Screens
                     var slot = _session.State.Plan.Slots[CalendarRules.SlotIndex(calendar.Day, calendar.Phase)];
                     _section.SetTime(calendar.Phase, true);
                     var travel = _section.Act(slot.ActionId);
-                    var wait = _speed == ExecutionSpeed.Normal ? Mathf.Min(travel, 1.4f) : _speed == ExecutionSpeed.Fast ? Mathf.Min(travel, 0.45f) : 0f;
+                    var wait = _speed == ExecutionSpeed.Normal ? Mathf.Min(travel, 1.8f) : _speed == ExecutionSpeed.Fast ? Mathf.Min(travel, 0.45f) : 0f;
                     if (wait > 0.05f)
                     {
                         yield return new WaitForSeconds(wait);

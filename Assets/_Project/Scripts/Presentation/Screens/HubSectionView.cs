@@ -176,8 +176,19 @@ namespace ApoGirl.Presentation.Screens
         /// <summary>낮·밤과 실행 중인지 (밤에는 방이 어두워지고 사람 있는 방만 불빛이 남는다).</summary>
         public void SetTime(DayPhase phase, bool executing)
         {
+            var changed = executing && (phase != _phase || !_executing);
             _phase = phase;
             _executing = executing;
+            if (changed)
+            {
+                // 밤에는 경비 말고는 지내는 곳으로 돌아가 쉬고, 낮에는 맡은 방으로 간다
+                foreach (var actor in _actors.Where(a => a.Kind == "npc"))
+                {
+                    var night = phase == DayPhase.Night && !actor.Guard;
+                    actor.WalkTo(night ? actor.HomeFloor : actor.PostFloor, night ? actor.HomeX : actor.PostX, this);
+                }
+            }
+
             ApplyLight();
         }
 
@@ -199,10 +210,19 @@ namespace ApoGirl.Presentation.Screens
             }
 
             var seconds = _player.WalkTo(room.Def.Floor, room.Def.X + room.Def.Width * 0.42f, this);
-            if (_teacher != null && _teacher.CanWalk && _session.Definitions.TryGetAction(actionId, out var action)
-                && action.Category == ActionCategory.Education && room.Def.Id != Shelter(_session.State))
+            if (_teacher != null && _teacher.CanWalk)
             {
-                _teacher.WalkTo(room.Def.Floor, room.Def.X + room.Def.Width * 0.72f, this);
+                // 가르치는 수업이면 그 방으로, 아니면 지내는 곳으로
+                var teaching = _session.Definitions.TryGetAction(actionId, out var action) && action.Category == ActionCategory.Education
+                               && room.Def.Id != Shelter(_session.State);
+                if (teaching)
+                {
+                    _teacher.WalkTo(room.Def.Floor, room.Def.X + room.Def.Width * 0.72f, this);
+                }
+                else
+                {
+                    _teacher.WalkTo(_teacher.HomeFloor, _teacher.HomeX, this);
+                }
             }
 
             return seconds;
@@ -472,10 +492,12 @@ namespace ApoGirl.Presentation.Screens
                 _teacher ??= NewActor("teacher");
                 _teacher.SetLook(Frames(teacherKey + "_idle_", teacherKey), canWalk ? Frames(teacherKey + "_idle_", teacherKey) : null);
                 _teacher.CanWalk = canWalk;
+                var teacherHome = _rooms.TryGetValue(teacherRoom ?? shelter, out var r) && r.Open ? r : home;
+                _teacher.HomeFloor = teacherHome.Def.Floor;
+                _teacher.HomeX = teacherHome.Def.X + teacherHome.Def.Width * 0.7f;
                 if (resetPositions)
                 {
-                    var room = _rooms.TryGetValue(teacherRoom ?? shelter, out var r) && r.Open ? r : home;
-                    _teacher.Place(room.Def.Floor, room.Def.X + room.Def.Width * 0.7f);
+                    _teacher.Place(_teacher.HomeFloor, _teacher.HomeX);
                 }
             }
 
@@ -499,7 +521,13 @@ namespace ApoGirl.Presentation.Screens
                 var room = roleRoom != null && _rooms.TryGetValue(roleRoom, out var rr) && rr.Open ? rr : home;
                 var actor = NewActor("npc");
                 actor.SetLook(Frames(sprite + "_idle_", sprite), null);
-                actor.Place(room.Def.Floor, room.Def.X + room.Def.Width * (0.2f + 0.18f * (index % 3)));
+                actor.Guard = pair.Value.Role == "GUARD";
+                actor.HomeFloor = home.Def.Floor;
+                actor.HomeX = home.Def.X + home.Def.Width * (0.12f + 0.1f * (index % 4));
+                actor.PostFloor = room.Def.Floor;
+                actor.PostX = room.Def.X + room.Def.Width * (0.2f + 0.18f * (index % 3));
+                var atNight = _executing && _phase == DayPhase.Night && !actor.Guard;
+                actor.Place(atNight ? actor.HomeFloor : actor.PostFloor, atNight ? actor.HomeX : actor.PostX);
                 actor.Phase = index * 0.37f;
                 index++;
             }
@@ -729,6 +757,11 @@ namespace ApoGirl.Presentation.Screens
             public float X;
             public float Phase;
             public bool CanWalk = true;
+            public bool Guard;
+            public int HomeFloor;
+            public float HomeX;
+            public int PostFloor;
+            public float PostX;
 
             public Texture2D Current { get; private set; }
 

@@ -6,7 +6,7 @@
   "Ground": 10,
   "StairsX": 732,
   "StairsWidth": 48,
-  "WalkSpeed": 110,
+  "WalkSpeed": 170,
   "ShelterFlag": "CLASSROOM_MOVED_IN",
   "ShelterRoom": "CLASSROOM",
   "DefaultShelter": "STORAGE",
@@ -28,7 +28,7 @@
       "Props": [ { "Key": "office_desk", "X": 52 }, { "Key": "prop_filecabinet", "X": 128 } ],
       "Actions": [ "ACT_SURV_COVERS" ] },
 
-    { "Id": "CLASSROOM", "Floor": 1, "X": 0, "Width": 200, "Wall": "wall_classroom", "FloorTex": "wall_floor_classroom", "Facility": "CLASSROOM",
+    { "Id": "CLASSROOM", "NameKey": "hubroom.CLASSROOM", "Floor": 1, "X": 0, "Width": 200, "Wall": "wall_classroom", "FloorTex": "wall_floor_classroom", "Facility": "CLASSROOM",
       "Props": [ { "Key": "prop_chalkboard", "X": 100, "Y": 44 }, { "Key": "prop_teacherdesk", "X": 40 }, { "Key": "prop_desk", "X": 120 }, { "Key": "prop_desk", "X": 166 } ],
       "Actions": [ "ACT_EDU_HUMANITIES", "ACT_EDU_SURVIVAL", "ACT_NIGHT_STUDY", "ACT_DAILY_TUTOR_DOHYEON" ] },
     { "Id": "SCIENCE", "Floor": 1, "X": 200, "Width": 172, "Wall": "wall_science", "FloorTex": "wall_floor_science", "Facility": "SCIENCE",
