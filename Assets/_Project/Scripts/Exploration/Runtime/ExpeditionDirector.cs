@@ -811,7 +811,7 @@ namespace ApoGirl.Exploration.Runtime
         private void SetupBag()
         {
             // 가방 색은 판(새 게임)마다 하나로 정해진다: 가죽 갈색·파랑·분홍·빨강·노랑·초록
-            var key = ExplorationArt.BagKey(ExplorationArt.ItemToken(_backpackItem?.Id, "ITEM_BAG_", ""), GameApp.Session != null && GameApp.Session.HasGame ? GameApp.Session.State.Seed : 0);
+            var key = ExplorationArt.BagKey(ExplorationArt.ItemToken(_backpackItem?.Id, "ITEM_BAG_", ""), GameApp.Session != null && GameApp.Session.HasGame ? GameApp.Session.State.Rng.Seed : 0);
             var sprite = _backpackItem != null && _playerSprites ? ExplorationArt.Get(key) : null;
             if (sprite == null)
             {
