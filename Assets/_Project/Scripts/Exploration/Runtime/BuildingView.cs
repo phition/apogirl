@@ -79,20 +79,30 @@ namespace ApoGirl.Exploration.Runtime
             return go;
         }
 
-        /// <summary>1점 투시 방(시험: 교실): 옆벽 그림 폭, 뒤쪽 바닥이 올라오는 높이, 천장이 내려오는 높이 (유닛, 그림 픽셀에 맞춘 값).</summary>
-        private const float SideWallWidth = 58f / 36f;
+        /// <summary>1점 투시 방: 옆벽 그림 폭, 뒤쪽 바닥이 올라오는 높이, 천장이 내려오는 높이 (유닛, 그림 픽셀에 맞춘 값).</summary>
+        private const float SideWallWidth = 72f / 36f;
         private const float BackFloorRise = 16f / 36f;
         private const float BackCeilingDrop = 12f / 36f;
 
-        /// <summary>그 방을 1점 투시로 그릴 때 쓰는 그림 이름 조각 (옆벽·바닥 그림이 있을 때만, 없으면 null = 예전 평면 그림).</summary>
-        private static string PerspectiveKind(RoomTemplateDef template)
+        /// <summary>
+        /// 그 방을 1점 투시로 그릴 때 쓰는 그림 이름 조각: 방 안쪽 벽 그림(wall_X)에 맞는 옆벽(wall_side_X_l/r)과 바닥(wall_floor_X)이
+        /// 모두 있을 때 X, 없으면 null (예전 평면 그림).
+        /// </summary>
+        private static string PerspectiveKind(RoomTemplateDef template, string locationId)
         {
-            var kind = template != null && template.Id.Contains("CLASSROOM") ? "classroom" : null;
-            return kind != null && ExplorationArt.Get($"wall_side_{kind}_l") != null && ExplorationArt.Get($"wall_floor_{kind}") != null ? kind : null;
+            if (template == null)
+            {
+                return null;
+            }
+
+            var wall = ExplorationArt.InteriorWall(template.Id, locationId);
+            var kind = wall != null && wall.StartsWith("wall_") ? wall.Substring(5) : null;
+            return kind != null && ExplorationArt.Get($"wall_side_{kind}_l") != null && ExplorationArt.Get($"wall_side_{kind}_r") != null
+                && ExplorationArt.Get($"wall_floor_{kind}") != null ? kind : null;
         }
 
         /// <summary>뒷벽에 붙은 것(문 등)을 올려 그릴 높이: 1점 투시 방이면 뒤쪽 바닥 높이, 아니면 0.</summary>
-        public static float BackWallOffset(RoomTemplateDef template) => PerspectiveKind(template) != null ? BackFloorRise : 0f;
+        public static float BackWallOffset(RoomTemplateDef template, string locationId) => PerspectiveKind(template, locationId) != null ? BackFloorRise : 0f;
 
         /// <summary>방 내부를 그린다 (같은 템플릿은 같은 모양).</summary>
         public void BuildRoom(ExplorationArea room, int colorIndex)
@@ -108,7 +118,7 @@ namespace ApoGirl.Exploration.Runtime
                 RoomColors[colorIndex % RoomColors.Length]);
             // 뒷벽 장식: 템플릿 WallDecor (양호실 적십자, 과학실 주기율표 등), 없으면 교실은 칠판
             // 1점 투시 방: 칠판·게시판은 옆벽 그림에 들어 있다 (뒷벽에는 문과 복도 쪽 창만)
-            var perspective = PerspectiveKind(room.Template);
+            var perspective = PerspectiveKind(room.Template, _locationId);
             var decorKey = !string.IsNullOrEmpty(room.Template.WallDecor) ? room.Template.WallDecor
                 : room.Template.Id.Contains("CLASSROOM") && perspective == null ? "prop_chalkboard" : "";
             var decor = string.IsNullOrEmpty(decorKey) ? null : ExplorationArt.Get(decorKey);

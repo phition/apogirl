@@ -1331,7 +1331,7 @@ namespace ApoGirl.Exploration.Runtime
             {
                 var exitView = Prop(room, "RoomExit", ExplorationArt.Door(Location.Id, room.Template?.Id, false), doorX, new Vector2(1.4f, 2.8f), BuildingView.DoorColor, 0);
                 // 1점 투시 방에서는 문이 뒷벽에 있다: 뒤쪽 바닥 높이만큼 올려 그린다
-                exitView.transform.localPosition += new Vector3(0f, BuildingView.BackWallOffset(room.Template), 0f);
+                exitView.transform.localPosition += new Vector3(0f, BuildingView.BackWallOffset(room.Template, Location.Id), 0f);
                 AddTarget(new ExplorationTarget { Kind = TargetKind.RoomExit, Area = room, X = doorX, Room = room, LinkX = room.SpanX + doorX, View = exitView });
             }
 
