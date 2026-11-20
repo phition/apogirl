@@ -85,13 +85,13 @@
         "Resources": [
           {
             "Resource": "Food",
-            "Min": 10,
-            "Max": 16
+            "Min": 18,
+            "Max": 29
           },
           {
             "Resource": "Water",
-            "Min": 6,
-            "Max": 10
+            "Min": 11,
+            "Max": 18
           },
           {
             "Resource": "Materials",
@@ -109,13 +109,13 @@
         "Resources": [
           {
             "Resource": "Food",
-            "Min": 12,
-            "Max": 18
+            "Min": 22,
+            "Max": 32
           },
           {
             "Resource": "Water",
-            "Min": 8,
-            "Max": 12
+            "Min": 14,
+            "Max": 22
           },
           {
             "Resource": "Fuel",

@@ -88,6 +88,8 @@
       "Actions": [
         "ACT_SURV_RESTORE_POWER",
         "ACT_SURV_MAKE_CRUTCH",
+        "ACT_SURV_RAIN_BARREL",
+        "ACT_SURV_GARDEN",
         "ACT_SURV_ALARM",
         "ACT_SURV_COVERS",
         "ACT_SURV_REINFORCE",

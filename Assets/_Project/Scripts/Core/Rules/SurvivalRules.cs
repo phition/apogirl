@@ -30,6 +30,9 @@ namespace ApoGirl.Core.Rules
     /// <summary>자원 소모 규칙 (문서 5.4, 9.1).</summary>
     public static class UpkeepRules
     {
+        public const string FlagRainBarrels = "RAIN_BARRELS";
+        public const string FlagRoofGarden = "ROOF_GARDEN";
+
         /// <summary>
         /// 매일 밤 처리: 식량·물 소모, 부족 시 허기·갈증 상승과 HP 감소.
         /// HP 감소는 그날 실제로 먹지(마시지) 못했을 때만. 먹었다면 허기가 높아도 회복만 한다.
@@ -88,6 +91,17 @@ namespace ApoGirl.Core.Rules
                 {
                     EffectApplier.ChangeVital(state, VitalType.Stress, balance.NoHeatStress, balance, delta);
                 }
+            }
+
+            // 거점 생산: 빗물통(비 오는 주), 옥상 텃밭(겨울 제외)
+            if (state.Flags.Contains(FlagRainBarrels) && state.Base.Weather == WeatherType.Rain)
+            {
+                EffectApplier.ChangeResource(state, ResourceType.Water, balance.RainBarrelWater, delta);
+            }
+
+            if (state.Flags.Contains(FlagRoofGarden) && CalendarRules.GetSeason(state.Calendar.Week) != Season.Winter)
+            {
+                EffectApplier.ChangeResource(state, ResourceType.Food, balance.RoofGardenFood, delta);
             }
 
             // M7-2: 보관량을 넘는 식량은 상한다

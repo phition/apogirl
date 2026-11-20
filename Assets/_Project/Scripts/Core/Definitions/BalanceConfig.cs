@@ -273,6 +273,14 @@ namespace ApoGirl.Core.Definitions
         /// <summary>대비가 부족하면 학교에 있던 동료 한 명이 다쳐 이만큼 주 동안 역할을 못 한다.</summary>
         public int IntrusionInjuryWeeks = 2;
 
+        // ── 거점 생산 ──
+
+        /// <summary>빗물통 (플래그 RAIN_BARRELS): 비 오는 주마다 주간 정산 때 물.</summary>
+        public int RainBarrelWater = 8;
+
+        /// <summary>옥상 텃밭 (플래그 ROOF_GARDEN): 겨울을 뺀 매주 식량.</summary>
+        public int RoofGardenFood = 5;
+
         // ── 거점 방어 작업 ──
 
         /// <summary>함정: 습격·침입 1회에 하나를 써서 방어력 +TrapPower (최대 MaxTraps개).</summary>
