@@ -32,6 +32,11 @@
       "Day": {
         "Resources": [
           {
+            "Resource": "RawWater",
+            "Min": 6,
+            "Max": 12
+          },
+          {
             "Resource": "Water",
             "Min": 18,
             "Max": 31
@@ -50,6 +55,11 @@
       },
       "Night": {
         "Resources": [
+          {
+            "Resource": "RawWater",
+            "Min": 4,
+            "Max": 9
+          },
           {
             "Resource": "Medicine",
             "Min": 2,

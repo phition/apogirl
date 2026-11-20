@@ -332,6 +332,9 @@ namespace ApoGirl.Core.Definitions
         /// <summary>빗물통 (플래그 RAIN_BARRELS): 비 오는 주마다 주간 정산 때 빗물(RawWater, 정수해야 식수).</summary>
         public int RainBarrelWater = 10;
 
+        /// <summary>비 오는 주에는 빗물통 없이도 양동이로 빗물(RawWater)을 조금 받는다.</summary>
+        public int RainCollectWater = 5;
+
         /// <summary>옥상 텃밭 (플래그 ROOF_GARDEN): 겨울을 뺀 매주 식량.</summary>
         public int RoofGardenFood = 7;
 

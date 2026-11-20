@@ -158,6 +158,7 @@
   },
   "CommonRules": [
     {"Note": "부상이면 의약품으로 먼저 치료 (부상 중에는 체력이 회복되지 않는다)", "When": {"FlagsAll": ["INJURED"]}, "Slots": ["D1"], "Use": "ACT_TREAT_WOUND"},
+    {"Note": "빗물이 모이면 정수 (빗물은 그대로 못 마신다)", "When": {"Checks": [{"Kind": "Resource", "Key": "RawWater", "Op": "GreaterOrEqual", "Value": 5}]}, "Slots": ["D7"], "Use": "ACT_SURV_PURIFY_WATER"},
     {"Note": "청결이 낮으면 청소 (다쳤을 때 감염이 덜 오른다)", "When": {"Checks": [{"Kind": "Vital", "Key": "Cleanliness", "Op": "LessOrEqual", "Value": 35}]}, "Slots": ["D4"], "Use": "ACT_SURV_CLEAN"},
     {
       "Note": "감염 증상이 보이면 처치부터",

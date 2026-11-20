@@ -98,9 +98,11 @@ namespace ApoGirl.Core.Rules
             }
 
             // 거점 생산: 빗물통(비 오는 주), 옥상 텃밭(겨울 제외)
-            if (state.Flags.Contains(FlagRainBarrels) && state.Base.Weather == WeatherType.Rain)
+            // 비 오는 주: 양동이로 받는 빗물 + 빗물통이 있으면 더
+            if (state.Base.Weather == WeatherType.Rain)
             {
-                EffectApplier.ChangeResource(state, ResourceType.RawWater, balance.RainBarrelWater, delta);
+                var rain = balance.RainCollectWater + (state.Flags.Contains(FlagRainBarrels) ? balance.RainBarrelWater : 0);
+                EffectApplier.ChangeResource(state, ResourceType.RawWater, rain, delta);
             }
 
             if (state.Flags.Contains(FlagRoofGarden) && CalendarRules.GetSeason(state.Calendar.Week) != Season.Winter)

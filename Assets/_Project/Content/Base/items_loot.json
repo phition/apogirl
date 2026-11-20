@@ -105,12 +105,12 @@
       "Night": { "Resources": [ { "Resource": "Food", "Min": 18, "Max": 28 }, { "Resource": "Medicine", "Min": 0, "Max": 2 }, { "Resource": "Materials", "Min": 2, "Max": 4 }, { "Resource": "Water", "Min": 3, "Max": 6 }, { "Resource": "RawWater", "Min": 1, "Max": 4 } ], "BaseDownChance": 0.1, "Fatigue": 20, "StressMin": 15, "StressMax": 15, "DawnReturnChance": 0.2 },
       "ContainersPerRun": 10 },
     { "Id": "LOC_STORE",
-      "Day": { "Resources": [ { "Resource": "Food", "Min": 18, "Max": 28 }, { "Resource": "Water", "Min": 9, "Max": 16 }, { "Resource": "Fuel", "Min": 0, "Max": 1 } ], "BaseDownChance": 0.06, "Fatigue": 14, "StressMin": 6, "StressMax": 12, "ConscienceMax": 2 },
-      "Night": { "Resources": [ { "Resource": "Food", "Min": 20, "Max": 31 }, { "Resource": "Water", "Min": 14, "Max": 23 }, { "Resource": "Materials", "Min": 1, "Max": 2 } ], "BaseDownChance": 0.11, "Fatigue": 18, "StressMin": 14, "StressMax": 16, "DawnReturnChance": 0.15 },
+      "Day": { "Resources": [ { "Resource": "RawWater", "Min": 1, "Max": 3 }, { "Resource": "Food", "Min": 18, "Max": 28 }, { "Resource": "Water", "Min": 9, "Max": 16 }, { "Resource": "Fuel", "Min": 0, "Max": 1 } ], "BaseDownChance": 0.06, "Fatigue": 14, "StressMin": 6, "StressMax": 12, "ConscienceMax": 2 },
+      "Night": { "Resources": [ { "Resource": "RawWater", "Min": 1, "Max": 3 }, { "Resource": "Food", "Min": 20, "Max": 31 }, { "Resource": "Water", "Min": 14, "Max": 23 }, { "Resource": "Materials", "Min": 1, "Max": 2 } ], "BaseDownChance": 0.11, "Fatigue": 18, "StressMin": 14, "StressMax": 16, "DawnReturnChance": 0.15 },
       "ContainersPerRun": 7 },
     { "Id": "LOC_PHARMACY",
-      "Day": { "Resources": [ { "Resource": "Medicine", "Min": 2, "Max": 4 }, { "Resource": "Water", "Min": 3, "Max": 6 } ], "BaseDownChance": 0.08, "Fatigue": 16, "StressMin": 8, "StressMax": 14, "ConscienceMax": 1 },
-      "Night": { "Resources": [ { "Resource": "Medicine", "Min": 4, "Max": 7 }, { "Resource": "Water", "Min": 0, "Max": 5 } ], "BaseDownChance": 0.15, "Fatigue": 20, "StressMin": 16, "StressMax": 18, "DawnReturnChance": 0.25 },
+      "Day": { "Resources": [ { "Resource": "RawWater", "Min": 1, "Max": 3 }, { "Resource": "Medicine", "Min": 2, "Max": 4 }, { "Resource": "Water", "Min": 3, "Max": 6 } ], "BaseDownChance": 0.08, "Fatigue": 16, "StressMin": 8, "StressMax": 14, "ConscienceMax": 1 },
+      "Night": { "Resources": [ { "Resource": "RawWater", "Min": 0, "Max": 2 }, { "Resource": "Medicine", "Min": 4, "Max": 7 }, { "Resource": "Water", "Min": 0, "Max": 5 } ], "BaseDownChance": 0.15, "Fatigue": 20, "StressMin": 16, "StressMax": 18, "DawnReturnChance": 0.25 },
       "ContainersPerRun": 9 }
   ],
 
