@@ -84,7 +84,7 @@
         { "Id": "SILENT", "Effect": { "Hidden": [ { "Hidden": "Isolation", "Amount": 3 } ], "Vitals": [ { "Vital": "Stress", "Amount": 4 } ] } }
       ] },
 
-    { "Id": "EVT_A1_SECRET_HINT", "Kind": "Night", "Priority": 30, "Condition": { "WeekMin": 7, "Phase": "Night", "FlagsAll": [ "POWER_RESTORED" ] },
+    { "Id": "EVT_A1_SECRET_HINT", "Kind": "Night", "Priority": 30, "Condition": { "WeekMin": 9, "Phase": "Night" },
       "OnShow": { "SetFlags": [ "NOTICE_HINT" ] } },
 
     { "Id": "EVT_A1_SECRET_FOUND", "Kind": "Story", "Priority": 75, "Condition": { "CluesAll": [ "CLUE_SCHOOL_NOTICE" ], "ActionCategories": [ "Expedition" ] },
@@ -137,6 +137,31 @@
       "Choices": [
         { "Id": "BARRICADE", "Effect": { "Defense": 3, "Resources": [ { "Resource": "Materials", "Amount": -1 } ] } },
         { "Id": "WATCH_PLAN", "Effect": { "Stats": [ { "Stat": "Willpower", "Amount": 1 } ], "Npcs": [ { "NpcId": "NPC_TEACHER", "Trust": 1 } ] } }
+      ] },
+
+    { "Id": "EVT_A1_TEACHER_FIRST_DAY", "Kind": "Night", "Priority": 42, "Condition": { "WeekMin": 8, "Phase": "Night" },
+      "Choices": [
+        { "Id": "LISTEN", "Effect": { "Npcs": [ { "NpcId": "NPC_TEACHER", "Affinity": 3, "Trust": 1 } ], "Hidden": [ { "Hidden": "Humanity", "Amount": 1 } ] } },
+        { "Id": "REST", "Effect": { "Npcs": [ { "NpcId": "NPC_TEACHER", "Affinity": 1 } ], "Vitals": [ { "Vital": "Stress", "Amount": -3 } ] } }
+      ] },
+
+    { "Id": "EVT_A1_ATTENDANCE", "Kind": "Story", "Priority": 44, "Condition": { "WeekMin": 9, "Phase": "Day", "ActionCategories": [ "Education" ] },
+      "Choices": [
+        { "Id": "READ_TOGETHER", "Effect": { "Npcs": [ { "NpcId": "NPC_TEACHER", "Affinity": 2 } ], "Hidden": [ { "Hidden": "Humanity", "Amount": 2 }, { "Hidden": "Hope", "Amount": 1 } ], "EndingTags": [ { "Tag": "TAG_TEACHING", "Amount": 1 } ] } },
+        { "Id": "CLOSE_BOOK", "Effect": { "Hidden": [ { "Hidden": "SelfAwareness", "Amount": 1 } ], "Vitals": [ { "Vital": "Stress", "Amount": -2 } ] } }
+      ] },
+
+    { "Id": "EVT_A1_FAR_ROTOR", "Kind": "Night", "Priority": 38, "Condition": { "WeekMin": 10, "Phase": "Night" },
+      "OnShow": { "Hidden": [ { "Hidden": "Hope", "Amount": 2 } ] } },
+
+    { "Id": "EVT_A1_PHONE_BATTERY", "Kind": "Story", "Priority": 58,
+      "Condition": { "WeekMin": 9, "ActionCategories": [ "Expedition" ], "FlagsNone": [ "POWER_RESTORED", "READ_MESSAGES" ] },
+      "OnShow": { "SetFlags": [ "PHONE_CHARGED" ] }, "ThenEventId": "EVT_A1_PHONE" },
+
+    { "Id": "EVT_A1_EVE", "Kind": "Night", "Priority": 60, "Condition": { "WeekMin": 12, "WeekMax": 12, "Days": [ 3, 4, 5 ], "Phase": "Night" },
+      "Choices": [
+        { "Id": "PROMISE", "Effect": { "Npcs": [ { "NpcId": "NPC_TEACHER", "Affinity": 2, "Trust": 1 } ], "Hidden": [ { "Hidden": "Hope", "Amount": 1 } ] } },
+        { "Id": "PREPARE", "Effect": { "Defense": 3, "Vitals": [ { "Vital": "Fatigue", "Amount": 5 } ] } }
       ] },
 
     { "Id": "EVT_A1_FINALE", "Kind": "Story", "Priority": 100, "Condition": { "WeekMin": 13, "WeekMax": 13, "Days": [ 6 ], "Phase": "Night" },
