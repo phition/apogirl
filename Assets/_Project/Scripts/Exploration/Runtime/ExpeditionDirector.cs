@@ -1009,6 +1009,19 @@ namespace ApoGirl.Exploration.Runtime
             return true;
         }
 
+        /// <summary>디버그·화면 확인: 복도(층) 또는 바깥 길(floor = -1 진입로, -2 탈출로)의 그 자리로 간다.</summary>
+        public bool DebugGoTo(int floor, float x)
+        {
+            var area = floor >= 0 ? (floor < _corridors.Count ? _corridors[floor] : null) : (-floor - 1 < _outdoors.Count ? _outdoors[-floor - 1] : null);
+            if (area == null)
+            {
+                return false;
+            }
+
+            MoveTo(area, x);
+            return true;
+        }
+
         private void MoveTo(ExplorationArea area, float x)
         {
             CurrentArea = area;

@@ -178,12 +178,34 @@ namespace ApoGirl.Exploration.Runtime
             var h = _layout.FloorHeight;
             var w = area.Width;
             Rect(root, "Sky", new Vector2(-40f, -20f), new Vector2(w + 80f, 60f), new Color(0.56f, 0.63f, 0.7f), -9);
-            Rect(root, "FarBuildings", new Vector2(-40f, h - 0.3f), new Vector2(w + 80f, 4.4f), new Color(0.3f, 0.34f, 0.39f), -8);
-            Rect(root, "FarRoofs", new Vector2(-40f, h + 4.1f), new Vector2(w + 80f, 1.6f), new Color(0.38f, 0.43f, 0.49f), -8);
+            // 먼 건물 윤곽: 너비·높이가 제각각인 건물을 두 겹으로 (지역·길마다 같은 모양)
+            var skyline = new System.Random(StableHash(_locationId + (entry ? "sky_entry" : "sky_escape")));
+            for (var layer = 0; layer < 2; layer++)
+            {
+                var shade = layer == 0 ? new Color(0.44f, 0.5f, 0.57f) : new Color(0.29f, 0.33f, 0.38f);
+                for (var x = -40f; x < w + 40f;)
+                {
+                    var width = 2.2f + (float)skyline.NextDouble() * 3.2f;
+                    var height = (layer == 0 ? 3.6f : 1.4f) + (float)skyline.NextDouble() * (layer == 0 ? 3.4f : 2.8f);
+                    Rect(root, "Far", new Vector2(x, h - 0.3f), new Vector2(width, height), shade, -8 + layer);
+                    if (layer == 1)
+                    {
+                        // 불 꺼진 창 몇 줄
+                        for (var wy = 0.5f; wy < height - 0.4f; wy += 0.7f)
+                        {
+                            Rect(root, "FarWin", new Vector2(x + 0.3f, h - 0.3f + wy), new Vector2(width - 0.6f, 0.22f), new Color(0.2f, 0.23f, 0.27f), -6);
+                        }
+                    }
+
+                    x += width + (float)skyline.NextDouble() * 0.5f;
+                }
+            }
+
             ExplorationArt.Tiled(root, "Backdrop", entry ? "wall_out_street" : "wall_out_alley", new Vector2(-12f, 0.15f), new Vector2(w + 24f, h - 0.3f), -6,
                 new Color(0.33f, 0.34f, 0.36f));
-            ExplorationArt.Tiled(root, "Ground", "ground", new Vector2(-40f, -3f), new Vector2(w + 80f, 3f), -5, new Color(0.12f, 0.13f, 0.12f));
-            Rect(root, "Road", new Vector2(-40f, -0.15f), new Vector2(w + 80f, 0.3f), new Color(0.13f, 0.13f, 0.14f), -3);
+            Rect(root, "Ground", new Vector2(-40f, -20f), new Vector2(w + 80f, 20f), new Color(0.1f, 0.1f, 0.11f), -5);
+            Rect(root, "Road", new Vector2(-40f, -0.15f), new Vector2(w + 80f, 0.3f), new Color(0.2f, 0.2f, 0.21f), -3);
+            Rect(root, "RoadLine", new Vector2(-40f, -0.55f), new Vector2(w + 80f, 0.08f), new Color(0.42f, 0.38f, 0.22f), -3);
             Rect(root, "EdgeL", new Vector2(-40f, -20f), new Vector2(40f - 0.2f, 60f), new Color(0.02f, 0.02f, 0.03f, 0.55f), 40);
             Rect(root, "EdgeR", new Vector2(w + 0.2f, -20f), new Vector2(40f, 60f), new Color(0.02f, 0.02f, 0.03f, 0.55f), 40);
 
