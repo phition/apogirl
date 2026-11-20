@@ -82,7 +82,7 @@ MonoBehaviour:
         X: 24
         Number: 1
         LootTableId: 
-        SearchFlag: 
+        SearchFlag: SEARCHED_NURSE
       - RoomId: ROOM_1F_ROOM_CLASSROOM_2
         TemplateId: ROOM_CLASSROOM
         Floor: 0
@@ -96,7 +96,7 @@ MonoBehaviour:
         X: 60
         Number: 3
         LootTableId: 
-        SearchFlag: 
+        SearchFlag: SEARCHED_HOMEEC
       - RoomId: ROOM_1F_ROOM_CLASSROOM_4
         TemplateId: ROOM_CLASSROOM
         Floor: 0
@@ -159,14 +159,14 @@ MonoBehaviour:
         X: 76
         Number: 6
         LootTableId: 
-        SearchFlag: 
+        SearchFlag: SEARCHED_COMPUTER
       - RoomId: ROOM_2F_ROOM_SCIENCE_7
         TemplateId: ROOM_SCIENCE
         Floor: 1
         X: 90
         Number: 7
         LootTableId: 
-        SearchFlag: 
+        SearchFlag: SEARCHED_SCIENCE
       - RoomId: ROOM_2F_ROOM_RESTROOM_0
         TemplateId: ROOM_RESTROOM
         Floor: 1
@@ -222,7 +222,7 @@ MonoBehaviour:
         X: 90
         Number: 7
         LootTableId: 
-        SearchFlag: 
+        SearchFlag: SEARCHED_MUSIC
       - RoomId: ROOM_3F_ROOM_RESTROOM_0
         TemplateId: ROOM_RESTROOM
         Floor: 2
@@ -278,7 +278,7 @@ MonoBehaviour:
         X: 90
         Number: 7
         LootTableId: 
-        SearchFlag: 
+        SearchFlag: SEARCHED_BROADCAST
       - RoomId: ROOM_4F_ROOM_RESTROOM_0
         TemplateId: ROOM_RESTROOM
         Floor: 3

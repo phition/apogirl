@@ -137,6 +137,7 @@ MonoBehaviour:
     MealSatiety: 45
     DrinkHydration: 55
     StarvationThreshold: -60
+    FirstDishFlag: COOKED_DISH
     CookingDishes:
     - Id: DISH_PORRIDGE
       MinCookingLevel: 0
