@@ -2978,6 +2978,10 @@ MonoBehaviour:
     m_Localized: "\uBC30\uB0AD\uC744 \uBE7C\uC557\uACBC\uB2E4. \uADF8\uB2E4\uC74C\uC740\u2026 \uAE30\uC5B5\uC774 \uB04A\uACBC\uB2E4. \uC815\uC2E0\uC744 \uCC28\uB838\uC744 \uB54C\uB294 \uAC74\uBB3C \uBC16\uC774\uC5C8\uB2E4."
     m_Metadata:
       m_Items: []
+  - m_Id: 357718740451328
+    m_Localized: "\uB2E4\uC74C \uB0AE \uD0D0\uD5D8: \uC0DD\uC874\uC790 (\uB204\uB97C \uB54C\uB9C8\uB2E4 \uC704\uD611\u2192\uAC15\uD0C8\u2192\uAD6C\uD0C0\u2192\uC5C6\uC74C)"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

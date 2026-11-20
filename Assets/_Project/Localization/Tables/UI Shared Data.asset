@@ -2975,6 +2975,10 @@ MonoBehaviour:
     m_Key: exp.hostile.Beaten
     m_Metadata:
       m_Items: []
+  - m_Id: 357718740451328
+    m_Key: debug.force_hostile
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
