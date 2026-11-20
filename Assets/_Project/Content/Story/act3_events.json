@@ -1706,6 +1706,7 @@
       "Kind": "Story",
       "Priority": 0,
       "Once": false,
+      "CooldownWeeks": 1,
       "Condition": {
         "FlagsAll": [
           "SYSTEM_ONLY"
