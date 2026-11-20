@@ -29,6 +29,9 @@ namespace ApoGirl.Presentation.Screens
             root.Q<Label>("subtitle-label").text = Loc.T("title.subtitle");
             _buttons = root.Q("title-buttons");
             _message = root.Q<Label>("title-message");
+            _message.style.whiteSpace = WhiteSpace.Normal;
+            _message.style.maxWidth = 720;
+            _message.style.unityTextAlign = TextAnchor.MiddleCenter;
             ShowMain();
         }
 

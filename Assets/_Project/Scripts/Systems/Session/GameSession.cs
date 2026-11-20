@@ -152,7 +152,8 @@ namespace ApoGirl.Systems.Session
         }
 
         /// <summary>이야기 중심: 대기 중인 탐험을 직접 들어가지 않고 자동 수색으로 처리 (자원 보상 ×DispatchYield).</summary>
-        public bool CanDispatch => HasGame && Difficulty.Dispatch && PendingExpedition != null;
+        public bool CanDispatch => HasGame && Difficulty.Dispatch && PendingExpedition != null
+                                   && !(_db.TryGetLocation(PendingExpedition.LocationId, out var location) && location.Tutorial);
 
         public SlotOutcome DispatchExpedition()
         {
