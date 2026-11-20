@@ -176,7 +176,7 @@
             "Kind": "Hidden",
             "Key": "SelfAwareness",
             "Op": "GreaterOrEqual",
-            "Value": 46
+            "Value": 48
           }
         ]
       },
