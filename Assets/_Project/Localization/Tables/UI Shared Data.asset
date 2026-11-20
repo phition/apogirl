@@ -3975,6 +3975,58 @@ MonoBehaviour:
     m_Key: hubroom.CLASSROOM
     m_Metadata:
       m_Items: []
+  - m_Id: 695764237172736
+    m_Key: settle.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 695764295892992
+    m_Key: settle.no_diary
+    m_Metadata:
+      m_Items: []
+  - m_Id: 695764295892993
+    m_Key: settle.week_events
+    m_Metadata:
+      m_Items: []
+  - m_Id: 695764295892994
+    m_Key: settle.when
+    m_Metadata:
+      m_Items: []
+  - m_Id: 695764295892995
+    m_Key: settle.raid_held
+    m_Metadata:
+      m_Items: []
+  - m_Id: 695764295892996
+    m_Key: settle.raid_lost
+    m_Metadata:
+      m_Items: []
+  - m_Id: 695764295892997
+    m_Key: settle.exp_Extracted
+    m_Metadata:
+      m_Items: []
+  - m_Id: 695764295892998
+    m_Key: settle.exp_Stranded
+    m_Metadata:
+      m_Items: []
+  - m_Id: 695764295892999
+    m_Key: settle.exp_Down
+    m_Metadata:
+      m_Items: []
+  - m_Id: 695764295893000
+    m_Key: settle.grown
+    m_Metadata:
+      m_Items: []
+  - m_Id: 695764295893001
+    m_Key: settle.supplies
+    m_Metadata:
+      m_Items: []
+  - m_Id: 695764295893002
+    m_Key: settle.body
+    m_Metadata:
+      m_Items: []
+  - m_Id: 695764295893003
+    m_Key: settle.vitals
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
