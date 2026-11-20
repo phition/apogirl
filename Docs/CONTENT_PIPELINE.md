@@ -134,4 +134,7 @@ SO 에셋과 문자열 테이블은 생성물이라 직접 고치지 않는다.
 - 적대적 생존자: 적 정의에 `"Kind": "Survivor"`, `SeesHiddenWithin`(숨은 사람 찾는 거리), `PatrolRange`, `CanBeDowned: false`. 지역 변형 `HostileChanceMultiplier`(0이면 안 나옴)·`HostileSpots`(시작 위치 후보)는 `Editor/LocationBuilder.cs`.
 - 상자 고갈: 지역 `DepletingContainers = true`(LocationBuilder) + 헤드리스 모델 `"ContainersPerRun"`(items_loot.json 등의 ExpeditionModels).
 - 행동 효과 `"TraumaCare": n` = 폭행 트라우마 회복을 n주 앞당긴다.
+- 탐험 상자: 모든 지역 기본 고갈(`DepletingContainers`), 매달 복구는 `Restocks`(교실동 false). 처음부터 빈 상자 비율은 `BalanceConfig.BaseEmptyContainerRate`. 복구 뒤 첫 방문 문장은 문자열 `exp.restocked.{지역ID}` — 새 지역을 만들면 같이 추가.
+- 낮 침입 이벤트는 `EVT_DAY_INTRUSION`(선택지 효과 `"IntrusionResponse": "Fight" | "Hide" | "Yield"`). 조건은 `SYSTEM_ONLY`라 일정 판정으로만 뜬다.
+- 행동 효과 `"Traps": n`(함정), 조건 값 `Traps`(설치한 함정 수).
 
