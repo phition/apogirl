@@ -267,6 +267,18 @@ namespace ApoGirl.Tests.EditMode
             {
                 slots[0].ActionId = "ACT_TREAT_WOUND";
             }
+
+            // 체력이 낮으면 탐험 대신 휴식 (봇의 공통 규칙과 같은 판단)
+            if (state.Player.Vitals.Hp <= 40)
+            {
+                for (var i = 0; i < slots.Count; i++)
+                {
+                    if (!slots[i].Locked && db.TryGetAction(slots[i].ActionId, out var planned) && planned.IsExpedition)
+                    {
+                        slots[i].ActionId = i % 2 == 0 ? "ACT_REST_DAY" : "ACT_REST_NIGHT";
+                    }
+                }
+            }
         }
 
         public static void ApplyPrologueCommon(GameState state, IDefinitionDatabase db)
