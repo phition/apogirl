@@ -2,7 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using ApoGirl.Presentation.Art;
 using ApoGirl.Presentation.Text;
+using UnityEngine;
 using UnityEngine.UIElements;
 
 namespace ApoGirl.Presentation.Dialogue
@@ -26,6 +28,10 @@ namespace ApoGirl.Presentation.Dialogue
         private readonly Button _autoButton;
         private readonly Button _skipButton;
         private readonly List<string> _history = new List<string>();
+        private readonly VisualElement _portrait;
+
+        /// <summary>말하는 사람 → 초상화 (M6-5). 비거나 null을 돌려주면 초상화를 숨긴다.</summary>
+        public Func<string, Texture2D> PortraitFor { get; set; }
 
         private TaskCompletionSource<bool> _advance;
         private IVisualElementScheduledItem _typing;
@@ -43,6 +49,12 @@ namespace ApoGirl.Presentation.Dialogue
             _options = root.Q("dialogue-options");
             _log = root.Q<ScrollView>("dialogue-log");
             root.Q("dialogue-box").RegisterCallback<PointerDownEvent>(_ => Advance());
+
+            // 초상화: 대화창 왼쪽 위에 선 그림 (그림이 없으면 숨김)
+            _portrait = new VisualElement { name = "dialogue-portrait", pickingMode = PickingMode.Ignore };
+            _portrait.AddToClassList("dialogue-portrait");
+            _portrait.AddToClassList("hidden");
+            _layer.Insert(0, _portrait);
 
             _autoButton = Tool(root, "dialogue-auto", Loc.T("dialogue.auto"), () =>
             {
@@ -80,6 +92,15 @@ namespace ApoGirl.Presentation.Dialogue
         {
             _typing?.Pause();
             _layer.AddToClassList("hidden");
+            _portrait.AddToClassList("hidden");
+            SetScene(null);
+        }
+
+        /// <summary>대화 뒤에 깔 사건 그림 (null이면 지운다).</summary>
+        public void SetScene(Texture2D scene)
+        {
+            StoryArt.SetCover(_layer, scene);
+            _layer.EnableInClassList("with-scene", scene != null);
         }
 
         /// <summary>클릭·Space·Enter: 타이핑 중이면 완성, 아니면 다음 줄.</summary>
@@ -104,6 +125,9 @@ namespace ApoGirl.Presentation.Dialogue
             _options.Clear();
             _speaker.text = speaker ?? "";
             _speaker.EnableInClassList("hidden", string.IsNullOrEmpty(speaker));
+            var portrait = string.IsNullOrEmpty(speaker) ? null : PortraitFor?.Invoke(speaker);
+            StoryArt.SetCover(_portrait, portrait);
+            _portrait.EnableInClassList("hidden", portrait == null);
             _history.Add(string.IsNullOrEmpty(speaker) ? text : speaker + ": " + text);
             _full = text ?? "";
             _advance = new TaskCompletionSource<bool>();

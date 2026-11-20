@@ -7,6 +7,7 @@ using ApoGirl.Core.Simulation;
 using ApoGirl.Core.State;
 using ApoGirl.Data;
 using ApoGirl.Presentation.App;
+using ApoGirl.Presentation.Art;
 using ApoGirl.Presentation.Dialogue;
 using ApoGirl.Presentation.Text;
 using ApoGirl.Systems.Save;
@@ -47,6 +48,7 @@ namespace ApoGirl.Presentation.Screens
         private DialogueView _dialogueView;
         private ExpeditionPrepView _prep;
         private EventDialoguePlayer _dialoguePlayer;
+        private VisualElement _teacherAvatar;
 
         /// <summary>테스트용: 허브 진입 시 시작 이벤트를 자동으로 띄우지 않는다.</summary>
         public static bool AutoPlayOpening = true;
@@ -73,7 +75,13 @@ namespace ApoGirl.Presentation.Screens
             _planSide = new PlanSideView(_root, _session);
             _card = new CardOverlay(_root);
             _debug = new DebugPanelView(_root.Q("debug-panel"), _session, ForceEvent, ShowEnd);
-            _dialogueView = new DialogueView(_root);
+            _dialogueView = new DialogueView(_root)
+            {
+                PortraitFor = speaker => StoryArt.Portrait(speaker, YarnFunctions.Name(), _session.State),
+            };
+            _teacherAvatar = new VisualElement { name = "teacher-avatar", pickingMode = PickingMode.Ignore };
+            _teacherAvatar.AddToClassList("teacher-avatar");
+            _root.Q("teacher-box").Add(_teacherAvatar);
             _prep = new ExpeditionPrepView(_session, _card);
             var yarnProject = Resources.Load<Yarn.Unity.YarnProject>(YarnProjectResource);
             if (yarnProject != null && yarnProject.Program != null)
@@ -226,6 +234,14 @@ namespace ApoGirl.Presentation.Screens
                 _root.Q("speed-" + speed).EnableInClassList("selected", speed == _speed);
             }
 
+            // 그림 (M6-5): 거처 배경, 선생님 얼굴 (그림이 없으면 지금처럼 글자)
+            var backdrop = StoryArt.Backdrop(_session.State);
+            StoryArt.SetCover(_root.Q("backdrop"), backdrop);
+            _root.Q("backdrop-label").EnableInClassList("hidden", backdrop != null);
+            var avatar = _session.HasMetTeacher ? StoryArt.Ui("avatar_teacher") : null;
+            StoryArt.SetContain(_teacherAvatar, avatar);
+            _teacherAvatar.EnableInClassList("hidden", avatar == null);
+
             // 선생님을 만나기 전 (1주차 창고): 혼잣말
             _root.Q<Label>("teacher-name").text = _session.HasMetTeacher ? Loc.T("hub.teacher_name") : Loc.T("hub.alone_name");
             _teacherLine.text = _session.HasMetTeacher ? TeacherLine(warned.Count > 0) : Loc.T(_session.IsExecuting ? "hub.alone_running" : "hub.alone_line");
@@ -359,6 +375,7 @@ namespace ApoGirl.Presentation.Screens
 
             if (_dialoguePlayer != null && _dialoguePlayer.HasNode(ev.Node))
             {
+                _dialogueView.SetScene(StoryArt.EventImage(ev.Id));
                 var task = _dialoguePlayer.Run(ev.Node, choices, Choose, destroyCancellationToken);
                 while (!task.IsCompleted)
                 {

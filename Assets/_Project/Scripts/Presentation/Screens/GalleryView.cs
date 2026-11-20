@@ -45,6 +45,9 @@ namespace ApoGirl.Presentation.Screens
                 if (seen && ColorUtility.TryParseHtmlString(ending.Color, out var color))
                 {
                     card.style.backgroundColor = color;
+                    var art = Art.StoryArt.Ending(ending.Id);
+                    Art.StoryArt.SetCover(card, art);
+                    card.EnableInClassList("with-art", art != null);
                 }
                 else
                 {

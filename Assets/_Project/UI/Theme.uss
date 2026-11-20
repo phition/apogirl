@@ -402,3 +402,50 @@ Button.selected { border-color: var(--accent); background-color: var(--accent-so
     -unity-text-align: middle-center;
     max-width: 1040px;
 }
+
+/* ── 그림 (M6-5) ── */
+.dialogue-portrait {
+    position: absolute;
+    left: 4%;
+    bottom: 250px;
+    width: 300px;
+    height: 400px;
+    border-radius: 8px;
+    border-width: 1px;
+    border-color: var(--accent-soft);
+}
+
+.teacher-box { padding-right: 92px; }
+
+.teacher-avatar {
+    position: absolute;
+    right: 10px;
+    top: 8px;
+    width: 68px;
+    height: 68px;
+}
+
+.title-logo {
+    width: 560px;
+    height: 360px;
+}
+
+.ending-view.with-art .ending-stage {
+    background-color: rgba(10, 12, 18, 0.66);
+    padding: 24px 36px;
+    border-radius: 10px;
+}
+
+.gallery-card.with-art > Label {
+    background-color: rgba(0, 0, 0, 0.6);
+    padding: 2px 6px;
+    border-radius: 4px;
+    align-self: flex-start;
+}
+
+.prep-location-art {
+    height: 180px;
+    border-radius: 6px;
+    margin-bottom: 8px;
+}
+.gallery-card.with-art { min-height: 96px; }

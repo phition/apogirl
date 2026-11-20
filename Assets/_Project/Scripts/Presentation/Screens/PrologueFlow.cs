@@ -58,7 +58,10 @@ namespace ApoGirl.Presentation.Screens
             YarnFunctions.PreviewProfile = _profile;
             YarnFunctions.PreviewFriend = _friend;
 
-            var view = new DialogueView(_root);
+            var view = new DialogueView(_root)
+            {
+                PortraitFor = speaker => Art.StoryArt.Portrait(speaker, Dialogue.YarnFunctions.Name(), null),
+            };
             _view = view;
             var player = new EventDialoguePlayer(_project, view) { CommandHandler = HandleCommand };
             yield return Wait(player.Run(StartNode, null, Record, token));

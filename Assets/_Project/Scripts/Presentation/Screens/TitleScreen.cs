@@ -26,6 +26,19 @@ namespace ApoGirl.Presentation.Screens
             var root = GetComponent<UIDocument>().rootVisualElement;
             KoreanFont.Apply(root);
             root.Q<Label>("title-label").text = Loc.T("title.game");
+
+            // 그림 (M6-5): 키 아트 배경, 로고가 있으면 제목 글자 대신
+            Art.StoryArt.SetCover(root.Q("screen"), Art.StoryArt.Story("title_key"));
+            var logo = Art.StoryArt.Story("logo_title");
+            if (logo != null)
+            {
+                var logoElement = new VisualElement { name = "title-logo", pickingMode = PickingMode.Ignore };
+                logoElement.AddToClassList("title-logo");
+                Art.StoryArt.SetContain(logoElement, logo);
+                var titleLabel = root.Q<Label>("title-label");
+                titleLabel.parent.Insert(titleLabel.parent.IndexOf(titleLabel), logoElement);
+                titleLabel.AddToClassList("hidden");
+            }
             root.Q<Label>("subtitle-label").text = Loc.T("title.subtitle");
             _buttons = root.Q("title-buttons");
             _message = root.Q<Label>("title-message");

@@ -248,7 +248,7 @@ namespace ApoGirl.EditorTools
             // 도현 (첫 NPC, M4 결정): 밤의 노크 소리를 들은 뒤(DH_HEARD) 3층 3-5 교실에 있다
             EncounterDef Dohyeon() => new EncounterDef
             {
-                Id = "DOHYEON", Floor = 2, RoomId = "ROOM_3F_ROOM_CLASSROOM_5", X = 9.5f,
+                Id = "DOHYEON", Floor = 2, RoomId = "ROOM_3F_ROOM_CLASSROOM_5", X = 9.5f, SpriteKey = "npc_dohyeon_hiding",
                 FlagsAll = { "DH_HEARD" }, FlagsNone = { "DH_RESCUED", "DH_LEFT", "DH_HELPED" },
                 PromptKey = "enc.DOHYEON.prompt",
                 Choices =
@@ -436,7 +436,7 @@ namespace ApoGirl.EditorTools
             // 박 간호사 (보건 교사): 2층 203호에 숨어 있다
             var nurse = new EncounterDef
             {
-                Id = "NURSE", Floor = 1, RoomId = "ROOM_HOUSE_203", X = 10f,
+                Id = "NURSE", Floor = 1, RoomId = "ROOM_HOUSE_203", X = 10f, SpriteKey = "npc_nurse_hiding",
                 FlagsAll = { "A2_STARTED" }, FlagsNone = { "NURSE_FOUND", "NURSE_DECLINED" },
                 PromptKey = "enc.NURSE.prompt",
                 Choices =
@@ -526,7 +526,7 @@ namespace ApoGirl.EditorTools
             };
             var bystander = new EncounterDef
             {
-                Id = "BYSTANDER", Floor = 0, RoomId = "ROOM_SUBWAY_OFFICE_2", X = 10f,
+                Id = "BYSTANDER", Floor = 0, RoomId = "ROOM_SUBWAY_OFFICE_2", X = 10f, SpriteKey = "npc_bystander_sitting",
                 FlagsAll = { "A2_STARTED" }, FlagsNone = { "BYSTANDER_MET" },
                 PromptKey = "enc.BYSTANDER.prompt",
                 Choices =
@@ -610,7 +610,7 @@ namespace ApoGirl.EditorTools
             // 어른 무리의 대표 (협상), 주동자 (직면)
             var group = new EncounterDef
             {
-                Id = "MART_GROUP", Floor = 0, RoomId = "ROOM_MART_OFFICE_1", X = 6f,
+                Id = "MART_GROUP", Floor = 0, RoomId = "ROOM_MART_OFFICE_1", X = 6f, SpriteKey = "npc_mart_adults_idle",
                 FlagsAll = { "A3_STARTED" }, FlagsNone = { "MART_GROUP_MET" },
                 PromptKey = "enc.MART_GROUP.prompt",
                 Choices =
@@ -621,7 +621,7 @@ namespace ApoGirl.EditorTools
             };
             var ringleader = new EncounterDef
             {
-                Id = "RINGLEADER", Floor = 1, RoomId = "ROOM_MART_OFFICE_2", X = 7f,
+                Id = "RINGLEADER", Floor = 1, RoomId = "ROOM_MART_OFFICE_2", X = 7f, SpriteKey = "npc_ringleader_sitting",
                 FlagsAll = { "MART_GROUP_MET" }, FlagsNone = { "RINGLEADER_MET" },
                 PromptKey = "enc.RINGLEADER.prompt",
                 Choices =

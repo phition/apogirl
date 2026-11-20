@@ -86,6 +86,16 @@ namespace ApoGirl.Presentation.Screens
             }
 
             BuildLoadout(_card.Extra);
+
+            // 지역 그림 (M6-5)
+            var locationArt = Art.StoryArt.Location(request.LocationId);
+            if (locationArt != null)
+            {
+                var image = new VisualElement { name = "prep-location-art", pickingMode = PickingMode.Ignore };
+                image.AddToClassList("prep-location-art");
+                Art.StoryArt.SetCover(image, locationArt);
+                _card.Extra.Insert(0, image);
+            }
         }
 
         private void BuildLoadout(VisualElement extra)

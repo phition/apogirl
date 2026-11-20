@@ -10,6 +10,9 @@ namespace ApoGirl.Exploration.Runtime
     public static class ExplorationArt
     {
         private const string Folder = "Art/Exploration/";
+
+        /// <summary>받은 그림 (M6-5, 같은 세계 크기의 4배 픽셀). 없으면 코드 그림.</summary>
+        private const string HdFolder = "Art/ExplorationHD/";
         private static readonly Dictionary<string, Sprite> Cache = new Dictionary<string, Sprite>();
 
         public static Sprite Get(string key)
@@ -21,11 +24,42 @@ namespace ApoGirl.Exploration.Runtime
 
             if (!Cache.TryGetValue(key, out var sprite))
             {
-                sprite = Resources.Load<Sprite>(Folder + key);
+                sprite = Resources.Load<Sprite>(HdFolder + key);
+                if (sprite == null)
+                {
+                    var family = HdFamily(key);
+                    sprite = family != null ? Resources.Load<Sprite>(HdFolder + family) : null;
+                }
+
+                if (sprite == null)
+                {
+                    sprite = Resources.Load<Sprite>(Folder + key);
+                }
+
                 Cache[key] = sprite;
             }
 
             return sprite;
+        }
+
+        /// <summary>
+        /// 받은 그림에 동작별 프레임이 없을 때 같이 쓸 그림: 주인공은 대기 그림, 좀비는 대기(휴면은 누운 그림).
+        /// </summary>
+        private static string HdFamily(string key)
+        {
+            if (key.StartsWith("player_")) return "player_idle";
+            if (key.StartsWith("zombie_"))
+            {
+                var kind = key.Substring("zombie_".Length);
+                var cut = kind.IndexOf('_');
+                if (cut > 0)
+                {
+                    var name = kind.Substring(0, cut);
+                    return kind.Substring(cut + 1).StartsWith("dormant") ? "zombie_" + name + "_dormant" : "zombie_" + name + "_idle";
+                }
+            }
+
+            return null;
         }
 
         /// <summary>바닥 기준점(스프라이트 피벗)에 그대로 놓는다. 없으면 fallbackSize 사각형 (아래 가운데 기준).</summary>
