@@ -22,9 +22,13 @@ namespace ApoGirl.Core.Rules
             return 1f - Math.Min(Math.Max(state.Player.Vitals.Cleanliness, 0), max) / (float)max;
         }
 
-        /// <summary>부상 때 오르는 상처 감염 (난이도 감염 배율 반영 전).</summary>
-        public static int WoundInfection(GameState state, BalanceConfig balance) =>
-            balance.WoundInfectionBase + (int)Math.Round(balance.WoundInfectionDirty * Dirt(state, balance), MidpointRounding.AwayFromZero);
+        /// <summary>부상 때 오르는 상처 감염 (난이도 감염 배율 반영 전). 청결이 기준 이상이면 기본값만.</summary>
+        public static int WoundInfection(GameState state, BalanceConfig balance)
+        {
+            var threshold = Math.Max(1, balance.WoundCleanThreshold);
+            var lack = Math.Max(0, threshold - state.Player.Vitals.Cleanliness) / (float)threshold;
+            return balance.WoundInfectionBase + (int)Math.Round(balance.WoundInfectionDirty * lack, MidpointRounding.AwayFromZero);
+        }
 
         /// <summary>부상이 되는 체력 손실 (최대 체력 × 비율, 올림. 0.3 × 100 = 30).</summary>
         public static int Threshold(BalanceConfig balance) =>
@@ -41,12 +45,17 @@ namespace ApoGirl.Core.Rules
             }
 
             var gain = DifficultyRules.Scale(WoundInfection(state, balance), DifficultyRules.Get(state, balance).Infection);
-            EffectApplier.ChangeVital(state, VitalType.Infection, gain, balance, delta);
+            if (gain > 0)
+            {
+                EffectApplier.ChangeVital(state, VitalType.Infection, gain, balance, delta);
+            }
+
             if (!string.IsNullOrEmpty(balance.InjuredFlag) && state.Flags.Add(balance.InjuredFlag))
             {
                 delta.FlagsSet.Add(balance.InjuredFlag);
             }
 
+            // 반환값은 '새로 다쳤다'는 표시로도 쓰므로 최소 1
             return Math.Max(1, gain);
         }
     }

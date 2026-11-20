@@ -534,7 +534,7 @@ namespace ApoGirl.Presentation.Screens
 
             if (outcome.WoundInfection > 0)
             {
-                lines.Add(Loc.T(InjuryRules.Dirt(_session.State, _session.Definitions.Balance) >= 0.6f ? "result.injured_dirty" : "result.injured"));
+                lines.Add(Loc.T(_session.State.Player.Vitals.Cleanliness < _session.Definitions.Balance.WoundCleanThreshold ? "result.injured_dirty" : "result.injured"));
             }
 
             if (outcome.Expedition != null && outcome.ExpeditionRequest != null && outcome.ExpeditionRequest.Restocked)

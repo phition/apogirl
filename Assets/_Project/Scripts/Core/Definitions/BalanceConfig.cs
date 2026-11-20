@@ -65,9 +65,13 @@ namespace ApoGirl.Core.Definitions
         /// <summary>부상 상태 플래그. 이 동안 체력이 회복되지 않고, 의약품 치료로만 풀린다.</summary>
         public string InjuredFlag = "INJURED";
 
-        /// <summary>부상 때 상처 감염: 기본 + 더러움(1 − 청결/최대) × 추가.</summary>
-        public int WoundInfectionBase = 2;
+        /// <summary>
+        /// 부상 때 상처 감염: 청결이 WoundCleanThreshold 이상이면 기본값만(0), 그보다 지저분할수록 최대 WoundInfectionDirty까지.
+        /// (감염도가 0보다 크면 매주 진행되므로, 깨끗하게 지내면 다쳐도 감염이 시작되지 않게 한다)
+        /// </summary>
+        public int WoundInfectionBase = 0;
         public int WoundInfectionDirty = 10;
+        public int WoundCleanThreshold = 50;
 
         /// <summary>물림 감염도 더러울수록 늘어난다: × (1 + 더러움 × 이 값).</summary>
         public float BiteDirtyBonus = 0.5f;

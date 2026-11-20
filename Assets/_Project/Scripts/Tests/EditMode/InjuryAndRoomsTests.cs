@@ -31,9 +31,9 @@ namespace ApoGirl.Tests.EditMode
             state.Player.Vitals.Cleanliness = 0;
             state.Player.Vitals.Infection = 0;
             state.Player.Vitals.Hp = 70;
-            Assert.AreEqual(12, InjuryRules.CheckIncident(state, 100, balance, delta), "더러우면 기본 2 + 10");
+            Assert.AreEqual(10, InjuryRules.CheckIncident(state, 100, balance, delta), "청결 0이면 상처 감염 +10");
             Assert.IsTrue(InjuryRules.IsInjured(state, balance));
-            Assert.AreEqual(12, state.Player.Vitals.Infection);
+            Assert.AreEqual(10, state.Player.Vitals.Infection);
 
             // 부상 중에는 휴식으로도 체력이 오르지 않는다
             ActionResolver.Resolve(state, db.GetAction(balance.NightRestActionId), db, new SeededRandom(SeededRandom.CreateState(1)), delta);
@@ -52,10 +52,13 @@ namespace ApoGirl.Tests.EditMode
             Assert.AreEqual(80, state.Player.Vitals.Hp, "치료하면서 회복 +10");
             Assert.AreEqual(0, state.Base.GetResource(ResourceType.Medicine));
 
-            // 깨끗하면 상처 감염이 덜 오른다
-            state.Player.Vitals.Cleanliness = balance.VitalMax;
+            // 깨끗하면(청결 50 이상) 다쳐도 상처 감염은 없다 (부상은 그대로)
+            state.Player.Vitals.Cleanliness = balance.WoundCleanThreshold;
+            var infection = state.Player.Vitals.Infection;
             state.Player.Vitals.Hp = 50;
-            Assert.AreEqual(2, InjuryRules.CheckIncident(state, 80, balance, delta));
+            Assert.AreEqual(1, InjuryRules.CheckIncident(state, 80, balance, delta));
+            Assert.AreEqual(infection, state.Player.Vitals.Infection);
+            Assert.IsTrue(InjuryRules.IsInjured(state, balance));
         }
 
         [Test]
