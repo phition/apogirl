@@ -113,7 +113,8 @@ MonoBehaviour:
           Amount: 2
         SleepDebt: 0
         Conscience: 0
-        SetFlags: []
+        SetFlags:
+        - HR_MEET_AGAIN
         ClearFlags: []
         AddClues: []
         EndingTags: []
@@ -211,7 +212,8 @@ MonoBehaviour:
           Amount: 2
         SleepDebt: 0
         Conscience: 0
-        SetFlags: []
+        SetFlags:
+        - HR_CLOSED
         ClearFlags: []
         AddClues: []
         EndingTags: []

@@ -3739,6 +3739,138 @@ MonoBehaviour:
     m_Key: faction.FAC_UBC.log.dh_mother
     m_Metadata:
       m_Items: []
+  - m_Id: 482287274967040
+    m_Key: ending.epilogue
+    m_Metadata:
+      m_Items: []
+  - m_Id: 482287346270208
+    m_Key: line.ep_sageori_default
+    m_Metadata:
+      m_Items: []
+  - m_Id: 482287346270209
+    m_Key: line.ep_sageori_truce
+    m_Metadata:
+      m_Items: []
+  - m_Id: 482287346270210
+    m_Key: line.ep_sageori_hostile
+    m_Metadata:
+      m_Items: []
+  - m_Id: 482287346270211
+    m_Key: line.ep_sageori_jun
+    m_Metadata:
+      m_Items: []
+  - m_Id: 482287346270212
+    m_Key: line.ep_sageori_ally
+    m_Metadata:
+      m_Items: []
+  - m_Id: 482287346270213
+    m_Key: line.ep_mart_default
+    m_Metadata:
+      m_Items: []
+  - m_Id: 482287346270214
+    m_Key: line.ep_mart_left
+    m_Metadata:
+      m_Items: []
+  - m_Id: 482287346270215
+    m_Key: line.ep_mart_abandoned
+    m_Metadata:
+      m_Items: []
+  - m_Id: 482287346270216
+    m_Key: line.ep_mart_friend
+    m_Metadata:
+      m_Items: []
+  - m_Id: 482287346270217
+    m_Key: line.ep_ubc_default
+    m_Metadata:
+      m_Items: []
+  - m_Id: 482287346270218
+    m_Key: line.ep_ubc_relay
+    m_Metadata:
+      m_Items: []
+  - m_Id: 482287346270219
+    m_Key: line.ep_ubc_mingyu
+    m_Metadata:
+      m_Items: []
+  - m_Id: 482287346270220
+    m_Key: line.ep_ubc_allied
+    m_Metadata:
+      m_Items: []
+  - m_Id: 482287346270221
+    m_Key: line.ep_dohyeon
+    m_Metadata:
+      m_Items: []
+  - m_Id: 482287346270222
+    m_Key: line.ep_dohyeon_mother
+    m_Metadata:
+      m_Items: []
+  - m_Id: 482287346270223
+    m_Key: line.ep_nurse
+    m_Metadata:
+      m_Items: []
+  - m_Id: 482287346270224
+    m_Key: line.ep_nurse_leg
+    m_Metadata:
+      m_Items: []
+  - m_Id: 482287346270225
+    m_Key: line.ep_bystander
+    m_Metadata:
+      m_Items: []
+  - m_Id: 482287346270226
+    m_Key: line.ep_bystander_friend
+    m_Metadata:
+      m_Items: []
+  - m_Id: 482287346270227
+    m_Key: line.ep_ringleader
+    m_Metadata:
+      m_Items: []
+  - m_Id: 482287346270228
+    m_Key: line.ep_ringleader_again
+    m_Metadata:
+      m_Items: []
+  - m_Id: 482287346270229
+    m_Key: line.ep_ringleader_closed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 482287346270230
+    m_Key: line.ep_jun
+    m_Metadata:
+      m_Items: []
+  - m_Id: 482287346270231
+    m_Key: line.m_outing
+    m_Metadata:
+      m_Items: []
+  - m_Id: 482287346270232
+    m_Key: line.m_trip
+    m_Metadata:
+      m_Items: []
+  - m_Id: 482287346270233
+    m_Key: line.m_sageori
+    m_Metadata:
+      m_Items: []
+  - m_Id: 482287346270234
+    m_Key: line.m_radio
+    m_Metadata:
+      m_Items: []
+  - m_Id: 482287346270235
+    m_Key: line.m_prosthetic
+    m_Metadata:
+      m_Items: []
+  - m_Id: 482287346270236
+    m_Key: line.m_mart
+    m_Metadata:
+      m_Items: []
+  - m_Id: 482287346270237
+    m_Key: line.m_mingyu
+    m_Metadata:
+      m_Items: []
+  - m_Id: 482287346270238
+    m_Key: line.m_ringleader
+    m_Metadata:
+      m_Items: []
+  - m_Id: 482287346270239
+    m_Key: line.m_last_stand
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

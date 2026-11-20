@@ -172,6 +172,7 @@ MonoBehaviour:
       IsBirthday: 0
     Priority: 70
     TextKey: diary.fever
+    Group: 
   - Id: DIARY_COUGH
     Kind: 0
     Condition:
@@ -198,6 +199,7 @@ MonoBehaviour:
       IsBirthday: 0
     Priority: 72
     TextKey: diary.cough
+    Group: 
   - Id: DIARY_TREMOR
     Kind: 0
     Condition:
@@ -224,6 +226,7 @@ MonoBehaviour:
       IsBirthday: 0
     Priority: 74
     TextKey: diary.tremor
+    Group: 
   - Id: TC_FEVER
     Kind: 1
     Condition:
@@ -250,6 +253,7 @@ MonoBehaviour:
       IsBirthday: 0
     Priority: 70
     TextKey: tc.fever
+    Group: 
   - Id: TC_TREMOR
     Kind: 1
     Condition:
@@ -276,6 +280,7 @@ MonoBehaviour:
       IsBirthday: 0
     Priority: 74
     TextKey: tc.tremor
+    Group: 
   - Id: TC_TEACHER_1
     Kind: 1
     Condition:
@@ -302,6 +307,7 @@ MonoBehaviour:
       IsBirthday: 0
     Priority: 65
     TextKey: tc.teacher_ill_1
+    Group: 
   - Id: TC_TEACHER_2
     Kind: 1
     Condition:
@@ -328,6 +334,7 @@ MonoBehaviour:
       IsBirthday: 0
     Priority: 66
     TextKey: tc.teacher_ill_2
+    Group: 
   - Id: TC_TEACHER_3
     Kind: 1
     Condition:
@@ -354,6 +361,7 @@ MonoBehaviour:
       IsBirthday: 0
     Priority: 67
     TextKey: tc.teacher_ill_3
+    Group: 
   - Id: TC_RAIN
     Kind: 1
     Condition:
@@ -380,6 +388,7 @@ MonoBehaviour:
       IsBirthday: 0
     Priority: 30
     TextKey: tc.rain
+    Group: 
   - Id: TC_HEAT
     Kind: 1
     Condition:
@@ -406,6 +415,7 @@ MonoBehaviour:
       IsBirthday: 0
     Priority: 31
     TextKey: tc.heat
+    Group: 
   - Id: TC_COLD
     Kind: 1
     Condition:
@@ -432,6 +442,7 @@ MonoBehaviour:
       IsBirthday: 0
     Priority: 32
     TextKey: tc.cold
+    Group: 
   - Id: REVIEW_A1
     Kind: 7
     Condition:
@@ -455,6 +466,7 @@ MonoBehaviour:
       IsBirthday: 0
     Priority: 10
     TextKey: review.a1
+    Group: 
   - Id: REVIEW_A1_HARD
     Kind: 7
     Condition:
@@ -486,6 +498,7 @@ MonoBehaviour:
       IsBirthday: 0
     Priority: 20
     TextKey: review.a1_hard
+    Group: 
   - Id: DIARY_A2_SUMMER
     Kind: 0
     Condition:
@@ -508,6 +521,7 @@ MonoBehaviour:
       IsBirthday: 0
     Priority: 12
     TextKey: diary.a2_summer
+    Group: 
   - Id: DIARY_A2_NURSE
     Kind: 0
     Condition:
@@ -532,6 +546,7 @@ MonoBehaviour:
       IsBirthday: 0
     Priority: 32
     TextKey: diary.a2_nurse
+    Group: 
   - Id: DIARY_A2_TRACE
     Kind: 0
     Condition:
@@ -555,6 +570,7 @@ MonoBehaviour:
       IsBirthday: 0
     Priority: 34
     TextKey: diary.a2_trace
+    Group: 
   - Id: DIARY_A2_KNOWS
     Kind: 0
     Condition:
@@ -578,6 +594,7 @@ MonoBehaviour:
       IsBirthday: 0
     Priority: 36
     TextKey: diary.a2_knows
+    Group: 
   - Id: DIARY_A2_BYSTANDER
     Kind: 0
     Condition:
@@ -602,6 +619,7 @@ MonoBehaviour:
       IsBirthday: 0
     Priority: 33
     TextKey: diary.a2_bystander
+    Group: 
   - Id: DIARY_A2_STORM
     Kind: 0
     Condition:
@@ -625,6 +643,7 @@ MonoBehaviour:
       IsBirthday: 0
     Priority: 38
     TextKey: diary.a2_storm
+    Group: 
   - Id: TC_A2_SUMMER
     Kind: 1
     Condition:
@@ -647,6 +666,7 @@ MonoBehaviour:
       IsBirthday: 0
     Priority: 3
     TextKey: tc.a2_summer
+    Group: 
   - Id: TC_A2_KNOWS
     Kind: 1
     Condition:
@@ -670,6 +690,7 @@ MonoBehaviour:
       IsBirthday: 0
     Priority: 36
     TextKey: tc.a2_knows
+    Group: 
   - Id: REVIEW_A2
     Kind: 7
     Condition:
@@ -693,6 +714,7 @@ MonoBehaviour:
       IsBirthday: 0
     Priority: 10
     TextKey: review.a2
+    Group: 
   - Id: REVIEW_A2_KNOWS
     Kind: 7
     Condition:
@@ -717,6 +739,7 @@ MonoBehaviour:
       IsBirthday: 0
     Priority: 20
     TextKey: review.a2_knows
+    Group: 
   - Id: M_NURSE
     Kind: 6
     Condition:
@@ -741,6 +764,7 @@ MonoBehaviour:
       IsBirthday: 0
     Priority: 0
     TextKey: line.m_nurse
+    Group: 
   - Id: M_TRACE
     Kind: 6
     Condition:
@@ -764,6 +788,7 @@ MonoBehaviour:
       IsBirthday: 0
     Priority: 0
     TextKey: line.m_trace
+    Group: 
   - Id: M_LOCKED_HOUSE
     Kind: 6
     Condition:
@@ -787,6 +812,7 @@ MonoBehaviour:
       IsBirthday: 0
     Priority: 0
     TextKey: line.m_locked_house
+    Group: 
   - Id: M_KNOWS
     Kind: 6
     Condition:
@@ -810,6 +836,7 @@ MonoBehaviour:
       IsBirthday: 0
     Priority: 0
     TextKey: line.m_knows
+    Group: 
   - Id: M_BYSTANDER
     Kind: 6
     Condition:
@@ -834,6 +861,7 @@ MonoBehaviour:
       IsBirthday: 0
     Priority: 0
     TextKey: line.m_bystander
+    Group: 
   - Id: M_ACT2
     Kind: 6
     Condition:
@@ -857,6 +885,7 @@ MonoBehaviour:
       IsBirthday: 0
     Priority: 0
     TextKey: line.m_act2
+    Group: 
   - Id: DIARY_A3_AUTUMN
     Kind: 0
     Condition:
@@ -879,6 +908,7 @@ MonoBehaviour:
       IsBirthday: 0
     Priority: 12
     TextKey: diary.a3_autumn
+    Group: 
   - Id: DIARY_A3_RESCUE
     Kind: 0
     Condition:
@@ -903,6 +933,7 @@ MonoBehaviour:
       IsBirthday: 0
     Priority: 40
     TextKey: diary.a3_rescue
+    Group: 
   - Id: DIARY_A3_FACE
     Kind: 0
     Condition:
@@ -928,6 +959,7 @@ MonoBehaviour:
       IsBirthday: 0
     Priority: 42
     TextKey: diary.a3_face
+    Group: 
   - Id: DIARY_A3_REINFECTED
     Kind: 0
     Condition:
@@ -951,6 +983,7 @@ MonoBehaviour:
       IsBirthday: 0
     Priority: 60
     TextKey: diary.a3_reinfected
+    Group: 
   - Id: DIARY_A3_CURE
     Kind: 0
     Condition:
@@ -975,6 +1008,7 @@ MonoBehaviour:
       IsBirthday: 0
     Priority: 62
     TextKey: diary.a3_cure
+    Group: 
   - Id: TC_A3_RESCUE
     Kind: 1
     Condition:
@@ -999,6 +1033,7 @@ MonoBehaviour:
       IsBirthday: 0
     Priority: 38
     TextKey: tc.a3_rescue
+    Group: 
   - Id: TC_A3_CURE
     Kind: 1
     Condition:
@@ -1022,6 +1057,7 @@ MonoBehaviour:
       IsBirthday: 0
     Priority: 68
     TextKey: tc.a3_cure
+    Group: 
   - Id: TC_A3_DISTANCE
     Kind: 1
     Condition:
@@ -1045,6 +1081,7 @@ MonoBehaviour:
       IsBirthday: 0
     Priority: 68
     TextKey: tc.a3_distance
+    Group: 
   - Id: REVIEW_A3
     Kind: 7
     Condition:
@@ -1068,6 +1105,7 @@ MonoBehaviour:
       IsBirthday: 0
     Priority: 10
     TextKey: review.a3
+    Group: 
   - Id: REVIEW_A3_CURE
     Kind: 7
     Condition:
@@ -1092,6 +1130,7 @@ MonoBehaviour:
       IsBirthday: 0
     Priority: 20
     TextKey: review.a3_cure
+    Group: 
   - Id: REVIEW_A3_DISTANCE
     Kind: 7
     Condition:
@@ -1116,6 +1155,7 @@ MonoBehaviour:
       IsBirthday: 0
     Priority: 20
     TextKey: review.a3_distance
+    Group: 
   - Id: M_RESCUE
     Kind: 6
     Condition:
@@ -1139,6 +1179,7 @@ MonoBehaviour:
       IsBirthday: 0
     Priority: 0
     TextKey: line.m_rescue
+    Group: 
   - Id: M_FACE
     Kind: 6
     Condition:
@@ -1162,6 +1203,7 @@ MonoBehaviour:
       IsBirthday: 0
     Priority: 0
     TextKey: line.m_face
+    Group: 
   - Id: M_MART_ALLY
     Kind: 6
     Condition:
@@ -1185,6 +1227,7 @@ MonoBehaviour:
       IsBirthday: 0
     Priority: 0
     TextKey: line.m_mart_ally
+    Group: 
   - Id: M_REINFECTED
     Kind: 6
     Condition:
@@ -1208,6 +1251,7 @@ MonoBehaviour:
       IsBirthday: 0
     Priority: 0
     TextKey: line.m_reinfected
+    Group: 
   - Id: M_WANDERER
     Kind: 6
     Condition:
@@ -1232,6 +1276,7 @@ MonoBehaviour:
       IsBirthday: 0
     Priority: 0
     TextKey: line.m_wanderer
+    Group: 
   - Id: M_ACT3
     Kind: 6
     Condition:
@@ -1255,6 +1300,7 @@ MonoBehaviour:
       IsBirthday: 0
     Priority: 0
     TextKey: line.m_act3
+    Group: 
   - Id: DIARY_A4_WINTER
     Kind: 0
     Condition:
@@ -1277,6 +1323,7 @@ MonoBehaviour:
       IsBirthday: 0
     Priority: 12
     TextKey: diary.a4_winter
+    Group: 
   - Id: DIARY_A4_TWO_CLOCKS
     Kind: 0
     Condition:
@@ -1301,6 +1348,7 @@ MonoBehaviour:
       IsBirthday: 0
     Priority: 64
     TextKey: diary.a4_two_clocks
+    Group: 
   - Id: DIARY_A4_RESEARCH
     Kind: 0
     Condition:
@@ -1325,6 +1373,7 @@ MonoBehaviour:
       IsBirthday: 0
     Priority: 66
     TextKey: diary.a4_research
+    Group: 
   - Id: DIARY_A4_CURED
     Kind: 0
     Condition:
@@ -1348,6 +1397,7 @@ MonoBehaviour:
       IsBirthday: 0
     Priority: 80
     TextKey: diary.a4_cured
+    Group: 
   - Id: DIARY_A4_FAILED
     Kind: 0
     Condition:
@@ -1371,6 +1421,7 @@ MonoBehaviour:
       IsBirthday: 0
     Priority: 70
     TextKey: diary.a4_failed
+    Group: 
   - Id: TC_A4_PLAN
     Kind: 1
     Condition:
@@ -1398,6 +1449,7 @@ MonoBehaviour:
       IsBirthday: 0
     Priority: 69
     TextKey: tc.a4_plan
+    Group: 
   - Id: TC_A4_CURED
     Kind: 1
     Condition:
@@ -1421,6 +1473,7 @@ MonoBehaviour:
       IsBirthday: 0
     Priority: 80
     TextKey: tc.a4_cured
+    Group: 
   - Id: M_RESEARCH
     Kind: 6
     Condition:
@@ -1444,6 +1497,7 @@ MonoBehaviour:
       IsBirthday: 0
     Priority: 0
     TextKey: line.m_research
+    Group: 
   - Id: M_CURE_TRY
     Kind: 6
     Condition:
@@ -1467,6 +1521,7 @@ MonoBehaviour:
       IsBirthday: 0
     Priority: 0
     TextKey: line.m_cure_try
+    Group: 
   - Id: M_GRADUATION
     Kind: 6
     Condition:
@@ -1490,6 +1545,7 @@ MonoBehaviour:
       IsBirthday: 0
     Priority: 0
     TextKey: line.m_graduation
+    Group: 
   - Id: M_NIGHT_BEFORE
     Kind: 6
     Condition:
@@ -1513,6 +1569,7 @@ MonoBehaviour:
       IsBirthday: 0
     Priority: 0
     TextKey: line.m_night_before
+    Group: 
   - Id: LT_DEFAULT
     Kind: 2
     Condition:
@@ -1535,6 +1592,7 @@ MonoBehaviour:
       IsBirthday: 0
     Priority: 0
     TextKey: line.lt_default
+    Group: 
   - Id: LT_CURED
     Kind: 2
     Condition:
@@ -1558,6 +1616,7 @@ MonoBehaviour:
       IsBirthday: 0
     Priority: 100
     TextKey: line.lt_cured
+    Group: 
   - Id: LT_LAST_LESSON
     Kind: 2
     Condition:
@@ -1581,6 +1640,7 @@ MonoBehaviour:
       IsBirthday: 0
     Priority: 50
     TextKey: line.lt_last_lesson
+    Group: 
   - Id: LT_ISOLATED
     Kind: 2
     Condition:
@@ -1604,6 +1664,7 @@ MonoBehaviour:
       IsBirthday: 0
     Priority: 50
     TextKey: line.lt_isolated
+    Group: 
   - Id: LT_EXPOSED
     Kind: 2
     Condition:
@@ -1627,6 +1688,7 @@ MonoBehaviour:
       IsBirthday: 0
     Priority: 50
     TextKey: line.lt_exposed
+    Group: 
   - Id: LT_LEFT_BEHIND
     Kind: 2
     Condition:
@@ -1650,6 +1712,7 @@ MonoBehaviour:
       IsBirthday: 0
     Priority: 40
     TextKey: line.lt_left_behind
+    Group: 
   - Id: LF_DEFAULT
     Kind: 3
     Condition:
@@ -1672,6 +1735,7 @@ MonoBehaviour:
       IsBirthday: 0
     Priority: 0
     TextKey: line.lf_default
+    Group: 
   - Id: LF_PROMISE
     Kind: 3
     Condition:
@@ -1695,6 +1759,7 @@ MonoBehaviour:
       IsBirthday: 0
     Priority: 20
     TextKey: line.lf_promise
+    Group: 
   - Id: LF_TOLD
     Kind: 3
     Condition:
@@ -1718,6 +1783,7 @@ MonoBehaviour:
       IsBirthday: 0
     Priority: 30
     TextKey: line.lf_told
+    Group: 
   - Id: LF_SUPPLIES
     Kind: 3
     Condition:
@@ -1741,6 +1807,7 @@ MonoBehaviour:
       IsBirthday: 0
     Priority: 40
     TextKey: line.lf_supplies
+    Group: 
   - Id: LC_1
     Kind: 4
     Condition:
@@ -1767,6 +1834,7 @@ MonoBehaviour:
       IsBirthday: 0
     Priority: 10
     TextKey: line.lc_1
+    Group: 
   - Id: LC_3
     Kind: 4
     Condition:
@@ -1793,6 +1861,7 @@ MonoBehaviour:
       IsBirthday: 0
     Priority: 20
     TextKey: line.lc_3
+    Group: 
   - Id: LC_6
     Kind: 4
     Condition:
@@ -1819,6 +1888,7 @@ MonoBehaviour:
       IsBirthday: 0
     Priority: 30
     TextKey: line.lc_6
+    Group: 
   - Id: LTD_HOME
     Kind: 5
     Condition:
@@ -1845,6 +1915,7 @@ MonoBehaviour:
       IsBirthday: 0
     Priority: 40
     TextKey: line.ltd_home
+    Group: 
   - Id: LTD_NIGHT
     Kind: 5
     Condition:
@@ -1875,6 +1946,7 @@ MonoBehaviour:
       IsBirthday: 0
     Priority: 30
     TextKey: line.ltd_night
+    Group: 
   - Id: LTD_DAY
     Kind: 5
     Condition:
@@ -1905,6 +1977,7 @@ MonoBehaviour:
       IsBirthday: 0
     Priority: 30
     TextKey: line.ltd_day
+    Group: 
   - Id: LTD_MIXED
     Kind: 5
     Condition:
@@ -1931,6 +2004,7 @@ MonoBehaviour:
       IsBirthday: 0
     Priority: 10
     TextKey: line.ltd_mixed
+    Group: 
   - Id: M_DOOR
     Kind: 6
     Condition:
@@ -1953,6 +2027,7 @@ MonoBehaviour:
       IsBirthday: 0
     Priority: 0
     TextKey: line.m_door
+    Group: 
   - Id: M_NIGHT
     Kind: 6
     Condition:
@@ -1976,6 +2051,7 @@ MonoBehaviour:
       IsBirthday: 0
     Priority: 0
     TextKey: line.m_night
+    Group: 
   - Id: M_CRUTCH
     Kind: 6
     Condition:
@@ -1999,6 +2075,7 @@ MonoBehaviour:
       IsBirthday: 0
     Priority: 0
     TextKey: line.m_crutch
+    Group: 
   - Id: M_POWER
     Kind: 6
     Condition:
@@ -2022,6 +2099,7 @@ MonoBehaviour:
       IsBirthday: 0
     Priority: 0
     TextKey: line.m_power
+    Group: 
   - Id: M_MESSAGES
     Kind: 6
     Condition:
@@ -2045,6 +2123,7 @@ MonoBehaviour:
       IsBirthday: 0
     Priority: 0
     TextKey: line.m_messages
+    Group: 
   - Id: M_DOHYEON
     Kind: 6
     Condition:
@@ -2069,6 +2148,7 @@ MonoBehaviour:
       IsBirthday: 0
     Priority: 0
     TextKey: line.m_dohyeon
+    Group: 
   - Id: M_ACT1
     Kind: 6
     Condition:
@@ -2092,6 +2172,7 @@ MonoBehaviour:
       IsBirthday: 0
     Priority: 0
     TextKey: line.m_act1
+    Group: 
   - Id: DIARY_BREAKDOWN
     Kind: 0
     Condition:
@@ -2118,6 +2199,7 @@ MonoBehaviour:
       IsBirthday: 0
     Priority: 60
     TextKey: diary.breakdown
+    Group: 
   - Id: TC_BREAKDOWN
     Kind: 1
     Condition:
@@ -2144,6 +2226,846 @@ MonoBehaviour:
       IsBirthday: 0
     Priority: 60
     TextKey: tc.breakdown
+    Group: 
+  - Id: EP_SAGEORI_DEFAULT
+    Kind: 8
+    Condition:
+      WeekMin: 0
+      WeekMax: 0
+      Days: 
+      Phase: 0
+      Seasons: 
+      Month: 0
+      DayOfMonth: 0
+      ActionCategories: 
+      ActionIds: []
+      FlagsAll: []
+      FlagsAny: []
+      FlagsNone: []
+      CluesAll: []
+      Checks:
+      - Kind: 35
+        Key: FAC_SAGEORI
+        Op: 2
+        Value: 1
+      AnyChecks: []
+      NpcStatuses: []
+      IsBirthday: 0
+    Priority: 0
+    TextKey: line.ep_sageori_default
+    Group: FAC_SAGEORI
+  - Id: EP_SAGEORI_TRUCE
+    Kind: 8
+    Condition:
+      WeekMin: 0
+      WeekMax: 0
+      Days: 
+      Phase: 0
+      Seasons: 
+      Month: 0
+      DayOfMonth: 0
+      ActionCategories: 
+      ActionIds: []
+      FlagsAll: []
+      FlagsAny: []
+      FlagsNone: []
+      CluesAll: []
+      Checks:
+      - Kind: 35
+        Key: FAC_SAGEORI
+        Op: 2
+        Value: 1
+      - Kind: 34
+        Key: FAC_SAGEORI
+        Op: 0
+        Value: -19
+      AnyChecks: []
+      NpcStatuses: []
+      IsBirthday: 0
+    Priority: 30
+    TextKey: line.ep_sageori_truce
+    Group: FAC_SAGEORI
+  - Id: EP_SAGEORI_HOSTILE
+    Kind: 8
+    Condition:
+      WeekMin: 0
+      WeekMax: 0
+      Days: 
+      Phase: 0
+      Seasons: 
+      Month: 0
+      DayOfMonth: 0
+      ActionCategories: 
+      ActionIds: []
+      FlagsAll:
+      - SAGEORI_FINALE_HOSTILE
+      FlagsAny: []
+      FlagsNone: []
+      CluesAll: []
+      Checks: []
+      AnyChecks: []
+      NpcStatuses: []
+      IsBirthday: 0
+    Priority: 40
+    TextKey: line.ep_sageori_hostile
+    Group: FAC_SAGEORI
+  - Id: EP_SAGEORI_JUN
+    Kind: 8
+    Condition:
+      WeekMin: 0
+      WeekMax: 0
+      Days: 
+      Phase: 0
+      Seasons: 
+      Month: 0
+      DayOfMonth: 0
+      ActionCategories: 
+      ActionIds: []
+      FlagsAll:
+      - JUN_MEDIATED
+      FlagsAny: []
+      FlagsNone: []
+      CluesAll: []
+      Checks: []
+      AnyChecks: []
+      NpcStatuses: []
+      IsBirthday: 0
+    Priority: 45
+    TextKey: line.ep_sageori_jun
+    Group: FAC_SAGEORI
+  - Id: EP_SAGEORI_ALLY
+    Kind: 8
+    Condition:
+      WeekMin: 0
+      WeekMax: 0
+      Days: 
+      Phase: 0
+      Seasons: 
+      Month: 0
+      DayOfMonth: 0
+      ActionCategories: 
+      ActionIds: []
+      FlagsAll:
+      - SAGEORI_ALLY_FINALE
+      FlagsAny: []
+      FlagsNone: []
+      CluesAll: []
+      Checks: []
+      AnyChecks: []
+      NpcStatuses: []
+      IsBirthday: 0
+    Priority: 50
+    TextKey: line.ep_sageori_ally
+    Group: FAC_SAGEORI
+  - Id: EP_MART_DEFAULT
+    Kind: 8
+    Condition:
+      WeekMin: 0
+      WeekMax: 0
+      Days: 
+      Phase: 0
+      Seasons: 
+      Month: 0
+      DayOfMonth: 0
+      ActionCategories: 
+      ActionIds: []
+      FlagsAll: []
+      FlagsAny: []
+      FlagsNone: []
+      CluesAll: []
+      Checks:
+      - Kind: 35
+        Key: FAC_MART
+        Op: 2
+        Value: 1
+      AnyChecks: []
+      NpcStatuses: []
+      IsBirthday: 0
+    Priority: 0
+    TextKey: line.ep_mart_default
+    Group: FAC_MART
+  - Id: EP_MART_LEFT
+    Kind: 8
+    Condition:
+      WeekMin: 0
+      WeekMax: 0
+      Days: 
+      Phase: 0
+      Seasons: 
+      Month: 0
+      DayOfMonth: 0
+      ActionCategories: 
+      ActionIds: []
+      FlagsAll:
+      - MART_LEFT
+      FlagsAny: []
+      FlagsNone: []
+      CluesAll: []
+      Checks: []
+      AnyChecks: []
+      NpcStatuses: []
+      IsBirthday: 0
+    Priority: 20
+    TextKey: line.ep_mart_left
+    Group: FAC_MART
+  - Id: EP_MART_ABANDONED
+    Kind: 8
+    Condition:
+      WeekMin: 0
+      WeekMax: 0
+      Days: 
+      Phase: 0
+      Seasons: 
+      Month: 0
+      DayOfMonth: 0
+      ActionCategories: 
+      ActionIds: []
+      FlagsAll:
+      - MART_ABANDONED
+      FlagsAny: []
+      FlagsNone: []
+      CluesAll: []
+      Checks: []
+      AnyChecks: []
+      NpcStatuses: []
+      IsBirthday: 0
+    Priority: 40
+    TextKey: line.ep_mart_abandoned
+    Group: FAC_MART
+  - Id: EP_MART_FRIEND
+    Kind: 8
+    Condition:
+      WeekMin: 0
+      WeekMax: 0
+      Days: 
+      Phase: 0
+      Seasons: 
+      Month: 0
+      DayOfMonth: 0
+      ActionCategories: 
+      ActionIds: []
+      FlagsAll:
+      - MART_LEFT
+      FlagsAny: []
+      FlagsNone:
+      - MART_ABANDONED
+      CluesAll: []
+      Checks:
+      - Kind: 36
+        Key: FAC_MART
+        Op: 0
+        Value: 3
+      AnyChecks: []
+      NpcStatuses: []
+      IsBirthday: 0
+    Priority: 50
+    TextKey: line.ep_mart_friend
+    Group: FAC_MART
+  - Id: EP_UBC_DEFAULT
+    Kind: 8
+    Condition:
+      WeekMin: 0
+      WeekMax: 0
+      Days: 
+      Phase: 0
+      Seasons: 
+      Month: 0
+      DayOfMonth: 0
+      ActionCategories: 
+      ActionIds: []
+      FlagsAll: []
+      FlagsAny: []
+      FlagsNone: []
+      CluesAll: []
+      Checks:
+      - Kind: 35
+        Key: FAC_UBC
+        Op: 2
+        Value: 1
+      AnyChecks: []
+      NpcStatuses: []
+      IsBirthday: 0
+    Priority: 0
+    TextKey: line.ep_ubc_default
+    Group: FAC_UBC
+  - Id: EP_UBC_RELAY
+    Kind: 8
+    Condition:
+      WeekMin: 0
+      WeekMax: 0
+      Days: 
+      Phase: 0
+      Seasons: 
+      Month: 0
+      DayOfMonth: 0
+      ActionCategories: 
+      ActionIds: []
+      FlagsAll:
+      - UBC_RELAY
+      FlagsAny: []
+      FlagsNone: []
+      CluesAll: []
+      Checks: []
+      AnyChecks: []
+      NpcStatuses: []
+      IsBirthday: 0
+    Priority: 30
+    TextKey: line.ep_ubc_relay
+    Group: FAC_UBC
+  - Id: EP_UBC_MINGYU
+    Kind: 8
+    Condition:
+      WeekMin: 0
+      WeekMax: 0
+      Days: 
+      Phase: 0
+      Seasons: 
+      Month: 0
+      DayOfMonth: 0
+      ActionCategories: 
+      ActionIds: []
+      FlagsAll:
+      - UBC_RUNNER_SAVED
+      FlagsAny: []
+      FlagsNone: []
+      CluesAll: []
+      Checks: []
+      AnyChecks: []
+      NpcStatuses: []
+      IsBirthday: 0
+    Priority: 40
+    TextKey: line.ep_ubc_mingyu
+    Group: FAC_UBC
+  - Id: EP_UBC_ALLIED
+    Kind: 8
+    Condition:
+      WeekMin: 0
+      WeekMax: 0
+      Days: 
+      Phase: 0
+      Seasons: 
+      Month: 0
+      DayOfMonth: 0
+      ActionCategories: 
+      ActionIds: []
+      FlagsAll: []
+      FlagsAny: []
+      FlagsNone: []
+      CluesAll: []
+      Checks:
+      - Kind: 35
+        Key: FAC_UBC
+        Op: 2
+        Value: 1
+      - Kind: 36
+        Key: FAC_UBC
+        Op: 0
+        Value: 4
+      AnyChecks: []
+      NpcStatuses: []
+      IsBirthday: 0
+    Priority: 50
+    TextKey: line.ep_ubc_allied
+    Group: FAC_UBC
+  - Id: EP_DOHYEON
+    Kind: 8
+    Condition:
+      WeekMin: 0
+      WeekMax: 0
+      Days: 
+      Phase: 0
+      Seasons: 
+      Month: 0
+      DayOfMonth: 0
+      ActionCategories: 
+      ActionIds: []
+      FlagsAll: []
+      FlagsAny: []
+      FlagsNone: []
+      CluesAll: []
+      Checks: []
+      AnyChecks: []
+      NpcStatuses:
+      - NpcId: NPC_DOHYEON
+        Status: 2
+      IsBirthday: 0
+    Priority: 0
+    TextKey: line.ep_dohyeon
+    Group: NPC_DOHYEON
+  - Id: EP_DOHYEON_MOTHER
+    Kind: 8
+    Condition:
+      WeekMin: 0
+      WeekMax: 0
+      Days: 
+      Phase: 0
+      Seasons: 
+      Month: 0
+      DayOfMonth: 0
+      ActionCategories: 
+      ActionIds: []
+      FlagsAll:
+      - DH_MOTHER_FOUND
+      FlagsAny: []
+      FlagsNone: []
+      CluesAll: []
+      Checks: []
+      AnyChecks: []
+      NpcStatuses:
+      - NpcId: NPC_DOHYEON
+        Status: 2
+      IsBirthday: 0
+    Priority: 50
+    TextKey: line.ep_dohyeon_mother
+    Group: NPC_DOHYEON
+  - Id: EP_NURSE
+    Kind: 8
+    Condition:
+      WeekMin: 0
+      WeekMax: 0
+      Days: 
+      Phase: 0
+      Seasons: 
+      Month: 0
+      DayOfMonth: 0
+      ActionCategories: 
+      ActionIds: []
+      FlagsAll: []
+      FlagsAny: []
+      FlagsNone: []
+      CluesAll: []
+      Checks: []
+      AnyChecks: []
+      NpcStatuses:
+      - NpcId: NPC_NURSE
+        Status: 2
+      IsBirthday: 0
+    Priority: 0
+    TextKey: line.ep_nurse
+    Group: NPC_NURSE
+  - Id: EP_NURSE_LEG
+    Kind: 8
+    Condition:
+      WeekMin: 0
+      WeekMax: 0
+      Days: 
+      Phase: 0
+      Seasons: 
+      Month: 0
+      DayOfMonth: 0
+      ActionCategories: 
+      ActionIds: []
+      FlagsAll:
+      - PROSTHETIC_DONE
+      FlagsAny: []
+      FlagsNone: []
+      CluesAll: []
+      Checks: []
+      AnyChecks: []
+      NpcStatuses:
+      - NpcId: NPC_NURSE
+        Status: 2
+      IsBirthday: 0
+    Priority: 30
+    TextKey: line.ep_nurse_leg
+    Group: NPC_NURSE
+  - Id: EP_BYSTANDER
+    Kind: 8
+    Condition:
+      WeekMin: 0
+      WeekMax: 0
+      Days: 
+      Phase: 0
+      Seasons: 
+      Month: 0
+      DayOfMonth: 0
+      ActionCategories: 
+      ActionIds: []
+      FlagsAll: []
+      FlagsAny: []
+      FlagsNone: []
+      CluesAll: []
+      Checks: []
+      AnyChecks: []
+      NpcStatuses:
+      - NpcId: NPC_BYSTANDER
+        Status: 2
+      IsBirthday: 0
+    Priority: 0
+    TextKey: line.ep_bystander
+    Group: NPC_BYSTANDER
+  - Id: EP_BYSTANDER_FRIEND
+    Kind: 8
+    Condition:
+      WeekMin: 0
+      WeekMax: 0
+      Days: 
+      Phase: 0
+      Seasons: 
+      Month: 0
+      DayOfMonth: 0
+      ActionCategories: 
+      ActionIds: []
+      FlagsAll:
+      - BY_FAREWELL
+      FlagsAny: []
+      FlagsNone: []
+      CluesAll: []
+      Checks: []
+      AnyChecks: []
+      NpcStatuses:
+      - NpcId: NPC_BYSTANDER
+        Status: 2
+      IsBirthday: 0
+    Priority: 30
+    TextKey: line.ep_bystander_friend
+    Group: NPC_BYSTANDER
+  - Id: EP_RINGLEADER
+    Kind: 8
+    Condition:
+      WeekMin: 0
+      WeekMax: 0
+      Days: 
+      Phase: 0
+      Seasons: 
+      Month: 0
+      DayOfMonth: 0
+      ActionCategories: 
+      ActionIds: []
+      FlagsAll: []
+      FlagsAny: []
+      FlagsNone: []
+      CluesAll: []
+      Checks: []
+      AnyChecks: []
+      NpcStatuses:
+      - NpcId: NPC_RINGLEADER
+        Status: 2
+      IsBirthday: 0
+    Priority: 0
+    TextKey: line.ep_ringleader
+    Group: NPC_RINGLEADER
+  - Id: EP_RINGLEADER_AGAIN
+    Kind: 8
+    Condition:
+      WeekMin: 0
+      WeekMax: 0
+      Days: 
+      Phase: 0
+      Seasons: 
+      Month: 0
+      DayOfMonth: 0
+      ActionCategories: 
+      ActionIds: []
+      FlagsAll:
+      - HR_MEET_AGAIN
+      FlagsAny: []
+      FlagsNone: []
+      CluesAll: []
+      Checks: []
+      AnyChecks: []
+      NpcStatuses:
+      - NpcId: NPC_RINGLEADER
+        Status: 2
+      IsBirthday: 0
+    Priority: 30
+    TextKey: line.ep_ringleader_again
+    Group: NPC_RINGLEADER
+  - Id: EP_RINGLEADER_CLOSED
+    Kind: 8
+    Condition:
+      WeekMin: 0
+      WeekMax: 0
+      Days: 
+      Phase: 0
+      Seasons: 
+      Month: 0
+      DayOfMonth: 0
+      ActionCategories: 
+      ActionIds: []
+      FlagsAll:
+      - HR_CLOSED
+      FlagsAny: []
+      FlagsNone: []
+      CluesAll: []
+      Checks: []
+      AnyChecks: []
+      NpcStatuses:
+      - NpcId: NPC_RINGLEADER
+        Status: 2
+      IsBirthday: 0
+    Priority: 30
+    TextKey: line.ep_ringleader_closed
+    Group: NPC_RINGLEADER
+  - Id: EP_JUN
+    Kind: 8
+    Condition:
+      WeekMin: 0
+      WeekMax: 0
+      Days: 
+      Phase: 0
+      Seasons: 
+      Month: 0
+      DayOfMonth: 0
+      ActionCategories: 
+      ActionIds: []
+      FlagsAll:
+      - JUN_JOINS
+      FlagsAny: []
+      FlagsNone: []
+      CluesAll: []
+      Checks: []
+      AnyChecks: []
+      NpcStatuses: []
+      IsBirthday: 0
+    Priority: 0
+    TextKey: line.ep_jun
+    Group: JUN
+  - Id: M_OUTING
+    Kind: 6
+    Condition:
+      WeekMin: 0
+      WeekMax: 0
+      Days: 
+      Phase: 0
+      Seasons: 
+      Month: 0
+      DayOfMonth: 0
+      ActionCategories: 
+      ActionIds: []
+      FlagsAll: []
+      FlagsAny:
+      - OUTING_SPRING_DONE
+      - OUTING_SUMMER_DONE
+      - OUTING_AUTUMN_DONE
+      - OUTING_WINTER_DONE
+      FlagsNone: []
+      CluesAll: []
+      Checks: []
+      AnyChecks: []
+      NpcStatuses: []
+      IsBirthday: 0
+    Priority: 0
+    TextKey: line.m_outing
+    Group: 
+  - Id: M_TRIP
+    Kind: 6
+    Condition:
+      WeekMin: 0
+      WeekMax: 0
+      Days: 
+      Phase: 0
+      Seasons: 
+      Month: 0
+      DayOfMonth: 0
+      ActionCategories: 
+      ActionIds: []
+      FlagsAll:
+      - TRIP_RETURNED
+      FlagsAny: []
+      FlagsNone: []
+      CluesAll: []
+      Checks: []
+      AnyChecks: []
+      NpcStatuses: []
+      IsBirthday: 0
+    Priority: 0
+    TextKey: line.m_trip
+    Group: 
+  - Id: M_SAGEORI
+    Kind: 6
+    Condition:
+      WeekMin: 0
+      WeekMax: 0
+      Days: 
+      Phase: 0
+      Seasons: 
+      Month: 0
+      DayOfMonth: 0
+      ActionCategories: 
+      ActionIds: []
+      FlagsAll:
+      - SAGEORI_MARKED
+      FlagsAny: []
+      FlagsNone: []
+      CluesAll: []
+      Checks: []
+      AnyChecks: []
+      NpcStatuses: []
+      IsBirthday: 0
+    Priority: 0
+    TextKey: line.m_sageori
+    Group: 
+  - Id: M_RADIO
+    Kind: 6
+    Condition:
+      WeekMin: 0
+      WeekMax: 0
+      Days: 
+      Phase: 0
+      Seasons: 
+      Month: 0
+      DayOfMonth: 0
+      ActionCategories: 
+      ActionIds: []
+      FlagsAll:
+      - UBC_CALL
+      FlagsAny: []
+      FlagsNone: []
+      CluesAll: []
+      Checks: []
+      AnyChecks: []
+      NpcStatuses: []
+      IsBirthday: 0
+    Priority: 0
+    TextKey: line.m_radio
+    Group: 
+  - Id: M_NURSE
+    Kind: 6
+    Condition:
+      WeekMin: 0
+      WeekMax: 0
+      Days: 
+      Phase: 0
+      Seasons: 
+      Month: 0
+      DayOfMonth: 0
+      ActionCategories: 
+      ActionIds: []
+      FlagsAll: []
+      FlagsAny: []
+      FlagsNone: []
+      CluesAll: []
+      Checks: []
+      AnyChecks: []
+      NpcStatuses:
+      - NpcId: NPC_NURSE
+        Status: 2
+      IsBirthday: 0
+    Priority: 0
+    TextKey: line.m_nurse
+    Group: 
+  - Id: M_PROSTHETIC
+    Kind: 6
+    Condition:
+      WeekMin: 0
+      WeekMax: 0
+      Days: 
+      Phase: 0
+      Seasons: 
+      Month: 0
+      DayOfMonth: 0
+      ActionCategories: 
+      ActionIds: []
+      FlagsAll:
+      - PROSTHETIC_DONE
+      FlagsAny: []
+      FlagsNone: []
+      CluesAll: []
+      Checks: []
+      AnyChecks: []
+      NpcStatuses: []
+      IsBirthday: 0
+    Priority: 0
+    TextKey: line.m_prosthetic
+    Group: 
+  - Id: M_MART
+    Kind: 6
+    Condition:
+      WeekMin: 0
+      WeekMax: 0
+      Days: 
+      Phase: 0
+      Seasons: 
+      Month: 0
+      DayOfMonth: 0
+      ActionCategories: 
+      ActionIds: []
+      FlagsAll: []
+      FlagsAny:
+      - MART_ALLY
+      - MART_TRADE
+      FlagsNone: []
+      CluesAll: []
+      Checks: []
+      AnyChecks: []
+      NpcStatuses: []
+      IsBirthday: 0
+    Priority: 0
+    TextKey: line.m_mart
+    Group: 
+  - Id: M_MINGYU
+    Kind: 6
+    Condition:
+      WeekMin: 0
+      WeekMax: 0
+      Days: 
+      Phase: 0
+      Seasons: 
+      Month: 0
+      DayOfMonth: 0
+      ActionCategories: 
+      ActionIds: []
+      FlagsAll:
+      - UBC_RUNNER_SAVED
+      FlagsAny: []
+      FlagsNone: []
+      CluesAll: []
+      Checks: []
+      AnyChecks: []
+      NpcStatuses: []
+      IsBirthday: 0
+    Priority: 0
+    TextKey: line.m_mingyu
+    Group: 
+  - Id: M_RINGLEADER
+    Kind: 6
+    Condition:
+      WeekMin: 0
+      WeekMax: 0
+      Days: 
+      Phase: 0
+      Seasons: 
+      Month: 0
+      DayOfMonth: 0
+      ActionCategories: 
+      ActionIds: []
+      FlagsAll:
+      - BULLY_RESCUED
+      FlagsAny: []
+      FlagsNone: []
+      CluesAll: []
+      Checks: []
+      AnyChecks: []
+      NpcStatuses: []
+      IsBirthday: 0
+    Priority: 0
+    TextKey: line.m_ringleader
+    Group: 
+  - Id: M_LAST_STAND
+    Kind: 6
+    Condition:
+      WeekMin: 0
+      WeekMax: 0
+      Days: 
+      Phase: 0
+      Seasons: 
+      Month: 0
+      DayOfMonth: 0
+      ActionCategories: 
+      ActionIds: []
+      FlagsAll:
+      - A4_RAID
+      FlagsAny: []
+      FlagsNone: []
+      CluesAll: []
+      Checks: []
+      AnyChecks: []
+      NpcStatuses: []
+      IsBirthday: 0
+    Priority: 0
+    TextKey: line.m_last_stand
+    Group: 
   - Id: DIARY_DEFAULT
     Kind: 0
     Condition:
@@ -2166,6 +3088,7 @@ MonoBehaviour:
       IsBirthday: 0
     Priority: 0
     TextKey: diary.default
+    Group: 
   - Id: DIARY_W1
     Kind: 0
     Condition:
@@ -2188,6 +3111,7 @@ MonoBehaviour:
       IsBirthday: 0
     Priority: 50
     TextKey: diary.w1
+    Group: 
   - Id: DIARY_W2
     Kind: 0
     Condition:
@@ -2210,6 +3134,7 @@ MonoBehaviour:
       IsBirthday: 0
     Priority: 40
     TextKey: diary.w2
+    Group: 
   - Id: DIARY_TIRED
     Kind: 0
     Condition:
@@ -2236,6 +3161,7 @@ MonoBehaviour:
       IsBirthday: 0
     Priority: 20
     TextKey: diary.tired
+    Group: 
   - Id: DIARY_STRESS
     Kind: 0
     Condition:
@@ -2262,6 +3188,7 @@ MonoBehaviour:
       IsBirthday: 0
     Priority: 22
     TextKey: diary.stress
+    Group: 
   - Id: DIARY_HUNGRY
     Kind: 0
     Condition:
@@ -2292,6 +3219,7 @@ MonoBehaviour:
       IsBirthday: 0
     Priority: 25
     TextKey: diary.hungry
+    Group: 
   - Id: DIARY_DEBT
     Kind: 0
     Condition:
@@ -2318,6 +3246,7 @@ MonoBehaviour:
       IsBirthday: 0
     Priority: 23
     TextKey: diary.debt
+    Group: 
   - Id: DIARY_CRUTCH
     Kind: 0
     Condition:
@@ -2342,6 +3271,7 @@ MonoBehaviour:
       IsBirthday: 0
     Priority: 30
     TextKey: diary.crutch
+    Group: 
   - Id: DIARY_DOHYEON
     Kind: 0
     Condition:
@@ -2367,6 +3297,7 @@ MonoBehaviour:
       IsBirthday: 0
     Priority: 31
     TextKey: diary.dohyeon
+    Group: 
   - Id: DIARY_MESSAGES
     Kind: 0
     Condition:
@@ -2391,6 +3322,7 @@ MonoBehaviour:
       IsBirthday: 0
     Priority: 35
     TextKey: diary.messages
+    Group: 
   - Id: DIARY_RAID
     Kind: 0
     Condition:
@@ -2415,6 +3347,7 @@ MonoBehaviour:
       IsBirthday: 0
     Priority: 33
     TextKey: diary.raid
+    Group: 
   - Id: DIARY_BREACH
     Kind: 0
     Condition:
@@ -2439,6 +3372,7 @@ MonoBehaviour:
       IsBirthday: 0
     Priority: 34
     TextKey: diary.breach
+    Group: 
   - Id: DIARY_SPRING
     Kind: 0
     Condition:
@@ -2461,6 +3395,7 @@ MonoBehaviour:
       IsBirthday: 0
     Priority: 5
     TextKey: diary.spring
+    Group: 
   - Id: DIARY_EARLY_SUMMER
     Kind: 0
     Condition:
@@ -2483,6 +3418,7 @@ MonoBehaviour:
       IsBirthday: 0
     Priority: 5
     TextKey: diary.early_summer
+    Group: 
   - Id: DIARY_HOPEFUL
     Kind: 0
     Condition:
@@ -2509,6 +3445,7 @@ MonoBehaviour:
       IsBirthday: 0
     Priority: 15
     TextKey: diary.hopeful
+    Group: 
   - Id: DIARY_LONELY
     Kind: 0
     Condition:
@@ -2535,6 +3472,7 @@ MonoBehaviour:
       IsBirthday: 0
     Priority: 15
     TextKey: diary.lonely
+    Group: 
   - Id: DIARY_ACT1_END
     Kind: 0
     Condition:
@@ -2558,6 +3496,7 @@ MonoBehaviour:
       IsBirthday: 0
     Priority: 60
     TextKey: diary.act1_end
+    Group: 
   - Id: TC_IDLE
     Kind: 1
     Condition:
@@ -2580,6 +3519,7 @@ MonoBehaviour:
       IsBirthday: 0
     Priority: 0
     TextKey: tc.idle
+    Group: 
   - Id: TC_W1
     Kind: 1
     Condition:
@@ -2602,6 +3542,7 @@ MonoBehaviour:
       IsBirthday: 0
     Priority: 50
     TextKey: tc.w1
+    Group: 
   - Id: TC_HUNGRY
     Kind: 1
     Condition:
@@ -2632,6 +3573,7 @@ MonoBehaviour:
       IsBirthday: 0
     Priority: 40
     TextKey: tc.hungry
+    Group: 
   - Id: TC_DEBT
     Kind: 1
     Condition:
@@ -2658,6 +3600,7 @@ MonoBehaviour:
       IsBirthday: 0
     Priority: 45
     TextKey: tc.debt
+    Group: 
   - Id: TC_STRESS
     Kind: 1
     Condition:
@@ -2684,6 +3627,7 @@ MonoBehaviour:
       IsBirthday: 0
     Priority: 42
     TextKey: tc.stress
+    Group: 
   - Id: TC_CRUTCH_TODO
     Kind: 1
     Condition:
@@ -2708,6 +3652,7 @@ MonoBehaviour:
       IsBirthday: 0
     Priority: 30
     TextKey: tc.crutch_todo
+    Group: 
   - Id: TC_POWER_TODO
     Kind: 1
     Condition:
@@ -2732,6 +3677,7 @@ MonoBehaviour:
       IsBirthday: 0
     Priority: 31
     TextKey: tc.power_todo
+    Group: 
   - Id: TC_THREAT
     Kind: 1
     Condition:
@@ -2759,6 +3705,7 @@ MonoBehaviour:
       IsBirthday: 0
     Priority: 41
     TextKey: tc.threat
+    Group: 
   - Id: TC_DOHYEON
     Kind: 1
     Condition:
@@ -2783,6 +3730,7 @@ MonoBehaviour:
       IsBirthday: 0
     Priority: 20
     TextKey: tc.dohyeon
+    Group: 
   - Id: TC_NIGHT
     Kind: 1
     Condition:
@@ -2806,6 +3754,7 @@ MonoBehaviour:
       IsBirthday: 0
     Priority: 18
     TextKey: tc.night
+    Group: 
   - Id: TC_FINAL_WEEK
     Kind: 1
     Condition:
@@ -2828,6 +3777,7 @@ MonoBehaviour:
       IsBirthday: 0
     Priority: 46
     TextKey: tc.final_week
+    Group: 
   - Id: TC_STUDY
     Kind: 1
     Condition:
@@ -2850,6 +3800,7 @@ MonoBehaviour:
       IsBirthday: 0
     Priority: 10
     TextKey: tc.study
+    Group: 
   _prologue:
     Questions:
     - Id: PERSONALITY
