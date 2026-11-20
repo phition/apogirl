@@ -131,3 +131,7 @@ SO 에셋과 문자열 테이블은 생성물이라 직접 고치지 않는다.
 - EditMode `ContentPipelineTests`가 실제 원본(JSON + Yarn)을 검증하고, 10주 헤드리스 진행을 확인한다.
 - PlayMode `HubDialogue_RunsYarnNode_AndAppliesChoice`가 허브에서 대사 표시, 조사 처리, 선택 반영을 확인한다.
 - 콘텐츠를 바꾼 뒤 밸런스는 봇 시뮬레이터로 본다: 메뉴 `ApoGirl/Balance/Run Bot Simulation` → `Temp/BotSim/summary.md`. 새 행동·지역을 만들면 봇 전략(`Assets/_Project/Balance/bot_strategies.json`의 묶음)에도 넣는다. 자세한 내용은 [M7_PLAN.md](M7_PLAN.md).
+- 적대적 생존자: 적 정의에 `"Kind": "Survivor"`, `SeesHiddenWithin`(숨은 사람 찾는 거리), `PatrolRange`, `CanBeDowned: false`. 지역 변형 `HostileChanceMultiplier`(0이면 안 나옴)·`HostileSpots`(시작 위치 후보)는 `Editor/LocationBuilder.cs`.
+- 상자 고갈: 지역 `DepletingContainers = true`(LocationBuilder) + 헤드리스 모델 `"ContainersPerRun"`(items_loot.json 등의 ExpeditionModels).
+- 행동 효과 `"TraumaCare": n` = 폭행 트라우마 회복을 n주 앞당긴다.
+
