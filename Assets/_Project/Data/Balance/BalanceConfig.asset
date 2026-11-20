@@ -18,6 +18,7 @@ MonoBehaviour:
     InjuryHpFraction: 0.3
     InjuryHpFractionPerMedicineLevel: 0.05
     InjuryMedicineCost: 1
+    MedicineYieldMultiplier: 0.75
     FirstAidNarrativeMinLoss: 15
     FirstAidSkilledLevel: 3
     InjuredFlag: INJURED
