@@ -35,8 +35,14 @@ tags: night teacher
 title: EVT_CRISIS_FOOD_SPOIL
 tags: crisis
 ---
-식량 상자에서 시큼한 냄새가 올라왔다.
-습기 때문에 빵과 반찬 몇 개가 상하기 시작했다.
+<<if seen("EVT_CRISIS_FOOD_SPOIL") % 3 == 1>>
+    식량 상자에서 시큼한 냄새가 올라왔다.
+    습기 때문에 빵과 반찬 몇 개가 상하기 시작했다.
+<<elseif seen("EVT_CRISIS_FOOD_SPOIL") % 3 == 2>>
+    통조림 하나가 불룩하게 부풀어 있었다. 옆 상자의 라면 봉지에도 곰팡이가 번지기 시작했다.
+<<else>>
+    쌓아 둔 식량 아래쪽에서 물기가 배어 나왔다. 아래 칸 것들이 눅눅하게 변해 있었다.
+<<endif>>
 윤 선생님: 아까워도 버리는 게 맞을 수도 있어. …네가 정해.
 -> 상한 것까지 전부 버린다 #choice:THROW
     아깝다는 생각을 꾹 누르고 상자를 비웠다.

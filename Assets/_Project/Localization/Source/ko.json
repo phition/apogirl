@@ -666,7 +666,7 @@
     "event.EVT_WX_COLD_ILLNESS.medicine": "감기약을 먹고 일찍 잔다 (약품 1)",
     "event.EVT_WX_COLD_ILLNESS.endure": "버틴다 (체력 −8, 피로 +10)",
     "event.EVT_WX_RAIN_LEAK.fix": "지붕을 막는다 (자재 1, 방어도 +1)",
-    "event.EVT_WX_RAIN_LEAK.collect": "양동이로 빗물을 받는다 (물 +3, 피로 +4)",
+    "event.EVT_WX_RAIN_LEAK.collect": "양동이로 빗물을 받는다 (빗물 +5, 피로 +4)",
     "event.EVT_WX_HEAT_SPOIL.title": "더위에 상하는 음식",
     "event.EVT_WX_HEAT_SPOIL.body": "급식실 구석에서 시큼한 냄새가 난다. 사흘 내내 이어진 더위에 식량 일부가 상하기 시작했다.",
     "event.EVT_WX_COLD_ILLNESS.title": "한파의 밤",

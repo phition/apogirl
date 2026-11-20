@@ -535,8 +535,8 @@
           "Effect": {
             "Resources": [
               {
-                "Resource": "Water",
-                "Amount": 3
+                "Resource": "RawWater",
+                "Amount": 5
               }
             ],
             "Vitals": [

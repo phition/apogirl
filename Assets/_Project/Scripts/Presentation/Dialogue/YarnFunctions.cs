@@ -105,6 +105,11 @@ namespace ApoGirl.Presentation.Dialogue
         [YarnFunction("week")]
         public static int Week() => State?.Calendar.Week ?? 1;
 
+        /// <summary>이 이벤트를 몇 번째 보는가 (지금 보는 것 포함). 반복되는 무작위 이벤트의 문장 변형에 쓴다.</summary>
+        [YarnFunction("seen")]
+        public static int Seen(string eventId) =>
+            State != null && State.Events.Records.TryGetValue(eventId, out var record) ? record.Count : 0;
+
         /// <summary>방금 고른 선택지의 판정이 실패가 아니었는지.</summary>
         [YarnFunction("succeeded")]
         public static bool Succeeded() => EventDialoguePlayer.LastChoiceResult == null || EventDialoguePlayer.LastChoiceResult.Result != CheckResult.Failure;

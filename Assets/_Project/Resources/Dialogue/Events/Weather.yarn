@@ -1,0 +1,48 @@
+title: EVT_WX_HEAT_SPOIL
+tags: weather crisis
+---
+<<if seen("EVT_WX_HEAT_SPOIL") % 2 == 1>>
+    한낮의 열기가 창고 안까지 들어찼다. 식량 상자에서 쉰내가 올라왔다.
+<<else>>
+    더위가 며칠째 이어졌다. 반찬 통 뚜껑을 열자마자 다시 닫았다.
+<<endif>>
+-> 소금에 절여 살려 본다 #choice:SALT
+    <<if succeeded()>>
+        소금을 아끼지 않았다. 짜긴 해도 며칠은 더 먹을 수 있다.
+    <<else>>
+        절이는 사이에도 상하는 게 더 빨랐다. 조금만 건졌다.
+    <<endif>>
+-> 상한 것을 버린다 #choice:THROW
+    아깝지만, 이 더위에 배탈이 나면 더 큰일이다.
+===
+
+title: EVT_WX_COLD_ILLNESS
+tags: weather crisis
+---
+<<if seen("EVT_WX_COLD_ILLNESS") % 2 == 1>>
+    밤새 오한이 났다. 담요를 두 겹 덮어도 이가 딱딱 부딪쳤다.
+<<else>>
+    목이 따끔거리더니 몸이 무거워졌다. 한파가 몸속까지 들어온 것 같았다.
+<<endif>>
+윤 선생님: 열 나는구나. 오늘은 무리하지 마.
+-> 약을 먹고 쉰다 #choice:MEDICINE
+    약을 삼키고 담요 속에서 땀을 흘렸다. 새벽녘에 열이 내렸다.
+-> 약을 아끼고 버틴다 #choice:ENDURE
+    약은 더 아플 때를 위해 남겨 두었다. 긴 밤이었다.
+===
+
+title: EVT_WX_RAIN_LEAK
+tags: weather crisis
+---
+<<if seen("EVT_WX_RAIN_LEAK") % 3 == 1>>
+    밤새 내린 비에 교실 천장에서 물이 샜다. 매트리스 한쪽이 젖었다.
+<<elseif seen("EVT_WX_RAIN_LEAK") % 3 == 2>>
+    빗줄기가 굵어지자 창틀 아래로 물이 스며들었다. 바닥에 걸레를 깔았다.
+<<else>>
+    천장 모서리에서 물방울이 떨어지는 소리에 잠이 깼다. 똑, 똑, 똑.
+<<endif>>
+-> 지붕을 막는다 #choice:FIX
+    자재를 덧대 새는 곳을 막았다. 이번 장마는 버틸 것 같다.
+-> 양동이로 빗물을 받는다 #choice:COLLECT
+    양동이가 금방 찼다. 정수하면 마실 수 있다.
+===

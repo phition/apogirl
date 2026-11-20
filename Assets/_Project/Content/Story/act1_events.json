@@ -209,7 +209,7 @@
       "Choices": [
         { "Id": "PATCH", "HasCheck": true, "Check": { "BaseRate": 0.5, "StatWeights": [ { "Stat": "Craft", "Weight": 0.006 } ] },
           "Effect": { "Stats": [ { "Stat": "Craft", "Amount": 1 } ] }, "OnFailure": { "Resources": [ { "Resource": "Materials", "Amount": -1 } ], "Vitals": [ { "Vital": "Fatigue", "Amount": 5 } ] } },
-        { "Id": "BUCKETS", "Effect": { "Resources": [ { "Resource": "Water", "Amount": 2 } ], "Vitals": [ { "Vital": "Fatigue", "Amount": 3 } ] } }
+        { "Id": "BUCKETS", "Effect": { "Resources": [ { "Resource": "RawWater", "Amount": 4 } ], "Vitals": [ { "Vital": "Fatigue", "Amount": 3 } ] } }
       ] },
     { "Id": "EVT_RND_NIGHTMARE", "Kind": "Crisis", "Once": false, "CooldownWeeks": 3, "Weight": 1.5,
       "Condition": { "Phase": "Night", "Checks": [ { "Kind": "Vital", "Key": "Stress", "Op": "GreaterOrEqual", "Value": 50 } ] },
@@ -228,7 +228,7 @@
         { "Id": "BOIL", "Costs": [ { "Resource": "Fuel", "Amount": 1 } ], "Effect": { "Vitals": [ { "Vital": "Fatigue", "Amount": 3 } ] } },
         { "Id": "DUMP", "Effect": { "Resources": [ { "Resource": "Water", "Amount": -3 } ] } }
       ] },
-    { "Id": "EVT_RND_QUIET_MORNING", "Kind": "Random", "Once": false, "CooldownWeeks": 3, "Weight": 1.2, "Condition": { "Phase": "Day" },
+    { "Id": "EVT_RND_QUIET_MORNING", "Kind": "Random", "Once": false, "CooldownWeeks": 5, "Weight": 1.2, "Condition": { "Phase": "Day" },
       "OnShow": { "Vitals": [ { "Vital": "Stress", "Amount": -4 } ], "Hidden": [ { "Hidden": "Hope", "Amount": 1 } ] } },
     { "Id": "EVT_RND_TEACHER_PAIN", "Kind": "Random", "Once": false, "CooldownWeeks": 4, "Weight": 1, "Condition": { "WeekMin": 2, "Phase": "Night" },
       "Choices": [
