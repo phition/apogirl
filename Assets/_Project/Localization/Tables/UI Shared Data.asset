@@ -3199,6 +3199,50 @@ MonoBehaviour:
     m_Key: dish.DISH_SET_MEAL
     m_Metadata:
       m_Items: []
+  - m_Id: 427324008054784
+    m_Key: band.SATED
+    m_Metadata:
+      m_Items: []
+  - m_Id: 427324083552256
+    m_Key: band.FULL
+    m_Metadata:
+      m_Items: []
+  - m_Id: 427324083552257
+    m_Key: band.NORMAL
+    m_Metadata:
+      m_Items: []
+  - m_Id: 427324083552258
+    m_Key: band.HUNGRY
+    m_Metadata:
+      m_Items: []
+  - m_Id: 427324083552259
+    m_Key: band.STARVING
+    m_Metadata:
+      m_Items: []
+  - m_Id: 427324083552260
+    m_Key: band.PLENTY
+    m_Metadata:
+      m_Items: []
+  - m_Id: 427324083552261
+    m_Key: band.GOOD
+    m_Metadata:
+      m_Items: []
+  - m_Id: 427324083552262
+    m_Key: band.THIRSTY
+    m_Metadata:
+      m_Items: []
+  - m_Id: 427324083552263
+    m_Key: band.DEHYDRATED
+    m_Metadata:
+      m_Items: []
+  - m_Id: 427324083552264
+    m_Key: vital.Satiety
+    m_Metadata:
+      m_Items: []
+  - m_Id: 427324083552265
+    m_Key: vital.Hydration
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

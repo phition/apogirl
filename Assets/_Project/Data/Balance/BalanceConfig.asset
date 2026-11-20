@@ -128,36 +128,87 @@ MonoBehaviour:
     DailyFood: 2
     DailyWater: 2
     WeeklyPower: 3
-    HungerRecovery: 20
-    HungerIncrease: 20
-    ThirstRecovery: 25
-    ThirstIncrease: 40
-    StarvationThreshold: 60
+    SatietyDailyDrain: 25
+    HydrationDailyDrain: 30
+    MealSatiety: 45
+    DrinkHydration: 55
+    StarvationThreshold: -60
     CookingDishes:
     - Id: DISH_PORRIDGE
       MinCookingLevel: 0
       FoodCost: 1
       WaterCost: 1
-      Hunger: 15
-      Thirst: 10
+      Satiety: 20
+      Hydration: 15
       Stress: 0
+      Stats: []
     - Id: DISH_SOUP
       MinCookingLevel: 2
       FoodCost: 2
       WaterCost: 2
-      Hunger: 25
-      Thirst: 25
+      Satiety: 35
+      Hydration: 40
       Stress: 2
+      Stats:
+      - Stat: 0
+        Amount: 1
     - Id: DISH_SET_MEAL
       MinCookingLevel: 4
       FoodCost: 2
       WaterCost: 1
-      Hunger: 35
-      Thirst: 20
+      Satiety: 50
+      Hydration: 30
       Stress: 5
+      Stats:
+      - Stat: 0
+        Amount: 1
+      - Stat: 5
+        Amount: 1
     StarvationHpLoss: 5
-    DehydrationThreshold: 60
+    DehydrationThreshold: -60
     DehydrationHpLoss: 10
+    SatietyBands:
+    - Min: 50
+      Key: SATED
+      Hp: 2
+      Stress: -2
+    - Min: 1
+      Key: FULL
+      Hp: 1
+      Stress: -1
+    - Min: -29
+      Key: NORMAL
+      Hp: 0
+      Stress: 0
+    - Min: -59
+      Key: HUNGRY
+      Hp: 0
+      Stress: 3
+    - Min: -100
+      Key: STARVING
+      Hp: -5
+      Stress: 5
+    HydrationBands:
+    - Min: 50
+      Key: PLENTY
+      Hp: 1
+      Stress: -1
+    - Min: 1
+      Key: GOOD
+      Hp: 1
+      Stress: 0
+    - Min: -29
+      Key: NORMAL
+      Hp: 0
+      Stress: 0
+    - Min: -59
+      Key: THIRSTY
+      Hp: 0
+      Stress: 3
+    - Min: -100
+      Key: DEHYDRATED
+      Hp: -10
+      Stress: 5
     DefaultDifficulty: STANDARD
     Difficulties:
     - Id: STORY
