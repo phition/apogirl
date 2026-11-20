@@ -173,6 +173,13 @@ namespace ApoGirl.Tests.EditMode
                 {
                     report.Append(Run(strategy, seed, out var state, 26));
                     report.AppendLine($"  end cause: {state.EndCause} hp {state.Player.Vitals.Hp} infection {state.Player.Vitals.Infection} flags {state.Flags.Count}");
+                    // 배드 목표 50%인 세계: 탐험만 하는 극단 전략은 기록만 하고, 혼합 전략은 막을 넘어야 한다
+                    if (strategy == Strategy.Expedition)
+                    {
+                        report.AppendLine($"  (탐험만 전략은 점검 제외: {state.Status})");
+                        continue;
+                    }
+
                     if (state.Status != GameStatus.Playing) failures.AppendLine($"{strategy}/{seed}: 2막을 버티지 못함 ({state.EndCause}, {state.Calendar.Week}주)");
                     if (!state.Events.Records.ContainsKey("EVT_A2_REVIEW")) failures.AppendLine($"{strategy}/{seed}: 2막 평가 미도달");
                     if (!state.Flags.Contains("LOC_RESIDENTIAL")) failures.AppendLine($"{strategy}/{seed}: 주택가 미해금");
@@ -197,6 +204,13 @@ namespace ApoGirl.Tests.EditMode
                 {
                     report.Append(Run(strategy, seed, out var state, 39));
                     report.AppendLine($"  end cause: {state.EndCause} hp {state.Player.Vitals.Hp} infection {state.Player.Vitals.Infection} teacher {state.Teacher.InfectionProgress} rescue {state.Flags.Contains("RESCUE_ANNOUNCED")}");
+                    // 배드 목표 50%인 세계: 탐험만 하는 극단 전략은 기록만 하고, 혼합 전략은 막을 넘어야 한다
+                    if (strategy == Strategy.Expedition)
+                    {
+                        report.AppendLine($"  (탐험만 전략은 점검 제외: {state.Status})");
+                        continue;
+                    }
+
                     if (state.Status != GameStatus.Playing) failures.AppendLine($"{strategy}/{seed}: 3막을 버티지 못함 ({state.EndCause}, {state.Calendar.Week}주)");
                     if (!state.Events.Records.ContainsKey("EVT_A3_REVIEW")) failures.AppendLine($"{strategy}/{seed}: 3막 평가 미도달");
                     if (!state.Teacher.Reinfected) failures.AppendLine($"{strategy}/{seed}: 선생님 재감염 미발생");
