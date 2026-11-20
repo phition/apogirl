@@ -15,7 +15,8 @@
 6. 응답은 한국어. 코드 식별자는 영어, 주석은 한국어.
 
 ## Git
-- 로컬 커밋만 한다. **사용자가 요청하기 전까지 push 하지 않는다.**
+- 원격 저장소: **https://github.com/phition/apogirl** (`origin`, 2026-11-20부터). 예전 저장소는 `old-origin`(apogirl-2026-11-18_15-16-26)으로 남겨 두고 더 쓰지 않는다.
+- 작업 하나를 마치고 테스트를 통과하면 `main`을 `origin`에 푸시한다. 강제 푸시는 하지 않는다.
 
 ## 현재 단계
 - M0~M5 완료. M6(전체 콘텐츠)은 M6-5(아트·사운드: 사용자가 `ArtInbox/`에 넣으면 연결, 프롬프트는 [Docs/HIGGSFIELD_ASSETS.md](Docs/HIGGSFIELD_ASSETS.md))만 남음. **M7(밸런싱 & 봇 테스트) 진행 중: M7-0(수혈·헤드리스 조우)·M7-1(봇 시뮬레이터) 완료, M7-2 수치 조정(1막 대사 보강·엔딩 기준 재조정 남음), M7-3 난이도 완료.** 봇 배드 목표 45~55% (부상 도입 뒤), 난이도별 식량·식수·의약품 수확 배율(`DifficultyDef`), 엔딩 목표 기본·특화 15~25·관계·서사 6~12·히든 1~3%. M7-2 수치 조정은 1막 대사 보강만 남음. 난이도는 `BalanceConfig.Difficulties`, 새 게임에서 선택. 밸런스 수치 원본은 `Core/Definitions/BalanceConfig.cs`, 에셋은 가져오기 때 동기화(메뉴 `ApoGirl/Balance/Sync Balance Asset`). 봇 시뮬레이터: 메뉴 `ApoGirl/Balance/Run Bot Simulation` → `Temp/BotSim/summary.md`·CSV, 전략은 `Assets/_Project/Balance/bot_strategies.json`. 계획·결정: [Docs/M7_PLAN.md](Docs/M7_PLAN.md). 52주 전체 헤드리스 점검은 EditMode `FullYear_MixedStrategy_ReachesRescueEnding` → `Temp/ApoGirlYearBalance.txt`. 막별 대본은 `Resources/Dialogue/Act{n}/`, 데이터는 `Content/Story/act{n}_events.json`·`Content/Base/act{n}_world.json`. 막별 헤드리스 점검은 EditMode `Act{n}_…` → `Temp/ApoGirlAct{n}Balance.txt`. 계획·결정: [Docs/M6_PLAN.md](Docs/M6_PLAN.md) (이전: M4_PLAN, M5_PLAN). 그림 프롬프트: [Docs/ART_PROMPTS.md](Docs/ART_PROMPTS.md), 사용자가 만든 그림은 `ArtInbox/`.
