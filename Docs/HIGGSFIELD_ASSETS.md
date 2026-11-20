@@ -629,6 +629,9 @@ ART_PROMPTS 6장의 21장에 하나를 더한다.
 - **바깥 길**: 학교 밖 지역은 진입로(거리)에서 시작하고, 건물 반대쪽 출구는 탈출로(골목)로 이어진다. 두 길 모두 학교로 돌아가는 지점이 있다 (`BuildingView.BuildOutdoor`, `BalanceConfig.ApproachRoadWidth`·`EscapeRouteWidth`).
 - **무너진 계단**: `ConnectorDef.Collapsed` (`LocationBuilder.Stairs(…, collapsedFrom)`). 학교 오른쪽 계단 2~3층, 정수장 왼쪽 계단 2~3층.
 - **지금 층만 보이기**: 위·아래층은 가린다. **빛줄기**는 층마다 1~2곳(`SunbeamsPerFloorMin/Max`), 해의 위치에 따라 기울기와 바닥 빛 자리가 움직인다.
+- **방은 얕은 1점 투시** (2026-11-21): 뒷벽(문·복도 쪽 창) 아래에 바닥 띠, 위에 천장 띠, 좌우에 원근으로 줄어드는 옆벽. 방 안쪽 벽 그림 `wall_X`에 맞는 `wall_side_X_l`·`wall_side_X_r`(입구 쪽·반대쪽, 벽걸이 장식 포함)와 `wall_floor_X`가 모두 있으면 투시로, 없으면 예전 평면으로 그린다 (`BuildingView.PerspectiveKind`). 교실은 입구 쪽 칠판, 반대쪽 학급 게시판. 그림은 `tools/make_room_persp.py`가 방 종류 18가지를 만든다 (옆벽 폭 72px·바닥 16px·천장 12px = `SideWallWidth`·`BackFloorRise`·`BackCeilingDrop`).
+- **좀비 반응**: `zombie_{종류}_hit_{0..7}`(맞음)·`_pushed_{0..7}`(밀림)·`_sleep_{0..15}`(선 채로 잠듦), 생존자 `survivor_hit_`·`survivor_pushed_`. 반응은 `ExpeditionDirector.React` → `ReactAnimSeconds` 동안 보이고 기절 동작으로 이어진다.
+- **계단실**: 가까이 붙은 계단을 한 칸으로 묶어 복도 벽이 뚫린 어두운 공간 안에 둔다. 건물·길 아래 땅속 단면은 그리지 않는다.
 - 만드는 도구는 저장소 밖 `I:/workshop/code_temp/apogirl/tools/` (gen_env·gen_player·gen_attack·gen_chars → install_env·install_player·install_chars → make_special·bag_colors·make_anchors·fix_idle·make_art_map). API 키는 저장소에 두지 않는다.
 - 화면 확인용: `ExpeditionDebug.Start(행동, 슬롯, 무기, 옷, 가방, 도구)`, `.Room(템플릿 글자)`, `ExpeditionDirector.DebugGoTo(층 또는 -1 진입로/-2 탈출로, x)`.
 
