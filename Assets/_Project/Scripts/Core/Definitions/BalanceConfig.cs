@@ -209,7 +209,7 @@ namespace ApoGirl.Core.Definitions
         public float[] HostileChanceByAct = { 0.10f, 0.15f, 0.20f, 0.25f };
 
         /// <summary>노출도 1당 생존자 등장 확률 추가 (낮에 자주 나가면 다른 생존자 눈에 띈다). 노출도는 낮 탐험마다 +1, 매주 절반으로.</summary>
-        public float HostileChancePerExposure = 0.05f;
+        public float HostileChancePerExposure = 0.10f;
 
         /// <summary>막별 성향 가중치 (위협, 강탈, 강탈+구타) × 4막. 막이 갈수록 거칠어진다.</summary>
         public int[] HostileWeightsByAct = { 55, 35, 10, 45, 40, 15, 32, 45, 23, 20, 50, 30 };
@@ -314,7 +314,7 @@ namespace ApoGirl.Core.Definitions
 
         // ── M6 주인공 감염 (문서 3.1.1): 쓰러지면 물릴 수 있다. 응급 처치 성공 시 감염이 휴면 ──
         public float BiteChanceOnDownDay = 0.25f;
-        public float BiteChanceOnDownNight = 0.35f; // M7-2: 0.5 → 0.35 (밤만 전략 감염 사망 과다)
+        public float BiteChanceOnDownNight = 0.3f; // M7-2: 0.5 → 0.3 (밤만 전략 감염 사망 과다)
         public int BiteInfection = 30;
         public int BiteInfectionTreated = 8;
         public float FirstAidBaseChance = 0.15f;
