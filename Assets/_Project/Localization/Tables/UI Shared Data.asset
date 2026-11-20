@@ -3895,6 +3895,50 @@ MonoBehaviour:
     m_Key: exp.area_escape
     m_Metadata:
       m_Items: []
+  - m_Id: 657464403181568
+    m_Key: hud.record
+    m_Metadata:
+      m_Items: []
+  - m_Id: 657465472729088
+    m_Key: hud.base
+    m_Metadata:
+      m_Items: []
+  - m_Id: 657465472729089
+    m_Key: hud.plan
+    m_Metadata:
+      m_Items: []
+  - m_Id: 657465472729090
+    m_Key: hud.plan_running
+    m_Metadata:
+      m_Items: []
+  - m_Id: 657465472729091
+    m_Key: hud.close
+    m_Metadata:
+      m_Items: []
+  - m_Id: 657465472729092
+    m_Key: hud.record_title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 657465472729093
+    m_Key: hud.base_title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 657465472729094
+    m_Key: hud.board_title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 657465472729095
+    m_Key: hud.board_hint
+    m_Metadata:
+      m_Items: []
+  - m_Id: 657465472729096
+    m_Key: hud.ticker
+    m_Metadata:
+      m_Items: []
+  - m_Id: 657465472729097
+    m_Key: hud.dock_day
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
