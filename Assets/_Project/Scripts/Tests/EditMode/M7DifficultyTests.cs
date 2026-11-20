@@ -83,7 +83,7 @@ namespace ApoGirl.Tests.EditMode
             runner.ExecuteNextSlot();
             runner.ExecuteNextSlot();
             runner.ExecuteNextSlot();
-            Assert.AreEqual(18, state.Base.GetResource(ResourceType.Food), "20 × 0.9");
+            Assert.That(state.Base.GetResource(ResourceType.Food), Is.InRange(16, 17), "20 × 0.9(전체) × 0.9(식량) = 16.2 → 확률 반올림");
         }
 
         private static GameSession Session(string directory, string difficulty, out InMemoryDefinitionDatabase db)

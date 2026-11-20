@@ -617,14 +617,18 @@ namespace ApoGirl.Core.Simulation
                 player.ReducedNextRest = true;
             }
 
-            var yieldMultiplier = DifficultyRules.Get(_state, Balance).Yield;
+            var difficulty = DifficultyRules.Get(_state, Balance);
             foreach (var loot in result.ResourceLoot)
             {
-                var amount = DifficultyRules.Scale(loot.Amount, yieldMultiplier);
-                if (loot.Resource == ResourceType.Medicine && Math.Abs(Balance.MedicineYieldMultiplier - 1f) > 0.0001f)
+                var amount = DifficultyRules.Scale(loot.Amount, difficulty.Yield);
+                var perResource = loot.Resource == ResourceType.Food ? difficulty.FoodYield
+                    : loot.Resource == ResourceType.Water ? difficulty.WaterYield
+                    : loot.Resource == ResourceType.Medicine ? difficulty.MedicineYield
+                    : 1f;
+                if (Math.Abs(perResource - 1f) > 0.0001f)
                 {
-                    // 의약품은 적게 나와서 반올림으로는 줄지 않는다: 소수 부분은 확률로 (1.4 → 1, 40%로 2)
-                    var scaled = amount * Math.Max(0f, Balance.MedicineYieldMultiplier);
+                    // 난이도별 식량·물·의약품 배율: 적게 나오는 자원은 반올림으로는 안 바뀌므로 소수 부분은 확률로 (1.4 → 1, 40%로 2)
+                    var scaled = amount * Math.Max(0f, perResource);
                     amount = (int)Math.Floor(scaled) + (_random.NextDouble() < scaled - Math.Floor(scaled) ? 1 : 0);
                 }
 

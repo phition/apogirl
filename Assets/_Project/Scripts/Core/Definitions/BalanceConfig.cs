@@ -68,9 +68,6 @@ namespace ApoGirl.Core.Definitions
         /// <summary>부상을 의약품으로 치유할 때 쓰는 양: 밤 휴식(있으면 반드시)·응급처치 수업 성공 때.</summary>
         public int InjuryMedicineCost = 1;
 
-        /// <summary>탐험에서 얻는 의약품 배율 (헤드리스·실시간 공통, 소수는 확률 반올림). 배드 목표 50%에 맞춘 값.</summary>
-        public float MedicineYieldMultiplier = 0.75f;
-
         /// <summary>응급처치 숙련이 있고 탐험에서 이만큼 이상 잃었지만 부상까지 가지 않았으면 '응급 치료로 마무리' 서술.</summary>
         public int FirstAidNarrativeMinLoss = 15;
 
@@ -302,11 +299,17 @@ namespace ApoGirl.Core.Definitions
             new DifficultyDef
             {
                 Id = "STORY", Consumption = 0.75f, Harm = 0.6f, HumanThreat = 0.7f, Infection = 0.6f, Yield = 1f,
+                FoodYield = 1.2f, WaterYield = 1.2f, MedicineYield = 1f,
                 WeeklyUndo = true, Dispatch = true, DispatchYield = 0.7f,
             },
-            new DifficultyDef { Id = "STANDARD" },
+            // 표준: 배드 목표 45~55%에 맞춰 의약품 ×0.75 (2026-11-20)
+            new DifficultyDef { Id = "STANDARD", MedicineYield = 0.75f },
             // 하드: 가혹해진 세계에 맞춰 소모는 표준과 같게 (2026-11-20 결정, M7-d의 ×1.25에서 수정)
-            new DifficultyDef { Id = "HARD", Consumption = 1f, Harm = 1.4f, HumanThreat = 1.3f, Infection = 1.3f, Yield = 0.9f },
+            new DifficultyDef
+            {
+                Id = "HARD", Consumption = 1f, Harm = 1.4f, HumanThreat = 1.3f, Infection = 1.3f, Yield = 0.9f,
+                FoodYield = 0.9f, WaterYield = 0.9f, MedicineYield = 0.6f,
+            },
         };
 
         // ── 적대적 생존자 (낮 탐험, M7 추가 요청) ──

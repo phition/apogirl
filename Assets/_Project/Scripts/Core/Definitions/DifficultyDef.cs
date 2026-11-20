@@ -22,8 +22,13 @@ namespace ApoGirl.Core.Definitions
         /// <summary>감염 진행 배율 (주인공·선생님의 주간 진행).</summary>
         public float Infection = 1f;
 
-        /// <summary>탐험 자원 수확 배율.</summary>
+        /// <summary>탐험 자원 수확 배율 (모든 자원).</summary>
         public float Yield = 1f;
+
+        /// <summary>자원별 탐험 수확 배율 (Yield에 곱한다, 소수는 확률 반올림). 난이도의 생존 압박을 맞추는 손잡이.</summary>
+        public float FoodYield = 1f;
+        public float WaterYield = 1f;
+        public float MedicineYield = 1f;
 
         /// <summary>주간 되돌리기 (매주 1회, 같은 주는 한 번).</summary>
         public bool WeeklyUndo;
