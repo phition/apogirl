@@ -208,8 +208,13 @@ namespace ApoGirl.Core.Definitions
         /// <summary>낮 탐험 1회 등장 확률: 1막(1~13주) / 2막 / 3막 / 4막. 지역 변형의 HostileChanceMultiplier를 곱한다.</summary>
         public float[] HostileChanceByAct = { 0.10f, 0.15f, 0.20f, 0.25f };
 
-        /// <summary>노출도 1당 생존자 등장 확률 추가 (낮에 자주 나가면 다른 생존자 눈에 띈다). 노출도는 낮 탐험마다 +1, 매주 절반으로.</summary>
-        public float HostileChancePerExposure = 0.10f;
+        /// <summary>노출도 1당 생존자 등장 확률 추가 (낮에 자주 나가면 다른 생존자 눈에 띈다). 노출도는 낮 탐험마다 +1, 매주 −ExposureDecayPerWeek, 최대 MaxExposure.</summary>
+        public float HostileChancePerExposure = 0.06f;
+        public int ExposureDecayPerWeek = 1;
+        public int MaxExposure = 6;
+
+        /// <summary>노출도 1당 낮 침입 주 확률 추가 ("뒤를 밟혔다", 낮 침입이 시작된 뒤에만).</summary>
+        public float IntrusionChancePerExposure = 0.02f;
 
         /// <summary>막별 성향 가중치 (위협, 강탈, 강탈+구타) × 4막. 막이 갈수록 거칠어진다.</summary>
         public int[] HostileWeightsByAct = { 55, 35, 10, 45, 40, 15, 32, 45, 23, 20, 50, 30 };

@@ -491,7 +491,7 @@ namespace ApoGirl.Core.Simulation
             InfectionRules.WeeklyTeacher(_state, _db);
             AssaultTraumaRules.Care(_state, 1, Balance);
             IntrusionRules.HealWeekly(_state);
-            _state.Exploration.DayExposure /= 2;
+            _state.Exploration.DayExposure = Math.Max(0, _state.Exploration.DayExposure - Balance.ExposureDecayPerWeek);
             RecordWeek(calendar.Week);
             var diary = LineRules.Pick(_state, _db, LineKind.Diary, new EventContext { Phase = DayPhase.Night, Day = CalendarState.DaysPerWeek });
             foreach (var outcome in _outcomes)
@@ -561,7 +561,7 @@ namespace ApoGirl.Core.Simulation
                 // 생존자가 다니는 곳에 낮에 나가면 눈에 띈다 (교실동·튜토리얼 제외)
                 if (!_db.TryGetLocation(action.LocationId, out var visited) || visited.DayVariant.HostileChanceMultiplier > 0f)
                 {
-                    _state.Exploration.DayExposure++;
+                    _state.Exploration.DayExposure = Math.Min(Balance.MaxExposure, _state.Exploration.DayExposure + 1);
                 }
             }
 

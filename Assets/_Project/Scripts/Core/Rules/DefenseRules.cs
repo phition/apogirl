@@ -91,6 +91,9 @@ namespace ApoGirl.Core.Rules
                 return false;
             }
 
+            // 낮에 자주 나가 눈에 띄었으면 뒤를 밟혀 더 자주 온다
+            weekly += state.Exploration.DayExposure * balance.IntrusionChancePerExposure;
+
             if (weekly >= 1f)
             {
                 return true; // 시험용: 매일
