@@ -217,6 +217,7 @@ namespace ApoGirl.Tests.EditMode
         [Test]
         public void ExpeditionLoot_IsAddedToBase()
         {
+            _db.Balance.MedicineYieldMultiplier = 1f; // 수확 반영 자체만 본다 (의약품 배율은 따로)
             _expedition.Handler = _ => new ExpeditionResult
             {
                 Status = ExtractStatus.Extracted,
