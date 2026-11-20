@@ -30,6 +30,40 @@ MonoBehaviour:
     ConscienceMax: 10
     SleepDebtMax: 5
     ProficiencyMaxLevel: 5
+    NpcAffinityMax: 100
+    NpcAffinityMin: -100
+    StartMonth: 3
+    StartDayOfMonth: 16
+    RandomEventsPerDay: 1
+    RandomEventsPerWeek: 3
+    RandomEventChance: 0.3
+    TutorialActionId: ACT_EXP_TUTORIAL
+    OpeningEventId: EVT_A1_OPENING
+    NgPlusOpeningEventId: EVT_NG_STORAGE_7DAYS
+    RaidStartWeek: 4
+    RaidBaseChance: 0.01
+    RaidChancePerPoint: 0.0015
+    RaidMaxChance: 0.15
+    RaidStrengthVariance: 20
+    RaidPowerVariance: 20
+    RaidDefenseWeight: 1.2
+    RaidBasePower: 20
+    RaidRepelStress: 6
+    RaidRepelDefenseLoss: 1
+    RaidBreachStress: 18
+    RaidBreachHp: 10
+    RaidBreachFood: 3
+    RaidBreachDefenseLoss: 3
+    RaidThreatRelief: 20
+    ThreatPerDayExpedition: 2
+    ThreatPerNightExpedition: 2
+    ThreatWeekly: 1
+    ThreatMax: 100
+    DefenseMax: 60
+    PocketWidth: 3
+    PocketHeight: 2
+    DownLosesEquipment: 1
+    PhoneLightMultiplier: 0.55
     GrowthBands:
     - FromValue: 0
       Multiplier: 1
@@ -91,6 +125,53 @@ MonoBehaviour:
     StarvationHpLoss: 5
     DehydrationThreshold: 60
     DehydrationHpLoss: 10
+    WinterFoodMultiplier: 1.3
+    WinterWeeklyFuel: 2
+    NoHeatStress: 6
+    FoodSpoilageThreshold: 60
+    FoodSpoilageRate: 0.2
+    BiteChanceOnDownDay: 0.25
+    BiteChanceOnDownNight: 0.35
+    BiteInfection: 30
+    BiteInfectionTreated: 8
+    FirstAidBaseChance: 0.15
+    FirstAidPerMedicineLevel: 0.1
+    InfectionWeeklyGrowth: 5
+    InfectionGrowthReducePerMedicineLevel: 1
+    InfectionGrowthMin: 2
+    TeacherInfectionWeekly: 6
+    TeacherInfectionReducePerMedicineLevel: 1
+    TeacherInfectionMinWeekly: 2
+    TeacherInfectionColdBonus: 2
+    TeacherStageSize: 25
+    MentorDecayPerStage: 0.2
+    WeatherBySeason:
+    - Season: 0
+      Clear: 6
+      Rain: 3
+      Heat: 0
+      Cold: 1
+    - Season: 1
+      Clear: 5
+      Rain: 4
+      Heat: 2
+      Cold: 0
+    - Season: 2
+      Clear: 6
+      Rain: 3
+      Heat: 0
+      Cold: 1
+    - Season: 3
+      Clear: 4
+      Rain: 1
+      Heat: 0
+      Cold: 5
+    RainNoiseBonus: -0.25
+    RainRaidMultiplier: 0.6
+    HeatExtraWater: 1
+    ColdDailyStress: 2
+    CollapseStress: 100
+    CollapseWeeks: 3
     DayRestActionId: ACT_REST_DAY
     NightRestActionId: ACT_REST_NIGHT
     ReducedRestMultiplier: 0.5
@@ -103,3 +184,84 @@ MonoBehaviour:
     StressThresholdPerWillpower: 0.3
     StressThresholdPerMindLevel: 5
     StressThresholdCap: 90
+    WalkSpeed: 2.2
+    RunSpeed: 4
+    CrouchSpeed: 1.2
+    BaseCarryWeight: 8
+    CarryWeightPerStrength: 0.1
+    OverweightSpeedMultiplier: 0.6
+    SearchSpeedPerCraft: 0.003
+    MaxSearchSpeedBonus: 0.3
+    BackpackWidth: 6
+    BackpackHeight: 4
+    StrandedFatigue: 10
+    StrandedStress: 10
+    CrouchNoise: 0.8
+    WalkNoise: 4
+    RunNoise: 11
+    DoorNoise: 5.5
+    StairsNoise: 4.5
+    SearchNoise: 3.5
+    DropNoise: 3
+    ShoveNoise: 7
+    OverweightNoiseMultiplier: 1.5
+    StirThreshold: 100
+    StirDecayPerSecond: 3
+    StirPerNoiseUnit: 14
+    PresenceStirPerSecond: 7
+    PresenceRange: 4
+    ChainWakeRadius: 12
+    SearchDuration: 6
+    PatrolRange: 4
+    AwarenessDecayPerSecond: 0.5
+    CrouchSightMultiplier: 0.6
+    HideBlockDistance: 4
+    ShoveRange: 1.3
+    ShoveStunSeconds: 2.5
+    ShovePush: 1.5
+    ShoveCooldown: 1.5
+    DownRemainingHp: 15
+    ActivitySight:
+    - 0.7
+    - 0.85
+    - 1
+    - 1.1
+    - 1.3
+    - 1
+    ActivityHearing:
+    - 0.7
+    - 0.9
+    - 1.1
+    - 1.2
+    - 1.4
+    - 1
+    ActivitySpeed:
+    - 0.8
+    - 0.9
+    - 1
+    - 1.1
+    - 1.25
+    - 1
+    ActivityStir:
+    - 0.8
+    - 1.2
+    - 2
+    - 2
+    - 2
+    - 1
+    AwakenedSight: 1.3
+    AwakenedHearing: 1.4
+    AwakenedSpeed: 1.25
+    NightAmbientIntensity: 0.12
+    DawnAmbientIntensity: 0.45
+    DarknessVisibility: 0.6
+    FlashlightExposure: 1.5
+    DarkSearchMultiplier: 1.6
+    NightViewDistance: 3.5
+    ZombieHearingBonus: 1.4
+    WallNoiseFactor: 0.6
+    PeekRange: 7
+    PeekVisibility: 0.35
+    ListenSeconds: 1.2
+    ListenBreathRange: 8
+    FlashlightViewDistance: 9

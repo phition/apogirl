@@ -38,9 +38,7 @@ MonoBehaviour:
       - Vital: 2
         Amount: -12
       Resources: []
-      Hidden:
-      - Hidden: 3
-        Amount: 1
+      Hidden: []
       SleepDebt: 0
       Conscience: 0
       SetFlags: []

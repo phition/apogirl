@@ -4310,7 +4310,11 @@ MonoBehaviour:
       - BULLY_RESCUED
       FlagsNone: []
       CluesAll: []
-      Checks: []
+      Checks:
+      - Kind: 4
+        Key: SelfAwareness
+        Op: 0
+        Value: 47
       AnyChecks: []
       NpcStatuses: []
       IsBirthday: 0
@@ -4342,11 +4346,11 @@ MonoBehaviour:
       - Kind: 4
         Key: TraumaRecovery
         Op: 0
-        Value: 60
+        Value: 32
       - Kind: 4
         Key: SelfAwareness
         Op: 0
-        Value: 40
+        Value: 43
       AnyChecks: []
       NpcStatuses: []
       IsBirthday: 0
@@ -4388,11 +4392,11 @@ MonoBehaviour:
       - Kind: 0
         Key: Intellect
         Op: 0
-        Value: 60
+        Value: 175
       - Kind: 4
         Key: Humanity
         Op: 0
-        Value: 30
+        Value: 55
       AnyChecks: []
       NpcStatuses: []
       IsBirthday: 0
@@ -4433,11 +4437,11 @@ MonoBehaviour:
       - Kind: 1
         Key: Engineering
         Op: 0
-        Value: 4
+        Value: 3
       - Kind: 0
         Key: Craft
         Op: 0
-        Value: 60
+        Value: 175
       AnyChecks: []
       NpcStatuses: []
       IsBirthday: 0
@@ -4475,15 +4479,15 @@ MonoBehaviour:
       - Kind: 0
         Key: Strength
         Op: 0
-        Value: 60
+        Value: 80
       - Kind: 0
         Key: Agility
         Op: 0
-        Value: 50
+        Value: 45
       - Kind: 1
         Key: SelfDefense
         Op: 0
-        Value: 3
+        Value: 1
       AnyChecks: []
       NpcStatuses: []
       IsBirthday: 0
@@ -4524,7 +4528,7 @@ MonoBehaviour:
       - Kind: 0
         Key: Leadership
         Op: 0
-        Value: 60
+        Value: 95
       - Kind: 21
         Key: 
         Op: 0
@@ -4532,7 +4536,7 @@ MonoBehaviour:
       - Kind: 4
         Key: Humanity
         Op: 0
-        Value: 30
+        Value: 55
       AnyChecks: []
       NpcStatuses: []
       IsBirthday: 0
@@ -4619,7 +4623,7 @@ MonoBehaviour:
       - Kind: 0
         Key: Empathy
         Op: 0
-        Value: 60
+        Value: 110
       - Kind: 10
         Key: TAG_TEACHING
         Op: 0
@@ -4668,7 +4672,7 @@ MonoBehaviour:
       - Kind: 4
         Key: Humanity
         Op: 0
-        Value: 40
+        Value: 60
       AnyChecks: []
       NpcStatuses: []
       IsBirthday: 0
@@ -4706,7 +4710,7 @@ MonoBehaviour:
       - Kind: 4
         Key: Isolation
         Op: 0
-        Value: 60
+        Value: 45
       - Kind: 21
         Key: 
         Op: 1
@@ -4749,7 +4753,7 @@ MonoBehaviour:
       - Kind: 22
         Key: 
         Op: 1
-        Value: 35
+        Value: 130
       AnyChecks: []
       NpcStatuses: []
       IsBirthday: 0
@@ -4784,7 +4788,7 @@ MonoBehaviour:
       - Kind: 4
         Key: TraumaRecovery
         Op: 1
-        Value: 10
+        Value: 12
       - Kind: 4
         Key: Isolation
         Op: 0

@@ -103,7 +103,7 @@ MonoBehaviour:
         Resources: []
         Hidden:
         - Hidden: 0
-          Amount: 8
+          Amount: 6
         - Hidden: 4
           Amount: -4
         SleepDebt: 0
@@ -187,7 +187,7 @@ MonoBehaviour:
         Resources: []
         Hidden:
         - Hidden: 1
-          Amount: 3
+          Amount: 2
         - Hidden: 4
           Amount: 2
         SleepDebt: 0
@@ -268,7 +268,7 @@ MonoBehaviour:
         Resources: []
         Hidden:
         - Hidden: 0
-          Amount: 4
+          Amount: 3
         SleepDebt: 0
         Conscience: 0
         SetFlags: []

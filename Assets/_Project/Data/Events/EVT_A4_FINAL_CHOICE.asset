@@ -101,9 +101,9 @@ MonoBehaviour:
         Resources: []
         Hidden:
         - Hidden: 0
-          Amount: 6
+          Amount: 5
         - Hidden: 3
-          Amount: 4
+          Amount: 2
         SleepDebt: 0
         Conscience: 0
         SetFlags:
@@ -183,7 +183,7 @@ MonoBehaviour:
         Resources: []
         Hidden:
         - Hidden: 1
-          Amount: 4
+          Amount: 2
         SleepDebt: 0
         Conscience: 0
         SetFlags:
@@ -261,7 +261,7 @@ MonoBehaviour:
         Resources: []
         Hidden:
         - Hidden: 2
-          Amount: 2
+          Amount: 1
         SleepDebt: 0
         Conscience: 0
         SetFlags:
@@ -317,11 +317,16 @@ MonoBehaviour:
         DayOfMonth: 0
         ActionCategories: 
         ActionIds: []
-        FlagsAll: []
+        FlagsAll:
+        - CARE_ROUTE
         FlagsAny: []
         FlagsNone: []
         CluesAll: []
-        Checks: []
+        Checks:
+        - Kind: 4
+          Key: Humanity
+          Op: 0
+          Value: 60
         AnyChecks: []
         NpcStatuses: []
         IsBirthday: 0
@@ -339,7 +344,7 @@ MonoBehaviour:
         Resources: []
         Hidden:
         - Hidden: 2
-          Amount: 6
+          Amount: 3
         SleepDebt: 0
         Conscience: 0
         SetFlags:

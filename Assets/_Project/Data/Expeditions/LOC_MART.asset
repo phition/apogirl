@@ -41,8 +41,8 @@ MonoBehaviour:
         Min: 12
         Max: 18
       - Resource: 1
-        Min: 6
-        Max: 10
+        Min: 8
+        Max: 12
       - Resource: 3
         Min: 1
         Max: 3
