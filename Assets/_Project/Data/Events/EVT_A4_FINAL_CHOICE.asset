@@ -73,6 +73,7 @@ MonoBehaviour:
       TraumaCare: 0
       Traps: 0
       IntrusionResponse: 
+      Factions: []
     ThenEventId: 
     Choices:
     - Id: LAST_LESSON
@@ -140,6 +141,7 @@ MonoBehaviour:
         TraumaCare: 0
         Traps: 0
         IntrusionResponse: 
+        Factions: []
       OnFailure:
         Stats: []
         Vitals: []
@@ -170,6 +172,7 @@ MonoBehaviour:
         TraumaCare: 0
         Traps: 0
         IntrusionResponse: 
+        Factions: []
       NextEventId: 
     - Id: ISOLATE
       TextKey: 
@@ -232,6 +235,7 @@ MonoBehaviour:
         TraumaCare: 0
         Traps: 0
         IntrusionResponse: 
+        Factions: []
       OnFailure:
         Stats: []
         Vitals: []
@@ -262,6 +266,7 @@ MonoBehaviour:
         TraumaCare: 0
         Traps: 0
         IntrusionResponse: 
+        Factions: []
       NextEventId: 
     - Id: HIDE
       TextKey: 
@@ -324,6 +329,7 @@ MonoBehaviour:
         TraumaCare: 0
         Traps: 0
         IntrusionResponse: 
+        Factions: []
       OnFailure:
         Stats: []
         Vitals: []
@@ -354,6 +360,7 @@ MonoBehaviour:
         TraumaCare: 0
         Traps: 0
         IntrusionResponse: 
+        Factions: []
       NextEventId: 
     - Id: STAY
       TextKey: 
@@ -421,6 +428,7 @@ MonoBehaviour:
         TraumaCare: 0
         Traps: 0
         IntrusionResponse: 
+        Factions: []
       OnFailure:
         Stats: []
         Vitals: []
@@ -451,6 +459,7 @@ MonoBehaviour:
         TraumaCare: 0
         Traps: 0
         IntrusionResponse: 
+        Factions: []
       NextEventId: 
     - Id: QUIET_FAREWELL
       TextKey: 
@@ -514,6 +523,7 @@ MonoBehaviour:
         TraumaCare: 0
         Traps: 0
         IntrusionResponse: 
+        Factions: []
       OnFailure:
         Stats: []
         Vitals: []
@@ -544,6 +554,7 @@ MonoBehaviour:
         TraumaCare: 0
         Traps: 0
         IntrusionResponse: 
+        Factions: []
       NextEventId: 
     ReviewAct: 0
     ReviewFromWeek: 1

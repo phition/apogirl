@@ -73,6 +73,7 @@ MonoBehaviour:
       TraumaCare: 0
       Traps: 0
       IntrusionResponse: 
+      Factions: []
     ThenEventId: 
     Choices:
     - Id: BOIL
@@ -137,6 +138,7 @@ MonoBehaviour:
         TraumaCare: 0
         Traps: 0
         IntrusionResponse: 
+        Factions: []
       OnFailure:
         Stats: []
         Vitals: []
@@ -167,6 +169,7 @@ MonoBehaviour:
         TraumaCare: 0
         Traps: 0
         IntrusionResponse: 
+        Factions: []
       NextEventId: 
     - Id: DUMP
       TextKey: 
@@ -228,6 +231,7 @@ MonoBehaviour:
         TraumaCare: 0
         Traps: 0
         IntrusionResponse: 
+        Factions: []
       OnFailure:
         Stats: []
         Vitals: []
@@ -258,6 +262,7 @@ MonoBehaviour:
         TraumaCare: 0
         Traps: 0
         IntrusionResponse: 
+        Factions: []
       NextEventId: 
     ReviewAct: 0
     ReviewFromWeek: 1

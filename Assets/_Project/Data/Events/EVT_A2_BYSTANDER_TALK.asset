@@ -74,6 +74,7 @@ MonoBehaviour:
       TraumaCare: 0
       Traps: 0
       IntrusionResponse: 
+      Factions: []
     ThenEventId: 
     Choices:
     - Id: LISTEN
@@ -141,6 +142,7 @@ MonoBehaviour:
         TraumaCare: 0
         Traps: 0
         IntrusionResponse: 
+        Factions: []
       OnFailure:
         Stats: []
         Vitals: []
@@ -171,6 +173,7 @@ MonoBehaviour:
         TraumaCare: 0
         Traps: 0
         IntrusionResponse: 
+        Factions: []
       NextEventId: 
     - Id: NOT_YET
       TextKey: 
@@ -232,6 +235,7 @@ MonoBehaviour:
         TraumaCare: 0
         Traps: 0
         IntrusionResponse: 
+        Factions: []
       OnFailure:
         Stats: []
         Vitals: []
@@ -262,6 +266,7 @@ MonoBehaviour:
         TraumaCare: 0
         Traps: 0
         IntrusionResponse: 
+        Factions: []
       NextEventId: 
     - Id: CANT
       TextKey: 
@@ -328,6 +333,7 @@ MonoBehaviour:
         TraumaCare: 0
         Traps: 0
         IntrusionResponse: 
+        Factions: []
       OnFailure:
         Stats: []
         Vitals: []
@@ -358,6 +364,7 @@ MonoBehaviour:
         TraumaCare: 0
         Traps: 0
         IntrusionResponse: 
+        Factions: []
       NextEventId: 
     ReviewAct: 0
     ReviewFromWeek: 1

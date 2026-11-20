@@ -75,6 +75,7 @@ MonoBehaviour:
       TraumaCare: 0
       Traps: 0
       IntrusionResponse: 
+      Factions: []
     ThenEventId: 
     Choices:
     - Id: TEACH_ME
@@ -142,6 +143,7 @@ MonoBehaviour:
         TraumaCare: 0
         Traps: 0
         IntrusionResponse: 
+        Factions: []
       OnFailure:
         Stats: []
         Vitals: []
@@ -172,6 +174,7 @@ MonoBehaviour:
         TraumaCare: 0
         Traps: 0
         IntrusionResponse: 
+        Factions: []
       NextEventId: 
     - Id: LISTEN
       TextKey: 
@@ -233,6 +236,7 @@ MonoBehaviour:
         TraumaCare: 0
         Traps: 0
         IntrusionResponse: 
+        Factions: []
       OnFailure:
         Stats: []
         Vitals: []
@@ -263,6 +267,7 @@ MonoBehaviour:
         TraumaCare: 0
         Traps: 0
         IntrusionResponse: 
+        Factions: []
       NextEventId: 
     ReviewAct: 0
     ReviewFromWeek: 1

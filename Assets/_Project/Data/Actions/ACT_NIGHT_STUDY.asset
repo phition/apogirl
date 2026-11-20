@@ -68,6 +68,7 @@ MonoBehaviour:
       TraumaCare: 0
       Traps: 0
       IntrusionResponse: 
+      Factions: []
     OnGreatSuccess:
       Stats: []
       Vitals: []
@@ -98,6 +99,7 @@ MonoBehaviour:
       TraumaCare: 0
       Traps: 0
       IntrusionResponse: 
+      Factions: []
     OnFailure:
       Stats: []
       Vitals: []
@@ -128,6 +130,7 @@ MonoBehaviour:
       TraumaCare: 0
       Traps: 0
       IntrusionResponse: 
+      Factions: []
     ExpeditionTime: 0
     LocationId: 
     Unlock:
@@ -154,3 +157,6 @@ MonoBehaviour:
     BonusPerLevel: 0
     ThreatGain: 0
     Confined: 0
+    LockNextSlots: 0
+    LockActionId: 
+    AwayFromBase: 0

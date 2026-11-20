@@ -70,6 +70,7 @@ MonoBehaviour:
       TraumaCare: 0
       Traps: 0
       IntrusionResponse: 
+      Factions: []
     ThenEventId: 
     Choices:
     - Id: STAY
@@ -140,6 +141,7 @@ MonoBehaviour:
         TraumaCare: 0
         Traps: 0
         IntrusionResponse: 
+        Factions: []
       OnFailure:
         Stats: []
         Vitals: []
@@ -170,6 +172,7 @@ MonoBehaviour:
         TraumaCare: 0
         Traps: 0
         IntrusionResponse: 
+        Factions: []
       NextEventId: 
     - Id: SEND
       TextKey: 
@@ -241,6 +244,7 @@ MonoBehaviour:
         TraumaCare: 0
         Traps: 0
         IntrusionResponse: 
+        Factions: []
       OnFailure:
         Stats: []
         Vitals: []
@@ -271,6 +275,7 @@ MonoBehaviour:
         TraumaCare: 0
         Traps: 0
         IntrusionResponse: 
+        Factions: []
       NextEventId: 
     - Id: REFLECT
       TextKey: 
@@ -333,6 +338,7 @@ MonoBehaviour:
         TraumaCare: 0
         Traps: 0
         IntrusionResponse: 
+        Factions: []
       OnFailure:
         Stats: []
         Vitals: []
@@ -363,6 +369,7 @@ MonoBehaviour:
         TraumaCare: 0
         Traps: 0
         IntrusionResponse: 
+        Factions: []
       NextEventId: 
     ReviewAct: 0
     ReviewFromWeek: 1

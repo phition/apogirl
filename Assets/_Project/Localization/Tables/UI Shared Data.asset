@@ -3255,6 +3255,278 @@ MonoBehaviour:
     m_Key: flag_cleared.INJURED
     m_Metadata:
       m_Items: []
+  - m_Id: 464782942814208
+    m_Key: result.faction
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464782997340160
+    m_Key: result.faction_known
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464782997340161
+    m_Key: status.factions
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464782997340162
+    m_Key: status.faction
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464782997340163
+    m_Key: faction.tier.Hostile
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464782997340164
+    m_Key: faction.tier.Wary
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464782997340165
+    m_Key: faction.tier.Neutral
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464782997340166
+    m_Key: faction.tier.Friendly
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464782997340167
+    m_Key: faction.tier.Allied
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464782997340168
+    m_Key: faction.card.tier
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464782997340169
+    m_Key: faction.card.effects
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464782997340170
+    m_Key: faction.card.log
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464782997340171
+    m_Key: faction.card.log_line
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464782997340172
+    m_Key: faction.log.drift
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464782997340173
+    m_Key: faction.trade.button
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464782997340174
+    m_Key: faction.trade.button_delayed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464782997340175
+    m_Key: faction.trade.unknown
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464782997340176
+    m_Key: faction.trade.tier
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464782997340177
+    m_Key: faction.trade.weekly
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464782997340178
+    m_Key: faction.trade.short
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464782997340179
+    m_Key: faction.trade.planning
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464782997340180
+    m_Key: faction.FAC_SAGEORI.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464782997340181
+    m_Key: faction.FAC_SAGEORI.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464782997340182
+    m_Key: faction.FAC_SAGEORI.status.Hostile
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464782997340183
+    m_Key: faction.FAC_SAGEORI.status.Wary
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464782997340184
+    m_Key: faction.FAC_SAGEORI.status.Neutral
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464782997340185
+    m_Key: faction.FAC_SAGEORI.status.Friendly
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464782997340186
+    m_Key: faction.FAC_SAGEORI.status.Allied
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464782997340187
+    m_Key: faction.FAC_SAGEORI.effect.hostile
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464782997340188
+    m_Key: faction.FAC_SAGEORI.effect.wary
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464782997340189
+    m_Key: faction.FAC_SAGEORI.effect.truce
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464782997340190
+    m_Key: faction.FAC_MART.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464782997340191
+    m_Key: faction.FAC_MART.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464782997340192
+    m_Key: faction.FAC_MART.status.Hostile
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464782997340193
+    m_Key: faction.FAC_MART.status.Wary
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464782997340194
+    m_Key: faction.FAC_MART.status.Neutral
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464782997340195
+    m_Key: faction.FAC_MART.status.Friendly
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464782997340196
+    m_Key: faction.FAC_MART.status.Allied
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464782997340197
+    m_Key: faction.FAC_MART.effect.cold
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464782997340198
+    m_Key: faction.FAC_MART.effect.neutral
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464782997340199
+    m_Key: faction.FAC_MART.effect.trade
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464782997340200
+    m_Key: faction.FAC_MART.effect.truck
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464782997340201
+    m_Key: faction.FAC_MART.log.talk
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464782997340202
+    m_Key: faction.FAC_MART.log.back_off
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464782997340203
+    m_Key: faction.FAC_MART.log.bbq
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464782997340204
+    m_Key: faction.FAC_MART.log.truck
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464782997340205
+    m_Key: trade.FAC_MART.MATERIALS_FOOD
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464782997340206
+    m_Key: trade.FAC_MART.MATERIALS_FOOD.log
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464782997340207
+    m_Key: trade.FAC_MART.MEDICINE_FOOD
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464782997340208
+    m_Key: trade.FAC_MART.MEDICINE_FOOD.log
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464782997340209
+    m_Key: trade.FAC_MART.FOOD_FUEL
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464782997340210
+    m_Key: trade.FAC_MART.FOOD_FUEL.log
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464782997340211
+    m_Key: trade.FAC_MART.MATERIALS_WATER
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464782997340212
+    m_Key: trade.FAC_MART.MATERIALS_WATER.log
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464782997340213
+    m_Key: faction.FAC_UBC.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464782997340214
+    m_Key: faction.FAC_UBC.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464782997340215
+    m_Key: faction.FAC_UBC.status.Hostile
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464782997340216
+    m_Key: faction.FAC_UBC.status.Wary
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464782997340217
+    m_Key: faction.FAC_UBC.status.Neutral
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464782997340218
+    m_Key: faction.FAC_UBC.status.Friendly
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464782997340219
+    m_Key: faction.FAC_UBC.status.Allied
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464782997340220
+    m_Key: faction.FAC_UBC.effect.distant
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464782997340221
+    m_Key: faction.FAC_UBC.effect.radio
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464782997340222
+    m_Key: faction.FAC_UBC.effect.allied
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464782997340223
+    m_Key: trade.FAC_UBC.FUEL_MEDICINE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464782997340224
+    m_Key: trade.FAC_UBC.FUEL_MEDICINE.log
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464782997340225
+    m_Key: trade.FAC_UBC.MATERIALS_INTEL
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464782997340226
+    m_Key: trade.FAC_UBC.MATERIALS_INTEL.log
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

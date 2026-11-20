@@ -70,6 +70,7 @@ MonoBehaviour:
       TraumaCare: 0
       Traps: 0
       IntrusionResponse: 
+      Factions: []
     ThenEventId: 
     Choices:
     - Id: FIGHT
@@ -130,6 +131,7 @@ MonoBehaviour:
         TraumaCare: 0
         Traps: 0
         IntrusionResponse: Fight
+        Factions: []
       OnFailure:
         Stats: []
         Vitals: []
@@ -160,6 +162,7 @@ MonoBehaviour:
         TraumaCare: 0
         Traps: 0
         IntrusionResponse: 
+        Factions: []
       NextEventId: 
     - Id: HIDE
       TextKey: 
@@ -219,6 +222,7 @@ MonoBehaviour:
         TraumaCare: 0
         Traps: 0
         IntrusionResponse: Hide
+        Factions: []
       OnFailure:
         Stats: []
         Vitals: []
@@ -249,6 +253,7 @@ MonoBehaviour:
         TraumaCare: 0
         Traps: 0
         IntrusionResponse: 
+        Factions: []
       NextEventId: 
     - Id: YIELD
       TextKey: 
@@ -308,6 +313,7 @@ MonoBehaviour:
         TraumaCare: 0
         Traps: 0
         IntrusionResponse: Yield
+        Factions: []
       OnFailure:
         Stats: []
         Vitals: []
@@ -338,6 +344,7 @@ MonoBehaviour:
         TraumaCare: 0
         Traps: 0
         IntrusionResponse: 
+        Factions: []
       NextEventId: 
     ReviewAct: 0
     ReviewFromWeek: 1

@@ -304,6 +304,7 @@ MonoBehaviour:
     WeeklyRawWater: 5
     RoofGardenFood: 7
     TrapPower: 25
+    AwayDefenseFactor: 0.5
     MaxTraps: 3
     AlarmPower: 10
     ReinforcedDefenseMax: 80

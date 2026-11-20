@@ -531,6 +531,54 @@ MonoBehaviour:
     m_Key: ITEM_TAP_WATER.name
     m_Metadata:
       m_Items: []
+  - m_Id: 464781269286912
+    m_Key: ACT_OUTING_SPRING.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464781328007168
+    m_Key: ACT_OUTING_SPRING.short
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464781328007169
+    m_Key: ACT_OUTING_SUMMER.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464781328007170
+    m_Key: ACT_OUTING_SUMMER.short
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464781328007171
+    m_Key: ACT_OUTING_AUTUMN.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464781328007172
+    m_Key: ACT_OUTING_AUTUMN.short
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464781328007173
+    m_Key: ACT_OUTING_WINTER.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464781328007174
+    m_Key: ACT_OUTING_WINTER.short
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464781328007175
+    m_Key: ACT_SCHOOL_TRIP.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464781328007176
+    m_Key: ACT_SCHOOL_TRIP.short
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464781328007177
+    m_Key: ACT_TRIP_NIGHT.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 464781328007178
+    m_Key: ACT_TRIP_NIGHT.short
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
