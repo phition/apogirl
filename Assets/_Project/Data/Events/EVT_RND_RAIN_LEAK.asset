@@ -202,8 +202,8 @@ MonoBehaviour:
         - Vital: 1
           Amount: 3
         Resources:
-        - Resource: 1
-          Amount: 2
+        - Resource: 8
+          Amount: 4
         Hidden: []
         SleepDebt: 0
         Conscience: 0

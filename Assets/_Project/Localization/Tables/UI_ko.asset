@@ -2419,7 +2419,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 169172331151396
-    m_Localized: "\uC591\uB3D9\uC774\uB85C \uBE57\uBB3C\uC744 \uBC1B\uB294\uB2E4 (\uBB3C +3, \uD53C\uB85C +4)"
+    m_Localized: "\uC591\uB3D9\uC774\uB85C \uBE57\uBB3C\uC744 \uBC1B\uB294\uB2E4 (\uBE57\uBB3C +5, \uD53C\uB85C +4)"
     m_Metadata:
       m_Items: []
   - m_Id: 169172331151397

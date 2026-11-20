@@ -37,7 +37,7 @@ MonoBehaviour:
     Priority: 0
     Weight: 1.2
     Once: 0
-    CooldownWeeks: 3
+    CooldownWeeks: 5
     DialogueNode: 
     OnShow:
       Stats: []
