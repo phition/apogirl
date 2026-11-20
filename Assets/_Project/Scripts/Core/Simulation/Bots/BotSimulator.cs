@@ -167,6 +167,7 @@ namespace ApoGirl.Core.Simulation.Bots
             while (state.Status == GameStatus.Playing && state.Calendar.Week <= config.MaxWeeks)
             {
                 // 1주차는 창고·탈출로 모두 잠겨 있다 (잠긴 칸은 전략이 건드리지 않음)
+                BotTrader.Trade(state, db);
                 BotPlanner.Plan(state, db, config, strategy, botRandom);
 
                 runner.PrepareWeek();
