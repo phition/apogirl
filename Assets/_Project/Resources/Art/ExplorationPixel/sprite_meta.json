@@ -1,0 +1,38 @@
+{
+ "Sprites": [
+  {
+   "Key": "prop_window",
+   "Pivot": [
+    0,
+    0
+   ],
+   "Border": [
+    7,
+    0,
+    7,
+    0
+   ]
+  },
+  {
+   "Key": "bag_school",
+   "Pivot": [
+    0.92,
+    0.82
+   ]
+  },
+  {
+   "Key": "bag_hiking",
+   "Pivot": [
+    0.92,
+    0.7
+   ]
+  },
+  {
+   "Key": "bag_tote",
+   "Pivot": [
+    0.9,
+    1.0
+   ]
+  }
+ ]
+}
