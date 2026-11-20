@@ -248,6 +248,9 @@ namespace ApoGirl.Core.Definitions
         /// <summary>이 값 이하면 굶주림·탈수로 쓰러진 것으로 친다 (사망 원인 판정).</summary>
         public int StarvationThreshold = -60;
 
+        /// <summary>처음 요리를 완성하면 켜지는 플래그 (첫 요리 장면 EVT_SYS_FIRST_DISH).</summary>
+        public string FirstDishFlag = "COOKED_DISH";
+
         /// <summary>
         /// 요리 (요리 수업 성공 시, 사용자 요청): 숙련이 오를수록 좋은 요리. 같은 재료로 하루 식사보다 허기·갈증을 더 낮춘다.
         /// </summary>

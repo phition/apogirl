@@ -56,6 +56,11 @@ namespace ApoGirl.Core.Rules
                 }
 
                 delta.DishesCooked.Add(dish.Id);
+                if (!string.IsNullOrEmpty(balance.FirstDishFlag) && state.Flags.Add(balance.FirstDishFlag))
+                {
+                    delta.FlagsSet.Add(balance.FirstDishFlag);
+                }
+
                 return dish;
             }
 

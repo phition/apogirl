@@ -1,0 +1,39 @@
+{
+  "Events": [
+    { "Id": "EVT_SYS_FIRST_INJURY", "Kind": "Story", "Priority": 60,
+      "Condition": { "WeekMax": 39, "FlagsNone": [ "TEACHER_BEDRIDDEN", "TEACHER_ISOLATED", "TEACHER_LEFT_BEHIND" ], "WeekMin": 2, "FlagsAll": [ "INJURED" ] } },
+
+    { "Id": "EVT_SYS_RAW_WATER", "Kind": "Story", "Priority": 20,
+      "Condition": { "WeekMax": 39, "FlagsNone": [ "TEACHER_BEDRIDDEN", "TEACHER_ISOLATED", "TEACHER_LEFT_BEHIND" ], "WeekMin": 2, "Checks": [
+        { "Kind": "Resource", "Key": "RawWater", "Op": "GreaterOrEqual", "Value": 1 },
+        { "Kind": "ActionCount", "Key": "ACT_SURV_PURIFY_WATER", "Op": "Equal", "Value": 0 } ] } },
+
+    { "Id": "EVT_SYS_FIRST_DISH", "Kind": "Story", "Priority": 45,
+      "Condition": { "WeekMax": 39, "FlagsNone": [ "TEACHER_BEDRIDDEN", "TEACHER_ISOLATED", "TEACHER_LEFT_BEHIND" ], "ActionIds": [ "ACT_EDU_COOKING" ], "FlagsAll": [ "COOKED_DISH" ] } },
+
+    { "Id": "EVT_SYS_FIRST_SCIENCE", "Kind": "Story", "Priority": 45,
+      "Condition": { "WeekMax": 39, "FlagsNone": [ "TEACHER_BEDRIDDEN", "TEACHER_ISOLATED", "TEACHER_LEFT_BEHIND" ], "ActionIds": [ "ACT_EDU_SCIENCE" ] } },
+
+    { "Id": "EVT_SYS_FIRST_MUSIC", "Kind": "Story", "Priority": 45,
+      "Condition": { "WeekMax": 39, "FlagsNone": [ "TEACHER_BEDRIDDEN", "TEACHER_ISOLATED", "TEACHER_LEFT_BEHIND" ], "ActionIds": [ "ACT_EDU_MUSIC" ] } },
+
+    { "Id": "EVT_SYS_CLASSROOM_NIGHT", "Kind": "Night", "Priority": 46,
+      "Condition": { "WeekMax": 39, "FlagsNone": [ "TEACHER_BEDRIDDEN", "TEACHER_ISOLATED", "TEACHER_LEFT_BEHIND" ], "Phase": "Night", "FlagsAll": [ "CLASSROOM_MOVED_IN" ] } },
+
+    { "Id": "EVT_SYS_STORAGE_NIGHT", "Kind": "Night", "Priority": 46,
+      "Condition": { "WeekMax": 39, "FlagsNone": [ "TEACHER_BEDRIDDEN", "TEACHER_ISOLATED", "TEACHER_LEFT_BEHIND" ], "Phase": "Night", "FlagsAll": [ "STAYED_STORAGE" ] } },
+
+    { "Id": "EVT_SYS_ROOM_NURSE", "Kind": "Story", "Priority": 30,
+      "Condition": { "WeekMax": 39, "FlagsNone": [ "TEACHER_BEDRIDDEN", "TEACHER_ISOLATED", "TEACHER_LEFT_BEHIND" ], "ActionIds": [ "ACT_EXP_DAY_SCHOOL", "ACT_EXP_NIGHT_SCHOOL" ], "FlagsAll": [ "SEARCHED_NURSE" ] } },
+    { "Id": "EVT_SYS_ROOM_HOMEEC", "Kind": "Story", "Priority": 30,
+      "Condition": { "WeekMax": 39, "FlagsNone": [ "TEACHER_BEDRIDDEN", "TEACHER_ISOLATED", "TEACHER_LEFT_BEHIND" ], "ActionIds": [ "ACT_EXP_DAY_SCHOOL", "ACT_EXP_NIGHT_SCHOOL" ], "FlagsAll": [ "SEARCHED_HOMEEC" ] } },
+    { "Id": "EVT_SYS_ROOM_SCIENCE", "Kind": "Story", "Priority": 30,
+      "Condition": { "WeekMax": 39, "FlagsNone": [ "TEACHER_BEDRIDDEN", "TEACHER_ISOLATED", "TEACHER_LEFT_BEHIND" ], "ActionIds": [ "ACT_EXP_DAY_SCHOOL", "ACT_EXP_NIGHT_SCHOOL" ], "FlagsAll": [ "SEARCHED_SCIENCE" ] } },
+    { "Id": "EVT_SYS_ROOM_COMPUTER", "Kind": "Story", "Priority": 30,
+      "Condition": { "WeekMax": 39, "FlagsNone": [ "TEACHER_BEDRIDDEN", "TEACHER_ISOLATED", "TEACHER_LEFT_BEHIND" ], "ActionIds": [ "ACT_EXP_DAY_SCHOOL", "ACT_EXP_NIGHT_SCHOOL" ], "FlagsAll": [ "SEARCHED_COMPUTER" ] } },
+    { "Id": "EVT_SYS_ROOM_MUSIC", "Kind": "Story", "Priority": 30,
+      "Condition": { "WeekMax": 39, "FlagsNone": [ "TEACHER_BEDRIDDEN", "TEACHER_ISOLATED", "TEACHER_LEFT_BEHIND" ], "ActionIds": [ "ACT_EXP_DAY_SCHOOL", "ACT_EXP_NIGHT_SCHOOL" ], "FlagsAll": [ "SEARCHED_MUSIC" ] } },
+    { "Id": "EVT_SYS_ROOM_BROADCAST", "Kind": "Story", "Priority": 30,
+      "Condition": { "WeekMax": 39, "FlagsNone": [ "TEACHER_BEDRIDDEN", "TEACHER_ISOLATED", "TEACHER_LEFT_BEHIND" ], "ActionIds": [ "ACT_EXP_DAY_SCHOOL", "ACT_EXP_NIGHT_SCHOOL" ], "FlagsAll": [ "SEARCHED_BROADCAST" ] } }
+  ]
+}

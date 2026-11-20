@@ -225,6 +225,17 @@ namespace ApoGirl.EditorTools
                 R("ROOM_RESTROOM", f, 104f, 0);
             }
 
+            // 특수실을 처음 뒤지면 발견 장면 (systems_events.json의 EVT_SYS_ROOM_*)
+            var roomFlags = new Dictionary<string, string>
+            {
+                { "ROOM_NURSE", "SEARCHED_NURSE" }, { "ROOM_HOMEEC", "SEARCHED_HOMEEC" }, { "ROOM_COMPUTER", "SEARCHED_COMPUTER" },
+                { "ROOM_SCIENCE", "SEARCHED_SCIENCE" }, { "ROOM_MUSIC", "SEARCHED_MUSIC" }, { "ROOM_BROADCAST", "SEARCHED_BROADCAST" },
+            };
+            foreach (var door in layout.Doors)
+            {
+                if (string.IsNullOrEmpty(door.SearchFlag) && roomFlags.TryGetValue(door.TemplateId, out var roomFlag)) door.SearchFlag = roomFlag;
+            }
+
             for (var f = 0; f < layout.Floors; f++)
             {
                 layout.Containers.Add(C($"C_{f + 1}F_HALL_LOCKER_A", ContainerKind.Locker, f, 114.5f, "LOOT_SCHOOL_LOCKER"));
