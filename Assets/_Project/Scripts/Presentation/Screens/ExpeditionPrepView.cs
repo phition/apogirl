@@ -50,7 +50,8 @@ namespace ApoGirl.Presentation.Screens
             shade.Apply();
             var shadeElement = root.Q(className: "exp-art-shade");
             shadeElement.style.backgroundImage = new StyleBackground(shade);
-            shadeElement.style.backgroundSize = new StyleBackgroundSize(new BackgroundSize(BackgroundSizeType.Cover));
+            // 1x64 그림을 요소 크기 그대로 늘린다 (Cover면 가운데만 확대돼 경계가 생긴다)
+            shadeElement.style.backgroundSize = new StyleBackgroundSize(new BackgroundSize(Length.Percent(100), Length.Percent(100)));
         }
 
         public bool IsOpen => !_sheet.ClassListContains("hidden");

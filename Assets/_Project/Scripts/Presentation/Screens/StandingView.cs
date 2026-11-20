@@ -67,7 +67,7 @@ namespace ApoGirl.Presentation.Screens
 
         /// <summary>
         /// "Layers" = 같은 캔버스 조각을 겹친다. "Whole" = 한 가지씩 바뀐 전신 그림 중 하나를 고른다
-        /// (WholePriority 순서: react 잠깐 표정 → mark 상태 → outfit 옷 → face 표정 → hair 머리).
+        /// (WholePriority 순서, 지금: mark 상태 → outfit 옷 → react 잠깐 표정 → face 표정 → hair 머리).
         /// </summary>
         public string Mode = "Layers";
         public string[] WholePriority = Array.Empty<string>();
