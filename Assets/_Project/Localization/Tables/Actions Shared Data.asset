@@ -335,6 +335,62 @@ MonoBehaviour:
     m_Key: ACT_EXP_NIGHT_WATERWORKS.short
     m_Metadata:
       m_Items: []
+  - m_Id: 366024573861888
+    m_Key: ACT_SURV_TRAP.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 366024636776448
+    m_Key: ACT_SURV_TRAP.short
+    m_Metadata:
+      m_Items: []
+  - m_Id: 366024636776449
+    m_Key: ACT_SURV_ALARM.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 366024636776450
+    m_Key: ACT_SURV_ALARM.short
+    m_Metadata:
+      m_Items: []
+  - m_Id: 366024636776451
+    m_Key: ACT_SURV_REINFORCE.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 366024636776452
+    m_Key: ACT_SURV_REINFORCE.short
+    m_Metadata:
+      m_Items: []
+  - m_Id: 366024636776453
+    m_Key: ACT_SURV_COVERS.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 366024636776454
+    m_Key: ACT_SURV_COVERS.short
+    m_Metadata:
+      m_Items: []
+  - m_Id: 366024636776455
+    m_Key: ACT_INTRUSION.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 366024636776456
+    m_Key: ACT_INTRUSION.short
+    m_Metadata:
+      m_Items: []
+  - m_Id: 370048203243520
+    m_Key: ACT_SURV_RAIN_BARREL.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 370048266158080
+    m_Key: ACT_SURV_RAIN_BARREL.short
+    m_Metadata:
+      m_Items: []
+  - m_Id: 370048266158081
+    m_Key: ACT_SURV_GARDEN.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 370048266158082
+    m_Key: ACT_SURV_GARDEN.short
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

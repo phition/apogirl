@@ -56,6 +56,8 @@ MonoBehaviour:
       TeacherReinfect: 0
       TeacherInfection: 0
       TraumaCare: 0
+      Traps: 0
+      IntrusionResponse: 
     OnGreatSuccess:
       Stats: []
       Vitals: []
@@ -80,6 +82,8 @@ MonoBehaviour:
       TeacherReinfect: 0
       TeacherInfection: 0
       TraumaCare: 0
+      Traps: 0
+      IntrusionResponse: 
     OnFailure:
       Stats: []
       Vitals: []
@@ -104,6 +108,8 @@ MonoBehaviour:
       TeacherReinfect: 0
       TeacherInfection: 0
       TraumaCare: 0
+      Traps: 0
+      IntrusionResponse: 
     ExpeditionTime: 0
     LocationId: LOC_SCHOOL_INTERIOR
     Unlock:

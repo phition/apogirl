@@ -18,11 +18,11 @@ MonoBehaviour:
     Day:
       Resources:
       - Resource: 0
-        Min: 6
-        Max: 10
+        Min: 14
+        Max: 23
       - Resource: 1
-        Min: 4
-        Max: 7
+        Min: 9
+        Max: 16
       - Resource: 5
         Min: 1
         Max: 3
@@ -41,8 +41,8 @@ MonoBehaviour:
     Night:
       Resources:
       - Resource: 0
-        Min: 3
-        Max: 6
+        Min: 6
+        Max: 14
       BaseDownChance: 0.16
       Fatigue: 20
       StressMin: 16
@@ -55,4 +55,4 @@ MonoBehaviour:
     AgilityDownReduction: 0.001
     SleepDebtDownIncrease: 0.03
     ConsecutiveDownIncrease: 0.1
-    ContainersPerRun: 0
+    ContainersPerRun: 11

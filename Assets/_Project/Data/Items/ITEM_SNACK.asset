@@ -24,7 +24,7 @@ MonoBehaviour:
     MaxDurability: 0
     ResourceYield:
     - Resource: 0
-      Amount: 1
+      Amount: 2
     Slot: 5
     GridWidth: 0
     GridHeight: 0

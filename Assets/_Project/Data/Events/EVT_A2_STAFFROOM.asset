@@ -73,6 +73,8 @@ MonoBehaviour:
       TeacherReinfect: 0
       TeacherInfection: 0
       TraumaCare: 0
+      Traps: 0
+      IntrusionResponse: 
     Choices:
     - Id: READ_OWN
       TextKey: 
@@ -130,6 +132,8 @@ MonoBehaviour:
         TeacherReinfect: 0
         TeacherInfection: 0
         TraumaCare: 0
+        Traps: 0
+        IntrusionResponse: 
       OnFailure:
         Stats: []
         Vitals: []
@@ -154,6 +158,8 @@ MonoBehaviour:
         TeacherReinfect: 0
         TeacherInfection: 0
         TraumaCare: 0
+        Traps: 0
+        IntrusionResponse: 
       NextEventId: 
     - Id: GIVE_TEACHER
       TextKey: 
@@ -213,6 +219,8 @@ MonoBehaviour:
         TeacherReinfect: 0
         TeacherInfection: 0
         TraumaCare: 0
+        Traps: 0
+        IntrusionResponse: 
       OnFailure:
         Stats: []
         Vitals: []
@@ -237,6 +245,8 @@ MonoBehaviour:
         TeacherReinfect: 0
         TeacherInfection: 0
         TraumaCare: 0
+        Traps: 0
+        IntrusionResponse: 
       NextEventId: 
     - Id: HIDE
       TextKey: 
@@ -293,6 +303,8 @@ MonoBehaviour:
         TeacherReinfect: 0
         TeacherInfection: 0
         TraumaCare: 0
+        Traps: 0
+        IntrusionResponse: 
       OnFailure:
         Stats: []
         Vitals: []
@@ -317,6 +329,8 @@ MonoBehaviour:
         TeacherReinfect: 0
         TeacherInfection: 0
         TraumaCare: 0
+        Traps: 0
+        IntrusionResponse: 
       NextEventId: 
     ReviewAct: 0
     ReviewFromWeek: 1

@@ -2979,6 +2979,62 @@ MonoBehaviour:
     m_Key: debug.force_hostile
     m_Metadata:
       m_Items: []
+  - m_Id: 366026239000576
+    m_Key: result.restocked
+    m_Metadata:
+      m_Items: []
+  - m_Id: 366026301915136
+    m_Key: result.intrusion_Fight_held
+    m_Metadata:
+      m_Items: []
+  - m_Id: 366026301915137
+    m_Key: result.intrusion_Fight_lost
+    m_Metadata:
+      m_Items: []
+  - m_Id: 366026301915138
+    m_Key: result.intrusion_Hide_held
+    m_Metadata:
+      m_Items: []
+  - m_Id: 366026301915139
+    m_Key: result.intrusion_Hide_lost
+    m_Metadata:
+      m_Items: []
+  - m_Id: 366026301915140
+    m_Key: result.intrusion_Yield_lost
+    m_Metadata:
+      m_Items: []
+  - m_Id: 366026301915141
+    m_Key: result.intrusion_injured
+    m_Metadata:
+      m_Items: []
+  - m_Id: 366026301915142
+    m_Key: exp.restocked.LOC_STORE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 366026301915143
+    m_Key: exp.restocked.LOC_PHARMACY
+    m_Metadata:
+      m_Items: []
+  - m_Id: 366026301915144
+    m_Key: exp.restocked.LOC_RESIDENTIAL
+    m_Metadata:
+      m_Items: []
+  - m_Id: 366026301915145
+    m_Key: exp.restocked.LOC_SUBWAY
+    m_Metadata:
+      m_Items: []
+  - m_Id: 366026301915146
+    m_Key: exp.restocked.LOC_MART
+    m_Metadata:
+      m_Items: []
+  - m_Id: 366026301915147
+    m_Key: exp.restocked.LOC_POLICE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 366026301915148
+    m_Key: exp.restocked.LOC_WATERWORKS
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

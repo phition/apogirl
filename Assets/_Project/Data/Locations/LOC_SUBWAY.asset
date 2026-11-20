@@ -337,4 +337,5 @@ MonoBehaviour:
       HostileChanceMultiplier: 1
       HostileSpots: []
     Tutorial: 0
-    DepletingContainers: 0
+    DepletingContainers: 1
+    Restocks: 1

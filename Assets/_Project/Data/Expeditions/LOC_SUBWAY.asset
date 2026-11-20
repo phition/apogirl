@@ -24,11 +24,11 @@ MonoBehaviour:
         Min: 1
         Max: 2
       - Resource: 0
+        Min: 6
+        Max: 14
+      - Resource: 1
         Min: 3
         Max: 6
-      - Resource: 1
-        Min: 1
-        Max: 3
       BaseDownChance: 0.09
       Fatigue: 17
       StressMin: 10
@@ -61,4 +61,4 @@ MonoBehaviour:
     AgilityDownReduction: 0.001
     SleepDebtDownIncrease: 0.03
     ConsecutiveDownIncrease: 0.1
-    ContainersPerRun: 0
+    ContainersPerRun: 8

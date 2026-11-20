@@ -2884,6 +2884,8 @@ MonoBehaviour:
           TeacherReinfect: 0
           TeacherInfection: 0
           TraumaCare: 0
+          Traps: 0
+          IntrusionResponse: 
         ProfileField: 
         ProfileValue: 
       - Id: I
@@ -2916,6 +2918,8 @@ MonoBehaviour:
           TeacherReinfect: 0
           TeacherInfection: 0
           TraumaCare: 0
+          Traps: 0
+          IntrusionResponse: 
         ProfileField: 
         ProfileValue: 
       - Id: S
@@ -2948,6 +2952,8 @@ MonoBehaviour:
           TeacherReinfect: 0
           TeacherInfection: 0
           TraumaCare: 0
+          Traps: 0
+          IntrusionResponse: 
         ProfileField: 
         ProfileValue: 
       - Id: N
@@ -2978,6 +2984,8 @@ MonoBehaviour:
           TeacherReinfect: 0
           TeacherInfection: 0
           TraumaCare: 0
+          Traps: 0
+          IntrusionResponse: 
         ProfileField: 
         ProfileValue: 
       - Id: T
@@ -3010,6 +3018,8 @@ MonoBehaviour:
           TeacherReinfect: 0
           TeacherInfection: 0
           TraumaCare: 0
+          Traps: 0
+          IntrusionResponse: 
         ProfileField: 
         ProfileValue: 
       - Id: F
@@ -3040,6 +3050,8 @@ MonoBehaviour:
           TeacherReinfect: 0
           TeacherInfection: 0
           TraumaCare: 0
+          Traps: 0
+          IntrusionResponse: 
         ProfileField: 
         ProfileValue: 
       - Id: J
@@ -3070,6 +3082,8 @@ MonoBehaviour:
           TeacherReinfect: 0
           TeacherInfection: 0
           TraumaCare: 0
+          Traps: 0
+          IntrusionResponse: 
         ProfileField: 
         ProfileValue: 
       - Id: P
@@ -3100,6 +3114,8 @@ MonoBehaviour:
           TeacherReinfect: 0
           TeacherInfection: 0
           TraumaCare: 0
+          Traps: 0
+          IntrusionResponse: 
         ProfileField: 
         ProfileValue: 
     - Id: BLOOD
@@ -3131,6 +3147,8 @@ MonoBehaviour:
           TeacherReinfect: 0
           TeacherInfection: 0
           TraumaCare: 0
+          Traps: 0
+          IntrusionResponse: 
         ProfileField: BloodType
         ProfileValue: A
       - Id: B
@@ -3160,6 +3178,8 @@ MonoBehaviour:
           TeacherReinfect: 0
           TeacherInfection: 0
           TraumaCare: 0
+          Traps: 0
+          IntrusionResponse: 
         ProfileField: BloodType
         ProfileValue: B
       - Id: O
@@ -3189,6 +3209,8 @@ MonoBehaviour:
           TeacherReinfect: 0
           TeacherInfection: 0
           TraumaCare: 0
+          Traps: 0
+          IntrusionResponse: 
         ProfileField: BloodType
         ProfileValue: O
       - Id: AB
@@ -3218,6 +3240,8 @@ MonoBehaviour:
           TeacherReinfect: 0
           TeacherInfection: 0
           TraumaCare: 0
+          Traps: 0
+          IntrusionResponse: 
         ProfileField: BloodType
         ProfileValue: AB
       - Id: UNKNOWN
@@ -3248,6 +3272,8 @@ MonoBehaviour:
           TeacherReinfect: 0
           TeacherInfection: 0
           TraumaCare: 0
+          Traps: 0
+          IntrusionResponse: 
         ProfileField: BloodType
         ProfileValue: Unknown
     - Id: GRADE
@@ -3283,6 +3309,8 @@ MonoBehaviour:
           TeacherReinfect: 0
           TeacherInfection: 0
           TraumaCare: 0
+          Traps: 0
+          IntrusionResponse: 
         ProfileField: GradeBandId
         ProfileValue: TOP
       - Id: MIDDLE
@@ -3316,6 +3344,8 @@ MonoBehaviour:
           TeacherReinfect: 0
           TeacherInfection: 0
           TraumaCare: 0
+          Traps: 0
+          IntrusionResponse: 
         ProfileField: GradeBandId
         ProfileValue: MIDDLE
       - Id: LOW
@@ -3349,6 +3379,8 @@ MonoBehaviour:
           TeacherReinfect: 0
           TeacherInfection: 0
           TraumaCare: 0
+          Traps: 0
+          IntrusionResponse: 
         ProfileField: GradeBandId
         ProfileValue: LOW
       - Id: UNKNOWN
@@ -3382,6 +3414,8 @@ MonoBehaviour:
           TeacherReinfect: 0
           TeacherInfection: 0
           TraumaCare: 0
+          Traps: 0
+          IntrusionResponse: 
         ProfileField: GradeBandId
         ProfileValue: UNKNOWN
     - Id: SUBJECT
@@ -3420,6 +3454,8 @@ MonoBehaviour:
           TeacherReinfect: 0
           TeacherInfection: 0
           TraumaCare: 0
+          Traps: 0
+          IntrusionResponse: 
         ProfileField: FavoriteSubjectId
         ProfileValue: KOREAN
       - Id: MATH_SCI
@@ -3451,6 +3487,8 @@ MonoBehaviour:
           TeacherReinfect: 0
           TeacherInfection: 0
           TraumaCare: 0
+          Traps: 0
+          IntrusionResponse: 
         ProfileField: FavoriteSubjectId
         ProfileValue: MATH_SCI
       - Id: PE
@@ -3482,6 +3520,8 @@ MonoBehaviour:
           TeacherReinfect: 0
           TeacherInfection: 0
           TraumaCare: 0
+          Traps: 0
+          IntrusionResponse: 
         ProfileField: FavoriteSubjectId
         ProfileValue: PE
       - Id: TECH_HOME
@@ -3513,6 +3553,8 @@ MonoBehaviour:
           TeacherReinfect: 0
           TeacherInfection: 0
           TraumaCare: 0
+          Traps: 0
+          IntrusionResponse: 
         ProfileField: FavoriteSubjectId
         ProfileValue: TECH_HOME
       - Id: BIO
@@ -3544,6 +3586,8 @@ MonoBehaviour:
           TeacherReinfect: 0
           TeacherInfection: 0
           TraumaCare: 0
+          Traps: 0
+          IntrusionResponse: 
         ProfileField: FavoriteSubjectId
         ProfileValue: BIO
       - Id: NONE
@@ -3575,6 +3619,8 @@ MonoBehaviour:
           TeacherReinfect: 0
           TeacherInfection: 0
           TraumaCare: 0
+          Traps: 0
+          IntrusionResponse: 
         ProfileField: FavoriteSubjectId
         ProfileValue: NONE
     - Id: CLUB
@@ -3609,6 +3655,8 @@ MonoBehaviour:
           TeacherReinfect: 0
           TeacherInfection: 0
           TraumaCare: 0
+          Traps: 0
+          IntrusionResponse: 
         ProfileField: ClubId
         ProfileValue: TRACK
       - Id: COOKING
@@ -3641,6 +3689,8 @@ MonoBehaviour:
           TeacherReinfect: 0
           TeacherInfection: 0
           TraumaCare: 0
+          Traps: 0
+          IntrusionResponse: 
         ProfileField: ClubId
         ProfileValue: COOKING
       - Id: SCIENCE
@@ -3673,6 +3723,8 @@ MonoBehaviour:
           TeacherReinfect: 0
           TeacherInfection: 0
           TraumaCare: 0
+          Traps: 0
+          IntrusionResponse: 
         ProfileField: ClubId
         ProfileValue: SCIENCE
       - Id: LIBRARY
@@ -3705,6 +3757,8 @@ MonoBehaviour:
           TeacherReinfect: 0
           TeacherInfection: 0
           TraumaCare: 0
+          Traps: 0
+          IntrusionResponse: 
         ProfileField: ClubId
         ProfileValue: LIBRARY
       - Id: ART
@@ -3737,6 +3791,8 @@ MonoBehaviour:
           TeacherReinfect: 0
           TeacherInfection: 0
           TraumaCare: 0
+          Traps: 0
+          IntrusionResponse: 
         ProfileField: ClubId
         ProfileValue: ART
       - Id: BROADCAST
@@ -3769,6 +3825,8 @@ MonoBehaviour:
           TeacherReinfect: 0
           TeacherInfection: 0
           TraumaCare: 0
+          Traps: 0
+          IntrusionResponse: 
         ProfileField: ClubId
         ProfileValue: BROADCAST
       - Id: HEALTH
@@ -3801,6 +3859,8 @@ MonoBehaviour:
           TeacherReinfect: 0
           TeacherInfection: 0
           TraumaCare: 0
+          Traps: 0
+          IntrusionResponse: 
         ProfileField: ClubId
         ProfileValue: HEALTH
       - Id: HOME
@@ -3833,6 +3893,8 @@ MonoBehaviour:
           TeacherReinfect: 0
           TeacherInfection: 0
           TraumaCare: 0
+          Traps: 0
+          IntrusionResponse: 
         ProfileField: ClubId
         ProfileValue: HOME
     - Id: MIND
@@ -3869,6 +3931,8 @@ MonoBehaviour:
           TeacherReinfect: 0
           TeacherInfection: 0
           TraumaCare: 0
+          Traps: 0
+          IntrusionResponse: 
         ProfileField: 
         ProfileValue: 
       - Id: HURRY
@@ -3901,6 +3965,8 @@ MonoBehaviour:
           TeacherReinfect: 0
           TeacherInfection: 0
           TraumaCare: 0
+          Traps: 0
+          IntrusionResponse: 
         ProfileField: 
         ProfileValue: 
       - Id: TELL
@@ -3933,6 +3999,8 @@ MonoBehaviour:
           TeacherReinfect: 0
           TeacherInfection: 0
           TraumaCare: 0
+          Traps: 0
+          IntrusionResponse: 
         ProfileField: 
         ProfileValue: 
       - Id: FACE
@@ -3965,6 +4033,8 @@ MonoBehaviour:
           TeacherReinfect: 0
           TeacherInfection: 0
           TraumaCare: 0
+          Traps: 0
+          IntrusionResponse: 
         ProfileField: 
         ProfileValue: 
     - Id: PROMISE
@@ -3997,6 +4067,8 @@ MonoBehaviour:
           TeacherReinfect: 0
           TeacherInfection: 0
           TraumaCare: 0
+          Traps: 0
+          IntrusionResponse: 
         ProfileField: 
         ProfileValue: 
       - Id: LATER
@@ -4025,6 +4097,8 @@ MonoBehaviour:
           TeacherReinfect: 0
           TeacherInfection: 0
           TraumaCare: 0
+          Traps: 0
+          IntrusionResponse: 
         ProfileField: 
         ProfileValue: 
     Common:
@@ -4063,6 +4137,8 @@ MonoBehaviour:
       TeacherReinfect: 0
       TeacherInfection: 0
       TraumaCare: 0
+      Traps: 0
+      IntrusionResponse: 
   _endings:
   - Id: ENDING_BAD_EXPEDITION
     Category: 0
@@ -4924,6 +5000,8 @@ MonoBehaviour:
       TeacherReinfect: 0
       TeacherInfection: 0
       TraumaCare: 0
+      Traps: 0
+      IntrusionResponse: 
   - Id: SCHOLAR
     Effect:
       Stats:
@@ -4957,6 +5035,8 @@ MonoBehaviour:
       TeacherReinfect: 0
       TeacherInfection: 0
       TraumaCare: 0
+      Traps: 0
+      IntrusionResponse: 
   - Id: SUPPLIES
     Effect:
       Stats: []
@@ -4990,3 +5070,5 @@ MonoBehaviour:
       TeacherReinfect: 0
       TeacherInfection: 0
       TraumaCare: 0
+      Traps: 0
+      IntrusionResponse: 

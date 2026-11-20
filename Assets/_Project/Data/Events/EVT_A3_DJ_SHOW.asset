@@ -72,6 +72,8 @@ MonoBehaviour:
       TeacherReinfect: 0
       TeacherInfection: 0
       TraumaCare: 0
+      Traps: 0
+      IntrusionResponse: 
     Choices: []
     ReviewAct: 0
     ReviewFromWeek: 1

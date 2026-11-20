@@ -571,7 +571,7 @@ MonoBehaviour:
           StressDelta: 0
           Removes: 1
         SpriteKey: 
-      HostileChanceMultiplier: 1
+      HostileChanceMultiplier: 0
       HostileSpots: []
     NightVariant:
       Spawns:
@@ -734,3 +734,4 @@ MonoBehaviour:
       HostileSpots: []
     Tutorial: 0
     DepletingContainers: 1
+    Restocks: 0

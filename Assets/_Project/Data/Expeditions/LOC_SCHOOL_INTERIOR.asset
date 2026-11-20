@@ -18,11 +18,11 @@ MonoBehaviour:
     Day:
       Resources:
       - Resource: 0
-        Min: 6
-        Max: 10
+        Min: 14
+        Max: 23
       - Resource: 1
-        Min: 4
-        Max: 8
+        Min: 9
+        Max: 18
       - Resource: 5
         Min: 1
         Max: 3
@@ -38,8 +38,8 @@ MonoBehaviour:
     Night:
       Resources:
       - Resource: 0
-        Min: 8
-        Max: 12
+        Min: 18
+        Max: 28
       - Resource: 2
         Min: 0
         Max: 2
@@ -47,8 +47,8 @@ MonoBehaviour:
         Min: 2
         Max: 4
       - Resource: 1
-        Min: 1
-        Max: 3
+        Min: 3
+        Max: 6
       BaseDownChance: 0.1
       Fatigue: 20
       StressMin: 15

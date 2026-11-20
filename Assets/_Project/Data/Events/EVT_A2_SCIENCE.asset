@@ -72,6 +72,8 @@ MonoBehaviour:
       TeacherReinfect: 0
       TeacherInfection: 0
       TraumaCare: 0
+      Traps: 0
+      IntrusionResponse: 
     Choices:
     - Id: FILTER
       TextKey: 
@@ -129,6 +131,8 @@ MonoBehaviour:
         TeacherReinfect: 0
         TeacherInfection: 0
         TraumaCare: 0
+        Traps: 0
+        IntrusionResponse: 
       OnFailure:
         Stats: []
         Vitals: []
@@ -153,6 +157,8 @@ MonoBehaviour:
         TeacherReinfect: 0
         TeacherInfection: 0
         TraumaCare: 0
+        Traps: 0
+        IntrusionResponse: 
       NextEventId: 
     - Id: NOTEBOOK
       TextKey: 
@@ -209,6 +215,8 @@ MonoBehaviour:
         TeacherReinfect: 0
         TeacherInfection: 0
         TraumaCare: 0
+        Traps: 0
+        IntrusionResponse: 
       OnFailure:
         Stats: []
         Vitals: []
@@ -233,6 +241,8 @@ MonoBehaviour:
         TeacherReinfect: 0
         TeacherInfection: 0
         TraumaCare: 0
+        Traps: 0
+        IntrusionResponse: 
       NextEventId: 
     ReviewAct: 0
     ReviewFromWeek: 1

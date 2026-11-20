@@ -127,13 +127,14 @@ MonoBehaviour:
     DehydrationHpLoss: 10
     HostileEnemyId: ENEMY_SURVIVOR
     HostileStartWeek: 5
-    HostileChanceAct1: 0.1
-    HostileChanceAct2: 0.15
-    HostileChanceAct3: 0.2
-    HostileChanceAct4: 0.25
-    HostileWeightThreaten: 50
-    HostileWeightRob: 35
-    HostileWeightBeat: 15
+    HostileChanceByAct:
+    - 0.1
+    - 0.15
+    - 0.2
+    - 0.25
+    HostileWeightsByAct: 37000000230000000a0000002d000000280000000f000000200000002d0000001700000014000000320000001e000000i
+    HostileCountMinByAct: 01000000010000000200000003000000i
+    HostileCountMaxByAct: 01000000020000000300000003000000i
     BeatenHpLoss: 40
     BeatenStress: 15
     BeatenTraumaRecoveryLoss: 3
@@ -143,6 +144,37 @@ MonoBehaviour:
     DayTraumaStressPerLevel: 4
     TraumaRecoveryWeeks: 6
     HeadlessHostileCaughtChance: 0.5
+    HeadlessHostileCaughtPerExtra: 0.1
+    HeadlessHostileCaughtMax: 0.8
+    BaseEmptyContainerRate: 0.3
+    RestockFraction: 0.5
+    IntrusionStartWeek: 27
+    IntrusionWeeklyChanceAct3: 0.12
+    IntrusionWeeklyChanceAct4: 0.18
+    IntrusionEventId: EVT_DAY_INTRUSION
+    IntrusionActionId: ACT_INTRUSION
+    IntrusionStrength: 55
+    IntrusionStrengthAct4Bonus: 15
+    IntrusionStrengthVariance: 20
+    IntrusionLossLost: 0.25
+    IntrusionLossHidden: 0.1
+    IntrusionLossYield: 0.15
+    IntrusionHideBaseChance: 0.35
+    IntrusionHideAlarmBonus: 0.3
+    IntrusionHidePerDefense: 0.004
+    IntrusionWinStress: 8
+    IntrusionLoseHp: 15
+    IntrusionLoseStress: 15
+    IntrusionYieldStress: 10
+    IntrusionHideStress: 6
+    IntrusionInjuryWeeks: 2
+    RainBarrelWater: 10
+    RoofGardenFood: 7
+    TrapPower: 25
+    MaxTraps: 3
+    AlarmPower: 10
+    ReinforcedDefenseMax: 80
+    CoveredThreatMultiplier: 0.7
     WinterFoodMultiplier: 1.3
     WinterWeeklyFuel: 2
     NoHeatStress: 6
