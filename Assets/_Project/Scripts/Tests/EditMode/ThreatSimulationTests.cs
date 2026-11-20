@@ -215,6 +215,59 @@ namespace ApoGirl.Tests.EditMode
             Assert.AreEqual(ZombieState.Idle, zombie.State);
         }
 
+        /// <summary>좀비가 주인공을 쫓다가(40 → 50 쪽) 놓치게 만든다: 발각될 때까지 보여 주고, 다른 공간으로 사라진다.</summary>
+        private ZombieUnit ChaseThenLose(ActivityMods mods)
+        {
+            var zombie = _sim.AddZombie(_walker, Corridor, 40f);
+            zombie.Facing = 1;
+            for (var t = 0f; t < 3f && zombie.State != ZombieState.Chase; t += 0.1f)
+            {
+                _sim.Step(0.1f, Player(Corridor, 44f), mods);
+            }
+
+            Assert.AreEqual(ZombieState.Chase, zombie.State);
+            for (var t = 0f; t < 10f && zombie.State == ZombieState.Chase; t += 0.1f)
+            {
+                _sim.Step(0.1f, Player(Room, 1f, hidden: true), mods);
+            }
+
+            Assert.AreEqual(ZombieState.Search, zombie.State, "놓치면 그 근처를 서성인다");
+            Assert.IsTrue(zombie.LostChase);
+            return zombie;
+        }
+
+        [Test]
+        public void LostChase_Day_LingersThenBacksOffALittleAndSleepsAgain()
+        {
+            var day = ActivityModel.Evaluate(ClockPhase.Morning, false, _balance);
+            var zombie = ChaseThenLose(day);
+            var lostX = zombie.X;
+            for (var t = 0f; t < 60f && zombie.State != ZombieState.Dormant; t += 0.1f)
+            {
+                Assert.LessOrEqual(System.Math.Abs(zombie.X - lostX), _balance.LostRetreatDay + 2.5f, "낮에는 조금만 물러난다");
+                _sim.Step(0.1f, Player(Room, 1f, hidden: true), day);
+            }
+
+            Assert.AreEqual(ZombieState.Dormant, zombie.State, "낮에는 물러난 자리에서 다시 잠든다");
+            Assert.GreaterOrEqual(System.Math.Abs(zombie.X - lostX), _balance.LostRetreatDay - 2.5f);
+            Assert.IsFalse(_sim.Crowds[zombie.CrowdId].Awake, "다시 잠든 좀비는 잠든 군집에 속한다 (소음으로 다시 깰 수 있다)");
+        }
+
+        [Test]
+        public void LostChase_Night_BacksOffFarAndStaysAwake()
+        {
+            var night = ActivityModel.Evaluate(ClockPhase.Midnight, false, _balance);
+            var zombie = ChaseThenLose(night);
+            var lostX = zombie.X;
+            for (var t = 0f; t < 120f && zombie.State != ZombieState.Idle; t += 0.1f)
+            {
+                _sim.Step(0.1f, Player(Room, 1f, hidden: true), night);
+            }
+
+            Assert.AreEqual(ZombieState.Idle, zombie.State, "밤에는 깨어 있는 채로 배회한다");
+            Assert.GreaterOrEqual(System.Math.Abs(zombie.X - lostX), _balance.LostRetreatNight - 2.5f, "밤에는 충분히 멀어진다");
+        }
+
         [Test]
         public void Shove_StunsAndPushes_IgnoresDormant()
         {

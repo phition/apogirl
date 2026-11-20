@@ -142,6 +142,9 @@ namespace ApoGirl.Core.Definitions
 
         /// <summary>비어 있지 않으면 종류 기본 그림 대신 쓸 스프라이트 키 (예: prop_bed).</summary>
         public string SpriteKey = "";
+
+        /// <summary>반드시 들어 있는 상자: 판마다 정해지는 '처음부터 빈 상자' 판정에서 빠진다 (예: 교실동 분실물 상자의 책가방).</summary>
+        public bool Guaranteed;
     }
 
     [Serializable]

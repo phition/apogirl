@@ -108,7 +108,7 @@ namespace ApoGirl.EditorTools
                 Containers =
                 {
                     C("MAT_PILE", ContainerKind.Box, 0, 4f, "LOOT_TUTORIAL_GEAR"),
-                    C("BALL_CART", ContainerKind.Box, 0, 7f),
+                    C("BALL_CART", ContainerKind.Box, 0, 7f, "LOOT_TUTORIAL_BAT"),   // 공 수레에 야구 방망이가 꽂혀 있다
                     C("SHELF", ContainerKind.Cabinet, 0, 10f),
                 },
             });
@@ -241,6 +241,15 @@ namespace ApoGirl.EditorTools
             {
                 layout.Containers.Add(C($"C_{f + 1}F_HALL_LOCKER_A", ContainerKind.Locker, f, 114.5f, "LOOT_SCHOOL_LOCKER"));
                 layout.Containers.Add(C($"C_{f + 1}F_HALL_LOCKER_B", ContainerKind.Locker, f, f == 0 ? 53.5f : 117.5f, "LOOT_SCHOOL_LOCKER"));
+            }
+
+            // 층마다 분실물 상자 하나: 책가방이 반드시 하나 들어 있다 (교실동에서 기본 가방 4개, 달마다 복구).
+            // 상자 번호가 밀리지 않게(뒤진 기록·전리품 시드) 목록 맨 끝에 붙인다
+            for (var f = 0; f < layout.Floors; f++)
+            {
+                var lostAndFound = C($"C_{f + 1}F_LOST_FOUND", ContainerKind.Box, f, 112.7f, "LOOT_SCHOOL_BAG");
+                lostAndFound.Guaranteed = true;
+                layout.Containers.Add(lostAndFound);
             }
 
             layout.Exits.Add(new ExitDef { Kind = ExitKind.Main, Floor = 0, X = 56f });

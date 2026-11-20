@@ -1892,7 +1892,7 @@ namespace ApoGirl.Exploration.Runtime
         /// </summary>
         private bool Deplete(ExplorationTarget target, string key)
         {
-            if (!Location.Tutorial && ContainerRules.BaselineEmpty(Request.WorldSeed, key, _balance.BaseEmptyContainerRate))
+            if (!Location.Tutorial && !(target.Container != null && target.Container.Guaranteed) && ContainerRules.BaselineEmpty(Request.WorldSeed, key, _balance.BaseEmptyContainerRate))
             {
                 return true;
             }

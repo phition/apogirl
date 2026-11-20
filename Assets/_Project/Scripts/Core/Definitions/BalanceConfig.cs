@@ -546,6 +546,14 @@ namespace ApoGirl.Core.Definitions
         public float ChainWakeRadius = 12f;
 
         public float SearchDuration = 6f;
+
+        /// <summary>
+        /// 추격하다 놓친 좀비: 놓친 곳 근처를 서성이는 시간(초), 그 뒤 물러나는 거리(유닛).
+        /// 낮(휴면·선잠)에는 조금 물러나 다시 잠들고, 밤에는 멀리 물러나 깨어 있는 채로 배회한다.
+        /// </summary>
+        public float LostLingerSeconds = 5f;
+        public float LostRetreatDay = 6f;
+        public float LostRetreatNight = 18f;
         public float PatrolRange = 4f;
         public float AwarenessDecayPerSecond = 0.5f;
         public float CrouchSightMultiplier = 0.6f;

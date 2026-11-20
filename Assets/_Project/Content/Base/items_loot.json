@@ -74,6 +74,10 @@
 
     { "Id": "LOOT_TUTORIAL", "MinRolls": 1, "MaxRolls": 1, "EmptyChance": 0.0,
       "Entries": [ { "ItemId": "ITEM_SNACK", "Weight": 3 }, { "ItemId": "ITEM_WATER_BOTTLE", "Weight": 3 }, { "ItemId": "ITEM_BANDAGE", "Weight": 1 } ] },
+    { "Id": "LOOT_TUTORIAL_BAT", "MinRolls": 1, "MaxRolls": 1, "EmptyChance": 0.0,
+      "Entries": [ { "ItemId": "ITEM_WEAPON_BAT", "Weight": 1 } ] },
+    { "Id": "LOOT_SCHOOL_BAG", "MinRolls": 1, "MaxRolls": 1, "EmptyChance": 0.0,
+      "Entries": [ { "ItemId": "ITEM_BAG_SCHOOL", "Weight": 1 } ] },
     { "Id": "LOOT_TUTORIAL_GEAR", "MinRolls": 1, "MaxRolls": 1, "EmptyChance": 0.0,
       "Entries": [ { "ItemId": "ITEM_ARMOR_GUARD", "Weight": 1 } ] },
 

@@ -141,6 +141,9 @@ namespace ApoGirl.Exploration.Model
         public int HomeArea;
         public float HomeX;
 
+        /// <summary>추격하다 놓쳤다: 놓친 곳 근처를 서성인 뒤 물러난다 (낮에는 조금 물러나 다시 잠들고, 밤에는 멀리 물러나 배회).</summary>
+        public bool LostChase;
+
         /// <summary>무기 타격 누적 (EnemyDef.Toughness에 닿으면 쓰러짐).</summary>
         public int Wounds;
 
@@ -631,6 +634,7 @@ namespace ApoGirl.Exploration.Model
 
             if (sees && zombie.Awareness >= 1f && zombie.State != ZombieState.Chase)
             {
+                zombie.LostChase = false;
                 zombie.State = ZombieState.Chase;
                 events.Spotted = true;
             }
@@ -670,7 +674,19 @@ namespace ApoGirl.Exploration.Model
                     }
 
                     MoveToward(zombie, zombie.TargetX, zombie.Def.WalkSpeed * 0.6f * mods.Speed, dt);
-                    if (zombie.Timer <= 0f)
+                    if (zombie.Timer <= 0f && zombie.LostChase && !zombie.IsSurvivor)
+                    {
+                        // 놓친 곳에서 물러난다: 주인공 반대쪽으로 (벽에 막히면 더 멀리 갈 수 있는 쪽으로)
+                        var sleepy = IsSleepy(mods);
+                        var distance = sleepy ? _balance.LostRetreatDay : _balance.LostRetreatNight;
+                        var away = player.AreaId == zombie.AreaId && Math.Abs(zombie.X - player.X) > 0.01f ? Math.Sign(zombie.X - player.X) : -zombie.Facing;
+                        var first = Clamp(zombie.AreaId, zombie.X + away * distance);
+                        var second = Clamp(zombie.AreaId, zombie.X - away * distance);
+                        zombie.HomeArea = zombie.AreaId;
+                        zombie.HomeX = Math.Abs(first - zombie.X) >= distance * 0.5f || Math.Abs(first - zombie.X) >= Math.Abs(second - zombie.X) ? first : second;
+                        zombie.State = ZombieState.Return;
+                    }
+                    else if (zombie.Timer <= 0f)
                     {
                         zombie.State = ZombieState.Return;
                         if (zombie.HomeArea != zombie.AreaId)
@@ -684,10 +700,16 @@ namespace ApoGirl.Exploration.Model
                     break;
 
                 case ZombieState.Return:
-                    if (MoveToward(zombie, zombie.HomeX, zombie.Def.WalkSpeed * 0.5f * mods.Speed, dt))
+                    if (MoveToward(zombie, zombie.HomeX, zombie.Def.WalkSpeed * (zombie.LostChase ? 0.7f : 0.5f) * mods.Speed, dt))
                     {
+                        var lost = zombie.LostChase;
+                        zombie.LostChase = false;
                         zombie.State = ZombieState.Idle;
                         zombie.Timer = 0f;
+                        if (lost && IsSleepy(mods) && !zombie.IsSurvivor)
+                        {
+                            FallAsleep(zombie);
+                        }
                     }
 
                     break;
@@ -736,8 +758,30 @@ namespace ApoGirl.Exploration.Model
             }
 
             zombie.State = ZombieState.Search;
-            zombie.Timer = _balance.SearchDuration;
+            zombie.Timer = zombie.IsSurvivor ? _balance.SearchDuration : _balance.LostLingerSeconds;
             zombie.Awareness = 0.5f;
+            zombie.LostChase = true;
+        }
+
+        /// <summary>좀비가 다시 잠들 수 있는 시간대인가 (낮: 휴면·선잠, 황혼 각성 뒤에는 아니다).</summary>
+        private bool IsSleepy(ActivityMods mods) => !Awakened && (mods.Level == ActivityLevel.Dormant || mods.Level == ActivityLevel.Stirring);
+
+        /// <summary>
+        /// 깨어 있던 좀비가 그 자리에서 다시 잠든다: 가까이(3유닛)에 잠든 군집이 있으면 거기에 끼고, 없으면 혼자인 새 군집이 된다.
+        /// (군집이 있어야 소음·기척으로 다시 깨어난다.)
+        /// </summary>
+        private void FallAsleep(ZombieUnit zombie)
+        {
+            if (zombie.CrowdId >= 0 && zombie.CrowdId < _crowds.Count)
+            {
+                _crowds[zombie.CrowdId].Members.Remove(zombie);
+            }
+
+            var crowd = _crowds.Find(c => !c.Awake && c.AreaId == zombie.AreaId && Math.Abs(c.X - zombie.X) <= 3f) ?? AddCrowd(zombie.AreaId, zombie.X);
+            crowd.Members.Add(zombie);
+            zombie.CrowdId = crowd.Id;
+            zombie.State = ZombieState.Dormant;
+            zombie.Awareness = 0f;
         }
 
         /// <returns>목표에 도착했는가.</returns>
