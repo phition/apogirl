@@ -629,7 +629,7 @@ ART_PROMPTS 6장의 21장에 하나를 더한다.
 - **바깥 길**: 학교 밖 지역은 진입로(거리)에서 시작하고, 건물 반대쪽 출구는 탈출로(골목)로 이어진다. 두 길 모두 학교로 돌아가는 지점이 있다 (`BuildingView.BuildOutdoor`, `BalanceConfig.ApproachRoadWidth`·`EscapeRouteWidth`).
 - **무너진 계단**: `ConnectorDef.Collapsed` (`LocationBuilder.Stairs(…, collapsedFrom)`). 학교 오른쪽 계단 2~3층, 정수장 왼쪽 계단 2~3층.
 - **지금 층만 보이기**: 위·아래층은 가린다. **빛줄기**는 층마다 1~2곳(`SunbeamsPerFloorMin/Max`), 해의 위치에 따라 기울기와 바닥 빛 자리가 움직인다.
-- 만드는 도구는 저장소 밖 `I:\workshop\code_temppogirl	ools\` (gen_env·gen_player·gen_attack·gen_chars → install_env·install_player·install_chars → make_special·bag_colors·make_anchors·fix_idle·make_art_map). API 키는 저장소에 두지 않는다.
+- 만드는 도구는 저장소 밖 `I:/workshop/code_temp/apogirl/tools/` (gen_env·gen_player·gen_attack·gen_chars → install_env·install_player·install_chars → make_special·bag_colors·make_anchors·fix_idle·make_art_map). API 키는 저장소에 두지 않는다.
 - 화면 확인용: `ExpeditionDebug.Start(행동, 슬롯, 무기, 옷, 가방, 도구)`, `.Room(템플릿 글자)`, `ExpeditionDirector.DebugGoTo(층 또는 -1 진입로/-2 탈출로, x)`.
 
 ## 9. 예비 에셋 (P4: 앞으로 추가될 수 있는 것)
