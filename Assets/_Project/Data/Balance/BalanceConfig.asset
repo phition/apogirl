@@ -168,8 +168,8 @@ MonoBehaviour:
     IntrusionYieldStress: 10
     IntrusionHideStress: 6
     IntrusionInjuryWeeks: 2
-    RainBarrelWater: 10
-    RoofGardenFood: 7
+    RainBarrelWater: 8
+    RoofGardenFood: 5
     TrapPower: 25
     MaxTraps: 3
     AlarmPower: 10
