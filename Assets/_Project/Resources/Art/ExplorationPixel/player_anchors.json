@@ -760,7 +760,7 @@
 "Key": "player_guard_baton_idle_14",
 "X": -0.107,
 "Y": 1.22,
-"Angle": 6.8
+"Angle": 6.9
 },
 {
 "Key": "player_guard_baton_idle_15",
@@ -1538,99 +1538,99 @@
 },
 {
 "Key": "player_guard_none_idle_0",
-"X": -0.105,
+"X": -0.106,
 "Y": 1.214,
-"Angle": 5.6
+"Angle": 5.5
 },
 {
 "Key": "player_guard_none_idle_1",
 "X": -0.106,
 "Y": 1.214,
-"Angle": 6.2
+"Angle": 5.5
 },
 {
 "Key": "player_guard_none_idle_2",
-"X": -0.108,
-"Y": 1.213,
-"Angle": 7.2
+"X": -0.106,
+"Y": 1.214,
+"Angle": 5.5
 },
 {
 "Key": "player_guard_none_idle_3",
-"X": -0.11,
-"Y": 1.213,
-"Angle": 7.3
+"X": -0.106,
+"Y": 1.214,
+"Angle": 5.5
 },
 {
 "Key": "player_guard_none_idle_4",
-"X": -0.111,
-"Y": 1.213,
-"Angle": 6.8
+"X": -0.106,
+"Y": 1.207,
+"Angle": 5.5
 },
 {
 "Key": "player_guard_none_idle_5",
-"X": -0.111,
-"Y": 1.213,
-"Angle": 6.5
+"X": -0.107,
+"Y": 1.193,
+"Angle": 5.4
 },
 {
 "Key": "player_guard_none_idle_6",
-"X": -0.112,
-"Y": 1.213,
-"Angle": 6.5
+"X": -0.107,
+"Y": 1.187,
+"Angle": 5.4
 },
 {
 "Key": "player_guard_none_idle_7",
-"X": -0.112,
-"Y": 1.213,
-"Angle": 6.7
+"X": -0.107,
+"Y": 1.187,
+"Angle": 5.4
 },
 {
 "Key": "player_guard_none_idle_8",
-"X": -0.111,
-"Y": 1.213,
-"Angle": 7.0
+"X": -0.107,
+"Y": 1.187,
+"Angle": 5.4
 },
 {
 "Key": "player_guard_none_idle_9",
-"X": -0.109,
-"Y": 1.213,
-"Angle": 6.8
+"X": -0.107,
+"Y": 1.187,
+"Angle": 5.4
 },
 {
 "Key": "player_guard_none_idle_10",
 "X": -0.107,
-"Y": 1.214,
-"Angle": 6.0
+"Y": 1.187,
+"Angle": 5.4
 },
 {
 "Key": "player_guard_none_idle_11",
-"X": -0.106,
-"Y": 1.214,
-"Angle": 5.6
+"X": -0.107,
+"Y": 1.193,
+"Angle": 5.4
 },
 {
 "Key": "player_guard_none_idle_12",
-"X": -0.105,
-"Y": 1.214,
-"Angle": 5.6
+"X": -0.106,
+"Y": 1.207,
+"Angle": 5.5
 },
 {
 "Key": "player_guard_none_idle_13",
-"X": -0.105,
+"X": -0.106,
 "Y": 1.214,
-"Angle": 5.6
+"Angle": 5.5
 },
 {
 "Key": "player_guard_none_idle_14",
-"X": -0.105,
+"X": -0.106,
 "Y": 1.214,
-"Angle": 5.6
+"Angle": 5.5
 },
 {
 "Key": "player_guard_none_idle_15",
-"X": -0.105,
+"X": -0.106,
 "Y": 1.214,
-"Angle": 5.6
+"Angle": 5.5
 },
 {
 "Key": "player_guard_none_run_0",
@@ -2114,99 +2114,99 @@
 },
 {
 "Key": "player_guard_pipe_idle_0",
-"X": -0.12,
+"X": -0.079,
 "Y": 1.214,
-"Angle": 1.0
+"Angle": 5.4
 },
 {
 "Key": "player_guard_pipe_idle_1",
-"X": -0.151,
-"Y": 1.208,
-"Angle": -2.6
+"X": -0.079,
+"Y": 1.214,
+"Angle": 5.4
 },
 {
 "Key": "player_guard_pipe_idle_2",
-"X": -0.143,
-"Y": 1.2,
-"Angle": -1.7
+"X": -0.079,
+"Y": 1.214,
+"Angle": 5.4
 },
 {
 "Key": "player_guard_pipe_idle_3",
-"X": -0.119,
-"Y": 1.202,
-"Angle": 1.0
+"X": -0.079,
+"Y": 1.214,
+"Angle": 5.4
 },
 {
 "Key": "player_guard_pipe_idle_4",
-"X": -0.131,
-"Y": 1.217,
-"Angle": -0.4
-},
-{
-"Key": "player_guard_pipe_idle_5",
-"X": -0.131,
-"Y": 1.217,
-"Angle": -0.3
-},
-{
-"Key": "player_guard_pipe_idle_6",
-"X": -0.098,
-"Y": 1.204,
-"Angle": 3.3
-},
-{
-"Key": "player_guard_pipe_idle_7",
-"X": -0.084,
-"Y": 1.208,
-"Angle": 4.8
-},
-{
-"Key": "player_guard_pipe_idle_8",
-"X": -0.082,
-"Y": 1.215,
-"Angle": 5.0
-},
-{
-"Key": "player_guard_pipe_idle_9",
-"X": -0.08,
+"X": -0.079,
 "Y": 1.207,
 "Angle": 5.4
 },
 {
-"Key": "player_guard_pipe_idle_10",
-"X": -0.084,
+"Key": "player_guard_pipe_idle_5",
+"X": -0.08,
 "Y": 1.194,
-"Angle": 4.9
+"Angle": 5.3
+},
+{
+"Key": "player_guard_pipe_idle_6",
+"X": -0.08,
+"Y": 1.187,
+"Angle": 5.3
+},
+{
+"Key": "player_guard_pipe_idle_7",
+"X": -0.08,
+"Y": 1.187,
+"Angle": 5.3
+},
+{
+"Key": "player_guard_pipe_idle_8",
+"X": -0.08,
+"Y": 1.187,
+"Angle": 5.3
+},
+{
+"Key": "player_guard_pipe_idle_9",
+"X": -0.08,
+"Y": 1.187,
+"Angle": 5.3
+},
+{
+"Key": "player_guard_pipe_idle_10",
+"X": -0.08,
+"Y": 1.187,
+"Angle": 5.3
 },
 {
 "Key": "player_guard_pipe_idle_11",
-"X": -0.088,
-"Y": 1.188,
-"Angle": 4.4
+"X": -0.08,
+"Y": 1.194,
+"Angle": 5.3
 },
 {
 "Key": "player_guard_pipe_idle_12",
-"X": -0.084,
-"Y": 1.187,
-"Angle": 4.9
+"X": -0.079,
+"Y": 1.207,
+"Angle": 5.4
 },
 {
 "Key": "player_guard_pipe_idle_13",
 "X": -0.079,
-"Y": 1.193,
+"Y": 1.214,
 "Angle": 5.4
 },
 {
 "Key": "player_guard_pipe_idle_14",
 "X": -0.079,
-"Y": 1.207,
+"Y": 1.214,
 "Angle": 5.4
 },
 {
 "Key": "player_guard_pipe_idle_15",
-"X": -0.09,
-"Y": 1.216,
-"Angle": 4.3
+"X": -0.079,
+"Y": 1.214,
+"Angle": 5.4
 },
 {
 "Key": "player_guard_pipe_run_0",
@@ -3938,80 +3938,80 @@
 },
 {
 "Key": "player_padding_none_idle_0",
-"X": -0.093,
-"Y": 1.186,
-"Angle": 6.1
-},
-{
-"Key": "player_padding_none_idle_1",
-"X": -0.093,
-"Y": 1.158,
-"Angle": 6.8
-},
-{
-"Key": "player_padding_none_idle_2",
-"X": -0.093,
-"Y": 1.186,
-"Angle": 5.9
-},
-{
-"Key": "player_padding_none_idle_3",
-"X": -0.093,
-"Y": 1.215,
-"Angle": 5.0
-},
-{
-"Key": "player_padding_none_idle_4",
-"X": -0.093,
-"Y": 1.215,
-"Angle": 5.2
-},
-{
-"Key": "player_padding_none_idle_5",
-"X": -0.094,
-"Y": 1.214,
-"Angle": 5.8
-},
-{
-"Key": "player_padding_none_idle_6",
-"X": -0.094,
-"Y": 1.193,
-"Angle": 6.4
-},
-{
-"Key": "player_padding_none_idle_7",
-"X": -0.093,
-"Y": 1.158,
-"Angle": 6.5
-},
-{
-"Key": "player_padding_none_idle_8",
-"X": -0.092,
-"Y": 1.158,
-"Angle": 5.8
-},
-{
-"Key": "player_padding_none_idle_9",
-"X": -0.092,
-"Y": 1.187,
-"Angle": 4.8
-},
-{
-"Key": "player_padding_none_idle_10",
-"X": -0.091,
-"Y": 1.209,
-"Angle": 4.2
-},
-{
-"Key": "player_padding_none_idle_11",
 "X": -0.091,
 "Y": 1.216,
 "Angle": 4.0
 },
 {
-"Key": "player_padding_none_idle_12",
+"Key": "player_padding_none_idle_1",
 "X": -0.091,
 "Y": 1.216,
+"Angle": 4.0
+},
+{
+"Key": "player_padding_none_idle_2",
+"X": -0.091,
+"Y": 1.216,
+"Angle": 4.0
+},
+{
+"Key": "player_padding_none_idle_3",
+"X": -0.091,
+"Y": 1.216,
+"Angle": 4.0
+},
+{
+"Key": "player_padding_none_idle_4",
+"X": -0.091,
+"Y": 1.209,
+"Angle": 4.0
+},
+{
+"Key": "player_padding_none_idle_5",
+"X": -0.09,
+"Y": 1.195,
+"Angle": 4.0
+},
+{
+"Key": "player_padding_none_idle_6",
+"X": -0.09,
+"Y": 1.188,
+"Angle": 4.1
+},
+{
+"Key": "player_padding_none_idle_7",
+"X": -0.09,
+"Y": 1.188,
+"Angle": 4.1
+},
+{
+"Key": "player_padding_none_idle_8",
+"X": -0.09,
+"Y": 1.188,
+"Angle": 4.1
+},
+{
+"Key": "player_padding_none_idle_9",
+"X": -0.09,
+"Y": 1.188,
+"Angle": 4.1
+},
+{
+"Key": "player_padding_none_idle_10",
+"X": -0.09,
+"Y": 1.188,
+"Angle": 4.1
+},
+{
+"Key": "player_padding_none_idle_11",
+"X": -0.09,
+"Y": 1.195,
+"Angle": 4.0
+},
+{
+"Key": "player_padding_none_idle_12",
+"X": -0.091,
+"Y": 1.209,
 "Angle": 4.0
 },
 {
@@ -4028,9 +4028,9 @@
 },
 {
 "Key": "player_padding_none_idle_15",
-"X": -0.092,
-"Y": 1.215,
-"Angle": 4.6
+"X": -0.091,
+"Y": 1.216,
+"Angle": 4.0
 },
 {
 "Key": "player_padding_none_run_0",
@@ -6346,79 +6346,79 @@
 "Key": "player_riot_none_idle_1",
 "X": -0.143,
 "Y": 1.215,
-"Angle": 4.8
+"Angle": 4.5
 },
 {
 "Key": "player_riot_none_idle_2",
-"X": -0.144,
-"Y": 1.214,
-"Angle": 5.3
+"X": -0.143,
+"Y": 1.215,
+"Angle": 4.5
 },
 {
 "Key": "player_riot_none_idle_3",
-"X": -0.144,
-"Y": 1.214,
-"Angle": 5.5
+"X": -0.143,
+"Y": 1.215,
+"Angle": 4.5
 },
 {
 "Key": "player_riot_none_idle_4",
-"X": -0.144,
-"Y": 1.214,
-"Angle": 5.3
+"X": -0.143,
+"Y": 1.208,
+"Angle": 4.5
 },
 {
 "Key": "player_riot_none_idle_5",
 "X": -0.143,
-"Y": 1.208,
-"Angle": 4.9
+"Y": 1.194,
+"Angle": 4.5
 },
 {
 "Key": "player_riot_none_idle_6",
-"X": -0.142,
-"Y": 1.194,
-"Angle": 5.0
+"X": -0.143,
+"Y": 1.187,
+"Angle": 4.5
 },
 {
 "Key": "player_riot_none_idle_7",
-"X": -0.142,
+"X": -0.143,
 "Y": 1.187,
-"Angle": 5.2
+"Angle": 4.5
 },
 {
 "Key": "player_riot_none_idle_8",
-"X": -0.142,
-"Y": 1.194,
-"Angle": 5.0
+"X": -0.143,
+"Y": 1.187,
+"Angle": 4.5
 },
 {
 "Key": "player_riot_none_idle_9",
 "X": -0.143,
-"Y": 1.208,
-"Angle": 4.9
+"Y": 1.187,
+"Angle": 4.5
 },
 {
 "Key": "player_riot_none_idle_10",
-"X": -0.144,
-"Y": 1.214,
-"Angle": 5.3
+"X": -0.143,
+"Y": 1.187,
+"Angle": 4.5
 },
 {
 "Key": "player_riot_none_idle_11",
-"X": -0.144,
-"Y": 1.214,
-"Angle": 5.5
+"X": -0.143,
+"Y": 1.194,
+"Angle": 4.5
 },
 {
 "Key": "player_riot_none_idle_12",
-"X": -0.144,
-"Y": 1.214,
-"Angle": 5.3
+"X": -0.143,
+"Y": 1.208,
+"Angle": 4.5
 },
 {
 "Key": "player_riot_none_idle_13",
 "X": -0.143,
 "Y": 1.215,
-"Angle": 4.8
+"Angle": 4.5
 },
 {
 "Key": "player_riot_none_idle_14",
@@ -7899,68 +7899,68 @@
 {
 "Key": "player_uniform_baton_idle_4",
 "X": -0.135,
-"Y": 1.214,
+"Y": 1.207,
 "Angle": 5.4
 },
 {
 "Key": "player_uniform_baton_idle_5",
+"X": -0.134,
+"Y": 1.193,
+"Angle": 5.5
+},
+{
+"Key": "player_uniform_baton_idle_6",
+"X": -0.134,
+"Y": 1.186,
+"Angle": 5.5
+},
+{
+"Key": "player_uniform_baton_idle_7",
+"X": -0.134,
+"Y": 1.186,
+"Angle": 5.5
+},
+{
+"Key": "player_uniform_baton_idle_8",
+"X": -0.134,
+"Y": 1.186,
+"Angle": 5.5
+},
+{
+"Key": "player_uniform_baton_idle_9",
+"X": -0.134,
+"Y": 1.186,
+"Angle": 5.5
+},
+{
+"Key": "player_uniform_baton_idle_10",
+"X": -0.134,
+"Y": 1.186,
+"Angle": 5.5
+},
+{
+"Key": "player_uniform_baton_idle_11",
+"X": -0.134,
+"Y": 1.193,
+"Angle": 5.5
+},
+{
+"Key": "player_uniform_baton_idle_12",
+"X": -0.135,
+"Y": 1.207,
+"Angle": 5.4
+},
+{
+"Key": "player_uniform_baton_idle_13",
 "X": -0.135,
 "Y": 1.214,
 "Angle": 5.4
 },
 {
-"Key": "player_uniform_baton_idle_6",
-"X": -0.136,
+"Key": "player_uniform_baton_idle_14",
+"X": -0.135,
 "Y": 1.214,
 "Angle": 5.4
-},
-{
-"Key": "player_uniform_baton_idle_7",
-"X": -0.14,
-"Y": 1.214,
-"Angle": 5.2
-},
-{
-"Key": "player_uniform_baton_idle_8",
-"X": -0.142,
-"Y": 1.215,
-"Angle": 4.8
-},
-{
-"Key": "player_uniform_baton_idle_9",
-"X": -0.142,
-"Y": 1.215,
-"Angle": 4.6
-},
-{
-"Key": "player_uniform_baton_idle_10",
-"X": -0.142,
-"Y": 1.215,
-"Angle": 4.6
-},
-{
-"Key": "player_uniform_baton_idle_11",
-"X": -0.142,
-"Y": 1.215,
-"Angle": 4.6
-},
-{
-"Key": "player_uniform_baton_idle_12",
-"X": -0.141,
-"Y": 1.215,
-"Angle": 4.7
-},
-{
-"Key": "player_uniform_baton_idle_13",
-"X": -0.139,
-"Y": 1.215,
-"Angle": 4.9
-},
-{
-"Key": "player_uniform_baton_idle_14",
-"X": -0.136,
-"Y": 1.214,
-"Angle": 5.3
 },
 {
 "Key": "player_uniform_baton_idle_15",
@@ -8354,9 +8354,9 @@
 },
 {
 "Key": "player_uniform_mop_idle_0",
-"X": 0.188,
-"Y": 1.387,
-"Angle": 1.2
+"X": 0.189,
+"Y": 1.386,
+"Angle": 1.3
 },
 {
 "Key": "player_uniform_mop_idle_1",
@@ -8426,27 +8426,27 @@
 },
 {
 "Key": "player_uniform_mop_idle_12",
-"X": 0.183,
+"X": 0.184,
 "Y": 1.367,
-"Angle": 0.7
+"Angle": 0.8
 },
 {
 "Key": "player_uniform_mop_idle_13",
-"X": 0.182,
-"Y": 1.381,
-"Angle": 0.5
+"X": 0.184,
+"Y": 1.38,
+"Angle": 0.7
 },
 {
 "Key": "player_uniform_mop_idle_14",
-"X": 0.182,
-"Y": 1.388,
-"Angle": 0.5
+"X": 0.184,
+"Y": 1.387,
+"Angle": 0.8
 },
 {
 "Key": "player_uniform_mop_idle_15",
-"X": 0.183,
-"Y": 1.388,
-"Angle": 0.7
+"X": 0.185,
+"Y": 1.387,
+"Angle": 0.9
 },
 {
 "Key": "player_uniform_mop_run_0",
