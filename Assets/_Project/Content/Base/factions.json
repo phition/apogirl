@@ -7,8 +7,8 @@
         { "MinTier": "Hostile", "MaxTier": "Hostile", "RaidChanceMultiplier": 1.25, "IntrusionMultiplier": 1.3, "HostileMultiplier": 1.3, "RaidStrengthBonus": 5,
           "TextKey": "faction.FAC_SAGEORI.effect.hostile" },
         { "MinTier": "Wary", "MaxTier": "Wary", "TextKey": "faction.FAC_SAGEORI.effect.wary" },
-        { "MinTier": "Neutral", "MaxTier": "Allied", "RaidChanceMultiplier": 0.8, "IntrusionMultiplier": 0.6, "HostileMultiplier": 0.6,
-          "WeeklyResources": [ { "Resource": "Food", "Amount": -2 } ], "TextKey": "faction.FAC_SAGEORI.effect.truce" }
+        { "MinTier": "Neutral", "MaxTier": "Allied", "RaidChanceMultiplier": 0.9, "IntrusionMultiplier": 0.75, "HostileMultiplier": 0.8,
+          "WeeklyResources": [ { "Resource": "Food", "Amount": -3 } ], "TextKey": "faction.FAC_SAGEORI.effect.truce" }
       ]
     },
     {
@@ -38,7 +38,7 @@
       "DriftAfterWeeks": 4, "WeeklyDrift": 3, "DriftTarget": 10,
       "Effects": [
         { "MinTier": "Hostile", "MaxTier": "Neutral", "TextKey": "faction.FAC_UBC.effect.distant" },
-        { "MinTier": "Friendly", "MaxTier": "Allied", "RaidChanceMultiplier": 0.9, "WeeklyStress": -2, "TextKey": "faction.FAC_UBC.effect.radio" },
+        { "MinTier": "Friendly", "MaxTier": "Allied", "RaidChanceMultiplier": 0.95, "WeeklyStress": -2, "TextKey": "faction.FAC_UBC.effect.radio" },
         { "MinTier": "Allied", "MaxTier": "Allied", "TextKey": "faction.FAC_UBC.effect.allied" }
       ],
       "Trades": [

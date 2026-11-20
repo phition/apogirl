@@ -98,13 +98,13 @@ namespace ApoGirl.Tests.EditMode
 
             // 휴전(중립 이상): 침입이 줄고 통행세
             state.Factions["FAC_SAGEORI"].Standing = 0;
-            Assert.AreEqual(0.6f, FactionRules.IntrusionMultiplier(state, db), 1e-5);
+            Assert.AreEqual(0.75f, FactionRules.IntrusionMultiplier(state, db), 1e-5);
             state.Base.SetResource(ResourceType.Food, 1);
             FactionRules.ApplyWeekly(state, db, db.Balance, new StateDelta());
             Assert.AreEqual(0, state.Base.GetResource(ResourceType.Food), "통행세는 있는 만큼만");
 
             var chanceBase = RaidRules.Chance(state, db.Balance);
-            Assert.AreEqual(chanceBase * 0.8f, RaidRules.Chance(state, db.Balance, db), 1e-5, "습격 확률에 세력 배율");
+            Assert.AreEqual(chanceBase * 0.9f, RaidRules.Chance(state, db.Balance, db), 1e-5, "습격 확률에 세력 배율");
         }
 
         [Test]

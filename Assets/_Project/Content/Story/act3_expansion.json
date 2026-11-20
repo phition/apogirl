@@ -120,7 +120,7 @@
         { "Id": "ASK_STAY", "Effect": { "Hidden": [ { "Hidden": "Humanity", "Amount": 1 } ], "Vitals": [ { "Vital": "Stress", "Amount": -4 } ] } }
       ] },
 
-    { "Id": "EVT_CAL_HANGEUL", "Kind": "Calendar", "Priority": 55, "Condition": { "Month": 10, "DayOfMonth": 9 },
+    { "Id": "EVT_CAL_HANGEUL", "Kind": "Calendar", "Priority": 75, "Condition": { "Month": 10, "DayOfMonth": 9 },
       "Choices": [
         { "Id": "WRITE", "Effect": { "Stats": [ { "Stat": "Empathy", "Amount": 1 } ], "Npcs": [ { "NpcId": "NPC_TEACHER", "Affinity": 3 } ], "Hidden": [ { "Hidden": "SelfAwareness", "Amount": 1 } ] } },
         { "Id": "LISTEN", "Effect": { "Stats": [ { "Stat": "Intellect", "Amount": 1 } ], "Npcs": [ { "NpcId": "NPC_TEACHER", "Affinity": 2 } ] } }
