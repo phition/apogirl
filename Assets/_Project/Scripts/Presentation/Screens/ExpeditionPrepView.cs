@@ -38,6 +38,19 @@ namespace ApoGirl.Presentation.Screens
             _loadout = root.Q("exp-loadout");
             _buttons = root.Q("exp-buttons");
             _standing = new StandingView(root.Q("exp-standing"), () => _session.State, () => _session.Definitions.Balance);
+
+            // 지역 그림 아래쪽을 부드럽게 어둡게 (위는 투명 → 아래는 거의 검정)
+            var shade = new UnityEngine.Texture2D(1, 64, UnityEngine.TextureFormat.RGBA32, false) { wrapMode = UnityEngine.TextureWrapMode.Clamp };
+            for (var y = 0; y < 64; y++)
+            {
+                var t = 1f - y / 63f;
+                shade.SetPixel(0, y, new UnityEngine.Color(0.03f, 0.035f, 0.05f, UnityEngine.Mathf.SmoothStep(0f, 0.9f, t)));
+            }
+
+            shade.Apply();
+            var shadeElement = root.Q(className: "exp-art-shade");
+            shadeElement.style.backgroundImage = new StyleBackground(shade);
+            shadeElement.style.backgroundSize = new StyleBackgroundSize(new BackgroundSize(BackgroundSizeType.Cover));
         }
 
         public bool IsOpen => !_sheet.ClassListContains("hidden");

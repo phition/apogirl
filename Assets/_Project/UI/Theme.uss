@@ -657,7 +657,7 @@ Button.selected { border-color: var(--accent); background-color: var(--accent-so
 /* ── 3겹 전용 화면 공통 ── */
 .sheet {
     position: absolute; left: 0; top: 0; right: 0; bottom: 0;
-    background-color: rgba(6, 7, 10, 0.82);
+    background-color: rgba(6, 7, 10, 0.95);
     align-items: center;
     justify-content: center;
 }
@@ -698,7 +698,7 @@ Button.selected { border-color: var(--accent); background-color: var(--accent-so
 /* 출정 준비: 왼쪽 지역 그림, 오른쪽 입상 + 장비 */
 .expedition-sheet { flex-direction: row; align-items: stretch; justify-content: flex-start; background-color: rgb(14, 15, 18); }
 .exp-art { flex-grow: 1; background-color: rgb(30, 32, 36); justify-content: flex-end; }
-.exp-art-shade { position: absolute; left: 0; right: 0; bottom: 0; height: 62%; background-color: rgba(8, 9, 12, 0.72); }
+.exp-art-shade { position: absolute; left: 0; right: 0; bottom: 0; height: 70%; }
 .expedition-sheet.night .exp-art { -unity-background-image-tint-color: rgb(120, 130, 170); }
 .exp-info { padding: 0 56px 56px 56px; }
 .exp-kicker { color: var(--accent); font-size: 18px; -unity-font-style: bold; }
@@ -707,8 +707,8 @@ Button.selected { border-color: var(--accent); background-color: var(--accent-so
 .exp-time.night { background-color: rgb(60, 70, 120); color: rgb(220, 226, 245); }
 .exp-line { color: rgb(220, 216, 206); font-size: 18px; white-space: normal; margin: 3px 0; max-width: 900px; }
 .exp-warning { color: rgb(232, 120, 104); font-size: 18px; -unity-font-style: bold; margin-top: 12px; }
-.exp-side { width: 720px; flex-direction: row; background-color: rgb(24, 26, 30); border-left-width: 1px; border-color: var(--line); }
-.exp-standing { width: 260px; margin: 40px 0 40px 16px; }
+.exp-side { width: 840px; flex-direction: row; background-color: rgb(24, 26, 30); border-left-width: 1px; border-color: var(--line); }
+.exp-standing { width: 380px; margin: 30px 0 30px 10px; }
 .exp-panel { flex-grow: 1; padding: 40px 24px 32px 12px; justify-content: space-between; }
 .exp-loadout { }
 .exp-slot { flex-direction: row; align-items: center; padding: 8px; margin-bottom: 8px; background-color: rgb(34, 36, 41); border-radius: 6px; border-width: 1px; border-color: var(--line); }
