@@ -32,6 +32,8 @@ namespace ApoGirl.Presentation.Dialogue
                 ["week"] = _ => (float)Week(),
                 ["seen"] = p => (float)Seen(Str(p, 0)),
                 ["joined"] = p => Joined(Str(p, 0)),
+                ["faction"] = p => (float)Faction(Str(p, 0)),
+                ["faction_known"] = p => FactionKnown(Str(p, 0)),
                 ["hidden"] = p => (float)Hidden(Str(p, 0)),
                 ["succeeded"] = _ => Succeeded(),
                 ["great_success"] = _ => GreatSuccess(),
@@ -116,6 +118,16 @@ namespace ApoGirl.Presentation.Dialogue
         [YarnFunction("joined")]
         public static bool Joined(string npcId) =>
             State != null && State.Npcs.TryGetValue(npcId ?? "", out var npc) && npc.Status == NpcStatus.Joined;
+
+        /// <summary>세력 평판 (−100~+100). 단계 경계는 −60/−20/30/60 (FactionRules).</summary>
+        [YarnFunction("faction")]
+        public static int Faction(string factionId) =>
+            State != null && State.Factions.TryGetValue(factionId ?? "", out var faction) ? faction.Standing : 0;
+
+        /// <summary>이 세력을 알게 됐는지.</summary>
+        [YarnFunction("faction_known")]
+        public static bool FactionKnown(string factionId) =>
+            State != null && State.Factions.TryGetValue(factionId ?? "", out var faction) && faction.Known;
 
         /// <summary>방금 고른 선택지의 판정이 실패가 아니었는지.</summary>
         [YarnFunction("succeeded")]

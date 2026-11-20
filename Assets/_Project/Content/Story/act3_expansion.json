@@ -1,0 +1,142 @@
+{
+  "Events": [
+    { "Id": "EVT_A3_UBC_CALL", "Kind": "Night", "Priority": 48,
+      "Condition": { "WeekMin": 29, "Phase": "Night", "FlagsAll": [ "DJ_CONTACT" ], "FlagsNone": [ "UBC_CALL" ] },
+      "OnShow": { "SetFlags": [ "UBC_CALL" ], "Factions": [ { "FactionId": "FAC_UBC", "Standing": 5, "Reveal": true, "LogKey": "faction.FAC_UBC.log.call" } ] },
+      "Choices": [
+        { "Id": "ASK_SUPPLY", "Effect": { "Factions": [ { "FactionId": "FAC_UBC", "Standing": 3 } ], "SetFlags": [ "UBC_SUPPLY_TALK" ] } },
+        { "Id": "OFFER_HELP", "Costs": [ { "Resource": "Materials", "Amount": 2 } ],
+          "Effect": { "Hidden": [ { "Hidden": "Humanity", "Amount": 1 } ], "Factions": [ { "FactionId": "FAC_UBC", "Standing": 8, "LogKey": "faction.FAC_UBC.log.parts" } ] } },
+        { "Id": "JUST_TALK", "Effect": { "Vitals": [ { "Vital": "Stress", "Amount": -6 } ], "Hidden": [ { "Hidden": "Isolation", "Amount": -2 } ] } }
+      ] },
+
+    { "Id": "EVT_A3_UBC_SOS", "Kind": "Night", "Priority": 52,
+      "Condition": { "WeekMin": 33, "Phase": "Night", "FlagsAll": [ "UBC_CALL" ], "FlagsNone": [ "UBC_SOS" ],
+        "Checks": [ { "Kind": "FactionStanding", "Key": "FAC_UBC", "Op": "GreaterOrEqual", "Value": 25 } ] },
+      "OnShow": { "SetFlags": [ "UBC_SOS" ] },
+      "Choices": [
+        { "Id": "SEARCH", "HasCheck": true, "Check": { "BaseRate": 0.5, "StatWeights": [ { "Stat": "Agility", "Weight": 0.005 }, { "Stat": "Stamina", "Weight": 0.003 } ] },
+          "Effect": { "Vitals": [ { "Vital": "Fatigue", "Amount": 12 } ], "Resources": [ { "Resource": "Medicine", "Amount": 2 } ], "SetFlags": [ "UBC_RUNNER_SAVED" ],
+            "Hidden": [ { "Hidden": "Humanity", "Amount": 2 } ], "Factions": [ { "FactionId": "FAC_UBC", "Standing": 22, "LogKey": "faction.FAC_UBC.log.saved" } ] },
+          "OnFailure": { "Vitals": [ { "Vital": "Hp", "Amount": -12 }, { "Vital": "Fatigue", "Amount": 12 } ], "SetFlags": [ "UBC_RUNNER_LOST" ],
+            "Factions": [ { "FactionId": "FAC_UBC", "Standing": 8, "LogKey": "faction.FAC_UBC.log.searched" } ] } },
+        { "Id": "ROUTE", "Effect": { "Stats": [ { "Stat": "Intellect", "Amount": 1 } ], "Factions": [ { "FactionId": "FAC_UBC", "Standing": 6, "LogKey": "faction.FAC_UBC.log.route" } ] } },
+        { "Id": "DECLINE", "Effect": { "Vitals": [ { "Vital": "Stress", "Amount": 4 } ], "Factions": [ { "FactionId": "FAC_UBC", "Standing": -6, "LogKey": "faction.FAC_UBC.log.decline" } ] } }
+      ] },
+
+    { "Id": "EVT_A3_MART_RADIO", "Kind": "Night", "Priority": 47,
+      "Condition": { "WeekMin": 31, "Phase": "Night", "FlagsAny": [ "MART_ALLY", "MART_TRADE" ], "FlagsNone": [ "MART_RADIO" ] },
+      "OnShow": { "SetFlags": [ "MART_RADIO" ] },
+      "Choices": [
+        { "Id": "WARN_US", "Effect": { "Defense": 4, "Factions": [ { "FactionId": "FAC_MART", "Standing": 3 } ] } },
+        { "Id": "SEND_MEDICINE", "Costs": [ { "Resource": "Medicine", "Amount": 1 } ],
+          "Effect": { "Hidden": [ { "Hidden": "Humanity", "Amount": 1 } ], "Factions": [ { "FactionId": "FAC_MART", "Standing": 12, "LogKey": "faction.FAC_MART.log.medicine" } ] } },
+        { "Id": "STAY_OUT", "Effect": { "Hidden": [ { "Hidden": "SelfAwareness", "Amount": 1 } ] } }
+      ] },
+
+    { "Id": "EVT_A3_MART_SPLIT", "Kind": "Story", "Priority": 58,
+      "Condition": { "WeekMin": 34, "Phase": "Day", "FlagsAll": [ "MART_RADIO" ], "FlagsNone": [ "MART_SPLIT" ] },
+      "OnShow": { "SetFlags": [ "MART_SPLIT" ], "Threat": 3 },
+      "Choices": [
+        { "Id": "HELP_DEFEND", "HasCheck": true, "Check": { "BaseRate": 0.45, "StatWeights": [ { "Stat": "Strength", "Weight": 0.005 }, { "Stat": "Agility", "Weight": 0.003 } ] },
+          "Effect": { "Vitals": [ { "Vital": "Fatigue", "Amount": 10 } ], "SetFlags": [ "MART_DEFENDED" ],
+            "Factions": [ { "FactionId": "FAC_MART", "Standing": 20, "LogKey": "faction.FAC_MART.log.defended" }, { "FactionId": "FAC_SAGEORI", "Standing": -10, "LogKey": "faction.FAC_SAGEORI.log.mart_fight" } ] },
+          "OnFailure": { "Vitals": [ { "Vital": "Hp", "Amount": -15 } ], "SetFlags": [ "MART_DEFENDED" ],
+            "Factions": [ { "FactionId": "FAC_MART", "Standing": 12, "LogKey": "faction.FAC_MART.log.defended_hurt" }, { "FactionId": "FAC_SAGEORI", "Standing": -10 } ] } },
+        { "Id": "MEDIATE", "HasCheck": true, "Check": { "BaseRate": 0.35, "StatWeights": [ { "Stat": "Leadership", "Weight": 0.008 } ] },
+          "Effect": { "Stats": [ { "Stat": "Leadership", "Amount": 2 } ], "SetFlags": [ "MART_MEDIATED" ],
+            "Factions": [ { "FactionId": "FAC_MART", "Standing": 10, "LogKey": "faction.FAC_MART.log.mediated" }, { "FactionId": "FAC_SAGEORI", "Standing": 5 } ] },
+          "OnFailure": { "Vitals": [ { "Vital": "Stress", "Amount": 6 } ], "Factions": [ { "FactionId": "FAC_MART", "Standing": -5 } ] } },
+        { "Id": "STAY_OUT", "Effect": { "SetFlags": [ "MART_ABANDONED" ], "Hidden": [ { "Hidden": "Isolation", "Amount": 2 } ],
+            "Factions": [ { "FactionId": "FAC_MART", "Standing": -12, "LogKey": "faction.FAC_MART.log.abandoned" } ] } }
+      ] },
+
+    { "Id": "EVT_A3_SAGEORI_RAISE", "Kind": "Story", "Priority": 57,
+      "Condition": { "WeekMin": 31, "Phase": "Day", "FlagsAll": [ "SAGEORI_PAID" ], "FlagsNone": [ "SAGEORI_RAISE" ] },
+      "OnShow": { "SetFlags": [ "SAGEORI_RAISE" ] },
+      "Choices": [
+        { "Id": "ACCEPT", "Costs": [ { "Resource": "Food", "Amount": 4 } ],
+          "Effect": { "Vitals": [ { "Vital": "Stress", "Amount": 5 } ], "Factions": [ { "FactionId": "FAC_SAGEORI", "Standing": 5, "LogKey": "faction.FAC_SAGEORI.log.raise_paid" } ] } },
+        { "Id": "PUSHBACK", "HasCheck": true, "Check": { "BaseRate": 0.4, "StatWeights": [ { "Stat": "Leadership", "Weight": 0.006 }, { "Stat": "Willpower", "Weight": 0.004 } ] },
+          "Effect": { "Stats": [ { "Stat": "Willpower", "Amount": 1 } ], "SetFlags": [ "SAGEORI_RESPECT" ],
+            "Factions": [ { "FactionId": "FAC_SAGEORI", "Standing": 8, "LogKey": "faction.FAC_SAGEORI.log.respect" } ] },
+          "OnFailure": { "Vitals": [ { "Vital": "Stress", "Amount": 6 } ], "Factions": [ { "FactionId": "FAC_SAGEORI", "Standing": -20, "LogKey": "faction.FAC_SAGEORI.log.pushback_fail" } ] } },
+        { "Id": "BREAK", "Effect": { "Threat": 8, "SetFlags": [ "SAGEORI_BROKE" ], "Factions": [ { "FactionId": "FAC_SAGEORI", "Standing": -30, "LogKey": "faction.FAC_SAGEORI.log.broke" } ] } }
+      ] },
+
+    { "Id": "EVT_A3_SAGEORI_WARNING", "Kind": "Story", "Priority": 56,
+      "Condition": { "WeekMin": 30, "Phase": "Day", "FlagsAll": [ "SAGEORI_MARKED" ], "FlagsNone": [ "SAGEORI_PAID", "SAGEORI_WARNING" ] },
+      "OnShow": { "SetFlags": [ "SAGEORI_WARNING" ], "Threat": 4, "Factions": [ { "FactionId": "FAC_SAGEORI", "Standing": -5, "LogKey": "faction.FAC_SAGEORI.log.warning" } ] },
+      "Choices": [
+        { "Id": "BARRICADE", "Costs": [ { "Resource": "Materials", "Amount": 2 } ], "Effect": { "Defense": 6 } },
+        { "Id": "SEND_WORD", "Costs": [ { "Resource": "Food", "Amount": 3 } ],
+          "Effect": { "SetFlags": [ "SAGEORI_PAID" ], "Factions": [ { "FactionId": "FAC_SAGEORI", "Standing": 20, "LogKey": "faction.FAC_SAGEORI.log.late_pay" } ] } },
+        { "Id": "IGNORE", "Effect": { "Vitals": [ { "Vital": "Stress", "Amount": 5 } ], "Stats": [ { "Stat": "Willpower", "Amount": 1 } ] } }
+      ] },
+
+    { "Id": "EVT_A3_SAGEORI_KID", "Kind": "Night", "Priority": 49,
+      "Condition": { "WeekMin": 33, "Phase": "Night", "FlagsAll": [ "SAGEORI_MARKED" ], "FlagsNone": [ "SAGEORI_KID" ] },
+      "OnShow": { "SetFlags": [ "SAGEORI_KID" ] },
+      "Choices": [
+        { "Id": "TREAT", "Costs": [ { "Resource": "Medicine", "Amount": 1 } ],
+          "Effect": { "SetFlags": [ "JUN_SAVED" ], "Hidden": [ { "Hidden": "Humanity", "Amount": 3 } ],
+            "Factions": [ { "FactionId": "FAC_SAGEORI", "Standing": 15, "LogKey": "faction.FAC_SAGEORI.log.jun_treated" } ] } },
+        { "Id": "FEED_AND_SEND", "Costs": [ { "Resource": "Food", "Amount": 2 } ],
+          "Effect": { "SetFlags": [ "JUN_FED" ], "Hidden": [ { "Hidden": "Humanity", "Amount": 1 } ],
+            "Factions": [ { "FactionId": "FAC_SAGEORI", "Standing": 8, "LogKey": "faction.FAC_SAGEORI.log.jun_fed" } ] } },
+        { "Id": "CHASE", "Effect": { "SetFlags": [ "JUN_CHASED" ], "Hidden": [ { "Hidden": "Isolation", "Amount": 1 } ],
+            "Factions": [ { "FactionId": "FAC_SAGEORI", "Standing": -5 } ] } }
+      ] },
+
+    { "Id": "EVT_HR_02_CHORES", "Kind": "Story", "Priority": 46,
+      "Condition": { "Phase": "Day", "FlagsAll": [ "RINGLEADER_NIGHT" ], "FlagsNone": [ "HR_CHORES" ], "NpcStatuses": [ { "NpcId": "NPC_RINGLEADER", "Status": "Joined" } ] },
+      "OnShow": { "SetFlags": [ "HR_CHORES" ] },
+      "Choices": [
+        { "Id": "THANK", "Effect": { "Npcs": [ { "NpcId": "NPC_RINGLEADER", "Affinity": 4 } ], "Hidden": [ { "Hidden": "TraumaRecovery", "Amount": 2 } ] } },
+        { "Id": "WORK_TOGETHER", "Effect": { "Vitals": [ { "Vital": "Fatigue", "Amount": 5 } ], "Stats": [ { "Stat": "Leadership", "Amount": 1 } ], "Npcs": [ { "NpcId": "NPC_RINGLEADER", "Trust": 4 } ] } },
+        { "Id": "LET_BE", "Effect": { "Hidden": [ { "Hidden": "SelfAwareness", "Amount": 1 } ] } }
+      ] },
+    { "Id": "EVT_HR_03_STORAGE", "Kind": "Night", "Priority": 46,
+      "Condition": { "Phase": "Night", "FlagsAll": [ "HR_CHORES" ], "FlagsNone": [ "HR_STORAGE" ], "NpcStatuses": [ { "NpcId": "NPC_RINGLEADER", "Status": "Joined" } ] },
+      "OnShow": { "SetFlags": [ "HR_STORAGE" ] },
+      "Choices": [
+        { "Id": "SIT", "Effect": { "Hidden": [ { "Hidden": "TraumaRecovery", "Amount": 5 } ], "Npcs": [ { "NpcId": "NPC_RINGLEADER", "Affinity": 6 } ] } },
+        { "Id": "LEAVE_HER", "Effect": { "Hidden": [ { "Hidden": "SelfAwareness", "Amount": 2 } ] } }
+      ] },
+    { "Id": "EVT_HR_04_SECRET", "Kind": "Story", "Priority": 45,
+      "Condition": { "WeekMin": 33, "Phase": "Day", "FlagsAll": [ "HR_STORAGE" ], "FlagsNone": [ "HR_SECRET" ], "NpcStatuses": [ { "NpcId": "NPC_RINGLEADER", "Status": "Joined" } ] },
+      "OnShow": { "SetFlags": [ "HR_SECRET" ], "Npcs": [ { "NpcId": "NPC_RINGLEADER", "Trust": 3 } ] },
+      "Choices": [
+        { "Id": "TELL_MART", "Condition": { "Checks": [ { "Kind": "FactionKnown", "Key": "FAC_MART", "Op": "Equal", "Value": 1 } ] },
+          "Effect": { "SetFlags": [ "MART_WARNED" ], "Factions": [ { "FactionId": "FAC_MART", "Standing": 10, "LogKey": "faction.FAC_MART.log.warned" } ] } },
+        { "Id": "KEEP", "Effect": { "Stats": [ { "Stat": "Intellect", "Amount": 1 } ] } }
+      ] },
+
+    { "Id": "EVT_A3_WANDERER_3", "Kind": "Story", "Priority": 44,
+      "Condition": { "WeekMin": 35, "Phase": "Day", "FlagsAll": [ "WANDERER_RETURN" ], "FlagsAny": [ "WANDERER_SHARED", "WANDERER_SHELTERED" ], "FlagsNone": [ "WANDERER_3" ] },
+      "OnShow": { "SetFlags": [ "WANDERER_3" ], "Defense": 3 },
+      "Choices": [
+        { "Id": "THANK", "Effect": { "Hidden": [ { "Hidden": "Hope", "Amount": 1 } ] } },
+        { "Id": "ASK_STAY", "Effect": { "Hidden": [ { "Hidden": "Humanity", "Amount": 1 } ], "Vitals": [ { "Vital": "Stress", "Amount": -4 } ] } }
+      ] },
+
+    { "Id": "EVT_CAL_HANGEUL", "Kind": "Calendar", "Priority": 55, "Condition": { "Month": 10, "DayOfMonth": 9 },
+      "Choices": [
+        { "Id": "WRITE", "Effect": { "Stats": [ { "Stat": "Empathy", "Amount": 1 } ], "Npcs": [ { "NpcId": "NPC_TEACHER", "Affinity": 3 } ], "Hidden": [ { "Hidden": "SelfAwareness", "Amount": 1 } ] } },
+        { "Id": "LISTEN", "Effect": { "Stats": [ { "Stat": "Intellect", "Amount": 1 } ], "Npcs": [ { "NpcId": "NPC_TEACHER", "Affinity": 2 } ] } }
+      ] },
+    { "Id": "EVT_CAL_KIMJANG", "Kind": "Calendar", "Priority": 54, "Condition": { "Month": 11, "DayOfMonth": 21 },
+      "Choices": [
+        { "Id": "MAKE", "Costs": [ { "Resource": "Food", "Amount": 2 } ],
+          "Effect": { "Vitals": [ { "Vital": "Fatigue", "Amount": 6 }, { "Vital": "Stress", "Amount": -6 } ], "Resources": [ { "Resource": "Food", "Amount": 6 } ], "Hidden": [ { "Hidden": "Hope", "Amount": 1 } ] } },
+        { "Id": "SKIP", "Effect": { "Vitals": [ { "Vital": "Fatigue", "Amount": -3 } ] } }
+      ] },
+
+    { "Id": "EVT_RND_A3_PERSIMMON", "Kind": "Random", "Priority": 0, "Once": false, "CooldownWeeks": 4, "Weight": 1,
+      "Condition": { "Phase": "Day", "Seasons": [ "Autumn" ] },
+      "Choices": [
+        { "Id": "PICK", "Effect": { "Resources": [ { "Resource": "Food", "Amount": 1 } ], "Vitals": [ { "Vital": "Fatigue", "Amount": 2 } ] } },
+        { "Id": "LEAVE_FOR_BIRDS", "Effect": { "Vitals": [ { "Vital": "Stress", "Amount": -4 } ], "Hidden": [ { "Hidden": "Humanity", "Amount": 1 } ] } }
+      ] }
+  ]
+}
