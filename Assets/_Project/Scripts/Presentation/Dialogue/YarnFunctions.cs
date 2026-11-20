@@ -30,6 +30,7 @@ namespace ApoGirl.Presentation.Dialogue
                 ["resource"] = p => (float)Resource(Str(p, 0)),
                 ["affinity"] = p => (float)Affinity(Str(p, 0)),
                 ["week"] = _ => (float)Week(),
+                ["seen"] = p => (float)Seen(Str(p, 0)),
                 ["hidden"] = p => (float)Hidden(Str(p, 0)),
                 ["succeeded"] = _ => Succeeded(),
                 ["great_success"] = _ => GreatSuccess(),
