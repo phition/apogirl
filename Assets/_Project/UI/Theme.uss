@@ -436,6 +436,13 @@ Button.selected { border-color: var(--accent); background-color: var(--accent-so
     border-radius: 10px;
 }
 
+.ending-view.with-art .ending-hint {
+    background-color: rgba(0, 0, 0, 0.6);
+    color: var(--text);
+    padding: 4px 12px;
+    border-radius: 12px;
+}
+
 .gallery-card.with-art > Label {
     background-color: rgba(0, 0, 0, 0.6);
     padding: 2px 6px;
@@ -449,3 +456,10 @@ Button.selected { border-color: var(--accent); background-color: var(--accent-so
     margin-bottom: 8px;
 }
 .gallery-card.with-art { min-height: 96px; }
+
+/* UI 아이콘 (M6-5): 글자 왼쪽에 아이콘 (StoryArt.SetIcon이 배경 그림을 깐다) */
+.with-icon { padding-left: 26px; }
+.tab.with-icon { padding-left: 22px; }
+.companion-button.with-icon { padding-left: 32px; min-height: 30px; }
+.calendar.with-icon { padding-left: 30px; }
+.vital-bar.with-icon { padding-left: 22px; }

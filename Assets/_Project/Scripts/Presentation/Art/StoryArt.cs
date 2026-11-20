@@ -45,8 +45,16 @@ namespace ApoGirl.Presentation.Art
         }
 
         [Serializable]
+        private sealed class IconEntry
+        {
+            public string Key = "";
+            public string Image = "";
+        }
+
+        [Serializable]
         private sealed class ArtMap
         {
+            public IconEntry[] Icons = Array.Empty<IconEntry>();
             public SpeakerEntry[] Speakers = Array.Empty<SpeakerEntry>();
             public EventEntry[] Events = Array.Empty<EventEntry>();
             public FlagEntry[] Backdrops = Array.Empty<FlagEntry>();
@@ -130,6 +138,67 @@ namespace ApoGirl.Presentation.Art
             }
 
             return null;
+        }
+
+        /// <summary>
+        /// UI 아이콘 (art_map.json의 Icons 표, 키 예: res.Food · cat.Education · stat.Stamina · npc.NPC_DOHYEON). 없으면 null.
+        /// </summary>
+        public static Texture2D Icon(string key)
+        {
+            if (string.IsNullOrEmpty(key))
+            {
+                return null;
+            }
+
+            foreach (var entry in Map.Icons)
+            {
+                if (entry.Key == key)
+                {
+                    return Ui(entry.Image);
+                }
+            }
+
+            return null;
+        }
+
+        /// <summary>아이템 아이콘: 표에 item.{id}가 있으면 그것, 없으면 이름 규칙 (ITEM_CANNED_FOOD → UI/item_canned_food).</summary>
+        public static Texture2D ItemIcon(string itemId)
+        {
+            if (string.IsNullOrEmpty(itemId))
+            {
+                return null;
+            }
+
+            var mapped = Icon("item." + itemId);
+            if (mapped != null)
+            {
+                return mapped;
+            }
+
+            var name = itemId.StartsWith("ITEM_") ? itemId.Substring(5) : itemId;
+            return Ui("item_" + name.ToLowerInvariant());
+        }
+
+        /// <summary>글자 왼쪽에 작은 아이콘을 깐다 (클래스 with-icon이 왼쪽 여백을 준다). null이면 아이콘을 지운다.</summary>
+        public static void SetIcon(VisualElement element, Texture2D icon, float size = 18f)
+        {
+            if (element == null)
+            {
+                return;
+            }
+
+            element.EnableInClassList("with-icon", icon != null);
+            if (icon == null)
+            {
+                element.style.backgroundImage = StyleKeyword.Null;
+                return;
+            }
+
+            element.style.backgroundImage = new StyleBackground(icon);
+            element.style.backgroundSize = new StyleBackgroundSize(new BackgroundSize(new Length(size, LengthUnit.Pixel), new Length(size, LengthUnit.Pixel)));
+            element.style.backgroundRepeat = new StyleBackgroundRepeat(new BackgroundRepeat(Repeat.NoRepeat, Repeat.NoRepeat));
+            element.style.backgroundPositionX = new StyleBackgroundPosition(new BackgroundPosition(BackgroundPositionKeyword.Left, new Length(4, LengthUnit.Pixel)));
+            element.style.backgroundPositionY = new StyleBackgroundPosition(new BackgroundPosition(BackgroundPositionKeyword.Center));
         }
 
         public static Texture2D Ending(string endingId) => string.IsNullOrEmpty(endingId) ? null : Story("Endings/" + endingId);

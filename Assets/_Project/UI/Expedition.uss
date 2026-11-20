@@ -131,3 +131,13 @@
     padding: 4px 10px;
     border-radius: 4px;
 }
+
+/* 아이템 그림 (M6-5) */
+.loot-row.with-icon { padding-left: 36px; }
+.bp-item.with-item-icon {
+    -unity-text-align: lower-center;
+    font-size: 11px;
+    color: #ffffff;
+    -unity-text-outline-width: 1px;
+    -unity-text-outline-color: #000000;
+}

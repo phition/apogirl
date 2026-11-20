@@ -348,6 +348,7 @@ namespace ApoGirl.Exploration.Runtime
                 var item = _director.Definitions.GetItemOrNull(container.Contents[i].ItemId);
                 var row = new Button(() => _director.TakeItem(index));
                 row.AddToClassList("loot-row");
+                Presentation.Art.StoryArt.SetIcon(row, Presentation.Art.StoryArt.ItemIcon(container.Contents[i].ItemId), 26f);
                 row.text = Loc.Item(container.Contents[i].ItemId) + (item != null ? $"   {item.Width}×{item.Height} · {item.Weight:0.0}kg" : "");
                 _lootList.Add(row);
             }
@@ -383,6 +384,14 @@ namespace ApoGirl.Exploration.Runtime
                 var item = placed;
                 var element = new Label(Loc.Item(placed.ItemId));
                 element.AddToClassList("bp-item");
+
+                // 아이템 그림 (M6-5): 칸을 그림으로 채우고 이름은 아래에 작게
+                var icon = Presentation.Art.StoryArt.ItemIcon(placed.ItemId);
+                if (icon != null)
+                {
+                    Presentation.Art.StoryArt.SetContain(element, icon);
+                    element.AddToClassList("with-item-icon");
+                }
                 element.EnableInClassList("selected", placed == _selected);
                 Place(element, placed.X, placed.Y, placed.Width, placed.Height);
                 element.RegisterCallback<PointerDownEvent>(evt =>

@@ -6,6 +6,7 @@ using ApoGirl.Core.Expedition;
 using ApoGirl.Core.Planning;
 using ApoGirl.Core.Rules;
 using ApoGirl.Core.State;
+using ApoGirl.Presentation.Art;
 using ApoGirl.Presentation.Text;
 using ApoGirl.Systems.Session;
 using UnityEngine.UIElements;
@@ -60,12 +61,14 @@ namespace ApoGirl.Presentation.Screens
             {
                 var label = new Label();
                 label.AddToClassList("resource");
+                StoryArt.SetIcon(label, StoryArt.Icon("res." + type));
                 container.Add(label);
                 _resources[type] = label;
             }
 
             _defense = new Label();
             _defense.AddToClassList("resource");
+            StoryArt.SetIcon(_defense, StoryArt.Icon("hub.defense"));
             container.Add(_defense);
 
             _blackout = new Label(Loc.T("hub.blackout"));
@@ -79,6 +82,7 @@ namespace ApoGirl.Presentation.Screens
             _rescue = new Label();
             _rescue.AddToClassList("resource");
             _rescue.AddToClassList("rescue-countdown");
+            StoryArt.SetIcon(_rescue, StoryArt.Icon("hub.rescue"));
             container.Add(_rescue);
         }
 
@@ -90,6 +94,7 @@ namespace ApoGirl.Presentation.Screens
             var state = _session.State;
             var calendar = state.Calendar;
             var season = UiText.Season(CalendarRules.GetSeason(calendar.Week));
+            StoryArt.SetIcon(_calendar, StoryArt.Icon("season." + CalendarRules.GetSeason(calendar.Week)), 22f);
             _calendar.text = _session.IsPlanning
                 ? Loc.F("hub.calendar_planning", calendar.Week, season)
                 : Loc.F("hub.calendar", calendar.Week, season, calendar.Day, UiText.Phase(calendar.Phase));
@@ -110,6 +115,7 @@ namespace ApoGirl.Presentation.Screens
             // M6: 날씨, 구조 카운트다운 (라디오 공지 이후)
             var weather = state.Base.Weather;
             _weather.text = Loc.F("hub.weather", Loc.T("weather." + weather));
+            StoryArt.SetIcon(_weather, StoryArt.Icon("weather." + weather));
             _weather.tooltip = weather == WeatherType.Clear ? "" : Loc.T("weather." + weather + ".desc");
             var announced = state.Flags.Contains("RESCUE_ANNOUNCED");
             _rescue.EnableInClassList("hidden", !announced);
@@ -151,6 +157,7 @@ namespace ApoGirl.Presentation.Screens
                 var bar = new ProgressBar { lowValue = centered ? -100 : 0, highValue = 100 };
                 bar.AddToClassList("vital-bar");
                 bar.AddToClassList("vital-" + vital.ToString().ToLowerInvariant());
+                StoryArt.SetIcon(bar, StoryArt.Icon("vital." + vital), 16f);
                 panel.Add(bar);
                 _vitals[vital] = bar;
             }
@@ -161,16 +168,20 @@ namespace ApoGirl.Presentation.Screens
 
             _symptom = Row(panel);
             _symptom.AddToClassList("danger");
+            StoryArt.SetIcon(_symptom, StoryArt.Icon("status.symptom"), 16f);
 
             panel.Add(_debtSection);
             _sleepDebt = Row(_debtSection);
             _conscience = Row(_debtSection);
+            StoryArt.SetIcon(_sleepDebt, StoryArt.Icon("status.sleep_debt"), 16f);
+            StoryArt.SetIcon(_conscience, StoryArt.Icon("status.conscience"), 16f);
 
             panel.Add(_statsSection);
             _statsSection.Add(Header("status.stats"));
             foreach (StatType stat in Enum.GetValues(typeof(StatType)))
             {
                 _stats[stat] = Row(_statsSection);
+                StoryArt.SetIcon(_stats[stat], StoryArt.Icon("stat." + stat), 16f);
             }
 
             _derived = Row(_statsSection);
@@ -181,6 +192,7 @@ namespace ApoGirl.Presentation.Screens
             foreach (ProficiencyType proficiency in Enum.GetValues(typeof(ProficiencyType)))
             {
                 _proficiencies[proficiency] = Row(_profSection);
+                StoryArt.SetIcon(_proficiencies[proficiency], StoryArt.Icon("prof." + proficiency), 16f);
             }
 
             panel.Add(_baseSection);
@@ -269,6 +281,7 @@ namespace ApoGirl.Presentation.Screens
                 };
                 button.AddToClassList("small-button");
                 button.AddToClassList("companion-button");
+                StoryArt.SetIcon(button, StoryArt.Icon("npc." + npcId), 24f);
                 button.SetEnabled(_session.IsPlanning && roles.Count > 0);
                 _companions.Add(button);
             }
@@ -395,6 +408,7 @@ namespace ApoGirl.Presentation.Screens
                     Refresh();
                 }) { text = Loc.T("cat." + category), name = "tab-" + category };
                 tab.AddToClassList("tab");
+                StoryArt.SetIcon(tab, StoryArt.Icon("cat." + category), 16f);
                 _tabs.Add(tab);
             }
 
