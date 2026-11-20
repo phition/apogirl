@@ -4618,7 +4618,7 @@ MonoBehaviour:
       - Kind: 4
         Key: SelfAwareness
         Op: 0
-        Value: 47
+        Value: 52
       AnyChecks: []
       NpcStatuses: []
       IsBirthday: 0
@@ -4654,7 +4654,7 @@ MonoBehaviour:
       - Kind: 4
         Key: SelfAwareness
         Op: 0
-        Value: 43
+        Value: 46
       AnyChecks: []
       NpcStatuses: []
       IsBirthday: 0
@@ -5315,6 +5315,7 @@ MonoBehaviour:
       TextKey: faction.FAC_SAGEORI.effect.truce
     Trades: []
     TradeIntervalWeeks: 1
+    GoneFlag: 
     FlagReactions: []
   - Id: FAC_MART
     StartStanding: 0
@@ -5400,6 +5401,7 @@ MonoBehaviour:
       StandingChange: 1
       Delayed: 0
     TradeIntervalWeeks: 2
+    GoneFlag: MART_LEFT
     FlagReactions:
     - Flag: ENC_MART_GROUP_TALK
       Standing: 5
@@ -5464,4 +5466,5 @@ MonoBehaviour:
       StandingChange: 2
       Delayed: 1
     TradeIntervalWeeks: 2
+    GoneFlag: 
     FlagReactions: []

@@ -28,7 +28,9 @@ MonoBehaviour:
       ActionIds: []
       FlagsAll: []
       FlagsAny: []
-      FlagsNone: []
+      FlagsNone:
+      - SAGEORI_ALLY_FINALE
+      - SAGEORI_FINALE_HOSTILE
       CluesAll: []
       Checks: []
       AnyChecks: []

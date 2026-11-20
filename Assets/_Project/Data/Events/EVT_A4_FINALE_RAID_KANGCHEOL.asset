@@ -1,0 +1,79 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e24ce4e6e4507494299ec76a5be73c10, type: 3}
+  m_Name: EVT_A4_FINALE_RAID_KANGCHEOL
+  m_EditorClassIdentifier: ApoGirl.Data::ApoGirl.Data.EventDefinitionAsset
+  _id: EVT_A4_FINALE_RAID_KANGCHEOL
+  _definition:
+    Id: EVT_A4_FINALE_RAID_KANGCHEOL
+    Kind: 0
+    Condition:
+      WeekMin: 49
+      WeekMax: 49
+      Days: 06000000i
+      Phase: 2
+      Seasons: 
+      Month: 0
+      DayOfMonth: 0
+      ActionCategories: 
+      ActionIds: []
+      FlagsAll:
+      - SAGEORI_FINALE_HOSTILE
+      FlagsAny: []
+      FlagsNone:
+      - SAGEORI_ALLY_FINALE
+      CluesAll: []
+      Checks: []
+      AnyChecks: []
+      NpcStatuses: []
+      IsBirthday: 0
+    Priority: 100
+    Weight: 1
+    Once: 1
+    CooldownWeeks: 0
+    DialogueNode: 
+    OnShow:
+      Stats: []
+      Vitals: []
+      Resources: []
+      Hidden: []
+      SleepDebt: 0
+      Conscience: 0
+      SetFlags:
+      - A4_RAID
+      ClearFlags: []
+      AddClues: []
+      EndingTags: []
+      Npcs: []
+      Items: []
+      Defense: 0
+      Threat: 0
+      Facilities: []
+      AddTraits: []
+      Proficiencies: []
+      TeacherMobility: 0
+      RestorePower: 0
+      TreatInjury: 0
+      CookDish: 0
+      PurifyWater: 0
+      PurifyRate: 1
+      RaidStrength: 105
+      TeacherReinfect: 0
+      TeacherInfection: 0
+      TraumaCare: 0
+      Traps: 0
+      IntrusionResponse: 
+      Factions: []
+    ThenEventId: 
+    Choices: []
+    ReviewAct: 0
+    ReviewFromWeek: 1

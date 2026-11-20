@@ -32,6 +32,7 @@ MonoBehaviour:
       - MART_TRADE
       FlagsNone:
       - MART_RADIO
+      - MART_LEFT
       CluesAll: []
       Checks: []
       AnyChecks: []

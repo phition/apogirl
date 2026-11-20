@@ -383,7 +383,7 @@ MonoBehaviour:
         - Kind: 4
           Key: Humanity
           Op: 0
-          Value: 60
+          Value: 72
         AnyChecks: []
         NpcStatuses: []
         IsBirthday: 0

@@ -114,7 +114,8 @@ MonoBehaviour:
           Amount: 2
         SleepDebt: 0
         Conscience: 0
-        SetFlags: []
+        SetFlags:
+        - BY_LETTER_READ
         ClearFlags: []
         AddClues: []
         EndingTags: []
@@ -212,7 +213,8 @@ MonoBehaviour:
           Amount: 1
         SleepDebt: 0
         Conscience: 0
-        SetFlags: []
+        SetFlags:
+        - BY_LETTER_RETURNED
         ClearFlags: []
         AddClues: []
         EndingTags: []

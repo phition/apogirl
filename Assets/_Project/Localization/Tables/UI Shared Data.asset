@@ -3679,6 +3679,66 @@ MonoBehaviour:
     m_Key: faction.FAC_SAGEORI.log.intrusion_yield
     m_Metadata:
       m_Items: []
+  - m_Id: 474676819410944
+    m_Key: faction.tier.gone
+    m_Metadata:
+      m_Items: []
+  - m_Id: 474676878131200
+    m_Key: faction.trade.gone
+    m_Metadata:
+      m_Items: []
+  - m_Id: 474676878131201
+    m_Key: faction.FAC_MART.status.gone
+    m_Metadata:
+      m_Items: []
+  - m_Id: 474676878131202
+    m_Key: faction.FAC_SAGEORI.status.gone
+    m_Metadata:
+      m_Items: []
+  - m_Id: 474676878131203
+    m_Key: faction.FAC_UBC.status.gone
+    m_Metadata:
+      m_Items: []
+  - m_Id: 474676878131204
+    m_Key: faction.FAC_SAGEORI.log.stand_together
+    m_Metadata:
+      m_Items: []
+  - m_Id: 474676878131205
+    m_Key: faction.FAC_SAGEORI.log.gift
+    m_Metadata:
+      m_Items: []
+  - m_Id: 474676878131206
+    m_Key: faction.FAC_SAGEORI.log.jun_mediated
+    m_Metadata:
+      m_Items: []
+  - m_Id: 474676878131207
+    m_Key: faction.FAC_SAGEORI.log.truce_late
+    m_Metadata:
+      m_Items: []
+  - m_Id: 474676878131208
+    m_Key: faction.FAC_SAGEORI.log.ultimatum_fail
+    m_Metadata:
+      m_Items: []
+  - m_Id: 474676878131209
+    m_Key: faction.FAC_SAGEORI.log.defy
+    m_Metadata:
+      m_Items: []
+  - m_Id: 474676878131210
+    m_Key: faction.FAC_MART.log.left
+    m_Metadata:
+      m_Items: []
+  - m_Id: 474676878131211
+    m_Key: faction.FAC_UBC.log.mingyu
+    m_Metadata:
+      m_Items: []
+  - m_Id: 474676878131212
+    m_Key: faction.FAC_UBC.log.relay
+    m_Metadata:
+      m_Items: []
+  - m_Id: 474676878131213
+    m_Key: faction.FAC_UBC.log.dh_mother
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

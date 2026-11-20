@@ -31,6 +31,7 @@ MonoBehaviour:
       FlagsAny: []
       FlagsNone:
       - MART_SPLIT
+      - MART_LEFT
       CluesAll: []
       Checks: []
       AnyChecks: []
