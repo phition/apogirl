@@ -132,7 +132,11 @@ MonoBehaviour:
         TraumaCare: 0
         Traps: 0
         IntrusionResponse: 
-        Factions: []
+        Factions:
+        - FactionId: FAC_SAGEORI
+          Standing: -3
+          Reveal: 0
+          LogKey: faction.FAC_SAGEORI.log.fortify
       OnFailure:
         Stats: []
         Vitals: []
@@ -225,7 +229,11 @@ MonoBehaviour:
         TraumaCare: 0
         Traps: 0
         IntrusionResponse: 
-        Factions: []
+        Factions:
+        - FactionId: FAC_SAGEORI
+          Standing: 2
+          Reveal: 0
+          LogKey: 
       OnFailure:
         Stats: []
         Vitals: []

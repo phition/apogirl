@@ -579,6 +579,14 @@ MonoBehaviour:
     m_Key: ACT_TRIP_NIGHT.short
     m_Metadata:
       m_Items: []
+  - m_Id: 468464438624256
+    m_Key: ACT_SURV_MAKE_PROSTHETIC.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 468464497344512
+    m_Key: ACT_SURV_MAKE_PROSTHETIC.short
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

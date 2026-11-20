@@ -5408,7 +5408,7 @@ MonoBehaviour:
       Reveal: 1
       LogKey: faction.FAC_MART.log.back_off
   - Id: FAC_UBC
-    StartStanding: 30
+    StartStanding: 20
     DriftAfterWeeks: 4
     WeeklyDrift: 3
     DriftTarget: 10

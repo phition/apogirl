@@ -71,6 +71,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: b054d5f5534c7c44aa115357a634ec6a, type: 2}
   - {fileID: 11400000, guid: 149dd8e15905ed44ab3b77154a1bb5ed, type: 2}
   - {fileID: 11400000, guid: 4f51264704af4994ebdfbf1a844759e8, type: 2}
+  - {fileID: 11400000, guid: 58e3dda942e9b514694caa0d9d300848, type: 2}
   _expeditionModels:
   - {fileID: 11400000, guid: 734bfa5bb208d9040b3c9b8661164dce, type: 2}
   - {fileID: 11400000, guid: 2beeafc66e909e443a5e7bc58eb6474d, type: 2}
@@ -267,6 +268,21 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 29a61baa1867cae47819243c3d32555b, type: 2}
   - {fileID: 11400000, guid: 36c3103a1b6acce41ad77ddc2cf7cb2a, type: 2}
   - {fileID: 11400000, guid: 0cf14366ce2e7914495ee8b5b027332b, type: 2}
+  - {fileID: 11400000, guid: fd24bfd7d6f9320468c496a31f5184df, type: 2}
+  - {fileID: 11400000, guid: 7df247efa12985f4b8b7d76f1f3359a5, type: 2}
+  - {fileID: 11400000, guid: 28b48a6a15589ec40a2ccdfc447edb31, type: 2}
+  - {fileID: 11400000, guid: 236271b0770e8e84892a501d57ceb284, type: 2}
+  - {fileID: 11400000, guid: 7fb5b3d67c9182149aa827d3edad16ae, type: 2}
+  - {fileID: 11400000, guid: 8d94312dea9aa344e8a3017dde3448d4, type: 2}
+  - {fileID: 11400000, guid: cc60a730673a8284d84b0d780569ff64, type: 2}
+  - {fileID: 11400000, guid: 9e1719fc21e6fdb418328b2038b1cfd9, type: 2}
+  - {fileID: 11400000, guid: a0a9db4d333de98449e25e57725a1e50, type: 2}
+  - {fileID: 11400000, guid: a769cc7e722502a4198714e87ea77df3, type: 2}
+  - {fileID: 11400000, guid: a7c373004a215124c8fc30ccf04c1c9a, type: 2}
+  - {fileID: 11400000, guid: 6e040ccfc5e2c854cb4e5e2c4be43b47, type: 2}
+  - {fileID: 11400000, guid: fd9caafd126ebf942bcb152ee458a919, type: 2}
+  - {fileID: 11400000, guid: 1de1051282f24044abaf312f02192485, type: 2}
+  - {fileID: 11400000, guid: c63c3ede9d235b24f9850d5bb10d3bc4, type: 2}
   - {fileID: 11400000, guid: c302b50e5133c754fa1846d9a419a482, type: 2}
   - {fileID: 11400000, guid: 513b27fdb1ff22941a1ce11f53192e0f, type: 2}
   - {fileID: 11400000, guid: cb9a66bad549ec54ea8818b50ddef9bc, type: 2}

@@ -76,7 +76,11 @@ MonoBehaviour:
       TraumaCare: 0
       Traps: 0
       IntrusionResponse: 
-      Factions: []
+      Factions:
+      - FactionId: FAC_UBC
+        Standing: 2
+        Reveal: 1
+        LogKey: faction.FAC_UBC.log.static
     ThenEventId: 
     Choices:
     - Id: LISTEN_MORE

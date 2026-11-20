@@ -3527,6 +3527,42 @@ MonoBehaviour:
     m_Key: trade.FAC_UBC.MATERIALS_INTEL.log
     m_Metadata:
       m_Items: []
+  - m_Id: 468466107957248
+    m_Key: faction.FAC_SAGEORI.log.mark
+    m_Metadata:
+      m_Items: []
+  - m_Id: 468466166677504
+    m_Key: faction.FAC_SAGEORI.log.erase
+    m_Metadata:
+      m_Items: []
+  - m_Id: 468466166677505
+    m_Key: faction.FAC_SAGEORI.log.pay
+    m_Metadata:
+      m_Items: []
+  - m_Id: 468466166677506
+    m_Key: faction.FAC_SAGEORI.log.negotiate
+    m_Metadata:
+      m_Items: []
+  - m_Id: 468466166677507
+    m_Key: faction.FAC_SAGEORI.log.negotiate_fail
+    m_Metadata:
+      m_Items: []
+  - m_Id: 468466166677508
+    m_Key: faction.FAC_SAGEORI.log.refuse
+    m_Metadata:
+      m_Items: []
+  - m_Id: 468466166677509
+    m_Key: faction.FAC_SAGEORI.log.fortify
+    m_Metadata:
+      m_Items: []
+  - m_Id: 468466166677510
+    m_Key: faction.FAC_UBC.log.leaflet
+    m_Metadata:
+      m_Items: []
+  - m_Id: 468466166677511
+    m_Key: faction.FAC_UBC.log.static
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
