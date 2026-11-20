@@ -616,6 +616,22 @@ ART_PROMPTS 6장의 21장에 하나를 더한다.
 
 ---
 
+### 8.3 탐험 픽셀 아트 전면 교체 (2026-11-20, PixelLab 유료 Tier 1)
+
+탐험에 쓰는 그림을 모두 PixelLab v2 API로 다시 만들었다. 기준은 PPU 36, 사람 키 64px. 폴더는 `Resources/Art/ExplorationPixel/`.
+
+- **무엇을 어디에 쓸지는 데이터**: `Resources/Art/exploration_art.json` (`ExplorationArtMap.cs`). 지역·방 템플릿별 벽(방 안·복도·방 바깥벽), 문·출구, 컨테이너, 조우 물건, 흩어 놓는 장식(바닥·벽, 밀도). 바깥 길 장식은 템플릿 `OUT_ENTRY` / `OUT_ESCAPE`.
+- **기준점·9조각**: `ExplorationPixel/sprite_meta.json` (창문 테두리, 가방 끈 자리 등) → `Editor/ArtImportSettings`.
+- **주인공**: `player_{옷}_{무기}_{동작}_{0..15}` — 옷 4(uniform·guard·padding·riot) × 무기 5(none·mop·bat·pipe·baton) = 20벌, 동작 5(idle·walk·run·crouch·attack 또는 shove) × 16프레임. 무기는 그림 안에 같이 그려져 있어 팔이 겹치지 않는다. 없는 차림은 `PlayerPrefix`가 교복+그 무기 → 그 옷+맨손 → 교복+맨손 순서로 물러난다.
+- **가방**: `bag_{school|hiking|tote}_{brown|blue|pink|red|yellow|green}`. 색은 판(시드)마다 하나. 붙일 자리는 프레임마다 `player_anchors.json`(등 쪽 어깨 위치·기울기).
+- **좀비·생존자·조우 인물**: 16프레임 동작(대기·걷기·기절·휴면 등), `SpriteFlipbook`.
+- **환경**: 벽 23종(지역·특수 교실·거리·골목), 문 4종(닫힘·열림), 출구 2종, 계단(위·아래·무너짐), 소품 약 320종. 교실 책상은 옆모습, 모니터·TV는 평면형.
+- **바깥 길**: 학교 밖 지역은 진입로(거리)에서 시작하고, 건물 반대쪽 출구는 탈출로(골목)로 이어진다. 두 길 모두 학교로 돌아가는 지점이 있다 (`BuildingView.BuildOutdoor`, `BalanceConfig.ApproachRoadWidth`·`EscapeRouteWidth`).
+- **무너진 계단**: `ConnectorDef.Collapsed` (`LocationBuilder.Stairs(…, collapsedFrom)`). 학교 오른쪽 계단 2~3층, 정수장 왼쪽 계단 2~3층.
+- **지금 층만 보이기**: 위·아래층은 가린다. **빛줄기**는 층마다 1~2곳(`SunbeamsPerFloorMin/Max`), 해의 위치에 따라 기울기와 바닥 빛 자리가 움직인다.
+- 만드는 도구는 저장소 밖 `I:\workshop\code_temppogirl	ools\` (gen_env·gen_player·gen_attack·gen_chars → install_env·install_player·install_chars → make_special·bag_colors·make_anchors·fix_idle·make_art_map). API 키는 저장소에 두지 않는다.
+- 화면 확인용: `ExpeditionDebug.Start(행동, 슬롯, 무기, 옷, 가방, 도구)`, `.Room(템플릿 글자)`, `ExpeditionDirector.DebugGoTo(층 또는 -1 진입로/-2 탈출로, x)`.
+
 ## 9. 예비 에셋 (P4: 앞으로 추가될 수 있는 것)
 
 지금 게임 데이터에는 없지만 개발 방향에 따라 들어올 수 있는 아이템·도구·제작품·설비다.

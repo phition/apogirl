@@ -23,3 +23,8 @@
 탐험 픽셀 아트 일부(주인공·좀비·생존자 동작 프레임, 벽 타일)는 PixelLab(pixellab.ai) API로 만들었다:
 `image-to-pixelart`, `animate-with-text-v3`, `create-image-pixen`. 게임용 사본은 `Assets/_Project/Resources/Art/ExplorationPixel/`.
 나머지 픽셀 소품·조우 인물은 위 Higgsfield 그림을 로컬에서 줄이고 색을 줄인 것이다.
+
+### 유료 계정으로 전면 교체 (2026-11-20, Tier 1)
+
+탐험 그림 전부(주인공 20벌 × 5동작 × 16프레임, 좀비·생존자·조우 인물, 벽·문·계단·출구, 소품 약 320종, 가방)를 PixelLab v2 API로 다시 만들었다:
+`create-1-direction-object`, `generate-image-v2`, `edit-images-v2`, `animate-with-text-v3`. 가방 색 바꾸기·대기 동작 정리·가방 자리 계산은 로컬 스크립트.
