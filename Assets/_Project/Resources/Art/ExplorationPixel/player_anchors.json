@@ -1,0 +1,9604 @@
+{
+"Frames": [
+{
+"Key": "player_guard_bat_attack_0",
+"X": -0.079,
+"Y": 1.201,
+"Angle": 6.1
+},
+{
+"Key": "player_guard_bat_attack_1",
+"X": -0.196,
+"Y": 1.179,
+"Angle": 7.5
+},
+{
+"Key": "player_guard_bat_attack_2",
+"X": -0.372,
+"Y": 1.18,
+"Angle": 6.2
+},
+{
+"Key": "player_guard_bat_attack_3",
+"X": -0.48,
+"Y": 1.202,
+"Angle": 4.3
+},
+{
+"Key": "player_guard_bat_attack_4",
+"X": -0.479,
+"Y": 1.243,
+"Angle": 4.6
+},
+{
+"Key": "player_guard_bat_attack_5",
+"X": -0.412,
+"Y": 1.29,
+"Angle": 6.5
+},
+{
+"Key": "player_guard_bat_attack_6",
+"X": -0.321,
+"Y": 1.317,
+"Angle": 7.9
+},
+{
+"Key": "player_guard_bat_attack_7",
+"X": -0.257,
+"Y": 1.324,
+"Angle": 8.5
+},
+{
+"Key": "player_guard_bat_attack_8",
+"X": -0.257,
+"Y": 1.324,
+"Angle": 8.5
+},
+{
+"Key": "player_guard_bat_attack_9",
+"X": -0.321,
+"Y": 1.317,
+"Angle": 7.9
+},
+{
+"Key": "player_guard_bat_attack_10",
+"X": -0.412,
+"Y": 1.29,
+"Angle": 6.5
+},
+{
+"Key": "player_guard_bat_attack_11",
+"X": -0.479,
+"Y": 1.243,
+"Angle": 4.6
+},
+{
+"Key": "player_guard_bat_attack_12",
+"X": -0.48,
+"Y": 1.202,
+"Angle": 4.3
+},
+{
+"Key": "player_guard_bat_attack_13",
+"X": -0.372,
+"Y": 1.18,
+"Angle": 6.2
+},
+{
+"Key": "player_guard_bat_attack_14",
+"X": -0.196,
+"Y": 1.179,
+"Angle": 7.5
+},
+{
+"Key": "player_guard_bat_attack_15",
+"X": -0.079,
+"Y": 1.201,
+"Angle": 6.1
+},
+{
+"Key": "player_guard_bat_crouch_0",
+"X": -0.079,
+"Y": 0.809,
+"Angle": -19.3
+},
+{
+"Key": "player_guard_bat_crouch_1",
+"X": -0.081,
+"Y": 0.819,
+"Angle": -19.8
+},
+{
+"Key": "player_guard_bat_crouch_2",
+"X": -0.08,
+"Y": 0.855,
+"Angle": -20.0
+},
+{
+"Key": "player_guard_bat_crouch_3",
+"X": -0.079,
+"Y": 0.87,
+"Angle": -20.2
+},
+{
+"Key": "player_guard_bat_crouch_4",
+"X": -0.08,
+"Y": 0.841,
+"Angle": -20.1
+},
+{
+"Key": "player_guard_bat_crouch_5",
+"X": -0.076,
+"Y": 0.817,
+"Angle": -19.6
+},
+{
+"Key": "player_guard_bat_crouch_6",
+"X": -0.071,
+"Y": 0.834,
+"Angle": -18.9
+},
+{
+"Key": "player_guard_bat_crouch_7",
+"X": -0.072,
+"Y": 0.855,
+"Angle": -18.9
+},
+{
+"Key": "player_guard_bat_crouch_8",
+"X": -0.077,
+"Y": 0.837,
+"Angle": -19.3
+},
+{
+"Key": "player_guard_bat_crouch_9",
+"X": -0.079,
+"Y": 0.818,
+"Angle": -19.7
+},
+{
+"Key": "player_guard_bat_crouch_10",
+"X": -0.076,
+"Y": 0.84,
+"Angle": -19.9
+},
+{
+"Key": "player_guard_bat_crouch_11",
+"X": -0.078,
+"Y": 0.869,
+"Angle": -20.1
+},
+{
+"Key": "player_guard_bat_crouch_12",
+"X": -0.084,
+"Y": 0.862,
+"Angle": -20.1
+},
+{
+"Key": "player_guard_bat_crouch_13",
+"X": -0.081,
+"Y": 0.834,
+"Angle": -20.0
+},
+{
+"Key": "player_guard_bat_crouch_14",
+"X": -0.074,
+"Y": 0.817,
+"Angle": -19.6
+},
+{
+"Key": "player_guard_bat_crouch_15",
+"X": -0.074,
+"Y": 0.814,
+"Angle": -19.0
+},
+{
+"Key": "player_guard_bat_idle_0",
+"X": -0.052,
+"Y": 1.214,
+"Angle": 5.3
+},
+{
+"Key": "player_guard_bat_idle_1",
+"X": -0.052,
+"Y": 1.214,
+"Angle": 5.2
+},
+{
+"Key": "player_guard_bat_idle_2",
+"X": -0.052,
+"Y": 1.214,
+"Angle": 5.8
+},
+{
+"Key": "player_guard_bat_idle_3",
+"X": -0.054,
+"Y": 1.213,
+"Angle": 7.5
+},
+{
+"Key": "player_guard_bat_idle_4",
+"X": -0.056,
+"Y": 1.213,
+"Angle": 8.6
+},
+{
+"Key": "player_guard_bat_idle_5",
+"X": -0.056,
+"Y": 1.213,
+"Angle": 8.8
+},
+{
+"Key": "player_guard_bat_idle_6",
+"X": -0.056,
+"Y": 1.213,
+"Angle": 8.9
+},
+{
+"Key": "player_guard_bat_idle_7",
+"X": -0.056,
+"Y": 1.213,
+"Angle": 8.9
+},
+{
+"Key": "player_guard_bat_idle_8",
+"X": -0.056,
+"Y": 1.213,
+"Angle": 8.9
+},
+{
+"Key": "player_guard_bat_idle_9",
+"X": -0.055,
+"Y": 1.213,
+"Angle": 8.2
+},
+{
+"Key": "player_guard_bat_idle_10",
+"X": -0.053,
+"Y": 1.214,
+"Angle": 6.7
+},
+{
+"Key": "player_guard_bat_idle_11",
+"X": -0.052,
+"Y": 1.214,
+"Angle": 5.6
+},
+{
+"Key": "player_guard_bat_idle_12",
+"X": -0.051,
+"Y": 1.214,
+"Angle": 5.4
+},
+{
+"Key": "player_guard_bat_idle_13",
+"X": -0.051,
+"Y": 1.214,
+"Angle": 5.4
+},
+{
+"Key": "player_guard_bat_idle_14",
+"X": -0.051,
+"Y": 1.214,
+"Angle": 5.4
+},
+{
+"Key": "player_guard_bat_idle_15",
+"X": -0.052,
+"Y": 1.214,
+"Angle": 5.4
+},
+{
+"Key": "player_guard_bat_run_0",
+"X": -0.052,
+"Y": 1.243,
+"Angle": 4.9
+},
+{
+"Key": "player_guard_bat_run_1",
+"X": -0.052,
+"Y": 1.244,
+"Angle": 3.9
+},
+{
+"Key": "player_guard_bat_run_2",
+"X": -0.054,
+"Y": 1.237,
+"Angle": 3.5
+},
+{
+"Key": "player_guard_bat_run_3",
+"X": -0.054,
+"Y": 1.223,
+"Angle": 4.0
+},
+{
+"Key": "player_guard_bat_run_4",
+"X": -0.054,
+"Y": 1.223,
+"Angle": 4.1
+},
+{
+"Key": "player_guard_bat_run_5",
+"X": -0.053,
+"Y": 1.236,
+"Angle": 4.3
+},
+{
+"Key": "player_guard_bat_run_6",
+"X": -0.057,
+"Y": 1.236,
+"Angle": 4.3
+},
+{
+"Key": "player_guard_bat_run_7",
+"X": -0.063,
+"Y": 1.23,
+"Angle": 4.1
+},
+{
+"Key": "player_guard_bat_run_8",
+"X": -0.06,
+"Y": 1.236,
+"Angle": 4.5
+},
+{
+"Key": "player_guard_bat_run_9",
+"X": -0.054,
+"Y": 1.243,
+"Angle": 4.8
+},
+{
+"Key": "player_guard_bat_run_10",
+"X": -0.054,
+"Y": 1.244,
+"Angle": 3.8
+},
+{
+"Key": "player_guard_bat_run_11",
+"X": -0.054,
+"Y": 1.237,
+"Angle": 3.4
+},
+{
+"Key": "player_guard_bat_run_12",
+"X": -0.054,
+"Y": 1.223,
+"Angle": 4.1
+},
+{
+"Key": "player_guard_bat_run_13",
+"X": -0.054,
+"Y": 1.223,
+"Angle": 4.0
+},
+{
+"Key": "player_guard_bat_run_14",
+"X": -0.053,
+"Y": 1.236,
+"Angle": 4.1
+},
+{
+"Key": "player_guard_bat_run_15",
+"X": -0.052,
+"Y": 1.243,
+"Angle": 4.9
+},
+{
+"Key": "player_guard_bat_walk_0",
+"X": -0.042,
+"Y": 1.153,
+"Angle": 3.9
+},
+{
+"Key": "player_guard_bat_walk_1",
+"X": -0.046,
+"Y": 1.16,
+"Angle": 4.1
+},
+{
+"Key": "player_guard_bat_walk_2",
+"X": -0.051,
+"Y": 1.182,
+"Angle": 3.6
+},
+{
+"Key": "player_guard_bat_walk_3",
+"X": -0.056,
+"Y": 1.176,
+"Angle": 2.7
+},
+{
+"Key": "player_guard_bat_walk_4",
+"X": -0.059,
+"Y": 1.162,
+"Angle": 2.3
+},
+{
+"Key": "player_guard_bat_walk_5",
+"X": -0.053,
+"Y": 1.175,
+"Angle": 2.9
+},
+{
+"Key": "player_guard_bat_walk_6",
+"X": -0.049,
+"Y": 1.189,
+"Angle": 3.4
+},
+{
+"Key": "player_guard_bat_walk_7",
+"X": -0.046,
+"Y": 1.174,
+"Angle": 3.8
+},
+{
+"Key": "player_guard_bat_walk_8",
+"X": -0.044,
+"Y": 1.153,
+"Angle": 4.4
+},
+{
+"Key": "player_guard_bat_walk_9",
+"X": -0.047,
+"Y": 1.167,
+"Angle": 4.1
+},
+{
+"Key": "player_guard_bat_walk_10",
+"X": -0.051,
+"Y": 1.196,
+"Angle": 3.1
+},
+{
+"Key": "player_guard_bat_walk_11",
+"X": -0.057,
+"Y": 1.183,
+"Angle": 2.8
+},
+{
+"Key": "player_guard_bat_walk_12",
+"X": -0.059,
+"Y": 1.161,
+"Angle": 3.1
+},
+{
+"Key": "player_guard_bat_walk_13",
+"X": -0.054,
+"Y": 1.182,
+"Angle": 3.1
+},
+{
+"Key": "player_guard_bat_walk_14",
+"X": -0.049,
+"Y": 1.203,
+"Angle": 3.0
+},
+{
+"Key": "player_guard_bat_walk_15",
+"X": -0.045,
+"Y": 1.182,
+"Angle": 3.3
+},
+{
+"Key": "player_guard_baton_attack_0",
+"X": -0.097,
+"Y": 1.186,
+"Angle": 5.7
+},
+{
+"Key": "player_guard_baton_attack_1",
+"X": -0.124,
+"Y": 1.201,
+"Angle": 5.5
+},
+{
+"Key": "player_guard_baton_attack_2",
+"X": -0.189,
+"Y": 1.244,
+"Angle": 3.9
+},
+{
+"Key": "player_guard_baton_attack_3",
+"X": -0.262,
+"Y": 1.3,
+"Angle": 3.5
+},
+{
+"Key": "player_guard_baton_attack_4",
+"X": -0.289,
+"Y": 1.362,
+"Angle": 4.0
+},
+{
+"Key": "player_guard_baton_attack_5",
+"X": -0.231,
+"Y": 1.431,
+"Angle": 4.3
+},
+{
+"Key": "player_guard_baton_attack_6",
+"X": -0.121,
+"Y": 1.491,
+"Angle": 2.4
+},
+{
+"Key": "player_guard_baton_attack_7",
+"X": -0.05,
+"Y": 1.529,
+"Angle": -2.4
+},
+{
+"Key": "player_guard_baton_attack_8",
+"X": -0.05,
+"Y": 1.529,
+"Angle": -2.4
+},
+{
+"Key": "player_guard_baton_attack_9",
+"X": -0.121,
+"Y": 1.491,
+"Angle": 2.4
+},
+{
+"Key": "player_guard_baton_attack_10",
+"X": -0.231,
+"Y": 1.431,
+"Angle": 4.3
+},
+{
+"Key": "player_guard_baton_attack_11",
+"X": -0.289,
+"Y": 1.362,
+"Angle": 4.0
+},
+{
+"Key": "player_guard_baton_attack_12",
+"X": -0.262,
+"Y": 1.3,
+"Angle": 3.5
+},
+{
+"Key": "player_guard_baton_attack_13",
+"X": -0.189,
+"Y": 1.244,
+"Angle": 3.9
+},
+{
+"Key": "player_guard_baton_attack_14",
+"X": -0.124,
+"Y": 1.201,
+"Angle": 5.5
+},
+{
+"Key": "player_guard_baton_attack_15",
+"X": -0.097,
+"Y": 1.186,
+"Angle": 5.7
+},
+{
+"Key": "player_guard_baton_crouch_0",
+"X": -0.121,
+"Y": 0.824,
+"Angle": -18.4
+},
+{
+"Key": "player_guard_baton_crouch_1",
+"X": -0.112,
+"Y": 0.833,
+"Angle": -17.5
+},
+{
+"Key": "player_guard_baton_crouch_2",
+"X": -0.106,
+"Y": 0.808,
+"Angle": -16.7
+},
+{
+"Key": "player_guard_baton_crouch_3",
+"X": -0.103,
+"Y": 0.772,
+"Angle": -16.5
+},
+{
+"Key": "player_guard_baton_crouch_4",
+"X": -0.104,
+"Y": 0.768,
+"Angle": -17.0
+},
+{
+"Key": "player_guard_baton_crouch_5",
+"X": -0.109,
+"Y": 0.786,
+"Angle": -17.8
+},
+{
+"Key": "player_guard_baton_crouch_6",
+"X": -0.114,
+"Y": 0.797,
+"Angle": -18.5
+},
+{
+"Key": "player_guard_baton_crouch_7",
+"X": -0.117,
+"Y": 0.795,
+"Angle": -19.3
+},
+{
+"Key": "player_guard_baton_crouch_8",
+"X": -0.122,
+"Y": 0.789,
+"Angle": -19.4
+},
+{
+"Key": "player_guard_baton_crouch_9",
+"X": -0.122,
+"Y": 0.804,
+"Angle": -18.5
+},
+{
+"Key": "player_guard_baton_crouch_10",
+"X": -0.112,
+"Y": 0.835,
+"Angle": -17.8
+},
+{
+"Key": "player_guard_baton_crouch_11",
+"X": -0.102,
+"Y": 0.838,
+"Angle": -17.2
+},
+{
+"Key": "player_guard_baton_crouch_12",
+"X": -0.103,
+"Y": 0.805,
+"Angle": -16.2
+},
+{
+"Key": "player_guard_baton_crouch_13",
+"X": -0.11,
+"Y": 0.773,
+"Angle": -16.7
+},
+{
+"Key": "player_guard_baton_crouch_14",
+"X": -0.115,
+"Y": 0.774,
+"Angle": -18.1
+},
+{
+"Key": "player_guard_baton_crouch_15",
+"X": -0.12,
+"Y": 0.799,
+"Angle": -18.9
+},
+{
+"Key": "player_guard_baton_idle_0",
+"X": -0.105,
+"Y": 1.214,
+"Angle": 5.8
+},
+{
+"Key": "player_guard_baton_idle_1",
+"X": -0.105,
+"Y": 1.207,
+"Angle": 5.6
+},
+{
+"Key": "player_guard_baton_idle_2",
+"X": -0.105,
+"Y": 1.193,
+"Angle": 5.6
+},
+{
+"Key": "player_guard_baton_idle_3",
+"X": -0.105,
+"Y": 1.186,
+"Angle": 5.6
+},
+{
+"Key": "player_guard_baton_idle_4",
+"X": -0.105,
+"Y": 1.186,
+"Angle": 5.6
+},
+{
+"Key": "player_guard_baton_idle_5",
+"X": -0.105,
+"Y": 1.193,
+"Angle": 5.6
+},
+{
+"Key": "player_guard_baton_idle_6",
+"X": -0.105,
+"Y": 1.207,
+"Angle": 5.6
+},
+{
+"Key": "player_guard_baton_idle_7",
+"X": -0.106,
+"Y": 1.221,
+"Angle": 6.2
+},
+{
+"Key": "player_guard_baton_idle_8",
+"X": -0.108,
+"Y": 1.234,
+"Angle": 7.5
+},
+{
+"Key": "player_guard_baton_idle_9",
+"X": -0.109,
+"Y": 1.241,
+"Angle": 8.3
+},
+{
+"Key": "player_guard_baton_idle_10",
+"X": -0.109,
+"Y": 1.241,
+"Angle": 8.4
+},
+{
+"Key": "player_guard_baton_idle_11",
+"X": -0.109,
+"Y": 1.241,
+"Angle": 8.4
+},
+{
+"Key": "player_guard_baton_idle_12",
+"X": -0.109,
+"Y": 1.241,
+"Angle": 8.4
+},
+{
+"Key": "player_guard_baton_idle_13",
+"X": -0.109,
+"Y": 1.234,
+"Angle": 7.9
+},
+{
+"Key": "player_guard_baton_idle_14",
+"X": -0.107,
+"Y": 1.22,
+"Angle": 6.8
+},
+{
+"Key": "player_guard_baton_idle_15",
+"X": -0.106,
+"Y": 1.214,
+"Angle": 6.2
+},
+{
+"Key": "player_guard_baton_run_0",
+"X": -0.128,
+"Y": 1.244,
+"Angle": 4.0
+},
+{
+"Key": "player_guard_baton_run_1",
+"X": -0.127,
+"Y": 1.23,
+"Angle": 3.4
+},
+{
+"Key": "player_guard_baton_run_2",
+"X": -0.121,
+"Y": 1.244,
+"Angle": 3.7
+},
+{
+"Key": "player_guard_baton_run_3",
+"X": -0.121,
+"Y": 1.258,
+"Angle": 3.7
+},
+{
+"Key": "player_guard_baton_run_4",
+"X": -0.12,
+"Y": 1.244,
+"Angle": 3.7
+},
+{
+"Key": "player_guard_baton_run_5",
+"X": -0.113,
+"Y": 1.229,
+"Angle": 4.3
+},
+{
+"Key": "player_guard_baton_run_6",
+"X": -0.113,
+"Y": 1.243,
+"Angle": 4.5
+},
+{
+"Key": "player_guard_baton_run_7",
+"X": -0.124,
+"Y": 1.257,
+"Angle": 4.2
+},
+{
+"Key": "player_guard_baton_run_8",
+"X": -0.132,
+"Y": 1.244,
+"Angle": 3.6
+},
+{
+"Key": "player_guard_baton_run_9",
+"X": -0.128,
+"Y": 1.23,
+"Angle": 3.4
+},
+{
+"Key": "player_guard_baton_run_10",
+"X": -0.119,
+"Y": 1.244,
+"Angle": 3.9
+},
+{
+"Key": "player_guard_baton_run_11",
+"X": -0.12,
+"Y": 1.257,
+"Angle": 3.9
+},
+{
+"Key": "player_guard_baton_run_12",
+"X": -0.121,
+"Y": 1.244,
+"Angle": 3.9
+},
+{
+"Key": "player_guard_baton_run_13",
+"X": -0.115,
+"Y": 1.229,
+"Angle": 4.3
+},
+{
+"Key": "player_guard_baton_run_14",
+"X": -0.115,
+"Y": 1.243,
+"Angle": 4.3
+},
+{
+"Key": "player_guard_baton_run_15",
+"X": -0.123,
+"Y": 1.257,
+"Angle": 4.3
+},
+{
+"Key": "player_guard_baton_walk_0",
+"X": -0.125,
+"Y": 1.17,
+"Angle": 1.7
+},
+{
+"Key": "player_guard_baton_walk_1",
+"X": -0.125,
+"Y": 1.163,
+"Angle": 1.7
+},
+{
+"Key": "player_guard_baton_walk_2",
+"X": -0.121,
+"Y": 1.17,
+"Angle": 2.1
+},
+{
+"Key": "player_guard_baton_walk_3",
+"X": -0.114,
+"Y": 1.182,
+"Angle": 3.0
+},
+{
+"Key": "player_guard_baton_walk_4",
+"X": -0.107,
+"Y": 1.188,
+"Angle": 3.7
+},
+{
+"Key": "player_guard_baton_walk_5",
+"X": -0.107,
+"Y": 1.181,
+"Angle": 3.7
+},
+{
+"Key": "player_guard_baton_walk_6",
+"X": -0.112,
+"Y": 1.161,
+"Angle": 3.2
+},
+{
+"Key": "player_guard_baton_walk_7",
+"X": -0.113,
+"Y": 1.148,
+"Angle": 3.0
+},
+{
+"Key": "player_guard_baton_walk_8",
+"X": -0.109,
+"Y": 1.161,
+"Angle": 3.5
+},
+{
+"Key": "player_guard_baton_walk_9",
+"X": -0.106,
+"Y": 1.181,
+"Angle": 3.8
+},
+{
+"Key": "player_guard_baton_walk_10",
+"X": -0.108,
+"Y": 1.188,
+"Angle": 3.6
+},
+{
+"Key": "player_guard_baton_walk_11",
+"X": -0.113,
+"Y": 1.189,
+"Angle": 3.0
+},
+{
+"Key": "player_guard_baton_walk_12",
+"X": -0.119,
+"Y": 1.183,
+"Angle": 2.3
+},
+{
+"Key": "player_guard_baton_walk_13",
+"X": -0.125,
+"Y": 1.17,
+"Angle": 1.7
+},
+{
+"Key": "player_guard_baton_walk_14",
+"X": -0.126,
+"Y": 1.171,
+"Angle": 1.6
+},
+{
+"Key": "player_guard_baton_walk_15",
+"X": -0.125,
+"Y": 1.177,
+"Angle": 1.8
+},
+{
+"Key": "player_guard_mop_attack_0",
+"X": 0.195,
+"Y": 1.228,
+"Angle": 0.7
+},
+{
+"Key": "player_guard_mop_attack_1",
+"X": 0.132,
+"Y": 1.249,
+"Angle": -2.0
+},
+{
+"Key": "player_guard_mop_attack_2",
+"X": 0.055,
+"Y": 1.294,
+"Angle": -5.7
+},
+{
+"Key": "player_guard_mop_attack_3",
+"X": 0.002,
+"Y": 1.37,
+"Angle": -7.6
+},
+{
+"Key": "player_guard_mop_attack_4",
+"X": -0.016,
+"Y": 1.447,
+"Angle": -8.0
+},
+{
+"Key": "player_guard_mop_attack_5",
+"X": 0.004,
+"Y": 1.485,
+"Angle": -6.8
+},
+{
+"Key": "player_guard_mop_attack_6",
+"X": 0.043,
+"Y": 1.458,
+"Angle": -5.0
+},
+{
+"Key": "player_guard_mop_attack_7",
+"X": 0.064,
+"Y": 1.414,
+"Angle": -4.5
+},
+{
+"Key": "player_guard_mop_attack_8",
+"X": 0.064,
+"Y": 1.414,
+"Angle": -4.5
+},
+{
+"Key": "player_guard_mop_attack_9",
+"X": 0.043,
+"Y": 1.458,
+"Angle": -5.0
+},
+{
+"Key": "player_guard_mop_attack_10",
+"X": 0.004,
+"Y": 1.485,
+"Angle": -6.8
+},
+{
+"Key": "player_guard_mop_attack_11",
+"X": -0.016,
+"Y": 1.447,
+"Angle": -8.0
+},
+{
+"Key": "player_guard_mop_attack_12",
+"X": 0.002,
+"Y": 1.37,
+"Angle": -7.6
+},
+{
+"Key": "player_guard_mop_attack_13",
+"X": 0.055,
+"Y": 1.294,
+"Angle": -5.7
+},
+{
+"Key": "player_guard_mop_attack_14",
+"X": 0.132,
+"Y": 1.249,
+"Angle": -2.0
+},
+{
+"Key": "player_guard_mop_attack_15",
+"X": 0.195,
+"Y": 1.228,
+"Angle": 0.7
+},
+{
+"Key": "player_guard_mop_crouch_0",
+"X": 0.216,
+"Y": 0.725,
+"Angle": -19.2
+},
+{
+"Key": "player_guard_mop_crouch_1",
+"X": 0.213,
+"Y": 0.754,
+"Angle": -19.5
+},
+{
+"Key": "player_guard_mop_crouch_2",
+"X": 0.21,
+"Y": 0.79,
+"Angle": -19.7
+},
+{
+"Key": "player_guard_mop_crouch_3",
+"X": 0.209,
+"Y": 0.794,
+"Angle": -19.2
+},
+{
+"Key": "player_guard_mop_crouch_4",
+"X": 0.213,
+"Y": 0.763,
+"Angle": -18.5
+},
+{
+"Key": "player_guard_mop_crouch_5",
+"X": 0.217,
+"Y": 0.723,
+"Angle": -18.9
+},
+{
+"Key": "player_guard_mop_crouch_6",
+"X": 0.217,
+"Y": 0.704,
+"Angle": -19.3
+},
+{
+"Key": "player_guard_mop_crouch_7",
+"X": 0.219,
+"Y": 0.709,
+"Angle": -18.8
+},
+{
+"Key": "player_guard_mop_crouch_8",
+"X": 0.22,
+"Y": 0.714,
+"Angle": -18.5
+},
+{
+"Key": "player_guard_mop_crouch_9",
+"X": 0.216,
+"Y": 0.731,
+"Angle": -19.0
+},
+{
+"Key": "player_guard_mop_crouch_10",
+"X": 0.212,
+"Y": 0.769,
+"Angle": -19.7
+},
+{
+"Key": "player_guard_mop_crouch_11",
+"X": 0.209,
+"Y": 0.798,
+"Angle": -19.8
+},
+{
+"Key": "player_guard_mop_crouch_12",
+"X": 0.209,
+"Y": 0.795,
+"Angle": -19.3
+},
+{
+"Key": "player_guard_mop_crouch_13",
+"X": 0.214,
+"Y": 0.763,
+"Angle": -18.7
+},
+{
+"Key": "player_guard_mop_crouch_14",
+"X": 0.217,
+"Y": 0.73,
+"Angle": -19.0
+},
+{
+"Key": "player_guard_mop_crouch_15",
+"X": 0.216,
+"Y": 0.718,
+"Angle": -19.2
+},
+{
+"Key": "player_guard_mop_idle_0",
+"X": 0.216,
+"Y": 1.22,
+"Angle": 1.1
+},
+{
+"Key": "player_guard_mop_idle_1",
+"X": 0.221,
+"Y": 1.215,
+"Angle": 0.3
+},
+{
+"Key": "player_guard_mop_idle_2",
+"X": 0.229,
+"Y": 1.205,
+"Angle": -1.3
+},
+{
+"Key": "player_guard_mop_idle_3",
+"X": 0.234,
+"Y": 1.2,
+"Angle": -2.3
+},
+{
+"Key": "player_guard_mop_idle_4",
+"X": 0.231,
+"Y": 1.199,
+"Angle": -2.0
+},
+{
+"Key": "player_guard_mop_idle_5",
+"X": 0.223,
+"Y": 1.203,
+"Angle": -0.4
+},
+{
+"Key": "player_guard_mop_idle_6",
+"X": 0.217,
+"Y": 1.213,
+"Angle": 1.1
+},
+{
+"Key": "player_guard_mop_idle_7",
+"X": 0.215,
+"Y": 1.219,
+"Angle": 1.7
+},
+{
+"Key": "player_guard_mop_idle_8",
+"X": 0.215,
+"Y": 1.219,
+"Angle": 1.8
+},
+{
+"Key": "player_guard_mop_idle_9",
+"X": 0.215,
+"Y": 1.219,
+"Angle": 1.8
+},
+{
+"Key": "player_guard_mop_idle_10",
+"X": 0.215,
+"Y": 1.219,
+"Angle": 1.8
+},
+{
+"Key": "player_guard_mop_idle_11",
+"X": 0.215,
+"Y": 1.219,
+"Angle": 1.8
+},
+{
+"Key": "player_guard_mop_idle_12",
+"X": 0.215,
+"Y": 1.219,
+"Angle": 1.8
+},
+{
+"Key": "player_guard_mop_idle_13",
+"X": 0.215,
+"Y": 1.219,
+"Angle": 1.8
+},
+{
+"Key": "player_guard_mop_idle_14",
+"X": 0.216,
+"Y": 1.219,
+"Angle": 1.5
+},
+{
+"Key": "player_guard_mop_idle_15",
+"X": 0.216,
+"Y": 1.22,
+"Angle": 1.1
+},
+{
+"Key": "player_guard_mop_run_0",
+"X": 0.263,
+"Y": 1.214,
+"Angle": 6.6
+},
+{
+"Key": "player_guard_mop_run_1",
+"X": 0.252,
+"Y": 1.2,
+"Angle": 6.1
+},
+{
+"Key": "player_guard_mop_run_2",
+"X": 0.228,
+"Y": 1.218,
+"Angle": 3.1
+},
+{
+"Key": "player_guard_mop_run_3",
+"X": 0.21,
+"Y": 1.236,
+"Angle": 0.3
+},
+{
+"Key": "player_guard_mop_run_4",
+"X": 0.213,
+"Y": 1.221,
+"Angle": 0.8
+},
+{
+"Key": "player_guard_mop_run_5",
+"X": 0.23,
+"Y": 1.203,
+"Angle": 3.8
+},
+{
+"Key": "player_guard_mop_run_6",
+"X": 0.248,
+"Y": 1.214,
+"Angle": 5.6
+},
+{
+"Key": "player_guard_mop_run_7",
+"X": 0.26,
+"Y": 1.228,
+"Angle": 6.0
+},
+{
+"Key": "player_guard_mop_run_8",
+"X": 0.263,
+"Y": 1.214,
+"Angle": 6.5
+},
+{
+"Key": "player_guard_mop_run_9",
+"X": 0.251,
+"Y": 1.2,
+"Angle": 6.1
+},
+{
+"Key": "player_guard_mop_run_10",
+"X": 0.228,
+"Y": 1.218,
+"Angle": 3.3
+},
+{
+"Key": "player_guard_mop_run_11",
+"X": 0.21,
+"Y": 1.236,
+"Angle": 0.4
+},
+{
+"Key": "player_guard_mop_run_12",
+"X": 0.212,
+"Y": 1.221,
+"Angle": 0.8
+},
+{
+"Key": "player_guard_mop_run_13",
+"X": 0.229,
+"Y": 1.203,
+"Angle": 3.6
+},
+{
+"Key": "player_guard_mop_run_14",
+"X": 0.247,
+"Y": 1.214,
+"Angle": 5.5
+},
+{
+"Key": "player_guard_mop_run_15",
+"X": 0.26,
+"Y": 1.228,
+"Angle": 5.9
+},
+{
+"Key": "player_guard_mop_walk_0",
+"X": 0.245,
+"Y": 1.167,
+"Angle": 3.8
+},
+{
+"Key": "player_guard_mop_walk_1",
+"X": 0.239,
+"Y": 1.161,
+"Angle": 3.2
+},
+{
+"Key": "player_guard_mop_walk_2",
+"X": 0.234,
+"Y": 1.169,
+"Angle": 2.6
+},
+{
+"Key": "player_guard_mop_walk_3",
+"X": 0.235,
+"Y": 1.183,
+"Angle": 2.7
+},
+{
+"Key": "player_guard_mop_walk_4",
+"X": 0.233,
+"Y": 1.183,
+"Angle": 2.6
+},
+{
+"Key": "player_guard_mop_walk_5",
+"X": 0.23,
+"Y": 1.17,
+"Angle": 2.2
+},
+{
+"Key": "player_guard_mop_walk_6",
+"X": 0.228,
+"Y": 1.163,
+"Angle": 1.9
+},
+{
+"Key": "player_guard_mop_walk_7",
+"X": 0.232,
+"Y": 1.162,
+"Angle": 2.4
+},
+{
+"Key": "player_guard_mop_walk_8",
+"X": 0.237,
+"Y": 1.168,
+"Angle": 3.0
+},
+{
+"Key": "player_guard_mop_walk_9",
+"X": 0.238,
+"Y": 1.182,
+"Angle": 3.0
+},
+{
+"Key": "player_guard_mop_walk_10",
+"X": 0.238,
+"Y": 1.182,
+"Angle": 3.1
+},
+{
+"Key": "player_guard_mop_walk_11",
+"X": 0.238,
+"Y": 1.168,
+"Angle": 3.0
+},
+{
+"Key": "player_guard_mop_walk_12",
+"X": 0.234,
+"Y": 1.162,
+"Angle": 2.6
+},
+{
+"Key": "player_guard_mop_walk_13",
+"X": 0.23,
+"Y": 1.17,
+"Angle": 2.2
+},
+{
+"Key": "player_guard_mop_walk_14",
+"X": 0.231,
+"Y": 1.183,
+"Angle": 2.3
+},
+{
+"Key": "player_guard_mop_walk_15",
+"X": 0.24,
+"Y": 1.182,
+"Angle": 3.2
+},
+{
+"Key": "player_guard_none_crouch_0",
+"X": -0.144,
+"Y": 0.786,
+"Angle": -12.5
+},
+{
+"Key": "player_guard_none_crouch_1",
+"X": -0.137,
+"Y": 0.789,
+"Angle": -11.6
+},
+{
+"Key": "player_guard_none_crouch_2",
+"X": -0.14,
+"Y": 0.783,
+"Angle": -11.9
+},
+{
+"Key": "player_guard_none_crouch_3",
+"X": -0.146,
+"Y": 0.767,
+"Angle": -12.9
+},
+{
+"Key": "player_guard_none_crouch_4",
+"X": -0.151,
+"Y": 0.765,
+"Angle": -13.9
+},
+{
+"Key": "player_guard_none_crouch_5",
+"X": -0.156,
+"Y": 0.795,
+"Angle": -14.3
+},
+{
+"Key": "player_guard_none_crouch_6",
+"X": -0.159,
+"Y": 0.816,
+"Angle": -14.4
+},
+{
+"Key": "player_guard_none_crouch_7",
+"X": -0.158,
+"Y": 0.802,
+"Angle": -14.3
+},
+{
+"Key": "player_guard_none_crouch_8",
+"X": -0.156,
+"Y": 0.773,
+"Angle": -14.1
+},
+{
+"Key": "player_guard_none_crouch_9",
+"X": -0.153,
+"Y": 0.757,
+"Angle": -13.6
+},
+{
+"Key": "player_guard_none_crouch_10",
+"X": -0.145,
+"Y": 0.766,
+"Angle": -12.6
+},
+{
+"Key": "player_guard_none_crouch_11",
+"X": -0.137,
+"Y": 0.782,
+"Angle": -11.6
+},
+{
+"Key": "player_guard_none_crouch_12",
+"X": -0.14,
+"Y": 0.784,
+"Angle": -12.0
+},
+{
+"Key": "player_guard_none_crouch_13",
+"X": -0.147,
+"Y": 0.767,
+"Angle": -12.9
+},
+{
+"Key": "player_guard_none_crouch_14",
+"X": -0.15,
+"Y": 0.755,
+"Angle": -13.2
+},
+{
+"Key": "player_guard_none_crouch_15",
+"X": -0.15,
+"Y": 0.769,
+"Angle": -13.3
+},
+{
+"Key": "player_guard_none_idle_0",
+"X": -0.105,
+"Y": 1.214,
+"Angle": 5.6
+},
+{
+"Key": "player_guard_none_idle_1",
+"X": -0.105,
+"Y": 1.214,
+"Angle": 5.6
+},
+{
+"Key": "player_guard_none_idle_2",
+"X": -0.105,
+"Y": 1.214,
+"Angle": 5.3
+},
+{
+"Key": "player_guard_none_idle_3",
+"X": -0.103,
+"Y": 1.209,
+"Angle": 4.0
+},
+{
+"Key": "player_guard_none_idle_4",
+"X": -0.1,
+"Y": 1.198,
+"Angle": 2.1
+},
+{
+"Key": "player_guard_none_idle_5",
+"X": -0.099,
+"Y": 1.192,
+"Angle": 1.1
+},
+{
+"Key": "player_guard_none_idle_6",
+"X": -0.098,
+"Y": 1.193,
+"Angle": 0.9
+},
+{
+"Key": "player_guard_none_idle_7",
+"X": -0.098,
+"Y": 1.193,
+"Angle": 0.9
+},
+{
+"Key": "player_guard_none_idle_8",
+"X": -0.099,
+"Y": 1.192,
+"Angle": 1.2
+},
+{
+"Key": "player_guard_none_idle_9",
+"X": -0.101,
+"Y": 1.197,
+"Angle": 2.5
+},
+{
+"Key": "player_guard_none_idle_10",
+"X": -0.104,
+"Y": 1.208,
+"Angle": 4.6
+},
+{
+"Key": "player_guard_none_idle_11",
+"X": -0.105,
+"Y": 1.214,
+"Angle": 5.6
+},
+{
+"Key": "player_guard_none_idle_12",
+"X": -0.105,
+"Y": 1.214,
+"Angle": 5.6
+},
+{
+"Key": "player_guard_none_idle_13",
+"X": -0.105,
+"Y": 1.214,
+"Angle": 5.6
+},
+{
+"Key": "player_guard_none_idle_14",
+"X": -0.105,
+"Y": 1.214,
+"Angle": 5.6
+},
+{
+"Key": "player_guard_none_idle_15",
+"X": -0.105,
+"Y": 1.214,
+"Angle": 5.6
+},
+{
+"Key": "player_guard_none_run_0",
+"X": -0.119,
+"Y": 1.228,
+"Angle": 5.6
+},
+{
+"Key": "player_guard_none_run_1",
+"X": -0.111,
+"Y": 1.241,
+"Angle": 6.5
+},
+{
+"Key": "player_guard_none_run_2",
+"X": -0.108,
+"Y": 1.262,
+"Angle": 6.7
+},
+{
+"Key": "player_guard_none_run_3",
+"X": -0.113,
+"Y": 1.262,
+"Angle": 6.2
+},
+{
+"Key": "player_guard_none_run_4",
+"X": -0.118,
+"Y": 1.249,
+"Angle": 5.7
+},
+{
+"Key": "player_guard_none_run_5",
+"X": -0.118,
+"Y": 1.235,
+"Angle": 5.7
+},
+{
+"Key": "player_guard_none_run_6",
+"X": -0.115,
+"Y": 1.228,
+"Angle": 6.0
+},
+{
+"Key": "player_guard_none_run_7",
+"X": -0.114,
+"Y": 1.242,
+"Angle": 6.1
+},
+{
+"Key": "player_guard_none_run_8",
+"X": -0.117,
+"Y": 1.263,
+"Angle": 5.7
+},
+{
+"Key": "player_guard_none_run_9",
+"X": -0.119,
+"Y": 1.263,
+"Angle": 5.6
+},
+{
+"Key": "player_guard_none_run_10",
+"X": -0.116,
+"Y": 1.249,
+"Angle": 5.9
+},
+{
+"Key": "player_guard_none_run_11",
+"X": -0.114,
+"Y": 1.248,
+"Angle": 6.2
+},
+{
+"Key": "player_guard_none_run_12",
+"X": -0.115,
+"Y": 1.262,
+"Angle": 6.0
+},
+{
+"Key": "player_guard_none_run_13",
+"X": -0.116,
+"Y": 1.27,
+"Angle": 5.9
+},
+{
+"Key": "player_guard_none_run_14",
+"X": -0.118,
+"Y": 1.263,
+"Angle": 5.6
+},
+{
+"Key": "player_guard_none_run_15",
+"X": -0.122,
+"Y": 1.242,
+"Angle": 5.3
+},
+{
+"Key": "player_guard_none_shove_0",
+"X": -0.092,
+"Y": 1.214,
+"Angle": 5.3
+},
+{
+"Key": "player_guard_none_shove_1",
+"X": -0.057,
+"Y": 1.215,
+"Angle": 4.8
+},
+{
+"Key": "player_guard_none_shove_2",
+"X": -0.001,
+"Y": 1.215,
+"Angle": 4.9
+},
+{
+"Key": "player_guard_none_shove_3",
+"X": 0.072,
+"Y": 1.214,
+"Angle": 6.6
+},
+{
+"Key": "player_guard_none_shove_4",
+"X": 0.15,
+"Y": 1.213,
+"Angle": 8.4
+},
+{
+"Key": "player_guard_none_shove_5",
+"X": 0.221,
+"Y": 1.213,
+"Angle": 8.6
+},
+{
+"Key": "player_guard_none_shove_6",
+"X": 0.292,
+"Y": 1.213,
+"Angle": 8.0
+},
+{
+"Key": "player_guard_none_shove_7",
+"X": 0.355,
+"Y": 1.213,
+"Angle": 7.3
+},
+{
+"Key": "player_guard_none_shove_8",
+"X": 0.355,
+"Y": 1.213,
+"Angle": 7.3
+},
+{
+"Key": "player_guard_none_shove_9",
+"X": 0.292,
+"Y": 1.213,
+"Angle": 8.0
+},
+{
+"Key": "player_guard_none_shove_10",
+"X": 0.221,
+"Y": 1.213,
+"Angle": 8.6
+},
+{
+"Key": "player_guard_none_shove_11",
+"X": 0.15,
+"Y": 1.213,
+"Angle": 8.4
+},
+{
+"Key": "player_guard_none_shove_12",
+"X": 0.072,
+"Y": 1.214,
+"Angle": 6.6
+},
+{
+"Key": "player_guard_none_shove_13",
+"X": -0.001,
+"Y": 1.215,
+"Angle": 4.9
+},
+{
+"Key": "player_guard_none_shove_14",
+"X": -0.057,
+"Y": 1.215,
+"Angle": 4.8
+},
+{
+"Key": "player_guard_none_shove_15",
+"X": -0.092,
+"Y": 1.214,
+"Angle": 5.3
+},
+{
+"Key": "player_guard_none_walk_0",
+"X": -0.114,
+"Y": 1.208,
+"Angle": 4.7
+},
+{
+"Key": "player_guard_none_walk_1",
+"X": -0.117,
+"Y": 1.195,
+"Angle": 4.3
+},
+{
+"Key": "player_guard_none_walk_2",
+"X": -0.118,
+"Y": 1.188,
+"Angle": 4.2
+},
+{
+"Key": "player_guard_none_walk_3",
+"X": -0.115,
+"Y": 1.194,
+"Angle": 4.6
+},
+{
+"Key": "player_guard_none_walk_4",
+"X": -0.111,
+"Y": 1.208,
+"Angle": 5.0
+},
+{
+"Key": "player_guard_none_walk_5",
+"X": -0.109,
+"Y": 1.215,
+"Angle": 5.1
+},
+{
+"Key": "player_guard_none_walk_6",
+"X": -0.109,
+"Y": 1.208,
+"Angle": 5.1
+},
+{
+"Key": "player_guard_none_walk_7",
+"X": -0.109,
+"Y": 1.194,
+"Angle": 5.1
+},
+{
+"Key": "player_guard_none_walk_8",
+"X": -0.109,
+"Y": 1.194,
+"Angle": 5.1
+},
+{
+"Key": "player_guard_none_walk_9",
+"X": -0.109,
+"Y": 1.208,
+"Angle": 5.2
+},
+{
+"Key": "player_guard_none_walk_10",
+"X": -0.109,
+"Y": 1.215,
+"Angle": 5.2
+},
+{
+"Key": "player_guard_none_walk_11",
+"X": -0.111,
+"Y": 1.208,
+"Angle": 5.0
+},
+{
+"Key": "player_guard_none_walk_12",
+"X": -0.115,
+"Y": 1.194,
+"Angle": 4.5
+},
+{
+"Key": "player_guard_none_walk_13",
+"X": -0.117,
+"Y": 1.195,
+"Angle": 4.3
+},
+{
+"Key": "player_guard_none_walk_14",
+"X": -0.114,
+"Y": 1.208,
+"Angle": 4.6
+},
+{
+"Key": "player_guard_none_walk_15",
+"X": -0.111,
+"Y": 1.215,
+"Angle": 4.9
+},
+{
+"Key": "player_guard_pipe_attack_0",
+"X": -0.103,
+"Y": 1.251,
+"Angle": 4.3
+},
+{
+"Key": "player_guard_pipe_attack_1",
+"X": -0.175,
+"Y": 1.338,
+"Angle": 1.7
+},
+{
+"Key": "player_guard_pipe_attack_2",
+"X": -0.266,
+"Y": 1.415,
+"Angle": 0.8
+},
+{
+"Key": "player_guard_pipe_attack_3",
+"X": -0.342,
+"Y": 1.434,
+"Angle": 2.3
+},
+{
+"Key": "player_guard_pipe_attack_4",
+"X": -0.337,
+"Y": 1.369,
+"Angle": 3.8
+},
+{
+"Key": "player_guard_pipe_attack_5",
+"X": -0.24,
+"Y": 1.291,
+"Angle": 5.5
+},
+{
+"Key": "player_guard_pipe_attack_6",
+"X": -0.14,
+"Y": 1.297,
+"Angle": 7.5
+},
+{
+"Key": "player_guard_pipe_attack_7",
+"X": -0.071,
+"Y": 1.338,
+"Angle": 8.1
+},
+{
+"Key": "player_guard_pipe_attack_8",
+"X": -0.071,
+"Y": 1.338,
+"Angle": 8.1
+},
+{
+"Key": "player_guard_pipe_attack_9",
+"X": -0.14,
+"Y": 1.297,
+"Angle": 7.5
+},
+{
+"Key": "player_guard_pipe_attack_10",
+"X": -0.24,
+"Y": 1.291,
+"Angle": 5.5
+},
+{
+"Key": "player_guard_pipe_attack_11",
+"X": -0.337,
+"Y": 1.369,
+"Angle": 3.8
+},
+{
+"Key": "player_guard_pipe_attack_12",
+"X": -0.342,
+"Y": 1.434,
+"Angle": 2.3
+},
+{
+"Key": "player_guard_pipe_attack_13",
+"X": -0.266,
+"Y": 1.415,
+"Angle": 0.8
+},
+{
+"Key": "player_guard_pipe_attack_14",
+"X": -0.175,
+"Y": 1.338,
+"Angle": 1.7
+},
+{
+"Key": "player_guard_pipe_attack_15",
+"X": -0.103,
+"Y": 1.251,
+"Angle": 4.3
+},
+{
+"Key": "player_guard_pipe_crouch_0",
+"X": -0.171,
+"Y": 0.753,
+"Angle": -9.7
+},
+{
+"Key": "player_guard_pipe_crouch_1",
+"X": -0.168,
+"Y": 0.779,
+"Angle": -9.3
+},
+{
+"Key": "player_guard_pipe_crouch_2",
+"X": -0.165,
+"Y": 0.799,
+"Angle": -9.0
+},
+{
+"Key": "player_guard_pipe_crouch_3",
+"X": -0.167,
+"Y": 0.806,
+"Angle": -9.2
+},
+{
+"Key": "player_guard_pipe_crouch_4",
+"X": -0.173,
+"Y": 0.803,
+"Angle": -10.0
+},
+{
+"Key": "player_guard_pipe_crouch_5",
+"X": -0.181,
+"Y": 0.8,
+"Angle": -10.9
+},
+{
+"Key": "player_guard_pipe_crouch_6",
+"X": -0.189,
+"Y": 0.818,
+"Angle": -11.9
+},
+{
+"Key": "player_guard_pipe_crouch_7",
+"X": -0.195,
+"Y": 0.842,
+"Angle": -12.7
+},
+{
+"Key": "player_guard_pipe_crouch_8",
+"X": -0.198,
+"Y": 0.851,
+"Angle": -13.0
+},
+{
+"Key": "player_guard_pipe_crouch_9",
+"X": -0.199,
+"Y": 0.845,
+"Angle": -13.2
+},
+{
+"Key": "player_guard_pipe_crouch_10",
+"X": -0.197,
+"Y": 0.823,
+"Angle": -13.0
+},
+{
+"Key": "player_guard_pipe_crouch_11",
+"X": -0.186,
+"Y": 0.789,
+"Angle": -11.6
+},
+{
+"Key": "player_guard_pipe_crouch_12",
+"X": -0.176,
+"Y": 0.755,
+"Angle": -10.3
+},
+{
+"Key": "player_guard_pipe_crouch_13",
+"X": -0.175,
+"Y": 0.734,
+"Angle": -10.3
+},
+{
+"Key": "player_guard_pipe_crouch_14",
+"X": -0.178,
+"Y": 0.729,
+"Angle": -10.6
+},
+{
+"Key": "player_guard_pipe_crouch_15",
+"X": -0.176,
+"Y": 0.734,
+"Angle": -10.3
+},
+{
+"Key": "player_guard_pipe_idle_0",
+"X": -0.079,
+"Y": 1.207,
+"Angle": 5.4
+},
+{
+"Key": "player_guard_pipe_idle_1",
+"X": -0.079,
+"Y": 1.193,
+"Angle": 5.4
+},
+{
+"Key": "player_guard_pipe_idle_2",
+"X": -0.079,
+"Y": 1.187,
+"Angle": 5.4
+},
+{
+"Key": "player_guard_pipe_idle_3",
+"X": -0.079,
+"Y": 1.187,
+"Angle": 5.3
+},
+{
+"Key": "player_guard_pipe_idle_4",
+"X": -0.079,
+"Y": 1.187,
+"Angle": 5.3
+},
+{
+"Key": "player_guard_pipe_idle_5",
+"X": -0.079,
+"Y": 1.193,
+"Angle": 5.5
+},
+{
+"Key": "player_guard_pipe_idle_6",
+"X": -0.079,
+"Y": 1.207,
+"Angle": 5.6
+},
+{
+"Key": "player_guard_pipe_idle_7",
+"X": -0.078,
+"Y": 1.214,
+"Angle": 5.5
+},
+{
+"Key": "player_guard_pipe_idle_8",
+"X": -0.078,
+"Y": 1.214,
+"Angle": 5.5
+},
+{
+"Key": "player_guard_pipe_idle_9",
+"X": -0.078,
+"Y": 1.207,
+"Angle": 5.5
+},
+{
+"Key": "player_guard_pipe_idle_10",
+"X": -0.079,
+"Y": 1.194,
+"Angle": 5.3
+},
+{
+"Key": "player_guard_pipe_idle_11",
+"X": -0.078,
+"Y": 1.187,
+"Angle": 4.7
+},
+{
+"Key": "player_guard_pipe_idle_12",
+"X": -0.078,
+"Y": 1.194,
+"Angle": 4.6
+},
+{
+"Key": "player_guard_pipe_idle_13",
+"X": -0.079,
+"Y": 1.208,
+"Angle": 5.2
+},
+{
+"Key": "player_guard_pipe_idle_14",
+"X": -0.079,
+"Y": 1.214,
+"Angle": 5.4
+},
+{
+"Key": "player_guard_pipe_idle_15",
+"X": -0.079,
+"Y": 1.214,
+"Angle": 5.4
+},
+{
+"Key": "player_guard_pipe_run_0",
+"X": -0.077,
+"Y": 1.262,
+"Angle": 6.9
+},
+{
+"Key": "player_guard_pipe_run_1",
+"X": -0.083,
+"Y": 1.249,
+"Angle": 6.0
+},
+{
+"Key": "player_guard_pipe_run_2",
+"X": -0.097,
+"Y": 1.25,
+"Angle": 4.8
+},
+{
+"Key": "player_guard_pipe_run_3",
+"X": -0.117,
+"Y": 1.266,
+"Angle": 2.7
+},
+{
+"Key": "player_guard_pipe_run_4",
+"X": -0.124,
+"Y": 1.268,
+"Angle": 1.5
+},
+{
+"Key": "player_guard_pipe_run_5",
+"X": -0.109,
+"Y": 1.252,
+"Angle": 3.4
+},
+{
+"Key": "player_guard_pipe_run_6",
+"X": -0.085,
+"Y": 1.249,
+"Angle": 6.3
+},
+{
+"Key": "player_guard_pipe_run_7",
+"X": -0.075,
+"Y": 1.262,
+"Angle": 7.4
+},
+{
+"Key": "player_guard_pipe_run_8",
+"X": -0.078,
+"Y": 1.262,
+"Angle": 6.8
+},
+{
+"Key": "player_guard_pipe_run_9",
+"X": -0.084,
+"Y": 1.249,
+"Angle": 5.9
+},
+{
+"Key": "player_guard_pipe_run_10",
+"X": -0.098,
+"Y": 1.25,
+"Angle": 4.8
+},
+{
+"Key": "player_guard_pipe_run_11",
+"X": -0.117,
+"Y": 1.266,
+"Angle": 2.8
+},
+{
+"Key": "player_guard_pipe_run_12",
+"X": -0.124,
+"Y": 1.268,
+"Angle": 1.7
+},
+{
+"Key": "player_guard_pipe_run_13",
+"X": -0.11,
+"Y": 1.252,
+"Angle": 3.3
+},
+{
+"Key": "player_guard_pipe_run_14",
+"X": -0.087,
+"Y": 1.249,
+"Angle": 6.2
+},
+{
+"Key": "player_guard_pipe_run_15",
+"X": -0.075,
+"Y": 1.262,
+"Angle": 7.4
+},
+{
+"Key": "player_guard_pipe_walk_0",
+"X": -0.069,
+"Y": 1.194,
+"Angle": 5.2
+},
+{
+"Key": "player_guard_pipe_walk_1",
+"X": -0.066,
+"Y": 1.193,
+"Angle": 5.6
+},
+{
+"Key": "player_guard_pipe_walk_2",
+"X": -0.059,
+"Y": 1.207,
+"Angle": 6.2
+},
+{
+"Key": "player_guard_pipe_walk_3",
+"X": -0.057,
+"Y": 1.207,
+"Angle": 6.4
+},
+{
+"Key": "player_guard_pipe_walk_4",
+"X": -0.057,
+"Y": 1.193,
+"Angle": 6.5
+},
+{
+"Key": "player_guard_pipe_walk_5",
+"X": -0.057,
+"Y": 1.193,
+"Angle": 6.5
+},
+{
+"Key": "player_guard_pipe_walk_6",
+"X": -0.06,
+"Y": 1.207,
+"Angle": 6.2
+},
+{
+"Key": "player_guard_pipe_walk_7",
+"X": -0.065,
+"Y": 1.207,
+"Angle": 5.6
+},
+{
+"Key": "player_guard_pipe_walk_8",
+"X": -0.069,
+"Y": 1.194,
+"Angle": 5.2
+},
+{
+"Key": "player_guard_pipe_walk_9",
+"X": -0.066,
+"Y": 1.193,
+"Angle": 5.6
+},
+{
+"Key": "player_guard_pipe_walk_10",
+"X": -0.059,
+"Y": 1.207,
+"Angle": 6.2
+},
+{
+"Key": "player_guard_pipe_walk_11",
+"X": -0.057,
+"Y": 1.207,
+"Angle": 6.5
+},
+{
+"Key": "player_guard_pipe_walk_12",
+"X": -0.057,
+"Y": 1.193,
+"Angle": 6.5
+},
+{
+"Key": "player_guard_pipe_walk_13",
+"X": -0.057,
+"Y": 1.193,
+"Angle": 6.5
+},
+{
+"Key": "player_guard_pipe_walk_14",
+"X": -0.06,
+"Y": 1.207,
+"Angle": 6.2
+},
+{
+"Key": "player_guard_pipe_walk_15",
+"X": -0.065,
+"Y": 1.207,
+"Angle": 5.6
+},
+{
+"Key": "player_padding_bat_attack_0",
+"X": -0.091,
+"Y": 1.258,
+"Angle": 3.5
+},
+{
+"Key": "player_padding_bat_attack_1",
+"X": -0.236,
+"Y": 1.341,
+"Angle": 4.5
+},
+{
+"Key": "player_padding_bat_attack_2",
+"X": -0.384,
+"Y": 1.38,
+"Angle": 7.2
+},
+{
+"Key": "player_padding_bat_attack_3",
+"X": -0.486,
+"Y": 1.373,
+"Angle": 9.5
+},
+{
+"Key": "player_padding_bat_attack_4",
+"X": -0.55,
+"Y": 1.359,
+"Angle": 10.1
+},
+{
+"Key": "player_padding_bat_attack_5",
+"X": -0.565,
+"Y": 1.352,
+"Angle": 9.6
+},
+{
+"Key": "player_padding_bat_attack_6",
+"X": -0.541,
+"Y": 1.359,
+"Angle": 8.8
+},
+{
+"Key": "player_padding_bat_attack_7",
+"X": -0.512,
+"Y": 1.372,
+"Angle": 8.8
+},
+{
+"Key": "player_padding_bat_attack_8",
+"X": -0.512,
+"Y": 1.372,
+"Angle": 8.8
+},
+{
+"Key": "player_padding_bat_attack_9",
+"X": -0.541,
+"Y": 1.359,
+"Angle": 8.8
+},
+{
+"Key": "player_padding_bat_attack_10",
+"X": -0.565,
+"Y": 1.352,
+"Angle": 9.6
+},
+{
+"Key": "player_padding_bat_attack_11",
+"X": -0.55,
+"Y": 1.359,
+"Angle": 10.1
+},
+{
+"Key": "player_padding_bat_attack_12",
+"X": -0.486,
+"Y": 1.373,
+"Angle": 9.5
+},
+{
+"Key": "player_padding_bat_attack_13",
+"X": -0.384,
+"Y": 1.38,
+"Angle": 7.2
+},
+{
+"Key": "player_padding_bat_attack_14",
+"X": -0.236,
+"Y": 1.341,
+"Angle": 4.5
+},
+{
+"Key": "player_padding_bat_attack_15",
+"X": -0.091,
+"Y": 1.258,
+"Angle": 3.5
+},
+{
+"Key": "player_padding_bat_crouch_0",
+"X": -0.089,
+"Y": 0.683,
+"Angle": -12.7
+},
+{
+"Key": "player_padding_bat_crouch_1",
+"X": -0.092,
+"Y": 0.689,
+"Angle": -12.6
+},
+{
+"Key": "player_padding_bat_crouch_2",
+"X": -0.076,
+"Y": 0.71,
+"Angle": -12.5
+},
+{
+"Key": "player_padding_bat_crouch_3",
+"X": -0.036,
+"Y": 0.741,
+"Angle": -14.5
+},
+{
+"Key": "player_padding_bat_crouch_4",
+"X": -0.035,
+"Y": 0.742,
+"Angle": -14.8
+},
+{
+"Key": "player_padding_bat_crouch_5",
+"X": -0.051,
+"Y": 0.727,
+"Angle": -14.5
+},
+{
+"Key": "player_padding_bat_crouch_6",
+"X": -0.044,
+"Y": 0.72,
+"Angle": -15.8
+},
+{
+"Key": "player_padding_bat_crouch_7",
+"X": -0.053,
+"Y": 0.705,
+"Angle": -15.6
+},
+{
+"Key": "player_padding_bat_crouch_8",
+"X": -0.069,
+"Y": 0.694,
+"Angle": -14.9
+},
+{
+"Key": "player_padding_bat_crouch_9",
+"X": -0.083,
+"Y": 0.691,
+"Angle": -12.9
+},
+{
+"Key": "player_padding_bat_crouch_10",
+"X": -0.072,
+"Y": 0.708,
+"Angle": -11.9
+},
+{
+"Key": "player_padding_bat_crouch_11",
+"X": -0.021,
+"Y": 0.745,
+"Angle": -15.1
+},
+{
+"Key": "player_padding_bat_crouch_12",
+"X": -0.019,
+"Y": 0.747,
+"Angle": -15.7
+},
+{
+"Key": "player_padding_bat_crouch_13",
+"X": -0.055,
+"Y": 0.715,
+"Angle": -13.5
+},
+{
+"Key": "player_padding_bat_crouch_14",
+"X": -0.067,
+"Y": 0.691,
+"Angle": -12.9
+},
+{
+"Key": "player_padding_bat_crouch_15",
+"X": -0.078,
+"Y": 0.682,
+"Angle": -12.4
+},
+{
+"Key": "player_padding_bat_idle_0",
+"X": -0.035,
+"Y": 1.217,
+"Angle": 3.3
+},
+{
+"Key": "player_padding_bat_idle_1",
+"X": -0.035,
+"Y": 1.204,
+"Angle": 2.8
+},
+{
+"Key": "player_padding_bat_idle_2",
+"X": -0.032,
+"Y": 1.178,
+"Angle": 1.4
+},
+{
+"Key": "player_padding_bat_idle_3",
+"X": -0.031,
+"Y": 1.173,
+"Angle": 0.5
+},
+{
+"Key": "player_padding_bat_idle_4",
+"X": -0.03,
+"Y": 1.187,
+"Angle": 0.2
+},
+{
+"Key": "player_padding_bat_idle_5",
+"X": -0.03,
+"Y": 1.187,
+"Angle": 0.2
+},
+{
+"Key": "player_padding_bat_idle_6",
+"X": -0.031,
+"Y": 1.172,
+"Angle": 0.7
+},
+{
+"Key": "player_padding_bat_idle_7",
+"X": -0.032,
+"Y": 1.171,
+"Angle": 1.1
+},
+{
+"Key": "player_padding_bat_idle_8",
+"X": -0.032,
+"Y": 1.192,
+"Angle": 1.5
+},
+{
+"Key": "player_padding_bat_idle_9",
+"X": -0.034,
+"Y": 1.211,
+"Angle": 2.5
+},
+{
+"Key": "player_padding_bat_idle_10",
+"X": -0.035,
+"Y": 1.217,
+"Angle": 3.2
+},
+{
+"Key": "player_padding_bat_idle_11",
+"X": -0.035,
+"Y": 1.217,
+"Angle": 3.2
+},
+{
+"Key": "player_padding_bat_idle_12",
+"X": -0.035,
+"Y": 1.217,
+"Angle": 3.2
+},
+{
+"Key": "player_padding_bat_idle_13",
+"X": -0.035,
+"Y": 1.217,
+"Angle": 3.2
+},
+{
+"Key": "player_padding_bat_idle_14",
+"X": -0.035,
+"Y": 1.217,
+"Angle": 3.2
+},
+{
+"Key": "player_padding_bat_idle_15",
+"X": -0.035,
+"Y": 1.217,
+"Angle": 3.2
+},
+{
+"Key": "player_padding_bat_run_0",
+"X": -0.123,
+"Y": 1.363,
+"Angle": 19.1
+},
+{
+"Key": "player_padding_bat_run_1",
+"X": -0.145,
+"Y": 1.363,
+"Angle": 19.1
+},
+{
+"Key": "player_padding_bat_run_2",
+"X": -0.153,
+"Y": 1.37,
+"Angle": 19.1
+},
+{
+"Key": "player_padding_bat_run_3",
+"X": -0.133,
+"Y": 1.37,
+"Angle": 19.1
+},
+{
+"Key": "player_padding_bat_run_4",
+"X": -0.123,
+"Y": 1.356,
+"Angle": 19.1
+},
+{
+"Key": "player_padding_bat_run_5",
+"X": -0.133,
+"Y": 1.335,
+"Angle": 19.1
+},
+{
+"Key": "player_padding_bat_run_6",
+"X": -0.127,
+"Y": 1.335,
+"Angle": 19.1
+},
+{
+"Key": "player_padding_bat_run_7",
+"X": -0.123,
+"Y": 1.363,
+"Angle": 19.1
+},
+{
+"Key": "player_padding_bat_run_8",
+"X": -0.154,
+"Y": 1.377,
+"Angle": 19.0
+},
+{
+"Key": "player_padding_bat_run_9",
+"X": -0.168,
+"Y": 1.363,
+"Angle": 19.0
+},
+{
+"Key": "player_padding_bat_run_10",
+"X": -0.139,
+"Y": 1.349,
+"Angle": 19.0
+},
+{
+"Key": "player_padding_bat_run_11",
+"X": -0.126,
+"Y": 1.362,
+"Angle": 18.8
+},
+{
+"Key": "player_padding_bat_run_12",
+"X": -0.153,
+"Y": 1.376,
+"Angle": 18.7
+},
+{
+"Key": "player_padding_bat_run_13",
+"X": -0.163,
+"Y": 1.369,
+"Angle": 18.9
+},
+{
+"Key": "player_padding_bat_run_14",
+"X": -0.137,
+"Y": 1.349,
+"Angle": 19.0
+},
+{
+"Key": "player_padding_bat_run_15",
+"X": -0.118,
+"Y": 1.349,
+"Angle": 19.2
+},
+{
+"Key": "player_padding_bat_walk_0",
+"X": -0.011,
+"Y": 1.193,
+"Angle": 6.6
+},
+{
+"Key": "player_padding_bat_walk_1",
+"X": -0.009,
+"Y": 1.206,
+"Angle": 6.8
+},
+{
+"Key": "player_padding_bat_walk_2",
+"X": -0.01,
+"Y": 1.207,
+"Angle": 6.5
+},
+{
+"Key": "player_padding_bat_walk_3",
+"X": -0.014,
+"Y": 1.186,
+"Angle": 5.9
+},
+{
+"Key": "player_padding_bat_walk_4",
+"X": -0.015,
+"Y": 1.165,
+"Angle": 6.0
+},
+{
+"Key": "player_padding_bat_walk_5",
+"X": -0.013,
+"Y": 1.165,
+"Angle": 6.4
+},
+{
+"Key": "player_padding_bat_walk_6",
+"X": -0.014,
+"Y": 1.179,
+"Angle": 6.3
+},
+{
+"Key": "player_padding_bat_walk_7",
+"X": -0.015,
+"Y": 1.193,
+"Angle": 6.2
+},
+{
+"Key": "player_padding_bat_walk_8",
+"X": -0.013,
+"Y": 1.207,
+"Angle": 6.4
+},
+{
+"Key": "player_padding_bat_walk_9",
+"X": -0.012,
+"Y": 1.207,
+"Angle": 6.3
+},
+{
+"Key": "player_padding_bat_walk_10",
+"X": -0.015,
+"Y": 1.186,
+"Angle": 5.8
+},
+{
+"Key": "player_padding_bat_walk_11",
+"X": -0.016,
+"Y": 1.165,
+"Angle": 5.9
+},
+{
+"Key": "player_padding_bat_walk_12",
+"X": -0.012,
+"Y": 1.165,
+"Angle": 6.5
+},
+{
+"Key": "player_padding_bat_walk_13",
+"X": -0.011,
+"Y": 1.186,
+"Angle": 6.6
+},
+{
+"Key": "player_padding_bat_walk_14",
+"X": -0.014,
+"Y": 1.2,
+"Angle": 6.3
+},
+{
+"Key": "player_padding_bat_walk_15",
+"X": -0.014,
+"Y": 1.193,
+"Angle": 6.3
+},
+{
+"Key": "player_padding_baton_attack_0",
+"X": -0.111,
+"Y": 1.245,
+"Angle": 3.2
+},
+{
+"Key": "player_padding_baton_attack_1",
+"X": -0.176,
+"Y": 1.339,
+"Angle": 1.0
+},
+{
+"Key": "player_padding_baton_attack_2",
+"X": -0.269,
+"Y": 1.453,
+"Angle": -0.5
+},
+{
+"Key": "player_padding_baton_attack_3",
+"X": -0.358,
+"Y": 1.502,
+"Angle": -0.6
+},
+{
+"Key": "player_padding_baton_attack_4",
+"X": -0.426,
+"Y": 1.454,
+"Angle": -1.2
+},
+{
+"Key": "player_padding_baton_attack_5",
+"X": -0.452,
+"Y": 1.358,
+"Angle": -1.7
+},
+{
+"Key": "player_padding_baton_attack_6",
+"X": -0.452,
+"Y": 1.291,
+"Angle": -2.6
+},
+{
+"Key": "player_padding_baton_attack_7",
+"X": -0.458,
+"Y": 1.266,
+"Angle": -3.7
+},
+{
+"Key": "player_padding_baton_attack_8",
+"X": -0.458,
+"Y": 1.266,
+"Angle": -3.7
+},
+{
+"Key": "player_padding_baton_attack_9",
+"X": -0.452,
+"Y": 1.291,
+"Angle": -2.6
+},
+{
+"Key": "player_padding_baton_attack_10",
+"X": -0.452,
+"Y": 1.358,
+"Angle": -1.7
+},
+{
+"Key": "player_padding_baton_attack_11",
+"X": -0.426,
+"Y": 1.454,
+"Angle": -1.2
+},
+{
+"Key": "player_padding_baton_attack_12",
+"X": -0.358,
+"Y": 1.502,
+"Angle": -0.6
+},
+{
+"Key": "player_padding_baton_attack_13",
+"X": -0.269,
+"Y": 1.453,
+"Angle": -0.5
+},
+{
+"Key": "player_padding_baton_attack_14",
+"X": -0.176,
+"Y": 1.339,
+"Angle": 1.0
+},
+{
+"Key": "player_padding_baton_attack_15",
+"X": -0.111,
+"Y": 1.245,
+"Angle": 3.2
+},
+{
+"Key": "player_padding_baton_crouch_0",
+"X": -0.131,
+"Y": 0.779,
+"Angle": -12.6
+},
+{
+"Key": "player_padding_baton_crouch_1",
+"X": -0.13,
+"Y": 0.793,
+"Angle": -12.6
+},
+{
+"Key": "player_padding_baton_crouch_2",
+"X": -0.134,
+"Y": 0.817,
+"Angle": -13.1
+},
+{
+"Key": "player_padding_baton_crouch_3",
+"X": -0.138,
+"Y": 0.828,
+"Angle": -13.9
+},
+{
+"Key": "player_padding_baton_crouch_4",
+"X": -0.141,
+"Y": 0.824,
+"Angle": -14.6
+},
+{
+"Key": "player_padding_baton_crouch_5",
+"X": -0.148,
+"Y": 0.805,
+"Angle": -15.0
+},
+{
+"Key": "player_padding_baton_crouch_6",
+"X": -0.153,
+"Y": 0.793,
+"Angle": -15.2
+},
+{
+"Key": "player_padding_baton_crouch_7",
+"X": -0.153,
+"Y": 0.807,
+"Angle": -15.3
+},
+{
+"Key": "player_padding_baton_crouch_8",
+"X": -0.149,
+"Y": 0.826,
+"Angle": -14.9
+},
+{
+"Key": "player_padding_baton_crouch_9",
+"X": -0.142,
+"Y": 0.829,
+"Angle": -14.1
+},
+{
+"Key": "player_padding_baton_crouch_10",
+"X": -0.138,
+"Y": 0.819,
+"Angle": -13.5
+},
+{
+"Key": "player_padding_baton_crouch_11",
+"X": -0.134,
+"Y": 0.795,
+"Angle": -13.0
+},
+{
+"Key": "player_padding_baton_crouch_12",
+"X": -0.13,
+"Y": 0.779,
+"Angle": -12.5
+},
+{
+"Key": "player_padding_baton_crouch_13",
+"X": -0.13,
+"Y": 0.793,
+"Angle": -12.5
+},
+{
+"Key": "player_padding_baton_crouch_14",
+"X": -0.133,
+"Y": 0.809,
+"Angle": -12.9
+},
+{
+"Key": "player_padding_baton_crouch_15",
+"X": -0.133,
+"Y": 0.795,
+"Angle": -12.9
+},
+{
+"Key": "player_padding_baton_idle_0",
+"X": -0.091,
+"Y": 1.21,
+"Angle": 3.4
+},
+{
+"Key": "player_padding_baton_idle_1",
+"X": -0.088,
+"Y": 1.191,
+"Angle": 1.7
+},
+{
+"Key": "player_padding_baton_idle_2",
+"X": -0.086,
+"Y": 1.174,
+"Angle": 0.1
+},
+{
+"Key": "player_padding_baton_idle_3",
+"X": -0.085,
+"Y": 1.168,
+"Angle": -0.5
+},
+{
+"Key": "player_padding_baton_idle_4",
+"X": -0.087,
+"Y": 1.18,
+"Angle": 0.6
+},
+{
+"Key": "player_padding_baton_idle_5",
+"X": -0.09,
+"Y": 1.204,
+"Angle": 2.8
+},
+{
+"Key": "player_padding_baton_idle_6",
+"X": -0.094,
+"Y": 1.215,
+"Angle": 5.0
+},
+{
+"Key": "player_padding_baton_idle_7",
+"X": -0.098,
+"Y": 1.214,
+"Angle": 7.2
+},
+{
+"Key": "player_padding_baton_idle_8",
+"X": -0.1,
+"Y": 1.213,
+"Angle": 8.4
+},
+{
+"Key": "player_padding_baton_idle_9",
+"X": -0.1,
+"Y": 1.213,
+"Angle": 8.4
+},
+{
+"Key": "player_padding_baton_idle_10",
+"X": -0.1,
+"Y": 1.213,
+"Angle": 8.4
+},
+{
+"Key": "player_padding_baton_idle_11",
+"X": -0.1,
+"Y": 1.213,
+"Angle": 8.4
+},
+{
+"Key": "player_padding_baton_idle_12",
+"X": -0.099,
+"Y": 1.213,
+"Angle": 8.0
+},
+{
+"Key": "player_padding_baton_idle_13",
+"X": -0.096,
+"Y": 1.214,
+"Angle": 6.5
+},
+{
+"Key": "player_padding_baton_idle_14",
+"X": -0.093,
+"Y": 1.215,
+"Angle": 4.6
+},
+{
+"Key": "player_padding_baton_idle_15",
+"X": -0.092,
+"Y": 1.216,
+"Angle": 3.9
+},
+{
+"Key": "player_padding_baton_run_0",
+"X": -0.049,
+"Y": 1.2,
+"Angle": 5.5
+},
+{
+"Key": "player_padding_baton_run_1",
+"X": -0.058,
+"Y": 1.215,
+"Angle": 4.5
+},
+{
+"Key": "player_padding_baton_run_2",
+"X": -0.066,
+"Y": 1.23,
+"Angle": 3.7
+},
+{
+"Key": "player_padding_baton_run_3",
+"X": -0.074,
+"Y": 1.217,
+"Angle": 2.8
+},
+{
+"Key": "player_padding_baton_run_4",
+"X": -0.071,
+"Y": 1.203,
+"Angle": 2.8
+},
+{
+"Key": "player_padding_baton_run_5",
+"X": -0.061,
+"Y": 1.216,
+"Angle": 3.5
+},
+{
+"Key": "player_padding_baton_run_6",
+"X": -0.055,
+"Y": 1.229,
+"Angle": 4.3
+},
+{
+"Key": "player_padding_baton_run_7",
+"X": -0.048,
+"Y": 1.214,
+"Angle": 5.5
+},
+{
+"Key": "player_padding_baton_run_8",
+"X": -0.049,
+"Y": 1.2,
+"Angle": 5.5
+},
+{
+"Key": "player_padding_baton_run_9",
+"X": -0.058,
+"Y": 1.215,
+"Angle": 4.5
+},
+{
+"Key": "player_padding_baton_run_10",
+"X": -0.066,
+"Y": 1.23,
+"Angle": 3.7
+},
+{
+"Key": "player_padding_baton_run_11",
+"X": -0.074,
+"Y": 1.217,
+"Angle": 2.8
+},
+{
+"Key": "player_padding_baton_run_12",
+"X": -0.072,
+"Y": 1.203,
+"Angle": 2.9
+},
+{
+"Key": "player_padding_baton_run_13",
+"X": -0.062,
+"Y": 1.216,
+"Angle": 3.7
+},
+{
+"Key": "player_padding_baton_run_14",
+"X": -0.055,
+"Y": 1.229,
+"Angle": 4.5
+},
+{
+"Key": "player_padding_baton_run_15",
+"X": -0.048,
+"Y": 1.214,
+"Angle": 5.5
+},
+{
+"Key": "player_padding_baton_walk_0",
+"X": -0.088,
+"Y": 1.195,
+"Angle": 4.3
+},
+{
+"Key": "player_padding_baton_walk_1",
+"X": -0.087,
+"Y": 1.194,
+"Angle": 4.4
+},
+{
+"Key": "player_padding_baton_walk_2",
+"X": -0.082,
+"Y": 1.208,
+"Angle": 4.5
+},
+{
+"Key": "player_padding_baton_walk_3",
+"X": -0.076,
+"Y": 1.215,
+"Angle": 4.9
+},
+{
+"Key": "player_padding_baton_walk_4",
+"X": -0.075,
+"Y": 1.215,
+"Angle": 5.1
+},
+{
+"Key": "player_padding_baton_walk_5",
+"X": -0.075,
+"Y": 1.208,
+"Angle": 5.1
+},
+{
+"Key": "player_padding_baton_walk_6",
+"X": -0.075,
+"Y": 1.194,
+"Angle": 5.1
+},
+{
+"Key": "player_padding_baton_walk_7",
+"X": -0.075,
+"Y": 1.194,
+"Angle": 5.1
+},
+{
+"Key": "player_padding_baton_walk_8",
+"X": -0.075,
+"Y": 1.208,
+"Angle": 5.1
+},
+{
+"Key": "player_padding_baton_walk_9",
+"X": -0.075,
+"Y": 1.215,
+"Angle": 5.1
+},
+{
+"Key": "player_padding_baton_walk_10",
+"X": -0.076,
+"Y": 1.208,
+"Angle": 5.2
+},
+{
+"Key": "player_padding_baton_walk_11",
+"X": -0.079,
+"Y": 1.194,
+"Angle": 5.3
+},
+{
+"Key": "player_padding_baton_walk_12",
+"X": -0.083,
+"Y": 1.194,
+"Angle": 4.9
+},
+{
+"Key": "player_padding_baton_walk_13",
+"X": -0.087,
+"Y": 1.209,
+"Angle": 4.0
+},
+{
+"Key": "player_padding_baton_walk_14",
+"X": -0.089,
+"Y": 1.216,
+"Angle": 3.6
+},
+{
+"Key": "player_padding_baton_walk_15",
+"X": -0.089,
+"Y": 1.209,
+"Angle": 3.9
+},
+{
+"Key": "player_padding_mop_attack_0",
+"X": 0.177,
+"Y": 1.258,
+"Angle": -0.6
+},
+{
+"Key": "player_padding_mop_attack_1",
+"X": 0.028,
+"Y": 1.36,
+"Angle": -2.3
+},
+{
+"Key": "player_padding_mop_attack_2",
+"X": -0.119,
+"Y": 1.459,
+"Angle": -5.2
+},
+{
+"Key": "player_padding_mop_attack_3",
+"X": -0.201,
+"Y": 1.497,
+"Angle": -6.4
+},
+{
+"Key": "player_padding_mop_attack_4",
+"X": -0.238,
+"Y": 1.497,
+"Angle": -6.3
+},
+{
+"Key": "player_padding_mop_attack_5",
+"X": -0.217,
+"Y": 1.453,
+"Angle": -5.6
+},
+{
+"Key": "player_padding_mop_attack_6",
+"X": -0.138,
+"Y": 1.401,
+"Angle": -4.7
+},
+{
+"Key": "player_padding_mop_attack_7",
+"X": -0.066,
+"Y": 1.393,
+"Angle": -4.3
+},
+{
+"Key": "player_padding_mop_attack_8",
+"X": -0.066,
+"Y": 1.393,
+"Angle": -4.3
+},
+{
+"Key": "player_padding_mop_attack_9",
+"X": -0.138,
+"Y": 1.401,
+"Angle": -4.7
+},
+{
+"Key": "player_padding_mop_attack_10",
+"X": -0.217,
+"Y": 1.453,
+"Angle": -5.6
+},
+{
+"Key": "player_padding_mop_attack_11",
+"X": -0.238,
+"Y": 1.497,
+"Angle": -6.3
+},
+{
+"Key": "player_padding_mop_attack_12",
+"X": -0.201,
+"Y": 1.497,
+"Angle": -6.4
+},
+{
+"Key": "player_padding_mop_attack_13",
+"X": -0.119,
+"Y": 1.459,
+"Angle": -5.2
+},
+{
+"Key": "player_padding_mop_attack_14",
+"X": 0.028,
+"Y": 1.36,
+"Angle": -2.3
+},
+{
+"Key": "player_padding_mop_attack_15",
+"X": 0.177,
+"Y": 1.258,
+"Angle": -0.6
+},
+{
+"Key": "player_padding_mop_crouch_0",
+"X": -0.091,
+"Y": 0.783,
+"Angle": -2.1
+},
+{
+"Key": "player_padding_mop_crouch_1",
+"X": -0.087,
+"Y": 0.792,
+"Angle": -2.6
+},
+{
+"Key": "player_padding_mop_crouch_2",
+"X": -0.086,
+"Y": 0.811,
+"Angle": -4.4
+},
+{
+"Key": "player_padding_mop_crouch_3",
+"X": -0.099,
+"Y": 0.817,
+"Angle": -4.3
+},
+{
+"Key": "player_padding_mop_crouch_4",
+"X": -0.094,
+"Y": 0.813,
+"Angle": -3.2
+},
+{
+"Key": "player_padding_mop_crouch_5",
+"X": -0.073,
+"Y": 0.813,
+"Angle": -3.1
+},
+{
+"Key": "player_padding_mop_crouch_6",
+"X": -0.066,
+"Y": 0.807,
+"Angle": -3.4
+},
+{
+"Key": "player_padding_mop_crouch_7",
+"X": -0.078,
+"Y": 0.793,
+"Angle": -3.2
+},
+{
+"Key": "player_padding_mop_crouch_8",
+"X": -0.095,
+"Y": 0.783,
+"Angle": -2.3
+},
+{
+"Key": "player_padding_mop_crouch_9",
+"X": -0.093,
+"Y": 0.792,
+"Angle": -2.7
+},
+{
+"Key": "player_padding_mop_crouch_10",
+"X": -0.081,
+"Y": 0.812,
+"Angle": -4.9
+},
+{
+"Key": "player_padding_mop_crouch_11",
+"X": -0.079,
+"Y": 0.821,
+"Angle": -5.6
+},
+{
+"Key": "player_padding_mop_crouch_12",
+"X": -0.081,
+"Y": 0.816,
+"Angle": -3.9
+},
+{
+"Key": "player_padding_mop_crouch_13",
+"X": -0.093,
+"Y": 0.811,
+"Angle": -2.4
+},
+{
+"Key": "player_padding_mop_crouch_14",
+"X": -0.098,
+"Y": 0.805,
+"Angle": -2.6
+},
+{
+"Key": "player_padding_mop_crouch_15",
+"X": -0.091,
+"Y": 0.792,
+"Angle": -3.0
+},
+{
+"Key": "player_padding_mop_idle_0",
+"X": 0.234,
+"Y": 1.224,
+"Angle": -0.9
+},
+{
+"Key": "player_padding_mop_idle_1",
+"X": 0.234,
+"Y": 1.231,
+"Angle": -0.9
+},
+{
+"Key": "player_padding_mop_idle_2",
+"X": 0.234,
+"Y": 1.245,
+"Angle": -0.9
+},
+{
+"Key": "player_padding_mop_idle_3",
+"X": 0.234,
+"Y": 1.252,
+"Angle": -0.9
+},
+{
+"Key": "player_padding_mop_idle_4",
+"X": 0.234,
+"Y": 1.252,
+"Angle": -0.9
+},
+{
+"Key": "player_padding_mop_idle_5",
+"X": 0.235,
+"Y": 1.252,
+"Angle": -0.8
+},
+{
+"Key": "player_padding_mop_idle_6",
+"X": 0.237,
+"Y": 1.244,
+"Angle": -0.5
+},
+{
+"Key": "player_padding_mop_idle_7",
+"X": 0.237,
+"Y": 1.23,
+"Angle": -0.5
+},
+{
+"Key": "player_padding_mop_idle_8",
+"X": 0.237,
+"Y": 1.223,
+"Angle": -0.5
+},
+{
+"Key": "player_padding_mop_idle_9",
+"X": 0.237,
+"Y": 1.223,
+"Angle": -0.5
+},
+{
+"Key": "player_padding_mop_idle_10",
+"X": 0.237,
+"Y": 1.223,
+"Angle": -0.5
+},
+{
+"Key": "player_padding_mop_idle_11",
+"X": 0.236,
+"Y": 1.224,
+"Angle": -0.6
+},
+{
+"Key": "player_padding_mop_idle_12",
+"X": 0.234,
+"Y": 1.224,
+"Angle": -0.8
+},
+{
+"Key": "player_padding_mop_idle_13",
+"X": 0.234,
+"Y": 1.224,
+"Angle": -0.9
+},
+{
+"Key": "player_padding_mop_idle_14",
+"X": 0.234,
+"Y": 1.224,
+"Angle": -0.9
+},
+{
+"Key": "player_padding_mop_idle_15",
+"X": 0.234,
+"Y": 1.224,
+"Angle": -0.9
+},
+{
+"Key": "player_padding_mop_run_0",
+"X": -0.327,
+"Y": 1.434,
+"Angle": -12.9
+},
+{
+"Key": "player_padding_mop_run_1",
+"X": -0.333,
+"Y": 1.42,
+"Angle": -12.8
+},
+{
+"Key": "player_padding_mop_run_2",
+"X": -0.356,
+"Y": 1.441,
+"Angle": -14.2
+},
+{
+"Key": "player_padding_mop_run_3",
+"X": -0.325,
+"Y": 1.444,
+"Angle": -12.0
+},
+{
+"Key": "player_padding_mop_run_4",
+"X": -0.288,
+"Y": 1.421,
+"Angle": -9.9
+},
+{
+"Key": "player_padding_mop_run_5",
+"X": -0.319,
+"Y": 1.415,
+"Angle": -11.7
+},
+{
+"Key": "player_padding_mop_run_6",
+"X": -0.369,
+"Y": 1.443,
+"Angle": -14.7
+},
+{
+"Key": "player_padding_mop_run_7",
+"X": -0.364,
+"Y": 1.458,
+"Angle": -14.9
+},
+{
+"Key": "player_padding_mop_run_8",
+"X": -0.328,
+"Y": 1.433,
+"Angle": -12.7
+},
+{
+"Key": "player_padding_mop_run_9",
+"X": -0.333,
+"Y": 1.42,
+"Angle": -12.8
+},
+{
+"Key": "player_padding_mop_run_10",
+"X": -0.356,
+"Y": 1.44,
+"Angle": -14.1
+},
+{
+"Key": "player_padding_mop_run_11",
+"X": -0.342,
+"Y": 1.447,
+"Angle": -12.5
+},
+{
+"Key": "player_padding_mop_run_12",
+"X": -0.323,
+"Y": 1.426,
+"Angle": -11.3
+},
+{
+"Key": "player_padding_mop_run_13",
+"X": -0.335,
+"Y": 1.42,
+"Angle": -12.9
+},
+{
+"Key": "player_padding_mop_run_14",
+"X": -0.365,
+"Y": 1.447,
+"Angle": -15.5
+},
+{
+"Key": "player_padding_mop_run_15",
+"X": -0.361,
+"Y": 1.461,
+"Angle": -15.5
+},
+{
+"Key": "player_padding_mop_walk_0",
+"X": 0.238,
+"Y": 1.188,
+"Angle": -0.2
+},
+{
+"Key": "player_padding_mop_walk_1",
+"X": 0.237,
+"Y": 1.167,
+"Angle": -0.3
+},
+{
+"Key": "player_padding_mop_walk_2",
+"X": 0.234,
+"Y": 1.154,
+"Angle": -0.6
+},
+{
+"Key": "player_padding_mop_walk_3",
+"X": 0.233,
+"Y": 1.168,
+"Angle": -0.7
+},
+{
+"Key": "player_padding_mop_walk_4",
+"X": 0.233,
+"Y": 1.189,
+"Angle": -0.7
+},
+{
+"Key": "player_padding_mop_walk_5",
+"X": 0.235,
+"Y": 1.195,
+"Angle": -0.4
+},
+{
+"Key": "player_padding_mop_walk_6",
+"X": 0.241,
+"Y": 1.187,
+"Angle": 0.2
+},
+{
+"Key": "player_padding_mop_walk_7",
+"X": 0.241,
+"Y": 1.166,
+"Angle": 0.1
+},
+{
+"Key": "player_padding_mop_walk_8",
+"X": 0.233,
+"Y": 1.154,
+"Angle": -0.7
+},
+{
+"Key": "player_padding_mop_walk_9",
+"X": 0.23,
+"Y": 1.169,
+"Angle": -1.0
+},
+{
+"Key": "player_padding_mop_walk_10",
+"X": 0.233,
+"Y": 1.189,
+"Angle": -0.7
+},
+{
+"Key": "player_padding_mop_walk_11",
+"X": 0.234,
+"Y": 1.189,
+"Angle": -0.6
+},
+{
+"Key": "player_padding_mop_walk_12",
+"X": 0.234,
+"Y": 1.168,
+"Angle": -0.6
+},
+{
+"Key": "player_padding_mop_walk_13",
+"X": 0.233,
+"Y": 1.154,
+"Angle": -0.7
+},
+{
+"Key": "player_padding_mop_walk_14",
+"X": 0.232,
+"Y": 1.168,
+"Angle": -0.8
+},
+{
+"Key": "player_padding_mop_walk_15",
+"X": 0.234,
+"Y": 1.189,
+"Angle": -0.5
+},
+{
+"Key": "player_padding_none_crouch_0",
+"X": -0.048,
+"Y": 0.686,
+"Angle": -11.9
+},
+{
+"Key": "player_padding_none_crouch_1",
+"X": -0.066,
+"Y": 0.696,
+"Angle": -14.0
+},
+{
+"Key": "player_padding_none_crouch_2",
+"X": -0.082,
+"Y": 0.726,
+"Angle": -15.8
+},
+{
+"Key": "player_padding_none_crouch_3",
+"X": -0.089,
+"Y": 0.751,
+"Angle": -16.6
+},
+{
+"Key": "player_padding_none_crouch_4",
+"X": -0.089,
+"Y": 0.757,
+"Angle": -16.4
+},
+{
+"Key": "player_padding_none_crouch_5",
+"X": -0.087,
+"Y": 0.749,
+"Angle": -16.2
+},
+{
+"Key": "player_padding_none_crouch_6",
+"X": -0.088,
+"Y": 0.736,
+"Angle": -16.4
+},
+{
+"Key": "player_padding_none_crouch_7",
+"X": -0.09,
+"Y": 0.724,
+"Angle": -16.7
+},
+{
+"Key": "player_padding_none_crouch_8",
+"X": -0.09,
+"Y": 0.713,
+"Angle": -17.1
+},
+{
+"Key": "player_padding_none_crouch_9",
+"X": -0.085,
+"Y": 0.71,
+"Angle": -16.6
+},
+{
+"Key": "player_padding_none_crouch_10",
+"X": -0.071,
+"Y": 0.721,
+"Angle": -14.7
+},
+{
+"Key": "player_padding_none_crouch_11",
+"X": -0.052,
+"Y": 0.73,
+"Angle": -12.4
+},
+{
+"Key": "player_padding_none_crouch_12",
+"X": -0.036,
+"Y": 0.728,
+"Angle": -10.3
+},
+{
+"Key": "player_padding_none_crouch_13",
+"X": -0.027,
+"Y": 0.716,
+"Angle": -9.3
+},
+{
+"Key": "player_padding_none_crouch_14",
+"X": -0.027,
+"Y": 0.703,
+"Angle": -9.3
+},
+{
+"Key": "player_padding_none_crouch_15",
+"X": -0.035,
+"Y": 0.692,
+"Angle": -10.2
+},
+{
+"Key": "player_padding_none_idle_0",
+"X": -0.091,
+"Y": 1.216,
+"Angle": 4.0
+},
+{
+"Key": "player_padding_none_idle_1",
+"X": -0.091,
+"Y": 1.223,
+"Angle": 3.9
+},
+{
+"Key": "player_padding_none_idle_2",
+"X": -0.092,
+"Y": 1.237,
+"Angle": 3.9
+},
+{
+"Key": "player_padding_none_idle_3",
+"X": -0.091,
+"Y": 1.244,
+"Angle": 3.9
+},
+{
+"Key": "player_padding_none_idle_4",
+"X": -0.091,
+"Y": 1.244,
+"Angle": 3.9
+},
+{
+"Key": "player_padding_none_idle_5",
+"X": -0.092,
+"Y": 1.237,
+"Angle": 3.9
+},
+{
+"Key": "player_padding_none_idle_6",
+"X": -0.091,
+"Y": 1.223,
+"Angle": 4.0
+},
+{
+"Key": "player_padding_none_idle_7",
+"X": -0.091,
+"Y": 1.216,
+"Angle": 4.0
+},
+{
+"Key": "player_padding_none_idle_8",
+"X": -0.091,
+"Y": 1.216,
+"Angle": 4.0
+},
+{
+"Key": "player_padding_none_idle_9",
+"X": -0.091,
+"Y": 1.223,
+"Angle": 3.9
+},
+{
+"Key": "player_padding_none_idle_10",
+"X": -0.092,
+"Y": 1.237,
+"Angle": 3.9
+},
+{
+"Key": "player_padding_none_idle_11",
+"X": -0.092,
+"Y": 1.244,
+"Angle": 3.9
+},
+{
+"Key": "player_padding_none_idle_12",
+"X": -0.092,
+"Y": 1.244,
+"Angle": 3.8
+},
+{
+"Key": "player_padding_none_idle_13",
+"X": -0.092,
+"Y": 1.237,
+"Angle": 3.9
+},
+{
+"Key": "player_padding_none_idle_14",
+"X": -0.091,
+"Y": 1.223,
+"Angle": 4.0
+},
+{
+"Key": "player_padding_none_idle_15",
+"X": -0.091,
+"Y": 1.216,
+"Angle": 4.0
+},
+{
+"Key": "player_padding_none_run_0",
+"X": -0.051,
+"Y": 1.234,
+"Angle": 6.9
+},
+{
+"Key": "player_padding_none_run_1",
+"X": -0.058,
+"Y": 1.22,
+"Angle": 6.8
+},
+{
+"Key": "player_padding_none_run_2",
+"X": -0.07,
+"Y": 1.213,
+"Angle": 7.0
+},
+{
+"Key": "player_padding_none_run_3",
+"X": -0.081,
+"Y": 1.214,
+"Angle": 6.4
+},
+{
+"Key": "player_padding_none_run_4",
+"X": -0.087,
+"Y": 1.221,
+"Angle": 5.6
+},
+{
+"Key": "player_padding_none_run_5",
+"X": -0.087,
+"Y": 1.235,
+"Angle": 5.1
+},
+{
+"Key": "player_padding_none_run_6",
+"X": -0.085,
+"Y": 1.236,
+"Angle": 4.3
+},
+{
+"Key": "player_padding_none_run_7",
+"X": -0.084,
+"Y": 1.223,
+"Angle": 4.0
+},
+{
+"Key": "player_padding_none_run_8",
+"X": -0.08,
+"Y": 1.215,
+"Angle": 4.4
+},
+{
+"Key": "player_padding_none_run_9",
+"X": -0.076,
+"Y": 1.222,
+"Angle": 4.7
+},
+{
+"Key": "player_padding_none_run_10",
+"X": -0.08,
+"Y": 1.236,
+"Angle": 4.4
+},
+{
+"Key": "player_padding_none_run_11",
+"X": -0.08,
+"Y": 1.236,
+"Angle": 4.4
+},
+{
+"Key": "player_padding_none_run_12",
+"X": -0.071,
+"Y": 1.214,
+"Angle": 5.3
+},
+{
+"Key": "player_padding_none_run_13",
+"X": -0.064,
+"Y": 1.2,
+"Angle": 6.1
+},
+{
+"Key": "player_padding_none_run_14",
+"X": -0.06,
+"Y": 1.214,
+"Angle": 6.5
+},
+{
+"Key": "player_padding_none_run_15",
+"X": -0.054,
+"Y": 1.234,
+"Angle": 7.0
+},
+{
+"Key": "player_padding_none_shove_0",
+"X": -0.087,
+"Y": 1.216,
+"Angle": 3.4
+},
+{
+"Key": "player_padding_none_shove_1",
+"X": -0.072,
+"Y": 1.218,
+"Angle": 2.2
+},
+{
+"Key": "player_padding_none_shove_2",
+"X": -0.052,
+"Y": 1.22,
+"Angle": 1.2
+},
+{
+"Key": "player_padding_none_shove_3",
+"X": 0.003,
+"Y": 1.235,
+"Angle": 0.4
+},
+{
+"Key": "player_padding_none_shove_4",
+"X": 0.141,
+"Y": 1.249,
+"Angle": 1.0
+},
+{
+"Key": "player_padding_none_shove_5",
+"X": 0.309,
+"Y": 1.231,
+"Angle": 4.1
+},
+{
+"Key": "player_padding_none_shove_6",
+"X": 0.415,
+"Y": 1.207,
+"Angle": 6.1
+},
+{
+"Key": "player_padding_none_shove_7",
+"X": 0.459,
+"Y": 1.194,
+"Angle": 5.3
+},
+{
+"Key": "player_padding_none_shove_8",
+"X": 0.459,
+"Y": 1.194,
+"Angle": 5.3
+},
+{
+"Key": "player_padding_none_shove_9",
+"X": 0.415,
+"Y": 1.207,
+"Angle": 6.1
+},
+{
+"Key": "player_padding_none_shove_10",
+"X": 0.309,
+"Y": 1.231,
+"Angle": 4.1
+},
+{
+"Key": "player_padding_none_shove_11",
+"X": 0.141,
+"Y": 1.249,
+"Angle": 1.0
+},
+{
+"Key": "player_padding_none_shove_12",
+"X": 0.003,
+"Y": 1.235,
+"Angle": 0.4
+},
+{
+"Key": "player_padding_none_shove_13",
+"X": -0.052,
+"Y": 1.22,
+"Angle": 1.2
+},
+{
+"Key": "player_padding_none_shove_14",
+"X": -0.072,
+"Y": 1.218,
+"Angle": 2.2
+},
+{
+"Key": "player_padding_none_shove_15",
+"X": -0.087,
+"Y": 1.216,
+"Angle": 3.4
+},
+{
+"Key": "player_padding_none_walk_0",
+"X": -0.086,
+"Y": 1.245,
+"Angle": 2.9
+},
+{
+"Key": "player_padding_none_walk_1",
+"X": -0.084,
+"Y": 1.238,
+"Angle": 3.2
+},
+{
+"Key": "player_padding_none_walk_2",
+"X": -0.083,
+"Y": 1.224,
+"Angle": 3.2
+},
+{
+"Key": "player_padding_none_walk_3",
+"X": -0.086,
+"Y": 1.217,
+"Angle": 2.9
+},
+{
+"Key": "player_padding_none_walk_4",
+"X": -0.088,
+"Y": 1.224,
+"Angle": 2.7
+},
+{
+"Key": "player_padding_none_walk_5",
+"X": -0.089,
+"Y": 1.238,
+"Angle": 2.6
+},
+{
+"Key": "player_padding_none_walk_6",
+"X": -0.089,
+"Y": 1.245,
+"Angle": 2.6
+},
+{
+"Key": "player_padding_none_walk_7",
+"X": -0.089,
+"Y": 1.239,
+"Angle": 2.5
+},
+{
+"Key": "player_padding_none_walk_8",
+"X": -0.089,
+"Y": 1.225,
+"Angle": 2.5
+},
+{
+"Key": "player_padding_none_walk_9",
+"X": -0.089,
+"Y": 1.225,
+"Angle": 2.5
+},
+{
+"Key": "player_padding_none_walk_10",
+"X": -0.089,
+"Y": 1.238,
+"Angle": 2.6
+},
+{
+"Key": "player_padding_none_walk_11",
+"X": -0.087,
+"Y": 1.245,
+"Angle": 2.8
+},
+{
+"Key": "player_padding_none_walk_12",
+"X": -0.084,
+"Y": 1.238,
+"Angle": 3.1
+},
+{
+"Key": "player_padding_none_walk_13",
+"X": -0.084,
+"Y": 1.224,
+"Angle": 3.1
+},
+{
+"Key": "player_padding_none_walk_14",
+"X": -0.087,
+"Y": 1.224,
+"Angle": 2.8
+},
+{
+"Key": "player_padding_none_walk_15",
+"X": -0.088,
+"Y": 1.238,
+"Angle": 2.7
+},
+{
+"Key": "player_padding_pipe_attack_0",
+"X": -0.07,
+"Y": 1.258,
+"Angle": 3.5
+},
+{
+"Key": "player_padding_pipe_attack_1",
+"X": -0.114,
+"Y": 1.37,
+"Angle": 3.0
+},
+{
+"Key": "player_padding_pipe_attack_2",
+"X": -0.212,
+"Y": 1.475,
+"Angle": 2.3
+},
+{
+"Key": "player_padding_pipe_attack_3",
+"X": -0.288,
+"Y": 1.517,
+"Angle": 2.4
+},
+{
+"Key": "player_padding_pipe_attack_4",
+"X": -0.289,
+"Y": 1.515,
+"Angle": 3.6
+},
+{
+"Key": "player_padding_pipe_attack_5",
+"X": -0.245,
+"Y": 1.486,
+"Angle": 4.8
+},
+{
+"Key": "player_padding_pipe_attack_6",
+"X": -0.194,
+"Y": 1.43,
+"Angle": 5.5
+},
+{
+"Key": "player_padding_pipe_attack_7",
+"X": -0.164,
+"Y": 1.374,
+"Angle": 5.5
+},
+{
+"Key": "player_padding_pipe_attack_8",
+"X": -0.164,
+"Y": 1.374,
+"Angle": 5.5
+},
+{
+"Key": "player_padding_pipe_attack_9",
+"X": -0.194,
+"Y": 1.43,
+"Angle": 5.5
+},
+{
+"Key": "player_padding_pipe_attack_10",
+"X": -0.245,
+"Y": 1.486,
+"Angle": 4.8
+},
+{
+"Key": "player_padding_pipe_attack_11",
+"X": -0.289,
+"Y": 1.515,
+"Angle": 3.6
+},
+{
+"Key": "player_padding_pipe_attack_12",
+"X": -0.288,
+"Y": 1.517,
+"Angle": 2.4
+},
+{
+"Key": "player_padding_pipe_attack_13",
+"X": -0.212,
+"Y": 1.475,
+"Angle": 2.3
+},
+{
+"Key": "player_padding_pipe_attack_14",
+"X": -0.114,
+"Y": 1.37,
+"Angle": 3.0
+},
+{
+"Key": "player_padding_pipe_attack_15",
+"X": -0.07,
+"Y": 1.258,
+"Angle": 3.5
+},
+{
+"Key": "player_padding_pipe_crouch_0",
+"X": -0.134,
+"Y": 0.755,
+"Angle": -19.6
+},
+{
+"Key": "player_padding_pipe_crouch_1",
+"X": -0.136,
+"Y": 0.778,
+"Angle": -19.9
+},
+{
+"Key": "player_padding_pipe_crouch_2",
+"X": -0.138,
+"Y": 0.807,
+"Angle": -20.2
+},
+{
+"Key": "player_padding_pipe_crouch_3",
+"X": -0.139,
+"Y": 0.829,
+"Angle": -20.3
+},
+{
+"Key": "player_padding_pipe_crouch_4",
+"X": -0.138,
+"Y": 0.828,
+"Angle": -20.2
+},
+{
+"Key": "player_padding_pipe_crouch_5",
+"X": -0.136,
+"Y": 0.806,
+"Angle": -19.9
+},
+{
+"Key": "player_padding_pipe_crouch_6",
+"X": -0.135,
+"Y": 0.777,
+"Angle": -19.8
+},
+{
+"Key": "player_padding_pipe_crouch_7",
+"X": -0.136,
+"Y": 0.757,
+"Angle": -19.9
+},
+{
+"Key": "player_padding_pipe_crouch_8",
+"X": -0.137,
+"Y": 0.758,
+"Angle": -20.1
+},
+{
+"Key": "player_padding_pipe_crouch_9",
+"X": -0.139,
+"Y": 0.78,
+"Angle": -20.3
+},
+{
+"Key": "player_padding_pipe_crouch_10",
+"X": -0.139,
+"Y": 0.808,
+"Angle": -20.4
+},
+{
+"Key": "player_padding_pipe_crouch_11",
+"X": -0.138,
+"Y": 0.828,
+"Angle": -20.2
+},
+{
+"Key": "player_padding_pipe_crouch_12",
+"X": -0.136,
+"Y": 0.826,
+"Angle": -19.9
+},
+{
+"Key": "player_padding_pipe_crouch_13",
+"X": -0.134,
+"Y": 0.804,
+"Angle": -19.7
+},
+{
+"Key": "player_padding_pipe_crouch_14",
+"X": -0.134,
+"Y": 0.776,
+"Angle": -19.6
+},
+{
+"Key": "player_padding_pipe_crouch_15",
+"X": -0.134,
+"Y": 0.755,
+"Angle": -19.6
+},
+{
+"Key": "player_padding_pipe_idle_0",
+"X": -0.063,
+"Y": 1.217,
+"Angle": 3.2
+},
+{
+"Key": "player_padding_pipe_idle_1",
+"X": -0.064,
+"Y": 1.217,
+"Angle": 3.1
+},
+{
+"Key": "player_padding_pipe_idle_2",
+"X": -0.064,
+"Y": 1.217,
+"Angle": 3.1
+},
+{
+"Key": "player_padding_pipe_idle_3",
+"X": -0.064,
+"Y": 1.217,
+"Angle": 3.1
+},
+{
+"Key": "player_padding_pipe_idle_4",
+"X": -0.063,
+"Y": 1.217,
+"Angle": 3.1
+},
+{
+"Key": "player_padding_pipe_idle_5",
+"X": -0.063,
+"Y": 1.217,
+"Angle": 3.2
+},
+{
+"Key": "player_padding_pipe_idle_6",
+"X": -0.065,
+"Y": 1.216,
+"Angle": 4.5
+},
+{
+"Key": "player_padding_pipe_idle_7",
+"X": -0.07,
+"Y": 1.214,
+"Angle": 7.2
+},
+{
+"Key": "player_padding_pipe_idle_8",
+"X": -0.072,
+"Y": 1.213,
+"Angle": 8.5
+},
+{
+"Key": "player_padding_pipe_idle_9",
+"X": -0.072,
+"Y": 1.213,
+"Angle": 8.5
+},
+{
+"Key": "player_padding_pipe_idle_10",
+"X": -0.072,
+"Y": 1.213,
+"Angle": 8.5
+},
+{
+"Key": "player_padding_pipe_idle_11",
+"X": -0.072,
+"Y": 1.213,
+"Angle": 8.5
+},
+{
+"Key": "player_padding_pipe_idle_12",
+"X": -0.07,
+"Y": 1.214,
+"Angle": 7.2
+},
+{
+"Key": "player_padding_pipe_idle_13",
+"X": -0.065,
+"Y": 1.216,
+"Angle": 4.6
+},
+{
+"Key": "player_padding_pipe_idle_14",
+"X": -0.063,
+"Y": 1.217,
+"Angle": 3.3
+},
+{
+"Key": "player_padding_pipe_idle_15",
+"X": -0.063,
+"Y": 1.217,
+"Angle": 3.2
+},
+{
+"Key": "player_padding_pipe_run_0",
+"X": -0.042,
+"Y": 1.22,
+"Angle": 10.7
+},
+{
+"Key": "player_padding_pipe_run_1",
+"X": -0.041,
+"Y": 1.22,
+"Angle": 11.1
+},
+{
+"Key": "player_padding_pipe_run_2",
+"X": -0.038,
+"Y": 1.234,
+"Angle": 11.6
+},
+{
+"Key": "player_padding_pipe_run_3",
+"X": -0.039,
+"Y": 1.235,
+"Angle": 12.0
+},
+{
+"Key": "player_padding_pipe_run_4",
+"X": -0.041,
+"Y": 1.221,
+"Angle": 12.4
+},
+{
+"Key": "player_padding_pipe_run_5",
+"X": -0.039,
+"Y": 1.221,
+"Angle": 12.0
+},
+{
+"Key": "player_padding_pipe_run_6",
+"X": -0.041,
+"Y": 1.234,
+"Angle": 11.0
+},
+{
+"Key": "player_padding_pipe_run_7",
+"X": -0.043,
+"Y": 1.234,
+"Angle": 11.1
+},
+{
+"Key": "player_padding_pipe_run_8",
+"X": -0.044,
+"Y": 1.22,
+"Angle": 11.6
+},
+{
+"Key": "player_padding_pipe_run_9",
+"X": -0.042,
+"Y": 1.22,
+"Angle": 11.6
+},
+{
+"Key": "player_padding_pipe_run_10",
+"X": -0.039,
+"Y": 1.234,
+"Angle": 11.9
+},
+{
+"Key": "player_padding_pipe_run_11",
+"X": -0.042,
+"Y": 1.235,
+"Angle": 12.4
+},
+{
+"Key": "player_padding_pipe_run_12",
+"X": -0.045,
+"Y": 1.221,
+"Angle": 12.8
+},
+{
+"Key": "player_padding_pipe_run_13",
+"X": -0.042,
+"Y": 1.221,
+"Angle": 12.2
+},
+{
+"Key": "player_padding_pipe_run_14",
+"X": -0.041,
+"Y": 1.234,
+"Angle": 11.0
+},
+{
+"Key": "player_padding_pipe_run_15",
+"X": -0.042,
+"Y": 1.234,
+"Angle": 10.6
+},
+{
+"Key": "player_padding_pipe_walk_0",
+"X": -0.037,
+"Y": 1.177,
+"Angle": 2.1
+},
+{
+"Key": "player_padding_pipe_walk_1",
+"X": -0.037,
+"Y": 1.19,
+"Angle": 2.2
+},
+{
+"Key": "player_padding_pipe_walk_2",
+"X": -0.037,
+"Y": 1.204,
+"Angle": 2.7
+},
+{
+"Key": "player_padding_pipe_walk_3",
+"X": -0.034,
+"Y": 1.189,
+"Angle": 2.8
+},
+{
+"Key": "player_padding_pipe_walk_4",
+"X": -0.032,
+"Y": 1.176,
+"Angle": 2.6
+},
+{
+"Key": "player_padding_pipe_walk_5",
+"X": -0.032,
+"Y": 1.19,
+"Angle": 2.8
+},
+{
+"Key": "player_padding_pipe_walk_6",
+"X": -0.034,
+"Y": 1.203,
+"Angle": 3.0
+},
+{
+"Key": "player_padding_pipe_walk_7",
+"X": -0.037,
+"Y": 1.19,
+"Angle": 2.6
+},
+{
+"Key": "player_padding_pipe_walk_8",
+"X": -0.037,
+"Y": 1.177,
+"Angle": 2.1
+},
+{
+"Key": "player_padding_pipe_walk_9",
+"X": -0.037,
+"Y": 1.19,
+"Angle": 2.2
+},
+{
+"Key": "player_padding_pipe_walk_10",
+"X": -0.037,
+"Y": 1.204,
+"Angle": 2.7
+},
+{
+"Key": "player_padding_pipe_walk_11",
+"X": -0.034,
+"Y": 1.189,
+"Angle": 2.8
+},
+{
+"Key": "player_padding_pipe_walk_12",
+"X": -0.032,
+"Y": 1.176,
+"Angle": 2.6
+},
+{
+"Key": "player_padding_pipe_walk_13",
+"X": -0.031,
+"Y": 1.189,
+"Angle": 2.8
+},
+{
+"Key": "player_padding_pipe_walk_14",
+"X": -0.034,
+"Y": 1.203,
+"Angle": 3.1
+},
+{
+"Key": "player_padding_pipe_walk_15",
+"X": -0.037,
+"Y": 1.19,
+"Angle": 2.6
+},
+{
+"Key": "player_riot_bat_attack_0",
+"X": -0.101,
+"Y": 1.229,
+"Angle": 4.7
+},
+{
+"Key": "player_riot_bat_attack_1",
+"X": -0.174,
+"Y": 1.265,
+"Angle": 4.6
+},
+{
+"Key": "player_riot_bat_attack_2",
+"X": -0.291,
+"Y": 1.304,
+"Angle": 1.5
+},
+{
+"Key": "player_riot_bat_attack_3",
+"X": -0.371,
+"Y": 1.327,
+"Angle": -0.4
+},
+{
+"Key": "player_riot_bat_attack_4",
+"X": -0.39,
+"Y": 1.334,
+"Angle": -0.3
+},
+{
+"Key": "player_riot_bat_attack_5",
+"X": -0.344,
+"Y": 1.34,
+"Angle": 1.2
+},
+{
+"Key": "player_riot_bat_attack_6",
+"X": -0.252,
+"Y": 1.355,
+"Angle": 6.3
+},
+{
+"Key": "player_riot_bat_attack_7",
+"X": -0.195,
+"Y": 1.373,
+"Angle": 10.6
+},
+{
+"Key": "player_riot_bat_attack_8",
+"X": -0.195,
+"Y": 1.373,
+"Angle": 10.6
+},
+{
+"Key": "player_riot_bat_attack_9",
+"X": -0.252,
+"Y": 1.355,
+"Angle": 6.3
+},
+{
+"Key": "player_riot_bat_attack_10",
+"X": -0.344,
+"Y": 1.34,
+"Angle": 1.2
+},
+{
+"Key": "player_riot_bat_attack_11",
+"X": -0.39,
+"Y": 1.334,
+"Angle": -0.3
+},
+{
+"Key": "player_riot_bat_attack_12",
+"X": -0.371,
+"Y": 1.327,
+"Angle": -0.4
+},
+{
+"Key": "player_riot_bat_attack_13",
+"X": -0.291,
+"Y": 1.304,
+"Angle": 1.5
+},
+{
+"Key": "player_riot_bat_attack_14",
+"X": -0.174,
+"Y": 1.265,
+"Angle": 4.6
+},
+{
+"Key": "player_riot_bat_attack_15",
+"X": -0.101,
+"Y": 1.229,
+"Angle": 4.7
+},
+{
+"Key": "player_riot_bat_crouch_0",
+"X": -0.082,
+"Y": 0.879,
+"Angle": -11.6
+},
+{
+"Key": "player_riot_bat_crouch_1",
+"X": -0.07,
+"Y": 0.902,
+"Angle": -11.9
+},
+{
+"Key": "player_riot_bat_crouch_2",
+"X": -0.073,
+"Y": 0.933,
+"Angle": -14.0
+},
+{
+"Key": "player_riot_bat_crouch_3",
+"X": -0.097,
+"Y": 0.945,
+"Angle": -15.1
+},
+{
+"Key": "player_riot_bat_crouch_4",
+"X": -0.119,
+"Y": 0.949,
+"Angle": -15.8
+},
+{
+"Key": "player_riot_bat_crouch_5",
+"X": -0.125,
+"Y": 0.952,
+"Angle": -16.5
+},
+{
+"Key": "player_riot_bat_crouch_6",
+"X": -0.114,
+"Y": 0.943,
+"Angle": -16.1
+},
+{
+"Key": "player_riot_bat_crouch_7",
+"X": -0.104,
+"Y": 0.904,
+"Angle": -13.7
+},
+{
+"Key": "player_riot_bat_crouch_8",
+"X": -0.099,
+"Y": 0.862,
+"Angle": -10.7
+},
+{
+"Key": "player_riot_bat_crouch_9",
+"X": -0.084,
+"Y": 0.87,
+"Angle": -11.0
+},
+{
+"Key": "player_riot_bat_crouch_10",
+"X": -0.075,
+"Y": 0.909,
+"Angle": -13.5
+},
+{
+"Key": "player_riot_bat_crouch_11",
+"X": -0.082,
+"Y": 0.939,
+"Angle": -15.3
+},
+{
+"Key": "player_riot_bat_crouch_12",
+"X": -0.098,
+"Y": 0.951,
+"Angle": -16.3
+},
+{
+"Key": "player_riot_bat_crouch_13",
+"X": -0.115,
+"Y": 0.953,
+"Angle": -16.6
+},
+{
+"Key": "player_riot_bat_crouch_14",
+"X": -0.113,
+"Y": 0.936,
+"Angle": -16.1
+},
+{
+"Key": "player_riot_bat_crouch_15",
+"X": -0.097,
+"Y": 0.898,
+"Angle": -13.9
+},
+{
+"Key": "player_riot_bat_idle_0",
+"X": -0.086,
+"Y": 1.216,
+"Angle": 3.7
+},
+{
+"Key": "player_riot_bat_idle_1",
+"X": -0.085,
+"Y": 1.211,
+"Angle": 2.9
+},
+{
+"Key": "player_riot_bat_idle_2",
+"X": -0.082,
+"Y": 1.199,
+"Angle": 1.2
+},
+{
+"Key": "player_riot_bat_idle_3",
+"X": -0.081,
+"Y": 1.194,
+"Angle": 0.3
+},
+{
+"Key": "player_riot_bat_idle_4",
+"X": -0.081,
+"Y": 1.194,
+"Angle": 0.3
+},
+{
+"Key": "player_riot_bat_idle_5",
+"X": -0.081,
+"Y": 1.194,
+"Angle": 0.3
+},
+{
+"Key": "player_riot_bat_idle_6",
+"X": -0.081,
+"Y": 1.193,
+"Angle": 0.6
+},
+{
+"Key": "player_riot_bat_idle_7",
+"X": -0.082,
+"Y": 1.199,
+"Angle": 1.0
+},
+{
+"Key": "player_riot_bat_idle_8",
+"X": -0.083,
+"Y": 1.212,
+"Angle": 1.8
+},
+{
+"Key": "player_riot_bat_idle_9",
+"X": -0.085,
+"Y": 1.217,
+"Angle": 3.1
+},
+{
+"Key": "player_riot_bat_idle_10",
+"X": -0.086,
+"Y": 1.216,
+"Angle": 3.9
+},
+{
+"Key": "player_riot_bat_idle_11",
+"X": -0.086,
+"Y": 1.216,
+"Angle": 3.9
+},
+{
+"Key": "player_riot_bat_idle_12",
+"X": -0.086,
+"Y": 1.216,
+"Angle": 3.9
+},
+{
+"Key": "player_riot_bat_idle_13",
+"X": -0.086,
+"Y": 1.216,
+"Angle": 3.9
+},
+{
+"Key": "player_riot_bat_idle_14",
+"X": -0.086,
+"Y": 1.216,
+"Angle": 3.9
+},
+{
+"Key": "player_riot_bat_idle_15",
+"X": -0.086,
+"Y": 1.216,
+"Angle": 3.8
+},
+{
+"Key": "player_riot_bat_run_0",
+"X": -0.103,
+"Y": 1.31,
+"Angle": 1.5
+},
+{
+"Key": "player_riot_bat_run_1",
+"X": -0.111,
+"Y": 1.297,
+"Angle": 1.0
+},
+{
+"Key": "player_riot_bat_run_2",
+"X": -0.113,
+"Y": 1.262,
+"Angle": 0.7
+},
+{
+"Key": "player_riot_bat_run_3",
+"X": -0.106,
+"Y": 1.255,
+"Angle": 0.9
+},
+{
+"Key": "player_riot_bat_run_4",
+"X": -0.1,
+"Y": 1.282,
+"Angle": 1.4
+},
+{
+"Key": "player_riot_bat_run_5",
+"X": -0.102,
+"Y": 1.303,
+"Angle": 1.5
+},
+{
+"Key": "player_riot_bat_run_6",
+"X": -0.109,
+"Y": 1.282,
+"Angle": 1.2
+},
+{
+"Key": "player_riot_bat_run_7",
+"X": -0.112,
+"Y": 1.255,
+"Angle": 0.9
+},
+{
+"Key": "player_riot_bat_run_8",
+"X": -0.106,
+"Y": 1.255,
+"Angle": 1.2
+},
+{
+"Key": "player_riot_bat_run_9",
+"X": -0.101,
+"Y": 1.282,
+"Angle": 1.5
+},
+{
+"Key": "player_riot_bat_run_10",
+"X": -0.101,
+"Y": 1.316,
+"Angle": 1.7
+},
+{
+"Key": "player_riot_bat_run_11",
+"X": -0.108,
+"Y": 1.317,
+"Angle": 1.4
+},
+{
+"Key": "player_riot_bat_run_12",
+"X": -0.113,
+"Y": 1.283,
+"Angle": 0.7
+},
+{
+"Key": "player_riot_bat_run_13",
+"X": -0.111,
+"Y": 1.256,
+"Angle": 0.7
+},
+{
+"Key": "player_riot_bat_run_14",
+"X": -0.103,
+"Y": 1.255,
+"Angle": 1.3
+},
+{
+"Key": "player_riot_bat_run_15",
+"X": -0.098,
+"Y": 1.282,
+"Angle": 1.6
+},
+{
+"Key": "player_riot_bat_walk_0",
+"X": -0.093,
+"Y": 1.168,
+"Angle": 3.4
+},
+{
+"Key": "player_riot_bat_walk_1",
+"X": -0.1,
+"Y": 1.183,
+"Angle": 2.7
+},
+{
+"Key": "player_riot_bat_walk_2",
+"X": -0.105,
+"Y": 1.184,
+"Angle": 2.1
+},
+{
+"Key": "player_riot_bat_walk_3",
+"X": -0.107,
+"Y": 1.17,
+"Angle": 2.0
+},
+{
+"Key": "player_riot_bat_walk_4",
+"X": -0.104,
+"Y": 1.163,
+"Angle": 2.3
+},
+{
+"Key": "player_riot_bat_walk_5",
+"X": -0.097,
+"Y": 1.161,
+"Angle": 3.1
+},
+{
+"Key": "player_riot_bat_walk_6",
+"X": -0.092,
+"Y": 1.168,
+"Angle": 3.6
+},
+{
+"Key": "player_riot_bat_walk_7",
+"X": -0.091,
+"Y": 1.181,
+"Angle": 3.7
+},
+{
+"Key": "player_riot_bat_walk_8",
+"X": -0.091,
+"Y": 1.181,
+"Angle": 3.7
+},
+{
+"Key": "player_riot_bat_walk_9",
+"X": -0.093,
+"Y": 1.168,
+"Angle": 3.5
+},
+{
+"Key": "player_riot_bat_walk_10",
+"X": -0.099,
+"Y": 1.162,
+"Angle": 2.8
+},
+{
+"Key": "player_riot_bat_walk_11",
+"X": -0.105,
+"Y": 1.17,
+"Angle": 2.2
+},
+{
+"Key": "player_riot_bat_walk_12",
+"X": -0.107,
+"Y": 1.184,
+"Angle": 1.9
+},
+{
+"Key": "player_riot_bat_walk_13",
+"X": -0.105,
+"Y": 1.19,
+"Angle": 2.2
+},
+{
+"Key": "player_riot_bat_walk_14",
+"X": -0.098,
+"Y": 1.182,
+"Angle": 2.9
+},
+{
+"Key": "player_riot_bat_walk_15",
+"X": -0.093,
+"Y": 1.168,
+"Angle": 3.5
+},
+{
+"Key": "player_riot_baton_attack_0",
+"X": -0.154,
+"Y": 1.225,
+"Angle": 2.3
+},
+{
+"Key": "player_riot_baton_attack_1",
+"X": -0.2,
+"Y": 1.246,
+"Angle": 2.4
+},
+{
+"Key": "player_riot_baton_attack_2",
+"X": -0.269,
+"Y": 1.261,
+"Angle": 1.6
+},
+{
+"Key": "player_riot_baton_attack_3",
+"X": -0.338,
+"Y": 1.263,
+"Angle": 1.0
+},
+{
+"Key": "player_riot_baton_attack_4",
+"X": -0.354,
+"Y": 1.28,
+"Angle": 3.2
+},
+{
+"Key": "player_riot_baton_attack_5",
+"X": -0.258,
+"Y": 1.298,
+"Angle": 5.7
+},
+{
+"Key": "player_riot_baton_attack_6",
+"X": -0.103,
+"Y": 1.289,
+"Angle": 3.8
+},
+{
+"Key": "player_riot_baton_attack_7",
+"X": -0.03,
+"Y": 1.286,
+"Angle": -2.1
+},
+{
+"Key": "player_riot_baton_attack_8",
+"X": -0.03,
+"Y": 1.286,
+"Angle": -2.1
+},
+{
+"Key": "player_riot_baton_attack_9",
+"X": -0.103,
+"Y": 1.289,
+"Angle": 3.8
+},
+{
+"Key": "player_riot_baton_attack_10",
+"X": -0.258,
+"Y": 1.298,
+"Angle": 5.7
+},
+{
+"Key": "player_riot_baton_attack_11",
+"X": -0.354,
+"Y": 1.28,
+"Angle": 3.2
+},
+{
+"Key": "player_riot_baton_attack_12",
+"X": -0.338,
+"Y": 1.263,
+"Angle": 1.0
+},
+{
+"Key": "player_riot_baton_attack_13",
+"X": -0.269,
+"Y": 1.261,
+"Angle": 1.6
+},
+{
+"Key": "player_riot_baton_attack_14",
+"X": -0.2,
+"Y": 1.246,
+"Angle": 2.4
+},
+{
+"Key": "player_riot_baton_attack_15",
+"X": -0.154,
+"Y": 1.225,
+"Angle": 2.3
+},
+{
+"Key": "player_riot_baton_crouch_0",
+"X": -0.061,
+"Y": 0.968,
+"Angle": -16.8
+},
+{
+"Key": "player_riot_baton_crouch_1",
+"X": -0.06,
+"Y": 1.004,
+"Angle": -17.1
+},
+{
+"Key": "player_riot_baton_crouch_2",
+"X": -0.067,
+"Y": 1.035,
+"Angle": -17.6
+},
+{
+"Key": "player_riot_baton_crouch_3",
+"X": -0.078,
+"Y": 1.043,
+"Angle": -17.9
+},
+{
+"Key": "player_riot_baton_crouch_4",
+"X": -0.085,
+"Y": 1.037,
+"Angle": -18.0
+},
+{
+"Key": "player_riot_baton_crouch_5",
+"X": -0.085,
+"Y": 1.016,
+"Angle": -18.0
+},
+{
+"Key": "player_riot_baton_crouch_6",
+"X": -0.084,
+"Y": 0.989,
+"Angle": -18.1
+},
+{
+"Key": "player_riot_baton_crouch_7",
+"X": -0.079,
+"Y": 0.979,
+"Angle": -18.6
+},
+{
+"Key": "player_riot_baton_crouch_8",
+"X": -0.073,
+"Y": 0.995,
+"Angle": -19.1
+},
+{
+"Key": "player_riot_baton_crouch_9",
+"X": -0.073,
+"Y": 1.022,
+"Angle": -19.0
+},
+{
+"Key": "player_riot_baton_crouch_10",
+"X": -0.077,
+"Y": 1.039,
+"Angle": -18.4
+},
+{
+"Key": "player_riot_baton_crouch_11",
+"X": -0.078,
+"Y": 1.04,
+"Angle": -17.3
+},
+{
+"Key": "player_riot_baton_crouch_12",
+"X": -0.073,
+"Y": 1.028,
+"Angle": -16.4
+},
+{
+"Key": "player_riot_baton_crouch_13",
+"X": -0.072,
+"Y": 0.998,
+"Angle": -16.0
+},
+{
+"Key": "player_riot_baton_crouch_14",
+"X": -0.074,
+"Y": 0.964,
+"Angle": -16.1
+},
+{
+"Key": "player_riot_baton_crouch_15",
+"X": -0.069,
+"Y": 0.952,
+"Angle": -16.5
+},
+{
+"Key": "player_riot_baton_idle_0",
+"X": -0.145,
+"Y": 1.235,
+"Angle": 5.4
+},
+{
+"Key": "player_riot_baton_idle_1",
+"X": -0.146,
+"Y": 1.242,
+"Angle": 5.8
+},
+{
+"Key": "player_riot_baton_idle_2",
+"X": -0.146,
+"Y": 1.242,
+"Angle": 5.9
+},
+{
+"Key": "player_riot_baton_idle_3",
+"X": -0.146,
+"Y": 1.242,
+"Angle": 5.9
+},
+{
+"Key": "player_riot_baton_idle_4",
+"X": -0.146,
+"Y": 1.242,
+"Angle": 5.9
+},
+{
+"Key": "player_riot_baton_idle_5",
+"X": -0.146,
+"Y": 1.242,
+"Angle": 5.9
+},
+{
+"Key": "player_riot_baton_idle_6",
+"X": -0.146,
+"Y": 1.242,
+"Angle": 5.9
+},
+{
+"Key": "player_riot_baton_idle_7",
+"X": -0.146,
+"Y": 1.242,
+"Angle": 5.7
+},
+{
+"Key": "player_riot_baton_idle_8",
+"X": -0.146,
+"Y": 1.242,
+"Angle": 5.6
+},
+{
+"Key": "player_riot_baton_idle_9",
+"X": -0.146,
+"Y": 1.242,
+"Angle": 5.7
+},
+{
+"Key": "player_riot_baton_idle_10",
+"X": -0.146,
+"Y": 1.242,
+"Angle": 5.7
+},
+{
+"Key": "player_riot_baton_idle_11",
+"X": -0.146,
+"Y": 1.242,
+"Angle": 5.5
+},
+{
+"Key": "player_riot_baton_idle_12",
+"X": -0.146,
+"Y": 1.242,
+"Angle": 5.3
+},
+{
+"Key": "player_riot_baton_idle_13",
+"X": -0.145,
+"Y": 1.235,
+"Angle": 5.2
+},
+{
+"Key": "player_riot_baton_idle_14",
+"X": -0.144,
+"Y": 1.222,
+"Angle": 4.9
+},
+{
+"Key": "player_riot_baton_idle_15",
+"X": -0.144,
+"Y": 1.222,
+"Angle": 4.9
+},
+{
+"Key": "player_riot_baton_run_0",
+"X": -0.136,
+"Y": 1.172,
+"Angle": 7.0
+},
+{
+"Key": "player_riot_baton_run_1",
+"X": -0.136,
+"Y": 1.151,
+"Angle": 6.8
+},
+{
+"Key": "player_riot_baton_run_2",
+"X": -0.134,
+"Y": 1.158,
+"Angle": 7.2
+},
+{
+"Key": "player_riot_baton_run_3",
+"X": -0.134,
+"Y": 1.185,
+"Angle": 7.4
+},
+{
+"Key": "player_riot_baton_run_4",
+"X": -0.139,
+"Y": 1.199,
+"Angle": 6.9
+},
+{
+"Key": "player_riot_baton_run_5",
+"X": -0.145,
+"Y": 1.186,
+"Angle": 6.4
+},
+{
+"Key": "player_riot_baton_run_6",
+"X": -0.144,
+"Y": 1.165,
+"Angle": 6.6
+},
+{
+"Key": "player_riot_baton_run_7",
+"X": -0.138,
+"Y": 1.165,
+"Angle": 7.1
+},
+{
+"Key": "player_riot_baton_run_8",
+"X": -0.134,
+"Y": 1.185,
+"Angle": 7.4
+},
+{
+"Key": "player_riot_baton_run_9",
+"X": -0.137,
+"Y": 1.199,
+"Angle": 7.1
+},
+{
+"Key": "player_riot_baton_run_10",
+"X": -0.143,
+"Y": 1.179,
+"Angle": 6.8
+},
+{
+"Key": "player_riot_baton_run_11",
+"X": -0.144,
+"Y": 1.151,
+"Angle": 7.0
+},
+{
+"Key": "player_riot_baton_run_12",
+"X": -0.139,
+"Y": 1.158,
+"Angle": 7.2
+},
+{
+"Key": "player_riot_baton_run_13",
+"X": -0.133,
+"Y": 1.185,
+"Angle": 7.5
+},
+{
+"Key": "player_riot_baton_run_14",
+"X": -0.134,
+"Y": 1.199,
+"Angle": 7.5
+},
+{
+"Key": "player_riot_baton_run_15",
+"X": -0.136,
+"Y": 1.192,
+"Angle": 7.2
+},
+{
+"Key": "player_riot_baton_walk_0",
+"X": -0.15,
+"Y": 1.243,
+"Angle": 4.6
+},
+{
+"Key": "player_riot_baton_walk_1",
+"X": -0.15,
+"Y": 1.243,
+"Angle": 4.6
+},
+{
+"Key": "player_riot_baton_walk_2",
+"X": -0.142,
+"Y": 1.242,
+"Angle": 5.7
+},
+{
+"Key": "player_riot_baton_walk_3",
+"X": -0.128,
+"Y": 1.241,
+"Angle": 7.1
+},
+{
+"Key": "player_riot_baton_walk_4",
+"X": -0.122,
+"Y": 1.241,
+"Angle": 7.7
+},
+{
+"Key": "player_riot_baton_walk_5",
+"X": -0.125,
+"Y": 1.241,
+"Angle": 7.7
+},
+{
+"Key": "player_riot_baton_walk_6",
+"X": -0.127,
+"Y": 1.241,
+"Angle": 7.7
+},
+{
+"Key": "player_riot_baton_walk_7",
+"X": -0.124,
+"Y": 1.241,
+"Angle": 8.0
+},
+{
+"Key": "player_riot_baton_walk_8",
+"X": -0.121,
+"Y": 1.241,
+"Angle": 8.4
+},
+{
+"Key": "player_riot_baton_walk_9",
+"X": -0.122,
+"Y": 1.241,
+"Angle": 8.3
+},
+{
+"Key": "player_riot_baton_walk_10",
+"X": -0.128,
+"Y": 1.241,
+"Angle": 7.4
+},
+{
+"Key": "player_riot_baton_walk_11",
+"X": -0.132,
+"Y": 1.241,
+"Angle": 6.5
+},
+{
+"Key": "player_riot_baton_walk_12",
+"X": -0.135,
+"Y": 1.241,
+"Angle": 6.2
+},
+{
+"Key": "player_riot_baton_walk_13",
+"X": -0.139,
+"Y": 1.241,
+"Angle": 6.2
+},
+{
+"Key": "player_riot_baton_walk_14",
+"X": -0.143,
+"Y": 1.242,
+"Angle": 5.9
+},
+{
+"Key": "player_riot_baton_walk_15",
+"X": -0.148,
+"Y": 1.242,
+"Angle": 5.3
+},
+{
+"Key": "player_riot_mop_attack_0",
+"X": 0.166,
+"Y": 1.235,
+"Angle": 0.5
+},
+{
+"Key": "player_riot_mop_attack_1",
+"X": 0.102,
+"Y": 1.285,
+"Angle": -0.1
+},
+{
+"Key": "player_riot_mop_attack_2",
+"X": 0.028,
+"Y": 1.357,
+"Angle": -1.1
+},
+{
+"Key": "player_riot_mop_attack_3",
+"X": -0.01,
+"Y": 1.426,
+"Angle": -3.4
+},
+{
+"Key": "player_riot_mop_attack_4",
+"X": -0.0,
+"Y": 1.489,
+"Angle": -6.0
+},
+{
+"Key": "player_riot_mop_attack_5",
+"X": 0.047,
+"Y": 1.516,
+"Angle": -5.7
+},
+{
+"Key": "player_riot_mop_attack_6",
+"X": 0.097,
+"Y": 1.475,
+"Angle": -3.8
+},
+{
+"Key": "player_riot_mop_attack_7",
+"X": 0.116,
+"Y": 1.417,
+"Angle": -3.0
+},
+{
+"Key": "player_riot_mop_attack_8",
+"X": 0.116,
+"Y": 1.417,
+"Angle": -3.0
+},
+{
+"Key": "player_riot_mop_attack_9",
+"X": 0.097,
+"Y": 1.475,
+"Angle": -3.8
+},
+{
+"Key": "player_riot_mop_attack_10",
+"X": 0.047,
+"Y": 1.516,
+"Angle": -5.7
+},
+{
+"Key": "player_riot_mop_attack_11",
+"X": -0.0,
+"Y": 1.489,
+"Angle": -6.0
+},
+{
+"Key": "player_riot_mop_attack_12",
+"X": -0.01,
+"Y": 1.426,
+"Angle": -3.4
+},
+{
+"Key": "player_riot_mop_attack_13",
+"X": 0.028,
+"Y": 1.357,
+"Angle": -1.1
+},
+{
+"Key": "player_riot_mop_attack_14",
+"X": 0.102,
+"Y": 1.285,
+"Angle": -0.1
+},
+{
+"Key": "player_riot_mop_attack_15",
+"X": 0.166,
+"Y": 1.235,
+"Angle": 0.5
+},
+{
+"Key": "player_riot_mop_crouch_0",
+"X": 0.156,
+"Y": 0.868,
+"Angle": -18.8
+},
+{
+"Key": "player_riot_mop_crouch_1",
+"X": 0.157,
+"Y": 0.88,
+"Angle": -18.5
+},
+{
+"Key": "player_riot_mop_crouch_2",
+"X": 0.159,
+"Y": 0.904,
+"Angle": -17.7
+},
+{
+"Key": "player_riot_mop_crouch_3",
+"X": 0.16,
+"Y": 0.914,
+"Angle": -17.0
+},
+{
+"Key": "player_riot_mop_crouch_4",
+"X": 0.159,
+"Y": 0.898,
+"Angle": -16.8
+},
+{
+"Key": "player_riot_mop_crouch_5",
+"X": 0.158,
+"Y": 0.881,
+"Angle": -17.4
+},
+{
+"Key": "player_riot_mop_crouch_6",
+"X": 0.157,
+"Y": 0.878,
+"Angle": -18.0
+},
+{
+"Key": "player_riot_mop_crouch_7",
+"X": 0.157,
+"Y": 0.873,
+"Angle": -18.5
+},
+{
+"Key": "player_riot_mop_crouch_8",
+"X": 0.157,
+"Y": 0.868,
+"Angle": -18.7
+},
+{
+"Key": "player_riot_mop_crouch_9",
+"X": 0.156,
+"Y": 0.881,
+"Angle": -18.5
+},
+{
+"Key": "player_riot_mop_crouch_10",
+"X": 0.158,
+"Y": 0.905,
+"Angle": -17.9
+},
+{
+"Key": "player_riot_mop_crouch_11",
+"X": 0.162,
+"Y": 0.921,
+"Angle": -17.2
+},
+{
+"Key": "player_riot_mop_crouch_12",
+"X": 0.164,
+"Y": 0.913,
+"Angle": -16.9
+},
+{
+"Key": "player_riot_mop_crouch_13",
+"X": 0.161,
+"Y": 0.888,
+"Angle": -17.5
+},
+{
+"Key": "player_riot_mop_crouch_14",
+"X": 0.158,
+"Y": 0.878,
+"Angle": -18.2
+},
+{
+"Key": "player_riot_mop_crouch_15",
+"X": 0.157,
+"Y": 0.874,
+"Angle": -18.6
+},
+{
+"Key": "player_riot_mop_idle_0",
+"X": 0.188,
+"Y": 1.221,
+"Angle": 0.4
+},
+{
+"Key": "player_riot_mop_idle_1",
+"X": 0.188,
+"Y": 1.221,
+"Angle": 0.4
+},
+{
+"Key": "player_riot_mop_idle_2",
+"X": 0.188,
+"Y": 1.221,
+"Angle": 0.4
+},
+{
+"Key": "player_riot_mop_idle_3",
+"X": 0.188,
+"Y": 1.221,
+"Angle": 0.4
+},
+{
+"Key": "player_riot_mop_idle_4",
+"X": 0.188,
+"Y": 1.221,
+"Angle": 0.4
+},
+{
+"Key": "player_riot_mop_idle_5",
+"X": 0.189,
+"Y": 1.228,
+"Angle": 0.4
+},
+{
+"Key": "player_riot_mop_idle_6",
+"X": 0.192,
+"Y": 1.243,
+"Angle": 0.2
+},
+{
+"Key": "player_riot_mop_idle_7",
+"X": 0.195,
+"Y": 1.25,
+"Angle": 0.0
+},
+{
+"Key": "player_riot_mop_idle_8",
+"X": 0.195,
+"Y": 1.25,
+"Angle": 0.0
+},
+{
+"Key": "player_riot_mop_idle_9",
+"X": 0.192,
+"Y": 1.243,
+"Angle": 0.0
+},
+{
+"Key": "player_riot_mop_idle_10",
+"X": 0.188,
+"Y": 1.229,
+"Angle": 0.2
+},
+{
+"Key": "player_riot_mop_idle_11",
+"X": 0.187,
+"Y": 1.222,
+"Angle": 0.4
+},
+{
+"Key": "player_riot_mop_idle_12",
+"X": 0.188,
+"Y": 1.221,
+"Angle": 0.4
+},
+{
+"Key": "player_riot_mop_idle_13",
+"X": 0.188,
+"Y": 1.221,
+"Angle": 0.4
+},
+{
+"Key": "player_riot_mop_idle_14",
+"X": 0.188,
+"Y": 1.221,
+"Angle": 0.4
+},
+{
+"Key": "player_riot_mop_idle_15",
+"X": 0.188,
+"Y": 1.221,
+"Angle": 0.4
+},
+{
+"Key": "player_riot_mop_run_0",
+"X": 0.238,
+"Y": 1.187,
+"Angle": 5.4
+},
+{
+"Key": "player_riot_mop_run_1",
+"X": 0.238,
+"Y": 1.173,
+"Angle": 5.4
+},
+{
+"Key": "player_riot_mop_run_2",
+"X": 0.235,
+"Y": 1.187,
+"Angle": 5.2
+},
+{
+"Key": "player_riot_mop_run_3",
+"X": 0.23,
+"Y": 1.201,
+"Angle": 4.7
+},
+{
+"Key": "player_riot_mop_run_4",
+"X": 0.23,
+"Y": 1.187,
+"Angle": 4.6
+},
+{
+"Key": "player_riot_mop_run_5",
+"X": 0.233,
+"Y": 1.173,
+"Angle": 4.9
+},
+{
+"Key": "player_riot_mop_run_6",
+"X": 0.239,
+"Y": 1.186,
+"Angle": 5.6
+},
+{
+"Key": "player_riot_mop_run_7",
+"X": 0.241,
+"Y": 1.2,
+"Angle": 5.9
+},
+{
+"Key": "player_riot_mop_run_8",
+"X": 0.24,
+"Y": 1.186,
+"Angle": 5.8
+},
+{
+"Key": "player_riot_mop_run_9",
+"X": 0.239,
+"Y": 1.172,
+"Angle": 5.7
+},
+{
+"Key": "player_riot_mop_run_10",
+"X": 0.234,
+"Y": 1.187,
+"Angle": 5.2
+},
+{
+"Key": "player_riot_mop_run_11",
+"X": 0.229,
+"Y": 1.201,
+"Angle": 4.6
+},
+{
+"Key": "player_riot_mop_run_12",
+"X": 0.229,
+"Y": 1.187,
+"Angle": 4.5
+},
+{
+"Key": "player_riot_mop_run_13",
+"X": 0.233,
+"Y": 1.173,
+"Angle": 4.9
+},
+{
+"Key": "player_riot_mop_run_14",
+"X": 0.238,
+"Y": 1.186,
+"Angle": 5.6
+},
+{
+"Key": "player_riot_mop_run_15",
+"X": 0.239,
+"Y": 1.2,
+"Angle": 5.7
+},
+{
+"Key": "player_riot_mop_walk_0",
+"X": 0.186,
+"Y": 1.228,
+"Angle": 0.4
+},
+{
+"Key": "player_riot_mop_walk_1",
+"X": 0.19,
+"Y": 1.234,
+"Angle": 0.8
+},
+{
+"Key": "player_riot_mop_walk_2",
+"X": 0.193,
+"Y": 1.22,
+"Angle": 1.1
+},
+{
+"Key": "player_riot_mop_walk_3",
+"X": 0.193,
+"Y": 1.206,
+"Angle": 1.1
+},
+{
+"Key": "player_riot_mop_walk_4",
+"X": 0.192,
+"Y": 1.213,
+"Angle": 1.0
+},
+{
+"Key": "player_riot_mop_walk_5",
+"X": 0.191,
+"Y": 1.213,
+"Angle": 1.0
+},
+{
+"Key": "player_riot_mop_walk_6",
+"X": 0.189,
+"Y": 1.207,
+"Angle": 0.7
+},
+{
+"Key": "player_riot_mop_walk_7",
+"X": 0.186,
+"Y": 1.215,
+"Angle": 0.3
+},
+{
+"Key": "player_riot_mop_walk_8",
+"X": 0.185,
+"Y": 1.229,
+"Angle": 0.3
+},
+{
+"Key": "player_riot_mop_walk_9",
+"X": 0.188,
+"Y": 1.235,
+"Angle": 0.6
+},
+{
+"Key": "player_riot_mop_walk_10",
+"X": 0.189,
+"Y": 1.221,
+"Angle": 0.7
+},
+{
+"Key": "player_riot_mop_walk_11",
+"X": 0.186,
+"Y": 1.208,
+"Angle": 0.4
+},
+{
+"Key": "player_riot_mop_walk_12",
+"X": 0.183,
+"Y": 1.215,
+"Angle": 0.1
+},
+{
+"Key": "player_riot_mop_walk_13",
+"X": 0.182,
+"Y": 1.215,
+"Angle": -0.0
+},
+{
+"Key": "player_riot_mop_walk_14",
+"X": 0.182,
+"Y": 1.209,
+"Angle": -0.1
+},
+{
+"Key": "player_riot_mop_walk_15",
+"X": 0.183,
+"Y": 1.215,
+"Angle": 0.0
+},
+{
+"Key": "player_riot_none_crouch_0",
+"X": -0.172,
+"Y": 0.867,
+"Angle": -16.1
+},
+{
+"Key": "player_riot_none_crouch_1",
+"X": -0.176,
+"Y": 0.884,
+"Angle": -15.4
+},
+{
+"Key": "player_riot_none_crouch_2",
+"X": -0.179,
+"Y": 0.878,
+"Angle": -15.6
+},
+{
+"Key": "player_riot_none_crouch_3",
+"X": -0.18,
+"Y": 0.849,
+"Angle": -16.6
+},
+{
+"Key": "player_riot_none_crouch_4",
+"X": -0.177,
+"Y": 0.825,
+"Angle": -17.3
+},
+{
+"Key": "player_riot_none_crouch_5",
+"X": -0.171,
+"Y": 0.818,
+"Angle": -17.3
+},
+{
+"Key": "player_riot_none_crouch_6",
+"X": -0.169,
+"Y": 0.817,
+"Angle": -17.2
+},
+{
+"Key": "player_riot_none_crouch_7",
+"X": -0.169,
+"Y": 0.817,
+"Angle": -17.2
+},
+{
+"Key": "player_riot_none_crouch_8",
+"X": -0.169,
+"Y": 0.817,
+"Angle": -17.2
+},
+{
+"Key": "player_riot_none_crouch_9",
+"X": -0.169,
+"Y": 0.824,
+"Angle": -17.2
+},
+{
+"Key": "player_riot_none_crouch_10",
+"X": -0.17,
+"Y": 0.838,
+"Angle": -17.1
+},
+{
+"Key": "player_riot_none_crouch_11",
+"X": -0.17,
+"Y": 0.845,
+"Angle": -17.1
+},
+{
+"Key": "player_riot_none_crouch_12",
+"X": -0.17,
+"Y": 0.845,
+"Angle": -17.1
+},
+{
+"Key": "player_riot_none_crouch_13",
+"X": -0.17,
+"Y": 0.845,
+"Angle": -17.1
+},
+{
+"Key": "player_riot_none_crouch_14",
+"X": -0.17,
+"Y": 0.845,
+"Angle": -17.1
+},
+{
+"Key": "player_riot_none_crouch_15",
+"X": -0.17,
+"Y": 0.85,
+"Angle": -16.9
+},
+{
+"Key": "player_riot_none_idle_0",
+"X": -0.145,
+"Y": 1.221,
+"Angle": 5.6
+},
+{
+"Key": "player_riot_none_idle_1",
+"X": -0.148,
+"Y": 1.234,
+"Angle": 7.8
+},
+{
+"Key": "player_riot_none_idle_2",
+"X": -0.149,
+"Y": 1.263,
+"Angle": 7.3
+},
+{
+"Key": "player_riot_none_idle_3",
+"X": -0.148,
+"Y": 1.322,
+"Angle": 3.4
+},
+{
+"Key": "player_riot_none_idle_4",
+"X": -0.144,
+"Y": 1.391,
+"Angle": -0.5
+},
+{
+"Key": "player_riot_none_idle_5",
+"X": -0.138,
+"Y": 1.379,
+"Angle": -1.3
+},
+{
+"Key": "player_riot_none_idle_6",
+"X": -0.137,
+"Y": 1.278,
+"Angle": 0.7
+},
+{
+"Key": "player_riot_none_idle_7",
+"X": -0.136,
+"Y": 1.237,
+"Angle": 0.0
+},
+{
+"Key": "player_riot_none_idle_8",
+"X": -0.131,
+"Y": 1.303,
+"Angle": -4.1
+},
+{
+"Key": "player_riot_none_idle_9",
+"X": -0.128,
+"Y": 1.401,
+"Angle": -8.4
+},
+{
+"Key": "player_riot_none_idle_10",
+"X": -0.132,
+"Y": 1.477,
+"Angle": -10.3
+},
+{
+"Key": "player_riot_none_idle_11",
+"X": -0.141,
+"Y": 1.522,
+"Angle": -9.2
+},
+{
+"Key": "player_riot_none_idle_12",
+"X": -0.14,
+"Y": 1.56,
+"Angle": -9.8
+},
+{
+"Key": "player_riot_none_idle_13",
+"X": -0.135,
+"Y": 1.497,
+"Angle": -8.2
+},
+{
+"Key": "player_riot_none_idle_14",
+"X": -0.138,
+"Y": 1.314,
+"Angle": -0.3
+},
+{
+"Key": "player_riot_none_idle_15",
+"X": -0.143,
+"Y": 1.215,
+"Angle": 4.5
+},
+{
+"Key": "player_riot_none_run_0",
+"X": -0.159,
+"Y": 1.092,
+"Angle": -0.5
+},
+{
+"Key": "player_riot_none_run_1",
+"X": -0.14,
+"Y": 1.081,
+"Angle": 1.5
+},
+{
+"Key": "player_riot_none_run_2",
+"X": -0.133,
+"Y": 1.087,
+"Angle": 1.6
+},
+{
+"Key": "player_riot_none_run_3",
+"X": -0.126,
+"Y": 1.08,
+"Angle": 1.5
+},
+{
+"Key": "player_riot_none_run_4",
+"X": -0.121,
+"Y": 1.073,
+"Angle": 1.9
+},
+{
+"Key": "player_riot_none_run_5",
+"X": -0.125,
+"Y": 1.081,
+"Angle": 1.5
+},
+{
+"Key": "player_riot_none_run_6",
+"X": -0.131,
+"Y": 1.082,
+"Angle": 0.7
+},
+{
+"Key": "player_riot_none_run_7",
+"X": -0.137,
+"Y": 1.09,
+"Angle": -0.1
+},
+{
+"Key": "player_riot_none_run_8",
+"X": -0.138,
+"Y": 1.084,
+"Angle": -0.1
+},
+{
+"Key": "player_riot_none_run_9",
+"X": -0.133,
+"Y": 1.076,
+"Angle": 0.4
+},
+{
+"Key": "player_riot_none_run_10",
+"X": -0.135,
+"Y": 1.09,
+"Angle": 0.2
+},
+{
+"Key": "player_riot_none_run_11",
+"X": -0.136,
+"Y": 1.097,
+"Angle": 0.2
+},
+{
+"Key": "player_riot_none_run_12",
+"X": -0.135,
+"Y": 1.089,
+"Angle": 0.5
+},
+{
+"Key": "player_riot_none_run_13",
+"X": -0.143,
+"Y": 1.083,
+"Angle": 0.2
+},
+{
+"Key": "player_riot_none_run_14",
+"X": -0.159,
+"Y": 1.092,
+"Angle": -0.8
+},
+{
+"Key": "player_riot_none_run_15",
+"X": -0.17,
+"Y": 1.101,
+"Angle": -1.8
+},
+{
+"Key": "player_riot_none_shove_0",
+"X": -0.156,
+"Y": 1.222,
+"Angle": 4.6
+},
+{
+"Key": "player_riot_none_shove_1",
+"X": -0.193,
+"Y": 1.236,
+"Angle": 4.6
+},
+{
+"Key": "player_riot_none_shove_2",
+"X": -0.215,
+"Y": 1.229,
+"Angle": 4.2
+},
+{
+"Key": "player_riot_none_shove_3",
+"X": -0.181,
+"Y": 1.196,
+"Angle": 3.5
+},
+{
+"Key": "player_riot_none_shove_4",
+"X": -0.077,
+"Y": 1.176,
+"Angle": 2.8
+},
+{
+"Key": "player_riot_none_shove_5",
+"X": 0.08,
+"Y": 1.188,
+"Angle": 3.8
+},
+{
+"Key": "player_riot_none_shove_6",
+"X": 0.243,
+"Y": 1.207,
+"Angle": 6.0
+},
+{
+"Key": "player_riot_none_shove_7",
+"X": 0.357,
+"Y": 1.213,
+"Angle": 7.2
+},
+{
+"Key": "player_riot_none_shove_8",
+"X": 0.357,
+"Y": 1.213,
+"Angle": 7.2
+},
+{
+"Key": "player_riot_none_shove_9",
+"X": 0.243,
+"Y": 1.207,
+"Angle": 6.0
+},
+{
+"Key": "player_riot_none_shove_10",
+"X": 0.08,
+"Y": 1.188,
+"Angle": 3.8
+},
+{
+"Key": "player_riot_none_shove_11",
+"X": -0.077,
+"Y": 1.176,
+"Angle": 2.8
+},
+{
+"Key": "player_riot_none_shove_12",
+"X": -0.181,
+"Y": 1.196,
+"Angle": 3.5
+},
+{
+"Key": "player_riot_none_shove_13",
+"X": -0.215,
+"Y": 1.229,
+"Angle": 4.2
+},
+{
+"Key": "player_riot_none_shove_14",
+"X": -0.193,
+"Y": 1.236,
+"Angle": 4.6
+},
+{
+"Key": "player_riot_none_shove_15",
+"X": -0.156,
+"Y": 1.222,
+"Angle": 4.6
+},
+{
+"Key": "player_riot_none_walk_0",
+"X": -0.145,
+"Y": 1.195,
+"Angle": 3.7
+},
+{
+"Key": "player_riot_none_walk_1",
+"X": -0.146,
+"Y": 1.195,
+"Angle": 3.5
+},
+{
+"Key": "player_riot_none_walk_2",
+"X": -0.144,
+"Y": 1.216,
+"Angle": 3.7
+},
+{
+"Key": "player_riot_none_walk_3",
+"X": -0.142,
+"Y": 1.223,
+"Angle": 4.1
+},
+{
+"Key": "player_riot_none_walk_4",
+"X": -0.142,
+"Y": 1.201,
+"Angle": 4.4
+},
+{
+"Key": "player_riot_none_walk_5",
+"X": -0.142,
+"Y": 1.195,
+"Angle": 4.2
+},
+{
+"Key": "player_riot_none_walk_6",
+"X": -0.142,
+"Y": 1.216,
+"Angle": 3.9
+},
+{
+"Key": "player_riot_none_walk_7",
+"X": -0.142,
+"Y": 1.23,
+"Angle": 3.9
+},
+{
+"Key": "player_riot_none_walk_8",
+"X": -0.142,
+"Y": 1.216,
+"Angle": 3.9
+},
+{
+"Key": "player_riot_none_walk_9",
+"X": -0.144,
+"Y": 1.195,
+"Angle": 3.7
+},
+{
+"Key": "player_riot_none_walk_10",
+"X": -0.146,
+"Y": 1.195,
+"Angle": 3.5
+},
+{
+"Key": "player_riot_none_walk_11",
+"X": -0.144,
+"Y": 1.216,
+"Angle": 3.7
+},
+{
+"Key": "player_riot_none_walk_12",
+"X": -0.142,
+"Y": 1.23,
+"Angle": 3.9
+},
+{
+"Key": "player_riot_none_walk_13",
+"X": -0.142,
+"Y": 1.223,
+"Angle": 3.7
+},
+{
+"Key": "player_riot_none_walk_14",
+"X": -0.141,
+"Y": 1.217,
+"Angle": 3.4
+},
+{
+"Key": "player_riot_none_walk_15",
+"X": -0.142,
+"Y": 1.209,
+"Angle": 3.6
+},
+{
+"Key": "player_riot_pipe_attack_0",
+"X": -0.116,
+"Y": 1.257,
+"Angle": 4.6
+},
+{
+"Key": "player_riot_pipe_attack_1",
+"X": -0.124,
+"Y": 1.361,
+"Angle": 4.2
+},
+{
+"Key": "player_riot_pipe_attack_2",
+"X": -0.149,
+"Y": 1.424,
+"Angle": 3.7
+},
+{
+"Key": "player_riot_pipe_attack_3",
+"X": -0.188,
+"Y": 1.411,
+"Angle": 3.7
+},
+{
+"Key": "player_riot_pipe_attack_4",
+"X": -0.232,
+"Y": 1.389,
+"Angle": 3.9
+},
+{
+"Key": "player_riot_pipe_attack_5",
+"X": -0.255,
+"Y": 1.382,
+"Angle": 4.1
+},
+{
+"Key": "player_riot_pipe_attack_6",
+"X": -0.216,
+"Y": 1.396,
+"Angle": 4.3
+},
+{
+"Key": "player_riot_pipe_attack_7",
+"X": -0.139,
+"Y": 1.409,
+"Angle": 4.9
+},
+{
+"Key": "player_riot_pipe_attack_8",
+"X": -0.139,
+"Y": 1.409,
+"Angle": 4.9
+},
+{
+"Key": "player_riot_pipe_attack_9",
+"X": -0.216,
+"Y": 1.396,
+"Angle": 4.3
+},
+{
+"Key": "player_riot_pipe_attack_10",
+"X": -0.255,
+"Y": 1.382,
+"Angle": 4.1
+},
+{
+"Key": "player_riot_pipe_attack_11",
+"X": -0.232,
+"Y": 1.389,
+"Angle": 3.9
+},
+{
+"Key": "player_riot_pipe_attack_12",
+"X": -0.188,
+"Y": 1.411,
+"Angle": 3.7
+},
+{
+"Key": "player_riot_pipe_attack_13",
+"X": -0.149,
+"Y": 1.424,
+"Angle": 3.7
+},
+{
+"Key": "player_riot_pipe_attack_14",
+"X": -0.124,
+"Y": 1.361,
+"Angle": 4.2
+},
+{
+"Key": "player_riot_pipe_attack_15",
+"X": -0.116,
+"Y": 1.257,
+"Angle": 4.6
+},
+{
+"Key": "player_riot_pipe_crouch_0",
+"X": -0.149,
+"Y": 0.788,
+"Angle": -15.7
+},
+{
+"Key": "player_riot_pipe_crouch_1",
+"X": -0.157,
+"Y": 0.815,
+"Angle": -16.8
+},
+{
+"Key": "player_riot_pipe_crouch_2",
+"X": -0.163,
+"Y": 0.847,
+"Angle": -17.6
+},
+{
+"Key": "player_riot_pipe_crouch_3",
+"X": -0.163,
+"Y": 0.868,
+"Angle": -17.6
+},
+{
+"Key": "player_riot_pipe_crouch_4",
+"X": -0.162,
+"Y": 0.867,
+"Angle": -17.4
+},
+{
+"Key": "player_riot_pipe_crouch_5",
+"X": -0.162,
+"Y": 0.847,
+"Angle": -17.5
+},
+{
+"Key": "player_riot_pipe_crouch_6",
+"X": -0.163,
+"Y": 0.819,
+"Angle": -17.5
+},
+{
+"Key": "player_riot_pipe_crouch_7",
+"X": -0.162,
+"Y": 0.798,
+"Angle": -17.4
+},
+{
+"Key": "player_riot_pipe_crouch_8",
+"X": -0.162,
+"Y": 0.798,
+"Angle": -17.5
+},
+{
+"Key": "player_riot_pipe_crouch_9",
+"X": -0.163,
+"Y": 0.829,
+"Angle": -18.0
+},
+{
+"Key": "player_riot_pipe_crouch_10",
+"X": -0.165,
+"Y": 0.864,
+"Angle": -18.1
+},
+{
+"Key": "player_riot_pipe_crouch_11",
+"X": -0.166,
+"Y": 0.875,
+"Angle": -17.5
+},
+{
+"Key": "player_riot_pipe_crouch_12",
+"X": -0.159,
+"Y": 0.863,
+"Angle": -16.7
+},
+{
+"Key": "player_riot_pipe_crouch_13",
+"X": -0.151,
+"Y": 0.838,
+"Angle": -16.0
+},
+{
+"Key": "player_riot_pipe_crouch_14",
+"X": -0.147,
+"Y": 0.808,
+"Angle": -15.4
+},
+{
+"Key": "player_riot_pipe_crouch_15",
+"X": -0.145,
+"Y": 0.785,
+"Angle": -15.2
+},
+{
+"Key": "player_riot_pipe_idle_0",
+"X": -0.114,
+"Y": 1.216,
+"Angle": 3.9
+},
+{
+"Key": "player_riot_pipe_idle_1",
+"X": -0.114,
+"Y": 1.223,
+"Angle": 4.0
+},
+{
+"Key": "player_riot_pipe_idle_2",
+"X": -0.115,
+"Y": 1.236,
+"Angle": 4.7
+},
+{
+"Key": "player_riot_pipe_idle_3",
+"X": -0.118,
+"Y": 1.242,
+"Angle": 6.1
+},
+{
+"Key": "player_riot_pipe_idle_4",
+"X": -0.119,
+"Y": 1.241,
+"Angle": 7.2
+},
+{
+"Key": "player_riot_pipe_idle_5",
+"X": -0.118,
+"Y": 1.241,
+"Angle": 7.5
+},
+{
+"Key": "player_riot_pipe_idle_6",
+"X": -0.116,
+"Y": 1.241,
+"Angle": 7.8
+},
+{
+"Key": "player_riot_pipe_idle_7",
+"X": -0.116,
+"Y": 1.241,
+"Angle": 7.8
+},
+{
+"Key": "player_riot_pipe_idle_8",
+"X": -0.118,
+"Y": 1.241,
+"Angle": 7.5
+},
+{
+"Key": "player_riot_pipe_idle_9",
+"X": -0.12,
+"Y": 1.241,
+"Angle": 7.4
+},
+{
+"Key": "player_riot_pipe_idle_10",
+"X": -0.12,
+"Y": 1.234,
+"Angle": 7.6
+},
+{
+"Key": "player_riot_pipe_idle_11",
+"X": -0.121,
+"Y": 1.22,
+"Angle": 8.0
+},
+{
+"Key": "player_riot_pipe_idle_12",
+"X": -0.119,
+"Y": 1.214,
+"Angle": 7.1
+},
+{
+"Key": "player_riot_pipe_idle_13",
+"X": -0.116,
+"Y": 1.215,
+"Angle": 5.0
+},
+{
+"Key": "player_riot_pipe_idle_14",
+"X": -0.114,
+"Y": 1.216,
+"Angle": 3.9
+},
+{
+"Key": "player_riot_pipe_idle_15",
+"X": -0.114,
+"Y": 1.216,
+"Angle": 3.9
+},
+{
+"Key": "player_riot_pipe_run_0",
+"X": -0.124,
+"Y": 1.261,
+"Angle": 8.8
+},
+{
+"Key": "player_riot_pipe_run_1",
+"X": -0.129,
+"Y": 1.241,
+"Angle": 8.7
+},
+{
+"Key": "player_riot_pipe_run_2",
+"X": -0.124,
+"Y": 1.262,
+"Angle": 7.0
+},
+{
+"Key": "player_riot_pipe_run_3",
+"X": -0.12,
+"Y": 1.291,
+"Angle": 5.9
+},
+{
+"Key": "player_riot_pipe_run_4",
+"X": -0.122,
+"Y": 1.29,
+"Angle": 6.7
+},
+{
+"Key": "player_riot_pipe_run_5",
+"X": -0.138,
+"Y": 1.269,
+"Angle": 7.3
+},
+{
+"Key": "player_riot_pipe_run_6",
+"X": -0.151,
+"Y": 1.248,
+"Angle": 7.8
+},
+{
+"Key": "player_riot_pipe_run_7",
+"X": -0.143,
+"Y": 1.241,
+"Angle": 8.3
+},
+{
+"Key": "player_riot_pipe_run_8",
+"X": -0.131,
+"Y": 1.248,
+"Angle": 7.6
+},
+{
+"Key": "player_riot_pipe_run_9",
+"X": -0.123,
+"Y": 1.269,
+"Angle": 6.7
+},
+{
+"Key": "player_riot_pipe_run_10",
+"X": -0.114,
+"Y": 1.29,
+"Angle": 7.8
+},
+{
+"Key": "player_riot_pipe_run_11",
+"X": -0.11,
+"Y": 1.289,
+"Angle": 9.9
+},
+{
+"Key": "player_riot_pipe_run_12",
+"X": -0.11,
+"Y": 1.269,
+"Angle": 10.7
+},
+{
+"Key": "player_riot_pipe_run_13",
+"X": -0.112,
+"Y": 1.255,
+"Angle": 9.8
+},
+{
+"Key": "player_riot_pipe_run_14",
+"X": -0.111,
+"Y": 1.269,
+"Angle": 8.3
+},
+{
+"Key": "player_riot_pipe_run_15",
+"X": -0.114,
+"Y": 1.282,
+"Angle": 8.1
+},
+{
+"Key": "player_riot_pipe_walk_0",
+"X": -0.089,
+"Y": 1.151,
+"Angle": 0.9
+},
+{
+"Key": "player_riot_pipe_walk_1",
+"X": -0.086,
+"Y": 1.164,
+"Angle": 1.2
+},
+{
+"Key": "player_riot_pipe_walk_2",
+"X": -0.083,
+"Y": 1.178,
+"Angle": 1.5
+},
+{
+"Key": "player_riot_pipe_walk_3",
+"X": -0.083,
+"Y": 1.164,
+"Angle": 1.5
+},
+{
+"Key": "player_riot_pipe_walk_4",
+"X": -0.082,
+"Y": 1.15,
+"Angle": 1.4
+},
+{
+"Key": "player_riot_pipe_walk_5",
+"X": -0.083,
+"Y": 1.164,
+"Angle": 1.5
+},
+{
+"Key": "player_riot_pipe_walk_6",
+"X": -0.085,
+"Y": 1.178,
+"Angle": 1.4
+},
+{
+"Key": "player_riot_pipe_walk_7",
+"X": -0.088,
+"Y": 1.165,
+"Angle": 1.0
+},
+{
+"Key": "player_riot_pipe_walk_8",
+"X": -0.089,
+"Y": 1.151,
+"Angle": 0.9
+},
+{
+"Key": "player_riot_pipe_walk_9",
+"X": -0.086,
+"Y": 1.164,
+"Angle": 1.2
+},
+{
+"Key": "player_riot_pipe_walk_10",
+"X": -0.083,
+"Y": 1.178,
+"Angle": 1.5
+},
+{
+"Key": "player_riot_pipe_walk_11",
+"X": -0.083,
+"Y": 1.164,
+"Angle": 1.5
+},
+{
+"Key": "player_riot_pipe_walk_12",
+"X": -0.083,
+"Y": 1.15,
+"Angle": 1.3
+},
+{
+"Key": "player_riot_pipe_walk_13",
+"X": -0.083,
+"Y": 1.164,
+"Angle": 1.4
+},
+{
+"Key": "player_riot_pipe_walk_14",
+"X": -0.085,
+"Y": 1.178,
+"Angle": 1.4
+},
+{
+"Key": "player_riot_pipe_walk_15",
+"X": -0.088,
+"Y": 1.165,
+"Angle": 1.0
+},
+{
+"Key": "player_uniform_bat_attack_0",
+"X": -0.091,
+"Y": 1.222,
+"Angle": 4.9
+},
+{
+"Key": "player_uniform_bat_attack_1",
+"X": -0.164,
+"Y": 1.235,
+"Angle": 6.2
+},
+{
+"Key": "player_uniform_bat_attack_2",
+"X": -0.281,
+"Y": 1.234,
+"Angle": 7.8
+},
+{
+"Key": "player_uniform_bat_attack_3",
+"X": -0.353,
+"Y": 1.22,
+"Angle": 9.3
+},
+{
+"Key": "player_uniform_bat_attack_4",
+"X": -0.392,
+"Y": 1.227,
+"Angle": 10.2
+},
+{
+"Key": "player_uniform_bat_attack_5",
+"X": -0.435,
+"Y": 1.262,
+"Angle": 10.3
+},
+{
+"Key": "player_uniform_bat_attack_6",
+"X": -0.469,
+"Y": 1.296,
+"Angle": 10.7
+},
+{
+"Key": "player_uniform_bat_attack_7",
+"X": -0.484,
+"Y": 1.318,
+"Angle": 11.7
+},
+{
+"Key": "player_uniform_bat_attack_8",
+"X": -0.484,
+"Y": 1.318,
+"Angle": 11.7
+},
+{
+"Key": "player_uniform_bat_attack_9",
+"X": -0.469,
+"Y": 1.296,
+"Angle": 10.7
+},
+{
+"Key": "player_uniform_bat_attack_10",
+"X": -0.435,
+"Y": 1.262,
+"Angle": 10.3
+},
+{
+"Key": "player_uniform_bat_attack_11",
+"X": -0.392,
+"Y": 1.227,
+"Angle": 10.2
+},
+{
+"Key": "player_uniform_bat_attack_12",
+"X": -0.353,
+"Y": 1.22,
+"Angle": 9.3
+},
+{
+"Key": "player_uniform_bat_attack_13",
+"X": -0.281,
+"Y": 1.234,
+"Angle": 7.8
+},
+{
+"Key": "player_uniform_bat_attack_14",
+"X": -0.164,
+"Y": 1.235,
+"Angle": 6.2
+},
+{
+"Key": "player_uniform_bat_attack_15",
+"X": -0.091,
+"Y": 1.222,
+"Angle": 4.9
+},
+{
+"Key": "player_uniform_bat_crouch_0",
+"X": -0.125,
+"Y": 0.926,
+"Angle": -14.1
+},
+{
+"Key": "player_uniform_bat_crouch_1",
+"X": -0.133,
+"Y": 0.959,
+"Angle": -15.1
+},
+{
+"Key": "player_uniform_bat_crouch_2",
+"X": -0.143,
+"Y": 0.966,
+"Angle": -16.5
+},
+{
+"Key": "player_uniform_bat_crouch_3",
+"X": -0.152,
+"Y": 0.952,
+"Angle": -17.7
+},
+{
+"Key": "player_uniform_bat_crouch_4",
+"X": -0.146,
+"Y": 0.962,
+"Angle": -17.0
+},
+{
+"Key": "player_uniform_bat_crouch_5",
+"X": -0.127,
+"Y": 0.976,
+"Angle": -14.4
+},
+{
+"Key": "player_uniform_bat_crouch_6",
+"X": -0.111,
+"Y": 0.952,
+"Angle": -12.3
+},
+{
+"Key": "player_uniform_bat_crouch_7",
+"X": -0.112,
+"Y": 0.918,
+"Angle": -12.4
+},
+{
+"Key": "player_uniform_bat_crouch_8",
+"X": -0.122,
+"Y": 0.924,
+"Angle": -13.8
+},
+{
+"Key": "player_uniform_bat_crouch_9",
+"X": -0.132,
+"Y": 0.958,
+"Angle": -15.0
+},
+{
+"Key": "player_uniform_bat_crouch_10",
+"X": -0.144,
+"Y": 0.967,
+"Angle": -16.6
+},
+{
+"Key": "player_uniform_bat_crouch_11",
+"X": -0.152,
+"Y": 0.953,
+"Angle": -17.9
+},
+{
+"Key": "player_uniform_bat_crouch_12",
+"X": -0.145,
+"Y": 0.963,
+"Angle": -17.2
+},
+{
+"Key": "player_uniform_bat_crouch_13",
+"X": -0.131,
+"Y": 0.98,
+"Angle": -15.1
+},
+{
+"Key": "player_uniform_bat_crouch_14",
+"X": -0.12,
+"Y": 0.957,
+"Angle": -13.4
+},
+{
+"Key": "player_uniform_bat_crouch_15",
+"X": -0.118,
+"Y": 0.922,
+"Angle": -13.3
+},
+{
+"Key": "player_uniform_bat_idle_0",
+"X": -0.082,
+"Y": 1.207,
+"Angle": 5.8
+},
+{
+"Key": "player_uniform_bat_idle_1",
+"X": -0.082,
+"Y": 1.193,
+"Angle": 5.7
+},
+{
+"Key": "player_uniform_bat_idle_2",
+"X": -0.081,
+"Y": 1.187,
+"Angle": 5.0
+},
+{
+"Key": "player_uniform_bat_idle_3",
+"X": -0.081,
+"Y": 1.187,
+"Angle": 5.0
+},
+{
+"Key": "player_uniform_bat_idle_4",
+"X": -0.081,
+"Y": 1.187,
+"Angle": 4.8
+},
+{
+"Key": "player_uniform_bat_idle_5",
+"X": -0.08,
+"Y": 1.188,
+"Angle": 4.1
+},
+{
+"Key": "player_uniform_bat_idle_6",
+"X": -0.079,
+"Y": 1.188,
+"Angle": 3.9
+},
+{
+"Key": "player_uniform_bat_idle_7",
+"X": -0.08,
+"Y": 1.195,
+"Angle": 3.9
+},
+{
+"Key": "player_uniform_bat_idle_8",
+"X": -0.08,
+"Y": 1.208,
+"Angle": 4.3
+},
+{
+"Key": "player_uniform_bat_idle_9",
+"X": -0.081,
+"Y": 1.215,
+"Angle": 4.9
+},
+{
+"Key": "player_uniform_bat_idle_10",
+"X": -0.081,
+"Y": 1.214,
+"Angle": 5.2
+},
+{
+"Key": "player_uniform_bat_idle_11",
+"X": -0.081,
+"Y": 1.214,
+"Angle": 5.2
+},
+{
+"Key": "player_uniform_bat_idle_12",
+"X": -0.081,
+"Y": 1.214,
+"Angle": 5.2
+},
+{
+"Key": "player_uniform_bat_idle_13",
+"X": -0.081,
+"Y": 1.214,
+"Angle": 5.2
+},
+{
+"Key": "player_uniform_bat_idle_14",
+"X": -0.081,
+"Y": 1.214,
+"Angle": 5.2
+},
+{
+"Key": "player_uniform_bat_idle_15",
+"X": -0.081,
+"Y": 1.214,
+"Angle": 5.3
+},
+{
+"Key": "player_uniform_bat_run_0",
+"X": -0.063,
+"Y": 1.274,
+"Angle": 1.8
+},
+{
+"Key": "player_uniform_bat_run_1",
+"X": -0.071,
+"Y": 1.262,
+"Angle": 1.0
+},
+{
+"Key": "player_uniform_bat_run_2",
+"X": -0.072,
+"Y": 1.278,
+"Angle": 0.1
+},
+{
+"Key": "player_uniform_bat_run_3",
+"X": -0.067,
+"Y": 1.291,
+"Angle": 0.5
+},
+{
+"Key": "player_uniform_bat_run_4",
+"X": -0.064,
+"Y": 1.275,
+"Angle": 1.7
+},
+{
+"Key": "player_uniform_bat_run_5",
+"X": -0.061,
+"Y": 1.26,
+"Angle": 2.3
+},
+{
+"Key": "player_uniform_bat_run_6",
+"X": -0.056,
+"Y": 1.274,
+"Angle": 2.2
+},
+{
+"Key": "player_uniform_bat_run_7",
+"X": -0.053,
+"Y": 1.288,
+"Angle": 2.3
+},
+{
+"Key": "player_uniform_bat_run_8",
+"X": -0.055,
+"Y": 1.273,
+"Angle": 2.7
+},
+{
+"Key": "player_uniform_bat_run_9",
+"X": -0.061,
+"Y": 1.26,
+"Angle": 2.1
+},
+{
+"Key": "player_uniform_bat_run_10",
+"X": -0.064,
+"Y": 1.276,
+"Angle": 1.0
+},
+{
+"Key": "player_uniform_bat_run_11",
+"X": -0.066,
+"Y": 1.29,
+"Angle": 0.7
+},
+{
+"Key": "player_uniform_bat_run_12",
+"X": -0.072,
+"Y": 1.276,
+"Angle": 0.8
+},
+{
+"Key": "player_uniform_bat_run_13",
+"X": -0.072,
+"Y": 1.262,
+"Angle": 1.0
+},
+{
+"Key": "player_uniform_bat_run_14",
+"X": -0.064,
+"Y": 1.275,
+"Angle": 1.2
+},
+{
+"Key": "player_uniform_bat_run_15",
+"X": -0.059,
+"Y": 1.289,
+"Angle": 1.6
+},
+{
+"Key": "player_uniform_bat_walk_0",
+"X": -0.077,
+"Y": 1.194,
+"Angle": 5.2
+},
+{
+"Key": "player_uniform_bat_walk_1",
+"X": -0.077,
+"Y": 1.201,
+"Angle": 5.2
+},
+{
+"Key": "player_uniform_bat_walk_2",
+"X": -0.08,
+"Y": 1.229,
+"Angle": 4.9
+},
+{
+"Key": "player_uniform_bat_walk_3",
+"X": -0.085,
+"Y": 1.236,
+"Angle": 4.3
+},
+{
+"Key": "player_uniform_bat_walk_4",
+"X": -0.088,
+"Y": 1.216,
+"Angle": 4.0
+},
+{
+"Key": "player_uniform_bat_walk_5",
+"X": -0.088,
+"Y": 1.202,
+"Angle": 4.0
+},
+{
+"Key": "player_uniform_bat_walk_6",
+"X": -0.089,
+"Y": 1.216,
+"Angle": 3.9
+},
+{
+"Key": "player_uniform_bat_walk_7",
+"X": -0.09,
+"Y": 1.23,
+"Angle": 3.7
+},
+{
+"Key": "player_uniform_bat_walk_8",
+"X": -0.09,
+"Y": 1.216,
+"Angle": 3.7
+},
+{
+"Key": "player_uniform_bat_walk_9",
+"X": -0.09,
+"Y": 1.202,
+"Angle": 3.7
+},
+{
+"Key": "player_uniform_bat_walk_10",
+"X": -0.09,
+"Y": 1.216,
+"Angle": 3.8
+},
+{
+"Key": "player_uniform_bat_walk_11",
+"X": -0.09,
+"Y": 1.23,
+"Angle": 3.8
+},
+{
+"Key": "player_uniform_bat_walk_12",
+"X": -0.089,
+"Y": 1.216,
+"Angle": 3.9
+},
+{
+"Key": "player_uniform_bat_walk_13",
+"X": -0.085,
+"Y": 1.195,
+"Angle": 4.3
+},
+{
+"Key": "player_uniform_bat_walk_14",
+"X": -0.08,
+"Y": 1.194,
+"Angle": 4.9
+},
+{
+"Key": "player_uniform_bat_walk_15",
+"X": -0.077,
+"Y": 1.201,
+"Angle": 5.2
+},
+{
+"Key": "player_uniform_baton_attack_0",
+"X": -0.159,
+"Y": 1.299,
+"Angle": 4.5
+},
+{
+"Key": "player_uniform_baton_attack_1",
+"X": -0.165,
+"Y": 1.354,
+"Angle": 4.4
+},
+{
+"Key": "player_uniform_baton_attack_2",
+"X": -0.229,
+"Y": 1.375,
+"Angle": 4.4
+},
+{
+"Key": "player_uniform_baton_attack_3",
+"X": -0.373,
+"Y": 1.357,
+"Angle": 2.7
+},
+{
+"Key": "player_uniform_baton_attack_4",
+"X": -0.538,
+"Y": 1.341,
+"Angle": -0.2
+},
+{
+"Key": "player_uniform_baton_attack_5",
+"X": -0.638,
+"Y": 1.364,
+"Angle": -0.5
+},
+{
+"Key": "player_uniform_baton_attack_6",
+"X": -0.61,
+"Y": 1.437,
+"Angle": 1.2
+},
+{
+"Key": "player_uniform_baton_attack_7",
+"X": -0.52,
+"Y": 1.508,
+"Angle": -0.1
+},
+{
+"Key": "player_uniform_baton_attack_8",
+"X": -0.52,
+"Y": 1.508,
+"Angle": -0.1
+},
+{
+"Key": "player_uniform_baton_attack_9",
+"X": -0.61,
+"Y": 1.437,
+"Angle": 1.2
+},
+{
+"Key": "player_uniform_baton_attack_10",
+"X": -0.638,
+"Y": 1.364,
+"Angle": -0.5
+},
+{
+"Key": "player_uniform_baton_attack_11",
+"X": -0.538,
+"Y": 1.341,
+"Angle": -0.2
+},
+{
+"Key": "player_uniform_baton_attack_12",
+"X": -0.373,
+"Y": 1.357,
+"Angle": 2.7
+},
+{
+"Key": "player_uniform_baton_attack_13",
+"X": -0.229,
+"Y": 1.375,
+"Angle": 4.4
+},
+{
+"Key": "player_uniform_baton_attack_14",
+"X": -0.165,
+"Y": 1.354,
+"Angle": 4.4
+},
+{
+"Key": "player_uniform_baton_attack_15",
+"X": -0.159,
+"Y": 1.299,
+"Angle": 4.5
+},
+{
+"Key": "player_uniform_baton_crouch_0",
+"X": -0.113,
+"Y": 0.935,
+"Angle": -18.4
+},
+{
+"Key": "player_uniform_baton_crouch_1",
+"X": -0.117,
+"Y": 0.945,
+"Angle": -18.9
+},
+{
+"Key": "player_uniform_baton_crouch_2",
+"X": -0.119,
+"Y": 0.968,
+"Angle": -19.3
+},
+{
+"Key": "player_uniform_baton_crouch_3",
+"X": -0.118,
+"Y": 0.99,
+"Angle": -19.5
+},
+{
+"Key": "player_uniform_baton_crouch_4",
+"X": -0.117,
+"Y": 0.991,
+"Angle": -19.6
+},
+{
+"Key": "player_uniform_baton_crouch_5",
+"X": -0.121,
+"Y": 0.971,
+"Angle": -19.7
+},
+{
+"Key": "player_uniform_baton_crouch_6",
+"X": -0.123,
+"Y": 0.95,
+"Angle": -19.7
+},
+{
+"Key": "player_uniform_baton_crouch_7",
+"X": -0.123,
+"Y": 0.943,
+"Angle": -19.7
+},
+{
+"Key": "player_uniform_baton_crouch_8",
+"X": -0.123,
+"Y": 0.943,
+"Angle": -19.7
+},
+{
+"Key": "player_uniform_baton_crouch_9",
+"X": -0.123,
+"Y": 0.95,
+"Angle": -19.7
+},
+{
+"Key": "player_uniform_baton_crouch_10",
+"X": -0.122,
+"Y": 0.971,
+"Angle": -19.7
+},
+{
+"Key": "player_uniform_baton_crouch_11",
+"X": -0.12,
+"Y": 0.991,
+"Angle": -19.6
+},
+{
+"Key": "player_uniform_baton_crouch_12",
+"X": -0.119,
+"Y": 0.99,
+"Angle": -19.5
+},
+{
+"Key": "player_uniform_baton_crouch_13",
+"X": -0.117,
+"Y": 0.967,
+"Angle": -19.0
+},
+{
+"Key": "player_uniform_baton_crouch_14",
+"X": -0.114,
+"Y": 0.943,
+"Angle": -18.5
+},
+{
+"Key": "player_uniform_baton_crouch_15",
+"X": -0.112,
+"Y": 0.934,
+"Angle": -18.2
+},
+{
+"Key": "player_uniform_baton_idle_0",
+"X": -0.131,
+"Y": 1.214,
+"Angle": 5.5
+},
+{
+"Key": "player_uniform_baton_idle_1",
+"X": -0.123,
+"Y": 1.209,
+"Angle": 4.4
+},
+{
+"Key": "player_uniform_baton_idle_2",
+"X": -0.118,
+"Y": 1.198,
+"Angle": 1.9
+},
+{
+"Key": "player_uniform_baton_idle_3",
+"X": -0.116,
+"Y": 1.194,
+"Angle": 0.1
+},
+{
+"Key": "player_uniform_baton_idle_4",
+"X": -0.115,
+"Y": 1.195,
+"Angle": -0.5
+},
+{
+"Key": "player_uniform_baton_idle_5",
+"X": -0.114,
+"Y": 1.202,
+"Angle": -0.2
+},
+{
+"Key": "player_uniform_baton_idle_6",
+"X": -0.118,
+"Y": 1.213,
+"Angle": 1.2
+},
+{
+"Key": "player_uniform_baton_idle_7",
+"X": -0.128,
+"Y": 1.217,
+"Angle": 3.0
+},
+{
+"Key": "player_uniform_baton_idle_8",
+"X": -0.136,
+"Y": 1.215,
+"Angle": 5.0
+},
+{
+"Key": "player_uniform_baton_idle_9",
+"X": -0.143,
+"Y": 1.214,
+"Angle": 6.5
+},
+{
+"Key": "player_uniform_baton_idle_10",
+"X": -0.146,
+"Y": 1.213,
+"Angle": 7.3
+},
+{
+"Key": "player_uniform_baton_idle_11",
+"X": -0.147,
+"Y": 1.213,
+"Angle": 7.9
+},
+{
+"Key": "player_uniform_baton_idle_12",
+"X": -0.145,
+"Y": 1.213,
+"Angle": 7.8
+},
+{
+"Key": "player_uniform_baton_idle_13",
+"X": -0.139,
+"Y": 1.213,
+"Angle": 6.9
+},
+{
+"Key": "player_uniform_baton_idle_14",
+"X": -0.136,
+"Y": 1.214,
+"Angle": 6.1
+},
+{
+"Key": "player_uniform_baton_idle_15",
+"X": -0.135,
+"Y": 1.214,
+"Angle": 5.7
+},
+{
+"Key": "player_uniform_baton_run_0",
+"X": -0.09,
+"Y": 1.227,
+"Angle": 7.0
+},
+{
+"Key": "player_uniform_baton_run_1",
+"X": -0.094,
+"Y": 1.207,
+"Angle": 6.7
+},
+{
+"Key": "player_uniform_baton_run_2",
+"X": -0.107,
+"Y": 1.215,
+"Angle": 5.0
+},
+{
+"Key": "player_uniform_baton_run_3",
+"X": -0.119,
+"Y": 1.237,
+"Angle": 3.6
+},
+{
+"Key": "player_uniform_baton_run_4",
+"X": -0.13,
+"Y": 1.232,
+"Angle": 2.5
+},
+{
+"Key": "player_uniform_baton_run_5",
+"X": -0.133,
+"Y": 1.211,
+"Angle": 2.4
+},
+{
+"Key": "player_uniform_baton_run_6",
+"X": -0.12,
+"Y": 1.216,
+"Angle": 3.9
+},
+{
+"Key": "player_uniform_baton_run_7",
+"X": -0.102,
+"Y": 1.235,
+"Angle": 5.7
+},
+{
+"Key": "player_uniform_baton_run_8",
+"X": -0.091,
+"Y": 1.227,
+"Angle": 7.1
+},
+{
+"Key": "player_uniform_baton_run_9",
+"X": -0.094,
+"Y": 1.207,
+"Angle": 6.7
+},
+{
+"Key": "player_uniform_baton_run_10",
+"X": -0.107,
+"Y": 1.215,
+"Angle": 5.0
+},
+{
+"Key": "player_uniform_baton_run_11",
+"X": -0.119,
+"Y": 1.237,
+"Angle": 3.6
+},
+{
+"Key": "player_uniform_baton_run_12",
+"X": -0.13,
+"Y": 1.232,
+"Angle": 2.5
+},
+{
+"Key": "player_uniform_baton_run_13",
+"X": -0.133,
+"Y": 1.211,
+"Angle": 2.5
+},
+{
+"Key": "player_uniform_baton_run_14",
+"X": -0.119,
+"Y": 1.216,
+"Angle": 4.1
+},
+{
+"Key": "player_uniform_baton_run_15",
+"X": -0.101,
+"Y": 1.235,
+"Angle": 5.8
+},
+{
+"Key": "player_uniform_baton_walk_0",
+"X": -0.145,
+"Y": 1.166,
+"Angle": 4.6
+},
+{
+"Key": "player_uniform_baton_walk_1",
+"X": -0.149,
+"Y": 1.167,
+"Angle": 4.0
+},
+{
+"Key": "player_uniform_baton_walk_2",
+"X": -0.152,
+"Y": 1.181,
+"Angle": 4.0
+},
+{
+"Key": "player_uniform_baton_walk_3",
+"X": -0.149,
+"Y": 1.187,
+"Angle": 4.8
+},
+{
+"Key": "player_uniform_baton_walk_4",
+"X": -0.147,
+"Y": 1.18,
+"Angle": 5.3
+},
+{
+"Key": "player_uniform_baton_walk_5",
+"X": -0.145,
+"Y": 1.166,
+"Angle": 5.6
+},
+{
+"Key": "player_uniform_baton_walk_6",
+"X": -0.143,
+"Y": 1.165,
+"Angle": 5.8
+},
+{
+"Key": "player_uniform_baton_walk_7",
+"X": -0.143,
+"Y": 1.172,
+"Angle": 5.7
+},
+{
+"Key": "player_uniform_baton_walk_8",
+"X": -0.145,
+"Y": 1.173,
+"Angle": 5.5
+},
+{
+"Key": "player_uniform_baton_walk_9",
+"X": -0.147,
+"Y": 1.173,
+"Angle": 5.3
+},
+{
+"Key": "player_uniform_baton_walk_10",
+"X": -0.147,
+"Y": 1.166,
+"Angle": 5.3
+},
+{
+"Key": "player_uniform_baton_walk_11",
+"X": -0.147,
+"Y": 1.159,
+"Angle": 5.3
+},
+{
+"Key": "player_uniform_baton_walk_12",
+"X": -0.148,
+"Y": 1.166,
+"Angle": 5.2
+},
+{
+"Key": "player_uniform_baton_walk_13",
+"X": -0.149,
+"Y": 1.18,
+"Angle": 5.1
+},
+{
+"Key": "player_uniform_baton_walk_14",
+"X": -0.15,
+"Y": 1.187,
+"Angle": 5.0
+},
+{
+"Key": "player_uniform_baton_walk_15",
+"X": -0.147,
+"Y": 1.18,
+"Angle": 4.9
+},
+{
+"Key": "player_uniform_mop_attack_0",
+"X": 0.169,
+"Y": 1.228,
+"Angle": 0.4
+},
+{
+"Key": "player_uniform_mop_attack_1",
+"X": 0.127,
+"Y": 1.255,
+"Angle": 1.0
+},
+{
+"Key": "player_uniform_mop_attack_2",
+"X": 0.063,
+"Y": 1.323,
+"Angle": 1.6
+},
+{
+"Key": "player_uniform_mop_attack_3",
+"X": -0.034,
+"Y": 1.395,
+"Angle": 0.7
+},
+{
+"Key": "player_uniform_mop_attack_4",
+"X": -0.153,
+"Y": 1.419,
+"Angle": -0.8
+},
+{
+"Key": "player_uniform_mop_attack_5",
+"X": -0.24,
+"Y": 1.44,
+"Angle": -1.1
+},
+{
+"Key": "player_uniform_mop_attack_6",
+"X": -0.263,
+"Y": 1.462,
+"Angle": -1.5
+},
+{
+"Key": "player_uniform_mop_attack_7",
+"X": -0.24,
+"Y": 1.458,
+"Angle": -2.6
+},
+{
+"Key": "player_uniform_mop_attack_8",
+"X": -0.24,
+"Y": 1.458,
+"Angle": -2.6
+},
+{
+"Key": "player_uniform_mop_attack_9",
+"X": -0.263,
+"Y": 1.462,
+"Angle": -1.5
+},
+{
+"Key": "player_uniform_mop_attack_10",
+"X": -0.24,
+"Y": 1.44,
+"Angle": -1.1
+},
+{
+"Key": "player_uniform_mop_attack_11",
+"X": -0.153,
+"Y": 1.419,
+"Angle": -0.8
+},
+{
+"Key": "player_uniform_mop_attack_12",
+"X": -0.034,
+"Y": 1.395,
+"Angle": 0.7
+},
+{
+"Key": "player_uniform_mop_attack_13",
+"X": 0.063,
+"Y": 1.323,
+"Angle": 1.6
+},
+{
+"Key": "player_uniform_mop_attack_14",
+"X": 0.127,
+"Y": 1.255,
+"Angle": 1.0
+},
+{
+"Key": "player_uniform_mop_attack_15",
+"X": 0.169,
+"Y": 1.228,
+"Angle": 0.4
+},
+{
+"Key": "player_uniform_mop_crouch_0",
+"X": 0.152,
+"Y": 0.821,
+"Angle": -19.1
+},
+{
+"Key": "player_uniform_mop_crouch_1",
+"X": 0.151,
+"Y": 0.85,
+"Angle": -19.2
+},
+{
+"Key": "player_uniform_mop_crouch_2",
+"X": 0.154,
+"Y": 0.874,
+"Angle": -18.6
+},
+{
+"Key": "player_uniform_mop_crouch_3",
+"X": 0.163,
+"Y": 0.861,
+"Angle": -17.5
+},
+{
+"Key": "player_uniform_mop_crouch_4",
+"X": 0.172,
+"Y": 0.819,
+"Angle": -16.3
+},
+{
+"Key": "player_uniform_mop_crouch_5",
+"X": 0.174,
+"Y": 0.797,
+"Angle": -16.0
+},
+{
+"Key": "player_uniform_mop_crouch_6",
+"X": 0.169,
+"Y": 0.822,
+"Angle": -16.8
+},
+{
+"Key": "player_uniform_mop_crouch_7",
+"X": 0.166,
+"Y": 0.859,
+"Angle": -17.2
+},
+{
+"Key": "player_uniform_mop_crouch_8",
+"X": 0.165,
+"Y": 0.859,
+"Angle": -17.2
+},
+{
+"Key": "player_uniform_mop_crouch_9",
+"X": 0.164,
+"Y": 0.826,
+"Angle": -17.5
+},
+{
+"Key": "player_uniform_mop_crouch_10",
+"X": 0.16,
+"Y": 0.815,
+"Angle": -18.0
+},
+{
+"Key": "player_uniform_mop_crouch_11",
+"X": 0.155,
+"Y": 0.846,
+"Angle": -18.6
+},
+{
+"Key": "player_uniform_mop_crouch_12",
+"X": 0.152,
+"Y": 0.877,
+"Angle": -19.1
+},
+{
+"Key": "player_uniform_mop_crouch_13",
+"X": 0.152,
+"Y": 0.877,
+"Angle": -19.0
+},
+{
+"Key": "player_uniform_mop_crouch_14",
+"X": 0.154,
+"Y": 0.854,
+"Angle": -18.8
+},
+{
+"Key": "player_uniform_mop_crouch_15",
+"X": 0.154,
+"Y": 0.827,
+"Angle": -18.8
+},
+{
+"Key": "player_uniform_mop_idle_0",
+"X": 0.183,
+"Y": 1.221,
+"Angle": 0.6
+},
+{
+"Key": "player_uniform_mop_idle_1",
+"X": 0.183,
+"Y": 1.228,
+"Angle": 0.6
+},
+{
+"Key": "player_uniform_mop_idle_2",
+"X": 0.182,
+"Y": 1.242,
+"Angle": 0.7
+},
+{
+"Key": "player_uniform_mop_idle_3",
+"X": 0.183,
+"Y": 1.249,
+"Angle": 0.6
+},
+{
+"Key": "player_uniform_mop_idle_4",
+"X": 0.185,
+"Y": 1.249,
+"Angle": 0.5
+},
+{
+"Key": "player_uniform_mop_idle_5",
+"X": 0.186,
+"Y": 1.242,
+"Angle": 0.7
+},
+{
+"Key": "player_uniform_mop_idle_6",
+"X": 0.184,
+"Y": 1.228,
+"Angle": 0.7
+},
+{
+"Key": "player_uniform_mop_idle_7",
+"X": 0.183,
+"Y": 1.221,
+"Angle": 0.6
+},
+{
+"Key": "player_uniform_mop_idle_8",
+"X": 0.184,
+"Y": 1.221,
+"Angle": 0.7
+},
+{
+"Key": "player_uniform_mop_idle_9",
+"X": 0.184,
+"Y": 1.221,
+"Angle": 0.7
+},
+{
+"Key": "player_uniform_mop_idle_10",
+"X": 0.179,
+"Y": 1.221,
+"Angle": 0.7
+},
+{
+"Key": "player_uniform_mop_idle_11",
+"X": 0.17,
+"Y": 1.221,
+"Angle": 0.8
+},
+{
+"Key": "player_uniform_mop_idle_12",
+"X": 0.168,
+"Y": 1.22,
+"Angle": 1.1
+},
+{
+"Key": "player_uniform_mop_idle_13",
+"X": 0.172,
+"Y": 1.219,
+"Angle": 1.5
+},
+{
+"Key": "player_uniform_mop_idle_14",
+"X": 0.178,
+"Y": 1.219,
+"Angle": 1.6
+},
+{
+"Key": "player_uniform_mop_idle_15",
+"X": 0.182,
+"Y": 1.22,
+"Angle": 1.0
+},
+{
+"Key": "player_uniform_mop_run_0",
+"X": 0.237,
+"Y": 1.264,
+"Angle": 13.5
+},
+{
+"Key": "player_uniform_mop_run_1",
+"X": 0.222,
+"Y": 1.262,
+"Angle": 11.9
+},
+{
+"Key": "player_uniform_mop_run_2",
+"X": 0.211,
+"Y": 1.241,
+"Angle": 10.8
+},
+{
+"Key": "player_uniform_mop_run_3",
+"X": 0.215,
+"Y": 1.22,
+"Angle": 11.2
+},
+{
+"Key": "player_uniform_mop_run_4",
+"X": 0.225,
+"Y": 1.221,
+"Angle": 12.0
+},
+{
+"Key": "player_uniform_mop_run_5",
+"X": 0.232,
+"Y": 1.235,
+"Angle": 12.6
+},
+{
+"Key": "player_uniform_mop_run_6",
+"X": 0.239,
+"Y": 1.236,
+"Angle": 13.6
+},
+{
+"Key": "player_uniform_mop_run_7",
+"X": 0.242,
+"Y": 1.223,
+"Angle": 14.1
+},
+{
+"Key": "player_uniform_mop_run_8",
+"X": 0.242,
+"Y": 1.223,
+"Angle": 14.1
+},
+{
+"Key": "player_uniform_mop_run_9",
+"X": 0.236,
+"Y": 1.243,
+"Angle": 13.5
+},
+{
+"Key": "player_uniform_mop_run_10",
+"X": 0.224,
+"Y": 1.256,
+"Angle": 12.2
+},
+{
+"Key": "player_uniform_mop_run_11",
+"X": 0.215,
+"Y": 1.241,
+"Angle": 11.1
+},
+{
+"Key": "player_uniform_mop_run_12",
+"X": 0.213,
+"Y": 1.213,
+"Angle": 11.0
+},
+{
+"Key": "player_uniform_mop_run_13",
+"X": 0.224,
+"Y": 1.207,
+"Angle": 12.1
+},
+{
+"Key": "player_uniform_mop_run_14",
+"X": 0.236,
+"Y": 1.229,
+"Angle": 13.5
+},
+{
+"Key": "player_uniform_mop_run_15",
+"X": 0.242,
+"Y": 1.25,
+"Angle": 14.1
+},
+{
+"Key": "player_uniform_mop_walk_0",
+"X": 0.218,
+"Y": 1.214,
+"Angle": 0.6
+},
+{
+"Key": "player_uniform_mop_walk_1",
+"X": 0.218,
+"Y": 1.2,
+"Angle": 0.6
+},
+{
+"Key": "player_uniform_mop_walk_2",
+"X": 0.214,
+"Y": 1.201,
+"Angle": 0.2
+},
+{
+"Key": "player_uniform_mop_walk_3",
+"X": 0.213,
+"Y": 1.215,
+"Angle": 0.1
+},
+{
+"Key": "player_uniform_mop_walk_4",
+"X": 0.217,
+"Y": 1.214,
+"Angle": 0.5
+},
+{
+"Key": "player_uniform_mop_walk_5",
+"X": 0.224,
+"Y": 1.199,
+"Angle": 1.3
+},
+{
+"Key": "player_uniform_mop_walk_6",
+"X": 0.227,
+"Y": 1.198,
+"Angle": 1.7
+},
+{
+"Key": "player_uniform_mop_walk_7",
+"X": 0.225,
+"Y": 1.213,
+"Angle": 1.4
+},
+{
+"Key": "player_uniform_mop_walk_8",
+"X": 0.222,
+"Y": 1.213,
+"Angle": 1.0
+},
+{
+"Key": "player_uniform_mop_walk_9",
+"X": 0.219,
+"Y": 1.207,
+"Angle": 0.7
+},
+{
+"Key": "player_uniform_mop_walk_10",
+"X": 0.214,
+"Y": 1.215,
+"Angle": 0.2
+},
+{
+"Key": "player_uniform_mop_walk_11",
+"X": 0.209,
+"Y": 1.216,
+"Angle": -0.4
+},
+{
+"Key": "player_uniform_mop_walk_12",
+"X": 0.207,
+"Y": 1.203,
+"Angle": -0.6
+},
+{
+"Key": "player_uniform_mop_walk_13",
+"X": 0.206,
+"Y": 1.203,
+"Angle": -0.7
+},
+{
+"Key": "player_uniform_mop_walk_14",
+"X": 0.207,
+"Y": 1.217,
+"Angle": -0.6
+},
+{
+"Key": "player_uniform_mop_walk_15",
+"X": 0.212,
+"Y": 1.222,
+"Angle": 0.0
+},
+{
+"Key": "player_uniform_none_crouch_0",
+"X": -0.134,
+"Y": 0.842,
+"Angle": -15.4
+},
+{
+"Key": "player_uniform_none_crouch_1",
+"X": -0.134,
+"Y": 0.836,
+"Angle": -15.5
+},
+{
+"Key": "player_uniform_none_crouch_2",
+"X": -0.134,
+"Y": 0.843,
+"Angle": -15.6
+},
+{
+"Key": "player_uniform_none_crouch_3",
+"X": -0.135,
+"Y": 0.864,
+"Angle": -15.6
+},
+{
+"Key": "player_uniform_none_crouch_4",
+"X": -0.137,
+"Y": 0.884,
+"Angle": -15.5
+},
+{
+"Key": "player_uniform_none_crouch_5",
+"X": -0.139,
+"Y": 0.89,
+"Angle": -15.1
+},
+{
+"Key": "player_uniform_none_crouch_6",
+"X": -0.137,
+"Y": 0.882,
+"Angle": -15.1
+},
+{
+"Key": "player_uniform_none_crouch_7",
+"X": -0.134,
+"Y": 0.862,
+"Angle": -15.3
+},
+{
+"Key": "player_uniform_none_crouch_8",
+"X": -0.134,
+"Y": 0.842,
+"Angle": -15.4
+},
+{
+"Key": "player_uniform_none_crouch_9",
+"X": -0.134,
+"Y": 0.835,
+"Angle": -15.4
+},
+{
+"Key": "player_uniform_none_crouch_10",
+"X": -0.133,
+"Y": 0.842,
+"Angle": -15.4
+},
+{
+"Key": "player_uniform_none_crouch_11",
+"X": -0.133,
+"Y": 0.863,
+"Angle": -15.3
+},
+{
+"Key": "player_uniform_none_crouch_12",
+"X": -0.136,
+"Y": 0.883,
+"Angle": -15.1
+},
+{
+"Key": "player_uniform_none_crouch_13",
+"X": -0.139,
+"Y": 0.888,
+"Angle": -14.9
+},
+{
+"Key": "player_uniform_none_crouch_14",
+"X": -0.138,
+"Y": 0.881,
+"Angle": -14.8
+},
+{
+"Key": "player_uniform_none_crouch_15",
+"X": -0.135,
+"Y": 0.862,
+"Angle": -15.2
+},
+{
+"Key": "player_uniform_none_idle_0",
+"X": -0.137,
+"Y": 1.214,
+"Angle": 5.2
+},
+{
+"Key": "player_uniform_none_idle_1",
+"X": -0.136,
+"Y": 1.208,
+"Angle": 4.7
+},
+{
+"Key": "player_uniform_none_idle_2",
+"X": -0.135,
+"Y": 1.196,
+"Angle": 3.3
+},
+{
+"Key": "player_uniform_none_idle_3",
+"X": -0.133,
+"Y": 1.191,
+"Angle": 1.7
+},
+{
+"Key": "player_uniform_none_idle_4",
+"X": -0.132,
+"Y": 1.192,
+"Angle": 1.2
+},
+{
+"Key": "player_uniform_none_idle_5",
+"X": -0.132,
+"Y": 1.192,
+"Angle": 1.2
+},
+{
+"Key": "player_uniform_none_idle_6",
+"X": -0.132,
+"Y": 1.192,
+"Angle": 1.2
+},
+{
+"Key": "player_uniform_none_idle_7",
+"X": -0.132,
+"Y": 1.192,
+"Angle": 1.2
+},
+{
+"Key": "player_uniform_none_idle_8",
+"X": -0.132,
+"Y": 1.198,
+"Angle": 1.6
+},
+{
+"Key": "player_uniform_none_idle_9",
+"X": -0.134,
+"Y": 1.21,
+"Angle": 2.9
+},
+{
+"Key": "player_uniform_none_idle_10",
+"X": -0.136,
+"Y": 1.215,
+"Angle": 4.6
+},
+{
+"Key": "player_uniform_none_idle_11",
+"X": -0.137,
+"Y": 1.214,
+"Angle": 5.2
+},
+{
+"Key": "player_uniform_none_idle_12",
+"X": -0.137,
+"Y": 1.214,
+"Angle": 5.2
+},
+{
+"Key": "player_uniform_none_idle_13",
+"X": -0.137,
+"Y": 1.214,
+"Angle": 5.2
+},
+{
+"Key": "player_uniform_none_idle_14",
+"X": -0.137,
+"Y": 1.214,
+"Angle": 5.2
+},
+{
+"Key": "player_uniform_none_idle_15",
+"X": -0.137,
+"Y": 1.214,
+"Angle": 5.2
+},
+{
+"Key": "player_uniform_none_run_0",
+"X": -0.091,
+"Y": 1.217,
+"Angle": 3.2
+},
+{
+"Key": "player_uniform_none_run_1",
+"X": -0.084,
+"Y": 1.202,
+"Angle": 4.3
+},
+{
+"Key": "player_uniform_none_run_2",
+"X": -0.087,
+"Y": 1.216,
+"Angle": 4.4
+},
+{
+"Key": "player_uniform_none_run_3",
+"X": -0.095,
+"Y": 1.231,
+"Angle": 3.0
+},
+{
+"Key": "player_uniform_none_run_4",
+"X": -0.096,
+"Y": 1.218,
+"Angle": 2.3
+},
+{
+"Key": "player_uniform_none_run_5",
+"X": -0.091,
+"Y": 1.203,
+"Angle": 3.4
+},
+{
+"Key": "player_uniform_none_run_6",
+"X": -0.091,
+"Y": 1.216,
+"Angle": 4.0
+},
+{
+"Key": "player_uniform_none_run_7",
+"X": -0.096,
+"Y": 1.224,
+"Angle": 3.3
+},
+{
+"Key": "player_uniform_none_run_8",
+"X": -0.093,
+"Y": 1.203,
+"Angle": 3.3
+},
+{
+"Key": "player_uniform_none_run_9",
+"X": -0.084,
+"Y": 1.195,
+"Angle": 4.5
+},
+{
+"Key": "player_uniform_none_run_10",
+"X": -0.084,
+"Y": 1.215,
+"Angle": 4.9
+},
+{
+"Key": "player_uniform_none_run_11",
+"X": -0.093,
+"Y": 1.231,
+"Angle": 3.3
+},
+{
+"Key": "player_uniform_none_run_12",
+"X": -0.096,
+"Y": 1.218,
+"Angle": 2.4
+},
+{
+"Key": "player_uniform_none_run_13",
+"X": -0.093,
+"Y": 1.203,
+"Angle": 3.4
+},
+{
+"Key": "player_uniform_none_run_14",
+"X": -0.095,
+"Y": 1.216,
+"Angle": 3.9
+},
+{
+"Key": "player_uniform_none_run_15",
+"X": -0.097,
+"Y": 1.231,
+"Angle": 3.2
+},
+{
+"Key": "player_uniform_none_shove_0",
+"X": -0.137,
+"Y": 1.214,
+"Angle": 5.3
+},
+{
+"Key": "player_uniform_none_shove_1",
+"X": -0.142,
+"Y": 1.208,
+"Angle": 4.7
+},
+{
+"Key": "player_uniform_none_shove_2",
+"X": -0.154,
+"Y": 1.183,
+"Angle": 2.9
+},
+{
+"Key": "player_uniform_none_shove_3",
+"X": -0.163,
+"Y": 1.13,
+"Angle": 1.0
+},
+{
+"Key": "player_uniform_none_shove_4",
+"X": -0.151,
+"Y": 1.078,
+"Angle": -0.6
+},
+{
+"Key": "player_uniform_none_shove_5",
+"X": -0.04,
+"Y": 1.092,
+"Angle": 0.9
+},
+{
+"Key": "player_uniform_none_shove_6",
+"X": 0.187,
+"Y": 1.162,
+"Angle": 7.2
+},
+{
+"Key": "player_uniform_none_shove_7",
+"X": 0.37,
+"Y": 1.206,
+"Angle": 11.3
+},
+{
+"Key": "player_uniform_none_shove_8",
+"X": 0.37,
+"Y": 1.206,
+"Angle": 11.3
+},
+{
+"Key": "player_uniform_none_shove_9",
+"X": 0.187,
+"Y": 1.162,
+"Angle": 7.2
+},
+{
+"Key": "player_uniform_none_shove_10",
+"X": -0.04,
+"Y": 1.092,
+"Angle": 0.9
+},
+{
+"Key": "player_uniform_none_shove_11",
+"X": -0.151,
+"Y": 1.078,
+"Angle": -0.6
+},
+{
+"Key": "player_uniform_none_shove_12",
+"X": -0.163,
+"Y": 1.13,
+"Angle": 1.0
+},
+{
+"Key": "player_uniform_none_shove_13",
+"X": -0.154,
+"Y": 1.183,
+"Angle": 2.9
+},
+{
+"Key": "player_uniform_none_shove_14",
+"X": -0.142,
+"Y": 1.208,
+"Angle": 4.7
+},
+{
+"Key": "player_uniform_none_shove_15",
+"X": -0.137,
+"Y": 1.214,
+"Angle": 5.3
+},
+{
+"Key": "player_uniform_none_walk_0",
+"X": -0.137,
+"Y": 1.263,
+"Angle": 5.4
+},
+{
+"Key": "player_uniform_none_walk_1",
+"X": -0.136,
+"Y": 1.27,
+"Angle": 5.5
+},
+{
+"Key": "player_uniform_none_walk_2",
+"X": -0.137,
+"Y": 1.263,
+"Angle": 5.4
+},
+{
+"Key": "player_uniform_none_walk_3",
+"X": -0.137,
+"Y": 1.242,
+"Angle": 5.4
+},
+{
+"Key": "player_uniform_none_walk_4",
+"X": -0.137,
+"Y": 1.221,
+"Angle": 5.4
+},
+{
+"Key": "player_uniform_none_walk_5",
+"X": -0.137,
+"Y": 1.214,
+"Angle": 5.4
+},
+{
+"Key": "player_uniform_none_walk_6",
+"X": -0.137,
+"Y": 1.221,
+"Angle": 5.4
+},
+{
+"Key": "player_uniform_none_walk_7",
+"X": -0.137,
+"Y": 1.242,
+"Angle": 5.4
+},
+{
+"Key": "player_uniform_none_walk_8",
+"X": -0.136,
+"Y": 1.263,
+"Angle": 5.4
+},
+{
+"Key": "player_uniform_none_walk_9",
+"X": -0.136,
+"Y": 1.27,
+"Angle": 5.5
+},
+{
+"Key": "player_uniform_none_walk_10",
+"X": -0.136,
+"Y": 1.263,
+"Angle": 5.6
+},
+{
+"Key": "player_uniform_none_walk_11",
+"X": -0.137,
+"Y": 1.242,
+"Angle": 5.7
+},
+{
+"Key": "player_uniform_none_walk_12",
+"X": -0.137,
+"Y": 1.221,
+"Angle": 5.6
+},
+{
+"Key": "player_uniform_none_walk_13",
+"X": -0.137,
+"Y": 1.214,
+"Angle": 5.4
+},
+{
+"Key": "player_uniform_none_walk_14",
+"X": -0.137,
+"Y": 1.221,
+"Angle": 5.4
+},
+{
+"Key": "player_uniform_none_walk_15",
+"X": -0.137,
+"Y": 1.242,
+"Angle": 5.4
+},
+{
+"Key": "player_uniform_pipe_attack_0",
+"X": -0.111,
+"Y": 1.228,
+"Angle": 5.1
+},
+{
+"Key": "player_uniform_pipe_attack_1",
+"X": -0.116,
+"Y": 1.271,
+"Angle": 4.5
+},
+{
+"Key": "player_uniform_pipe_attack_2",
+"X": -0.126,
+"Y": 1.327,
+"Angle": 4.1
+},
+{
+"Key": "player_uniform_pipe_attack_3",
+"X": -0.149,
+"Y": 1.382,
+"Angle": 4.3
+},
+{
+"Key": "player_uniform_pipe_attack_4",
+"X": -0.164,
+"Y": 1.438,
+"Angle": 4.4
+},
+{
+"Key": "player_uniform_pipe_attack_5",
+"X": -0.152,
+"Y": 1.478,
+"Angle": 6.3
+},
+{
+"Key": "player_uniform_pipe_attack_6",
+"X": -0.121,
+"Y": 1.47,
+"Angle": 7.7
+},
+{
+"Key": "player_uniform_pipe_attack_7",
+"X": -0.085,
+"Y": 1.429,
+"Angle": 6.7
+},
+{
+"Key": "player_uniform_pipe_attack_8",
+"X": -0.085,
+"Y": 1.429,
+"Angle": 6.7
+},
+{
+"Key": "player_uniform_pipe_attack_9",
+"X": -0.121,
+"Y": 1.47,
+"Angle": 7.7
+},
+{
+"Key": "player_uniform_pipe_attack_10",
+"X": -0.152,
+"Y": 1.478,
+"Angle": 6.3
+},
+{
+"Key": "player_uniform_pipe_attack_11",
+"X": -0.164,
+"Y": 1.438,
+"Angle": 4.4
+},
+{
+"Key": "player_uniform_pipe_attack_12",
+"X": -0.149,
+"Y": 1.382,
+"Angle": 4.3
+},
+{
+"Key": "player_uniform_pipe_attack_13",
+"X": -0.126,
+"Y": 1.327,
+"Angle": 4.1
+},
+{
+"Key": "player_uniform_pipe_attack_14",
+"X": -0.116,
+"Y": 1.271,
+"Angle": 4.5
+},
+{
+"Key": "player_uniform_pipe_attack_15",
+"X": -0.111,
+"Y": 1.228,
+"Angle": 5.1
+},
+{
+"Key": "player_uniform_pipe_crouch_0",
+"X": -0.17,
+"Y": 0.864,
+"Angle": -19.2
+},
+{
+"Key": "player_uniform_pipe_crouch_1",
+"X": -0.172,
+"Y": 0.886,
+"Angle": -19.5
+},
+{
+"Key": "player_uniform_pipe_crouch_2",
+"X": -0.172,
+"Y": 0.907,
+"Angle": -19.5
+},
+{
+"Key": "player_uniform_pipe_crouch_3",
+"X": -0.172,
+"Y": 0.905,
+"Angle": -19.1
+},
+{
+"Key": "player_uniform_pipe_crouch_4",
+"X": -0.173,
+"Y": 0.889,
+"Angle": -18.7
+},
+{
+"Key": "player_uniform_pipe_crouch_5",
+"X": -0.171,
+"Y": 0.876,
+"Angle": -19.0
+},
+{
+"Key": "player_uniform_pipe_crouch_6",
+"X": -0.17,
+"Y": 0.863,
+"Angle": -19.1
+},
+{
+"Key": "player_uniform_pipe_crouch_7",
+"X": -0.17,
+"Y": 0.864,
+"Angle": -19.2
+},
+{
+"Key": "player_uniform_pipe_crouch_8",
+"X": -0.171,
+"Y": 0.885,
+"Angle": -19.3
+},
+{
+"Key": "player_uniform_pipe_crouch_9",
+"X": -0.172,
+"Y": 0.907,
+"Angle": -19.5
+},
+{
+"Key": "player_uniform_pipe_crouch_10",
+"X": -0.173,
+"Y": 0.914,
+"Angle": -19.5
+},
+{
+"Key": "player_uniform_pipe_crouch_11",
+"X": -0.172,
+"Y": 0.913,
+"Angle": -19.4
+},
+{
+"Key": "player_uniform_pipe_crouch_12",
+"X": -0.17,
+"Y": 0.906,
+"Angle": -19.2
+},
+{
+"Key": "player_uniform_pipe_crouch_13",
+"X": -0.17,
+"Y": 0.885,
+"Angle": -19.2
+},
+{
+"Key": "player_uniform_pipe_crouch_14",
+"X": -0.17,
+"Y": 0.863,
+"Angle": -19.1
+},
+{
+"Key": "player_uniform_pipe_crouch_15",
+"X": -0.169,
+"Y": 0.856,
+"Angle": -19.1
+},
+{
+"Key": "player_uniform_pipe_idle_0",
+"X": -0.109,
+"Y": 1.214,
+"Angle": 5.2
+},
+{
+"Key": "player_uniform_pipe_idle_1",
+"X": -0.108,
+"Y": 1.208,
+"Angle": 4.5
+},
+{
+"Key": "player_uniform_pipe_idle_2",
+"X": -0.104,
+"Y": 1.191,
+"Angle": 2.3
+},
+{
+"Key": "player_uniform_pipe_idle_3",
+"X": -0.101,
+"Y": 1.174,
+"Angle": -0.0
+},
+{
+"Key": "player_uniform_pipe_idle_4",
+"X": -0.1,
+"Y": 1.174,
+"Angle": -0.3
+},
+{
+"Key": "player_uniform_pipe_idle_5",
+"X": -0.102,
+"Y": 1.186,
+"Angle": 0.8
+},
+{
+"Key": "player_uniform_pipe_idle_6",
+"X": -0.103,
+"Y": 1.192,
+"Angle": 1.3
+},
+{
+"Key": "player_uniform_pipe_idle_7",
+"X": -0.103,
+"Y": 1.192,
+"Angle": 1.3
+},
+{
+"Key": "player_uniform_pipe_idle_8",
+"X": -0.102,
+"Y": 1.187,
+"Angle": 0.4
+},
+{
+"Key": "player_uniform_pipe_idle_9",
+"X": -0.099,
+"Y": 1.183,
+"Angle": -0.9
+},
+{
+"Key": "player_uniform_pipe_idle_10",
+"X": -0.1,
+"Y": 1.195,
+"Angle": -0.1
+},
+{
+"Key": "player_uniform_pipe_idle_11",
+"X": -0.104,
+"Y": 1.212,
+"Angle": 2.0
+},
+{
+"Key": "player_uniform_pipe_idle_12",
+"X": -0.107,
+"Y": 1.216,
+"Angle": 3.5
+},
+{
+"Key": "player_uniform_pipe_idle_13",
+"X": -0.108,
+"Y": 1.215,
+"Angle": 4.7
+},
+{
+"Key": "player_uniform_pipe_idle_14",
+"X": -0.109,
+"Y": 1.214,
+"Angle": 5.2
+},
+{
+"Key": "player_uniform_pipe_idle_15",
+"X": -0.109,
+"Y": 1.214,
+"Angle": 5.2
+},
+{
+"Key": "player_uniform_pipe_run_0",
+"X": -0.094,
+"Y": 1.192,
+"Angle": 9.1
+},
+{
+"Key": "player_uniform_pipe_run_1",
+"X": -0.1,
+"Y": 1.192,
+"Angle": 7.9
+},
+{
+"Key": "player_uniform_pipe_run_2",
+"X": -0.106,
+"Y": 1.207,
+"Angle": 6.6
+},
+{
+"Key": "player_uniform_pipe_run_3",
+"X": -0.111,
+"Y": 1.207,
+"Angle": 6.3
+},
+{
+"Key": "player_uniform_pipe_run_4",
+"X": -0.118,
+"Y": 1.193,
+"Angle": 6.4
+},
+{
+"Key": "player_uniform_pipe_run_5",
+"X": -0.119,
+"Y": 1.193,
+"Angle": 6.3
+},
+{
+"Key": "player_uniform_pipe_run_6",
+"X": -0.111,
+"Y": 1.207,
+"Angle": 6.3
+},
+{
+"Key": "player_uniform_pipe_run_7",
+"X": -0.104,
+"Y": 1.206,
+"Angle": 7.1
+},
+{
+"Key": "player_uniform_pipe_run_8",
+"X": -0.097,
+"Y": 1.192,
+"Angle": 8.7
+},
+{
+"Key": "player_uniform_pipe_run_9",
+"X": -0.093,
+"Y": 1.192,
+"Angle": 9.1
+},
+{
+"Key": "player_uniform_pipe_run_10",
+"X": -0.096,
+"Y": 1.199,
+"Angle": 9.0
+},
+{
+"Key": "player_uniform_pipe_run_11",
+"X": -0.099,
+"Y": 1.192,
+"Angle": 9.3
+},
+{
+"Key": "player_uniform_pipe_run_12",
+"X": -0.093,
+"Y": 1.192,
+"Angle": 9.3
+},
+{
+"Key": "player_uniform_pipe_run_13",
+"X": -0.081,
+"Y": 1.206,
+"Angle": 9.6
+},
+{
+"Key": "player_uniform_pipe_run_14",
+"X": -0.076,
+"Y": 1.213,
+"Angle": 10.1
+},
+{
+"Key": "player_uniform_pipe_run_15",
+"X": -0.085,
+"Y": 1.206,
+"Angle": 9.8
+},
+{
+"Key": "player_uniform_pipe_walk_0",
+"X": -0.116,
+"Y": 1.132,
+"Angle": 4.8
+},
+{
+"Key": "player_uniform_pipe_walk_1",
+"X": -0.118,
+"Y": 1.118,
+"Angle": 4.5
+},
+{
+"Key": "player_uniform_pipe_walk_2",
+"X": -0.113,
+"Y": 1.131,
+"Angle": 5.1
+},
+{
+"Key": "player_uniform_pipe_walk_3",
+"X": -0.107,
+"Y": 1.145,
+"Angle": 5.7
+},
+{
+"Key": "player_uniform_pipe_walk_4",
+"X": -0.107,
+"Y": 1.131,
+"Angle": 5.8
+},
+{
+"Key": "player_uniform_pipe_walk_5",
+"X": -0.105,
+"Y": 1.117,
+"Angle": 6.0
+},
+{
+"Key": "player_uniform_pipe_walk_6",
+"X": -0.1,
+"Y": 1.13,
+"Angle": 6.4
+},
+{
+"Key": "player_uniform_pipe_walk_7",
+"X": -0.1,
+"Y": 1.144,
+"Angle": 6.5
+},
+{
+"Key": "player_uniform_pipe_walk_8",
+"X": -0.103,
+"Y": 1.13,
+"Angle": 6.1
+},
+{
+"Key": "player_uniform_pipe_walk_9",
+"X": -0.108,
+"Y": 1.117,
+"Angle": 5.7
+},
+{
+"Key": "player_uniform_pipe_walk_10",
+"X": -0.107,
+"Y": 1.131,
+"Angle": 5.8
+},
+{
+"Key": "player_uniform_pipe_walk_11",
+"X": -0.101,
+"Y": 1.144,
+"Angle": 6.4
+},
+{
+"Key": "player_uniform_pipe_walk_12",
+"X": -0.099,
+"Y": 1.13,
+"Angle": 6.6
+},
+{
+"Key": "player_uniform_pipe_walk_13",
+"X": -0.101,
+"Y": 1.116,
+"Angle": 6.4
+},
+{
+"Key": "player_uniform_pipe_walk_14",
+"X": -0.106,
+"Y": 1.131,
+"Angle": 5.8
+},
+{
+"Key": "player_uniform_pipe_walk_15",
+"X": -0.111,
+"Y": 1.145,
+"Angle": 5.3
+}
+]
+}
