@@ -48,6 +48,21 @@ namespace ApoGirl.Tests.EditMode
         }
 
         [Test]
+        public void FirstDish_SetsFlagForIntroScene()
+        {
+            var balance = new BalanceConfig();
+            var state = Hungry(balance, 0, 5);
+            CookingRules.Cook(state, balance, 0, new StateDelta());
+            Assert.IsFalse(state.Flags.Contains(balance.FirstDishFlag), "요리를 못 만들면 플래그 없음");
+
+            state.Base.SetResource(ResourceType.Food, 5);
+            var delta = new StateDelta();
+            CookingRules.Cook(state, balance, 0, delta);
+            Assert.IsTrue(state.Flags.Contains(balance.FirstDishFlag), "처음 요리를 만들면 첫 요리 장면 플래그");
+            CollectionAssert.Contains(delta.FlagsSet, balance.FirstDishFlag);
+        }
+
+        [Test]
         public void NotEnoughIngredients_FallsBackOrSkips()
         {
             var balance = new BalanceConfig();
