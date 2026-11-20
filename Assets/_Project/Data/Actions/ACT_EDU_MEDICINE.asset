@@ -46,7 +46,8 @@ MonoBehaviour:
       SleepDebt: 0
       Conscience: 0
       SetFlags: []
-      ClearFlags: []
+      ClearFlags:
+      - INJURED
       AddClues: []
       EndingTags: []
       Npcs: []
@@ -75,7 +76,8 @@ MonoBehaviour:
       SleepDebt: 0
       Conscience: 0
       SetFlags: []
-      ClearFlags: []
+      ClearFlags:
+      - INJURED
       AddClues: []
       EndingTags: []
       Npcs: []

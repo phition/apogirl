@@ -3243,6 +3243,18 @@ MonoBehaviour:
     m_Key: vital.Hydration
     m_Metadata:
       m_Items: []
+  - m_Id: 432515390390272
+    m_Key: result.first_aid
+    m_Metadata:
+      m_Items: []
+  - m_Id: 432515461693440
+    m_Key: result.first_aid_skilled
+    m_Metadata:
+      m_Items: []
+  - m_Id: 432515461693441
+    m_Key: flag_cleared.INJURED
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

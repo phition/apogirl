@@ -16,6 +16,10 @@ MonoBehaviour:
     BaseStatValue: 10
     StartingHp: 100
     InjuryHpFraction: 0.3
+    InjuryHpFractionPerMedicineLevel: 0.05
+    RestInjuryMedicine: 1
+    FirstAidNarrativeMinLoss: 15
+    FirstAidSkilledLevel: 3
     InjuredFlag: INJURED
     WoundInfectionBase: 0
     WoundInfectionDirty: 10
