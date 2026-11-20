@@ -71,6 +71,7 @@ MonoBehaviour:
       TraumaCare: 0
       Traps: 0
       IntrusionResponse: 
+    ThenEventId: 
     Choices:
     - Id: READ_DIARY
       TextKey: 

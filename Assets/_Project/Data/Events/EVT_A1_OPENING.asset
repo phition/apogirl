@@ -19,15 +19,15 @@ MonoBehaviour:
     Condition:
       WeekMin: 0
       WeekMax: 0
-      Days: 
-      Phase: 0
+      Days: 06000000i
+      Phase: 2
       Seasons: 
       Month: 0
       DayOfMonth: 0
       ActionCategories: 
-      ActionIds: []
-      FlagsAll:
-      - FORCED_ONLY
+      ActionIds:
+      - ACT_STORAGE_WAIT
+      FlagsAll: []
       FlagsAny: []
       FlagsNone: []
       CluesAll: []
@@ -74,6 +74,7 @@ MonoBehaviour:
       TraumaCare: 0
       Traps: 0
       IntrusionResponse: 
+    ThenEventId: 
     Choices: []
     ReviewAct: 0
     ReviewFromWeek: 1

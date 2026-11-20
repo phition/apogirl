@@ -66,6 +66,7 @@ MonoBehaviour:
       TraumaCare: 0
       Traps: 0
       IntrusionResponse: 
+    ThenEventId: 
     Choices: []
     ReviewAct: 1
     ReviewFromWeek: 1

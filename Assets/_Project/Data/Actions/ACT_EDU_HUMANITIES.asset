@@ -142,3 +142,4 @@ MonoBehaviour:
     BonusFacilityId: CLASSROOM
     BonusPerLevel: 0.1
     ThreatGain: 0
+    Confined: 0

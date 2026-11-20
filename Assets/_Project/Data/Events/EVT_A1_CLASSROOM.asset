@@ -74,6 +74,7 @@ MonoBehaviour:
       TraumaCare: 0
       Traps: 0
       IntrusionResponse: 
+    ThenEventId: 
     Choices:
     - Id: MOVE_IN
       TextKey: 

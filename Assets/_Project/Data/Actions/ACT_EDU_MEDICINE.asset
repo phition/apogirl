@@ -140,3 +140,4 @@ MonoBehaviour:
     BonusFacilityId: INFIRMARY
     BonusPerLevel: 0.2
     ThreatGain: 0
+    Confined: 0

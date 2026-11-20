@@ -73,6 +73,7 @@ MonoBehaviour:
       TraumaCare: 0
       Traps: 0
       IntrusionResponse: 
+    ThenEventId: 
     Choices:
     - Id: MEDICINE
       TextKey: event.EVT_WX_COLD_ILLNESS.medicine

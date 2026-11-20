@@ -38,6 +38,9 @@ MonoBehaviour:
     RandomEventsPerWeek: 3
     RandomEventChance: 0.3
     TutorialActionId: ACT_EXP_TUTORIAL
+    StorageWaitActionId: ACT_STORAGE_WAIT
+    TutorialDay: 7
+    IntroEventId: EVT_A1_TRAPPED
     OpeningEventId: EVT_A1_OPENING
     NgPlusOpeningEventId: EVT_NG_STORAGE_7DAYS
     RaidStartWeek: 4

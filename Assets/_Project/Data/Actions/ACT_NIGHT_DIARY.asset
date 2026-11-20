@@ -138,3 +138,4 @@ MonoBehaviour:
     BonusFacilityId: 
     BonusPerLevel: 0
     ThreatGain: 0
+    Confined: 0
