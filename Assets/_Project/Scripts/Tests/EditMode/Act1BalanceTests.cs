@@ -227,12 +227,12 @@ namespace ApoGirl.Tests.EditMode
                 }
             }
 
-            if (state.Player.Vitals.Cleanliness <= 35 && Usable("ACT_SURV_CLEAN", 6))
+            if (state.Player.Vitals.Cleanliness <= 55 && Usable("ACT_SURV_CLEAN", 6))
             {
                 slots[6].ActionId = "ACT_SURV_CLEAN";
             }
 
-            if (state.Base.GetResource(ResourceType.Medicine) >= 2 && Usable("ACT_TREAT_WOUND", 0))
+            if (state.Base.GetResource(ResourceType.Medicine) >= 1 && Usable("ACT_TREAT_WOUND", 0))
             {
                 slots[0].ActionId = "ACT_TREAT_WOUND";
             }

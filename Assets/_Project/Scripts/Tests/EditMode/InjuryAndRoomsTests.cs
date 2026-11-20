@@ -46,10 +46,10 @@ namespace ApoGirl.Tests.EditMode
             ActionResolver.Resolve(state, treat, db, new SeededRandom(SeededRandom.CreateState(1)), delta);
             Assert.IsTrue(InjuryRules.IsInjured(state, balance), "약 없이는 낫지 않는다");
 
-            state.Base.SetResource(ResourceType.Medicine, 2);
+            state.Base.SetResource(ResourceType.Medicine, 1);
             ActionResolver.Resolve(state, treat, db, new SeededRandom(SeededRandom.CreateState(1)), delta);
             Assert.IsFalse(InjuryRules.IsInjured(state, balance));
-            Assert.AreEqual(80, state.Player.Vitals.Hp, "치료하면서 회복 +10");
+            Assert.AreEqual(85, state.Player.Vitals.Hp, "치료하면서 회복 +15");
             Assert.AreEqual(0, state.Base.GetResource(ResourceType.Medicine));
 
             // 깨끗하면(청결 50 이상) 다쳐도 상처 감염은 없다 (부상은 그대로)
