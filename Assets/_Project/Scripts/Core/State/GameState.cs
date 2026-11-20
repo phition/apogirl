@@ -9,7 +9,7 @@ namespace ApoGirl.Core.State
     public sealed class GameState
     {
         /// <summary>현재 세이브 포맷 버전. 마이그레이션 시 증가시킨다.</summary>
-        public const int CurrentSaveVersion = 4;
+        public const int CurrentSaveVersion = 5;
 
         public int SaveVersion { get; set; } = CurrentSaveVersion;
         public GameStatus Status { get; set; } = GameStatus.Playing;
@@ -180,8 +180,11 @@ namespace ApoGirl.Core.State
         public int Stress { get; set; }
         public int Infection { get; set; }
         public int Cleanliness { get; set; }
-        public int Hunger { get; set; }
-        public int Thirst { get; set; }
+        /// <summary>포만 (−100~+100, 0 = 보통). +면 배부름, −면 허기짐.</summary>
+        public int Satiety { get; set; }
+
+        /// <summary>수분 (−100~+100, 0 = 보통). −면 목마름.</summary>
+        public int Hydration { get; set; }
     }
 
     /// <summary>엔딩 판정용 숨김 수치 (문서 5.3).</summary>

@@ -122,7 +122,7 @@ namespace ApoGirl.Presentation.Screens
     {
         private static readonly VitalType[] ShownVitals =
         {
-            VitalType.Hp, VitalType.Fatigue, VitalType.Stress, VitalType.Cleanliness, VitalType.Hunger, VitalType.Thirst,
+            VitalType.Hp, VitalType.Fatigue, VitalType.Stress, VitalType.Cleanliness, VitalType.Satiety, VitalType.Hydration,
         };
 
         private readonly GameSession _session;
@@ -146,7 +146,9 @@ namespace ApoGirl.Presentation.Screens
             panel.Add(Header("status.vitals"));
             foreach (var vital in ShownVitals)
             {
-                var bar = new ProgressBar { lowValue = 0, highValue = 100 };
+                // 포만·수분은 −100 ~ +100 (가운데 0)
+                var centered = vital == VitalType.Satiety || vital == VitalType.Hydration;
+                var bar = new ProgressBar { lowValue = centered ? -100 : 0, highValue = 100 };
                 bar.AddToClassList("vital-bar");
                 bar.AddToClassList("vital-" + vital.ToString().ToLowerInvariant());
                 panel.Add(bar);
@@ -231,7 +233,14 @@ namespace ApoGirl.Presentation.Screens
                 var value = player.Vitals.GetVital(pair.Key);
                 pair.Value.value = value;
                 pair.Value.title = UiText.Vital(pair.Key) + " " + value;
-                var basic = pair.Key == VitalType.Hp || pair.Key == VitalType.Stress || pair.Key == VitalType.Fatigue || pair.Key == VitalType.Cleanliness;
+                if (pair.Key == VitalType.Satiety || pair.Key == VitalType.Hydration)
+                {
+                    var band = UpkeepRules.Band(pair.Key == VitalType.Satiety ? balance.SatietyBands : balance.HydrationBands, value);
+                    pair.Value.title = UiText.Vital(pair.Key) + " " + (value > 0 ? "+" : "") + value + (band != null ? " · " + Loc.T("band." + band.Key) : "");
+                }
+
+                var basic = pair.Key == VitalType.Hp || pair.Key == VitalType.Stress || pair.Key == VitalType.Fatigue || pair.Key == VitalType.Cleanliness
+                            || pair.Key == VitalType.Satiety || pair.Key == VitalType.Hydration;
                 pair.Value.EnableInClassList("hidden", !basic && !Disclosure.Has(state, "UI_RESOURCES"));
             }
 

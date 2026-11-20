@@ -223,24 +223,60 @@ namespace ApoGirl.Core.Definitions
         public int DailyFood = 2;
         public int DailyWater = 2;
         public int WeeklyPower = 3;
-        public int HungerRecovery = 20;
-        public int HungerIncrease = 20;
-        public int ThirstRecovery = 25;
-        public int ThirstIncrease = 40;
-        public int StarvationThreshold = 60;
+        // ── 포만·수분 (사용자 요청: 0이 가운데, +면 배부름, −면 허기짐) ──
+
+        /// <summary>매일 밤 빠지는 포만·수분.</summary>
+        public int SatietyDailyDrain = 25;
+        public int HydrationDailyDrain = 30;
+
+        /// <summary>0 아래면 그날 몫을 먹고 마신다: 포만·수분이 이만큼 오르되 0까지만 (0 이상이면 먹지 않아 아낀다).</summary>
+        public int MealSatiety = 45;
+        public int DrinkHydration = 55;
+
+        /// <summary>이 값 이하면 굶주림·탈수로 쓰러진 것으로 친다 (사망 원인 판정).</summary>
+        public int StarvationThreshold = -60;
 
         /// <summary>
         /// 요리 (요리 수업 성공 시, 사용자 요청): 숙련이 오를수록 좋은 요리. 같은 재료로 하루 식사보다 허기·갈증을 더 낮춘다.
         /// </summary>
         public DishDef[] CookingDishes =
         {
-            new DishDef { Id = "DISH_PORRIDGE", MinCookingLevel = 0, FoodCost = 1, WaterCost = 1, Hunger = 15, Thirst = 10 },
-            new DishDef { Id = "DISH_SOUP", MinCookingLevel = 2, FoodCost = 2, WaterCost = 2, Hunger = 25, Thirst = 25, Stress = 2 },
-            new DishDef { Id = "DISH_SET_MEAL", MinCookingLevel = 4, FoodCost = 2, WaterCost = 1, Hunger = 35, Thirst = 20, Stress = 5 },
+            new DishDef { Id = "DISH_PORRIDGE", MinCookingLevel = 0, FoodCost = 1, WaterCost = 1, Satiety = 20, Hydration = 15 },
+            new DishDef
+            {
+                Id = "DISH_SOUP", MinCookingLevel = 2, FoodCost = 2, WaterCost = 2, Satiety = 35, Hydration = 40, Stress = 2,
+                Stats = { new StatAmount(StatType.Stamina, 1) },
+            },
+            new DishDef
+            {
+                Id = "DISH_SET_MEAL", MinCookingLevel = 4, FoodCost = 2, WaterCost = 1, Satiety = 50, Hydration = 30, Stress = 5,
+                Stats = { new StatAmount(StatType.Stamina, 1), new StatAmount(StatType.Willpower, 1) },
+            },
         };
+
         public int StarvationHpLoss = 5;
-        public int DehydrationThreshold = 60;
+        public int DehydrationThreshold = -60;
         public int DehydrationHpLoss = 10;
+
+        /// <summary>포만 단계 (높은 Min부터): 든든함·배부름·보통·허기짐·굶주림.</summary>
+        public NourishmentBand[] SatietyBands =
+        {
+            new NourishmentBand { Min = 50, Key = "SATED", Hp = 2, Stress = -2 },
+            new NourishmentBand { Min = 1, Key = "FULL", Hp = 1, Stress = -1 },
+            new NourishmentBand { Min = -29, Key = "NORMAL" },
+            new NourishmentBand { Min = -59, Key = "HUNGRY", Stress = 3 },
+            new NourishmentBand { Min = -100, Key = "STARVING", Hp = -5, Stress = 5 },
+        };
+
+        /// <summary>수분 단계: 넉넉함·촉촉함·보통·목마름·탈수.</summary>
+        public NourishmentBand[] HydrationBands =
+        {
+            new NourishmentBand { Min = 50, Key = "PLENTY", Hp = 1, Stress = -1 },
+            new NourishmentBand { Min = 1, Key = "GOOD", Hp = 1 },
+            new NourishmentBand { Min = -29, Key = "NORMAL" },
+            new NourishmentBand { Min = -59, Key = "THIRSTY", Stress = 3 },
+            new NourishmentBand { Min = -100, Key = "DEHYDRATED", Hp = -10, Stress = 5 },
+        };
 
         // ── 난이도 (M7-3: M7-d 배율, M7-e 이야기 중심 편의) ──
 

@@ -13,6 +13,7 @@ namespace ApoGirl.Systems.Save
                 yield return new V1ToV2();
                 yield return new V2ToV3();
                 yield return new V3ToV4();
+                yield return new V4ToV5();
             }
         }
 
@@ -40,6 +41,32 @@ namespace ApoGirl.Systems.Save
                 if (root["History"] == null)
                 {
                     root["History"] = new JArray();
+                }
+            }
+        }
+
+        /// <summary>v5: 허기·갈증(0~100, 높을수록 굶음) → 포만·수분(−100~+100, 0 = 보통). 부호를 뒤집어 옮긴다.</summary>
+        private sealed class V4ToV5 : ISaveMigration
+        {
+            public int FromVersion => 4;
+
+            public void Migrate(JObject root)
+            {
+                if (!(root["Player"]?["Vitals"] is JObject vitals))
+                {
+                    return;
+                }
+
+                if (vitals["Hunger"] != null)
+                {
+                    vitals["Satiety"] = -(vitals.Value<int?>("Hunger") ?? 0);
+                    vitals.Remove("Hunger");
+                }
+
+                if (vitals["Thirst"] != null)
+                {
+                    vitals["Hydration"] = -(vitals.Value<int?>("Thirst") ?? 0);
+                    vitals.Remove("Thirst");
                 }
             }
         }

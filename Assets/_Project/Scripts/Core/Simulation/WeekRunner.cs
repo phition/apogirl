@@ -433,7 +433,7 @@ namespace ApoGirl.Core.Simulation
             }
 
             var vitals = _state.Player.Vitals;
-            if (vitals.Hunger >= Balance.StarvationThreshold || vitals.Thirst >= Balance.DehydrationThreshold)
+            if (vitals.Satiety <= Balance.StarvationThreshold || vitals.Hydration <= Balance.DehydrationThreshold)
             {
                 return EndCauseStarvation;
             }

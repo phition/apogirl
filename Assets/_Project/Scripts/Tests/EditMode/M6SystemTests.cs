@@ -181,13 +181,13 @@ namespace ApoGirl.Tests.EditMode
             var db = TestContent.CreateDatabase();
             var state = TestContent.NewGame(db);
             state.Player.Vitals.Hp = 50;
-            state.Player.Vitals.Hunger = 100;
-            state.Player.Vitals.Thirst = 100;
+            state.Player.Vitals.Satiety = -100;
+            state.Player.Vitals.Hydration = -100;
             state.Base.Resources[ResourceType.Food] = 50;
             state.Base.Resources[ResourceType.Water] = 50;
             UpkeepRules.ApplyDaily(state, db.Balance, new StateDelta());
             Assert.AreEqual(50, state.Player.Vitals.Hp, "먹고 마셨으면 배고픔이 높아도 체력 피해 없음");
-            Assert.Less(state.Player.Vitals.Hunger, 100);
+            Assert.Greater(state.Player.Vitals.Satiety, -100);
 
             state.Base.Resources[ResourceType.Food] = 0;
             UpkeepRules.ApplyDaily(state, db.Balance, new StateDelta());

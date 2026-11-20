@@ -34,34 +34,80 @@ namespace ApoGirl.Core.Rules
         public const string FlagRoofGarden = "ROOF_GARDEN";
 
         /// <summary>
-        /// 매일 밤 처리: 식량·물 소모, 부족 시 허기·갈증 상승과 HP 감소.
-        /// HP 감소는 그날 실제로 먹지(마시지) 못했을 때만. 먹었다면 허기가 높아도 회복만 한다.
+        /// 매일 밤 처리: 포만·수분이 빠지고, 0 아래면 그날 몫을 먹고 마셔 0까지 채운다 (0 이상이면 먹지 않아 아낀다).
+        /// 그다음 포만·수분 단계에 따라 체력·스트레스가 오르내린다 (배부르면 버프, 허기지면 디버프).
         /// </summary>
         public static void ApplyDaily(GameState state, BalanceConfig balance, StateDelta delta, int foodSaving = 0)
         {
             var difficulty = DifficultyRules.Get(state, balance);
             var baseFood = DailyFoodNeed(state.Calendar.Week, state.Calendar.Day, balance, difficulty.Consumption);
             var food = state.Calendar.Day % 2 == 0 ? Math.Max(0, baseFood - foodSaving) : baseFood;
-            var ate = Consume(state, ResourceType.Food, food, VitalType.Hunger, balance.HungerRecovery, balance.HungerIncrease, balance, delta);
+            Nourish(state, ResourceType.Food, food, VitalType.Satiety, balance.SatietyDailyDrain, balance.MealSatiety, balance, delta);
             var water = DifficultyRules.DailyShare(balance.DailyWater, difficulty.Consumption, state.Calendar.Day)
                         + (state.Base.Weather == WeatherType.Heat ? balance.HeatExtraWater : 0);
-            var drank = Consume(state, ResourceType.Water, water, VitalType.Thirst, balance.ThirstRecovery, balance.ThirstIncrease, balance, delta);
+            Nourish(state, ResourceType.Water, water, VitalType.Hydration, balance.HydrationDailyDrain, balance.DrinkHydration, balance, delta);
             if (state.Base.Weather == WeatherType.Cold && balance.ColdDailyStress > 0)
             {
                 // M6: 한파 (문서 6.6)
                 EffectApplier.ChangeVital(state, VitalType.Stress, balance.ColdDailyStress, balance, delta);
             }
 
-            var vitals = state.Player.Vitals;
-            if (!ate && vitals.Hunger >= balance.StarvationThreshold)
+            ApplyBand(state, Band(balance.SatietyBands, state.Player.Vitals.Satiety), balance, delta);
+            ApplyBand(state, Band(balance.HydrationBands, state.Player.Vitals.Hydration), balance, delta);
+        }
+
+        /// <summary>값이 Min 이상인 가장 높은 단계 (없으면 null).</summary>
+        public static NourishmentBand Band(NourishmentBand[] bands, int value)
+        {
+            if (bands == null)
             {
-                EffectApplier.ChangeVital(state, VitalType.Hp, -balance.StarvationHpLoss, balance, delta);
+                return null;
             }
 
-            if (!drank && vitals.Thirst >= balance.DehydrationThreshold)
+            NourishmentBand best = null;
+            foreach (var band in bands)
             {
-                EffectApplier.ChangeVital(state, VitalType.Hp, -balance.DehydrationHpLoss, balance, delta);
+                if (value >= band.Min && (best == null || band.Min > best.Min))
+                {
+                    best = band;
+                }
             }
+
+            return best;
+        }
+
+        private static void ApplyBand(GameState state, NourishmentBand band, BalanceConfig balance, StateDelta delta)
+        {
+            if (band == null)
+            {
+                return;
+            }
+
+            if (band.Hp != 0) EffectApplier.ChangeVital(state, VitalType.Hp, band.Hp, balance, delta);
+            if (band.Stress != 0) EffectApplier.ChangeVital(state, VitalType.Stress, band.Stress, balance, delta);
+        }
+
+        /// <summary>하루치가 빠지고, 0 아래면 가진 만큼 먹어(마셔) 0까지 채운다 (모자라면 비율만큼).</summary>
+        private static void Nourish(
+            GameState state, ResourceType resource, int need, VitalType vital, int drain, int restore, BalanceConfig balance, StateDelta delta)
+        {
+            EffectApplier.ChangeVital(state, vital, -drain, balance, delta);
+            var current = state.Player.Vitals.GetVital(vital);
+            if (current >= 0 || need <= 0)
+            {
+                return;
+            }
+
+            var have = state.Base.GetResource(resource);
+            var used = Math.Min(have, need);
+            if (used <= 0)
+            {
+                return;
+            }
+
+            EffectApplier.ChangeResource(state, resource, -used, delta);
+            var gain = (int)Math.Round(restore * used / (double)need, MidpointRounding.AwayFromZero);
+            EffectApplier.ChangeVital(state, vital, Math.Min(gain, -current), balance, delta);
         }
 
         /// <summary>그날의 기본 식량 소모. 겨울에는 배율을 하루 단위로 나눠 쓴다 (소수점 누적: 2 × 1.3 → 2,3,2,3,3,2,3).</summary>
@@ -128,22 +174,6 @@ namespace ApoGirl.Core.Rules
         }
 
         /// <summary>필요량을 다 채웠으면 true.</summary>
-        private static bool Consume(
-            GameState state, ResourceType resource, int need, VitalType vital, int recovery, int increase,
-            BalanceConfig balance, StateDelta delta)
-        {
-            var have = state.Base.GetResource(resource);
-            if (have >= need)
-            {
-                EffectApplier.ChangeResource(state, resource, -need, delta);
-                EffectApplier.ChangeVital(state, vital, -recovery, balance, delta);
-                return true;
-            }
-
-            EffectApplier.ChangeResource(state, resource, -have, delta);
-            EffectApplier.ChangeVital(state, vital, increase, balance, delta);
-            return false;
-        }
     }
 
     /// <summary>달력 규칙.</summary>

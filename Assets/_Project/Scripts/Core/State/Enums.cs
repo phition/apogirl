@@ -62,8 +62,11 @@ namespace ApoGirl.Core.State
         Stress,
         Infection,
         Cleanliness,
-        Hunger,
-        Thirst,
+        /// <summary>포만 (−100~+100, 0 = 보통). +면 배부름, −면 허기짐.</summary>
+        Satiety,
+
+        /// <summary>수분 (−100~+100, 0 = 보통). −면 목마름.</summary>
+        Hydration,
     }
 
     /// <summary>엔딩 판정용 숨김 수치 (문서 5.3).</summary>

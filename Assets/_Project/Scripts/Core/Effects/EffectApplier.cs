@@ -280,7 +280,9 @@ namespace ApoGirl.Core.Effects
 
             var vitals = state.Player.Vitals;
             var before = vitals.GetVital(type);
-            var after = Clamp(before + amount, 0, balance.VitalMax);
+            // 포만·수분은 0이 가운데 (−최대 ~ +최대)
+            var min = type == VitalType.Satiety || type == VitalType.Hydration ? -balance.VitalMax : 0;
+            var after = Clamp(before + amount, min, balance.VitalMax);
             vitals.SetVital(type, after);
             delta.AddVital(type, after - before);
             return after - before;

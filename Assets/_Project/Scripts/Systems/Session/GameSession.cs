@@ -479,8 +479,8 @@ namespace ApoGirl.Systems.Session
         {
             var vitals = State.Player.Vitals;
             vitals.Hp = _db.Balance.VitalMax;
-            vitals.Hunger = 0;
-            vitals.Thirst = 0;
+            vitals.Satiety = 0;
+            vitals.Hydration = 0;
             vitals.Fatigue = 0;
             vitals.Stress = 0;
             State.Player.BreakdownWeeks = 0;

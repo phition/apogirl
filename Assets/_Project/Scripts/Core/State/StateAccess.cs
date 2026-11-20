@@ -42,8 +42,8 @@ namespace ApoGirl.Core.State
                 case VitalType.Stress: return vitals.Stress;
                 case VitalType.Infection: return vitals.Infection;
                 case VitalType.Cleanliness: return vitals.Cleanliness;
-                case VitalType.Hunger: return vitals.Hunger;
-                case VitalType.Thirst: return vitals.Thirst;
+                case VitalType.Satiety: return vitals.Satiety;
+                case VitalType.Hydration: return vitals.Hydration;
                 default: throw new ArgumentOutOfRangeException(nameof(type), type, null);
             }
         }
@@ -57,8 +57,8 @@ namespace ApoGirl.Core.State
                 case VitalType.Stress: vitals.Stress = value; break;
                 case VitalType.Infection: vitals.Infection = value; break;
                 case VitalType.Cleanliness: vitals.Cleanliness = value; break;
-                case VitalType.Hunger: vitals.Hunger = value; break;
-                case VitalType.Thirst: vitals.Thirst = value; break;
+                case VitalType.Satiety: vitals.Satiety = value; break;
+                case VitalType.Hydration: vitals.Hydration = value; break;
                 default: throw new ArgumentOutOfRangeException(nameof(type), type, null);
             }
         }

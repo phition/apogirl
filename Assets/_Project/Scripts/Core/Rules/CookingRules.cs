@@ -6,7 +6,7 @@ using ApoGirl.Core.State;
 namespace ApoGirl.Core.Rules
 {
     /// <summary>
-    /// 요리: 요리 숙련에 맞는 가장 좋은 요리(대성공이면 한 단계 위)를 만들어 먹는다.
+    /// 요리: 요리 숙련에 맞는 가장 좋은 요리(대성공이면 한 단계 위)를 만들어 먹는다. 포만·수분이 0 위로도 올라 배부름이 된다.
     /// 재료(식량·물)가 모자라면 만들 수 있는 아래 단계로, 하나도 못 만들면 아무 일도 없다.
     /// </summary>
     public static class CookingRules
@@ -42,11 +42,17 @@ namespace ApoGirl.Core.Rules
 
                 EffectApplier.ChangeResource(state, ResourceType.Food, -dish.FoodCost, delta);
                 EffectApplier.ChangeResource(state, ResourceType.Water, -dish.WaterCost, delta);
-                EffectApplier.ChangeVital(state, VitalType.Hunger, -dish.Hunger, balance, delta);
-                EffectApplier.ChangeVital(state, VitalType.Thirst, -dish.Thirst, balance, delta);
+                EffectApplier.ChangeVital(state, VitalType.Satiety, dish.Satiety, balance, delta);
+                EffectApplier.ChangeVital(state, VitalType.Hydration, dish.Hydration, balance, delta);
                 if (dish.Stress != 0)
                 {
                     EffectApplier.ChangeVital(state, VitalType.Stress, -dish.Stress, balance, delta);
+                }
+
+                // 좋은 요리는 능력치도 조금
+                foreach (var stat in dish.Stats)
+                {
+                    EffectApplier.ChangeStat(state, stat.Stat, stat.Amount, balance, delta);
                 }
 
                 delta.DishesCooked.Add(dish.Id);

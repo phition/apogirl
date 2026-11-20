@@ -143,7 +143,7 @@ namespace ApoGirl.Tests.EditMode
                 foreach (var seed in new[] { 11, 22, 33 })
                 {
                     report.Append(Run(strategy, seed, out var state));
-                    report.AppendLine($"  end cause: {state.EndCause} hp {state.Player.Vitals.Hp} hunger {state.Player.Vitals.Hunger} thirst {state.Player.Vitals.Thirst}");
+                    report.AppendLine($"  end cause: {state.EndCause} hp {state.Player.Vitals.Hp} satiety {state.Player.Vitals.Satiety} hydration {state.Player.Vitals.Hydration}");
                     if (strategy == Strategy.Study)
                     {
                         continue;

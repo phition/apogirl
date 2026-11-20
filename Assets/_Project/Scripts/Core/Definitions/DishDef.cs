@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using ApoGirl.Core.State;
 
 namespace ApoGirl.Core.Definitions
 {
@@ -13,9 +15,22 @@ namespace ApoGirl.Core.Definitions
         public int FoodCost;
         public int WaterCost;
 
-        /// <summary>먹고 나서 줄어드는 허기·갈증·스트레스 (양수 = 그만큼 낮춘다).</summary>
-        public int Hunger;
-        public int Thirst;
+        /// <summary>먹고 나서 오르는 포만·수분 (0 위로도 올라 배부름이 된다), 줄어드는 스트레스.</summary>
+        public int Satiety;
+        public int Hydration;
+        public int Stress;
+
+        /// <summary>좋은 요리는 능력치도 조금 오른다.</summary>
+        public List<StatAmount> Stats = new List<StatAmount>();
+    }
+
+    /// <summary>포만·수분 단계: 값이 Min 이상인 가장 높은 단계가 그날의 효과 (매일 밤).</summary>
+    [Serializable]
+    public sealed class NourishmentBand
+    {
+        public int Min;
+        public string Key = "";
+        public int Hp;
         public int Stress;
     }
 }

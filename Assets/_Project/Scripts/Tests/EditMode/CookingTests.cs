@@ -14,8 +14,8 @@ namespace ApoGirl.Tests.EditMode
         private static GameState Hungry(BalanceConfig balance, int food, int water)
         {
             var state = NewGameFactory.Create(balance, 1);
-            state.Player.Vitals.Hunger = 60;
-            state.Player.Vitals.Thirst = 60;
+            state.Player.Vitals.Satiety = -60;
+            state.Player.Vitals.Hydration = -60;
             state.Base.SetResource(ResourceType.Food, food);
             state.Base.SetResource(ResourceType.Water, water);
             return state;
@@ -28,8 +28,8 @@ namespace ApoGirl.Tests.EditMode
             var state = Hungry(balance, 10, 10);
             var dish = CookingRules.Cook(state, balance, 0, new StateDelta());
             Assert.AreEqual("DISH_PORRIDGE", dish.Id, "숙련 0이면 주먹밥과 죽");
-            Assert.AreEqual(45, state.Player.Vitals.Hunger);
-            Assert.AreEqual(50, state.Player.Vitals.Thirst);
+            Assert.AreEqual(-40, state.Player.Vitals.Satiety, "죽은 포만 +20");
+            Assert.AreEqual(-45, state.Player.Vitals.Hydration);
             Assert.AreEqual(9, state.Base.GetResource(ResourceType.Food));
             Assert.AreEqual(9, state.Base.GetResource(ResourceType.Water));
 
@@ -38,7 +38,9 @@ namespace ApoGirl.Tests.EditMode
             Assert.AreEqual(4, state.Player.ProficiencyLevel(ProficiencyType.Cooking));
             dish = CookingRules.Cook(state, balance, 0, new StateDelta());
             Assert.AreEqual("DISH_SET_MEAL", dish.Id);
-            Assert.AreEqual(25, state.Player.Vitals.Hunger, "정식은 허기 −35");
+            Assert.AreEqual(-10, state.Player.Vitals.Satiety, "정식은 포만 +50");
+            var stamina = NewGameFactory.Create(balance, 1).Player.GetStat(StatType.Stamina);
+            Assert.AreEqual(stamina + 1, state.Player.GetStat(StatType.Stamina), "좋은 요리는 능력치도 조금");
 
             // 대성공은 한 단계 위
             state = Hungry(balance, 10, 10);
@@ -56,7 +58,7 @@ namespace ApoGirl.Tests.EditMode
             state = Hungry(balance, 0, 5);
             var delta = new StateDelta();
             Assert.IsNull(CookingRules.Cook(state, balance, 0, delta), "식량이 없으면 요리 없음");
-            Assert.AreEqual(60, state.Player.Vitals.Hunger);
+            Assert.AreEqual(-60, state.Player.Vitals.Satiety);
             Assert.IsEmpty(delta.DishesCooked);
         }
 
@@ -81,7 +83,7 @@ namespace ApoGirl.Tests.EditMode
 
                 success++;
                 Assert.AreEqual(1, delta.DishesCooked.Count);
-                Assert.Less(state.Player.Vitals.Hunger, 60);
+                Assert.Greater(state.Player.Vitals.Satiety, -60);
                 Assert.Less(state.Base.GetResource(ResourceType.Water), 10);
             }
 

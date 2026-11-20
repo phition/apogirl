@@ -162,8 +162,8 @@ namespace ApoGirl.Tests.EditMode
             var state = TestContent.NewGame(db);
             state.Base.Resources[ResourceType.Food] = 0;
             state.Base.Resources[ResourceType.Water] = 0;
-            state.Player.Vitals.Hunger = 90;
-            state.Player.Vitals.Thirst = 90;
+            state.Player.Vitals.Satiety = -90;
+            state.Player.Vitals.Hydration = -90;
             state.Player.Vitals.Hp = 3;
             var runner = Runner(state, db);
             runner.PrepareWeek();
