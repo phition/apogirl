@@ -108,7 +108,7 @@ namespace ApoGirl.Core.Definitions
         /// <summary>습격 세기 = 위협 + 0~분산, 방어력 = 전투력 + 방어도 × 배율 + 경계 보정 + 0~분산.</summary>
         public int RaidStrengthVariance = 20;
         public int RaidPowerVariance = 20;
-        public float RaidDefenseWeight = 2f;
+        public float RaidDefenseWeight = 1.2f; // M7-2: 2 → 1.2 (방어 60이면 늘 막던 것을 후반에 가끔 뚫리게)
 
         /// <summary>거점 기본 방어력 (선생님·지형). 전투력·방어도에 더해진다.</summary>
         public int RaidBasePower = 20;
@@ -120,7 +120,7 @@ namespace ApoGirl.Core.Definitions
         public int RaidBreachHp = 10;
         public int RaidBreachFood = 3;
         public int RaidBreachDefenseLoss = 3;
-        public int RaidThreatRelief = 8;
+        public int RaidThreatRelief = 20; // M7-2: 8 → 20 (습격 빈도는 위협 증가량 ÷ 이 값으로 정해진다: 연 30회 → 약 12회)
 
         /// <summary>위협도: 탐험마다(낮/밤), 매주 자연 증가, 상한.</summary>
         public int ThreatPerDayExpedition = 2;
