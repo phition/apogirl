@@ -94,6 +94,9 @@ namespace ApoGirl.Core.Simulation.Bots
         /// <summary>M7-2 진단: 끝났을 때 켜져 있던 갈래 플래그 (BotSimulator.TrackedFlags 중).</summary>
         public readonly HashSet<string> TrackedFlags = new HashSet<string>();
 
+        /// <summary>진단: 끝났을 때의 이벤트 기록 (이벤트 ID → 본 횟수, 마지막으로 본 주). 1회성 이벤트면 그 주가 발생 주.</summary>
+        public readonly Dictionary<string, (int Count, int LastWeek)> EventRecords = new Dictionary<string, (int Count, int LastWeek)>();
+
         public readonly List<BotWeekSample> Weeks = new List<BotWeekSample>();
         public readonly List<BotExpeditionSample> Expeditions = new List<BotExpeditionSample>();
 
@@ -253,6 +256,10 @@ namespace ApoGirl.Core.Simulation.Bots
             result.IntrusionsLost = state.Exploration.IntrusionsLost;
             result.Companions = state.Npcs.Count(n => n.Value.Status == NpcStatus.Joined);
             result.Events = state.Events.Records.Count;
+            foreach (var record in state.Events.Records)
+            {
+                result.EventRecords[record.Key] = (record.Value.Count, record.Value.LastWeek);
+            }
 
             var flags = state.Flags;
             result.TeacherReinfected = state.Teacher.Reinfected;
