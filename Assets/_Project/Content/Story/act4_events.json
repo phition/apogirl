@@ -830,7 +830,7 @@
                 "Kind": "Hidden",
                 "Key": "Humanity",
                 "Op": "GreaterOrEqual",
-                "Value": 60
+                "Value": 72
               }
             ]
           },

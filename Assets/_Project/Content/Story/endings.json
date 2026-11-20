@@ -149,7 +149,7 @@
             "Kind": "Hidden",
             "Key": "SelfAwareness",
             "Op": "GreaterOrEqual",
-            "Value": 47
+            "Value": 52
           }
         ]
       },
@@ -176,7 +176,7 @@
             "Kind": "Hidden",
             "Key": "SelfAwareness",
             "Op": "GreaterOrEqual",
-            "Value": 43
+            "Value": 46
           }
         ]
       },
