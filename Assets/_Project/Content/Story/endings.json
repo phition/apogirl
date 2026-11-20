@@ -143,6 +143,14 @@
           "BULLY_FORGAVE",
           "BULLY_SEPARATED",
           "BULLY_RESCUED"
+        ],
+        "Checks": [
+          {
+            "Kind": "Hidden",
+            "Key": "SelfAwareness",
+            "Op": "GreaterOrEqual",
+            "Value": 47
+          }
         ]
       },
       "CutKeys": [
@@ -162,13 +170,13 @@
             "Kind": "Hidden",
             "Key": "TraumaRecovery",
             "Op": "GreaterOrEqual",
-            "Value": 60
+            "Value": 32
           },
           {
             "Kind": "Hidden",
             "Key": "SelfAwareness",
             "Op": "GreaterOrEqual",
-            "Value": 40
+            "Value": 43
           }
         ]
       },
@@ -207,13 +215,13 @@
             "Kind": "Stat",
             "Key": "Intellect",
             "Op": "GreaterOrEqual",
-            "Value": 60
+            "Value": 175
           },
           {
             "Kind": "Hidden",
             "Key": "Humanity",
             "Op": "GreaterOrEqual",
-            "Value": 30
+            "Value": 55
           }
         ]
       },
@@ -251,13 +259,13 @@
             "Kind": "Proficiency",
             "Key": "Engineering",
             "Op": "GreaterOrEqual",
-            "Value": 4
+            "Value": 3
           },
           {
             "Kind": "Stat",
             "Key": "Craft",
             "Op": "GreaterOrEqual",
-            "Value": 60
+            "Value": 175
           }
         ]
       },
@@ -290,19 +298,19 @@
             "Kind": "Stat",
             "Key": "Strength",
             "Op": "GreaterOrEqual",
-            "Value": 60
+            "Value": 80
           },
           {
             "Kind": "Stat",
             "Key": "Agility",
             "Op": "GreaterOrEqual",
-            "Value": 50
+            "Value": 45
           },
           {
             "Kind": "Proficiency",
             "Key": "SelfDefense",
             "Op": "GreaterOrEqual",
-            "Value": 3
+            "Value": 1
           }
         ]
       },
@@ -340,7 +348,7 @@
             "Kind": "Stat",
             "Key": "Leadership",
             "Op": "GreaterOrEqual",
-            "Value": 60
+            "Value": 95
           },
           {
             "Kind": "Companions",
@@ -351,7 +359,7 @@
             "Kind": "Hidden",
             "Key": "Humanity",
             "Op": "GreaterOrEqual",
-            "Value": 30
+            "Value": 55
           }
         ]
       },
@@ -431,7 +439,7 @@
             "Kind": "Stat",
             "Key": "Empathy",
             "Op": "GreaterOrEqual",
-            "Value": 60
+            "Value": 110
           },
           {
             "Kind": "EndingTag",
@@ -480,7 +488,7 @@
             "Kind": "Hidden",
             "Key": "Humanity",
             "Op": "GreaterOrEqual",
-            "Value": 40
+            "Value": 60
           }
         ]
       },
@@ -512,7 +520,7 @@
             "Kind": "Hidden",
             "Key": "Isolation",
             "Op": "GreaterOrEqual",
-            "Value": 60
+            "Value": 45
           },
           {
             "Kind": "Companions",
@@ -549,7 +557,7 @@
           {
             "Kind": "StatSpread",
             "Op": "LessOrEqual",
-            "Value": 35
+            "Value": 130
           }
         ]
       },
@@ -576,7 +584,7 @@
             "Kind": "Hidden",
             "Key": "TraumaRecovery",
             "Op": "LessOrEqual",
-            "Value": 10
+            "Value": 12
           },
           {
             "Kind": "Hidden",
