@@ -119,6 +119,10 @@ namespace ApoGirl.Exploration.Runtime
         private Light2D _flashlight;
         private Light2D _selfLight;
         private float _ambientIntensity;
+
+        /// <summary>공간별 조명 (낮 복도 햇빛·어두운 방, M6-5)과 보이는 공간에 따른 밝기 배율 (부드럽게 바뀐다).</summary>
+        private ExplorationLighting _lighting;
+        private float _areaFactor = 1f;
         private readonly PlayLogEntry _log = new PlayLogEntry();
 
         public ExpeditionRequest Request { get; private set; }
@@ -1147,6 +1151,7 @@ namespace ApoGirl.Exploration.Runtime
 
             room.Built = true;
             _building.BuildRoom(room, room.DoorIndex);
+            _lighting?.AddRoom(room);
             foreach (var doorX in room.Template.DoorXs)
             {
                 var exitView = Prop(room, "RoomExit", "door_closed", doorX, new Vector2(1.4f, 2.8f), BuildingView.DoorColor, 0);
@@ -1308,6 +1313,23 @@ namespace ApoGirl.Exploration.Runtime
             _selfLight.pointLightOuterRadius = _balance.NightViewDistance;
             _selfLight.intensity = 0.55f;
             _selfLight.color = new Color(0.8f, 0.85f, 1f);
+
+            _lighting = new ExplorationLighting(_world, _balance, _building.FloorHeight, day ? ExplorationLighting.Phase.Day : ExplorationLighting.Phase.Night);
+            foreach (var corridor in _corridors)
+            {
+                _lighting.AddCorridor(corridor);
+            }
+
+            foreach (var room in _rooms)
+            {
+                if (room.Built)
+                {
+                    _lighting.AddRoom(room);
+                }
+            }
+
+            _areaFactor = _lighting.AmbientFactor(CurrentArea);
+            SetAmbient(_ambientIntensity, _light.color);
         }
 
         private static void EnsureEventSystem()
@@ -1363,7 +1385,10 @@ namespace ApoGirl.Exploration.Runtime
 
             if (_selfLight != null)
             {
-                _selfLight.enabled = IsDark;
+                // 낮에도 어두운 방 안에서는 주인공 주변만 희미하게 보이게
+                var dimRoom = !IsDark && _lighting != null && _lighting.IsDimRoom(CurrentArea);
+                _selfLight.enabled = IsDark || dimRoom;
+                _selfLight.intensity = IsDark ? 0.55f : 0.35f;
                 _selfLight.transform.localPosition = center;
             }
 
@@ -1407,6 +1432,17 @@ namespace ApoGirl.Exploration.Runtime
             var target = new Vector3(cameraX, viewOrigin.y + _building.FloorHeight * 0.5f, -10f);
             var cameraTransform = _camera.transform;
             cameraTransform.position = cut || dt >= 1000f ? target : Vector3.Lerp(cameraTransform.position, target, Mathf.Clamp01(dt * 6f));
+
+            // 보이는 공간의 밝기 (낮: 복도는 햇빛, 문 안 방은 어둡게). 문을 지나면 잠깐 동안 눈이 적응하듯 바뀐다.
+            if (_lighting != null)
+            {
+                var wanted = _lighting.AmbientFactor(_shownArea ?? CurrentArea);
+                _areaFactor = cut || dt >= 1000f ? wanted : Mathf.MoveTowards(_areaFactor, wanted, dt * 2.5f);
+                if (_light != null && !FullVision)
+                {
+                    _light.intensity = AmbientLightIntensity;
+                }
+            }
         }
 
         // ── 위협 ──
@@ -1642,6 +1678,7 @@ namespace ApoGirl.Exploration.Runtime
             DuskAwakened = true;
             _threat.AwakenAll();
             SetAmbient(0.2f, new Color(0.75f, 0.6f, 0.65f));
+            _lighting?.SetPhase(ExplorationLighting.Phase.Dusk);
             Sfx("sfx_timer_warning");
             Presentation.Audio.Sound.Play("Sfx/sfx_z_horde_far", Presentation.Audio.SoundCategory.Ambience);
             _hud?.ShowMessage("exp.dusk");
@@ -1824,14 +1861,15 @@ namespace ApoGirl.Exploration.Runtime
         {
             DawnReturn = true;
             SetAmbient(_balance.DawnAmbientIntensity, new Color(0.85f, 0.8f, 0.9f));
+            _lighting?.SetPhase(ExplorationLighting.Phase.Dawn);
             Sfx("sfx_timer_warning");
             _hud?.ShowMessage("exp.dawn");
         }
 
         /// <summary>밸런스 값은 체감 밝기(화면 기준). 선형 색 공간에서는 감마를 풀어야 0.12가 실제로 어둡게 보인다.</summary>
         private float AmbientLightIntensity => QualitySettings.activeColorSpace == ColorSpace.Linear
-            ? Mathf.Pow(_ambientIntensity, 2.2f)
-            : _ambientIntensity;
+            ? Mathf.Pow(_ambientIntensity * _areaFactor, 2.2f)
+            : _ambientIntensity * _areaFactor;
 
         /// <summary>건물 바깥 배경(조명을 받지 않으므로 밝기에 맞춰 직접 어둡게 한다).</summary>
         private static readonly Color SkyColor = new Color(0.07f, 0.08f, 0.09f);

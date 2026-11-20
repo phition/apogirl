@@ -577,6 +577,18 @@ namespace ApoGirl.Core.Definitions
         public float NightAmbientIntensity = 0.12f;
         public float DawnAmbientIntensity = 0.45f;
 
+        /// <summary>
+        /// 낮 공간별 밝기 배율 (M6-5, 그림만 — 시야·수색 규칙은 그대로): 복도는 햇빛 줄기가 살도록 조금 낮추고,
+        /// 전기가 끊긴 방 안은 어둡게.
+        /// </summary>
+        public float DayCorridorAmbient = 0.8f;
+        public float DayRoomAmbient = 0.32f;
+
+        /// <summary>복도 햇빛 줄기 밝기·간격(유닛), 방의 복도 쪽 창으로 새어 드는 빛 밝기.</summary>
+        public float SunbeamIntensity = 0.7f;
+        public float SunbeamSpacing = 6f;
+        public float RoomWindowLightIntensity = 0.4f;
+
         /// <summary>어둠 속에서 손전등을 끈 플레이어가 좀비 눈에 띄는 정도 (시야 배율).</summary>
         public float DarknessVisibility = 0.6f;
 
