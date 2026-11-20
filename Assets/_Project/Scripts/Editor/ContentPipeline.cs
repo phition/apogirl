@@ -41,6 +41,27 @@ namespace ApoGirl.EditorTools
             EditorUtility.DisplayDialog("콘텐츠 가져오기", errors == 0 ? "완료 (오류 없음)" : $"완료 — 오류 {errors}개. 콘솔을 확인하세요.", "확인");
         }
 
+        public const string BalancePath = "Assets/_Project/Data/Balance/BalanceConfig.asset";
+
+        /// <summary>
+        /// M7-2: 밸런스 에셋을 BalanceConfig의 현재 값으로 다시 쓴다 (테스트와 같은 값).
+        /// 에셋 파일에 없는 필드는 처음 불러온 시점의 기본값이 메모리에 남아 코드 변경이 반영되지 않던 문제를 막는다.
+        /// </summary>
+        [MenuItem("ApoGirl/Balance/Sync Balance Asset")]
+        public static void SyncBalance()
+        {
+            var balance = AssetDatabase.LoadAssetAtPath<BalanceConfigAsset>(BalancePath);
+            if (balance == null)
+            {
+                Debug.LogError($"[Content] 밸런스 에셋 없음: {BalancePath}");
+                return;
+            }
+
+            balance.EditorSetConfig(new BalanceConfig());
+            EditorUtility.SetDirty(balance);
+            AssetDatabase.SaveAssets();
+        }
+
         /// <summary>가져오기 전체 과정. 검증 오류 수를 돌려준다.</summary>
         public static int Import()
         {
@@ -73,6 +94,7 @@ namespace ApoGirl.EditorTools
                 Debug.Log($"[Content] 행동 {actions.Count}, 아이템 {items.Count}, 전리품 {loot.Count}, 모델 {models.Count}, 적 {enemies.Count}, 특성 {content.Traits.Count}, 시설 {content.Facilities.Count}, 대사 줄 {content.Lines.Count}, 엔딩 {content.Endings.Count}, 역할 {content.Roles.Count}");
             }
 
+            SyncBalance();
             EditorUtility.SetDirty(database);
             AssetDatabase.SaveAssets();
             Debug.Log($"[Content] 이벤트 {events.Count}개, NPC {npcs.Count}개 가져옴");
