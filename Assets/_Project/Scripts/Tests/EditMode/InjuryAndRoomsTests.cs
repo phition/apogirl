@@ -79,15 +79,20 @@ namespace ApoGirl.Tests.EditMode
             state.Player.Vitals.Hp = 60;
             Assert.Greater(InjuryRules.CheckIncident(state, 100, balance, new StateDelta()), 0, "40이면 부상");
 
-            // 응급처치 수업 성공: 의약품 없이도 부상이 풀린다
+            // 응급처치 수업 성공: 의약품을 써서 부상이 풀린다 (의약품이 없으면 그대로)
             var lesson = db.GetAction("ACT_EDU_MEDICINE");
-            state.Base.SetResource(ResourceType.Medicine, 0);
             var healed = false;
             for (var seed = 1; seed <= 20 && !healed; seed++)
             {
                 state.Flags.Add(balance.InjuredFlag);
+                state.Base.SetResource(ResourceType.Medicine, 0);
+                var noMedicine = ActionResolver.Resolve(state, lesson, db, new SeededRandom(SeededRandom.CreateState(seed)), new StateDelta());
+                Assert.IsTrue(InjuryRules.IsInjured(state, balance), "의약품이 없으면 수업에 성공해도 그대로 (" + noMedicine + ")");
+
+                state.Base.SetResource(ResourceType.Medicine, 2);
                 var result = ActionResolver.Resolve(state, lesson, db, new SeededRandom(SeededRandom.CreateState(seed)), new StateDelta());
                 Assert.AreEqual(result == CheckResult.Failure, InjuryRules.IsInjured(state, balance), "성공하면 치유, 실패하면 그대로");
+                Assert.AreEqual(result == CheckResult.Failure ? 2 : 1, state.Base.GetResource(ResourceType.Medicine), "치유하면 의약품 1");
                 healed = result != CheckResult.Failure;
             }
 
@@ -95,7 +100,7 @@ namespace ApoGirl.Tests.EditMode
         }
 
         [Test]
-        public void Rest_WithMedicine_AlwaysTreatsInjury()
+        public void NightRest_WithMedicine_AlwaysTreatsInjury()
         {
             var db = M6Act4Tests.ShippedDb();
             var balance = db.Balance;
@@ -112,6 +117,12 @@ namespace ApoGirl.Tests.EditMode
 
             // 다치지 않았으면 의약품을 쓰지 않는다
             ActionResolver.Resolve(state, db.GetAction(balance.NightRestActionId), db, new SeededRandom(SeededRandom.CreateState(1)), new StateDelta());
+            Assert.AreEqual(2, state.Base.GetResource(ResourceType.Medicine));
+
+            // 낮잠으로는 치유되지 않는다 (밤 휴식만)
+            state.Flags.Add(balance.InjuredFlag);
+            ActionResolver.Resolve(state, db.GetAction(balance.DayRestActionId), db, new SeededRandom(SeededRandom.CreateState(1)), new StateDelta());
+            Assert.IsTrue(InjuryRules.IsInjured(state, balance), "낮잠은 의약품을 쓰지 않는다");
             Assert.AreEqual(2, state.Base.GetResource(ResourceType.Medicine));
         }
 

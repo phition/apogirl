@@ -78,8 +78,11 @@ namespace ApoGirl.Core.Simulation
             {
                 recovery *= 1f + TraitRules.Sum(state, db, TraitModifierKind.RestRecovery);
 
-                // 부상 중 휴식: 의약품이 있으면 반드시 써서 치유한다 (그 뒤 휴식 회복은 그대로)
-                InjuryRules.TreatOnRest(state, balance, delta);
+                // 부상 중 밤 휴식: 의약품이 있으면 반드시 써서 치유한다 (그 뒤 휴식 회복은 그대로)
+                if (action.Id == balance.NightRestActionId)
+                {
+                    InjuryRules.TreatWithMedicine(state, balance, delta);
+                }
             }
 
             // 비용을 못 냈으면 아무 효과도 없다 (빗물 없이 정수해도 실패 보상을 받지 않게)

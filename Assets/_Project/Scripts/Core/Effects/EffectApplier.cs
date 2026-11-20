@@ -22,6 +22,12 @@ namespace ApoGirl.Core.Effects
                 ChangeStat(state, stat.Stat, stat.Amount, balance, delta);
             }
 
+            // 의약품으로 부상 치유 (그 뒤의 체력 회복이 막히지 않게 먼저)
+            if (effect.TreatInjury)
+            {
+                Rules.InjuryRules.TreatWithMedicine(state, balance, delta);
+            }
+
             // 플래그 해제를 먼저: 부상 치료(INJURED 해제)와 같은 효과의 체력 회복이 막히지 않게
             foreach (var flag in effect.ClearFlags)
             {

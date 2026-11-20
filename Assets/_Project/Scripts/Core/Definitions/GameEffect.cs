@@ -43,6 +43,9 @@ namespace ApoGirl.Core.Definitions
 
         public bool RestorePower;
 
+        /// <summary>부상 중이면 의약품을 써서 치유한다 (응급처치 수업 성공 등, 의약품이 없으면 그대로).</summary>
+        public bool TreatInjury;
+
         /// <summary>요리를 만든다 (0 = 안 함, 1 = 숙련에 맞는 요리, 2 = 한 단계 위). CookingRules.</summary>
         public int CookDish;
 

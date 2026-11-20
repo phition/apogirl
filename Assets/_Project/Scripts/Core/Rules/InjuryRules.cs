@@ -7,8 +7,8 @@ namespace ApoGirl.Core.Rules
 {
     /// <summary>
     /// 부상: 한 사건에서 최대 체력의 InjuryHpFraction(+응급처치·의학 Lv × 5%) 이상을 잃으면 부상 상태(플래그)가 된다.
-    /// 부상 중에는 체력이 회복되지 않는다(EffectApplier). 풀리는 길: 부상 치료(의약품), 응급처치 수업 성공(약 없이),
-    /// 휴식(의약품이 있으면 반드시 써서).
+    /// 부상 중에는 체력이 회복되지 않는다(EffectApplier). 풀리는 길은 모두 의약품이 든다:
+    /// 부상 치료 행동, 응급처치 수업 성공, 밤 휴식(의약품이 있으면 반드시 써서).
     /// 다칠 때 상처 감염이 오르고, 청결이 낮을수록 더 오른다.
     /// </summary>
     public static class InjuryRules
@@ -52,15 +52,16 @@ namespace ApoGirl.Core.Rules
                    && state.Player.ProficiencyLevel(ProficiencyType.Medicine) >= 1;
         }
 
-        /// <summary>부상 중 휴식: 의약품이 있으면 반드시 써서 치유한다. 치유했으면 true.</summary>
-        public static bool TreatOnRest(GameState state, BalanceConfig balance, StateDelta delta)
+        /// <summary>부상 중이고 의약품이 있으면 써서 치유한다 (밤 휴식·응급처치 수업 성공). 치유했으면 true.</summary>
+        public static bool TreatWithMedicine(GameState state, BalanceConfig balance, StateDelta delta)
         {
-            if (!IsInjured(state, balance) || balance.RestInjuryMedicine <= 0 || state.Base.GetResource(ResourceType.Medicine) < balance.RestInjuryMedicine)
+            var cost = Math.Max(0, balance.InjuryMedicineCost);
+            if (!IsInjured(state, balance) || state.Base.GetResource(ResourceType.Medicine) < cost)
             {
                 return false;
             }
 
-            EffectApplier.ChangeResource(state, ResourceType.Medicine, -balance.RestInjuryMedicine, delta);
+            EffectApplier.ChangeResource(state, ResourceType.Medicine, -cost, delta);
             if (state.Flags.Remove(balance.InjuredFlag))
             {
                 delta.FlagsCleared.Add(balance.InjuredFlag);
