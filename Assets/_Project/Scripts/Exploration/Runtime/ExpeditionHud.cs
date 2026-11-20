@@ -272,7 +272,7 @@ namespace ApoGirl.Exploration.Runtime
             switch (target.Kind)
             {
                 case TargetKind.Container:
-                    var name = Loc.T("container." + target.Container.Kind);
+                    var name = ContainerName(target.Container);
                     var canHide = target.Container.Kind == ContainerKind.Locker || target.Container.Kind == ContainerKind.Desk;
                     var hideHint = canHide ? "  ·  " + Loc.T("exp.prompt_hide") : "";
                     if (target.Searched)
@@ -334,7 +334,7 @@ namespace ApoGirl.Exploration.Runtime
 
             _shownContainer = container;
             _shownContentCount = container.Contents.Count;
-            _lootTitle.text = Loc.T("container." + container.Container.Kind);
+            _lootTitle.text = ContainerName(container.Container);
             _lootList.Clear();
             if (container.Contents.Count == 0)
             {
@@ -502,6 +502,21 @@ namespace ApoGirl.Exploration.Runtime
             element.style.top = y * CellSize;
             element.style.width = width * CellSize - 2f;
             element.style.height = height * CellSize - 2f;
+        }
+
+        /// <summary>상자 이름: 방별 그림(SpriteKey)에 맞는 이름이 있으면 그것 (침대·실험대 등), 없으면 종류 이름.</summary>
+        private static string ContainerName(ContainerDef container)
+        {
+            if (!string.IsNullOrEmpty(container.SpriteKey))
+            {
+                var special = Loc.Lookup(Loc.UiTable, "container." + container.SpriteKey);
+                if (!string.IsNullOrEmpty(special))
+                {
+                    return special;
+                }
+            }
+
+            return Loc.T("container." + container.Kind);
         }
     }
 
