@@ -107,7 +107,11 @@ namespace ApoGirl.Exploration.Runtime
         private bool _animRunning;
         private float _animTime;
         private float _attackAnim;
-        private const float AttackAnimSeconds = 0.3f;
+        private float _shoveAnim;
+
+        /// <summary>무기 휘두르기·맨손 밀치기 동작 길이 (픽셀 아트 프레임을 이 시간에 나눠 보여 준다).</summary>
+        private const float AttackAnimSeconds = 0.4f;
+        private const float ShoveAnimSeconds = 0.4f;
         private float _noiseMultiplier = 1f;
         private float _tutorialMoved;
         private float _tutorialCrouched;
@@ -614,6 +618,7 @@ namespace ApoGirl.Exploration.Runtime
             }
 
             _shoveTimer = _balance.ShoveCooldown;
+            _shoveAnim = ShoveAnimSeconds;
             var shoved = _threat.Shove(Snapshot, _facingRight ? 1 : -1);
             Sfx("sfx_push");
             EmitNoise(CurrentArea, X, _balance.ShoveNoise);
@@ -1185,6 +1190,7 @@ namespace ApoGirl.Exploration.Runtime
             {
                 _animTime += dt;
                 _attackAnim = Mathf.Max(0f, _attackAnim - dt);
+                _shoveAnim = Mathf.Max(0f, _shoveAnim - dt);
             }
 
             // 픽셀 아트는 동작마다 프레임 수가 다르다 (없으면 코드 그림 4프레임). 한 바퀴 빠르기는 그대로 둔다.
@@ -1192,6 +1198,15 @@ namespace ApoGirl.Exploration.Runtime
             {
                 var swing = ExplorationArt.FrameCount("player_attack_", 0);
                 return swing > 0 ? "player_attack_" + Mathf.Clamp((int)((1f - _attackAnim / AttackAnimSeconds) * swing), 0, swing - 1) : "player_attack";
+            }
+
+            if (_shoveAnim > 0f)
+            {
+                var push = ExplorationArt.FrameCount("player_shove_", 0);
+                if (push > 0)
+                {
+                    return "player_shove_" + Mathf.Clamp((int)((1f - _shoveAnim / ShoveAnimSeconds) * push), 0, push - 1);
+                }
             }
 
             if (Hidden) return "player_crouch";
