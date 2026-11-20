@@ -4027,6 +4027,46 @@ MonoBehaviour:
     m_Key: settle.vitals
     m_Metadata:
       m_Items: []
+  - m_Id: 699774113431552
+    m_Key: faction.trade.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 699774176346112
+    m_Key: faction.trade.none
+    m_Metadata:
+      m_Items: []
+  - m_Id: 699774176346113
+    m_Key: faction.trade.give
+    m_Metadata:
+      m_Items: []
+  - m_Id: 699774176346114
+    m_Key: faction.trade.get
+    m_Metadata:
+      m_Items: []
+  - m_Id: 699774176346115
+    m_Key: faction.trade.do
+    m_Metadata:
+      m_Items: []
+  - m_Id: 699774176346116
+    m_Key: faction.trade.delayed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 699774176346117
+    m_Key: faction.trade.standing
+    m_Metadata:
+      m_Items: []
+  - m_Id: 699774176346118
+    m_Key: faction.trade.min_tier
+    m_Metadata:
+      m_Items: []
+  - m_Id: 699774176346119
+    m_Key: faction.log.empty
+    m_Metadata:
+      m_Items: []
+  - m_Id: 699774176346120
+    m_Key: faction.log.week
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
