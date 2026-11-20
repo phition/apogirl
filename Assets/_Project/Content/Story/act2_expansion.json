@@ -1,0 +1,122 @@
+{
+  "Actions": [
+    { "Id": "ACT_SURV_MAKE_PROSTHETIC", "Category": "Survival", "SlotTag": "DayOnly", "FatigueCost": 10, "StressCost": 2, "HasCheck": true,
+      "ResourceCosts": [ { "Resource": "Materials", "Amount": 4 } ],
+      "Check": { "BaseRate": 0.35, "StatWeights": [ { "Stat": "Craft", "Weight": 0.006 } ], "UsesProficiency": true, "Proficiency": "Engineering", "ProficiencyWeight": 0.08 },
+      "StatGains": [ { "Stat": "Craft", "Amount": 2 } ], "HasProficiency": true, "Proficiency": "Engineering", "ProficiencyXp": 3,
+      "OnSuccess": { "TeacherMobility": 2, "SetFlags": [ "PROSTHETIC_DONE" ] },
+      "OnGreatSuccess": { "TeacherMobility": 2, "SetFlags": [ "PROSTHETIC_DONE" ] },
+      "Unlock": { "FlagsAll": [ "PROSTHETIC_PLAN", "CRUTCH_DONE" ], "FlagsNone": [ "PROSTHETIC_DONE" ] } }
+  ],
+  "Events": [
+    { "Id": "EVT_A2_SAGEORI_MARK", "Kind": "Story", "Priority": 60,
+      "Condition": { "WeekMin": 16, "Phase": "Day", "ActionCategories": [ "Expedition" ], "FlagsNone": [ "SAGEORI_MARKED" ] },
+      "OnShow": { "SetFlags": [ "SAGEORI_MARKED" ],
+        "Factions": [ { "FactionId": "FAC_SAGEORI", "Reveal": true, "LogKey": "faction.FAC_SAGEORI.log.mark" } ] },
+      "Choices": [
+        { "Id": "ERASE", "Effect": { "Defense": 2, "Factions": [ { "FactionId": "FAC_SAGEORI", "Standing": -5, "LogKey": "faction.FAC_SAGEORI.log.erase" } ] } },
+        { "Id": "DECOY", "Effect": { "Threat": -4 } },
+        { "Id": "LEAVE", "Effect": { "Vitals": [ { "Vital": "Stress", "Amount": 3 } ] } }
+      ] },
+
+    { "Id": "EVT_A2_SAGEORI_TOLL", "Kind": "Story", "Priority": 62,
+      "Condition": { "WeekMin": 21, "Phase": "Day", "FlagsAll": [ "SAGEORI_MARKED" ], "FlagsNone": [ "SAGEORI_TOLL" ] },
+      "OnShow": { "SetFlags": [ "SAGEORI_TOLL" ] },
+      "Choices": [
+        { "Id": "PAY", "Costs": [ { "Resource": "Food", "Amount": 4 } ],
+          "Effect": { "Vitals": [ { "Vital": "Stress", "Amount": 4 } ], "SetFlags": [ "SAGEORI_PAID" ],
+            "Factions": [ { "FactionId": "FAC_SAGEORI", "Standing": 25, "LogKey": "faction.FAC_SAGEORI.log.pay" } ] } },
+        { "Id": "NEGOTIATE", "HasCheck": true, "Check": { "BaseRate": 0.4, "StatWeights": [ { "Stat": "Leadership", "Weight": 0.008 } ] },
+          "Costs": [ { "Resource": "Food", "Amount": 2 } ],
+          "Effect": { "Stats": [ { "Stat": "Leadership", "Amount": 1 } ], "SetFlags": [ "SAGEORI_PAID" ],
+            "Factions": [ { "FactionId": "FAC_SAGEORI", "Standing": 25, "LogKey": "faction.FAC_SAGEORI.log.negotiate" } ] },
+          "OnFailure": { "Vitals": [ { "Vital": "Stress", "Amount": 6 } ],
+            "Factions": [ { "FactionId": "FAC_SAGEORI", "Standing": -10, "LogKey": "faction.FAC_SAGEORI.log.negotiate_fail" } ] } },
+        { "Id": "REFUSE", "Effect": { "Threat": 6, "Stats": [ { "Stat": "Willpower", "Amount": 1 } ], "SetFlags": [ "SAGEORI_REFUSED" ],
+            "Factions": [ { "FactionId": "FAC_SAGEORI", "Standing": -15, "LogKey": "faction.FAC_SAGEORI.log.refuse" } ] } }
+      ] },
+
+    { "Id": "EVT_A2_UBC_LEAFLET", "Kind": "Story", "Priority": 40,
+      "Condition": { "WeekMin": 18, "ActionIds": [ "ACT_EXP_DAY_STORE", "ACT_EXP_DAY_RESIDENTIAL", "ACT_EXP_DAY_PHARMACY", "ACT_EXP_DAY_SUBWAY" ], "FlagsNone": [ "UBC_LEAFLET" ] },
+      "OnShow": { "SetFlags": [ "UBC_LEAFLET" ], "Hidden": [ { "Hidden": "Hope", "Amount": 1 } ],
+        "Factions": [ { "FactionId": "FAC_UBC", "Reveal": true, "LogKey": "faction.FAC_UBC.log.leaflet" } ] } },
+
+    { "Id": "EVT_NURSE_03_THAT_DAY", "Kind": "Night", "Priority": 44,
+      "Condition": { "WeekMin": 17, "Phase": "Night", "FlagsAll": [ "NURSE_EXAM_DONE" ], "FlagsNone": [ "NURSE_THAT_DAY" ], "NpcStatuses": [ { "NpcId": "NPC_NURSE", "Status": "Joined" } ] },
+      "OnShow": { "SetFlags": [ "NURSE_THAT_DAY" ] },
+      "Choices": [
+        { "Id": "LISTEN", "Effect": { "Npcs": [ { "NpcId": "NPC_NURSE", "Affinity": 5 } ], "Hidden": [ { "Hidden": "Humanity", "Amount": 1 } ] } },
+        { "Id": "HAND", "Effect": { "Npcs": [ { "NpcId": "NPC_NURSE", "Affinity": 4, "Trust": 3 } ], "Stats": [ { "Stat": "Empathy", "Amount": 1 } ] } }
+      ] },
+
+    { "Id": "EVT_NURSE_04_RATION", "Kind": "Story", "Priority": 46,
+      "Condition": { "WeekMin": 19, "FlagsAll": [ "NURSE_THAT_DAY" ], "FlagsNone": [ "MED_RULE_SET" ], "NpcStatuses": [ { "NpcId": "NPC_NURSE", "Status": "Joined" } ],
+        "Checks": [ { "Kind": "Resource", "Key": "Medicine", "Op": "LessOrEqual", "Value": 3 } ] },
+      "OnShow": { "SetFlags": [ "MED_RULE_SET" ] },
+      "Choices": [
+        { "Id": "SICK_FIRST", "Effect": { "SetFlags": [ "MED_RULE_SICK" ], "Hidden": [ { "Hidden": "Humanity", "Amount": 2 } ], "Npcs": [ { "NpcId": "NPC_NURSE", "Affinity": 4 } ] } },
+        { "Id": "WORKER_FIRST", "Effect": { "SetFlags": [ "MED_RULE_WORKER" ], "Stats": [ { "Stat": "Leadership", "Amount": 1 } ], "Hidden": [ { "Hidden": "Humanity", "Amount": -1 } ], "Npcs": [ { "NpcId": "NPC_NURSE", "Affinity": -2 } ] } },
+        { "Id": "DOCTOR_DECIDES", "Effect": { "SetFlags": [ "MED_RULE_NURSE" ], "Npcs": [ { "NpcId": "NPC_NURSE", "Trust": 6 } ], "Hidden": [ { "Hidden": "SelfAwareness", "Amount": 1 } ] } }
+      ] },
+
+    { "Id": "EVT_NURSE_05_LEG", "Kind": "Night", "Priority": 43,
+      "Condition": { "WeekMin": 21, "Phase": "Night", "FlagsAll": [ "CRUTCH_DONE", "NURSE_THAT_DAY" ], "FlagsNone": [ "PROSTHETIC_PLAN" ], "NpcStatuses": [ { "NpcId": "NPC_NURSE", "Status": "Joined" } ] },
+      "OnShow": { "SetFlags": [ "PROSTHETIC_PLAN" ], "Npcs": [ { "NpcId": "NPC_TEACHER", "Affinity": 3 }, { "NpcId": "NPC_NURSE", "Affinity": 2 } ], "Hidden": [ { "Hidden": "Hope", "Amount": 1 } ] } },
+    { "Id": "EVT_A2_PROSTHETIC_DONE", "Kind": "Story", "Priority": 90,
+      "Condition": { "ActionIds": [ "ACT_SURV_MAKE_PROSTHETIC" ], "FlagsAll": [ "PROSTHETIC_DONE" ] },
+      "OnShow": { "Npcs": [ { "NpcId": "NPC_TEACHER", "Affinity": 8 } ], "Hidden": [ { "Hidden": "Hope", "Amount": 3 } ] } },
+
+    { "Id": "EVT_BY_03_LETTER", "Kind": "Night", "Priority": 42,
+      "Condition": { "WeekMin": 18, "Phase": "Night", "FlagsAll": [ "BYSTANDER_TALKED" ], "FlagsNone": [ "BY_LETTER" ], "NpcStatuses": [ { "NpcId": "NPC_BYSTANDER", "Status": "Joined" } ] },
+      "OnShow": { "SetFlags": [ "BY_LETTER" ] },
+      "Choices": [
+        { "Id": "READ", "Effect": { "Hidden": [ { "Hidden": "TraumaRecovery", "Amount": 2 } ], "Npcs": [ { "NpcId": "NPC_BYSTANDER", "Affinity": 3 } ] } },
+        { "Id": "RETURN", "Effect": { "Hidden": [ { "Hidden": "SelfAwareness", "Amount": 1 } ], "Npcs": [ { "NpcId": "NPC_BYSTANDER", "Trust": 4 } ] } }
+      ] },
+    { "Id": "EVT_BY_04_MAP", "Kind": "Story", "Priority": 41,
+      "Condition": { "WeekMin": 21, "Phase": "Day", "FlagsAll": [ "BY_LETTER" ], "FlagsNone": [ "BY_MAP" ], "NpcStatuses": [ { "NpcId": "NPC_BYSTANDER", "Status": "Joined" } ] },
+      "OnShow": { "SetFlags": [ "BY_MAP" ] },
+      "Choices": [
+        { "Id": "DEFENSE_MAP", "Effect": { "Defense": 4, "Npcs": [ { "NpcId": "NPC_BYSTANDER", "Affinity": 4 } ] } },
+        { "Id": "TOWN_MAP", "Effect": { "Stats": [ { "Stat": "Intellect", "Amount": 1 } ], "Npcs": [ { "NpcId": "NPC_BYSTANDER", "Affinity": 4 } ] } }
+      ] },
+
+    { "Id": "EVT_DH_NURSE_FEVER", "Kind": "Night", "Priority": 44,
+      "Condition": { "WeekMin": 18, "Phase": "Night", "FlagsNone": [ "DH_FEVER" ],
+        "NpcStatuses": [ { "NpcId": "NPC_DOHYEON", "Status": "Joined" }, { "NpcId": "NPC_NURSE", "Status": "Joined" } ] },
+      "OnShow": { "SetFlags": [ "DH_FEVER" ] },
+      "Choices": [
+        { "Id": "STAY_UP", "Effect": { "Vitals": [ { "Vital": "Fatigue", "Amount": 10 } ], "Npcs": [ { "NpcId": "NPC_DOHYEON", "Affinity": 6 }, { "NpcId": "NPC_NURSE", "Affinity": 2 } ], "Hidden": [ { "Hidden": "Humanity", "Amount": 1 } ] } },
+        { "Id": "TRUST_NURSE", "Effect": { "Npcs": [ { "NpcId": "NPC_NURSE", "Trust": 3 } ] } }
+      ] },
+
+    { "Id": "EVT_A2_RATION_FIGHT", "Kind": "Story", "Priority": 47,
+      "Condition": { "WeekMin": 18, "Phase": "Day", "FlagsNone": [ "A2_RATION_FIGHT" ],
+        "Checks": [ { "Kind": "Companions", "Op": "GreaterOrEqual", "Value": 2 }, { "Kind": "Resource", "Key": "Food", "Op": "LessOrEqual", "Value": 10 } ] },
+      "OnShow": { "SetFlags": [ "A2_RATION_FIGHT" ], "Vitals": [ { "Vital": "Stress", "Amount": 4 } ] },
+      "Choices": [
+        { "Id": "EQUAL", "Effect": { "Stats": [ { "Stat": "Leadership", "Amount": 2 } ], "SetFlags": [ "RATION_EQUAL" ] } },
+        { "Id": "WORK_FIRST", "Effect": { "Stats": [ { "Stat": "Leadership", "Amount": 1 } ], "Hidden": [ { "Hidden": "Humanity", "Amount": -1 } ], "SetFlags": [ "RATION_WORK" ] } },
+        { "Id": "MY_SHARE", "Effect": { "Vitals": [ { "Vital": "Satiety", "Amount": -20 } ], "Hidden": [ { "Hidden": "Humanity", "Amount": 2 } ], "SetFlags": [ "RATION_SELF" ],
+            "Npcs": [ { "NpcId": "NPC_TEACHER", "Affinity": 2 } ] } }
+      ] },
+
+    { "Id": "EVT_CAL_RAINY_SEASON", "Kind": "Calendar", "Priority": 54, "Condition": { "Month": 6, "DayOfMonth": 22 },
+      "Choices": [
+        { "Id": "BUCKETS", "Effect": { "Resources": [ { "Resource": "RawWater", "Amount": 4 } ], "Vitals": [ { "Vital": "Fatigue", "Amount": 3 } ] } },
+        { "Id": "MOLD", "Effect": { "Vitals": [ { "Vital": "Cleanliness", "Amount": 10 } ] } }
+      ] },
+    { "Id": "EVT_CAL_CHOBOK", "Kind": "Calendar", "Priority": 54, "Condition": { "Month": 7, "DayOfMonth": 15 },
+      "Choices": [
+        { "Id": "SHARE_CAN", "Costs": [ { "Resource": "Food", "Amount": 2 } ],
+          "Effect": { "Vitals": [ { "Vital": "Stress", "Amount": -8 }, { "Vital": "Satiety", "Amount": 15 } ], "Npcs": [ { "NpcId": "NPC_TEACHER", "Affinity": 2 } ] } },
+        { "Id": "SKIP", "Effect": { "Stats": [ { "Stat": "Willpower", "Amount": 1 } ] } }
+      ] },
+    { "Id": "EVT_CAL_LIBERATION", "Kind": "Calendar", "Priority": 54, "Condition": { "Month": 8, "DayOfMonth": 15 },
+      "OnShow": { "Hidden": [ { "Hidden": "Hope", "Amount": 1 } ], "Npcs": [ { "NpcId": "NPC_TEACHER", "Affinity": 1 } ] } },
+
+    { "Id": "EVT_RND_A2_TROPICAL_NIGHT", "Kind": "Random", "Priority": 0, "Once": false, "CooldownWeeks": 4, "Weight": 1,
+      "Condition": { "Phase": "Night", "Seasons": [ "Summer" ] },
+      "OnShow": { "Vitals": [ { "Vital": "Fatigue", "Amount": 3 }, { "Vital": "Hydration", "Amount": -5 } ] } }
+  ]
+}

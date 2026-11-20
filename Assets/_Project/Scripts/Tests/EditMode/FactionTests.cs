@@ -57,7 +57,7 @@ namespace ApoGirl.Tests.EditMode
             var state = NewState(db);
             Assert.AreEqual(-40, state.Factions["FAC_SAGEORI"].Standing, "사거리 파: 경계");
             Assert.AreEqual(0, state.Factions["FAC_MART"].Standing, "더불어 마트: 중립");
-            Assert.AreEqual(30, state.Factions["FAC_UBC"].Standing, "UBC: 호의");
+            Assert.AreEqual(20, state.Factions["FAC_UBC"].Standing, "UBC: 중립 (교신하면 호의)");
             Assert.IsFalse(state.Factions.Values.Any(f => f.Known), "처음에는 모르는 세력");
         }
 
@@ -128,6 +128,7 @@ namespace ApoGirl.Tests.EditMode
             // UBC 무전 거래: 다음 주 정산 때 도착
             var ubc = state.Factions["FAC_UBC"];
             ubc.Known = true;
+            ubc.Standing = 30;
             state.Base.SetResource(ResourceType.Fuel, 0);
             Assert.AreEqual("faction.trade.short", FactionRules.TradeBlocker(state, db, "FAC_UBC", "FUEL_MEDICINE"));
             state.Base.SetResource(ResourceType.Fuel, 1);
@@ -144,6 +145,7 @@ namespace ApoGirl.Tests.EditMode
             var state = NewState(db, 30);
             var ubc = state.Factions["FAC_UBC"];
             ubc.Known = true;
+            ubc.Standing = 30;
             ubc.LastContactWeek = 28;
             FactionRules.ApplyWeekly(state, db, db.Balance, new StateDelta());
             Assert.AreEqual(30, ubc.Standing, "4주가 안 지나면 그대로");

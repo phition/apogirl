@@ -863,7 +863,16 @@
     "trade.FAC_UBC.FUEL_MEDICINE": "발전기 연료를 보내면, 운반조가 다음 주에 의약품을 교문 앞에 두고 간다.",
     "trade.FAC_UBC.FUEL_MEDICINE.log": "연료를 보내고 의약품을 부탁했다",
     "trade.FAC_UBC.MATERIALS_INTEL": "안테나 부품을 보내면, 다음 주에 생수를 보내 준다.",
-    "trade.FAC_UBC.MATERIALS_INTEL.log": "부품을 보내고 생수를 부탁했다"
+    "trade.FAC_UBC.MATERIALS_INTEL.log": "부품을 보내고 생수를 부탁했다",
+    "faction.FAC_SAGEORI.log.mark": "학교 담장에 붉은 표시가 생겼다",
+    "faction.FAC_SAGEORI.log.erase": "표시를 지우고 교문을 막았다",
+    "faction.FAC_SAGEORI.log.pay": "전갈을 받고 식량을 내줬다",
+    "faction.FAC_SAGEORI.log.negotiate": "조건을 걸고 통행세를 흥정했다",
+    "faction.FAC_SAGEORI.log.negotiate_fail": "흥정하다 얕보였다",
+    "faction.FAC_SAGEORI.log.refuse": "통행세를 거절했다",
+    "faction.FAC_SAGEORI.log.fortify": "담장을 보강해 맞섰다",
+    "faction.FAC_UBC.log.leaflet": "가게 유리문에서 방송 전단지를 찾았다",
+    "faction.FAC_UBC.log.static": "방송실 무전기로 처음 목소리를 들었다"
   },
   "Actions": {
     "ACT_REST_DAY.name": "낮잠",
@@ -979,7 +988,9 @@
     "ACT_SCHOOL_TRIP.name": "수학여행 (1박 2일)",
     "ACT_SCHOOL_TRIP.short": "수학여행",
     "ACT_TRIP_NIGHT.name": "수학여행의 밤",
-    "ACT_TRIP_NIGHT.short": "여행 중"
+    "ACT_TRIP_NIGHT.short": "여행 중",
+    "ACT_SURV_MAKE_PROSTHETIC.name": "간이 의족 만들기",
+    "ACT_SURV_MAKE_PROSTHETIC.short": "의족"
   },
   "Items": {
     "ITEM_ANTISEPTIC.name": "소독약",

@@ -34,7 +34,7 @@
     },
     {
       "Id": "FAC_UBC",
-      "StartStanding": 30,
+      "StartStanding": 20,
       "DriftAfterWeeks": 4, "WeeklyDrift": 3, "DriftTarget": 10,
       "Effects": [
         { "MinTier": "Hostile", "MaxTier": "Neutral", "TextKey": "faction.FAC_UBC.effect.distant" },

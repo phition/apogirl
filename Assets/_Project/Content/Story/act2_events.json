@@ -1159,6 +1159,14 @@
       "OnShow": {
         "SetFlags": [
           "RADIO_HEARD"
+        ],
+        "Factions": [
+          {
+            "FactionId": "FAC_UBC",
+            "Reveal": true,
+            "Standing": 2,
+            "LogKey": "faction.FAC_UBC.log.static"
+          }
         ]
       },
       "Choices": [
@@ -1792,7 +1800,14 @@
                 "Amount": -2
               }
             ],
-            "Defense": 5
+            "Defense": 5,
+            "Factions": [
+              {
+                "FactionId": "FAC_SAGEORI",
+                "Standing": -3,
+                "LogKey": "faction.FAC_SAGEORI.log.fortify"
+              }
+            ]
           }
         },
         {
@@ -1802,6 +1817,12 @@
               {
                 "Vital": "Stress",
                 "Amount": 5
+              }
+            ],
+            "Factions": [
+              {
+                "FactionId": "FAC_SAGEORI",
+                "Standing": 2
               }
             ]
           }
