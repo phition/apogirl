@@ -210,7 +210,8 @@ namespace ApoGirl.Core.Definitions
                 WeeklyUndo = true, Dispatch = true, DispatchYield = 0.7f,
             },
             new DifficultyDef { Id = "STANDARD" },
-            new DifficultyDef { Id = "HARD", Consumption = 1.25f, Harm = 1.4f, HumanThreat = 1.3f, Infection = 1.3f, Yield = 0.85f },
+            // 하드: 가혹해진 세계에 맞춰 소모는 표준과 같게 (2026-11-20 결정, M7-d의 ×1.25에서 수정)
+            new DifficultyDef { Id = "HARD", Consumption = 1f, Harm = 1.4f, HumanThreat = 1.3f, Infection = 1.3f, Yield = 0.9f },
         };
 
         // ── 적대적 생존자 (낮 탐험, M7 추가 요청) ──
