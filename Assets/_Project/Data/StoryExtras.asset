@@ -5605,7 +5605,7 @@ MonoBehaviour:
       - Kind: 4
         Key: SelfAwareness
         Op: 0
-        Value: 46
+        Value: 48
       AnyChecks: []
       NpcStatuses: []
       IsBirthday: 0
@@ -5854,7 +5854,7 @@ MonoBehaviour:
     Color: '#302A22'
   - Id: ENDING_EDUCATOR
     Category: 3
-    Priority: 300
+    Priority: 305
     EndCauses: []
     Condition:
       WeekMin: 0
@@ -5882,7 +5882,7 @@ MonoBehaviour:
       - Kind: 10
         Key: TAG_TEACHING
         Op: 0
-        Value: 5
+        Value: 3
       AnyChecks: []
       NpcStatuses: []
       IsBirthday: 0
