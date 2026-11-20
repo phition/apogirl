@@ -872,6 +872,37 @@ namespace ApoGirl.Presentation.Screens
             _faction.Show(factionId);
         }
 
+        /// <summary>
+        /// 실행 중 평범한 칸: 카드로 멈추지 않고 장면 위에 결과 한 줄을 흘려보낸다 (최근 4줄, 몇 초 뒤 사라짐).
+        /// 대성공이면 입상이 밝게 웃는다.
+        /// </summary>
+        private void ShowTicker(SlotOutcome outcome)
+        {
+            if (string.IsNullOrEmpty(outcome.ActionId))
+            {
+                return;
+            }
+
+            var deltas = UiText.DeltaLines(outcome.Delta);
+            var detail = UiText.Result(outcome.Result) + (deltas.Count > 0 ? "  " + string.Join("  ", deltas.Take(3)) : "");
+            var line = new Label(Loc.F("hud.ticker", outcome.Day, UiText.Phase(outcome.Phase), Loc.Action(outcome.ActionId, "short"), detail));
+            line.AddToClassList("ticker-line");
+            line.EnableInClassList("great", outcome.Result == Core.Rules.CheckResult.GreatSuccess);
+            line.EnableInClassList("fail", outcome.Result == Core.Rules.CheckResult.Failure);
+            _ticker.Add(line);
+            while (_ticker.childCount > 4)
+            {
+                _ticker.RemoveAt(0);
+            }
+
+            line.schedule.Execute(() => line.AddToClassList("fading")).ExecuteLater(2600);
+            line.schedule.Execute(() => line.RemoveFromHierarchy()).ExecuteLater(3000);
+            if (outcome.Result == Core.Rules.CheckResult.GreatSuccess)
+            {
+                _standing.React("bright", 1.6f);
+            }
+        }
+
         private void ShowToast(string message)
         {
             _toast.text = message;
