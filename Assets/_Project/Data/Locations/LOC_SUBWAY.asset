@@ -24,10 +24,12 @@ MonoBehaviour:
         Floor: 0
         X: 48
         TargetFloor: 1
+        Collapsed: 0
       - Kind: 0
         Floor: 1
         X: 46.6
         TargetFloor: 0
+        Collapsed: 0
       Doors:
       - RoomId: ROOM_SUBWAY_OFFICE_1
         TemplateId: ROOM_SUBWAY_OFFICE

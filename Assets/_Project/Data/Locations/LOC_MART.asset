@@ -24,10 +24,12 @@ MonoBehaviour:
         Floor: 0
         X: 104
         TargetFloor: 1
+        Collapsed: 0
       - Kind: 0
         Floor: 1
         X: 102.6
         TargetFloor: 0
+        Collapsed: 0
       Doors:
       - RoomId: ROOM_MART_OFFICE_1
         TemplateId: ROOM_MART_OFFICE

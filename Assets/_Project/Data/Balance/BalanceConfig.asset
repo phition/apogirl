@@ -442,6 +442,10 @@ MonoBehaviour:
     DayRoomAmbient: 0.32
     SunbeamIntensity: 2.3
     SunbeamSpacing: 6
+    SunbeamsPerFloorMin: 1
+    SunbeamsPerFloorMax: 2
+    ApproachRoadWidth: 18
+    EscapeRouteWidth: 14
     RoomWindowLightIntensity: 0.15
     DarknessVisibility: 0.6
     FlashlightExposure: 1.5

@@ -24,34 +24,42 @@ MonoBehaviour:
         Floor: 0
         X: 6
         TargetFloor: 1
+        Collapsed: 0
       - Kind: 0
         Floor: 1
         X: 4.6
         TargetFloor: 0
+        Collapsed: 0
       - Kind: 0
         Floor: 1
         X: 6
         TargetFloor: 2
+        Collapsed: 1
       - Kind: 0
         Floor: 2
         X: 4.6
         TargetFloor: 1
+        Collapsed: 1
       - Kind: 0
         Floor: 0
         X: 96
         TargetFloor: 1
+        Collapsed: 0
       - Kind: 0
         Floor: 1
         X: 94.6
         TargetFloor: 0
+        Collapsed: 0
       - Kind: 0
         Floor: 1
         X: 96
         TargetFloor: 2
+        Collapsed: 0
       - Kind: 0
         Floor: 2
         X: 94.6
         TargetFloor: 1
+        Collapsed: 0
       Doors:
       - RoomId: ROOM_WATER_ARCHIVE_1
         TemplateId: ROOM_WATER_ARCHIVE

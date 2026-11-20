@@ -24,50 +24,62 @@ MonoBehaviour:
         Floor: 0
         X: 3
         TargetFloor: 1
+        Collapsed: 0
       - Kind: 0
         Floor: 1
         X: 1.6
         TargetFloor: 0
+        Collapsed: 0
       - Kind: 0
         Floor: 1
         X: 3
         TargetFloor: 2
+        Collapsed: 0
       - Kind: 0
         Floor: 2
         X: 1.6
         TargetFloor: 1
+        Collapsed: 0
       - Kind: 0
         Floor: 2
         X: 3
         TargetFloor: 3
+        Collapsed: 0
       - Kind: 0
         Floor: 3
         X: 1.6
         TargetFloor: 2
+        Collapsed: 0
       - Kind: 0
         Floor: 0
         X: 121
         TargetFloor: 1
+        Collapsed: 0
       - Kind: 0
         Floor: 1
         X: 119.6
         TargetFloor: 0
+        Collapsed: 0
       - Kind: 0
         Floor: 1
         X: 121
         TargetFloor: 2
+        Collapsed: 1
       - Kind: 0
         Floor: 2
         X: 119.6
         TargetFloor: 1
+        Collapsed: 1
       - Kind: 0
         Floor: 2
         X: 121
         TargetFloor: 3
+        Collapsed: 0
       - Kind: 0
         Floor: 3
         X: 119.6
         TargetFloor: 2
+        Collapsed: 0
       Doors:
       - RoomId: ROOM_1F_ROOM_OFFICE_0
         TemplateId: ROOM_OFFICE

@@ -3871,6 +3871,30 @@ MonoBehaviour:
     m_Key: line.m_last_stand
     m_Metadata:
       m_Items: []
+  - m_Id: 556800675168256
+    m_Key: exp.prompt_go_outside
+    m_Metadata:
+      m_Items: []
+  - m_Id: 556801501446144
+    m_Key: exp.prompt_enter_building
+    m_Metadata:
+      m_Items: []
+  - m_Id: 556801501446145
+    m_Key: exp.prompt_stairs_collapsed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 556801501446146
+    m_Key: exp.stairs_collapsed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 556801501446147
+    m_Key: exp.area_entry
+    m_Metadata:
+      m_Items: []
+  - m_Id: 556801501446148
+    m_Key: exp.area_escape
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
