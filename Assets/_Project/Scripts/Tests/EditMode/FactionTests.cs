@@ -121,7 +121,7 @@ namespace ApoGirl.Tests.EditMode
             mart.Standing = 30;
             Assert.IsTrue(FactionRules.Trade(state, db, "FAC_MART", "MEDICINE_FOOD", new StateDelta()));
             Assert.AreEqual(1, state.Base.GetResource(ResourceType.Medicine));
-            Assert.AreEqual(5, state.Base.GetResource(ResourceType.Food));
+            Assert.AreEqual(4, state.Base.GetResource(ResourceType.Food));
             Assert.AreEqual(33, mart.Standing);
             Assert.AreEqual("faction.trade.weekly", FactionRules.TradeBlocker(state, db, "FAC_MART", "MEDICINE_FOOD"), "세력마다 주 1회");
 
@@ -129,9 +129,9 @@ namespace ApoGirl.Tests.EditMode
             var ubc = state.Factions["FAC_UBC"];
             ubc.Known = true;
             ubc.Standing = 30;
-            state.Base.SetResource(ResourceType.Fuel, 0);
-            Assert.AreEqual("faction.trade.short", FactionRules.TradeBlocker(state, db, "FAC_UBC", "FUEL_MEDICINE"));
             state.Base.SetResource(ResourceType.Fuel, 1);
+            Assert.AreEqual("faction.trade.short", FactionRules.TradeBlocker(state, db, "FAC_UBC", "FUEL_MEDICINE"));
+            state.Base.SetResource(ResourceType.Fuel, 2);
             Assert.IsTrue(FactionRules.Trade(state, db, "FAC_UBC", "FUEL_MEDICINE", new StateDelta()));
             Assert.AreEqual(1, state.Base.GetResource(ResourceType.Medicine), "아직 안 왔다");
             FactionRules.ApplyWeekly(state, db, db.Balance, new StateDelta());

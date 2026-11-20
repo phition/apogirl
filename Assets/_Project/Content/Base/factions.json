@@ -22,10 +22,10 @@
         { "MinTier": "Allied", "MaxTier": "Allied", "TextKey": "faction.FAC_MART.effect.truck" }
       ],
       "Trades": [
-        { "Id": "MATERIALS_FOOD", "MinTier": "Neutral", "Give": [ { "Resource": "Materials", "Amount": 3 } ], "Get": [ { "Resource": "Food", "Amount": 3 } ], "StandingChange": 1 },
-        { "Id": "MEDICINE_FOOD", "MinTier": "Friendly", "Give": [ { "Resource": "Medicine", "Amount": 1 } ], "Get": [ { "Resource": "Food", "Amount": 5 } ], "StandingChange": 3 },
-        { "Id": "FOOD_FUEL", "MinTier": "Friendly", "Give": [ { "Resource": "Food", "Amount": 3 } ], "Get": [ { "Resource": "Fuel", "Amount": 2 } ], "StandingChange": 1 },
-        { "Id": "MATERIALS_WATER", "MinTier": "Allied", "Give": [ { "Resource": "Materials", "Amount": 2 } ], "Get": [ { "Resource": "Water", "Amount": 6 } ], "StandingChange": 1 }
+        { "Id": "MATERIALS_FOOD", "MinTier": "Neutral", "Give": [ { "Resource": "Materials", "Amount": 4 } ], "Get": [ { "Resource": "Food", "Amount": 3 } ], "StandingChange": 1 },
+        { "Id": "MEDICINE_FOOD", "MinTier": "Friendly", "Give": [ { "Resource": "Medicine", "Amount": 1 } ], "Get": [ { "Resource": "Food", "Amount": 4 } ], "StandingChange": 3 },
+        { "Id": "FOOD_FUEL", "MinTier": "Friendly", "Give": [ { "Resource": "Food", "Amount": 4 } ], "Get": [ { "Resource": "Fuel", "Amount": 2 } ], "StandingChange": 1 },
+        { "Id": "MATERIALS_WATER", "MinTier": "Allied", "Give": [ { "Resource": "Materials", "Amount": 3 } ], "Get": [ { "Resource": "Water", "Amount": 5 } ], "StandingChange": 1 }
       ],
       "FlagReactions": [
         { "Flag": "ENC_MART_GROUP_TALK", "Standing": 5, "Reveal": true, "LogKey": "faction.FAC_MART.log.talk" },
@@ -42,8 +42,8 @@
         { "MinTier": "Allied", "MaxTier": "Allied", "TextKey": "faction.FAC_UBC.effect.allied" }
       ],
       "Trades": [
-        { "Id": "FUEL_MEDICINE", "MinTier": "Friendly", "Give": [ { "Resource": "Fuel", "Amount": 1 } ], "Get": [ { "Resource": "Medicine", "Amount": 1 } ], "StandingChange": 3, "Delayed": true },
-        { "Id": "MATERIALS_INTEL", "MinTier": "Friendly", "Give": [ { "Resource": "Materials", "Amount": 2 } ], "Get": [ { "Resource": "Water", "Amount": 4 } ], "StandingChange": 2, "Delayed": true }
+        { "Id": "FUEL_MEDICINE", "MinTier": "Friendly", "Give": [ { "Resource": "Fuel", "Amount": 2 } ], "Get": [ { "Resource": "Medicine", "Amount": 1 } ], "StandingChange": 3, "Delayed": true },
+        { "Id": "MATERIALS_INTEL", "MinTier": "Friendly", "Give": [ { "Resource": "Materials", "Amount": 3 } ], "Get": [ { "Resource": "Water", "Amount": 4 } ], "StandingChange": 2, "Delayed": true }
       ]
     }
   ]
