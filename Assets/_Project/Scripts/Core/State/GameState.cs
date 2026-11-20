@@ -296,6 +296,9 @@ namespace ApoGirl.Core.State
         public int HostileRobberies { get; set; }
         public int HostileBeatings { get; set; }
 
+        /// <summary>다른 생존자 눈에 띈 정도 (생존자가 나오는 지역의 낮 탐험마다 +1, 매주 절반).</summary>
+        public int DayExposure { get; set; }
+
         /// <summary>낮 침입 횟수와 그중 대비가 부족해 크게 당한 횟수.</summary>
         public int Intrusions { get; set; }
         public int IntrusionsLost { get; set; }

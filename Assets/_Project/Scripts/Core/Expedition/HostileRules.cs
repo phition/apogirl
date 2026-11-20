@@ -33,7 +33,8 @@ namespace ApoGirl.Core.Expedition
             }
 
             var act = ActIndex(request.Week);
-            var chance = Chance(request.Week, balance) * (location?.DayVariant?.HostileChanceMultiplier ?? 1f);
+            var chance = (Chance(request.Week, balance) + request.DayExposure * balance.HostileChancePerExposure)
+                         * (location?.DayVariant?.HostileChanceMultiplier ?? 1f);
             if (chance <= 0f)
             {
                 return 0;

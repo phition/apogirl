@@ -79,6 +79,9 @@ namespace ApoGirl.Core.Expedition
         /// <summary>생존자 수 (한 무리, 같은 성향).</summary>
         public int HostileCount;
 
+        /// <summary>출정 시점의 노출도 (낮에 자주 나갈수록 생존자가 더 자주 나온다).</summary>
+        public int DayExposure;
+
         /// <summary>판 시드 (지역마다 처음부터 빈 상자를 정한다).</summary>
         public int WorldSeed;
 
@@ -175,6 +178,7 @@ namespace ApoGirl.Core.Expedition
             // 적대적 생존자 (낮만) · 상자 고갈 (교실동)
             LocationDef location = null;
             var hasLocation = db != null && db.TryGetLocation(action.LocationId, out location);
+            request.DayExposure = state.Exploration.DayExposure;
             HostileRules.Assign(request, hasLocation ? location : null, db?.Balance);
             request.WorldSeed = state.Rng.Seed;
             request.Restocked = state.Flags.Contains(ContainerRules.RestockFlag(action.LocationId));
