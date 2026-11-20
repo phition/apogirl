@@ -158,7 +158,7 @@
   },
   "CommonRules": [
     {"Note": "계절 소풍 (열리는 주에만 쓸 수 있다)", "Slots": ["D5"], "Use": "ACT_OUTING_SPRING|ACT_OUTING_SUMMER|ACT_OUTING_AUTUMN|ACT_OUTING_WINTER"},
-    {"Note": "수학여행 (30~33주, 그날 밤은 여행 중)", "Slots": ["D5"], "Use": "ACT_SCHOOL_TRIP"},
+    {"Note": "수학여행 (30~33주, 그날 밤은 여행 중; 한글날 30주 5일을 피해 3일)", "Slots": ["D3"], "Use": "ACT_SCHOOL_TRIP"},
     {"Note": "의족 설계가 나오면 만든다 (자재 4)", "Slots": ["D2"], "Use": "ACT_SURV_MAKE_PROSTHETIC"},
     {"Note": "부상이면 의약품으로 먼저 치료 (부상 중에는 체력이 회복되지 않는다)", "When": {"FlagsAll": ["INJURED"]}, "Slots": ["D1"], "Use": "ACT_TREAT_WOUND"},
     {"Note": "빗물이 모이면 정수 (빗물은 그대로 못 마신다)", "When": {"Checks": [{"Kind": "Resource", "Key": "RawWater", "Op": "GreaterOrEqual", "Value": 5}]}, "Slots": ["D7"], "Use": "ACT_SURV_PURIFY_WATER"},

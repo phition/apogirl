@@ -50,7 +50,7 @@
       "OnShow": { "SetFlags": [ "MART_LEFT" ], "Factions": [ { "FactionId": "FAC_MART", "LogKey": "faction.FAC_MART.log.left" } ] },
       "Choices": [
         { "Id": "THANK", "Condition": { "Checks": [ { "Kind": "FactionTier", "Key": "FAC_MART", "Op": "GreaterOrEqual", "Value": 3 } ] },
-          "Effect": { "Resources": [ { "Resource": "Food", "Amount": 8 }, { "Resource": "Fuel", "Amount": 2 } ], "Hidden": [ { "Hidden": "Hope", "Amount": 2 } ] } },
+          "Effect": { "Resources": [ { "Resource": "Food", "Amount": 5 }, { "Resource": "Fuel", "Amount": 1 } ], "Hidden": [ { "Hidden": "Hope", "Amount": 2 } ] } },
         { "Id": "SEE_OFF", "Effect": { "Hidden": [ { "Hidden": "Humanity", "Amount": 1 } ] } }
       ] },
 
@@ -72,7 +72,7 @@
         "NpcStatuses": [ { "NpcId": "NPC_DOHYEON", "Status": "Joined" } ],
         "Checks": [ { "Kind": "FactionStanding", "Key": "FAC_UBC", "Op": "GreaterOrEqual", "Value": 30 } ] },
       "OnShow": { "SetFlags": [ "DH_MOTHER", "DH_MOTHER_FOUND" ], "Hidden": [ { "Hidden": "Hope", "Amount": 3 } ],
-        "Npcs": [ { "NpcId": "NPC_DOHYEON", "Affinity": 10 } ], "Factions": [ { "FactionId": "FAC_UBC", "Standing": 5, "LogKey": "faction.FAC_UBC.log.dh_mother" } ] } },
+        "Npcs": [ { "NpcId": "NPC_DOHYEON", "Affinity": 5 } ], "Factions": [ { "FactionId": "FAC_UBC", "Standing": 5, "LogKey": "faction.FAC_UBC.log.dh_mother" } ] } },
     { "Id": "EVT_A4_UBC_LAST_SHOW", "Kind": "Night", "Priority": 60,
       "Condition": { "WeekMin": 51, "Phase": "Night", "FlagsAll": [ "DJ_CONTACT" ], "FlagsNone": [ "UBC_LAST_SHOW" ] },
       "OnShow": { "SetFlags": [ "UBC_LAST_SHOW" ], "Vitals": [ { "Vital": "Stress", "Amount": -8 } ], "Hidden": [ { "Hidden": "Hope", "Amount": 1 } ],
@@ -82,12 +82,12 @@
       "Condition": { "WeekMin": 50, "Phase": "Night", "FlagsNone": [ "DH_FAREWELL" ], "NpcStatuses": [ { "NpcId": "NPC_DOHYEON", "Status": "Joined" } ] },
       "OnShow": { "SetFlags": [ "DH_FAREWELL" ] },
       "Choices": [
-        { "Id": "PROMISE", "Effect": { "Npcs": [ { "NpcId": "NPC_DOHYEON", "Affinity": 4 } ], "Hidden": [ { "Hidden": "Hope", "Amount": 1 } ] } },
-        { "Id": "GIFT", "Effect": { "Npcs": [ { "NpcId": "NPC_DOHYEON", "Affinity": 6 } ], "Hidden": [ { "Hidden": "Humanity", "Amount": 1 } ] } }
+        { "Id": "PROMISE", "Effect": { "Npcs": [ { "NpcId": "NPC_DOHYEON", "Affinity": 2 } ], "Hidden": [ { "Hidden": "Hope", "Amount": 1 } ] } },
+        { "Id": "GIFT", "Effect": { "Npcs": [ { "NpcId": "NPC_DOHYEON", "Affinity": 3 } ] } }
       ] },
     { "Id": "EVT_NURSE_06_FAREWELL", "Kind": "Night", "Priority": 46,
       "Condition": { "WeekMin": 50, "Phase": "Night", "FlagsNone": [ "NURSE_FAREWELL" ], "NpcStatuses": [ { "NpcId": "NPC_NURSE", "Status": "Joined" } ] },
-      "OnShow": { "SetFlags": [ "NURSE_FAREWELL" ], "Npcs": [ { "NpcId": "NPC_NURSE", "Affinity": 4 } ] },
+      "OnShow": { "SetFlags": [ "NURSE_FAREWELL" ], "Npcs": [ { "NpcId": "NPC_NURSE", "Affinity": 2 } ] },
       "Choices": [
         { "Id": "ASK_FUTURE", "Effect": { "Hidden": [ { "Hidden": "SelfAwareness", "Amount": 2 } ] } },
         { "Id": "THANK", "Effect": { "Hidden": [ { "Hidden": "TraumaRecovery", "Amount": 2 } ] } }
@@ -96,15 +96,15 @@
       "Condition": { "WeekMin": 50, "Phase": "Night", "FlagsAll": [ "BY_LETTER" ], "FlagsNone": [ "BY_FAREWELL" ], "NpcStatuses": [ { "NpcId": "NPC_BYSTANDER", "Status": "Joined" } ] },
       "OnShow": { "SetFlags": [ "BY_FAREWELL" ] },
       "Choices": [
-        { "Id": "FRIEND", "Effect": { "Hidden": [ { "Hidden": "TraumaRecovery", "Amount": 3 } ], "Npcs": [ { "NpcId": "NPC_BYSTANDER", "Affinity": 6 } ] } },
+        { "Id": "FRIEND", "Effect": { "Hidden": [ { "Hidden": "TraumaRecovery", "Amount": 2 } ], "Npcs": [ { "NpcId": "NPC_BYSTANDER", "Affinity": 3 } ] } },
         { "Id": "NOD", "Effect": { "Hidden": [ { "Hidden": "SelfAwareness", "Amount": 1 } ] } }
       ] },
     { "Id": "EVT_HR_05_FAREWELL", "Kind": "Night", "Priority": 46,
       "Condition": { "WeekMin": 50, "Phase": "Night", "FlagsNone": [ "HR_FAREWELL" ], "NpcStatuses": [ { "NpcId": "NPC_RINGLEADER", "Status": "Joined" } ] },
       "OnShow": { "SetFlags": [ "HR_FAREWELL" ] },
       "Choices": [
-        { "Id": "MEET_AGAIN", "Effect": { "Hidden": [ { "Hidden": "TraumaRecovery", "Amount": 3 } ], "Npcs": [ { "NpcId": "NPC_RINGLEADER", "Affinity": 5 } ] } },
-        { "Id": "CLOSE", "Effect": { "Hidden": [ { "Hidden": "SelfAwareness", "Amount": 3 } ] } }
+        { "Id": "MEET_AGAIN", "Effect": { "Hidden": [ { "Hidden": "TraumaRecovery", "Amount": 2 } ], "Npcs": [ { "NpcId": "NPC_RINGLEADER", "Affinity": 2 } ] } },
+        { "Id": "CLOSE", "Effect": { "Hidden": [ { "Hidden": "SelfAwareness", "Amount": 2 } ] } }
       ] },
 
     { "Id": "EVT_A4_FIRST_SNOW", "Kind": "Story", "Priority": 36,
