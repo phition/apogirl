@@ -17,6 +17,9 @@ namespace ApoGirl.Exploration.Runtime
         /// <summary>방 안의 출입문 (복도로 나가기).</summary>
         RoomExit,
 
+        /// <summary>바깥 길에서 건물로 들어가는 문 (LinkArea·LinkX로 이동).</summary>
+        Passage,
+
         /// <summary>사람·스토리 오브젝트 조우 (M4).</summary>
         Encounter,
     }
@@ -28,6 +31,9 @@ namespace ApoGirl.Exploration.Runtime
     public sealed class ExplorationArea
     {
         public bool IsRoom;
+
+        /// <summary>건물 밖 길 (진입로·탈출로): 복도도 방도 아니다. 조명은 바깥 밝기, 좀비는 문으로 따라 나올 수 있다.</summary>
+        public bool IsOutdoor;
         public int Floor;
         public Vector2 Origin;
         public float Width;
@@ -72,6 +78,9 @@ namespace ApoGirl.Exploration.Runtime
 
         public ExitDef Exit;
         public bool Locked;
+
+        /// <summary>지나가면 서게 될 다른 공간 (건물 출구 → 바깥 길, 바깥 길의 문 → 복도). 비면 Exit는 곧바로 귀환.</summary>
+        public ExplorationArea LinkArea;
 
         /// <summary>Door: 들어갈 방 / RoomExit: 이 문이 속한 방.</summary>
         public ExplorationArea Room;

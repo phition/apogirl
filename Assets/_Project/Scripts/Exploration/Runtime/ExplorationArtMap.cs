@@ -261,6 +261,16 @@ namespace ApoGirl.Exploration.Runtime
             return "player_";
         }
 
+        /// <summary>가방 색 (그림 bag_{종류}_{색}).</summary>
+        public static readonly string[] BagColors = { "brown", "blue", "pink", "red", "yellow", "green" };
+
+        /// <summary>가방 그림 키: 판의 시드로 색을 하나 고른다 (그 색 그림이 없으면 기본 그림 bag_{종류}).</summary>
+        public static string BagKey(string kind, int seed)
+        {
+            var colored = $"bag_{kind}_{BagColors[(seed & 0x7fffffff) % BagColors.Length]}";
+            return Get(colored) != null ? colored : "bag_" + kind;
+        }
+
         /// <summary>
         /// 가방을 붙일 자리: 그 프레임에서 등 위치(발 기준, 오른쪽을 볼 때의 유닛)와 몸통 기울기(도).
         /// 표(Resources/Art/ExplorationPixel/player_anchors.json)에 없으면 false.

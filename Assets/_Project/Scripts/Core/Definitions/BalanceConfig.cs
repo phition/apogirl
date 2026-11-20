@@ -587,6 +587,16 @@ namespace ApoGirl.Core.Definitions
         /// <summary>복도 햇빛 줄기 밝기·간격(유닛), 방의 복도 쪽 창으로 새어 드는 빛 밝기 (조명 밝기는 선형 값이라 0.15도 꽤 밝다).</summary>
         public float SunbeamIntensity = 2.3f;
         public float SunbeamSpacing = 6f;
+
+        /// <summary>복도 한 층에 드는 빛줄기(햇빛·달빛) 수: 층마다 이 범위에서 정해진다 (자리는 층마다 다르고 늘 같다).</summary>
+        public int SunbeamsPerFloorMin = 1;
+        public int SunbeamsPerFloorMax = 2;
+
+        /// <summary>
+        /// 학교 밖 지역의 바깥 길 (유닛): 진입로(정문 앞, 여기서 시작)와 탈출로(다른 출구 뒤). 어느 쪽이든 길 끝에서 학교로 돌아간다.
+        /// </summary>
+        public float ApproachRoadWidth = 18f;
+        public float EscapeRouteWidth = 14f;
         public float RoomWindowLightIntensity = 0.15f;
 
         /// <summary>어둠 속에서 손전등을 끈 플레이어가 좀비 눈에 띄는 정도 (시야 배율).</summary>

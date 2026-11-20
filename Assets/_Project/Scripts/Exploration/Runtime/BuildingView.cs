@@ -165,6 +165,35 @@ namespace ApoGirl.Exploration.Runtime
             }
         }
 
+        /// <summary>
+        /// 건물 밖 길 (진입로·탈출로): 뒤 벽(거리·골목) + 그 위 먼 건물 윤곽 + 하늘, 바닥. 장식은 그림 표의 OUT_ENTRY / OUT_ESCAPE 규칙.
+        /// </summary>
+        public void BuildOutdoor(ExplorationArea area, bool entry, List<(float, float)> blocked)
+        {
+            var root = new GameObject(entry ? "Outdoor_Entry" : "Outdoor_Escape").transform;
+            root.SetParent(_root, false);
+            root.localPosition = area.Origin;
+            area.Root = root.gameObject;
+
+            var h = _layout.FloorHeight;
+            var w = area.Width;
+            Rect(root, "Sky", new Vector2(-40f, -20f), new Vector2(w + 80f, 60f), new Color(0.56f, 0.63f, 0.7f), -9);
+            Rect(root, "FarBuildings", new Vector2(-40f, h - 0.3f), new Vector2(w + 80f, 4.4f), new Color(0.3f, 0.34f, 0.39f), -8);
+            Rect(root, "FarRoofs", new Vector2(-40f, h + 4.1f), new Vector2(w + 80f, 1.6f), new Color(0.38f, 0.43f, 0.49f), -8);
+            ExplorationArt.Tiled(root, "Backdrop", entry ? "wall_out_street" : "wall_out_alley", new Vector2(-12f, 0.15f), new Vector2(w + 24f, h - 0.3f), -6,
+                new Color(0.33f, 0.34f, 0.36f));
+            ExplorationArt.Tiled(root, "Ground", "ground", new Vector2(-40f, -3f), new Vector2(w + 80f, 3f), -5, new Color(0.12f, 0.13f, 0.12f));
+            Rect(root, "Road", new Vector2(-40f, -0.15f), new Vector2(w + 80f, 0.3f), new Color(0.13f, 0.13f, 0.14f), -3);
+            Rect(root, "EdgeL", new Vector2(-40f, -20f), new Vector2(40f - 0.2f, 60f), new Color(0.02f, 0.02f, 0.03f, 0.55f), 40);
+            Rect(root, "EdgeR", new Vector2(w + 0.2f, -20f), new Vector2(40f, 60f), new Color(0.02f, 0.02f, 0.03f, 0.55f), 40);
+
+            var rule = ExplorationArt.Decor(_locationId, entry ? "OUT_ENTRY" : "OUT_ESCAPE");
+            if (rule != null)
+            {
+                Scatter(root, rule, w, 0f, new List<(float, float)>(blocked), new List<(float, float)>(blocked), StableHash(_locationId + (entry ? "entry" : "escape")));
+            }
+        }
+
         /// <summary>창문 사이 빈 벽 중 가장 넓은 구간의 가운데 (needed 이상일 때만).</summary>
         private static bool TryFindWallGap(ExplorationArea room, float needed, out float center)
         {

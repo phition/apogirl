@@ -291,6 +291,15 @@ namespace ApoGirl.Exploration.Runtime
                     }
 
                     break;
+                case TargetKind.Connector when target.Connector.Collapsed:
+                    _prompt.text = Loc.T("exp.prompt_stairs_collapsed");
+                    break;
+                case TargetKind.Passage:
+                    _prompt.text = Loc.T("exp.prompt_enter_building");
+                    break;
+                case TargetKind.Exit when !target.Locked && target.LinkArea != null:
+                    _prompt.text = Loc.F("exp.prompt_go_outside", target.LinkArea.Label);
+                    break;
                 case TargetKind.Connector:
                     _prompt.text = Loc.F(target.Connector.TargetFloor > target.Floor ? "exp.prompt_up" : "exp.prompt_down", target.Connector.TargetFloor + 1);
                     break;

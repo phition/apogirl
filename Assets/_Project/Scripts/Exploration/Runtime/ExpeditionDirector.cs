@@ -311,10 +311,10 @@ namespace ApoGirl.Exploration.Runtime
                 if (PeekTarget != null)
                 {
                     var other = PeekArea;
-                    return Loc.F("exp.peeking_into", other.IsRoom ? other.Label : Loc.F("exp.corridor", other.Floor + 1));
+                    return Loc.F("exp.peeking_into", other.IsRoom || other.IsOutdoor ? other.Label : Loc.F("exp.corridor", other.Floor + 1));
                 }
 
-                if (InRoom)
+                if (InRoom || CurrentArea.IsOutdoor)
                 {
                     return CurrentArea.Label;
                 }
@@ -438,6 +438,16 @@ namespace ApoGirl.Exploration.Runtime
 
             switch (target.Kind)
             {
+                case TargetKind.Connector when target.Connector.Collapsed:
+                    Sfx("sfx_door_locked");
+                    _hud?.ShowMessage("exp.stairs_collapsed");
+                    break;
+                case TargetKind.Passage:
+                    Sfx("sfx_door_open", 0.8f);
+                    EmitNoise(CurrentArea, X, _balance.DoorNoise);
+                    MoveTo(target.LinkArea, target.LinkX);
+                    EmitNoise(CurrentArea, X, _balance.DoorNoise);
+                    break;
                 case TargetKind.Connector:
                     Sfx("sfx_step_run");
                     EmitNoise(CurrentArea, X, _balance.StairsNoise);
@@ -522,6 +532,13 @@ namespace ApoGirl.Exploration.Runtime
                     {
                         Sfx("sfx_door_locked");
                         _hud?.ShowMessage("exp.exit_locked");
+                    }
+                    else if (target.LinkArea != null)
+                    {
+                        // 학교 밖 지역: 출구는 바깥 길(진입로·탈출로)로 이어지고, 길 끝에서 학교로 돌아간다
+                        Sfx("sfx_door_open", 0.8f);
+                        EmitNoise(CurrentArea, X, _balance.DoorNoise);
+                        MoveTo(target.LinkArea, target.LinkX);
                     }
                     else
                     {
@@ -793,7 +810,8 @@ namespace ApoGirl.Exploration.Runtime
         /// <summary>등에 멘 가방 (배낭 아이템이 있고 그 그림이 있을 때): 주인공 몸 뒤에 한 겹 더 그린다.</summary>
         private void SetupBag()
         {
-            var key = "bag_" + ExplorationArt.ItemToken(_backpackItem?.Id, "ITEM_BAG_", "");
+            // 가방 색은 판(새 게임)마다 하나로 정해진다: 가죽 갈색·파랑·분홍·빨강·노랑·초록
+            var key = ExplorationArt.BagKey(ExplorationArt.ItemToken(_backpackItem?.Id, "ITEM_BAG_", ""), GameApp.Session != null && GameApp.Session.HasGame ? GameApp.Session.State.Seed : 0);
             var sprite = _backpackItem != null && _playerSprites ? ExplorationArt.Get(key) : null;
             if (sprite == null)
             {
@@ -1096,8 +1114,10 @@ namespace ApoGirl.Exploration.Runtime
 
             foreach (var connector in layout.Connectors)
             {
-                var view = Prop(_corridors[connector.Floor], "Stairs", connector.TargetFloor > connector.Floor ? "prop_stairs_up" : "prop_stairs_down",
-                    connector.X, new Vector2(1f, 2.7f), new Color(0.32f, 0.38f, 0.5f), 0);
+                var stairsKey = connector.Collapsed && ExplorationArt.Get("prop_stairs_collapsed") != null ? "prop_stairs_collapsed"
+                    : connector.TargetFloor > connector.Floor ? "prop_stairs_up" : "prop_stairs_down";
+                var view = Prop(_corridors[connector.Floor], "Stairs", stairsKey,
+                    connector.X, new Vector2(1f, 2.7f), connector.Collapsed ? new Color(0.25f, 0.24f, 0.23f) : new Color(0.32f, 0.38f, 0.5f), 0);
                 AddTarget(new ExplorationTarget { Kind = TargetKind.Connector, Area = _corridors[connector.Floor], X = connector.X, Connector = connector, View = view });
             }
 
@@ -1163,19 +1183,33 @@ namespace ApoGirl.Exploration.Runtime
             }
 
             ExitDef start = null;
+            ExplorationTarget startTarget = null;
             foreach (var exit in layout.Exits)
             {
                 var color = exit.StartsLocked ? new Color(0.3f, 0.3f, 0.3f) : new Color(0.35f, 0.6f, 0.38f);
                 var view = Prop(_corridors[exit.Floor], "Exit", ExplorationArt.Exit(Location.Id, exit.StartsLocked), exit.X, new Vector2(1.6f, 3f), color, 0);
-                AddTarget(new ExplorationTarget { Kind = TargetKind.Exit, Area = _corridors[exit.Floor], X = exit.X, Exit = exit, Locked = exit.StartsLocked, View = view });
+                var exitTarget = new ExplorationTarget { Kind = TargetKind.Exit, Area = _corridors[exit.Floor], X = exit.X, Exit = exit, Locked = exit.StartsLocked, View = view };
+                AddTarget(exitTarget);
+                if (HasApproach)
+                {
+                    BuildOutdoor(exitTarget, exit.Kind == ExitKind.Main);
+                }
+
                 if (exit.Kind == ExitKind.Main && start == null)
                 {
                     start = exit;
+                    startTarget = exitTarget;
                 }
             }
 
             CurrentArea = _corridors[start?.Floor ?? 0];
             X = start?.X ?? 1f;
+            if (startTarget != null && startTarget.LinkArea != null)
+            {
+                // 학교 밖 지역은 진입로 끝(학교에서 오는 길)에서 시작해 걸어 들어간다
+                CurrentArea = startTarget.LinkArea;
+                X = 2.2f;
+            }
 
             _playerSprites = ExplorationArt.Get("player_idle") != null;
             _player = _playerSprites
@@ -1189,6 +1223,45 @@ namespace ApoGirl.Exploration.Runtime
             }
 
             SetupBag();
+        }
+
+        /// <summary>학교 밖 지역(튜토리얼 제외)에는 바깥 길이 있다: 진입로와 탈출로.</summary>
+        private bool HasApproach => !Location.Id.Contains("SCHOOL") && !Location.Id.Contains("TUTORIAL");
+
+        private readonly List<ExplorationArea> _outdoors = new List<ExplorationArea>();
+        private readonly List<ExplorationTarget> _outdoorLinks = new List<ExplorationTarget>();
+
+        /// <summary>
+        /// 건물 출구 하나에 바깥 길을 붙인다. 진입로(정문): 왼쪽 끝 = 학교로 돌아가는 길, 오른쪽 끝 = 건물 문.
+        /// 탈출로(다른 출구): 왼쪽 끝 = 건물 문, 오른쪽 끝 = 학교로 돌아가는 길. 어느 길 끝에서든 귀환한다.
+        /// </summary>
+        private void BuildOutdoor(ExplorationTarget exitTarget, bool entry)
+        {
+            var width = entry ? _balance.ApproachRoadWidth : _balance.EscapeRouteWidth;
+            var area = new ExplorationArea
+            {
+                IsOutdoor = true,
+                Floor = exitTarget.Area.Floor,
+                Origin = new Vector2(_outdoors.Count * 90f, -70f),
+                Width = width,
+                Label = Loc.T(entry ? "exp.area_entry" : "exp.area_escape"),
+            };
+            _outdoors.Add(area);
+            _areasById.Add(area);
+
+            var doorX = entry ? width - 2.2f : 2.2f;
+            var returnX = entry ? 1.6f : width - 1.6f;
+            _building.BuildOutdoor(area, entry, new List<(float, float)> { (doorX - 1.6f, doorX + 1.6f), (returnX - 1.6f, returnX + 1.6f) });
+
+            var doorView = Prop(area, "BuildingDoor", ExplorationArt.Exit(Location.Id, false), doorX, new Vector2(1.6f, 3f), new Color(0.35f, 0.6f, 0.38f), 0);
+            var passage = new ExplorationTarget { Kind = TargetKind.Passage, Area = area, X = doorX, LinkArea = exitTarget.Area, LinkX = exitTarget.X, View = doorView };
+            AddTarget(passage);
+            var returnView = Prop(area, "ReturnPoint", "prop_out_return", returnX, new Vector2(0.8f, 2.2f), new Color(0.35f, 0.5f, 0.7f), 0);
+            AddTarget(new ExplorationTarget { Kind = TargetKind.Exit, Area = area, X = returnX, Exit = exitTarget.Exit, View = returnView });
+
+            exitTarget.LinkArea = area;
+            exitTarget.LinkX = doorX;
+            _outdoorLinks.Add(exitTarget);
         }
 
         /// <summary>방 내부는 처음 들어갈 때 만든다. 전리품은 방 시드로 굴려 같은 템플릿이라도 방마다 다르다.</summary>
@@ -1386,9 +1459,15 @@ namespace ApoGirl.Exploration.Runtime
             var fade = BuildingView.Rect(go.transform, "ScreenFade", new Vector2(-100f, -100f), new Vector2(200f, 200f), new Color(0f, 0f, 0f, 0f), 1000);
             fade.transform.localPosition = new Vector3(-100f, -100f, 1f);
             _fadeOverlay = fade.GetComponent<SpriteRenderer>();
+            // 다른 층 가리개: 복도에서는 지금 있는 층만 보인다 (위·아래층은 검게)
+            _maskAbove = BuildingView.Rect(_world, "FloorMaskAbove", Vector2.zero, new Vector2(600f, 60f), Color.black, 45);
+            _maskBelow = BuildingView.Rect(_world, "FloorMaskBelow", Vector2.zero, new Vector2(600f, 60f), Color.black, 45);
             _shownArea = CurrentArea;
             SnapCamera();
         }
+
+        private GameObject _maskAbove;
+        private GameObject _maskBelow;
 
         private void SetupLight(bool day)
         {
@@ -1596,6 +1675,20 @@ namespace ApoGirl.Exploration.Runtime
             cameraPosition.y = Mathf.Round(cameraPosition.y * grid) / grid;
             cameraTransform.position = cameraPosition;
 
+            // 복도에서는 지금 층만: 위층은 천장 슬래브 위부터, 아래층은 바닥 슬래브 아래부터 가린다 (1층 아래 땅은 그대로)
+            if (_maskAbove != null)
+            {
+                var shown = _shownArea ?? CurrentArea;
+                var corridorView = !shown.IsRoom && !shown.IsOutdoor;
+                _maskAbove.SetActive(corridorView);
+                _maskBelow.SetActive(corridorView && shown.Floor > 0);
+                if (corridorView)
+                {
+                    _maskAbove.transform.localPosition = new Vector3(-200f, shown.Origin.y + _building.FloorHeight + 0.15f, 0f);
+                    _maskBelow.transform.localPosition = new Vector3(-200f, shown.Origin.y - 0.15f - 60f, 0f);
+                }
+            }
+
             // 보이는 공간의 밝기 (낮: 복도는 햇빛, 문 안 방은 어둡게). 문을 지나면 잠깐 동안 눈이 적응하듯 바뀐다.
             if (_lighting != null)
             {
@@ -1617,6 +1710,13 @@ namespace ApoGirl.Exploration.Runtime
             for (var id = 0; id < _areasById.Count; id++)
             {
                 _threat.SetAreaWidth(id, _areasById[id].Width);
+            }
+
+            foreach (var link in _outdoorLinks)
+            {
+                // 건물 출구 ↔ 바깥 길: 쫓아오는 좀비가 문으로 따라 나올 수 있다
+                _threat.AddLink(AreaId(link.Area), link.X, AreaId(link.LinkArea), link.LinkX);
+                _threat.AddLink(AreaId(link.LinkArea), link.LinkX, AreaId(link.Area), link.X);
             }
 
             foreach (var room in _rooms)
@@ -1915,6 +2015,11 @@ namespace ApoGirl.Exploration.Runtime
                 return;
             }
 
+            if (area.IsOutdoor)
+            {
+                return;
+            }
+
             if (area.IsRoom)
             {
                 _threat.Emit(new NoiseEvent(AreaId(_corridors[area.Floor]), area.SpanX + x, muffled));
@@ -1940,7 +2045,7 @@ namespace ApoGirl.Exploration.Runtime
         private void UpdateWindowSilhouettes()
         {
             var used = 0;
-            if (PeekTarget == null)
+            if (PeekTarget == null && !CurrentArea.IsOutdoor)
             {
                 if (CurrentArea.IsRoom)
                 {

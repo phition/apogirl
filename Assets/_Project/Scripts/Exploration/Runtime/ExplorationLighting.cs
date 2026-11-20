@@ -68,10 +68,15 @@ namespace ApoGirl.Exploration.Runtime
         /// <summary>복도 한 층: 일정 간격으로 햇빛 줄기 + 줄기가 닿는 바닥의 번진 빛.</summary>
         public void AddCorridor(ExplorationArea corridor)
         {
-            var spacing = Mathf.Max(2.5f, _balance.SunbeamSpacing);
+            // 층마다 한두 곳에만 빛이 든다 (자리는 층마다 다르고 늘 같다)
+            var random = new System.Random(7919 * (corridor.Floor + 1) + Mathf.RoundToInt(corridor.Width * 13f));
+            var count = random.Next(Mathf.Max(0, _balance.SunbeamsPerFloorMin), Mathf.Max(_balance.SunbeamsPerFloorMin, _balance.SunbeamsPerFloorMax) + 1);
             var top = _floorHeight - 0.18f;
-            for (var x = spacing * 0.6f; x < corridor.Width - 1f; x += spacing)
+            var span = Mathf.Max(1f, corridor.Width - 8f);
+            for (var i = 0; i < count; i++)
             {
+                // 복도를 count 구간으로 나눠 구간마다 하나씩 (서로 붙지 않게)
+                var x = 4f + span * (i + 0.2f + (float)random.NextDouble() * 0.6f) / count;
                 var beam = SpriteLight("Sunbeam", BeamCookie(), new Vector3(corridor.Origin.x + x, corridor.Origin.y + top, 0f));
                 _beams.Add(beam);
                 var pool = SpriteLight("SunPool", PoolCookie(), new Vector3(corridor.Origin.x + x, corridor.Origin.y + 0.1f, 0f));
@@ -231,9 +236,12 @@ namespace ApoGirl.Exploration.Runtime
             switch (_phase)
             {
                 case Phase.Day:
-                    return area.IsRoom ? _balance.DayRoomAmbient : _balance.DayCorridorAmbient;
+                    return area.IsOutdoor ? 1f : area.IsRoom ? _balance.DayRoomAmbient : _balance.DayCorridorAmbient;
                 case Phase.Dawn:
-                    return area.IsRoom ? Mathf.Min(1f, _balance.DayRoomAmbient * 2f) : 1f;
+                    return area.IsOutdoor ? 1.25f : area.IsRoom ? Mathf.Min(1f, _balance.DayRoomAmbient * 2f) : 1f;
+                case Phase.Night:
+                case Phase.Dusk:
+                    return area.IsOutdoor ? 1.5f : 1f;   // 밖은 달빛·노을로 건물 안보다 조금 밝다
                 default:
                     return 1f;
             }

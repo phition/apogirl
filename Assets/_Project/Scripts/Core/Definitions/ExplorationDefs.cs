@@ -123,6 +123,9 @@ namespace ApoGirl.Core.Definitions
         public int Floor;
         public float X;
         public int TargetFloor;
+
+        /// <summary>무너져서 쓸 수 없는 계단 (보이기만 하고 지나갈 수 없다. 다른 쪽 계단으로 돌아가야 한다).</summary>
+        public bool Collapsed;
     }
 
     [Serializable]

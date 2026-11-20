@@ -694,6 +694,55 @@
  ],
  "Decor": [
   {
+   "Location": "",
+   "Template": "OUT_ENTRY",
+   "Floor": [
+    "decor_car",
+    "decor_scooter",
+    "decor_busstop",
+    "decor_streetlamp",
+    "decor_tree",
+    "decor_kiosk",
+    "decor_bicycle",
+    "decor_barrier",
+    "decor_hydrant",
+    "decor_trashbags",
+    "decor_cones",
+    "decor_sandbags",
+    "decor_phonebooth",
+    "decor_shutter"
+   ],
+   "Wall": [
+    "decor_poster_a",
+    "decor_warning",
+    "decor_poster_safety"
+   ],
+   "FloorDensity": 0.22,
+   "WallDensity": 0.08
+  },
+  {
+   "Location": "",
+   "Template": "OUT_ESCAPE",
+   "Floor": [
+    "decor_dumpster",
+    "decor_trashbags",
+    "decor_crates_out",
+    "decor_tires",
+    "decor_fence",
+    "decor_laundry",
+    "decor_bicycle",
+    "decor_mailboxes",
+    "decor_acunits"
+   ],
+   "Wall": [
+    "decor_vent",
+    "decor_elecbox",
+    "decor_poster_b"
+   ],
+   "FloorDensity": 0.24,
+   "WallDensity": 0.1
+  },
+  {
    "Location": "LOC_SCHOOL",
    "Template": "CLASSROOM",
    "Floor": [

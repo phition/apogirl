@@ -33,6 +33,132 @@
     0.9,
     1.0
    ]
+  },
+  {
+   "Key": "bag_school_brown",
+   "Pivot": [
+    0.92,
+    0.82
+   ]
+  },
+  {
+   "Key": "bag_school_blue",
+   "Pivot": [
+    0.92,
+    0.82
+   ]
+  },
+  {
+   "Key": "bag_school_pink",
+   "Pivot": [
+    0.92,
+    0.82
+   ]
+  },
+  {
+   "Key": "bag_school_red",
+   "Pivot": [
+    0.92,
+    0.82
+   ]
+  },
+  {
+   "Key": "bag_school_yellow",
+   "Pivot": [
+    0.92,
+    0.82
+   ]
+  },
+  {
+   "Key": "bag_school_green",
+   "Pivot": [
+    0.92,
+    0.82
+   ]
+  },
+  {
+   "Key": "bag_hiking_brown",
+   "Pivot": [
+    0.92,
+    0.7
+   ]
+  },
+  {
+   "Key": "bag_hiking_blue",
+   "Pivot": [
+    0.92,
+    0.7
+   ]
+  },
+  {
+   "Key": "bag_hiking_pink",
+   "Pivot": [
+    0.92,
+    0.7
+   ]
+  },
+  {
+   "Key": "bag_hiking_red",
+   "Pivot": [
+    0.92,
+    0.7
+   ]
+  },
+  {
+   "Key": "bag_hiking_yellow",
+   "Pivot": [
+    0.92,
+    0.7
+   ]
+  },
+  {
+   "Key": "bag_hiking_green",
+   "Pivot": [
+    0.92,
+    0.7
+   ]
+  },
+  {
+   "Key": "bag_tote_brown",
+   "Pivot": [
+    0.9,
+    1.0
+   ]
+  },
+  {
+   "Key": "bag_tote_blue",
+   "Pivot": [
+    0.9,
+    1.0
+   ]
+  },
+  {
+   "Key": "bag_tote_pink",
+   "Pivot": [
+    0.9,
+    1.0
+   ]
+  },
+  {
+   "Key": "bag_tote_red",
+   "Pivot": [
+    0.9,
+    1.0
+   ]
+  },
+  {
+   "Key": "bag_tote_yellow",
+   "Pivot": [
+    0.9,
+    1.0
+   ]
+  },
+  {
+   "Key": "bag_tote_green",
+   "Pivot": [
+    0.9,
+    1.0
+   ]
   }
  ]
 }

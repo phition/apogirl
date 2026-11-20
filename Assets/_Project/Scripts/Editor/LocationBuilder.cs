@@ -81,12 +81,13 @@ namespace ApoGirl.EditorTools
             return new SpawnDef { EnemyId = enemy, Floor = floor, RoomId = room, X = x, Count = count, Spread = spread, Dormant = false };
         }
 
-        private static void Stairs(BuildingLayoutDef layout, float x)
+        /// <summary>계단 한 줄. collapsedFrom ≥ 0이면 그 층과 위층 사이가 무너져 못 쓴다 (반대쪽 계단으로 돌아가야 한다).</summary>
+        private static void Stairs(BuildingLayoutDef layout, float x, int collapsedFrom = -1)
         {
             for (var f = 0; f < layout.Floors - 1; f++)
             {
-                layout.Connectors.Add(new ConnectorDef { Kind = ConnectorKind.Stairs, Floor = f, X = x, TargetFloor = f + 1 });
-                layout.Connectors.Add(new ConnectorDef { Kind = ConnectorKind.Stairs, Floor = f + 1, X = x - 1.4f, TargetFloor = f });
+                layout.Connectors.Add(new ConnectorDef { Kind = ConnectorKind.Stairs, Floor = f, X = x, TargetFloor = f + 1, Collapsed = f == collapsedFrom });
+                layout.Connectors.Add(new ConnectorDef { Kind = ConnectorKind.Stairs, Floor = f + 1, X = x - 1.4f, TargetFloor = f, Collapsed = f == collapsedFrom });
             }
         }
 
@@ -199,7 +200,7 @@ namespace ApoGirl.EditorTools
                 CS("FUEL", ContainerKind.Box, 9.6f, "prop_box"), CS("LOCKER", ContainerKind.Locker, 11.1f, "prop_locker", "LOOT_SCHOOL_LOCKER")));
 
             Stairs(layout, 3f);
-            Stairs(layout, 121f);
+            Stairs(layout, 121f, collapsedFrom: 1);   // 오른쪽 계단은 2~3층 사이가 무너졌다
 
             void R(string template, int floor, float spanX, int number) =>
                 Room(layout, $"ROOM_{floor + 1}F_{template}_{number}", template, floor, spanX, number);
@@ -757,7 +758,7 @@ namespace ApoGirl.EditorTools
                 Containers = { C("CONSOLE", ContainerKind.Desk, 0, 5f), C("PARTS", ContainerKind.Box, 0, 8.4f), C("SUPPLY", ContainerKind.Cabinet, 0, 11.4f) },
             });
 
-            Stairs(layout, 6f);
+            Stairs(layout, 6f, collapsedFrom: 1);     // 왼쪽 계단은 2~3층 사이가 무너졌다
             Stairs(layout, 96f);
             Room(layout, "ROOM_WATER_ARCHIVE_1", "ROOM_WATER_ARCHIVE", 0, 40f, 1);
             Room(layout, "ROOM_WATER_CONTROL_1", "ROOM_WATER_CONTROL", 1, 20f, 1);
