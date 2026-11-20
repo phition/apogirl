@@ -42,6 +42,7 @@ SO 에셋과 문자열 테이블은 생성물이라 직접 고치지 않는다.
   - 판정이 필요하면 `HasCheck` + `Check`를 쓴다. 실패하면 `OnFailure`가 적용된다.
   - 조건·비용 없는 선택지를 최소 하나 둔다. 없으면 검증기가 경고한다.
 - **연쇄**: `NextEventId`의 이벤트가 조건과 관계없이 바로 이어진다.
+  선택지가 없는 서술 이벤트는 이벤트의 `ThenEventId`로 잇는다 (선택지의 `NextEventId`가 우선).
 - **NPC**: `Npcs: [{ NpcId, Affinity, Trust, SetStatus, SetRole }]`. `NPC_TEACHER`는 윤 선생님 호감이다.
 
 ## 4. Yarn 규칙
