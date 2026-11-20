@@ -30,6 +30,9 @@ namespace ApoGirl.Presentation.Screens
         {
             public string Id = "";
             public string NameKey = "";
+
+            /// <summary>방을 눌렀을 때 패널에 보이는 일러스트 (Resources/Art 아래, 없으면 생략).</summary>
+            public string Art = "";
             public int Floor;
             public float X;
             public float Width = 150;
@@ -410,6 +413,15 @@ namespace ApoGirl.Presentation.Screens
             var title = new Label(room.Open ? RoomName(room.Def) : Loc.T("hub.room_locked"));
             title.AddToClassList("hub-room-panel-title");
             _roomPanel.Add(title);
+
+            var art = room.Open && !string.IsNullOrEmpty(room.Def.Art) ? StoryArt.Load(room.Def.Art) : null;
+            if (art != null)
+            {
+                var picture = new VisualElement { pickingMode = PickingMode.Ignore };
+                picture.AddToClassList("hub-room-art");
+                StoryArt.SetCover(picture, art);
+                _roomPanel.Add(picture);
+            }
 
             if (room.Open)
             {

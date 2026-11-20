@@ -5,6 +5,7 @@ using ApoGirl.Core.Definitions;
 using ApoGirl.Core.Expedition;
 using ApoGirl.Core.Rules;
 using ApoGirl.Core.State;
+using ApoGirl.Presentation.Art;
 using ApoGirl.Presentation.Text;
 using ApoGirl.Systems.Session;
 using UnityEngine.UIElements;
@@ -12,120 +13,133 @@ using UnityEngine.UIElements;
 namespace ApoGirl.Presentation.Screens
 {
     /// <summary>
-    /// 출정 준비 (문서 6.3.4-1, M4 전체 로드아웃): 목적지·시간대 정보와 예보, 배낭·주무기·도구·방어구·퀵슬롯 선택.
-    /// 쓰러지면 가져간 장비를 모두 잃는다는 경고를 함께 보여준다. 카드 오버레이의 추가 영역에 그린다.
+    /// 3겹 출정 준비 (문서 6.3.4-1, Docs/UI_REDESIGN_PROPOSAL.md): 왼쪽은 지역 그림 위에 목적지·시간대·예보·손실 경고,
+    /// 오른쪽은 지금 차림의 주인공 입상과 장비 칸(배낭·주무기·도구·방어구, ◀ ▶로 바꾸기)과 퀵슬롯 4칸(누르면 다음 것).
+    /// 장비를 바꾸면 입상도 바로 바뀐다.
     /// </summary>
     internal sealed class ExpeditionPrepView
     {
         private const int QuickSlotCount = 4;
 
         private readonly GameSession _session;
-        private readonly CardOverlay _card;
+        private readonly VisualElement _sheet;
+        private readonly VisualElement _art;
+        private readonly VisualElement _info;
+        private readonly VisualElement _loadout;
+        private readonly VisualElement _buttons;
+        private readonly StandingView _standing;
 
-        public ExpeditionPrepView(GameSession session, CardOverlay card)
+        public ExpeditionPrepView(VisualElement root, GameSession session)
         {
             _session = session;
-            _card = card;
+            _sheet = root.Q("expedition-sheet");
+            _art = root.Q("exp-art");
+            _info = root.Q("exp-info");
+            _loadout = root.Q("exp-loadout");
+            _buttons = root.Q("exp-buttons");
+            _standing = new StandingView(root.Q("exp-standing"), () => _session.State, () => _session.Definitions.Balance);
         }
+
+        public bool IsOpen => !_sheet.ClassListContains("hidden");
 
         public void Show(ExpeditionRequest request, Action onDepart, Action onDispatch = null)
         {
             var db = _session.Definitions;
+            var state = _session.State;
             var day = request.TimeOfDay == ExpeditionTime.Day;
-            var lines = new List<string>
-            {
-                Loc.T("location." + request.LocationId) + " · " + Loc.T(day ? "exp.time_day" : "exp.time_night"),
-                Loc.T(day ? "prep.forecast_day" : "prep.forecast_night"),
-            };
+            StoryArt.SetCover(_art, StoryArt.Location(request.LocationId));
+            _sheet.EnableInClassList("night", !day);
 
+            // ── 왼쪽: 목적지·예보 ──
+            _info.Clear();
+            Add(_info, Loc.T("prep.title"), "exp-kicker");
+            Add(_info, Loc.T("location." + request.LocationId), "exp-location");
+            Add(_info, Loc.T(day ? "exp.time_day" : "exp.time_night"), day ? "exp-time" : "exp-time night");
+            Add(_info, Loc.T(day ? "prep.forecast_day" : "prep.forecast_night"), "exp-line");
             if (db.TryGetExpeditionModel(request.LocationId, out var model))
             {
                 var y = day ? model.Day : model.Night;
-                lines.Add(Loc.F("prep.cost", y.Fatigue, y.StressMin, Math.Max(y.StressMin, y.StressMax)));
+                Add(_info, Loc.F("prep.cost", y.Fatigue, y.StressMin, Math.Max(y.StressMin, y.StressMax)), "exp-line");
             }
 
             if (!day)
             {
-                lines.Add(Loc.T("prep.night_debt"));
+                Add(_info, Loc.T("prep.night_debt"), "exp-line");
             }
 
-            // M6: 날씨, 정찰 정보 (출정 한 번에 소모)
-            var weather = _session.State.Base.Weather;
+            var weather = state.Base.Weather;
             if (weather != WeatherType.Clear)
             {
-                lines.Add(Loc.F("prep.weather", Loc.T("weather." + weather), Loc.T("weather." + weather + ".desc")));
+                Add(_info, Loc.F("prep.weather", Loc.T("weather." + weather), Loc.T("weather." + weather + ".desc")), "exp-line");
             }
 
-            if (ScoutRules.IsScouted(_session.State, request.LocationId) && db.TryGetLocation(request.LocationId, out var location))
+            if (ScoutRules.IsScouted(state, request.LocationId) && db.TryGetLocation(request.LocationId, out var location))
             {
                 var variant = day ? location.DayVariant : location.NightVariant;
-                lines.Add(Loc.F("prep.scouted", variant.LockedRooms.Count, variant.ForceableRooms.Count, variant.Encounters.Count));
+                Add(_info, Loc.F("prep.scouted", variant.LockedRooms.Count, variant.ForceableRooms.Count, variant.Encounters.Count), "exp-line");
             }
 
-            lines.Add(Loc.T("prep.loss_warning"));
-            (string, Action) depart = (Loc.T("prep.depart"), () =>
+            Add(_info, Loc.T("prep.loss_warning"), "exp-warning");
+
+            // ── 오른쪽: 장비 ──
+            BuildLoadout();
+
+            // ── 단추 ──
+            _buttons.Clear();
+            var depart = new Button(() =>
             {
                 _session.RefreshPendingLoadout();
-                _card.Hide();
+                Hide();
                 onDepart();
-            });
+            }) { text = Loc.T("prep.depart") };
+            depart.AddToClassList("exp-depart");
+            _buttons.Add(depart);
             if (onDispatch != null && _session.CanDispatch)
             {
                 // 이야기 중심: 직접 들어가지 않고 자동 수색
-                lines.Add(Loc.F("prep.dispatch_hint", Math.Round(_session.Difficulty.DispatchYield * 100)));
-                _card.Show(Loc.T("prep.title"), string.Join("\n", lines), false, depart, (Loc.T("prep.dispatch"), () =>
+                var dispatch = new Button(() =>
                 {
                     _session.RefreshPendingLoadout();
-                    _card.Hide();
+                    Hide();
                     onDispatch();
-                }));
-            }
-            else
-            {
-                _card.Show(Loc.T("prep.title"), string.Join("\n", lines), false, depart);
+                }) { text = Loc.T("prep.dispatch"), tooltip = Loc.F("prep.dispatch_hint", Math.Round(_session.Difficulty.DispatchYield * 100)) };
+                dispatch.AddToClassList("exp-dispatch");
+                _buttons.Add(dispatch);
             }
 
-            BuildLoadout(_card.Extra);
-
-            // 지역 그림 (M6-5)
-            var locationArt = Art.StoryArt.Location(request.LocationId);
-            if (locationArt != null)
-            {
-                var image = new VisualElement { name = "prep-location-art", pickingMode = PickingMode.Ignore };
-                image.AddToClassList("prep-location-art");
-                Art.StoryArt.SetCover(image, locationArt);
-                _card.Extra.Insert(0, image);
-            }
+            KoreanFont.ApplyDeep(_sheet);
+            _sheet.RemoveFromClassList("hidden");
+            depart.Focus();
         }
 
-        private void BuildLoadout(VisualElement extra)
+        public void Hide() => _sheet.AddToClassList("hidden");
+
+        private void BuildLoadout()
         {
-            extra.Clear();
+            _loadout.Clear();
             var state = _session.State;
             var loadout = state.Loadout;
             LoadoutRules.Sanitize(state);
 
-            AddSlot(extra, "prep.backpack", EquipSlot.Backpack, loadout.Backpack, id => loadout.Backpack = id);
-            AddSlot(extra, "prep.weapon", EquipSlot.Weapon, loadout.MainWeapon, id => loadout.MainWeapon = id);
-            AddSlot(extra, "prep.tool", EquipSlot.Tool, loadout.Tool, id => loadout.Tool = id);
-            AddSlot(extra, "prep.armor", EquipSlot.Armor, loadout.Armor, id => loadout.Armor = id);
+            AddSlot("prep.backpack", EquipSlot.Backpack, loadout.Backpack, id => loadout.Backpack = id);
+            AddSlot("prep.weapon", EquipSlot.Weapon, loadout.MainWeapon, id => loadout.MainWeapon = id);
+            AddSlot("prep.tool", EquipSlot.Tool, loadout.Tool, id => loadout.Tool = id);
+            AddSlot("prep.armor", EquipSlot.Armor, loadout.Armor, id => loadout.Armor = id);
 
-            var consumables = Owned(EquipSlot.Consumable);
+            Add(_loadout, Loc.T("prep.quick"), "exp-quick-label");
             var row = new VisualElement();
-            row.AddToClassList("prep-row");
-            row.Add(new Label(Loc.T("prep.quick")) { name = "prep-quick-label" });
+            row.AddToClassList("exp-quick-row");
+            var options = new List<string> { "" };
+            options.AddRange(Owned(EquipSlot.Consumable).Select(c => c.ItemId));
             for (var i = 0; i < QuickSlotCount; i++)
             {
                 var index = i;
                 var current = index < loadout.QuickSlots.Count ? loadout.QuickSlots[index] : "";
-                var options = new List<string> { "" };
-                options.AddRange(consumables.Select(c => c.ItemId));
-                var field = new DropdownField(options.Select(Label).ToList(), Math.Max(0, options.IndexOf(current)));
-                field.AddToClassList("prep-quick");
-                FieldStyle.Dark(field);
-                field.RegisterValueChangedCallback(_ =>
+                var tile = new Button(() =>
                 {
-                    var chosen = options[Math.Max(0, field.index)];
+                    // 누르면 다음 소모품으로 (끝이면 비움)
+                    var at = Math.Max(0, options.IndexOf(current));
+                    var chosen = options[(at + 1) % options.Count];
                     while (loadout.QuickSlots.Count <= index)
                     {
                         loadout.QuickSlots.Add("");
@@ -134,36 +148,72 @@ namespace ApoGirl.Presentation.Screens
                     loadout.QuickSlots[index] = chosen;
                     loadout.QuickSlots.RemoveAll(string.IsNullOrEmpty);
                     LoadoutRules.Sanitize(state);
-                    BuildLoadout(extra);
-                });
-                row.Add(field);
+                    BuildLoadout();
+                }) { tooltip = NameOf(current) };
+                tile.AddToClassList("exp-quick");
+                var icon = new VisualElement { pickingMode = PickingMode.Ignore };
+                icon.AddToClassList("exp-icon");
+                StoryArt.SetContain(icon, StoryArt.ItemIcon(current));
+                tile.Add(icon);
+                var label = new Label(string.IsNullOrEmpty(current) ? Loc.T("prep.none") : NameOf(current)) { pickingMode = PickingMode.Ignore };
+                label.AddToClassList("exp-quick-name");
+                tile.Add(label);
+                row.Add(tile);
             }
 
-            extra.Add(row);
+            _loadout.Add(row);
+            KoreanFont.ApplyDeep(_loadout);
+
+            // 차림이 바뀌면 입상도 (각오한 얼굴로)
+            _standing.React("determined", 600f);
         }
 
-        private void AddSlot(VisualElement parent, string labelKey, EquipSlot slot, string current, Action<string> set)
+        private void AddSlot(string labelKey, EquipSlot slot, string current, Action<string> set)
         {
-            var owned = Owned(slot);
             var options = new List<string> { "" };
-            options.AddRange(owned.Select(o => o.ItemId));
+            options.AddRange(Owned(slot).Select(o => o.ItemId));
+            var index = Math.Max(0, options.IndexOf(current));
+
             var row = new VisualElement();
-            row.AddToClassList("prep-row");
-            row.Add(new Label(Loc.T(labelKey)));
-            var field = new DropdownField(options.Select(Label).ToList(), Math.Max(0, options.IndexOf(current)));
-            field.AddToClassList("prep-field");
-            FieldStyle.Dark(field);
-            field.RegisterValueChangedCallback(_ =>
+            row.AddToClassList("exp-slot");
+            var icon = new VisualElement();
+            icon.AddToClassList("exp-icon");
+            StoryArt.SetContain(icon, StoryArt.ItemIcon(current));
+            row.Add(icon);
+
+            var text = new VisualElement();
+            text.AddToClassList("exp-slot-text");
+            Add(text, Loc.T(labelKey), "exp-slot-kind");
+            Add(text, string.IsNullOrEmpty(current) ? Loc.T("prep.none") : Label(current), "exp-slot-name");
+            var info = SlotInfo(current);
+            if (!string.IsNullOrEmpty(info))
             {
-                set(options[Math.Max(0, field.index)]);
+                Add(text, info, "exp-slot-info");
+            }
+
+            row.Add(text);
+
+            void Step(int direction)
+            {
+                if (options.Count <= 1)
+                {
+                    return;
+                }
+
+                set(options[(index + direction + options.Count) % options.Count]);
                 LoadoutRules.Sanitize(_session.State);
-            });
-            row.Add(field);
-            var info = new Label(SlotInfo(current));
-            info.AddToClassList("prep-info");
-            field.RegisterValueChangedCallback(_ => info.text = SlotInfo(options[Math.Max(0, field.index)]));
-            row.Add(info);
-            parent.Add(row);
+                BuildLoadout();
+            }
+
+            var prev = new Button(() => Step(-1)) { text = "◀" };
+            prev.AddToClassList("exp-arrow");
+            prev.SetEnabled(options.Count > 1);
+            var next = new Button(() => Step(1)) { text = "▶" };
+            next.AddToClassList("exp-arrow");
+            next.SetEnabled(options.Count > 1);
+            row.Add(prev);
+            row.Add(next);
+            _loadout.Add(row);
         }
 
         private List<ItemStack> Owned(EquipSlot slot)
@@ -176,13 +226,10 @@ namespace ApoGirl.Presentation.Screens
                 .ToList();
         }
 
+        private string NameOf(string itemId) => string.IsNullOrEmpty(itemId) ? "" : Loc.Item(itemId);
+
         private string Label(string itemId)
         {
-            if (string.IsNullOrEmpty(itemId))
-            {
-                return Loc.T("prep.none");
-            }
-
             var count = LoadoutRules.CountInStorage(_session.State, itemId);
             return Loc.Item(itemId) + (count > 1 ? " ×" + count : "");
         }
@@ -209,6 +256,18 @@ namespace ApoGirl.Presentation.Screens
                 default:
                     return "";
             }
+        }
+
+        private static Label Add(VisualElement parent, string text, string classes)
+        {
+            var label = new Label(text);
+            foreach (var cssClass in classes.Split(' '))
+            {
+                label.AddToClassList(cssClass);
+            }
+
+            parent.Add(label);
+            return label;
         }
     }
 }

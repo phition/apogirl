@@ -48,6 +48,7 @@ namespace ApoGirl.Presentation.Screens
         private int _fontIndex = 1;
         private DialogueView _dialogueView;
         private ExpeditionPrepView _prep;
+        private SettlementView _settlement;
         private EventDialoguePlayer _dialoguePlayer;
         private VisualElement _teacherAvatar;
         private HubLayers _layers;
@@ -111,7 +112,8 @@ namespace ApoGirl.Presentation.Screens
             _teacherAvatar = new VisualElement { name = "teacher-avatar", pickingMode = PickingMode.Ignore };
             _teacherAvatar.AddToClassList("teacher-avatar");
             _root.Q("teacher-box").Add(_teacherAvatar);
-            _prep = new ExpeditionPrepView(_session, _card);
+            _prep = new ExpeditionPrepView(_root, _session);
+            _settlement = new SettlementView(_root, _session);
             var yarnProject = Resources.Load<Yarn.Unity.YarnProject>(YarnProjectResource);
             if (yarnProject != null && yarnProject.Program != null)
             {
@@ -195,7 +197,7 @@ namespace ApoGirl.Presentation.Screens
                 _debug.Toggle();
             }
 
-            var busy = _card.IsOpen || _dialogueView.IsOpen || (_ending != null && _ending.IsOpen);
+            var busy = _card.IsOpen || _dialogueView.IsOpen || (_ending != null && _ending.IsOpen) || _settlement.IsOpen || _prep.IsOpen;
 
             // 대화 중에는 말하는 사람 초상이 왼쪽에 나오므로 입상·요약·선생님 한마디를 잠시 숨긴다
             _standingArea.EnableInClassList("hidden", _dialogueView.IsOpen);
@@ -707,47 +709,22 @@ namespace ApoGirl.Presentation.Screens
             }));
         }
 
+        /// <summary>주간 결산: 펼친 일기장 (일기·이번 주 일 / 자란 것·살림·몸과 마음·선생님 한마디).</summary>
         private void ShowSummary(WeekSummary summary, System.Action onClosed)
         {
-            var lines = new List<string>();
-            var diary = Loc.Lookup(Loc.UiTable, summary.DiaryKey);
-            if (!string.IsNullOrEmpty(diary))
-            {
-                lines.Add(Loc.F("summary.diary", diary));
-                lines.Add("");
-            }
-
-            lines.AddRange(UiText.DeltaLines(summary.Delta));
-            if (summary.StatusAfter == GameStatus.Playing)
-            {
-                lines.Add("");
-                lines.Add(Loc.T("summary.autosaved"));
-            }
-
+            System.Action undo = null;
             if (_session.CanUndoWeek)
             {
                 // 이야기 중심: 이번 주를 시작 직전으로 되돌린다 (같은 주는 한 번)
-                _card.Show(Loc.F("summary.title", summary.Week), string.Join("\n", lines), true,
-                    (Loc.T("summary.next"), () =>
-                    {
-                        _card.Hide();
-                        onClosed();
-                    }),
-                    (Loc.T("summary.undo"), () =>
-                    {
-                        _card.Hide();
-                        _session.UndoWeek();
-                        ShowToast(Loc.T("summary.undone"));
-                        onClosed();
-                    }));
-                return;
+                undo = () =>
+                {
+                    _session.UndoWeek();
+                    ShowToast(Loc.T("summary.undone"));
+                    onClosed();
+                };
             }
 
-            _card.Show(Loc.F("summary.title", summary.Week), string.Join("\n", lines), true, (Loc.T("summary.next"), () =>
-            {
-                _card.Hide();
-                onClosed();
-            }));
+            _settlement.Show(summary, onClosed, undo);
         }
 
         /// <summary>엔딩 연출 (M5). 판정은 세션이 게임 종료 시점에 한 번 해 둔다.</summary>

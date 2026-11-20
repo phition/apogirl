@@ -1,5 +1,7 @@
 {
   "Folder": "Standing",
+  "Mode": "Whole",
+  "WholePriority": [ "react", "mark", "outfit", "face", "hair" ],
   "Order": [ "base", "outfit", "hair", "face", "mark", "bag", "weapon", "tool" ],
   "Armor": [
     { "Item": "ITEM_ARMOR_GUARD", "Key": "guard" },

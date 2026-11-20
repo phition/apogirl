@@ -649,3 +649,83 @@ Button.selected { border-color: var(--accent); background-color: var(--accent-so
 .with-section .teacher-box { top: 64px; bottom: auto; }
 .with-section.board-open .teacher-box { top: 64px; bottom: auto; }
 .with-section .scene-shade { display: none; }
+
+/* ── 입상 그림 (전신 한 장) ── */
+.with-section .standing { width: 300px; height: 452px; }
+.standing.fallback { width: 300px; height: 400px; }
+
+/* ── 3겹 전용 화면 공통 ── */
+.sheet {
+    position: absolute; left: 0; top: 0; right: 0; bottom: 0;
+    background-color: rgba(6, 7, 10, 0.82);
+    align-items: center;
+    justify-content: center;
+}
+
+/* 주간 결산: 펼친 일기장 (그림 비율 1920x1086) */
+.settle-book {
+    width: 1600px;
+    height: 905px;
+    flex-direction: row;
+}
+.settle-page { position: absolute; top: 13%; bottom: 17%; }
+.settle-left { left: 7.6%; width: 39.4%; padding: 6px 18px; }
+.settle-right { left: 53.4%; width: 39.4%; padding: 6px 18px; }
+.settle-title { font-size: 30px; -unity-font-style: bold; color: rgb(44, 38, 32); margin-bottom: 12px; }
+.settle-diary { font-size: 21px; color: rgb(52, 46, 40); white-space: normal; margin-bottom: 14px; }
+.settle-head { font-size: 18px; -unity-font-style: bold; color: rgb(70, 84, 120); margin-top: 10px; margin-bottom: 4px; }
+.settle-line { font-size: 17px; color: rgb(52, 46, 40); white-space: normal; margin: 1px 0; }
+.settle-line.strong { -unity-font-style: bold; color: rgb(60, 92, 60); }
+.settle-stat { flex-direction: row; align-items: center; margin: 1px 0; }
+.settle-stat-name { width: 150px; font-size: 17px; color: rgb(52, 46, 40); }
+.settle-stat-bar { height: 10px; background-color: rgb(96, 128, 84); border-radius: 3px; }
+.settle-stat-bar.down { background-color: rgb(170, 80, 70); }
+.settle-teacher {
+    margin-top: 16px;
+    font-size: 19px;
+    color: rgb(178, 44, 40);
+    -unity-font-style: italic;
+    white-space: normal;
+    border-left-width: 3px;
+    border-color: rgb(178, 44, 40);
+    padding-left: 10px;
+}
+.settle-foot { position: absolute; bottom: -6px; left: 18px; font-size: 14px; color: rgb(110, 100, 90); }
+.settle-buttons { flex-direction: row; justify-content: center; margin-top: -40px; }
+.settle-next { min-width: 260px; height: 50px; font-size: 19px; -unity-font-style: bold; background-color: var(--accent-soft); border-color: var(--accent); }
+.settle-undo { min-width: 200px; height: 50px; font-size: 16px; }
+
+/* 출정 준비: 왼쪽 지역 그림, 오른쪽 입상 + 장비 */
+.expedition-sheet { flex-direction: row; align-items: stretch; justify-content: flex-start; background-color: rgb(14, 15, 18); }
+.exp-art { flex-grow: 1; background-color: rgb(30, 32, 36); justify-content: flex-end; }
+.exp-art-shade { position: absolute; left: 0; right: 0; bottom: 0; height: 62%; background-color: rgba(8, 9, 12, 0.72); }
+.expedition-sheet.night .exp-art { -unity-background-image-tint-color: rgb(120, 130, 170); }
+.exp-info { padding: 0 56px 56px 56px; }
+.exp-kicker { color: var(--accent); font-size: 18px; -unity-font-style: bold; }
+.exp-location { color: rgb(240, 236, 226); font-size: 44px; -unity-font-style: bold; margin-bottom: 6px; }
+.exp-time { align-self: flex-start; padding: 3px 12px; border-radius: 12px; background-color: rgb(196, 168, 96); color: rgb(30, 26, 20); font-size: 16px; margin-bottom: 14px; }
+.exp-time.night { background-color: rgb(60, 70, 120); color: rgb(220, 226, 245); }
+.exp-line { color: rgb(220, 216, 206); font-size: 18px; white-space: normal; margin: 3px 0; max-width: 900px; }
+.exp-warning { color: rgb(232, 120, 104); font-size: 18px; -unity-font-style: bold; margin-top: 12px; }
+.exp-side { width: 720px; flex-direction: row; background-color: rgb(24, 26, 30); border-left-width: 1px; border-color: var(--line); }
+.exp-standing { width: 260px; margin: 40px 0 40px 16px; }
+.exp-panel { flex-grow: 1; padding: 40px 24px 32px 12px; justify-content: space-between; }
+.exp-loadout { }
+.exp-slot { flex-direction: row; align-items: center; padding: 8px; margin-bottom: 8px; background-color: rgb(34, 36, 41); border-radius: 6px; border-width: 1px; border-color: var(--line); }
+.exp-icon { width: 56px; height: 56px; margin-right: 10px; background-color: rgb(22, 23, 27); border-radius: 4px; }
+.exp-slot-text { flex-grow: 1; }
+.exp-slot-kind { color: var(--text-dim); font-size: 13px; }
+.exp-slot-name { font-size: 18px; -unity-font-style: bold; }
+.exp-slot-info { color: var(--ok); font-size: 14px; }
+.exp-arrow { width: 36px; height: 44px; padding: 0; font-size: 14px; }
+.exp-quick-label { color: var(--text-dim); font-size: 14px; margin-top: 8px; }
+.exp-quick-row { flex-direction: row; }
+.exp-quick { width: 92px; height: 104px; padding: 6px; margin: 4px 6px 0 0; align-items: center; flex-direction: column; }
+.exp-quick .exp-icon { margin-right: 0; }
+.exp-quick-name { font-size: 12px; -unity-text-align: middle-center; white-space: normal; }
+.exp-buttons { }
+.exp-depart { height: 60px; font-size: 22px; -unity-font-style: bold; background-color: var(--accent-soft); border-color: var(--accent); }
+.exp-dispatch { height: 40px; font-size: 16px; margin-top: 6px; }
+
+/* 단면도 방 패널의 방 그림 */
+.hub-room-art { height: 130px; margin: 2px 0 6px 0; border-radius: 4px; }

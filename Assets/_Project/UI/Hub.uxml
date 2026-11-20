@@ -89,6 +89,29 @@
 
         <ui:VisualElement name="debug-panel" class="debug-panel hidden" />
 
+        <!-- 3겹 전용 화면: 주간 결산(일기장), 출정 준비 -->
+        <ui:VisualElement name="settlement" class="sheet settlement hidden">
+            <ui:VisualElement name="settle-book" class="settle-book">
+                <ui:VisualElement name="settle-left" class="settle-page settle-left" />
+                <ui:VisualElement name="settle-right" class="settle-page settle-right" />
+            </ui:VisualElement>
+            <ui:VisualElement name="settle-buttons" class="settle-buttons" />
+        </ui:VisualElement>
+
+        <ui:VisualElement name="expedition-sheet" class="sheet expedition-sheet hidden">
+            <ui:VisualElement name="exp-art" class="exp-art">
+                <ui:VisualElement class="exp-art-shade" picking-mode="Ignore" />
+                <ui:VisualElement name="exp-info" class="exp-info" />
+            </ui:VisualElement>
+            <ui:VisualElement name="exp-side" class="exp-side">
+                <ui:VisualElement name="exp-standing" class="exp-standing" />
+                <ui:VisualElement name="exp-panel" class="exp-panel">
+                    <ui:VisualElement name="exp-loadout" class="exp-loadout" />
+                    <ui:VisualElement name="exp-buttons" class="exp-buttons" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+        </ui:VisualElement>
+
         <!-- 4겹: 대화 -->
         <ui:VisualElement name="dialogue" class="dialogue hidden">
             <ui:ScrollView name="dialogue-log" class="dialogue-log hidden" />

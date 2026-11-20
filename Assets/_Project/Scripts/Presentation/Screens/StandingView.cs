@@ -65,6 +65,13 @@ namespace ApoGirl.Presentation.Screens
 
         public string Folder = "Standing";
 
+        /// <summary>
+        /// "Layers" = 같은 캔버스 조각을 겹친다. "Whole" = 한 가지씩 바뀐 전신 그림 중 하나를 고른다
+        /// (WholePriority 순서: react 잠깐 표정 → mark 상태 → outfit 옷 → face 표정 → hair 머리).
+        /// </summary>
+        public string Mode = "Layers";
+        public string[] WholePriority = Array.Empty<string>();
+
         /// <summary>겹치는 순서 (아래 → 위): base, outfit, hair, face, mark, bag, weapon, tool.</summary>
         public string[] Order = Array.Empty<string>();
         public ItemKey[] Armor = Array.Empty<ItemKey>();
@@ -242,6 +249,13 @@ namespace ApoGirl.Presentation.Screens
                 return;
             }
 
+            if (_config.Mode == "Whole")
+            {
+                // 한 장 고르기: 우선순위에서 처음으로 그림이 있는 것, 없으면 기본 입상
+                StoryArt.SetContain(_host, WholePicture(look) ?? basePiece);
+                return;
+            }
+
             StoryArt.SetCover(_host, null);
             foreach (var layer in _config.Order)
             {
@@ -281,6 +295,34 @@ namespace ApoGirl.Presentation.Screens
         }
 
         private Texture2D Piece(string name) => StoryArt.Load(_config.Folder + "/stand_" + name);
+
+        private Texture2D WholePicture(StandingLook look)
+        {
+            foreach (var kind in _config.WholePriority)
+            {
+                IEnumerable<string> names;
+                switch (kind)
+                {
+                    case "react": names = string.IsNullOrEmpty(_reactFace) ? Array.Empty<string>() : new[] { "face_" + _reactFace }; break;
+                    case "mark": names = look.Pieces("mark"); break;
+                    case "outfit": names = look.Pieces("outfit"); break;
+                    case "face": names = look.Pieces("face"); break;
+                    case "hair": names = look.Pieces("hair"); break;
+                    default: names = Array.Empty<string>(); break;
+                }
+
+                foreach (var name in names)
+                {
+                    var texture = Piece(name);
+                    if (texture != null)
+                    {
+                        return texture;
+                    }
+                }
+            }
+
+            return null;
+        }
 
         private Texture2D Portrait(string face)
         {
