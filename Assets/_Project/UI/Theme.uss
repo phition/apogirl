@@ -210,7 +210,8 @@ Button.selected { border-color: var(--accent); background-color: var(--accent-so
     position: absolute; top: 60px; bottom: 92px;
     width: 440px;
     padding: 10px 12px;
-    background-color: rgba(30, 32, 36, 0.96);
+    /* 선형 색공간에서는 반투명이 생각보다 많이 비쳐서, 글이 많은 서랍·보드는 불투명으로 */
+    background-color: rgb(30, 32, 36);
     border-color: var(--line);
     border-width: 1px;
     transition-property: translate, opacity;
@@ -231,7 +232,7 @@ Button.selected { border-color: var(--accent); background-color: var(--accent-so
     position: absolute; left: 336px; right: 0; bottom: 84px;
     height: 600px;
     padding: 10px 14px;
-    background-color: rgba(26, 28, 32, 0.97);
+    background-color: rgb(26, 28, 32);
     border-top-width: 1px;
     border-color: var(--accent-soft);
     border-top-left-radius: 10px;
@@ -287,6 +288,7 @@ Button.selected { border-color: var(--accent); background-color: var(--accent-so
 .action-gains { color: var(--ok); font-size: 15px; }
 
 .planner-row { flex-direction: row; flex-grow: 1; }
+.planner-header { flex-grow: 0; }
 .planner-day, .planner-phase {
     -unity-text-align: middle-center;
     color: var(--text-dim);

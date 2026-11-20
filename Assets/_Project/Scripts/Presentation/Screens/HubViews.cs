@@ -501,6 +501,7 @@ namespace ApoGirl.Presentation.Screens
 
             var header = new VisualElement();
             header.AddToClassList("planner-row");
+            header.AddToClassList("planner-header");
             header.Add(Corner());
             for (var day = 1; day <= CalendarState.DaysPerWeek; day++)
             {
