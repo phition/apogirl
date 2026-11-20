@@ -92,6 +92,14 @@ namespace ApoGirl.Exploration.Runtime
         private readonly List<string> _quickSlots = new List<string>();
         private readonly List<string> _usedItems = new List<string>();
         private readonly List<string> _runFlags = new List<string>();
+
+        // 적대적 생존자에게 붙잡힘 → 암전 후 귀환 (문서 13장 4항: 암전·짧은 문장 연출)
+        private const float ConfrontSeconds = 2.2f;
+        private HostileOutcome _hostileOutcome;
+        private float _confrontTimer = -1f;
+
+        // 상자 고갈 지역(교실동)에서 이번에 뒤진 상자
+        private readonly List<string> _searchedKeys = new List<string>();
         private readonly List<string> _runClues = new List<string>();
         private float _moveMultiplier = 1f;
         private bool _playerSprites;
@@ -352,6 +360,12 @@ namespace ApoGirl.Exploration.Runtime
             if (OpenEncounter != null)
             {
                 _hud.Refresh();
+                return;
+            }
+
+            if (_confrontTimer >= 0f)
+            {
+                TickConfrontation(Time.deltaTime);
                 return;
             }
 
@@ -847,6 +861,10 @@ namespace ApoGirl.Exploration.Runtime
                     {
                         _log.ContainersSearched++;
                         Nearest.MarkSearched();
+                        if (!string.IsNullOrEmpty(Nearest.LootKey))
+                        {
+                            _searchedKeys.Add(Nearest.LootKey);
+                        }
                         _tutorialSearched = true;
                         OpenContainer = Nearest;
                     }
@@ -908,6 +926,8 @@ namespace ApoGirl.Exploration.Runtime
             Result = RunResultBuilder.Build(status, Backpack.Items, _db, _baseFatigue, _runStress, hpDelta, Clock.Elapsed);
             Result.UsedItems.AddRange(_usedItems);
             Result.WeaponWear = _weaponWear;
+            Result.SearchedContainers.AddRange(_searchedKeys);
+            HostileRules.Apply(Result, _hostileOutcome, _startHp, _balance);
             foreach (var flag in _runFlags)
             {
                 if (!Result.Flags.Contains(flag)) Result.Flags.Add(flag);
@@ -1031,7 +1051,10 @@ namespace ApoGirl.Exploration.Runtime
             {
                 var container = layout.Containers[i];
                 var target = CreateContainer(_corridors[container.Floor], container);
-                target.Contents.AddRange(RoomLoot.RollCorridorContainer(_db, Location, i, Request.Seed));
+                if (!Deplete(target, HostileRules.CorridorKey(Location.Id, i)))
+                {
+                    target.Contents.AddRange(RoomLoot.RollCorridorContainer(_db, Location, i, Request.Seed));
+                }
             }
 
             foreach (var encounter in ActiveEncounters())
@@ -1097,7 +1120,7 @@ namespace ApoGirl.Exploration.Runtime
             for (var i = 0; i < room.Template.Containers.Count; i++)
             {
                 var target = CreateContainer(room, room.Template.Containers[i]);
-                if (i < contents.Count)
+                if (!Deplete(target, HostileRules.RoomKey(Location.Id, room.DoorIndex, i)) && i < contents.Count)
                 {
                     target.Contents.AddRange(contents[i]);
                 }
@@ -1398,6 +1421,103 @@ namespace ApoGirl.Exploration.Runtime
                     });
                 }
             }
+
+            SpawnSurvivor(variant);
+        }
+
+        /// <summary>적대적 생존자 1명 (요청의 성향이 있으면). 지정 위치 후보 중 하나, 없으면 출구에서 먼 복도.</summary>
+        private void SpawnSurvivor(LocationVariantDef variant)
+        {
+            if (Request.HostileTemperament <= 0)
+            {
+                return;
+            }
+
+            if (!_db.TryGetEnemy(_balance.HostileEnemyId, out var enemy))
+            {
+                enemy = new EnemyDef { Id = _balance.HostileEnemyId, Kind = EnemyKind.Survivor, CanBeDowned = false };
+            }
+
+            var random = new SeededRandom(SeededRandom.CreateState(Request.Seed ^ 0x5A1));
+            ExplorationArea area;
+            float x;
+            if (variant.HostileSpots.Count > 0)
+            {
+                var spot = variant.HostileSpots[random.Range(0, variant.HostileSpots.Count - 1)];
+                area = ResolveSpawnArea(spot) ?? _corridors[0];
+                x = spot.X;
+            }
+            else
+            {
+                var start = Location.Layout.Exits.Find(e => e.Kind == ExitKind.Main);
+                var floor = _corridors.Count > 1 ? random.Range(0, _corridors.Count - 1) : 0;
+                area = _corridors[floor];
+                var startNearLeft = start == null || start.Floor != floor || start.X < area.Width / 2f;
+                x = startNearLeft
+                    ? area.Width * (0.6f + 0.3f * (float)random.NextDouble())
+                    : area.Width * (0.1f + 0.3f * (float)random.NextDouble());
+            }
+
+            var unit = _threat.AddZombie(enemy, AreaId(area), x);
+            var sprites = ExplorationArt.Get("player_idle") != null;
+            var body = sprites
+                ? ExplorationArt.Place(_world, "Survivor_" + unit.Id, "player_idle", Vector2.zero, 6, Vector2.zero, SurvivorTint)
+                : BuildingView.Rect(_world, "Survivor_" + unit.Id, Vector2.zero, Vector2.one, SurvivorTint, 6);
+            var marker = BuildingView.Rect(_world, "Awareness_" + unit.Id, Vector2.zero, Vector2.one, Color.yellow, 12);
+            _zombieViews.Add(new ZombieView
+            {
+                Unit = unit, Body = body.transform, BodyRenderer = body.GetComponent<SpriteRenderer>(), Marker = marker.transform,
+                MarkerRenderer = marker.GetComponent<SpriteRenderer>(), Kind = "survivor", Sprites = sprites, Survivor = true, LastX = unit.X,
+            });
+        }
+
+        /// <summary>생존자 실루엣 색 (사람 그림 위에 어두운 색을 얹는다. 전용 그림이 오면 교체).</summary>
+        private static readonly Color SurvivorTint = new Color(0.5f, 0.38f, 0.34f);
+
+        /// <summary>상자 고갈 지역: 이미 뒤진 상자면 비운 채 수색 완료로 둔다. 반환: 비웠는가.</summary>
+        private bool Deplete(ExplorationTarget target, string key)
+        {
+            if (!Location.DepletingContainers)
+            {
+                return false;
+            }
+
+            target.LootKey = key;
+            if (!Request.LootedContainers.Contains(key))
+            {
+                return false;
+            }
+
+            target.SearchProgress = target.SearchSeconds;
+            target.MarkSearched();
+            target.LootKey = null;
+            return true;
+        }
+
+        /// <summary>생존자에게 붙잡힘: 조작을 멈추고 성향에 맞는 문장을 띄운 뒤 암전 → 귀환.</summary>
+        private void BeginConfrontation()
+        {
+            _hostileOutcome = HostileRules.OutcomeFor(Request.HostileTemperament);
+            _confrontTimer = 0f;
+            CloseContainer();
+            _log.HostileOutcome = _hostileOutcome.ToString();
+            _hud?.ShowText(Loc.T("exp.hostile." + _hostileOutcome));
+        }
+
+        private void TickConfrontation(float dt)
+        {
+            _confrontTimer += dt;
+            ScreenFade = Mathf.Clamp01(_confrontTimer / ConfrontSeconds);
+            if (_fadeOverlay != null)
+            {
+                _fadeOverlay.color = new Color(0f, 0f, 0f, ScreenFade);
+            }
+
+            _hud?.Refresh();
+            if (_confrontTimer >= ConfrontSeconds + 0.6f)
+            {
+                Finish(ExtractStatus.Extracted);
+            }
         }
 
         private ExplorationArea ResolveSpawnArea(SpawnDef spawn)
@@ -1415,6 +1535,12 @@ namespace ApoGirl.Exploration.Runtime
             Activity = ActivityModel.Evaluate(Clock.Phase, DuskAwakened, _balance);
             NoiseLevel = Mathf.Max(0f, NoiseLevel - dt * 6f);
             var events = _threat.Step(dt, Snapshot, Activity);
+            if (events.CaughtBy != null && !Invincible)
+            {
+                BeginConfrontation();
+                return;
+            }
+
             if (events.Damage > 0 && !Invincible)
             {
                 var damage = Mathf.Max(1, Mathf.RoundToInt(events.Damage * (1f - Mathf.Clamp01(_armor?.DamageReduction ?? 0f))));
@@ -1791,6 +1917,34 @@ namespace ApoGirl.Exploration.Runtime
 
                 // 휴면도 선 채로 (고개 숙인 듯 살짝 낮게), 머리 위 Zzz는 HUD가 그린다
                 var shade = 1f + (unit.Id % 3 - 1) * 0.08f;
+                if (view.Survivor)
+                {
+                    var walking = Mathf.Abs(unit.X - view.LastX) > 0.0005f;
+                    if (walking)
+                    {
+                        view.MoveTime += Time.deltaTime;
+                    }
+
+                    if (view.Sprites)
+                    {
+                        if (walking) view.BodyRenderer.flipX = unit.X < view.LastX;
+                        var running = unit.State == ZombieState.Chase;
+                        var frame = (int)(view.MoveTime * (running ? 12f : 7f)) % 4;
+                        view.BodyRenderer.sprite = ExplorationArt.Get(!walking ? "player_idle" : (running ? "player_run_" : "player_walk_") + frame);
+                        view.Body.localPosition = new Vector3(origin.x + unit.X, origin.y + 0.15f, 0f);
+                        view.Body.localScale = Vector3.one;
+                    }
+                    else
+                    {
+                        view.Body.localPosition = new Vector3(origin.x + unit.X - 0.3f, origin.y + 0.15f, 0f);
+                        view.Body.localScale = new Vector3(0.6f, 1.8f, 1f);
+                    }
+
+                    view.LastX = unit.X;
+                    view.BodyRenderer.color = unit.State == ZombieState.Stunned ? new Color(0.45f, 0.45f, 0.6f) : SurvivorTint;
+                    goto Marker;
+                }
+
                 if (view.Sprites)
                 {
                     var moved = Mathf.Abs(unit.X - view.LastX) > 0.0005f;
@@ -1844,6 +1998,7 @@ namespace ApoGirl.Exploration.Runtime
             public SpriteRenderer MarkerRenderer;
             public string Kind = "wanderer";
             public bool Sprites;
+            public bool Survivor;
             public float LastX;
             public float MoveTime;
         }

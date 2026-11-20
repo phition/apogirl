@@ -38,5 +38,8 @@ namespace ApoGirl.Core.Definitions
         public float AgilityDownReduction = 0.001f;
         public float SleepDebtDownIncrease = 0.03f;
         public float ConsecutiveDownIncrease = 0.1f;
+
+        /// <summary>상자가 고갈되는 지역(LocationDef.DepletingContainers)에서 헤드리스 1회가 뒤지는 상자 수. 남은 상자가 적으면 수확이 그 비율로 준다.</summary>
+        public int ContainersPerRun;
     }
 }

@@ -459,6 +459,7 @@ namespace ApoGirl.Core.Simulation
             }
 
             InfectionRules.WeeklyTeacher(_state, _db);
+            AssaultTraumaRules.Care(_state, 1, Balance);
             RecordWeek(calendar.Week);
             var diary = LineRules.Pick(_state, _db, LineKind.Diary, new EventContext { Phase = DayPhase.Night, Day = CalendarState.DaysPerWeek });
             foreach (var outcome in _outcomes)
@@ -520,9 +521,18 @@ namespace ApoGirl.Core.Simulation
             }
 
             ApplyEquipment(outcome.ExpeditionRequest, result, delta);
+            ApplyHostile(outcome.ExpeditionRequest, result, delta);
+
+            // 교실동 등: 뒤진 상자는 다음 출정에도 비어 있다
+            foreach (var key in result.SearchedContainers)
+            {
+                _state.Exploration.LootedContainers.Add(key);
+            }
 
             EffectApplier.ChangeVital(_state, VitalType.Fatigue, (int)Math.Round(result.FatigueDelta), Balance, delta);
-            var stress = (int)Math.Round(result.StressDelta * (1f + TraitRules.Sum(_state, _db, TraitModifierKind.ExpeditionStress)));
+            // 폭행 트라우마: 낮 탐험마다 스트레스가 더 오른다
+            var traumaStress = action.ExpeditionTime == ExpeditionTime.Day ? AssaultTraumaRules.DayExpeditionStress(_state, Balance) : 0;
+            var stress = (int)Math.Round((result.StressDelta + traumaStress) * (1f + TraitRules.Sum(_state, _db, TraitModifierKind.ExpeditionStress)));
             EffectApplier.ChangeVital(_state, VitalType.Stress, StatRules.ScaleStress(stress, player.SleepDebt, Balance), Balance, delta);
             EffectApplier.ChangeVital(_state, VitalType.Hp, result.HpDelta, Balance, delta);
             EffectApplier.ChangeSleepDebt(_state, result.SleepDebtDelta, Balance, delta);
@@ -611,6 +621,54 @@ namespace ApoGirl.Core.Simulation
 
             LoadoutRules.WearItem(_state, _db, loadout.MainWeapon, result.WeaponWear, delta);
             LoadoutRules.Sanitize(_state);
+        }
+
+        /// <summary>적대적 생존자에게 붙잡힘: 강탈·구타는 들고 간 소모품도 잃고, 구타는 무기까지 잃고 트라우마가 생긴다.</summary>
+        private void ApplyHostile(ExpeditionRequest request, ExpeditionResult result, StateDelta delta)
+        {
+            var stats = _state.Exploration;
+            switch (result.Hostile)
+            {
+                case HostileOutcome.Evicted:
+                    stats.HostileEvictions++;
+                    return;
+                case HostileOutcome.Robbed:
+                    stats.HostileRobberies++;
+                    break;
+                case HostileOutcome.Beaten:
+                    stats.HostileBeatings++;
+                    break;
+                default:
+                    return;
+            }
+
+            var loadout = request?.Loadout;
+            if (loadout != null)
+            {
+                var used = new List<string>(result.UsedItems);
+                foreach (var id in loadout.QuickSlots)
+                {
+                    if (string.IsNullOrEmpty(id) || used.Remove(id))
+                    {
+                        continue;
+                    }
+
+                    LoadoutRules.RemoveFromStorage(_state, id, 1, delta);
+                }
+
+                if (result.Hostile == HostileOutcome.Beaten && !string.IsNullOrEmpty(loadout.MainWeapon))
+                {
+                    LoadoutRules.RemoveFromStorage(_state, loadout.MainWeapon, 1, delta);
+                }
+
+                LoadoutRules.Sanitize(_state);
+            }
+
+            if (result.Hostile == HostileOutcome.Beaten)
+            {
+                AssaultTraumaRules.Add(_state, Balance);
+                EffectApplier.ChangeHidden(_state, HiddenType.TraumaRecovery, -Balance.BeatenTraumaRecoveryLoss, Balance, delta);
+            }
         }
 
         private void LockFollowingSlots(int index, int count)

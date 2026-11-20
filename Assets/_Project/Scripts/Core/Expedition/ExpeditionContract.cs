@@ -70,6 +70,29 @@ namespace ApoGirl.Core.Expedition
 
         /// <summary>주무기의 남은 내구도 (0 = 최대치 사용).</summary>
         public int WeaponDurability;
+
+        // ── 적대적 생존자·상자 고갈 ──
+
+        /// <summary>이번 출정에 나오는 적대적 생존자의 성향 (0 = 없음, 1 위협 / 2 강탈 / 3 강탈+구타). HostileRules가 정한다.</summary>
+        public int HostileTemperament;
+
+        /// <summary>이 지역에서 이미 뒤진 상자 키 (DepletingContainers 지역만). 키는 HostileRules.ContainerKey.</summary>
+        public HashSet<string> LootedContainers = new HashSet<string>();
+    }
+
+    /// <summary>적대적 생존자에게 붙잡힌 결과.</summary>
+    public enum HostileOutcome
+    {
+        None,
+
+        /// <summary>1단계: 위협하고 쫓아낸다 (가진 것은 지킨다).</summary>
+        Evicted,
+
+        /// <summary>2단계: 배낭을 전부 빼앗고 쫓아낸다.</summary>
+        Robbed,
+
+        /// <summary>3단계: 빼앗고 구타한다 (체력 크게 감소, 트라우마).</summary>
+        Beaten,
     }
 
     public sealed class ExpeditionResult
@@ -100,6 +123,12 @@ namespace ApoGirl.Core.Expedition
 
         /// <summary>주무기 내구도 소모량.</summary>
         public int WeaponWear;
+
+        /// <summary>적대적 생존자에게 붙잡힌 결과 (없으면 None).</summary>
+        public HostileOutcome Hostile;
+
+        /// <summary>이번에 뒤진 상자 키 (DepletingContainers 지역이면 거점이 기록한다).</summary>
+        public List<string> SearchedContainers = new List<string>();
     }
 
     /// <summary>탐험 실행기. M1은 헤드리스 확률 모델, M2b부터 실시간 탐험 씬이 같은 계약을 구현한다.</summary>
@@ -133,6 +162,22 @@ namespace ApoGirl.Core.Expedition
                 ConsecutiveRun = consecutiveRun,
                 WeatherId = state.Base.Weather.ToString(),
             };
+
+            // 적대적 생존자 (낮만) · 상자 고갈 (교실동)
+            LocationDef location = null;
+            var hasLocation = db != null && db.TryGetLocation(action.LocationId, out location);
+            request.HostileTemperament = HostileRules.Roll(request, hasLocation ? location : null, db?.Balance);
+            if (hasLocation && location.DepletingContainers)
+            {
+                var prefix = action.LocationId + "/";
+                foreach (var key in state.Exploration.LootedContainers)
+                {
+                    if (key.StartsWith(prefix, StringComparison.Ordinal))
+                    {
+                        request.LootedContainers.Add(key);
+                    }
+                }
+            }
 
             foreach (var pair in player.Proficiency)
             {

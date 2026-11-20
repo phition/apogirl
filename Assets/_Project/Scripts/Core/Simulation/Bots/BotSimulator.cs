@@ -46,6 +46,9 @@ namespace ApoGirl.Core.Simulation.Bots
         public int Materials;
         public int Items;
         public bool Bitten;
+
+        /// <summary>적대적 생존자에게 붙잡힌 결과.</summary>
+        public HostileOutcome Hostile;
     }
 
     /// <summary>한 판의 결과.</summary>
@@ -205,6 +208,7 @@ namespace ApoGirl.Core.Simulation.Bots
                 Materials = Loot(ResourceType.Materials),
                 Items = expedition.Loot.Sum(i => i.Count),
                 Bitten = outcome.Bite != null,
+                Hostile = expedition.Hostile,
             });
         }
 

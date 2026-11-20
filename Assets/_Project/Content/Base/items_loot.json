@@ -71,7 +71,8 @@
       "Night": { "Resources": [ { "Resource": "Food", "Min": 2, "Max": 3 } ], "BaseDownChance": 0.0, "Fatigue": 8, "StressMin": 6, "StressMax": 8 } },
     { "Id": "LOC_SCHOOL_INTERIOR",
       "Day": { "Resources": [ { "Resource": "Food", "Min": 6, "Max": 10 }, { "Resource": "Water", "Min": 4, "Max": 8 }, { "Resource": "Materials", "Min": 1, "Max": 3 } ], "BaseDownChance": 0.05, "Fatigue": 15, "StressMin": 6, "StressMax": 12, "ConscienceMax": 2 },
-      "Night": { "Resources": [ { "Resource": "Food", "Min": 8, "Max": 12 }, { "Resource": "Medicine", "Min": 0, "Max": 2 }, { "Resource": "Materials", "Min": 2, "Max": 4 }, { "Resource": "Water", "Min": 1, "Max": 3 } ], "BaseDownChance": 0.1, "Fatigue": 20, "StressMin": 15, "StressMax": 15, "DawnReturnChance": 0.2 } },
+      "Night": { "Resources": [ { "Resource": "Food", "Min": 8, "Max": 12 }, { "Resource": "Medicine", "Min": 0, "Max": 2 }, { "Resource": "Materials", "Min": 2, "Max": 4 }, { "Resource": "Water", "Min": 1, "Max": 3 } ], "BaseDownChance": 0.1, "Fatigue": 20, "StressMin": 15, "StressMax": 15, "DawnReturnChance": 0.2 },
+      "ContainersPerRun": 10 },
     { "Id": "LOC_STORE",
       "Day": { "Resources": [ { "Resource": "Food", "Min": 8, "Max": 12 }, { "Resource": "Water", "Min": 4, "Max": 7 }, { "Resource": "Fuel", "Min": 0, "Max": 1 } ], "BaseDownChance": 0.06, "Fatigue": 14, "StressMin": 6, "StressMax": 12, "ConscienceMax": 2 },
       "Night": { "Resources": [ { "Resource": "Food", "Min": 9, "Max": 14 }, { "Resource": "Water", "Min": 6, "Max": 10 }, { "Resource": "Materials", "Min": 1, "Max": 2 } ], "BaseDownChance": 0.11, "Fatigue": 18, "StressMin": 14, "StressMax": 16, "DawnReturnChance": 0.15 } },
@@ -83,6 +84,7 @@
   "Enemies": [
     { "Id": "ENEMY_WANDERER", "WalkSpeed": 1.0, "RunSpeed": 3.2, "SightRange": 7.0, "HearingMultiplier": 1.0, "AwarenessRate": 1.2, "Damage": 12, "HitCooldown": 1.2, "AttackRange": 0.7, "Toughness": 3 },
     { "Id": "ENEMY_LISTENER", "WalkSpeed": 0.8, "RunSpeed": 3.0, "SightRange": 4.0, "HearingMultiplier": 2.0, "AwarenessRate": 1.0, "Damage": 10, "HitCooldown": 1.2, "AttackRange": 0.7, "Toughness": 3 },
-    { "Id": "ENEMY_WATCHER", "WalkSpeed": 0.9, "RunSpeed": 3.4, "SightRange": 10.0, "HearingMultiplier": 0.6, "AwarenessRate": 1.7, "Damage": 12, "HitCooldown": 1.1, "AttackRange": 0.7, "Toughness": 4 }
+    { "Id": "ENEMY_WATCHER", "WalkSpeed": 0.9, "RunSpeed": 3.4, "SightRange": 10.0, "HearingMultiplier": 0.6, "AwarenessRate": 1.7, "Damage": 12, "HitCooldown": 1.1, "AttackRange": 0.7, "Toughness": 4 },
+    { "Id": "ENEMY_SURVIVOR", "Kind": "Survivor", "WalkSpeed": 1.4, "RunSpeed": 3.7, "SightRange": 12.0, "HearingMultiplier": 1.8, "AwarenessRate": 2.2, "Damage": 0, "HitCooldown": 1.0, "AttackRange": 0.8, "Toughness": 99, "SeesHiddenWithin": 2.5, "PatrolRange": 14.0, "CanBeDowned": false }
   ]
 }

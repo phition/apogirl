@@ -67,6 +67,9 @@ namespace ApoGirl.Exploration.Runtime
         public bool Searched;
         public readonly List<ItemStack> Contents = new List<ItemStack>();
 
+        /// <summary>상자 고갈 지역의 상자 키 (뒤지면 거점이 기록, 이미 뒤진 상자면 null).</summary>
+        public string LootKey;
+
         public ExitDef Exit;
         public bool Locked;
 

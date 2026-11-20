@@ -54,6 +54,9 @@ namespace ApoGirl.Core.Definitions
         /// <summary>선생님 감염 진행도 변화 (돌봄 −, 악화 +). 재감염 전에는 무시.</summary>
         public int TeacherInfection;
 
+        /// <summary>폭행 트라우마 회복을 앞당기는 주 수 (선생님과의 대화·마음 돌보기).</summary>
+        public int TraumaCare;
+
         /// <summary>다른 효과를 이 효과에 더한다 (목록은 이어 붙이고, 수치는 더하고, 단계·세기는 큰 쪽).</summary>
         public GameEffect MergeFrom(GameEffect other)
         {
@@ -84,6 +87,7 @@ namespace ApoGirl.Core.Definitions
             RaidStrength = Math.Max(RaidStrength, other.RaidStrength);
             TeacherReinfect |= other.TeacherReinfect;
             TeacherInfection += other.TeacherInfection;
+            TraumaCare += other.TraumaCare;
             return this;
         }
     }

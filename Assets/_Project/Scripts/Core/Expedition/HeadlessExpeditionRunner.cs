@@ -72,7 +72,59 @@ namespace ApoGirl.Core.Expedition
 
             // M7: 조우도 확률로 (봇 판에서도 간호사·주동자·연구 자료 갈래가 열리게). 기존 굴림 뒤에 굴려 자원 결과는 그대로다.
             RollEncounters(request, timeYield, random, result);
+
+            // 교실동 상자 고갈·적대적 생존자: 따로 뽑은 난수로 (기존 굴림 결과를 흔들지 않는다)
+            ApplyDepletion(request, model, result);
+            ApplyHostile(request, result);
             return result;
+        }
+
+        /// <summary>상자가 고갈되는 지역: 이번에 뒤질 상자를 남은 것 중에서 고르고, 남은 상자가 모자라면 수확을 그만큼 줄인다.</summary>
+        private void ApplyDepletion(ExpeditionRequest request, ExpeditionModelDef model, ExpeditionResult result)
+        {
+            if (model.ContainersPerRun <= 0 || !_db.TryGetLocation(request.LocationId, out var location) || !location.DepletingContainers)
+            {
+                return;
+            }
+
+            var available = HostileRules.AllContainerKeys(location).Where(k => !request.LootedContainers.Contains(k)).ToList();
+            var random = new SeededRandom(SeededRandom.CreateState(request.Seed ^ 0xDE91E7));
+            var picked = Math.Min(model.ContainersPerRun, available.Count);
+            for (var i = 0; i < picked; i++)
+            {
+                var index = random.Range(i, available.Count - 1);
+                (available[i], available[index]) = (available[index], available[i]);
+                result.SearchedContainers.Add(available[i]);
+            }
+
+            var fraction = (float)picked / model.ContainersPerRun;
+            if (fraction >= 1f)
+            {
+                return;
+            }
+
+            foreach (var loot in result.ResourceLoot)
+            {
+                loot.Amount = (int)Math.Round(loot.Amount * fraction, MidpointRounding.AwayFromZero);
+            }
+
+            result.ResourceLoot.RemoveAll(r => r.Amount <= 0);
+        }
+
+        /// <summary>적대적 생존자가 있으면 확률로 붙잡힌다 (실시간 탐험의 도망·숨기를 확률로 대신).</summary>
+        private void ApplyHostile(ExpeditionRequest request, ExpeditionResult result)
+        {
+            if (request.HostileTemperament <= 0)
+            {
+                return;
+            }
+
+            var balance = _db.Balance;
+            var random = new SeededRandom(SeededRandom.CreateState(request.Seed ^ 0x40571F));
+            if (random.NextDouble() < balance.HeadlessHostileCaughtChance)
+            {
+                HostileRules.Apply(result, HostileRules.OutcomeFor(request.HostileTemperament), request.Hp, balance);
+            }
         }
 
         private void RollEncounters(ExpeditionRequest request, ExpeditionYield timeYield, IRandomService random, ExpeditionResult result)

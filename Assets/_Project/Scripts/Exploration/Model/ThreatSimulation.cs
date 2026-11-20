@@ -146,6 +146,9 @@ namespace ApoGirl.Exploration.Model
 
         public bool IsAwake => State != ZombieState.Dormant && State != ZombieState.Down;
 
+        /// <summary>적대적 생존자 (사람): 낮 활동 보정을 받지 않고, 붙잡으면 피해 대신 대치가 된다.</summary>
+        public bool IsSurvivor => Def != null && Def.Kind == EnemyKind.Survivor;
+
         public bool IsDown => State == ZombieState.Down;
     }
 
@@ -178,6 +181,9 @@ namespace ApoGirl.Exploration.Model
 
         /// <summary>새로 발각됨 (어느 좀비든 추격 시작).</summary>
         public bool Spotted;
+
+        /// <summary>적대적 생존자에게 붙잡힘 (피해 대신 런이 끝난다, 처리는 호출 측).</summary>
+        public ZombieUnit CaughtBy;
 
         public readonly List<CrowdState> WokenCrowds = new List<CrowdState>();
     }
@@ -324,7 +330,7 @@ namespace ApoGirl.Exploration.Model
             }
 
             best.Wounds += Math.Max(1, power);
-            if (best.Wounds >= Math.Max(1, best.Def.Toughness))
+            if (best.Def.CanBeDowned && best.Wounds >= Math.Max(1, best.Def.Toughness))
             {
                 best.State = ZombieState.Down;
                 best.Awareness = 0f;
@@ -503,15 +509,26 @@ namespace ApoGirl.Exploration.Model
             return events;
         }
 
+        /// <summary>좀비만 시간대 활동 보정을 받는다 (사람은 늘 깨어 있다).</summary>
+        private static ActivityMods ModsFor(ZombieUnit unit, ActivityMods mods) => unit.IsSurvivor ? ActivityMods.Neutral : mods;
+
         public bool CanSee(ZombieUnit zombie, PlayerSnapshot player, ActivityMods mods)
         {
-            if (player.Hidden || player.AreaId != zombie.AreaId || zombie.State == ZombieState.Stunned)
+            if (player.AreaId != zombie.AreaId || zombie.State == ZombieState.Stunned)
             {
                 return false;
             }
 
+            mods = ModsFor(zombie, mods);
             var dx = player.X - zombie.X;
             var distance = Math.Abs(dx);
+            if (player.Hidden)
+            {
+                // 경계 중인 생존자는 가까운 숨을 곳을 뒤진다
+                var alert = zombie.State == ZombieState.Investigate || zombie.State == ZombieState.Search || zombie.State == ZombieState.Chase;
+                return alert && zombie.Def.SeesHiddenWithin > 0f && distance <= zombie.Def.SeesHiddenWithin;
+            }
+
             var range = zombie.Def.SightRange * mods.Sight * player.Visibility
                         * (player.Crouching ? _balance.CrouchSightMultiplier : 1f);
             if (distance > range)
@@ -548,7 +565,7 @@ namespace ApoGirl.Exploration.Model
                     continue;
                 }
 
-                var reach = noise.Radius * mods.Hearing * zombie.Def.HearingMultiplier * _balance.ZombieHearingBonus;
+                var reach = noise.Radius * ModsFor(zombie, mods).Hearing * zombie.Def.HearingMultiplier * _balance.ZombieHearingBonus;
                 if (Math.Abs(zombie.X - noise.X) <= reach)
                 {
                     zombie.State = ZombieState.Investigate;
@@ -580,6 +597,7 @@ namespace ApoGirl.Exploration.Model
 
         private void TickZombie(ZombieUnit zombie, float dt, PlayerSnapshot player, ActivityMods mods, ThreatEvents events)
         {
+            mods = ModsFor(zombie, mods);
             if (zombie.HitTimer > 0f)
             {
                 zombie.HitTimer -= dt;
@@ -623,7 +641,8 @@ namespace ApoGirl.Exploration.Model
                     zombie.Timer -= dt;
                     if (zombie.Timer <= 0f || Math.Abs(zombie.X - zombie.TargetX) <= ArriveDistance)
                     {
-                        zombie.TargetX = Clamp(zombie.AreaId, zombie.HomeX + (float)(_random.NextDouble() * 2 - 1) * _balance.PatrolRange);
+                        var patrol = zombie.Def.PatrolRange > 0f ? zombie.Def.PatrolRange : _balance.PatrolRange;
+                        zombie.TargetX = Clamp(zombie.AreaId, zombie.HomeX + (float)(_random.NextDouble() * 2 - 1) * patrol);
                         zombie.Timer = 3f + (float)_random.NextDouble() * 4f;
                     }
 
@@ -684,6 +703,12 @@ namespace ApoGirl.Exploration.Model
             }
 
             var arrived = MoveToward(zombie, zombie.TargetX, zombie.Def.RunSpeed * mods.Speed, dt);
+
+            if (sees && zombie.IsSurvivor && Math.Abs(player.X - zombie.X) <= zombie.Def.AttackRange)
+            {
+                events.CaughtBy ??= zombie;
+                return;
+            }
 
             if (sees && Math.Abs(player.X - zombie.X) <= zombie.Def.AttackRange && zombie.HitTimer <= 0f)
             {

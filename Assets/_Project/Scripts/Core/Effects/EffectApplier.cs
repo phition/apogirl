@@ -152,6 +152,11 @@ namespace ApoGirl.Core.Effects
             {
                 ApoGirl.Core.Rules.InfectionRules.ChangeTeacherInfection(state, effect.TeacherInfection, balance);
             }
+
+            if (effect.TraumaCare > 0)
+            {
+                ApoGirl.Core.Rules.AssaultTraumaRules.Care(state, effect.TraumaCare, balance);
+            }
         }
 
         public static int ChangeDefense(GameState state, int amount, BalanceConfig balance, StateDelta delta)

@@ -198,6 +198,41 @@ namespace ApoGirl.Core.Definitions
         public int DehydrationThreshold = 60;
         public int DehydrationHpLoss = 10;
 
+        // ── 적대적 생존자 (낮 탐험, M7 추가 요청) ──
+
+        public string HostileEnemyId = "ENEMY_SURVIVOR";
+
+        /// <summary>이 주차부터 나온다 (튜토리얼 기간은 안전).</summary>
+        public int HostileStartWeek = 5;
+
+        /// <summary>낮 탐험 1회 등장 확률: 1막(1~13주) / 2막 / 3막 / 4막. 지역 변형의 HostileChanceMultiplier를 곱한다.</summary>
+        public float HostileChanceAct1 = 0.10f;
+        public float HostileChanceAct2 = 0.15f;
+        public float HostileChanceAct3 = 0.20f;
+        public float HostileChanceAct4 = 0.25f;
+
+        /// <summary>성향 가중치: 1단계 위협 / 2단계 강탈 / 3단계 강탈+구타.</summary>
+        public int HostileWeightThreaten = 50;
+        public int HostileWeightRob = 35;
+        public int HostileWeightBeat = 15;
+
+        /// <summary>구타: 체력 손실 (돌아올 때 최소 1은 남긴다), 추가 스트레스, 트라우마 회복 숨김 수치 감소.</summary>
+        public int BeatenHpLoss = 40;
+        public int BeatenStress = 15;
+        public int BeatenTraumaRecoveryLoss = 3;
+        public int RobbedStress = 8;
+        public int EvictedStress = 4;
+
+        /// <summary>폭행 트라우마: 단계당 낮 탐험 스트레스 +DayTraumaStressPerLevel (최대 MaxAssaultTrauma 단계).</summary>
+        public int MaxAssaultTrauma = 3;
+        public int DayTraumaStressPerLevel = 4;
+
+        /// <summary>다시 맞지 않고 이만큼 주가 지나면 1단계 회복 (돌봄 행동이 주 수를 앞당긴다: GameEffect.TraumaCare).</summary>
+        public int TraumaRecoveryWeeks = 6;
+
+        /// <summary>헤드리스 탐험: 생존자가 있을 때 붙잡힐 확률.</summary>
+        public float HeadlessHostileCaughtChance = 0.5f;
+
         // ── M7-2 후반 압박 (M7-f, 문서 9.0 "자원 압박이 서서히 상승") ──
 
         /// <summary>겨울(40~52주) 식량 소모 배율. 하루 소모를 소수점까지 누적해 나눠 쓴다 (2 × 1.3 → 주 18).</summary>

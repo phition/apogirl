@@ -114,7 +114,7 @@ namespace ApoGirl.EditorTools
             return new LocationDef
             {
                 Layout = layout, DayRunSeconds = 420f, NightRunSeconds = 420f, DefaultLootTableId = "LOOT_TUTORIAL", Tutorial = true,
-                DayVariant = new LocationVariantDef { Spawns = { Crowd("ENEMY_WANDERER", 0, "", 30f, 2, 1.2f) } },
+                DayVariant = new LocationVariantDef { Spawns = { Crowd("ENEMY_WANDERER", 0, "", 30f, 2, 1.2f) }, HostileChanceMultiplier = 0f },
                 NightVariant = new LocationVariantDef { Spawns = { Crowd("ENEMY_WANDERER", 0, "", 30f, 2, 1.2f) } },
             };
         }
@@ -256,6 +256,9 @@ namespace ApoGirl.EditorTools
             {
                 Layout = layout, DayRunSeconds = 360f, NightRunSeconds = 360f, DefaultLootTableId = "LOOT_SCHOOL_GENERAL",
                 DayVariant = day, NightVariant = night,
+
+                // 교실동은 무한 파밍 불가: 한 번 뒤진 상자는 다음 출정에도 비어 있다
+                DepletingContainers = true,
             };
         }
 

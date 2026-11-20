@@ -26,6 +26,9 @@ namespace ApoGirl.Exploration.Model
         public int RoomsEntered;
         public int TimesSpotted;
         public int CrowdsWoken;
+
+        /// <summary>적대적 생존자에게 붙잡힌 결과 (없으면 빈 문자열).</summary>
+        public string HostileOutcome = "";
         public int DamageTaken;
         public bool DebugUsed;
         public List<ResourceAmount> Resources = new List<ResourceAmount>();

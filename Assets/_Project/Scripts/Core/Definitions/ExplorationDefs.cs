@@ -216,11 +216,19 @@ namespace ApoGirl.Core.Definitions
         public RoomTemplateDef FindTemplate(string id) => RoomTemplates.Find(t => t.Id == id);
     }
 
-    /// <summary>좀비 유형 (문서 6.3.5-(4)). 속도는 유닛/초, 시야는 유닛.</summary>
+    /// <summary>적 종류. Survivor = 자원을 찾아 나온 적대적 생존자 (낮 탐험, 붙잡히면 성향에 따라 쫓겨남·강탈·구타).</summary>
+    public enum EnemyKind
+    {
+        Zombie,
+        Survivor,
+    }
+
+    /// <summary>좀비·적대적 생존자 유형 (문서 6.3.5-(4)). 속도는 유닛/초, 시야는 유닛.</summary>
     [Serializable]
     public sealed class EnemyDef
     {
         public string Id = "";
+        public EnemyKind Kind = EnemyKind.Zombie;
         public float WalkSpeed = 1f;
         public float RunSpeed = 3.2f;
         public float SightRange = 7f;
@@ -237,6 +245,17 @@ namespace ApoGirl.Core.Definitions
 
         /// <summary>무기 타격을 몇 번 버티는가 (WeaponPower 합계가 넘으면 쓰러짐).</summary>
         public int Toughness = 3;
+
+        // ── 적대적 생존자 ──
+
+        /// <summary>경계(조사·추격·수색) 중 이 거리 안에 숨은 사람을 찾아낸다 (0이면 숨으면 못 찾음).</summary>
+        public float SeesHiddenWithin;
+
+        /// <summary>배회 반경 (0이면 밸런스 기본값).</summary>
+        public float PatrolRange;
+
+        /// <summary>false면 무기에 기절만 하고 쓰러지지 않는다 (사람).</summary>
+        public bool CanBeDowned = true;
     }
 
     /// <summary>
@@ -268,6 +287,12 @@ namespace ApoGirl.Core.Definitions
         public List<string> ForceableRooms = new List<string>();
 
         public List<EncounterDef> Encounters = new List<EncounterDef>();
+
+        /// <summary>적대적 생존자 등장 확률 배율 (막별 기본 확률 × 이 값, 0이면 나오지 않음).</summary>
+        public float HostileChanceMultiplier = 1f;
+
+        /// <summary>적대적 생존자 시작 위치 후보 (EnemyId는 무시). 비면 출구에서 먼 복도 아무 곳.</summary>
+        public List<SpawnDef> HostileSpots = new List<SpawnDef>();
     }
 
     /// <summary>탐험 지역 (실시간 모드). ID는 같은 지역의 헤드리스 ExpeditionModelDef와 같다.</summary>
@@ -284,5 +309,8 @@ namespace ApoGirl.Core.Definitions
 
         /// <summary>튜토리얼 런 (화면 안내 표시).</summary>
         public bool Tutorial;
+
+        /// <summary>한 번 뒤진 상자는 다음 출정에도 비어 있다 (교실동: 무한 파밍 방지).</summary>
+        public bool DepletingContainers;
     }
 }

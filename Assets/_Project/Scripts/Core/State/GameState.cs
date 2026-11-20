@@ -132,6 +132,12 @@ namespace ApoGirl.Core.State
 
         /// <summary>주간 정산 때 스트레스가 한계였던 연속 주 수. 한계 주 수에 이르면 정신 붕괴 (M5).</summary>
         public int BreakdownWeeks { get; set; }
+
+        /// <summary>적대적 생존자에게 구타당한 트라우마 단계 (0~MaxAssaultTrauma). 단계마다 낮 탐험 스트레스 증가.</summary>
+        public int AssaultTrauma { get; set; }
+
+        /// <summary>트라우마 회복 진행 (주). TraumaRecoveryWeeks에 닿으면 1단계 회복. 다시 맞으면 0.</summary>
+        public int TraumaCareProgress { get; set; }
     }
 
     /// <summary>0막 프롤로그에서 정해지는 인적 사항 (문서 7.1).</summary>
@@ -281,6 +287,14 @@ namespace ApoGirl.Core.State
 
         public int Raids { get; set; }
         public int RaidsRepelled { get; set; }
+
+        /// <summary>적대적 생존자에게 붙잡힌 횟수 (쫓겨남 / 강탈 / 구타).</summary>
+        public int HostileEvictions { get; set; }
+        public int HostileRobberies { get; set; }
+        public int HostileBeatings { get; set; }
+
+        /// <summary>뒤진 상자 키 "지역ID/키" (DepletingContainers 지역만, 교실동 무한 파밍 방지).</summary>
+        public HashSet<string> LootedContainers { get; set; } = new HashSet<string>();
     }
 
     public sealed class NpcState

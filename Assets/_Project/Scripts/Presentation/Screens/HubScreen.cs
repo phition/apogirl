@@ -510,7 +510,13 @@ namespace ApoGirl.Presentation.Screens
 
             if (outcome.Expedition != null)
             {
-                lines.Add(Loc.T("result.expedition_" + outcome.Expedition.Status));
+                lines.Add(outcome.Expedition.Hostile != HostileOutcome.None
+                    ? Loc.T("result.hostile_" + outcome.Expedition.Hostile)
+                    : Loc.T("result.expedition_" + outcome.Expedition.Status));
+                if (outcome.Expedition.Hostile == HostileOutcome.Beaten)
+                {
+                    lines.Add(Loc.T("result.trauma"));
+                }
                 if (outcome.Bite != null)
                 {
                     lines.Add(Loc.T(outcome.Bite.Treated ? "result.bite_treated" : "result.bite"));
