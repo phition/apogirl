@@ -1506,6 +1506,7 @@ namespace ApoGirl.Exploration.Runtime
             _hostileOutcome = HostileRules.OutcomeFor(Request.HostileTemperament);
             _confrontTimer = 0f;
             CloseContainer();
+            Nearest = null;
             _log.HostileOutcome = _hostileOutcome.ToString();
             _hud?.ShowHold(Loc.T("exp.hostile." + _hostileOutcome));
         }
