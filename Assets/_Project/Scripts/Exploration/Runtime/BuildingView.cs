@@ -79,6 +79,21 @@ namespace ApoGirl.Exploration.Runtime
             return go;
         }
 
+        /// <summary>1점 투시 방(시험: 교실): 옆벽 그림 폭, 뒤쪽 바닥이 올라오는 높이, 천장이 내려오는 높이 (유닛, 그림 픽셀에 맞춘 값).</summary>
+        private const float SideWallWidth = 58f / 36f;
+        private const float BackFloorRise = 16f / 36f;
+        private const float BackCeilingDrop = 12f / 36f;
+
+        /// <summary>그 방을 1점 투시로 그릴 때 쓰는 그림 이름 조각 (옆벽·바닥 그림이 있을 때만, 없으면 null = 예전 평면 그림).</summary>
+        private static string PerspectiveKind(RoomTemplateDef template)
+        {
+            var kind = template != null && template.Id.Contains("CLASSROOM") ? "classroom" : null;
+            return kind != null && ExplorationArt.Get($"wall_side_{kind}_l") != null && ExplorationArt.Get($"wall_floor_{kind}") != null ? kind : null;
+        }
+
+        /// <summary>뒷벽에 붙은 것(문 등)을 올려 그릴 높이: 1점 투시 방이면 뒤쪽 바닥 높이, 아니면 0.</summary>
+        public static float BackWallOffset(RoomTemplateDef template) => PerspectiveKind(template) != null ? BackFloorRise : 0f;
+
         /// <summary>방 내부를 그린다 (같은 템플릿은 같은 모양).</summary>
         public void BuildRoom(ExplorationArea room, int colorIndex)
         {
@@ -92,8 +107,10 @@ namespace ApoGirl.Exploration.Runtime
             ExplorationArt.Tiled(root, "Interior", ExplorationArt.InteriorWall(room.Template.Id, _locationId), new Vector2(0f, 0.15f), new Vector2(room.Width, h - 0.3f), -5,
                 RoomColors[colorIndex % RoomColors.Length]);
             // 뒷벽 장식: 템플릿 WallDecor (양호실 적십자, 과학실 주기율표 등), 없으면 교실은 칠판
+            // 1점 투시 방: 칠판·게시판은 옆벽 그림에 들어 있다 (뒷벽에는 문과 복도 쪽 창만)
+            var perspective = PerspectiveKind(room.Template);
             var decorKey = !string.IsNullOrEmpty(room.Template.WallDecor) ? room.Template.WallDecor
-                : room.Template.Id.Contains("CLASSROOM") ? "prop_chalkboard" : "";
+                : room.Template.Id.Contains("CLASSROOM") && perspective == null ? "prop_chalkboard" : "";
             var decor = string.IsNullOrEmpty(decorKey) ? null : ExplorationArt.Get(decorKey);
             (float, float) decorSpan = (0f, 0f);
             if (decor != null)
@@ -145,10 +162,25 @@ namespace ApoGirl.Exploration.Runtime
             {
                 ExplorationArt.Place(root, "Lamp", "prop_ceiling_lamp", new Vector2(x, h - 0.15f), -3, Vector2.zero, Color.clear);
             }
-            Rect(root, "Floor", new Vector2(-0.3f, -0.15f), new Vector2(room.Width + 0.6f, 0.3f), new Color(0.09f, 0.09f, 0.1f), -3);
-            Rect(root, "Ceiling", new Vector2(-0.3f, h - 0.15f), new Vector2(room.Width + 0.6f, 0.3f), new Color(0.09f, 0.09f, 0.1f), -3);
-            Rect(root, "WallL", new Vector2(-0.3f, 0f), new Vector2(0.3f, h), new Color(0.1f, 0.1f, 0.11f), -3);
-            Rect(root, "WallR", new Vector2(room.Width, 0f), new Vector2(0.3f, h), new Color(0.1f, 0.1f, 0.11f), -3);
+            var sideSpan = perspective != null ? SideWallWidth + 0.3f : 0.3f;
+            Rect(root, "Floor", new Vector2(-sideSpan, -0.15f), new Vector2(room.Width + sideSpan * 2f, 0.3f), new Color(0.09f, 0.09f, 0.1f), -3);
+            Rect(root, "Ceiling", new Vector2(-sideSpan, h - 0.15f), new Vector2(room.Width + sideSpan * 2f, 0.3f), new Color(0.09f, 0.09f, 0.1f), -3);
+            if (perspective != null)
+            {
+                // 얕은 1점 투시: 뒷벽 아래에 바닥 띠, 위에 천장 띠, 양옆에 원근으로 줄어드는 옆벽 (입구 쪽 칠판, 반대쪽 게시판)
+                var color = RoomColors[colorIndex % RoomColors.Length];
+                ExplorationArt.Tiled(root, "PerspFloor", $"wall_floor_{perspective}", new Vector2(-SideWallWidth, 0.15f), new Vector2(room.Width + SideWallWidth * 2f, BackFloorRise), -4, color);
+                Rect(root, "PerspCeiling", new Vector2(-SideWallWidth, h - 0.15f - BackCeilingDrop), new Vector2(room.Width + SideWallWidth * 2f, BackCeilingDrop), new Color(0.2f, 0.19f, 0.18f), -4);
+                ExplorationArt.Place(root, "SideWallL", $"wall_side_{perspective}_l", new Vector2(-SideWallWidth, 0.15f), -3, Vector2.zero, Color.clear);
+                ExplorationArt.Place(root, "SideWallR", $"wall_side_{perspective}_r", new Vector2(room.Width, 0.15f), -3, Vector2.zero, Color.clear);
+                Rect(root, "WallL", new Vector2(-SideWallWidth - 0.3f, 0f), new Vector2(0.3f, h), new Color(0.1f, 0.1f, 0.11f), -3);
+                Rect(root, "WallR", new Vector2(room.Width + SideWallWidth, 0f), new Vector2(0.3f, h), new Color(0.1f, 0.1f, 0.11f), -3);
+            }
+            else
+            {
+                Rect(root, "WallL", new Vector2(-0.3f, 0f), new Vector2(0.3f, h), new Color(0.1f, 0.1f, 0.11f), -3);
+                Rect(root, "WallR", new Vector2(room.Width, 0f), new Vector2(0.3f, h), new Color(0.1f, 0.1f, 0.11f), -3);
+            }
 
             // 복도 쪽 창문: 너머로 복도의 실루엣이 보인다
             foreach (var window in room.Template.Windows)
@@ -158,7 +190,7 @@ namespace ApoGirl.Exploration.Runtime
 
                 // 방 안에서는 창이 화면 앞쪽 벽에 있다: 반투명하게 그려 뒤 벽(칠판·장식)이 비쳐 보이게
                 var glassRenderer = glass.GetComponent<SpriteRenderer>();
-                if (glassRenderer != null && ExplorationArt.Get("prop_window") != null)
+                if (glassRenderer != null && ExplorationArt.Get("prop_window") != null && perspective == null)
                 {
                     glassRenderer.color = new Color(1f, 1f, 1f, 0.55f);
                 }
@@ -203,9 +235,8 @@ namespace ApoGirl.Exploration.Runtime
 
             ExplorationArt.Tiled(root, "Backdrop", entry ? "wall_out_street" : "wall_out_alley", new Vector2(-12f, 0.15f), new Vector2(w + 24f, h - 0.3f), -6,
                 new Color(0.33f, 0.34f, 0.36f));
-            Rect(root, "Ground", new Vector2(-40f, -20f), new Vector2(w + 80f, 20f), new Color(0.1f, 0.1f, 0.11f), -5);
+            Rect(root, "Ground", new Vector2(-40f, -20f), new Vector2(w + 80f, 20f), new Color(0.03f, 0.03f, 0.04f), -5);
             Rect(root, "Road", new Vector2(-40f, -0.15f), new Vector2(w + 80f, 0.3f), new Color(0.2f, 0.2f, 0.21f), -3);
-            Rect(root, "RoadLine", new Vector2(-40f, -0.55f), new Vector2(w + 80f, 0.08f), new Color(0.42f, 0.38f, 0.22f), -3);
             Rect(root, "EdgeL", new Vector2(-40f, -20f), new Vector2(40f - 0.2f, 60f), new Color(0.02f, 0.02f, 0.03f, 0.55f), 40);
             Rect(root, "EdgeR", new Vector2(w + 0.2f, -20f), new Vector2(40f, 60f), new Color(0.02f, 0.02f, 0.03f, 0.55f), 40);
 
@@ -253,7 +284,8 @@ namespace ApoGirl.Exploration.Runtime
         {
             var h = _layout.FloorHeight;
             var length = _layout.CorridorLength;
-            ExplorationArt.Tiled(_root, "Ground", "ground", new Vector2(-30f, -3f), new Vector2(length + 60f, 3f), -10, new Color(0.12f, 0.13f, 0.12f));
+            // 건물 아래는 그리지 않는다 (땅속 단면처럼 보이면 아랫길이 있는 것으로 읽힌다): 어두운 바닥 한 장
+            Rect(_root, "Ground", new Vector2(-30f, -20f), new Vector2(length + 60f, 20f), new Color(0.03f, 0.03f, 0.04f), -10);
             ExplorationArt.Tiled(_root, "Shell", "wall_brick", new Vector2(-0.6f, 0f), new Vector2(length + 1.2f, _layout.Floors * h + 0.4f), -9, new Color(0.16f, 0.17f, 0.18f));
 
             for (var floor = 0; floor < _layout.Floors; floor++)

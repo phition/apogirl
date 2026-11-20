@@ -113,6 +113,9 @@ namespace ApoGirl.Exploration.Runtime
         private const float AttackAnimSeconds = 0.5f;
         private const float ShoveAnimSeconds = 0.5f;
 
+        /// <summary>맞거나 밀린 좀비의 반응 동작 길이 (초).</summary>
+        private const float ReactAnimSeconds = 0.6f;
+
         /// <summary>픽셀 아트 동작 빠르기 (초당 프레임). 코드 그림은 예전 빠르기를 쓴다.</summary>
         private const float PixelIdleFps = 7f;
         private const float PixelWalkFps = 18f;
@@ -656,6 +659,7 @@ namespace ApoGirl.Exploration.Runtime
             EmitNoise(CurrentArea, X, _balance.ShoveNoise);
             if (shoved != null)
             {
+                React(shoved, "pushed_");
                 _hud?.ShowMessage("exp.shoved");
             }
 
@@ -702,6 +706,7 @@ namespace ApoGirl.Exploration.Runtime
             }
 
             _weaponWear++;
+            React(hit, "hit_");
             Sfx("sfx_hit");
             _hud?.ShowMessage(hit.IsDown ? "exp.zombie_down" : "exp.hit");
             if (_weaponDurability > 0 && _weaponWear >= _weaponDurability)
@@ -1125,12 +1130,46 @@ namespace ApoGirl.Exploration.Runtime
 
             _areasById.InsertRange(0, _corridors);
 
+            // 계단실: 가까이 붙은 계단(올라가는·내려가는)을 한 칸으로 묶어, 복도 벽이 뚫린 어두운 공간 안에 계단을 둔다
+            var wells = new List<(int Floor, float Min, float Max)>();
+            foreach (var connector in layout.Connectors)
+            {
+                var index = wells.FindIndex(w => w.Floor == connector.Floor && connector.X > w.Min - 4f && connector.X < w.Max + 4f);
+                if (index < 0)
+                {
+                    wells.Add((connector.Floor, connector.X, connector.X));
+                }
+                else
+                {
+                    wells[index] = (connector.Floor, Mathf.Min(wells[index].Min, connector.X), Mathf.Max(wells[index].Max, connector.X));
+                }
+            }
+
+            foreach (var well in wells)
+            {
+                var origin = _corridors[well.Floor].Origin;
+                var left = Mathf.Max(0f, well.Min - 1.1f);
+                var right = Mathf.Min(layout.CorridorLength, well.Max + 1.1f);
+                var top = layout.FloorHeight - 0.75f;
+                BuildingView.Rect(_world, "Stairwell", origin + new Vector2(left, 0.15f), new Vector2(right - left, top - 0.15f), new Color(0.05f, 0.055f, 0.07f), -5);
+                BuildingView.Rect(_world, "StairwellBack", origin + new Vector2(left + 0.25f, 0.15f), new Vector2(right - left - 0.5f, top - 0.45f), new Color(0.1f, 0.11f, 0.12f), -5);
+                BuildingView.Rect(_world, "StairwellLanding", origin + new Vector2(left, 0.15f), new Vector2(right - left, 0.12f), new Color(0.17f, 0.17f, 0.17f), -4);
+                BuildingView.Rect(_world, "StairwellFrameL", origin + new Vector2(left - 0.14f, 0.15f), new Vector2(0.14f, top - 0.15f), new Color(0.3f, 0.31f, 0.29f), -4);
+                BuildingView.Rect(_world, "StairwellFrameR", origin + new Vector2(right, 0.15f), new Vector2(0.14f, top - 0.15f), new Color(0.3f, 0.31f, 0.29f), -4);
+                BuildingView.Rect(_world, "StairwellLintel", origin + new Vector2(left - 0.14f, top), new Vector2(right - left + 0.28f, 0.16f), new Color(0.3f, 0.31f, 0.29f), -4);
+            }
+
             foreach (var connector in layout.Connectors)
             {
                 var stairsKey = connector.Collapsed && ExplorationArt.Get("prop_stairs_collapsed") != null ? "prop_stairs_collapsed"
                     : connector.TargetFloor > connector.Floor ? "prop_stairs_up" : "prop_stairs_down";
                 var view = Prop(_corridors[connector.Floor], "Stairs", stairsKey,
-                    connector.X, new Vector2(1f, 2.7f), connector.Collapsed ? new Color(0.25f, 0.24f, 0.23f) : new Color(0.32f, 0.38f, 0.5f), 0);
+                    connector.X, new Vector2(1f, 2.7f), connector.Collapsed ? new Color(0.25f, 0.24f, 0.23f) : new Color(0.32f, 0.38f, 0.5f), -3);
+                var stairsRenderer = view.GetComponent<SpriteRenderer>();
+                if (stairsRenderer != null && ExplorationArt.Get(stairsKey) != null)
+                {
+                    stairsRenderer.color = new Color(0.78f, 0.78f, 0.8f);   // 계단실 안쪽이라 복도보다 조금 어둡게
+                }
                 AddTarget(new ExplorationTarget { Kind = TargetKind.Connector, Area = _corridors[connector.Floor], X = connector.X, Connector = connector, View = view });
             }
 
@@ -1291,6 +1330,8 @@ namespace ApoGirl.Exploration.Runtime
             foreach (var doorX in room.Template.DoorXs)
             {
                 var exitView = Prop(room, "RoomExit", ExplorationArt.Door(Location.Id, room.Template?.Id, false), doorX, new Vector2(1.4f, 2.8f), BuildingView.DoorColor, 0);
+                // 1점 투시 방에서는 문이 뒷벽에 있다: 뒤쪽 바닥 높이만큼 올려 그린다
+                exitView.transform.localPosition += new Vector3(0f, BuildingView.BackWallOffset(room.Template), 0f);
                 AddTarget(new ExplorationTarget { Kind = TargetKind.RoomExit, Area = room, X = doorX, Room = room, LinkX = room.SpanX + doorX, View = exitView });
             }
 
@@ -2379,7 +2420,7 @@ namespace ApoGirl.Exploration.Runtime
                         var survivorPrefix = running ? "survivor_run_" : "survivor_walk_";
                         var survivorCount = ExplorationArt.FrameCount(survivorPrefix, 4);
                         var frame = (int)(view.MoveTime * (running ? 12f : 7f)) % survivorCount;
-                        var survivorKey = unit.State == ZombieState.Stunned ? LoopFrame("survivor_stun_", Time.time, PixelZombieIdleFps, unit.Id * 3) ?? "survivor_stun"
+                        var survivorKey = ReactFrame(view, "survivor_") is string survivorReact ? survivorReact : unit.State == ZombieState.Stunned ? LoopFrame("survivor_stun_", Time.time, PixelZombieIdleFps, unit.Id * 3) ?? "survivor_stun"
                             : !walking ? LoopFrame("survivor_idle_", Time.time, PixelIdleFps, unit.Id * 5) ?? "survivor_idle"
                             : LoopFrame(survivorPrefix, view.MoveTime, running ? PixelRunFps : PixelWalkFps) ?? survivorPrefix + frame;
                         view.BodyRenderer.sprite = ExplorationArt.Get(survivorKey);
@@ -2415,8 +2456,9 @@ namespace ApoGirl.Exploration.Runtime
                     var phase = (int)((dormant ? Time.time * 0.8f : view.MoveTime * (chasing ? 7f : 4f)) + unit.Id) % poseCount;
 
                     // 픽셀 아트: 상태마다 16프레임 안팎 (잠든 숨·서성임·기절 비틀거림까지). 없으면 코드 그림 2프레임
-                    var zombieKey = unit.State == ZombieState.Stunned ? LoopFrame(kindPrefix + "stun_", Time.time, PixelZombieIdleFps * 1.6f, unit.Id * 3) ?? kindPrefix + "stun"
-                        : dormant ? LoopFrame(kindPrefix + "dormant_", Time.time, PixelZombieIdleFps * 0.6f, unit.Id * 7) ?? kindPrefix + "dormant_" + phase
+                    var zombieKey = ReactFrame(view, kindPrefix) is string zombieReact ? zombieReact : unit.State == ZombieState.Stunned ? LoopFrame(kindPrefix + "stun_", Time.time, PixelZombieIdleFps * 1.6f, unit.Id * 3) ?? kindPrefix + "stun"
+                        : dormant ? LoopFrame(kindPrefix + "sleep_", Time.time, PixelZombieIdleFps * 0.6f, unit.Id * 7)
+                            ?? LoopFrame(kindPrefix + "dormant_", Time.time, PixelZombieIdleFps * 0.6f, unit.Id * 7) ?? kindPrefix + "dormant_" + phase
                         : chasing ? LoopFrame(kindPrefix + "chase_", view.MoveTime, PixelZombieChaseFps, unit.Id) ?? kindPrefix + "chase_" + phase
                         : moved ? LoopFrame(kindPrefix + "walk_", view.MoveTime, PixelZombieWalkFps, unit.Id) ?? kindPrefix + "walk_" + phase
                         : LoopFrame(kindPrefix + "idle_", Time.time, PixelZombieIdleFps, unit.Id * 5) ?? kindPrefix + "walk_0";
@@ -2461,6 +2503,41 @@ namespace ApoGirl.Exploration.Runtime
             public bool Survivor;
             public float LastX;
             public float MoveTime;
+
+            /// <summary>맞거나 밀린 반응 동작 ("hit_" / "pushed_")과 시작한 때. 비어 있으면 없음.</summary>
+            public string ReactPose = "";
+            public float ReactStart;
+        }
+
+        /// <summary>맞거나 밀린 좀비·생존자에게 반응 동작을 건다 (그림이 없으면 기절 동작만 보인다).</summary>
+        private void React(ZombieUnit unit, string pose)
+        {
+            var view = _zombieViews.Find(v => v.Unit == unit);
+            if (view != null)
+            {
+                view.ReactPose = pose;
+                view.ReactStart = Time.time;
+            }
+        }
+
+        /// <summary>반응 동작 중이면 그 프레임 키 (끝났거나 그림이 없으면 null). 반응 중에는 주인공 쪽을 본다.</summary>
+        private string ReactFrame(ZombieView view, string prefix)
+        {
+            if (string.IsNullOrEmpty(view.ReactPose))
+            {
+                return null;
+            }
+
+            var progress = (Time.time - view.ReactStart) / ReactAnimSeconds;
+            var key = progress < 1f ? ProgressFrame(prefix + view.ReactPose, progress) : null;
+            if (key == null)
+            {
+                view.ReactPose = "";
+                return null;
+            }
+
+            view.BodyRenderer.flipX = X < view.Unit.X;
+            return key;
         }
 
         private static Vector2 ContainerSize(ContainerKind kind)
