@@ -735,3 +735,4 @@ Button.selected { border-color: var(--accent); background-color: var(--accent-so
 .hub-room-built-item { width: 74px; height: 74px; margin-left: 2px; }
 .action-card.with-icon { padding-left: 56px; background-position-y: center; }
 .hub-room-action.with-icon { padding-left: 36px; }
+.hub-room-built.standalone { position: relative; left: 0; right: 0; bottom: 0; justify-content: flex-start; margin-bottom: 6px; }

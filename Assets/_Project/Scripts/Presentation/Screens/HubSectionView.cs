@@ -427,19 +427,24 @@ namespace ApoGirl.Presentation.Screens
             _roomPanel.Add(title);
 
             var art = room.Open && !string.IsNullOrEmpty(room.Def.Art) ? StoryArt.Load(room.Def.Art) : null;
+            VisualElement picture = null;
             if (art != null)
             {
-                var picture = new VisualElement { pickingMode = PickingMode.Ignore };
+                picture = new VisualElement { pickingMode = PickingMode.Ignore };
                 picture.AddToClassList("hub-room-art");
                 StoryArt.SetCover(picture, art);
                 _roomPanel.Add(picture);
+            }
 
-                // 지어 놓은 설비 (P4 허브 그림): 방 그림 아래쪽에 나란히
-                var shelf = new VisualElement { pickingMode = PickingMode.Ignore };
-                shelf.AddToClassList("hub-room-built");
+            // 지어 놓은 설비 (P4 허브 그림): 방 그림이 있으면 그 아래쪽에, 없으면 따로 한 줄로
+            var shelf = new VisualElement { pickingMode = PickingMode.Ignore };
+            shelf.AddToClassList("hub-room-built");
+            shelf.EnableInClassList("standalone", picture == null);
+            if (room.Open)
+            {
+                var state = _session.State;
                 foreach (var built in room.Def.Built)
                 {
-                    var state = _session.State;
                     var shown = (string.IsNullOrEmpty(built.Flag) || state.Flags.Contains(built.Flag)) && state.Base.Defense >= built.MinDefense;
                     var texture = shown ? StoryArt.Load(built.Image) : null;
                     if (texture == null)
@@ -452,8 +457,11 @@ namespace ApoGirl.Presentation.Screens
                     StoryArt.SetContain(item, texture);
                     shelf.Add(item);
                 }
+            }
 
-                picture.Add(shelf);
+            if (shelf.childCount > 0)
+            {
+                (picture ?? _roomPanel).Add(shelf);
             }
 
             if (room.Open)
