@@ -262,11 +262,17 @@ tags: act4 story winter
 title: EVT_CAL_DONGJI
 tags: calendar winter
 ---
+<<if flag("TEACHER_BEDRIDDEN")>>
+    선생님이 이불 속에서 손가락으로 창밖을 가리켰다. 해가 벌써 지고 있었다.
+<<endif>>
 윤 선생님: 오늘이 동지야. 일 년 중에 밤이 제일 긴 날.
 윤 선생님: 원래는 팥죽을 쑤어 먹어. 나쁜 기운 쫓으라고. 내일부터는 낮이 조금씩 길어지거든.
 팥은 없었다. 통조림 팥이 하나 있었다. 빙수용이었다.
 -> 통조림 팥으로 팥죽 비슷한 것을 쑨다 #choice:PORRIDGE
     쌀을 오래 끓여 팥을 풀었다. 너무 달아서 다들 웃었다. 그래도 새알심 대신 넣은 떡 조각은 쫀득했다.
+    <<if flag("TEACHER_BEDRIDDEN")>>
+        선생님 입에 한 숟가락씩 떠 넣어 드렸다. 두 숟가락째에 선생님이 웃었다.
+    <<endif>>
     윤 선생님: 달다. 나쁜 기운이 달아서 도망가겠다.
 -> 가장 긴 밤을 그냥 함께 견딘다 #choice:LONG_NIGHT
     불을 아끼려고 일찍 누웠다. 긴 밤이었다. 그래도 내일부터는, 조금씩 짧아진다.
@@ -293,6 +299,9 @@ tags: calendar winter
 title: EVT_CAL_DAEBOREUM
 tags: calendar winter
 ---
+<<if flag("TEACHER_BEDRIDDEN")>>
+    선생님이 누운 채로 부럼 대신 말린 콩 한 알을 우리 손에 하나씩 쥐여 주었다.
+<<endif>>
 윤 선생님: 오늘은 정월대보름. 일 년 중 달이 제일 크고 밝은 날이야.
 윤 선생님: 아침엔 부럼을 깨고, 더위를 팔고, 밤엔 달에 소원을 빌어.
 땅콩 대신 말린 콩을 깨물었다. 이가 아팠다. 다들 웃었다.

@@ -56,11 +56,15 @@
         "ACT_EDU_SURVIVAL",
         "ACT_EDU_ENGINEERING",
         "ACT_EDU_COOKING",
-        "ACT_EDU_MIND"
+        "ACT_EDU_MIND",
+        "ACT_EDU_SCIENCE",
+        "ACT_EDU_MUSIC"
       ],
       "Weights": [
         2,
         2,
+        1,
+        1,
         1,
         1,
         1,

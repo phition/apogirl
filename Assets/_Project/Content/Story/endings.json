@@ -426,7 +426,7 @@
     {
       "Id": "ENDING_EDUCATOR",
       "Category": "Specialized",
-      "Priority": 300,
+      "Priority": 305,
       "Condition": {
         "Checks": [
           {
@@ -445,7 +445,7 @@
             "Kind": "EndingTag",
             "Key": "TAG_TEACHING",
             "Op": "GreaterOrEqual",
-            "Value": 5
+            "Value": 3
           }
         ]
       },
