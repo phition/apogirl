@@ -620,7 +620,15 @@ namespace ApoGirl.Core.Simulation
             var yieldMultiplier = DifficultyRules.Get(_state, Balance).Yield;
             foreach (var loot in result.ResourceLoot)
             {
-                EffectApplier.ChangeResource(_state, loot.Resource, DifficultyRules.Scale(loot.Amount, yieldMultiplier), delta);
+                var amount = DifficultyRules.Scale(loot.Amount, yieldMultiplier);
+                if (loot.Resource == ResourceType.Medicine && Math.Abs(Balance.MedicineYieldMultiplier - 1f) > 0.0001f)
+                {
+                    // 의약품은 적게 나와서 반올림으로는 줄지 않는다: 소수 부분은 확률로 (1.4 → 1, 40%로 2)
+                    var scaled = amount * Math.Max(0f, Balance.MedicineYieldMultiplier);
+                    amount = (int)Math.Floor(scaled) + (_random.NextDouble() < scaled - Math.Floor(scaled) ? 1 : 0);
+                }
+
+                EffectApplier.ChangeResource(_state, loot.Resource, amount, delta);
             }
 
             foreach (var item in result.Loot)
