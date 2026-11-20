@@ -909,6 +909,20 @@ namespace ApoGirl.Exploration.Runtime
             return best;
         }
 
+        /// <summary>디버그·화면 확인: 방 ID로 바로 들어간다 (없으면 false).</summary>
+        public bool DebugEnterRoom(string roomId, float x = 4f)
+        {
+            var room = _rooms.Find(r => r.Door.RoomId == roomId);
+            if (room == null)
+            {
+                return false;
+            }
+
+            EnsureRoomBuilt(room);
+            MoveTo(room, x);
+            return true;
+        }
+
         private void MoveTo(ExplorationArea area, float x)
         {
             CurrentArea = area;
