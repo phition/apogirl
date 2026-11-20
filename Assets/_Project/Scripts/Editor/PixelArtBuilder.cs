@@ -47,6 +47,7 @@ namespace ApoGirl.EditorTools
             var count = 0;
             count += BuildPlayer();
             count += BuildZombies();
+            count += BuildSurvivor();
             count += BuildPeople();
             count += BuildProps();
             count += BuildWalls();
@@ -290,6 +291,29 @@ namespace ApoGirl.EditorTools
                 n += 7;
             }
 
+            return n;
+        }
+
+        /// <summary>적대적 생존자 (어른): 후드 달린 작업 점퍼, 작업 바지, 큰 배낭. 교복이 아니라 주인공과 한눈에 구분된다.</summary>
+        private static int BuildSurvivor()
+        {
+            var f = new Figure
+            {
+                Skirt = false, Backpack = true, Collar = false, Ribbon = null, Hood = true,
+                Top = C(78, 84, 60), TopShade = C(58, 62, 44), Bottom = C(58, 54, 48), Leg = C(58, 54, 48), Feet = C(44, 32, 24),
+                SkinC = C(204, 168, 138), SkinS = C(170, 136, 110), HairC = C(36, 30, 26),
+            };
+            var n = 0;
+            int[] phases = { 1, 0, -1, 0 };
+            int[] bobs = { 0, 1, 0, 1 };
+            Save("survivor_idle", DrawPerson(f, 0, 0, 0, 0, false), 0.5f, 0f); n++;
+            for (var i = 0; i < 4; i++)
+            {
+                Save("survivor_walk_" + i, DrawPerson(f, phases[i], -phases[i], bobs[i], 0, false), 0.5f, 0f); n++;
+                Save("survivor_run_" + i, DrawPerson(f, phases[i] + Math.Sign(phases[i]), -phases[i] * 2, bobs[i], 1, true), 0.5f, 0f); n++;
+            }
+
+            Save("survivor_stun", DrawPerson(f, 0, 0, 0, -1, false, true), 0.5f, 0f); n++;
             return n;
         }
 

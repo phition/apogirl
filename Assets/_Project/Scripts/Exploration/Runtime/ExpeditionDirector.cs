@@ -1462,9 +1462,9 @@ namespace ApoGirl.Exploration.Runtime
             }
 
             var unit = _threat.AddZombie(enemy, AreaId(area), x);
-            var sprites = ExplorationArt.Get("player_idle") != null;
+            var sprites = ExplorationArt.Get("survivor_idle") != null;
             var body = sprites
-                ? ExplorationArt.Place(_world, "Survivor_" + unit.Id, "player_idle", Vector2.zero, 6, Vector2.zero, SurvivorTint)
+                ? ExplorationArt.Place(_world, "Survivor_" + unit.Id, "survivor_idle", Vector2.zero, 6, Vector2.zero, Color.white)
                 : BuildingView.Rect(_world, "Survivor_" + unit.Id, Vector2.zero, Vector2.one, SurvivorTint, 6);
             var marker = BuildingView.Rect(_world, "Awareness_" + unit.Id, Vector2.zero, Vector2.one, Color.yellow, 12);
             _zombieViews.Add(new ZombieView
@@ -1474,8 +1474,11 @@ namespace ApoGirl.Exploration.Runtime
             });
         }
 
-        /// <summary>생존자 실루엣 색 (사람 그림 위에 어두운 색을 얹는다. 전용 그림이 오면 교체).</summary>
+        /// <summary>생존자 그림이 없을 때의 사각형 색.</summary>
         private static readonly Color SurvivorTint = new Color(0.5f, 0.38f, 0.34f);
+
+        /// <summary>어른이라 주인공보다 조금 크게 그린다.</summary>
+        private const float SurvivorScale = 1.12f;
 
         /// <summary>상자 고갈 지역: 이미 뒤진 상자면 비운 채 수색 완료로 둔다. 반환: 비웠는가.</summary>
         private bool Deplete(ExplorationTarget target, string key)
@@ -1933,9 +1936,10 @@ namespace ApoGirl.Exploration.Runtime
                         if (walking) view.BodyRenderer.flipX = unit.X < view.LastX;
                         var running = unit.State == ZombieState.Chase;
                         var frame = (int)(view.MoveTime * (running ? 12f : 7f)) % 4;
-                        view.BodyRenderer.sprite = ExplorationArt.Get(!walking ? "player_idle" : (running ? "player_run_" : "player_walk_") + frame);
+                        view.BodyRenderer.sprite = ExplorationArt.Get(unit.State == ZombieState.Stunned ? "survivor_stun"
+                            : !walking ? "survivor_idle" : (running ? "survivor_run_" : "survivor_walk_") + frame);
                         view.Body.localPosition = new Vector3(origin.x + unit.X, origin.y + 0.15f, 0f);
-                        view.Body.localScale = Vector3.one;
+                        view.Body.localScale = Vector3.one * SurvivorScale;
                     }
                     else
                     {
@@ -1944,7 +1948,7 @@ namespace ApoGirl.Exploration.Runtime
                     }
 
                     view.LastX = unit.X;
-                    view.BodyRenderer.color = unit.State == ZombieState.Stunned ? new Color(0.45f, 0.45f, 0.6f) : SurvivorTint;
+                    view.BodyRenderer.color = view.Sprites ? Color.white : unit.State == ZombieState.Stunned ? new Color(0.45f, 0.45f, 0.6f) : SurvivorTint;
                     goto Marker;
                 }
 
