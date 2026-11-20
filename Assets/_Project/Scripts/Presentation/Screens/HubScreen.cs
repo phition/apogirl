@@ -56,6 +56,8 @@ namespace ApoGirl.Presentation.Screens
         private StandingView _standing;
         private VisualElement _ticker;
         private VisualElement _standingArea;
+        private HubSectionView _section;
+        private VisualElement _sectionFrame;
         private VisualElement _teacherBox;
         private int _lastWarningCount = -1;
 
@@ -88,6 +90,16 @@ namespace ApoGirl.Presentation.Screens
             _standing = new StandingView(_root.Q("standing"), () => _session.State, () => _session.Definitions.Balance);
             _ticker = _root.Q("ticker");
             _standingArea = _root.Q("standing-area");
+            _sectionFrame = _root.Q("section-frame");
+            _section = new HubSectionView(_root.Q("section"), _session)
+            {
+                ActionPicked = id =>
+                {
+                    _palette.Select(id);
+                    _layers.SetBoard(true);
+                    ShowToast(Loc.T("plan.pick_slot"));
+                },
+            };
             _teacherBox = _root.Q("teacher-box");
             _card = new CardOverlay(_root);
             _debug = new DebugPanelView(_root.Q("debug-panel"), _session, ForceEvent, ShowEnd);
@@ -195,6 +207,7 @@ namespace ApoGirl.Presentation.Screens
 
             if (!busy && keyboard.escapeKey.wasPressedThisFrame)
             {
+                _section.HideRoomPanel();
                 _layers.CloseTop();
             }
 
@@ -285,6 +298,20 @@ namespace ApoGirl.Presentation.Screens
                 _root.Q("speed-" + speed).EnableInClassList("selected", speed == _speed);
             }
 
+            // 0겹: 선생님을 만난 뒤에는 학교 단면도, 그 전(창고에 갇힌 1주차)에는 거처 그림
+            var withSection = _session.HasMetTeacher;
+            _sectionFrame.EnableInClassList("hidden", !withSection);
+            _root.Q("screen").EnableInClassList("with-section", withSection);
+            if (withSection)
+            {
+                if (_session.IsPlanning)
+                {
+                    _section.SetTime(Core.State.DayPhase.Day, false);
+                }
+
+                _section.Refresh();
+            }
+
             // 그림 (M6-5): 거처 배경, 선생님 얼굴 (그림이 없으면 지금처럼 글자)
             var backdrop = StoryArt.Backdrop(_session.State);
             StoryArt.SetCover(_root.Q("backdrop"), backdrop);
@@ -330,6 +357,20 @@ namespace ApoGirl.Presentation.Screens
             _session.BeginWeek();
             while (_session.IsExecuting)
             {
+                // 단면도: 이번 칸의 방으로 걸어간다 (보통 속도면 걷는 모습을 조금 보여 준다)
+                if (_session.HasMetTeacher)
+                {
+                    var calendar = _session.State.Calendar;
+                    var slot = _session.State.Plan.Slots[CalendarRules.SlotIndex(calendar.Day, calendar.Phase)];
+                    _section.SetTime(calendar.Phase, true);
+                    var travel = _section.Act(slot.ActionId);
+                    var wait = _speed == ExecutionSpeed.Normal ? Mathf.Min(travel, 1.4f) : _speed == ExecutionSpeed.Fast ? Mathf.Min(travel, 0.45f) : 0f;
+                    if (wait > 0.05f)
+                    {
+                        yield return new WaitForSeconds(wait);
+                    }
+                }
+
                 var outcome = _session.Step();
                 if (outcome.AwaitingExpedition)
                 {
@@ -389,6 +430,9 @@ namespace ApoGirl.Presentation.Screens
                     }
                 }
             }
+
+            _section.SetTime(Core.State.DayPhase.Day, false);
+            Refresh();
 
             if (_pendingSummary != null)
             {

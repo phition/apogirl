@@ -12,6 +12,10 @@
                 <ui:Label name="backdrop-label" class="backdrop-label" />
             </ui:VisualElement>
             <ui:VisualElement name="scene-shade" class="scene-shade" picking-mode="Ignore" />
+            <!-- 학교 단면도 (선생님을 만난 뒤부터; 그 전에는 위의 거처 그림) -->
+            <ui:VisualElement name="section-frame" class="section-frame hidden">
+                <ui:VisualElement name="section" class="section" />
+            </ui:VisualElement>
         </ui:VisualElement>
 
         <!-- 1겹: 상시 표시 -->

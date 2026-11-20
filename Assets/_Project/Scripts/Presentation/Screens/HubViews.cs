@@ -419,6 +419,18 @@ namespace ApoGirl.Presentation.Screens
 
         public string SelectedActionId { get; private set; } = "";
 
+        /// <summary>행동을 고른 상태로 (단면도에서 방의 행동을 눌렀을 때). 그 행동의 분류 탭으로 옮긴다.</summary>
+        public void Select(string actionId)
+        {
+            if (_session.Definitions.TryGetAction(actionId, out var action) && Array.IndexOf(Tabs, action.Category) >= 0)
+            {
+                _category = action.Category;
+            }
+
+            SelectedActionId = actionId;
+            Refresh();
+        }
+
         public void Refresh()
         {
             foreach (var category in Tabs)

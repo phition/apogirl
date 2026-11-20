@@ -589,3 +589,63 @@ Button.selected { border-color: var(--accent); background-color: var(--accent-so
 .companion-button.with-icon { padding-left: 38px; min-height: 32px; }
 .calendar.with-icon { padding-left: 36px; }
 .vital-bar.with-icon { padding-left: 28px; }
+
+/* ── 허브 0겹: 학교 단면도 (HubSectionView) ── */
+.section-frame {
+    position: absolute; left: 0; top: 0; right: 0; bottom: 0;
+    background-color: rgb(120, 146, 168);
+    align-items: flex-end;
+    justify-content: flex-end;
+    padding: 0 22px 92px 0;
+}
+.section-frame.night { background-color: rgb(14, 18, 30); }
+.section { position: relative; }
+.hub-sky { position: absolute; left: -2000px; right: -2000px; top: -400px; bottom: 0; }
+.hub-building { position: absolute; left: 0; top: 0; right: 0; bottom: 0; }
+.hub-actors { position: absolute; left: 0; top: 0; right: 0; bottom: 0; }
+.hub-shell { -unity-background-image-tint-color: rgb(150, 150, 150); }
+.hub-ground { background-color: rgb(46, 44, 40); }
+.hub-stairs { background-color: rgb(28, 30, 36); border-left-width: 2px; border-color: rgb(70, 72, 76); }
+.hub-room { overflow: hidden; }
+.hub-room.roof { overflow: visible; }
+.hub-room:hover > .hub-room-name { background-color: rgba(185, 163, 122, 0.85); color: rgb(20, 20, 22); }
+.hub-room.locked > .hub-dark { background-color: rgba(6, 7, 10, 0.86); }
+.hub-slab { background-color: rgb(40, 40, 44); }
+.hub-parapet { background-color: rgb(96, 96, 98); }
+.hub-prop { }
+.hub-dark { background-color: rgba(6, 8, 16, 0); transition-property: background-color; transition-duration: 0.6s; }
+.hub-dark.dim { background-color: rgba(6, 8, 16, 0.25); }
+.hub-dark.night { background-color: rgba(6, 8, 16, 0.62); }
+.hub-dark.blackout { background-color: rgba(4, 5, 10, 0.8); }
+.hub-glow { background-color: rgba(255, 186, 110, 0); transition-property: background-color; transition-duration: 0.6s; }
+.hub-glow.on { background-color: rgba(255, 186, 110, 0.1); }
+.hub-room-name {
+    position: absolute; left: 6px; top: 12px;
+    padding: 1px 6px;
+    font-size: 14px;
+    color: rgb(230, 225, 214);
+    background-color: rgba(14, 15, 18, 0.72);
+    border-radius: 3px;
+}
+.hub-room.shelter > .hub-room-name { border-left-width: 3px; border-color: var(--accent); }
+.hub-room.locked > .hub-room-name { color: var(--text-dim); }
+.hub-actor { position: absolute; }
+.hub-room-panel {
+    position: absolute;
+    width: 260px;
+    padding: 8px 10px;
+    background-color: rgb(30, 32, 36);
+    border-width: 1px;
+    border-color: var(--accent);
+    border-radius: 6px;
+}
+.hub-room-panel-title { -unity-font-style: bold; color: var(--accent); font-size: 17px; margin-bottom: 4px; }
+.hub-room-panel-note { color: var(--text-dim); font-size: 14px; margin-bottom: 4px; }
+.hub-room-action { -unity-text-align: middle-left; height: 32px; margin: 2px 0; }
+
+/* 단면도가 있을 때: 입상은 왼쪽 열(요약 위·입상 아래), 선생님 한마디는 오른쪽 위 */
+.with-section .standing-area { flex-direction: column-reverse; align-items: flex-start; }
+.with-section .vitals-mini { margin-left: 0; margin-bottom: 8px; }
+.with-section .teacher-box { top: 64px; bottom: auto; }
+.with-section.board-open .teacher-box { top: 64px; bottom: auto; }
+.with-section .scene-shade { display: none; }
