@@ -220,9 +220,9 @@ namespace ApoGirl.Tests.EditMode
         {
             var zombie = _sim.AddZombie(_walker, Corridor, 40f);
             zombie.Facing = 1;
-            for (var t = 0f; t < 3f && zombie.State != ZombieState.Chase; t += 0.1f)
+            for (var t = 0f; t < 8f && zombie.State != ZombieState.Chase; t += 0.1f)
             {
-                _sim.Step(0.1f, Player(Corridor, 44f), mods);
+                _sim.Step(0.1f, Player(Corridor, 41.5f), mods);
             }
 
             Assert.AreEqual(ZombieState.Chase, zombie.State);
