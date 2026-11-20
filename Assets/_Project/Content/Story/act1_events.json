@@ -84,7 +84,7 @@
         { "Id": "SILENT", "Effect": { "Hidden": [ { "Hidden": "Isolation", "Amount": 3 } ], "Vitals": [ { "Vital": "Stress", "Amount": 4 } ] } }
       ] },
 
-    { "Id": "EVT_A1_SECRET_HINT", "Kind": "Night", "Priority": 30, "Condition": { "WeekMin": 9, "Phase": "Night" },
+    { "Id": "EVT_A1_SECRET_HINT", "Kind": "Night", "Priority": 30, "Condition": { "WeekMin": 11, "Phase": "Night" },
       "OnShow": { "SetFlags": [ "NOTICE_HINT" ] } },
 
     { "Id": "EVT_A1_SECRET_FOUND", "Kind": "Story", "Priority": 75, "Condition": { "CluesAll": [ "CLUE_SCHOOL_NOTICE" ], "ActionCategories": [ "Expedition" ] },
