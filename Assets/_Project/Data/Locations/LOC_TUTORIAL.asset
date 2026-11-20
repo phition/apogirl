@@ -42,13 +42,15 @@ MonoBehaviour:
           SearchSeconds: 2.5
           LootTableId: LOOT_TUTORIAL_GEAR
           SpriteKey: 
+          Guaranteed: 0
         - Id: BALL_CART
           Kind: 4
           Floor: 0
           X: 7
           SearchSeconds: 2.5
-          LootTableId: 
+          LootTableId: LOOT_TUTORIAL_BAT
           SpriteKey: 
+          Guaranteed: 0
         - Id: SHELF
           Kind: 2
           Floor: 0
@@ -56,6 +58,7 @@ MonoBehaviour:
           SearchSeconds: 3.5
           LootTableId: 
           SpriteKey: 
+          Guaranteed: 0
         DefaultLootTableId: LOOT_TUTORIAL
         WallDecor: 
       Containers:
@@ -66,6 +69,7 @@ MonoBehaviour:
         SearchSeconds: 3
         LootTableId: LOOT_TUTORIAL
         SpriteKey: 
+        Guaranteed: 0
       - Id: C_TUT_LOCKER_B
         Kind: 0
         Floor: 0
@@ -73,6 +77,7 @@ MonoBehaviour:
         SearchSeconds: 3
         LootTableId: LOOT_TUTORIAL
         SpriteKey: 
+        Guaranteed: 0
       - Id: C_TUT_DESK
         Kind: 1
         Floor: 0
@@ -80,6 +85,7 @@ MonoBehaviour:
         SearchSeconds: 2
         LootTableId: LOOT_TUTORIAL
         SpriteKey: 
+        Guaranteed: 0
       Exits:
       - Kind: 0
         Floor: 0

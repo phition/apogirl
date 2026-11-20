@@ -49,6 +49,7 @@ MonoBehaviour:
           SearchSeconds: 2.5
           LootTableId: 
           SpriteKey: 
+          Guaranteed: 0
         - Id: STOCK_2
           Kind: 4
           Floor: 0
@@ -56,6 +57,7 @@ MonoBehaviour:
           SearchSeconds: 2.5
           LootTableId: 
           SpriteKey: 
+          Guaranteed: 0
         - Id: STOCK_3
           Kind: 4
           Floor: 0
@@ -63,6 +65,7 @@ MonoBehaviour:
           SearchSeconds: 2.5
           LootTableId: 
           SpriteKey: 
+          Guaranteed: 0
         - Id: WALKIN
           Kind: 3
           Floor: 0
@@ -70,6 +73,7 @@ MonoBehaviour:
           SearchSeconds: 4
           LootTableId: LOOT_STORE_FRIDGE
           SpriteKey: 
+          Guaranteed: 0
         DefaultLootTableId: LOOT_STORE_STOCK
         WallDecor: 
       - Id: ROOM_STORE_OFFICE
@@ -85,6 +89,7 @@ MonoBehaviour:
           SearchSeconds: 2
           LootTableId: 
           SpriteKey: 
+          Guaranteed: 0
         - Id: OFFICE_LOCKER
           Kind: 0
           Floor: 0
@@ -92,6 +97,7 @@ MonoBehaviour:
           SearchSeconds: 3
           LootTableId: 
           SpriteKey: 
+          Guaranteed: 0
         DefaultLootTableId: LOOT_STORE_OFFICE
         WallDecor: 
       Containers:
@@ -102,6 +108,7 @@ MonoBehaviour:
         SearchSeconds: 2.5
         LootTableId: LOOT_STORE_SHELF
         SpriteKey: 
+        Guaranteed: 0
       - Id: C_SHELF_2
         Kind: 4
         Floor: 0
@@ -109,6 +116,7 @@ MonoBehaviour:
         SearchSeconds: 2.5
         LootTableId: LOOT_STORE_SHELF
         SpriteKey: 
+        Guaranteed: 0
       - Id: C_SHELF_3
         Kind: 4
         Floor: 0
@@ -116,6 +124,7 @@ MonoBehaviour:
         SearchSeconds: 2.5
         LootTableId: LOOT_STORE_SHELF
         SpriteKey: 
+        Guaranteed: 0
       - Id: C_SHELF_4
         Kind: 4
         Floor: 0
@@ -123,6 +132,7 @@ MonoBehaviour:
         SearchSeconds: 2.5
         LootTableId: LOOT_STORE_SHELF
         SpriteKey: 
+        Guaranteed: 0
       - Id: C_SHELF_5
         Kind: 4
         Floor: 0
@@ -130,6 +140,7 @@ MonoBehaviour:
         SearchSeconds: 2.5
         LootTableId: LOOT_STORE_SHELF
         SpriteKey: 
+        Guaranteed: 0
       - Id: C_SHELF_6
         Kind: 4
         Floor: 0
@@ -137,6 +148,7 @@ MonoBehaviour:
         SearchSeconds: 2.5
         LootTableId: LOOT_STORE_SHELF
         SpriteKey: 
+        Guaranteed: 0
       - Id: C_COUNTER
         Kind: 1
         Floor: 0
@@ -144,6 +156,7 @@ MonoBehaviour:
         SearchSeconds: 2
         LootTableId: LOOT_STORE_COUNTER
         SpriteKey: 
+        Guaranteed: 0
       - Id: C_DRINK_FRIDGE
         Kind: 3
         Floor: 0
@@ -151,6 +164,7 @@ MonoBehaviour:
         SearchSeconds: 4
         LootTableId: LOOT_STORE_FRIDGE
         SpriteKey: 
+        Guaranteed: 0
       Exits:
       - Kind: 0
         Floor: 0

@@ -396,6 +396,9 @@ MonoBehaviour:
     PresenceRange: 4
     ChainWakeRadius: 12
     SearchDuration: 6
+    LostLingerSeconds: 5
+    LostRetreatDay: 6
+    LostRetreatNight: 18
     PatrolRange: 4
     AwarenessDecayPerSecond: 0.5
     CrouchSightMultiplier: 0.6
