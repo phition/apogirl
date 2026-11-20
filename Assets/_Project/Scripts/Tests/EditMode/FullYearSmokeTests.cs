@@ -72,7 +72,9 @@ namespace ApoGirl.Tests.EditMode
 
             foreach (VitalType vital in Enum.GetValues(typeof(VitalType)))
             {
-                Assert.That(state.Player.Vitals.GetVital(vital), Is.InRange(0, balance.VitalMax));
+                // 포만·수분은 0이 가운데 (−최대 ~ +최대)
+                var min = vital == VitalType.Satiety || vital == VitalType.Hydration ? -balance.VitalMax : 0;
+                Assert.That(state.Player.Vitals.GetVital(vital), Is.InRange(min, balance.VitalMax));
             }
 
             foreach (ResourceType resource in Enum.GetValues(typeof(ResourceType)))
