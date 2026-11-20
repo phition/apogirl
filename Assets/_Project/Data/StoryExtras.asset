@@ -4612,7 +4612,7 @@ MonoBehaviour:
       - Kind: 4
         Key: TraumaRecovery
         Op: 0
-        Value: 32
+        Value: 25
       - Kind: 4
         Key: SelfAwareness
         Op: 0
@@ -4658,7 +4658,7 @@ MonoBehaviour:
       - Kind: 0
         Key: Intellect
         Op: 0
-        Value: 175
+        Value: 190
       - Kind: 4
         Key: Humanity
         Op: 0
@@ -4703,11 +4703,11 @@ MonoBehaviour:
       - Kind: 1
         Key: Engineering
         Op: 0
-        Value: 3
+        Value: 2
       - Kind: 0
         Key: Craft
         Op: 0
-        Value: 175
+        Value: 185
       AnyChecks: []
       NpcStatuses: []
       IsBirthday: 0
@@ -4745,7 +4745,7 @@ MonoBehaviour:
       - Kind: 0
         Key: Strength
         Op: 0
-        Value: 80
+        Value: 35
       - Kind: 0
         Key: Agility
         Op: 0
@@ -4794,7 +4794,7 @@ MonoBehaviour:
       - Kind: 0
         Key: Leadership
         Op: 0
-        Value: 95
+        Value: 85
       - Kind: 21
         Key: 
         Op: 0
@@ -4843,7 +4843,7 @@ MonoBehaviour:
       - Kind: 1
         Key: Humanities
         Op: 0
-        Value: 4
+        Value: 3
       - Kind: 20
         Key: 
         Op: 0
@@ -4934,7 +4934,7 @@ MonoBehaviour:
       - Kind: 21
         Key: 
         Op: 0
-        Value: 3
+        Value: 4
       - Kind: 4
         Key: Humanity
         Op: 0
@@ -5054,7 +5054,7 @@ MonoBehaviour:
       - Kind: 4
         Key: TraumaRecovery
         Op: 1
-        Value: 12
+        Value: 6
       - Kind: 4
         Key: Isolation
         Op: 0

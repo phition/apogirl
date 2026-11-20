@@ -18,7 +18,6 @@ MonoBehaviour:
     InjuryHpFraction: 0.3
     InjuryHpFractionPerMedicineLevel: 0.05
     InjuryMedicineCost: 1
-    MedicineYieldMultiplier: 0.75
     FirstAidNarrativeMinLoss: 15
     FirstAidSkilledLevel: 3
     InjuredFlag: INJURED
@@ -222,6 +221,9 @@ MonoBehaviour:
       HumanThreat: 0.7
       Infection: 0.6
       Yield: 1
+      FoodYield: 1.1
+      WaterYield: 1.1
+      MedicineYield: 0.85
       WeeklyUndo: 1
       Dispatch: 1
       DispatchYield: 0.7
@@ -231,6 +233,9 @@ MonoBehaviour:
       HumanThreat: 1
       Infection: 1
       Yield: 1
+      FoodYield: 1
+      WaterYield: 1
+      MedicineYield: 0.75
       WeeklyUndo: 0
       Dispatch: 0
       DispatchYield: 0.7
@@ -240,6 +245,9 @@ MonoBehaviour:
       HumanThreat: 1.3
       Infection: 1.3
       Yield: 0.9
+      FoodYield: 0.95
+      WaterYield: 0.95
+      MedicineYield: 0.7
       WeeklyUndo: 0
       Dispatch: 0
       DispatchYield: 0.7
