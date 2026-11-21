@@ -590,7 +590,7 @@ namespace ApoGirl.Core.Definitions
         /// 전기가 끊긴 방 안은 어둡게.
         /// </summary>
         public float DayCorridorAmbient = 0.72f;
-        public float DayRoomAmbient = 0.32f;
+        public float DayRoomAmbient = 0.22f;
 
         /// <summary>복도 햇빛 줄기 밝기·간격(유닛), 방의 복도 쪽 창으로 새어 드는 빛 밝기 (조명 밝기는 선형 값이라 0.15도 꽤 밝다).</summary>
         public float SunbeamIntensity = 2.3f;
@@ -627,6 +627,12 @@ namespace ApoGirl.Core.Definitions
 
         /// <summary>문틈으로 살필 때 보이는 거리 (어둠 속에서는 NightViewDistance).</summary>
         public float PeekRange = 7f;
+
+        /// <summary>낮에 어두운 방 안을 문틈으로 살필 때 보이는 거리 (문 근처만). 밤에는 문틈으로 아무것도 보이지 않는다.</summary>
+        public float RoomPeekRange = 2.5f;
+
+        /// <summary>어둠 속 기물이 시야에 들어오고 나갈 때 나타나고 사라지는 빠르기 (초당 불투명도).</summary>
+        public float FogFadeSpeed = 4f;
 
         /// <summary>문틈으로 살필 때 안쪽 좀비에게 들킬 정도 (시야 배율).</summary>
         public float PeekVisibility = 0.35f;

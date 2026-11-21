@@ -219,6 +219,15 @@ namespace ApoGirl.Exploration.Runtime
         /// <summary>어둠 (밤 탐험, 또는 낮 탐험의 황혼 각성 이후).</summary>
         public bool IsDark => Request.TimeOfDay == ExpeditionTime.Night || DuskAwakened;
 
+        /// <summary>그 공간에서 눈이 어둠 규칙을 따르는가: 밤·황혼이면 어디든, 낮에도 방 안은 전기가 끊겨 기본이 어둡다.</summary>
+        public bool IsDarkIn(ExplorationArea area) => IsDark || (area != null && area.IsRoom);
+
+        /// <summary>지금 있는 곳이 어두운가 (손전등이 켜지고 HUD에 손전등 상태가 보인다).</summary>
+        public bool DarkHere => IsDarkIn(CurrentArea);
+
+        /// <summary>문틈 너머가 너무 어두워 아무것도 보이지 않는다 (밤): 귀 기울이기(S)로 알아낸다.</summary>
+        public bool PeekTooDark => PeekTarget != null && PeekViewRange <= 0f;
+
         public bool FlashlightOn { get; private set; }
 
         /// <summary>장비 (HUD 표시용).</summary>
@@ -276,11 +285,11 @@ namespace ApoGirl.Exploration.Runtime
 
             if (PeekTarget != null)
             {
-                return unit.AreaId == AreaId(PeekArea) && Mathf.Abs(unit.X - PeekTarget.LinkX) <= PeekViewRange;
+                return unit.AreaId == AreaId(PeekArea) && PeekViewRange > 0f && Mathf.Abs(unit.X - PeekTarget.LinkX) <= PeekViewRange;
             }
 
             return PlayerViewRules.CanPlayerSee(
-                AreaId(CurrentArea), X, _facingRight ? 1 : -1, IsDark, FlashlightOn && !Hidden,
+                AreaId(CurrentArea), X, _facingRight ? 1 : -1, DarkHere, FlashlightOn && !Hidden,
                 unit.AreaId, unit.X, _balance);
         }
 
@@ -294,8 +303,10 @@ namespace ApoGirl.Exploration.Runtime
         public ExplorationArea PeekArea => PeekTarget == null ? null
             : PeekTarget.Kind == TargetKind.Door ? PeekTarget.Room : _corridors[PeekTarget.Room.Floor];
 
-        /// <summary>문틈으로 살필 때 보이는 거리.</summary>
-        public float PeekViewRange => IsDark ? _balance.NightViewDistance : _balance.PeekRange;
+        /// <summary>
+        /// 문틈으로 살필 때 보이는 거리 (문에서부터): 밤에는 0 (아무것도 안 보인다 — 소리로), 낮 방 안은 어두워 문 근처만, 낮 복도는 PeekRange.
+        /// </summary>
+        public float PeekViewRange => PeekTarget == null || IsDark ? 0f : PeekArea.IsRoom ? _balance.RoomPeekRange : _balance.PeekRange;
 
         /// <summary>좀비 눈에 띄는 정도: 낮 1, 어둠 0.6, 손전등 1.5.</summary>
         public float Visibility => (!IsDark ? 1f : FlashlightOn ? _balance.FlashlightExposure : _balance.DarknessVisibility)
@@ -441,6 +452,7 @@ namespace ApoGirl.Exploration.Runtime
 
             UpdateViews(dt);
             UpdateZombieViews();
+            UpdateFog(dt);
             UpdateSounds();
             UpdateWindowSilhouettes();
             _hud.Refresh();
@@ -1392,6 +1404,7 @@ namespace ApoGirl.Exploration.Runtime
             var doorX = entry ? width - 2.2f : 2.2f;
             var returnX = entry ? 1.6f : width - 1.6f;
             _building.BuildOutdoor(area, entry, new List<(float, float)> { (doorX - 1.6f, doorX + 1.6f), (returnX - 1.6f, returnX + 1.6f) });
+            CollectFog(area.Root.transform, area);
 
             var doorView = Prop(area, "BuildingDoor", ExplorationArt.Exit(Location.Id, false), doorX, new Vector2(1.6f, 3f), new Color(0.35f, 0.6f, 0.38f), 0);
             var passage = new ExplorationTarget { Kind = TargetKind.Passage, Area = area, X = doorX, LinkArea = exitTarget.Area, LinkX = exitTarget.X, View = doorView };
@@ -1414,6 +1427,7 @@ namespace ApoGirl.Exploration.Runtime
 
             room.Built = true;
             _building.BuildRoom(room, room.DoorIndex);
+            CollectFog(room.Root.transform, room);
             _lighting?.AddRoom(room);
             foreach (var doorX in room.Template.DoorXs)
             {
@@ -1546,6 +1560,7 @@ namespace ApoGirl.Exploration.Runtime
                 : encounter.Id.Contains("NOTE") || encounter.Id.Contains("NOTICE") ? "prop_paper" : "person_student_crouch");
             var view = Prop(area, "Encounter_" + encounter.Id, key, encounter.X, new Vector2(0.6f, 1.5f), new Color(0.55f, 0.62f, 0.75f), 9);
             ExplorationArt.Animate(view, key, 6f);   // 숨 쉬는 사람 등 (프레임이 있을 때만)
+            AddFog(view, area);
             AddTarget(new ExplorationTarget { Kind = TargetKind.Encounter, Area = area, X = encounter.X, Encounter = encounter, View = view });
         }
 
@@ -1558,6 +1573,7 @@ namespace ApoGirl.Exploration.Runtime
                 ? container.SpriteKey
                 : ContainerSprite(container.Kind));
             var view = Prop(area, "Container_" + container.Id, sprite, container.X, size, new Color(0.55f, 0.45f, 0.3f), 1);
+            AddFog(view, area);
             var target = new ExplorationTarget
             {
                 Kind = TargetKind.Container,
@@ -1646,6 +1662,7 @@ namespace ApoGirl.Exploration.Runtime
             _selfLight.intensity = 0.55f;
             _selfLight.color = new Color(0.8f, 0.85f, 1f);
 
+            CollectFog(_world, null);
             _lighting = new ExplorationLighting(_world, _balance, _building.FloorHeight, day ? ExplorationLighting.Phase.Day : ExplorationLighting.Phase.Night);
             foreach (var corridor in _corridors)
             {
@@ -1743,7 +1760,7 @@ namespace ApoGirl.Exploration.Runtime
             var center = new Vector3(worldX, origin.y + 1.4f, 0f);
             if (_flashlight != null)
             {
-                var flashOn = IsDark && FlashlightOn && !Hidden;
+                var flashOn = DarkHere && FlashlightOn && !Hidden;
                 _flashlight.enabled = flashOn;
                 if (_flashlightHot != null) _flashlightHot.enabled = flashOn;
                 if (_flashlightSpill != null) _flashlightSpill.enabled = flashOn;
@@ -1761,7 +1778,7 @@ namespace ApoGirl.Exploration.Runtime
             {
                 // 낮에도 어두운 방 안에서는 주인공 주변만 희미하게 보이게
                 var dimRoom = !IsDark && _lighting != null && _lighting.IsDimRoom(CurrentArea);
-                _selfLight.enabled = IsDark || dimRoom;
+                _selfLight.enabled = DarkHere || dimRoom;
                 _selfLight.intensity = IsDark ? 0.55f : 0.35f;
                 _selfLight.transform.localPosition = center;
             }
@@ -2240,7 +2257,7 @@ namespace ApoGirl.Exploration.Runtime
 
         private bool SeesThroughWindow(int areaId, float mappedPlayerX, ZombieUnit unit)
         {
-            return FullVision || PlayerViewRules.CanPlayerSee(areaId, mappedPlayerX, _facingRight ? 1 : -1, IsDark, FlashlightOn && !Hidden, areaId, unit.X, _balance);
+            return FullVision || PlayerViewRules.CanPlayerSee(areaId, mappedPlayerX, _facingRight ? 1 : -1, IsDarkIn(_areasById[areaId]), FlashlightOn && !Hidden, areaId, unit.X, _balance);
         }
 
         private void PlaceSilhouette(int index, ExplorationArea area, float x, bool dormant)
@@ -2250,9 +2267,15 @@ namespace ApoGirl.Exploration.Runtime
                 var sil = ExplorationArt.Get("silhouette") != null
                     ? ExplorationArt.Place(_world, "Silhouette", "silhouette", Vector2.zero, -3, Vector2.zero, Color.clear)
                     : BuildingView.Rect(_world, "Silhouette", Vector2.zero, Vector2.one, BuildingView.SilhouetteColor, -3);
-                sil.GetComponent<SpriteRenderer>().color = BuildingView.SilhouetteColor;
+                var silRenderer = sil.GetComponent<SpriteRenderer>();
+                silRenderer.color = BuildingView.SilhouetteColor;
+                // 창틀 밖으로 삐져나오지 않게 창 유리 모양(WindowMask) 안에서만 보인다
+                silRenderer.maskInteraction = SpriteMaskInteraction.VisibleInsideMask;
                 _silhouettes.Add(sil);
             }
+
+            // 유리 바로 위 (복도에서 본 방 창 -4, 방 안 창 -2): 유리 뒤에 그리면 유리에 가려 창 밖 벽에만 비친다
+            _silhouettes[index].GetComponent<SpriteRenderer>().sortingOrder = area.IsRoom ? -1 : -3;
 
             // 창틀 안에 머리·어깨만 보이게 (잠든 좀비는 조금 낮게)
             var origin = area.Origin;
@@ -2472,6 +2495,112 @@ namespace ApoGirl.Exploration.Runtime
         private void OnDestroy()
         {
             Presentation.Audio.Sound.StopAllLoops();
+        }
+
+        // ── 기물 안개: 어둠 속 먼 기물(장식·수색할 곳·인물)은 좀비처럼 보이지 않는다 ──
+
+        private sealed class FogProp
+        {
+            public SpriteRenderer Renderer;
+            public ExplorationArea Area;
+            public float Min;
+            public float Max;
+            public float Alpha = 1f;
+        }
+
+        private readonly List<FogProp> _fogProps = new List<FogProp>();
+        private ExplorationArea _fogShown;
+
+        /// <summary>안개를 따를 기물 하나 (자리는 그림 테두리의 가로 범위, 공간 기준 좌표).</summary>
+        private void AddFog(GameObject view, ExplorationArea area)
+        {
+            var renderer = view != null ? view.GetComponent<SpriteRenderer>() : null;
+            if (renderer == null || area == null)
+            {
+                return;
+            }
+
+            var bounds = renderer.bounds;
+            var min = _world.InverseTransformPoint(bounds.min).x - area.Origin.x;
+            var max = _world.InverseTransformPoint(bounds.max).x - area.Origin.x;
+            _fogProps.Add(new FogProp { Renderer = renderer, Area = area, Min = Mathf.Min(min, max), Max = Mathf.Max(min, max) });
+        }
+
+        /// <summary>흩어 놓은 장식(Decor_*)·뒷벽 장식(WallDecor). area가 없으면 복도: 높이로 층을 찾는다.</summary>
+        private void CollectFog(Transform parent, ExplorationArea area)
+        {
+            foreach (Transform child in parent)
+            {
+                if (!child.name.StartsWith("Decor_", StringComparison.Ordinal) && child.name != "WallDecor")
+                {
+                    continue;
+                }
+
+                var target = area;
+                if (target == null)
+                {
+                    var floor = Mathf.Clamp(Mathf.FloorToInt(child.localPosition.y / _building.FloorHeight), 0, _corridors.Count - 1);
+                    target = _corridors[floor];
+                }
+
+                AddFog(child.gameObject, target);
+            }
+        }
+
+        private bool FogVisible(FogProp prop)
+        {
+            if (FullVision || DebugOverlay)
+            {
+                return true;
+            }
+
+            if (PeekTarget != null)
+            {
+                // 문틈 너머: 밝은 낮 복도는 다 보이고, 어두운 곳은 문 가까이만 (밤에는 아무것도)
+                if (prop.Area != PeekArea || !IsDarkIn(PeekArea))
+                {
+                    return true;
+                }
+
+                var range = PeekViewRange;
+                var door = PeekTarget.LinkX;
+                return range > 0f && Mathf.Abs(Mathf.Clamp(door, prop.Min, prop.Max) - door) <= range;
+            }
+
+            if (prop.Area != CurrentArea)
+            {
+                return true;
+            }
+
+            // 좀비와 같은 시야 규칙: 어둠 속에서는 맨눈 거리 안이거나 손전등이 비추는 쪽만 (넓은 기물은 가장 가까운 끝으로 잰다)
+            var nearest = Mathf.Clamp(X, prop.Min, prop.Max);
+            return PlayerViewRules.CanPlayerSee(0, X, _facingRight ? 1 : -1, DarkHere, FlashlightOn && !Hidden, 0, nearest, _balance);
+        }
+
+        private void UpdateFog(float dt)
+        {
+            // 보이는 공간이 바뀌면(문을 지나거나 문틈을 볼 때) 바로 맞추고, 그 안에서는 천천히 나타나고 사라진다
+            var shown = PeekTarget != null ? PeekArea : CurrentArea;
+            var snap = shown != _fogShown;
+            _fogShown = shown;
+            var step = dt * _balance.FogFadeSpeed;
+            foreach (var prop in _fogProps)
+            {
+                if (prop.Renderer == null)
+                {
+                    continue;
+                }
+
+                var wanted = FogVisible(prop) ? 1f : 0f;
+                prop.Alpha = snap ? wanted : Mathf.MoveTowards(prop.Alpha, wanted, step);
+                var color = prop.Renderer.color;
+                if (!Mathf.Approximately(color.a, prop.Alpha))
+                {
+                    prop.Renderer.color = new Color(color.r, color.g, color.b, prop.Alpha);
+                }
+
+                prop.Renderer.enabled = prop.Alpha > 0.01f;
+            }
         }
 
         private void UpdateZombieViews()

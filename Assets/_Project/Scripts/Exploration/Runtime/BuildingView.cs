@@ -66,6 +66,22 @@ namespace ApoGirl.Exploration.Runtime
 
         public float FloorY(int floor) => floor * _layout.FloorHeight;
 
+        /// <summary>창틀 두께 (유닛): 창 그림 가장자리 2픽셀.</summary>
+        private const float WindowFrame = 2f / 36f;
+
+        /// <summary>
+        /// 창 유리 자리의 마스크: 창 너머 좀비 실루엣(VisibleInsideMask)이 이 사각형 안에서만 보인다.
+        /// 다른 그림은 마스크를 따르지 않으니 영향이 없다.
+        /// </summary>
+        private static void AddWindowMask(Transform parent, float x, float width, float y = 0f)
+        {
+            var go = new GameObject("WindowMask");
+            go.transform.SetParent(parent, false);
+            go.transform.localPosition = new Vector3(x + WindowFrame, y + WindowBottom + WindowFrame, 0f);
+            go.transform.localScale = new Vector3(Mathf.Max(0.05f, width - WindowFrame * 2f), WindowHeight - WindowFrame * 2f, 1f);
+            go.AddComponent<SpriteMask>().sprite = Square;
+        }
+
         public static GameObject Rect(Transform parent, string name, Vector2 position, Vector2 size, Color color, int order)
         {
             var go = new GameObject(name);
@@ -197,6 +213,7 @@ namespace ApoGirl.Exploration.Runtime
             {
                 // 복도 쪽 벽(앞면)의 창: 반투명 유리라 뒤 벽의 칠판 앞에 겹쳐 그린다
                 var glass = ExplorationArt.Stretched(root, "Window", "prop_window", new Vector2(window.X, WindowBottom), new Vector2(window.Width, WindowHeight), -2, WindowColor);
+                AddWindowMask(root, window.X, window.Width);
 
                 // 방 안에서는 창이 화면 앞쪽 벽에 있다: 반투명하게 그려 뒤 벽(칠판·장식)이 비쳐 보이게
                 var glassRenderer = glass.GetComponent<SpriteRenderer>();
@@ -322,6 +339,7 @@ namespace ApoGirl.Exploration.Runtime
                 foreach (var window in template.Windows)
                 {
                     ExplorationArt.Stretched(_root, "RoomWindow", "prop_window", new Vector2(door.X + window.X, y + WindowBottom), new Vector2(window.Width, WindowHeight), -4, WindowColor);
+                    AddWindowMask(_root, door.X + window.X, window.Width, y);
                 }
 
                 // 교실 명패 (첫 문 위)

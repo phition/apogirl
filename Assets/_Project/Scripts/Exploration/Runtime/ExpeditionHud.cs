@@ -168,7 +168,7 @@ namespace ApoGirl.Exploration.Runtime
             _activity.EnableInClassList("danger", _director.Activity.Level >= ActivityLevel.Alert);
             var noiseBars = Mathf.Clamp(Mathf.CeilToInt(_director.NoiseLevel / 1.8f), 0, 4);
             _noise.text = Loc.T("exp.noise") + " " + new string('■', noiseBars) + new string('□', 4 - noiseBars)
-                          + (_director.IsDark ? "   " + Loc.T(_director.FlashlightOn ? "exp.light_on" : "exp.light_off") : "");
+                          + (_director.DarkHere ? "   " + Loc.T(_director.FlashlightOn ? "exp.light_on" : "exp.light_off") : "");
             _hidden.EnableInClassList("hidden", !_director.Hidden);
             _hidden.text = Loc.T("exp.hidden");
 
@@ -258,7 +258,7 @@ namespace ApoGirl.Exploration.Runtime
 
             if (_director.PeekTarget != null)
             {
-                _prompt.text = Loc.T("exp.prompt_peeking");
+                _prompt.text = Loc.T(_director.PeekTooDark ? "exp.prompt_peeking_dark" : "exp.prompt_peeking");
                 return;
             }
 

@@ -408,6 +408,7 @@
     "exp.debug_vision": "시야",
     "exp.prompt_door_senses": "W: 문틈 살피기 · S: 귀 기울이기",
     "exp.prompt_peeking": "문틈으로 살피는 중… (W를 떼면 그만)",
+    "exp.prompt_peeking_dark": "너무 어두워 문틈 너머가 보이지 않는다. 귀를 기울여 보자 (S)",
     "exp.prompt_listening": "문에 귀를 대고 있다…",
     "exp.peeking_into": "문틈 너머: {0}",
     "exp.peek_noticed": "안쪽의 무언가가 이쪽을 봤다!",
