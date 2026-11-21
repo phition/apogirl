@@ -188,7 +188,9 @@ namespace ApoGirl.Tests.EditMode
             Assert.AreEqual(max, ExplorationRules.StaminaCap(max, 0, false, balance), 1e-5f);
             Assert.AreEqual(max * 0.8f, ExplorationRules.StaminaCap(max, 50, false, balance), 1e-4f);
             Assert.AreEqual(max * 0.55f, ExplorationRules.StaminaCap(max, 50, true, balance), 1e-4f);
-            Assert.AreEqual(max * balance.StaminaMinCapRatio, ExplorationRules.StaminaCap(max, 100, true, balance), 1e-4f);
+            Assert.AreEqual(max * 0.35f, ExplorationRules.StaminaCap(max, 100, true, balance), 1e-4f);
+            balance.StaminaInjuryPenalty = 0.5f;
+            Assert.AreEqual(max * balance.StaminaMinCapRatio, ExplorationRules.StaminaCap(max, 100, true, balance), 1e-4f, "아무리 지쳐도 최소 비율은 남는다");
         }
 
         [Test]
