@@ -824,13 +824,19 @@ Button.selected { border-color: var(--accent); background-color: var(--accent-so
 .tone-warn { color: rgb(150, 85, 10); -unity-text-outline-width: 0.5px; -unity-text-outline-color: rgb(150, 85, 10); }
 .tone-danger { color: rgb(165, 30, 25); -unity-text-outline-width: 0.5px; -unity-text-outline-color: rgb(165, 30, 25); }
 .diary-alert { font-size: 13px; color: rgb(160, 30, 25); -unity-text-outline-width: 0.5px; -unity-text-outline-color: rgb(160, 30, 25); white-space: normal; margin-top: 2px; }
-.diary-dots { font-size: 13px; color: rgb(40, 32, 26); -unity-text-outline-width: 0.5px; -unity-text-outline-color: rgb(40, 32, 26); margin-top: 2px; }
+.diary-dots { flex-direction: row; align-items: center; margin-top: 3px; }
+.diary-dots-label { font-size: 13px; color: rgb(40, 32, 26); -unity-text-outline-width: 0.5px; -unity-text-outline-color: rgb(40, 32, 26); margin-right: 6px; }
+.diary-dot-row { flex-direction: row; align-items: center; }
+.diary-dot { width: 9px; height: 9px; border-radius: 5px; border-width: 1.5px; border-color: rgb(60, 48, 38); margin-right: 3px; }
+.diary-dot.filled { background-color: rgb(60, 48, 38); }
 .diary-stat-grid { flex-direction: column; }
 .diary-stat-row { flex-direction: row; align-items: center; height: 19px; padding: 0 4px; }
 .diary-stat-row:hover { background-color: rgba(255, 255, 255, 0.35); border-radius: 4px; }
 .diary-stat-name { width: 96px; font-size: 15px; color: rgb(20, 28, 50); -unity-text-outline-width: 0.5px; -unity-text-outline-color: rgb(20, 28, 50); }
 .diary-stat-name.with-icon { padding-left: 22px; }
-.diary-stat-boxes { flex-grow: 1; font-size: 15px; color: rgb(25, 45, 100); letter-spacing: 2px; }
+.diary-stat-boxes { flex-grow: 1; flex-direction: row; align-items: center; }
+.diary-box { width: 11px; height: 11px; border-width: 1.5px; border-color: rgb(25, 45, 100); margin-right: 3px; }
+.diary-box.filled { background-color: rgb(25, 45, 100); }
 .diary-stat-value { width: 40px; font-size: 13px; color: rgb(35, 45, 70); -unity-text-outline-width: 0.5px; -unity-text-outline-color: rgb(35, 45, 70); -unity-text-align: middle-right; }
 .diary-stat-delta { width: 40px; height: 20px; font-size: 14px; color: rgb(30, 95, 35); -unity-text-outline-width: 0.5px; -unity-text-outline-color: rgb(30, 95, 35); -unity-text-align: middle-center; -unity-background-scale-mode: stretch-to-fill; }
 .diary-stat-delta.circled { color: rgb(170, 30, 25); -unity-text-outline-width: 0.5px; -unity-text-outline-color: rgb(170, 30, 25); }

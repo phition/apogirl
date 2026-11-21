@@ -334,8 +334,8 @@ namespace ApoGirl.Presentation.Screens
 
             if (Disclosure.Has(state, "UI_SLEEPDEBT"))
             {
-                Add(note, Loc.T("status.sleep_debt") + " " + Dots(player.SleepDebt, balance.SleepDebtMax), "diary-dots");
-                Add(note, Loc.T("status.conscience") + " " + Dots(player.Conscience, balance.ConscienceMax), "diary-dots");
+                note.Add(DotsRow(Loc.T("status.sleep_debt"), player.SleepDebt, balance.SleepDebtMax));
+                note.Add(DotsRow(Loc.T("status.conscience"), player.Conscience, balance.ConscienceMax));
             }
 
             return note;
@@ -359,7 +359,7 @@ namespace ApoGirl.Presentation.Screens
                 row.AddToClassList("diary-stat-row");
                 var name = Add(row, UiText.Stat(stat), "diary-stat-name");
                 StoryArt.SetIcon(name, StoryArt.Icon("stat." + stat), 18f);
-                Add(row, new string('■', filled) + new string('□', _config.StatBoxes - filled), "diary-stat-boxes");
+                row.Add(Marks(filled, _config.StatBoxes, "diary-stat-boxes", "diary-box"));
                 Add(row, value.ToString(), "diary-stat-value");
                 var gained = 0;
                 if (delta != null && delta.Stats.TryGetValue(stat, out var d))
@@ -460,7 +460,31 @@ namespace ApoGirl.Presentation.Screens
             return note;
         }
 
-        private static string Dots(int value, int max) => new string('●', Math.Max(0, Math.Min(value, max))) + new string('○', Math.Max(0, max - value));
+        /// <summary>칸 표시: 글꼴 기호(□○)는 대체 글꼴에 따라 크기가 흔들려서 작은 요소로 그린다.</summary>
+        private static VisualElement Marks(int filled, int count, string boxClass, string markClass)
+        {
+            var box = new VisualElement();
+            box.AddToClassList(boxClass);
+            filled = Math.Max(0, Math.Min(filled, count));
+            for (var i = 0; i < count; i++)
+            {
+                var mark = new VisualElement();
+                mark.AddToClassList(markClass);
+                if (i < filled) mark.AddToClassList("filled");
+                box.Add(mark);
+            }
+
+            return box;
+        }
+
+        private static VisualElement DotsRow(string label, int value, int max)
+        {
+            var row = new VisualElement();
+            row.AddToClassList("diary-dots");
+            Add(row, label, "diary-dots-label");
+            row.Add(Marks(value, max, "diary-dot-row", "diary-dot"));
+            return row;
+        }
 
         private static Label Add(VisualElement parent, string text, string cssClass)
         {
