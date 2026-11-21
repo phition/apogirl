@@ -47,7 +47,7 @@ namespace ApoGirl.Core.Rules
             var list = new List<string>();
             if (!state.Flags.Contains(FlagChoseToStay)) list.Add(Player);
             list.Add(Friend);
-            if (state.Flags.Contains(M6Rules.FlagTeacherCured)) list.Add(Teacher);
+            if (state.Flags.Contains(InfectionRules.FlagTeacherCured)) list.Add(Teacher);
             foreach (var id in CompanionIds)
             {
                 if (state.Npcs.TryGetValue(id, out var npc) && npc.Status == NpcStatus.Joined) list.Add(id);

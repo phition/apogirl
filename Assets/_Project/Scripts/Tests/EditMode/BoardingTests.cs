@@ -31,7 +31,7 @@ namespace ApoGirl.Tests.EditMode
         private static GameState FullHouse(BalanceConfig balance, bool cured = true, bool jun = true)
         {
             var state = NewGameFactory.Create(balance, 3);
-            if (cured) state.Flags.Add(M6Rules.FlagTeacherCured);
+            if (cured) state.Flags.Add(InfectionRules.FlagTeacherCured);
             if (jun) state.Flags.Add(BoardingRules.FlagJunJoins);
             foreach (var id in Companions) state.Npcs[id] = new NpcState { Status = NpcStatus.Joined };
             return state;
