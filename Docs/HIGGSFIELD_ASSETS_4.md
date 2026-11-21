@@ -416,3 +416,14 @@ No gore, no blood, no visible wounds, no sexualized poses or revealing clothing,
 1. 영상을 프레임으로 뽑아(플레이 모드 VideoPlayer) 배경을 지우고 정지 그림과 같은 자리·크기로 맞춘다 (`code_temp/apogirl/tools/make_standing_motion.py`, 12fps 340×512).
 2. `Resources/Art/Standing/Motion/{그림}_{동작}/`에 두고, `standing_map.json` `Motion`을 그림별 표로 늘린다 (그림 → idle·이따금 끼울 동작·간격).
 3. 표정 그림이 바뀔 때(예: 보통 → 지침) 영상과 정지 그림 사이가 튀면 0.25초 겹쳐 바꾼다.
+
+### 연결 결과 (2026-11-22)
+
+- 3차(옷·머리 × idle·look·sigh, `base_sigh`)와 4차 22개, 모두 35개를 연결했다. `base_idle`·`base_look`은 이전에 연결되어 있었다.
+- **프레임 뽑기**: Windows 내장 디코더(WinRT `MediaComposition.GetThumbnailAsync`, `code_temp/apogirl/scratch/grab_frames.ps1`)로 24fps를 뽑았다. 플레이 모드 VideoPlayer는 준비 단계에서 멈춰 쓰지 않았다.
+- **맞추기**: `code_temp/apogirl/tools/make_standing_motion3.py`를 쓴다.
+  - 첫 프레임과 기준 전신 그림의 윤곽이 가장 많이 겹치는 배율·위치를 찾는다.
+  - 정강이에서 잘린 영상 16개는 아래를 기준 그림의 다리로 채우고 16px로 섞는다.
+  - 한 장 걸러 12fps로 줄이고, 340×512로 저장한다.
+- `standing_map.json` `Motion.Sets`: 그림(+얼굴) → idle·이따금 끼울 동작·간격. 고르는 순서는 표 순서, 첫 일치가 이긴다. 방어구 차림과 `face_surprised`는 영상 없이 눈 깜빡임·시선만 쓴다.
+- 프레임 1,873장, 약 172MB(PNG, LFS).
