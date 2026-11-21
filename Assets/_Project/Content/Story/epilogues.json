@@ -51,6 +51,15 @@
     { "Id": "EP_RINGLEADER_CLOSED", "Kind": "EndingEpilogue", "Group": "NPC_RINGLEADER", "Priority": 30, "TextKey": "line.ep_ringleader_closed",
       "Condition": { "FlagsAll": [ "HR_CLOSED" ], "NpcStatuses": [ { "NpcId": "NPC_RINGLEADER", "Status": "Joined" } ] } },
 
+    { "Id": "EP_SENIOR", "Kind": "EndingEpilogue", "Group": "NPC_SURVIVOR_A", "Priority": 0, "TextKey": "line.ep_senior",
+      "Condition": { "NpcStatuses": [ { "NpcId": "NPC_SURVIVOR_A", "Status": "Joined" } ] } },
+    { "Id": "EP_SENIOR_STOOD", "Kind": "EndingEpilogue", "Group": "NPC_SURVIVOR_A", "Priority": 20, "TextKey": "line.ep_senior_stood",
+      "Condition": { "FlagsAll": [ "SV_STOOD_FOR" ], "NpcStatuses": [ { "NpcId": "NPC_SURVIVOR_A", "Status": "Joined" } ] } },
+    { "Id": "EP_SENIOR_NAME", "Kind": "EndingEpilogue", "Group": "NPC_SURVIVOR_A", "Priority": 30, "TextKey": "line.ep_senior_name",
+      "Condition": { "FlagsAll": [ "SV_NAME_KEPT" ], "NpcStatuses": [ { "NpcId": "NPC_SURVIVOR_A", "Status": "Joined" } ] } },
+    { "Id": "EP_SENIOR_LAUGH", "Kind": "EndingEpilogue", "Group": "NPC_SURVIVOR_A", "Priority": 30, "TextKey": "line.ep_senior_laugh",
+      "Condition": { "FlagsAll": [ "SV_LAUGHED" ], "NpcStatuses": [ { "NpcId": "NPC_SURVIVOR_A", "Status": "Joined" } ] } },
+
     { "Id": "EP_JUN", "Kind": "EndingEpilogue", "Group": "JUN", "Priority": 0, "TextKey": "line.ep_jun",
       "Condition": { "FlagsAll": [ "JUN_JOINS" ] } },
 

@@ -1,0 +1,253 @@
+{
+  "Events": [
+    {
+      "Id": "EVT_SV_01_ERRAND",
+      "Kind": "Night",
+      "Priority": 35,
+      "Condition": {
+        "WeekMin": 16,
+        "WeekMax": 26,
+        "Phase": "Night",
+        "FlagsNone": [
+          "SV_ERRAND"
+        ],
+        "NpcStatuses": [
+          {
+            "NpcId": "NPC_SURVIVOR_A",
+            "Status": "Joined"
+          }
+        ]
+      },
+      "OnShow": {
+        "SetFlags": [
+          "SV_ERRAND"
+        ],
+        "Resources": [
+          {
+            "Resource": "Medicine",
+            "Amount": 1
+          }
+        ]
+      },
+      "Choices": [
+        {
+          "Id": "THANK",
+          "Effect": {
+            "Npcs": [
+              {
+                "NpcId": "NPC_SURVIVOR_A",
+                "Affinity": 2
+              }
+            ]
+          }
+        },
+        {
+          "Id": "GO_TOGETHER",
+          "Effect": {
+            "Npcs": [
+              {
+                "NpcId": "NPC_SURVIVOR_A",
+                "Trust": 2
+              }
+            ],
+            "Resources": [
+              {
+                "Resource": "Intel",
+                "Amount": 1
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "Id": "EVT_SV_02_SCAR",
+      "Kind": "Night",
+      "Priority": 35,
+      "Condition": {
+        "WeekMin": 28,
+        "WeekMax": 38,
+        "Phase": "Night",
+        "FlagsAll": [
+          "SV_ERRAND"
+        ],
+        "FlagsNone": [
+          "SV_SCAR"
+        ],
+        "NpcStatuses": [
+          {
+            "NpcId": "NPC_SURVIVOR_A",
+            "Status": "Joined"
+          }
+        ]
+      },
+      "OnShow": {
+        "SetFlags": [
+          "SV_SCAR"
+        ]
+      },
+      "Choices": [
+        {
+          "Id": "SIT_BESIDE",
+          "Effect": {
+            "Npcs": [
+              {
+                "NpcId": "NPC_SURVIVOR_A",
+                "Affinity": 2
+              }
+            ],
+            "Vitals": [
+              {
+                "Vital": "Stress",
+                "Amount": -3
+              }
+            ]
+          }
+        },
+        {
+          "Id": "NOTEBOOK",
+          "Effect": {
+            "SetFlags": [
+              "SV_NOTEBOOK"
+            ],
+            "Hidden": [
+              {
+                "Hidden": "SelfAwareness",
+                "Amount": 1
+              }
+            ],
+            "Npcs": [
+              {
+                "NpcId": "NPC_SURVIVOR_A",
+                "Trust": 1
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "Id": "EVT_SV_03_RECOGNIZED",
+      "Kind": "Story",
+      "Priority": 30,
+      "Condition": {
+        "WeekMin": 40,
+        "WeekMax": 48,
+        "ActionCategories": [
+          "Expedition"
+        ],
+        "FlagsNone": [
+          "SV_RECOGNIZED"
+        ],
+        "NpcStatuses": [
+          {
+            "NpcId": "NPC_SURVIVOR_A",
+            "Status": "Joined"
+          }
+        ],
+        "Checks": [
+          {
+            "Kind": "FactionKnown",
+            "Key": "FAC_SAGEORI",
+            "Op": "Equal",
+            "Value": 1
+          }
+        ]
+      },
+      "OnShow": {
+        "SetFlags": [
+          "SV_RECOGNIZED"
+        ]
+      },
+      "Choices": [
+        {
+          "Id": "STAND_FOR",
+          "Effect": {
+            "SetFlags": [
+              "SV_STOOD_FOR"
+            ],
+            "Npcs": [
+              {
+                "NpcId": "NPC_SURVIVOR_A",
+                "Affinity": 4
+              }
+            ],
+            "Hidden": [
+              {
+                "Hidden": "Humanity",
+                "Amount": 2
+              }
+            ]
+          }
+        },
+        {
+          "Id": "ASK",
+          "Effect": {
+            "SetFlags": [
+              "SV_ASKED"
+            ],
+            "Hidden": [
+              {
+                "Hidden": "SelfAwareness",
+                "Amount": 2
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "Id": "EVT_SV_04_FAREWELL",
+      "Kind": "Night",
+      "Priority": 60,
+      "Condition": {
+        "WeekMin": 50,
+        "Phase": "Night",
+        "FlagsNone": [
+          "SV_FAREWELL"
+        ],
+        "NpcStatuses": [
+          {
+            "NpcId": "NPC_SURVIVOR_A",
+            "Status": "Joined"
+          }
+        ]
+      },
+      "OnShow": {
+        "SetFlags": [
+          "SV_FAREWELL"
+        ],
+        "Npcs": [
+          {
+            "NpcId": "NPC_SURVIVOR_A",
+            "Affinity": 3
+          }
+        ]
+      },
+      "Choices": [
+        {
+          "Id": "ASK_NAME",
+          "Effect": {
+            "SetFlags": [
+              "SV_NAME_KEPT"
+            ]
+          }
+        },
+        {
+          "Id": "CALL_SENIOR",
+          "Effect": {
+            "SetFlags": [
+              "SV_LAUGHED"
+            ],
+            "Vitals": [
+              {
+                "Vital": "Stress",
+                "Amount": -4
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -57,6 +57,9 @@ tags: act4 night radio rescue
 <<if joined("NPC_RINGLEADER")>>
     최하린. 그 이름에서 손가락이 아주 잠깐 멈췄다. 하린이 그걸 봤다.
 <<endif>>
+<<if joined("NPC_SURVIVOR_A")>>
+    선배. 손가락이 접히는 걸 보고도 선배는 아무 반응이 없었다. 늘 그렇듯.
+<<endif>>
 <<if flag("JUN_SAVED") || flag("JUN_FED")>>
     그리고 사거리의 준. 헬기 얘기만 나오면 눈이 반짝이던 애.
 <<endif>>
@@ -293,6 +296,10 @@ tags: act4 night teacher
         최하린이 잠깐 망설이다 손을 들었다.
         최하린: 있어.
     <<endif>>
+    <<if joined("NPC_SURVIVOR_A")>>
+        {name()}: 선배.
+        선배가 고개를 끄덕였다. 대답은 늘 그거였다. 출석부의 '2학년' 옆에 동그라미를 쳤다.
+    <<endif>>
     <<if joined("NPC_NURSE")>>
         {name()}: 박 선생님.
         박 선생님: 출석입니다. 아이고, 이 나이에 출석을 다 부르네.
@@ -422,6 +429,9 @@ tags: act4 story raid
 <<if joined("NPC_NURSE")>>
     박 선생님은 보건실 문을 활짝 열어 두고, 붕대를 길게 잘라 의자 등받이마다 걸었다.
 <<endif>>
+<<if joined("NPC_SURVIVOR_A")>>
+    선배는 맡긴 대로 왼쪽 계단 아래에 섰다. 고개를 한 번 끄덕이고는, 끝까지 그 자리에서 움직이지 않았다.
+<<endif>>
 <<if flag("TEACHER_CURED")>>
     윤 선생님이 무전기를 들고 옥상 문 앞에 섰다. 열이 내린 뒤로 처음 맡는 자리였다.
     윤 선생님: 오랜만에 서 있으려니 무릎이 다 떨린다. …농담이다. 왼쪽 계단, 셋.
@@ -539,6 +549,9 @@ tags: act4 night rescue
 <<endif>>
 <<if joined("NPC_RINGLEADER")>>
     최하린은 복도 끝 창가에 혼자 서 있었다. 내가 다가가자 한 걸음 옆으로 비켜 자리를 내주었다.
+<<endif>>
+<<if joined("NPC_SURVIVOR_A")>>
+    선배는 늘 앉던 창가 구석에서 옥상 쪽을 올려다보고 있었다. 가방은 오후에 이미 다 싸 두었다. 단출했다.
 <<endif>>
 <<if flag("TEACHER_CURED")>>
     윤 선생님은 교실 칠판을 깨끗이 지우고, 맨 위에 날짜를 적었다. 그리고 그 아래에, 내일.
