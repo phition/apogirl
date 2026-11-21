@@ -362,6 +362,14 @@
 - **선생님의 한마디**: 생활기록부 "행동 특성 및 종합 의견"을 부드럽게. 이번 주 가장 많이 오른 능력치(3 이상)를 두고 한 줄(`diary.teacher.grew.*`), 없으면 가장 높은 능력치(`diary.teacher.best.*`). 선생님을 만난 뒤에만.
 - 오른쪽 서랍(`StatusPanelView`)은 거점·사람·세력만 남겼다.
 
+### 살아 있는 입상 시험 (2026-11-21, HIGGSFIELD_ASSETS_3.md 1차 샘플)
+- 들어온 것: 눈 감은 얼굴 9장(`stand_blink_*`), 눈동자 좌우 2장(`stand_gaze_*`), 영상 2개(`motion_base_idle` 4초·`motion_base_look` 5초, 720×1280 24fps).
+- **A. 눈 조각**: 편집 그림은 몸 전체가 조금씩 다시 그려져서 통째로 바꾸면 깜빡일 때마다 몸이 흔들린다. 그래서 눈 둘레(680×1024 기준 318,72 104×56)만 잘라, 지금 쓰는 전신 그림마다 위치·색을 맞춘 조각을 만든다(`Resources/Art/Standing/Eyes/{blink|gaze_left|gaze_right}_{그림}.png`, 입상 바깥으로는 번지지 않게). 표정 그림은 그 표정의 눈 감은 얼굴, 나머지(옷·머리·상태)는 기본 눈 감은 얼굴. 시선은 표정 그림 말고만.
+- **B. 동작 프레임**: 영상을 Unity로 프레임을 뽑아 배경을 지우고(배경색 거리 + 둘러싸인 큰 배경 덩어리), 정지 입상과 같은 자리·크기로 맞춰 12fps 340×512로 둔다(`Standing/Motion/{idle|look}/m_##.png`, 약 10MB). 지금 그림이 `base`일 때만: 숨쉬기를 반복하다 12~24초마다 두리번 한 번.
+- 코드: `StandingView`(Whole 방식에서 고른 그림 이름을 기억, 40ms마다 동작 프레임 또는 눈 조각), 수치는 `standing_map.json` `Eyes`·`Motion`.
+- 도구: `code_temp/apogirl/tools/make_standing_blink.py`, `make_standing_motion.py` (영상 프레임은 ffmpeg이 없어 플레이 모드 VideoPlayer로 뽑았다).
+- 한계: 동작 영상은 기본 차림(겨울 카디건)뿐이라 봄 1~13주·보통 얼굴일 때만 보인다(14주부터는 머리가 자란 그림이 우선). 다른 차림 영상이 오면 `Motion.Picture`를 그림별로 늘린다.
+
 ### 남은 것
 - 선생님 입상을 쓸 곳(대화 전신 구도), 종이·도장으로 출정 봉투 꾸미기
 - 입상 조각 그림이 들어오면 겹쳐 보기 시험 (HIGGSFIELD_ASSETS_2.md 1.2)
