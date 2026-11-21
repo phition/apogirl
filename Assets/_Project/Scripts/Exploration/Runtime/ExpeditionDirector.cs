@@ -862,11 +862,12 @@ namespace ApoGirl.Exploration.Runtime
             _hud?.ShowMessage("exp.fell_asleep");
         }
 
-        private void WakeUp()
+        /// <summary>잠에서 깬다. 연타로 깨면 기본 문구, 물려서 깨면 그 문구.</summary>
+        private void WakeUp(string messageKey = "exp.woke_up")
         {
             Asleep = false;
             WakeProgress = 0f;
-            _hud?.ShowMessage("exp.woke_up");
+            _hud?.ShowMessage(messageKey);
         }
 
         /// <summary>디버그·화면 확인: 가까운 숨을 곳에 바로 숨어 잠든다.</summary>
@@ -2312,7 +2313,16 @@ namespace ApoGirl.Exploration.Runtime
                 var damage = Mathf.Max(1, Mathf.RoundToInt(events.Damage * Request.HarmMultiplier * (1f - Mathf.Clamp01(_armor?.DamageReduction ?? 0f))));
                 _log.DamageTaken += damage;
                 Hp = Math.Max(0, Hp - damage);
-                _hud?.ShowMessage("exp.hurt");
+                if (Asleep)
+                {
+                    // 잠든 사이 물리면 아픔에 바로 깬다 (연타하지 않아도 된다)
+                    WakeUp("exp.woke_bitten");
+                }
+                else
+                {
+                    _hud?.ShowMessage("exp.hurt");
+                }
+
                 Sfx("sfx_z_grab", 0.7f);
                 Sfx("sfx_hurt");
                 if (Hp <= 0)
