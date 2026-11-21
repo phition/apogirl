@@ -138,8 +138,9 @@ namespace ApoGirl.Presentation.Screens
         /// <summary>시간·날씨를 반영한다 (바뀐 것이 있을 때만 다시 그린다).</summary>
         public void Apply(bool night, WeatherType weather, Season season)
         {
+            // 단면도를 짓기 전(Build 전)에는 그릴 곳이 없다
             var signature = night + "|" + weather + "|" + season;
-            if (signature == _signature)
+            if (_cloudLayer == null || signature == _signature)
             {
                 return;
             }
