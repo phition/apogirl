@@ -77,6 +77,72 @@
       ]
     },
     {
+      "Id": "EVT_A4_SEAT_COUNT",
+      "Kind": "Night",
+      "Priority": 70,
+      "Condition": {
+        "WeekMin": 41,
+        "WeekMax": 44,
+        "Phase": "Night",
+        "FlagsAll": [
+          "RESCUE_ANNOUNCED"
+        ],
+        "FlagsNone": [
+          "SEAT_COUNT"
+        ]
+      },
+      "OnShow": {
+        "SetFlags": [
+          "SEAT_COUNT"
+        ],
+        "Hidden": [
+          {
+            "Hidden": "SelfAwareness",
+            "Amount": 1
+          }
+        ]
+      },
+      "Choices": [
+        {
+          "Id": "LIST_NOW",
+          "Effect": {
+            "SetFlags": [
+              "SEAT_LIST_DRAFTED"
+            ],
+            "Stats": [
+              {
+                "Stat": "Leadership",
+                "Amount": 1
+              }
+            ],
+            "Vitals": [
+              {
+                "Vital": "Stress",
+                "Amount": 3
+              }
+            ]
+          }
+        },
+        {
+          "Id": "NOT_YET",
+          "Effect": {
+            "Hidden": [
+              {
+                "Hidden": "Hope",
+                "Amount": 1
+              }
+            ],
+            "Vitals": [
+              {
+                "Vital": "Stress",
+                "Amount": -2
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
       "Id": "EVT_A4_WATERWORKS_UNLOCK",
       "Kind": "Night",
       "Priority": 60,
