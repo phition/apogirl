@@ -258,7 +258,7 @@ namespace ApoGirl.EditorTools
             // 도현 (첫 NPC, M4 결정): 밤의 노크 소리를 들은 뒤(DH_HEARD) 3층 3-5 교실에 있다
             EncounterDef Dohyeon() => new EncounterDef
             {
-                Id = "DOHYEON", Floor = 2, RoomId = "ROOM_3F_ROOM_CLASSROOM_5", X = 9.5f, SpriteKey = "npc_dohyeon_hiding",
+                Id = "DOHYEON", Floor = 2, RoomId = "ROOM_3F_ROOM_CLASSROOM_5", X = 8.85f, SpriteKey = "npc_dohyeon_hiding",
                 FlagsAll = { "DH_HEARD" }, FlagsNone = { "DH_RESCUED", "DH_LEFT", "DH_HELPED" },
                 PromptKey = "enc.DOHYEON.prompt",
                 DialogueNode = "ENC_DOHYEON", SceneEventId = "EVT_DH_02_ARRIVAL",
@@ -447,7 +447,7 @@ namespace ApoGirl.EditorTools
             // 박 간호사 (보건 교사): 2층 203호에 숨어 있다
             var nurse = new EncounterDef
             {
-                Id = "NURSE", Floor = 1, RoomId = "ROOM_HOUSE_203", X = 10f, SpriteKey = "npc_nurse_hiding",
+                Id = "NURSE", Floor = 1, RoomId = "ROOM_HOUSE_203", X = 10.6f, SpriteKey = "npc_nurse_hiding",
                 FlagsAll = { "A2_STARTED" }, FlagsNone = { "NURSE_FOUND", "NURSE_DECLINED" },
                 PromptKey = "enc.NURSE.prompt",
                 DialogueNode = "ENC_NURSE", SceneEventId = "EVT_A2_NURSE_JOIN",
@@ -538,7 +538,7 @@ namespace ApoGirl.EditorTools
             };
             var bystander = new EncounterDef
             {
-                Id = "BYSTANDER", Floor = 0, RoomId = "ROOM_SUBWAY_OFFICE_2", X = 10f, SpriteKey = "npc_bystander_sitting",
+                Id = "BYSTANDER", Floor = 0, RoomId = "ROOM_SUBWAY_OFFICE_2", X = 9.2f, SpriteKey = "npc_bystander_sitting",
                 FlagsAll = { "A2_STARTED" }, FlagsNone = { "BYSTANDER_MET" },
                 PromptKey = "enc.BYSTANDER.prompt",
                 DialogueNode = "ENC_BYSTANDER", SceneEventId = "EVT_A2_BYSTANDER",
@@ -634,7 +634,7 @@ namespace ApoGirl.EditorTools
             };
             var ringleader = new EncounterDef
             {
-                Id = "RINGLEADER", Floor = 1, RoomId = "ROOM_MART_OFFICE_2", X = 7f, SpriteKey = "npc_ringleader_sitting",
+                Id = "RINGLEADER", Floor = 1, RoomId = "ROOM_MART_OFFICE_2", X = 8.5f, SpriteKey = "npc_ringleader_sitting",
                 FlagsAll = { "MART_GROUP_MET" }, FlagsNone = { "RINGLEADER_MET" },
                 PromptKey = "enc.RINGLEADER.prompt",
                 DialogueNode = "ENC_RINGLEADER", SceneEventId = "EVT_A3_RINGLEADER", PlayEventInField = true,
