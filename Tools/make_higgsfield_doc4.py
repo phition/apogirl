@@ -22,12 +22,21 @@ PICTURES = {
     'mark_dirty': ('b58046cf-9e76-4f9e-852e-51acf5a22b42', 'hf_20261120_211324_'),
     'mark_mask': ('3abe881f-c2ca-4c87-82a8-491f36b6c86e', 'hf_20261120_211531_'),
     'mark_thin': ('5b25d2ae-d07e-44b6-8f35-731ad2c92a85', 'hf_20261120_211640_'),
+    'outfit_summer': ('1ea6aa36-2d7f-4d14-81d1-adaba215bac1', 'hf_20261120_164547_'),
+    'outfit_winter': ('d0e6502f-4820-4b9d-adad-d8d5a48a048c', 'hf_20261120_205735_'),
 }
 
 VIDEO_LOCK = ('Locked-off static camera, no camera movement, no zoom, no cut. The plain light grey background stays completely '
               'unchanged and empty. The girl stays in the same spot and the same size in the frame for the whole clip; her outfit, '
               'hair and face stay consistent with the first frame. The clip ends in exactly the same pose as it starts so it can '
               'loop seamlessly. Gentle, small, natural motion; 2D anime illustration style matching the reference, no 3D look.')
+# 계절 옷 영상: 시작 그림이 보통 얼굴이라, 클립 가운데에서만 표정이 바뀌고 끝에는 처음 표정으로 돌아온다
+OUTFIT_LOCK = ('Locked-off static camera, no camera movement, no zoom, no cut. The plain light grey background stays completely '
+               'unchanged and empty. The girl stays in the same spot and the same size in the frame for the whole clip; her outfit, '
+               'hair and identity stay consistent with the first frame. Her facial expression may change in the middle of the clip '
+               'but relaxes back to exactly the reference expression by the last frame, and the clip ends in exactly the same pose '
+               'as it starts so it can loop seamlessly. Gentle, small, natural motion; 2D anime illustration style matching the '
+               'reference, no 3D look.')
 SAFE = ('No gore, no blood, no visible wounds, no sexualized poses or revealing clothing, modest school uniforms, '
         'no text, no logo, no watermark.')
 
@@ -83,6 +92,28 @@ GROUPS = [
     ]),
 ]
 
+# 여름·겨울 옷 (방어구는 빼기로 함): 옷 그림이 표정 그림보다 먼저 골라지므로 표정 상태별 영상을 옷마다 둔다
+OUTFIT_STATES = [
+    ('tired', 'P1', '피로·졸림 (수면 부채 3 이상 또는 피로 70 이상)',
+     'She becomes visibly tired: her eyelids grow heavy, her shoulders slump, she yawns quietly behind her hand and her head '
+     'nods forward once as if fighting sleep, then she straightens up and her face relaxes back to the starting expression.'),
+    ('sad', 'P1', '스트레스 60 이상',
+     'Her expression turns downcast: she lowers her head slightly, holds her left elbow with her right hand close to her body '
+     'and breathes a little unevenly, then takes a slow breath, lowers her hand and looks ahead again with the starting expression.'),
+    ('blank', 'P1', '스트레스가 한계의 90% 이상',
+     'Her face goes blank and vacant: she stares into the distance almost motionless with very slow shallow breathing and one '
+     'slow delayed blink, arms hanging loosely, then she blinks twice as if coming back to herself and returns to the starting expression.'),
+    ('worried', 'P1', '경고(식량·식수 부족, 위협 등)가 있을 때',
+     'She looks worried: she bites her lip lightly, her fingers fiddle nervously with the hem of her clothes and she glances to '
+     'the left and right, then she lets go and looks back to the front with the starting expression.'),
+    ('smile', 'P2', '스트레스 25 미만',
+     'She smiles softly and sways gently from side to side as if humming a song to herself, her hair swaying a little, then '
+     'settles back into the starting pose and expression.'),
+]
+for outfit, label, when in [('outfit_summer', '여름 교복', '6~8월(여름)'), ('outfit_winter', '겨울 교복', '12~2월(겨울)')]:
+    GROUPS.append((f'{label} 반응', f'{when}에 `stand_{outfit}` 그림이 보일 때. 시작 그림이 보통 얼굴이라 클립 가운데에서만 표정이 바뀌고 끝에는 처음 얼굴로 돌아온다', [
+        (outfit, state, 4, prio, f'{label} + {cond}', prompt) for state, prio, cond, prompt in OUTFIT_STATES]))
+
 
 def picture_line(name):
     job, prefix = PICTURES[name]
@@ -101,7 +132,7 @@ Higgsfield로 영상을 만들어 줘.
 - 결과 파일 이름: {file}
 - 프롬프트:
 {prompt} The reference image is both the first and the last frame.
-{VIDEO_LOCK}
+{OUTFIT_LOCK if name.startswith('outfit_') else VIDEO_LOCK}
 {SAFE}
 ```
 '''
@@ -134,6 +165,10 @@ def main():
 ```
 {VIDEO_LOCK}
 ```
+`[영상 고정 — 계절 옷]` (여름·겨울 반응: 가운데에서만 표정이 바뀜)
+```
+{OUTFIT_LOCK}
+```
 `[안전]` (부상·감염 장면도 피·상처는 보이지 않게, 붕대는 깨끗한 흰색)
 ```
 {SAFE}
@@ -148,7 +183,10 @@ def main():
             lines.append(f'| `{name}` | `{motion}` | {seconds}초 | {prio} | {when} |')
     lines.append('''
 - 그림을 고르는 순서는 지금과 같다(`standing_map.json` `WholePriority`: 상태 표시 → 옷 → 잠깐 표정 → 표정 → 머리). 그 그림에 `idle` 영상이 있으면 반복하고, 다른 동작은 이따금 한 번 끼운다. 영상이 없는 그림은 3차의 눈 깜빡임·시선만.
-- **상태 표시(붕대·마스크·마름·얼룩)는 계절·옷보다 먼저 골라지므로 1년 내내 나온다.** 표정 그림은 옷 다음이라 계절 옷이 없는 봄·가을(방어구 없음)에만 나온다. 여름·겨울·방어구 차림의 반응 영상은 이번 문서에 없다(필요하면 다음 차례).
+- **상태 표시(붕대·마스크·마름·얼룩)는 계절·옷보다 먼저 골라지므로 1년 내내 나온다.** 표정 그림은 옷 다음이라 계절 옷이 없는 봄·가을에만 나온다.
+- 여름·겨울에는 옷 그림(보통 얼굴)이 골라지므로, **옷 그림 + 지금 표정 상태**로 영상을 고른다 (예: 여름 + 지침 → `motion_outfit_summer_tired`). 방어구 차림은 만들지 않는다(눈 깜빡임·시선만).
+- 여름·겨울 옷의 보통 상태(숨쉬기·두리번)는 3차 문서 2.2의 `motion_summer_idle`·`motion_winter_idle` 등을 쓴다. 이 문서는 표정 상태가 있을 때만.
+- 머리가 자란 그림(`hair_mid`·`hair_long`)은 봄·가을 보통 얼굴일 때 보이므로, 3차 문서 2.2의 `idle`·`look`이면 충분하다.
 
 ---
 ''')
