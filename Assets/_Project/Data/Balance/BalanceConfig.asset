@@ -442,7 +442,7 @@ MonoBehaviour:
     NightAmbientIntensity: 0.12
     DawnAmbientIntensity: 0.45
     DayCorridorAmbient: 0.72
-    DayRoomAmbient: 0.32
+    DayRoomAmbient: 0.22
     SunbeamIntensity: 2.3
     SunbeamSpacing: 6
     SunbeamsPerFloorMin: 1
@@ -457,6 +457,8 @@ MonoBehaviour:
     ZombieHearingBonus: 1.4
     WallNoiseFactor: 0.6
     PeekRange: 7
+    RoomPeekRange: 2.5
+    FogFadeSpeed: 4
     PeekVisibility: 0.35
     ListenSeconds: 1.2
     ListenBreathRange: 8

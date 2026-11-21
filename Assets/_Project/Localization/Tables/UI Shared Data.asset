@@ -4339,6 +4339,10 @@ MonoBehaviour:
     m_Key: prof.Music.short
     m_Metadata:
       m_Items: []
+  - m_Id: 840816280223744
+    m_Key: exp.prompt_peeking_dark
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
