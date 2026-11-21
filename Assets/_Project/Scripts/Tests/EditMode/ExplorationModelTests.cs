@@ -139,10 +139,65 @@ namespace ApoGirl.Tests.EditMode
             var balance = new BalanceConfig();
             var stats = new System.Collections.Generic.Dictionary<StatType, int> { { StatType.Strength, 20 }, { StatType.Craft, 50 } };
             Assert.AreEqual(10f, ExplorationRules.CarryCapacity(stats, balance), 1e-5f);
-            Assert.AreEqual(2.55f, ExplorationRules.SearchSeconds(3f, stats, balance), 1e-5f);
+            Assert.AreEqual(2.55f * 0.7f, ExplorationRules.SearchSeconds(3f, stats, balance), 1e-5f);
             stats[StatType.Craft] = 999;
-            Assert.AreEqual(2.1f, ExplorationRules.SearchSeconds(3f, stats, balance), 1e-5f);
+            Assert.AreEqual(2.1f * 0.7f, ExplorationRules.SearchSeconds(3f, stats, balance), 1e-5f);
             Assert.Less(ExplorationRules.MoveSpeed(true, false, true, balance), ExplorationRules.MoveSpeed(true, false, false, balance));
+        }
+    }
+
+    public sealed class StaminaHideRulesTests
+    {
+        [Test]
+        public void StressSlowsSearch_OnlyAboveThreshold()
+        {
+            var balance = new BalanceConfig();
+            Assert.AreEqual(1f, ExplorationRules.StressSearchFactor(40, balance), 1e-5f);
+            Assert.AreEqual(1f, ExplorationRules.StressSearchFactor(60, balance), 1e-5f);
+            Assert.AreEqual(1.25f, ExplorationRules.StressSearchFactor(80, balance), 1e-5f);
+            Assert.AreEqual(1.5f, ExplorationRules.StressSearchFactor(100, balance), 1e-5f);
+            Assert.AreEqual(1.5f, ExplorationRules.StressSearchFactor(150, balance), 1e-5f);
+        }
+
+        [Test]
+        public void HideSeconds_ShrinksSteadilyWithAgility()
+        {
+            var balance = new BalanceConfig();
+            var stats = new System.Collections.Generic.Dictionary<StatType, int> { { StatType.Agility, 0 } };
+            Assert.AreEqual(1.5f, ExplorationRules.HideSeconds(stats, balance), 1e-5f);
+            var last = 1.5f;
+            foreach (var agility in new[] { 10, 30, 60, 100 })
+            {
+                stats[StatType.Agility] = agility;
+                var seconds = ExplorationRules.HideSeconds(stats, balance);
+                Assert.Less(seconds, last, "민첩이 오를수록 짧아진다");
+                last = seconds;
+            }
+
+            stats[StatType.Agility] = 100000;
+            Assert.AreEqual(balance.HideMinSeconds, ExplorationRules.HideSeconds(stats, balance), 1e-5f);
+        }
+
+        [Test]
+        public void StaminaCap_FatigueAndInjuryLowerIt()
+        {
+            var balance = new BalanceConfig();
+            var stats = new System.Collections.Generic.Dictionary<StatType, int> { { StatType.Stamina, 40 } };
+            var max = ExplorationRules.StaminaMax(stats, balance);
+            Assert.AreEqual(120f, max, 1e-5f);
+            Assert.AreEqual(max, ExplorationRules.StaminaCap(max, 0, false, balance), 1e-5f);
+            Assert.AreEqual(max * 0.8f, ExplorationRules.StaminaCap(max, 50, false, balance), 1e-4f);
+            Assert.AreEqual(max * 0.55f, ExplorationRules.StaminaCap(max, 50, true, balance), 1e-4f);
+            Assert.AreEqual(max * balance.StaminaMinCapRatio, ExplorationRules.StaminaCap(max, 100, true, balance), 1e-4f);
+        }
+
+        [Test]
+        public void HideSleep_NeedsSleepDebt()
+        {
+            var balance = new BalanceConfig();
+            Assert.AreEqual(0f, ExplorationRules.HideSleepChancePerSecond(1, balance));
+            Assert.Greater(ExplorationRules.HideSleepChancePerSecond(2, balance), 0f);
+            Assert.Greater(ExplorationRules.HideSleepChancePerSecond(4, balance), ExplorationRules.HideSleepChancePerSecond(2, balance));
         }
     }
 

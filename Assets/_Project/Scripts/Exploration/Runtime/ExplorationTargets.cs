@@ -69,6 +69,10 @@ namespace ApoGirl.Exploration.Runtime
 
         public ContainerDef Container;
         public float SearchSeconds;
+
+        /// <summary>스트레스가 없었다면 걸렸을 수색 시간. 이걸 넘기면 짜증 섞인 한숨 (한 번).</summary>
+        public float CalmSeconds;
+        public bool Sighed;
         public float SearchProgress;
         public bool Searched;
         public readonly List<ItemStack> Contents = new List<ItemStack>();

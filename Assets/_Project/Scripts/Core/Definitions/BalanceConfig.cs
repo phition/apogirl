@@ -516,6 +516,50 @@ namespace ApoGirl.Core.Definitions
 
         public float SearchSpeedPerCraft = 0.003f;
         public float MaxSearchSpeedBonus = 0.3f;
+
+        /// <summary>실시간 탐험 수색 시간 배율 (2026-11-21: 30% 줄임).</summary>
+        public float SearchTimeMultiplier = 0.7f;
+
+        /// <summary>스트레스가 이보다 높으면 수색이 느려진다. 100에서 StressSearchMaxExtra만큼 더 걸린다 (짜증 섞인 한숨).</summary>
+        public float StressSearchThreshold = 60f;
+        public float StressSearchMaxExtra = 0.5f;
+
+        // ── 탐험 스태미너 (달리기·싸움) ──
+        /// <summary>최대치 = StaminaBase + 체력 능력치 × StaminaPerStat.</summary>
+        public float StaminaBase = 100f;
+        public float StaminaPerStat = 0.5f;
+
+        /// <summary>달리는 동안 초당 소모, 쉴 때 초당 회복 (마지막으로 쓴 뒤 StaminaRegenDelay초부터).</summary>
+        public float StaminaRunDrain = 16f;
+        public float StaminaRegen = 14f;
+        public float StaminaRegenDelay = 0.8f;
+
+        /// <summary>바닥나면 숨이 차 이만큼 다시 찰 때까지 달릴 수 없다.</summary>
+        public float StaminaRecoverToRun = 25f;
+        public float StaminaAttackCost = 15f;
+        public float StaminaShoveCost = 12f;
+
+        /// <summary>이번 탐험 동안 깎이는 최대치 (게이지에 붉게): 피로 1당 비율, 부상(INJURED) 비율, 그래도 남는 최소 비율.</summary>
+        public float StaminaFatiguePenalty = 0.004f;
+        public float StaminaInjuryPenalty = 0.25f;
+        public float StaminaMinCapRatio = 0.3f;
+
+        // ── 숨기 (Space 누르고 있기) ──
+        /// <summary>숨는 데 걸리는 시간 = HideSeconds / (1 + 민첩 × HideAgilityFactor), 최소 HideMinSeconds.</summary>
+        public float HideSeconds = 1.5f;
+        public float HideAgilityFactor = 0.01f;
+        public float HideMinSeconds = 0.4f;
+
+        /// <summary>수면 부채가 이 이상이면 숨어 있다가 잠들 수 있다: 1초마다 (부채 − 기준 + 1) × HideSleepChancePerDebt.</summary>
+        public int HideSleepDebtThreshold = 2;
+        public float HideSleepChancePerDebt = 0.015f;
+
+        /// <summary>잠든 동안 탐험 시계가 흐르는 배율.</summary>
+        public float HideSleepClockMultiplier = 2f;
+
+        /// <summary>깨어나기: Space 한 번에 오르는 양(1이면 깸), 손을 놓으면 초당 줄어드는 양.</summary>
+        public float WakePerPress = 0.12f;
+        public float WakeDecay = 0.3f;
         public int BackpackWidth = 6;
         public int BackpackHeight = 4;
 

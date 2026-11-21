@@ -79,6 +79,7 @@ namespace ApoGirl.Exploration.Runtime
             _stirBar = root.Q<ProgressBar>("stir-bar");
             _worldLabels = root.Q("world-labels");
             _root = root;
+            BuildStaminaBar(root);
             Presentation.Audio.Sound.AttachUiClicks(root);
             _equip = root.Q<Label>("equip-label");
             _tutorial = root.Q<Label>("tutorial-label");
@@ -164,13 +165,15 @@ namespace ApoGirl.Exploration.Runtime
             _room.text = _director.LocationLabel;
             _vitals.text = Loc.F("exp.vitals", _director.Hp);
             _vitals.EnableInClassList("danger", _director.Hp <= 30);
+            RefreshStamina();
+            _sleepOverlay.EnableInClassList("hidden", !_director.Asleep);
             _activity.text = Loc.F("exp.activity", Loc.T("activity." + _director.Activity.Level));
             _activity.EnableInClassList("danger", _director.Activity.Level >= ActivityLevel.Alert);
             var noiseBars = Mathf.Clamp(Mathf.CeilToInt(_director.NoiseLevel / 1.8f), 0, 4);
             _noise.text = Loc.T("exp.noise") + " " + new string('■', noiseBars) + new string('□', 4 - noiseBars)
                           + (_director.DarkHere ? "   " + Loc.T(_director.FlashlightOn ? "exp.light_on" : "exp.light_off") : "");
             _hidden.EnableInClassList("hidden", !_director.Hidden);
-            _hidden.text = Loc.T("exp.hidden");
+            _hidden.text = Loc.T(_director.Asleep ? "exp.hidden_asleep" : "exp.hidden");
 
             var crowd = _director.Threat.NearestDormantCrowd(_director.Snapshot, 10f);
             _stirBar.EnableInClassList("hidden", crowd == null);
@@ -201,6 +204,49 @@ namespace ApoGirl.Exploration.Runtime
             RefreshLoot();
             RefreshGrid();
             RefreshSleepLabels();
+        }
+
+        // ── 스태미너 게이지: 초록 = 지금, 오른쪽 붉은 칸 = 피로·부상으로 이번 탐험 동안 깎인 최대치 ──
+        private VisualElement _staminaFill;
+        private VisualElement _staminaLost;
+        private VisualElement _staminaTrack;
+        private VisualElement _sleepOverlay;
+
+        private void BuildStaminaBar(VisualElement root)
+        {
+            var row = new VisualElement { pickingMode = PickingMode.Ignore };
+            row.AddToClassList("exp-stamina");
+            var label = new Label(Loc.T("exp.stamina")) { pickingMode = PickingMode.Ignore };
+            label.AddToClassList("exp-stamina-label");
+            _staminaTrack = new VisualElement { pickingMode = PickingMode.Ignore };
+            _staminaTrack.AddToClassList("exp-stamina-track");
+            _staminaFill = new VisualElement { pickingMode = PickingMode.Ignore };
+            _staminaFill.AddToClassList("exp-stamina-fill");
+            _staminaLost = new VisualElement { pickingMode = PickingMode.Ignore };
+            _staminaLost.AddToClassList("exp-stamina-lost");
+            _staminaTrack.Add(_staminaFill);
+            _staminaTrack.Add(_staminaLost);
+            row.Add(label);
+            row.Add(_staminaTrack);
+            var parent = _vitals.parent;
+            parent.Insert(parent.IndexOf(_vitals) + 1, row);
+
+            // 잠들었을 때 화면을 어둡게 (HUD 글자는 그 위에)
+            _sleepOverlay = new VisualElement { pickingMode = PickingMode.Ignore };
+            _sleepOverlay.AddToClassList("exp-sleep-overlay");
+            _sleepOverlay.AddToClassList("hidden");
+            root.Insert(0, _sleepOverlay);
+        }
+
+        private void RefreshStamina()
+        {
+            var max = Mathf.Max(1f, _director.StaminaMax);
+            _staminaFill.style.width = Length.Percent(Mathf.Clamp01(_director.Stamina / max) * 100f);
+            var cap = Mathf.Clamp01(_director.StaminaCap / max);
+            _staminaLost.style.left = Length.Percent(cap * 100f);
+            _staminaLost.style.width = Length.Percent((1f - cap) * 100f);
+            _staminaLost.EnableInClassList("hidden", cap >= 0.999f);
+            _staminaFill.EnableInClassList("exhausted", _director.Exhausted);
         }
 
         private string EquipmentText()
@@ -250,9 +296,25 @@ namespace ApoGirl.Exploration.Runtime
         {
             var target = _director.Nearest;
             _searchBar.AddToClassList("hidden");
+            if (_director.Asleep)
+            {
+                _prompt.text = Loc.T("exp.prompt_wake");
+                _searchBar.RemoveFromClassList("hidden");
+                _searchBar.value = _director.WakeProgress * 100f;
+                return;
+            }
+
             if (_director.Hidden)
             {
                 _prompt.text = Loc.T("exp.prompt_unhide");
+                return;
+            }
+
+            if (_director.HideProgress > 0f)
+            {
+                _prompt.text = Loc.T("exp.hiding");
+                _searchBar.RemoveFromClassList("hidden");
+                _searchBar.value = _director.HideProgress * 100f;
                 return;
             }
 

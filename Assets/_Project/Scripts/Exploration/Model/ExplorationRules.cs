@@ -22,7 +22,41 @@ namespace ApoGirl.Exploration.Model
         {
             stats.TryGetValue(StatType.Craft, out var craft);
             var bonus = Math.Min(balance.MaxSearchSpeedBonus, craft * balance.SearchSpeedPerCraft);
-            return baseSeconds * (1f - bonus);
+            return baseSeconds * (1f - bonus) * balance.SearchTimeMultiplier;
+        }
+
+        /// <summary>스트레스가 높으면 수색이 더 걸린다: 1(기준 이하) ~ 1 + StressSearchMaxExtra(스트레스 100).</summary>
+        public static float StressSearchFactor(int stress, BalanceConfig balance)
+        {
+            var over = (stress - balance.StressSearchThreshold) / Math.Max(1f, 100f - balance.StressSearchThreshold);
+            return 1f + Math.Max(0f, Math.Min(1f, over)) * balance.StressSearchMaxExtra;
+        }
+
+        /// <summary>숨는 데 걸리는 시간: 민첩이 오를수록 계속 짧아진다 (최소값 있음).</summary>
+        public static float HideSeconds(IReadOnlyDictionary<StatType, int> stats, BalanceConfig balance)
+        {
+            stats.TryGetValue(StatType.Agility, out var agility);
+            return Math.Max(balance.HideMinSeconds, balance.HideSeconds / (1f + Math.Max(0, agility) * balance.HideAgilityFactor));
+        }
+
+        /// <summary>스태미너 최대치: 체력 능력치가 높을수록 크다.</summary>
+        public static float StaminaMax(IReadOnlyDictionary<StatType, int> stats, BalanceConfig balance)
+        {
+            stats.TryGetValue(StatType.Stamina, out var stamina);
+            return balance.StaminaBase + Math.Max(0, stamina) * balance.StaminaPerStat;
+        }
+
+        /// <summary>이번 탐험에서 쓸 수 있는 최대치: 피로·부상만큼 일시적으로 깎인다.</summary>
+        public static float StaminaCap(float max, int fatigue, bool injured, BalanceConfig balance)
+        {
+            var ratio = 1f - Math.Max(0, fatigue) * balance.StaminaFatiguePenalty - (injured ? balance.StaminaInjuryPenalty : 0f);
+            return max * Math.Max(balance.StaminaMinCapRatio, Math.Min(1f, ratio));
+        }
+
+        /// <summary>숨어 있는 1초 동안 잠들 확률 (수면 부채가 기준 미만이면 0).</summary>
+        public static float HideSleepChancePerSecond(int sleepDebt, BalanceConfig balance)
+        {
+            return sleepDebt < balance.HideSleepDebtThreshold ? 0f : (sleepDebt - balance.HideSleepDebtThreshold + 1) * balance.HideSleepChancePerDebt;
         }
 
         public static float MoveSpeed(bool running, bool crouching, bool overweight, BalanceConfig balance)

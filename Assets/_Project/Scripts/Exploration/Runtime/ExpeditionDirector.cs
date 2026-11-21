@@ -205,6 +205,35 @@ namespace ApoGirl.Exploration.Runtime
         /// <summary>사물함·책상 밑에 숨어 있음.</summary>
         public bool Hidden { get; private set; }
 
+        // ── 스태미너 (달리기·싸움) ──
+        /// <summary>체력 능력치로 정해지는 최대치.</summary>
+        public float StaminaMax { get; private set; } = 100f;
+
+        /// <summary>이번 탐험에서 쓸 수 있는 최대치 (피로·부상으로 깎인 만큼은 게이지에 붉게).</summary>
+        public float StaminaCap { get; private set; } = 100f;
+        public float Stamina { get; private set; } = 100f;
+
+        /// <summary>바닥나서 숨이 찬 상태: StaminaRecoverToRun까지 달릴 수 없다.</summary>
+        public bool Exhausted { get; private set; }
+
+        private float _staminaRestTimer;
+        private bool _ranThisFrame;
+
+        // ── 숨기 (누르고 있기)·숨다가 잠들기 ──
+        /// <summary>숨는 중 진행도 0~1 (Space를 누르고 있는 동안).</summary>
+        public float HideProgress { get; private set; }
+
+        /// <summary>숨어 있다가 잠들었다: 시계가 HideSleepClockMultiplier배로 흐르고, Space 연타로 깬다.</summary>
+        public bool Asleep { get; private set; }
+
+        /// <summary>깨어나기 진행도 0~1.</summary>
+        public float WakeProgress { get; private set; }
+
+        private float _hideSeconds = 1.5f;
+        private bool _hideArmed;
+        private float _stressSearchFactor = 1f;
+        private System.Random _sleepRandom = new System.Random(0);
+
         /// <summary>낮 시계가 끝나 황혼 각성이 일어남 (이후 탈출은 시간 초과 귀환).</summary>
         public bool DuskAwakened { get; private set; }
 
@@ -379,6 +408,7 @@ namespace ApoGirl.Exploration.Runtime
 
             Clock = new RunClock(day ? Location.DayRunSeconds : Location.NightRunSeconds, Request.TimeOfDay);
             SetupEquipment();
+            SetupBody();
             Backpack = _backpackItem != null && _backpackItem.GridWidth > 0
                 ? new BackpackGrid(_backpackItem.GridWidth, _backpackItem.GridHeight)
                 : new BackpackGrid(_balance.PocketWidth, _balance.PocketHeight);
@@ -409,6 +439,7 @@ namespace ApoGirl.Exploration.Runtime
         private void Update()
         {
             _searching = false;
+            _ranThisFrame = false;
             if (IsFinished || _hud == null)
             {
                 return;
@@ -434,7 +465,8 @@ namespace ApoGirl.Exploration.Runtime
             }
 
             var dt = Time.deltaTime;
-            Clock.Tick(dt * TimeScale);
+            // 숨다가 잠들면 시간이 더 빨리 흐른다
+            Clock.Tick(dt * TimeScale * (Asleep ? _balance.HideSleepClockMultiplier : 1f));
             if (Clock.IsOver)
             {
                 if (Request.TimeOfDay == ExpeditionTime.Day && !DuskAwakened)
@@ -448,6 +480,7 @@ namespace ApoGirl.Exploration.Runtime
             }
 
             HandleInput(dt);
+            UpdateStamina(dt);
             StepThreats(dt);
             if (IsFinished)
             {
@@ -660,7 +693,13 @@ namespace ApoGirl.Exploration.Runtime
         {
             if (Hidden)
             {
+                if (Asleep)
+                {
+                    return false; // 잠든 채로는 못 나온다 (Space 연타로 먼저 깨야)
+                }
+
                 Hidden = false;
+                _hideArmed = false;
                 return true;
             }
 
@@ -679,7 +718,166 @@ namespace ApoGirl.Exploration.Runtime
 
             X = spot.X;
             Hidden = true;
+            _hideArmed = false;
             CloseContainer();
+            return true;
+        }
+
+        /// <summary>짜증 섞인 한숨 (스트레스로 수색이 늘어질 때). 파일이 없으면 조용히 넘어간다.</summary>
+        private const string SighSound = "sfx_sigh_irritated";
+
+        /// <summary>체력 능력치·피로·부상으로 스태미너를, 민첩으로 숨는 시간을, 스트레스로 수색 배율을 정한다.</summary>
+        private void SetupBody()
+        {
+            StaminaMax = ExplorationRules.StaminaMax(Request.Stats, _balance);
+            var injured = !string.IsNullOrEmpty(_balance.InjuredFlag) && Request.Flags.Contains(_balance.InjuredFlag);
+            StaminaCap = ExplorationRules.StaminaCap(StaminaMax, Request.Fatigue, injured, _balance);
+            Stamina = StaminaCap;
+            _hideSeconds = ExplorationRules.HideSeconds(Request.Stats, _balance);
+            _stressSearchFactor = ExplorationRules.StressSearchFactor(Request.Stress, _balance);
+            _sleepRandom = new System.Random(Request.Seed ^ 0x51EE9);
+        }
+
+        /// <summary>싸움 한 번의 스태미너. 모자라면 숨이 차 못 한다.</summary>
+        private bool SpendStamina(float cost)
+        {
+            if (Invincible)
+            {
+                return true;
+            }
+
+            if (Stamina < cost)
+            {
+                _hud?.ShowMessage("exp.out_of_breath");
+                return false;
+            }
+
+            Stamina -= cost;
+            _staminaRestTimer = _balance.StaminaRegenDelay;
+            return true;
+        }
+
+        /// <summary>매 프레임: 달리면 줄고, 쉬면(잠시 뒤부터) 이번 탐험 최대치까지 찬다.</summary>
+        private void UpdateStamina(float dt)
+        {
+            if (_ranThisFrame && !Invincible)
+            {
+                Stamina = Mathf.Max(0f, Stamina - _balance.StaminaRunDrain * dt);
+                _staminaRestTimer = _balance.StaminaRegenDelay;
+                if (Stamina <= 0f && !Exhausted)
+                {
+                    Exhausted = true;
+                    _hud?.ShowMessage("exp.out_of_breath");
+                }
+
+                return;
+            }
+
+            if (_staminaRestTimer > 0f)
+            {
+                _staminaRestTimer -= dt;
+                return;
+            }
+
+            Stamina = Mathf.Min(StaminaCap, Stamina + _balance.StaminaRegen * dt);
+            if (Exhausted && Stamina >= Mathf.Min(StaminaCap, _balance.StaminaRecoverToRun))
+            {
+                Exhausted = false;
+            }
+        }
+
+        /// <summary>
+        /// 숨을 곳(사물함·책상) 앞에서 Space를 누르고 있으면 HideSeconds에 걸쳐 숨는다. 새로 누른 뒤부터만 (나온 직후 계속 누르고 있어도 다시 숨지 않게).
+        /// 처리 중이면 true (이동하지 않음).
+        /// </summary>
+        private bool HandleHideHold(Keyboard keyboard, float dt)
+        {
+            if (keyboard.spaceKey.wasPressedThisFrame)
+            {
+                _hideArmed = true;
+            }
+
+            var spot = Nearest;
+            var canHide = spot != null && spot.Kind == TargetKind.Container
+                          && (spot.Container.Kind == ContainerKind.Locker || spot.Container.Kind == ContainerKind.Desk);
+            if (!canHide || !keyboard.spaceKey.isPressed || !_hideArmed)
+            {
+                HideProgress = 0f;
+                if (!keyboard.spaceKey.isPressed)
+                {
+                    _hideArmed = false;
+                }
+
+                return false;
+            }
+
+            CloseContainer();
+            HideProgress += dt / Mathf.Max(0.05f, _hideSeconds);
+            if (HideProgress >= 1f)
+            {
+                HideProgress = 0f;
+                ToggleHide();
+                _hideArmed = false;
+            }
+
+            return true;
+        }
+
+        /// <summary>숨어 있는 동안: Space로 나오기. 수면 부채가 쌓였으면 잠들 수 있고, 잠들면 Space 연타로 깬다.</summary>
+        private void HandleHidden(Keyboard keyboard, float dt)
+        {
+            HideProgress = 0f;
+            if (Asleep)
+            {
+                WakeProgress = Mathf.Max(0f, WakeProgress - _balance.WakeDecay * dt);
+                if (keyboard.spaceKey.wasPressedThisFrame)
+                {
+                    WakeProgress += _balance.WakePerPress;
+                    if (WakeProgress >= 1f)
+                    {
+                        WakeUp();
+                    }
+                }
+
+                return;
+            }
+
+            if (keyboard.spaceKey.wasPressedThisFrame)
+            {
+                ToggleHide();
+                return;
+            }
+
+            var chance = ExplorationRules.HideSleepChancePerSecond(Request.SleepDebt, _balance) * dt;
+            if (chance > 0f && _sleepRandom.NextDouble() < chance)
+            {
+                FallAsleep();
+            }
+        }
+
+        private void FallAsleep()
+        {
+            Asleep = true;
+            WakeProgress = 0f;
+            _hud?.ShowMessage("exp.fell_asleep");
+        }
+
+        private void WakeUp()
+        {
+            Asleep = false;
+            WakeProgress = 0f;
+            _hud?.ShowMessage("exp.woke_up");
+        }
+
+        /// <summary>디버그·화면 확인: 가까운 숨을 곳에 바로 숨어 잠든다.</summary>
+        public bool DebugHideAndSleep()
+        {
+            if (!Hidden && !ToggleHide())
+            {
+                return false;
+            }
+
+            FallAsleep();
             return true;
         }
 
@@ -687,6 +885,11 @@ namespace ApoGirl.Exploration.Runtime
         public bool Shove()
         {
             if (_shoveTimer > 0f || Hidden)
+            {
+                return false;
+            }
+
+            if (!SpendStamina(_balance.StaminaShoveCost))
             {
                 return false;
             }
@@ -730,6 +933,11 @@ namespace ApoGirl.Exploration.Runtime
             }
 
             if (_attackTimer > 0f || Hidden)
+            {
+                return false;
+            }
+
+            if (!SpendStamina(_balance.StaminaAttackCost))
             {
                 return false;
             }
@@ -982,12 +1190,13 @@ namespace ApoGirl.Exploration.Runtime
             if (keyboard.digit4Key.wasPressedThisFrame) UseQuickSlot(3);
 
             Nearest = FindNearest();
-            if (keyboard.spaceKey.wasPressedThisFrame)
+            if (Hidden)
             {
-                ToggleHide();
+                HandleHidden(keyboard, dt);
+                return;
             }
 
-            if (Hidden)
+            if (HandleHideHold(keyboard, dt))
             {
                 return;
             }
@@ -1008,7 +1217,8 @@ namespace ApoGirl.Exploration.Runtime
             }
 
             _crouching = keyboard.leftCtrlKey.isPressed;
-            var running = keyboard.leftShiftKey.isPressed && !_crouching;
+            // 숨이 차면(스태미너 바닥) 다시 찰 때까지 걷기만
+            var running = keyboard.leftShiftKey.isPressed && !_crouching && !Exhausted && Stamina > 0f;
             _animRunning = running;
             var move = (keyboard.dKey.isPressed || keyboard.rightArrowKey.isPressed ? 1f : 0f)
                        - (keyboard.aKey.isPressed || keyboard.leftArrowKey.isPressed ? 1f : 0f);
@@ -1016,6 +1226,7 @@ namespace ApoGirl.Exploration.Runtime
             if (move != 0f)
             {
                 _facingRight = move > 0f;
+                _ranThisFrame = running;
                 CloseContainer();
                 var speed = ExplorationRules.MoveSpeed(running, _crouching, IsOverweight, _balance)
                             * _moveMultiplier * (running ? 1f + Request.Modifier("RunSpeed") : 1f);
@@ -1057,6 +1268,13 @@ namespace ApoGirl.Exploration.Runtime
 
                     var searchRate = 1f + Request.Modifier("SearchSpeed");
                     Nearest.SearchProgress += (IsDark && !FlashlightOn ? dt / _balance.DarkSearchMultiplier : dt) * searchRate;
+                    if (!Nearest.Sighed && Nearest.SearchSeconds > Nearest.CalmSeconds + 0.01f && Nearest.SearchProgress >= Nearest.CalmSeconds)
+                    {
+                        // 스트레스가 없었다면 끝났을 때: 짜증 섞인 한숨 (그만큼 더 걸린다)
+                        Nearest.Sighed = true;
+                        Sfx(SighSound, 0.8f);
+                    }
+
                     if (Nearest.SearchProgress >= Nearest.SearchSeconds)
                     {
                         _searching = false;
@@ -1601,7 +1819,8 @@ namespace ApoGirl.Exploration.Runtime
                 Area = area,
                 X = container.X,
                 Container = container,
-                SearchSeconds = ExplorationRules.SearchSeconds(container.SearchSeconds, Request.Stats, _balance),
+                CalmSeconds = ExplorationRules.SearchSeconds(container.SearchSeconds, Request.Stats, _balance),
+                SearchSeconds = ExplorationRules.SearchSeconds(container.SearchSeconds, Request.Stats, _balance) * _stressSearchFactor,
                 View = view,
             };
             AddTarget(target);

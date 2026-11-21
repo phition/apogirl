@@ -34,6 +34,15 @@
     border-radius: 4px;
 }
 .exp-search-bar { width: 260px; height: 12px; margin-top: 6px; }
+
+/* 스태미너: 초록 = 지금, 붉은 칸 = 피로·부상으로 이번 탐험 동안 깎인 최대치, 숨이 차면 주황 */
+.exp-stamina { flex-direction: row; align-items: center; margin: 2px 0 4px 0; }
+.exp-stamina-label { font-size: 14px; color: rgb(220, 220, 214); margin-right: 8px; -unity-text-align: middle-left; }
+.exp-stamina-track { width: 160px; height: 10px; background-color: rgba(20, 20, 22, 0.85); border-width: 1px; border-color: rgba(200, 200, 190, 0.5); }
+.exp-stamina-fill { position: absolute; left: 0; top: 0; bottom: 0; background-color: rgb(118, 196, 112); }
+.exp-stamina-fill.exhausted { background-color: rgb(226, 150, 60); }
+.exp-stamina-lost { position: absolute; top: 0; bottom: 0; background-color: rgba(190, 52, 46, 0.85); }
+.exp-sleep-overlay { position: absolute; left: 0; top: 0; right: 0; bottom: 0; background-color: rgba(0, 0, 0, 0.72); }
 .exp-search-bar .unity-progress-bar__progress { background-color: var(--ok); }
 
 .exp-bottom { flex-direction: row; justify-content: space-between; align-items: flex-end; }
