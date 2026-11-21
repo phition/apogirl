@@ -4371,6 +4371,10 @@ MonoBehaviour:
     m_Key: exp.stamina
     m_Metadata:
       m_Items: []
+  - m_Id: 852042074832896
+    m_Key: exp.woke_bitten
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
