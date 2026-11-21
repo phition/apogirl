@@ -60,4 +60,20 @@
 
         <ui:Label name="message" class="exp-message hidden" />
     </ui:VisualElement>
+
+    <!-- 그 자리 대화 (동료가 될 인물): 허브 대화 창과 같은 요소 (FieldDialogue) -->
+    <ui:VisualElement name="dialogue" class="dialogue hidden">
+        <ui:ScrollView name="dialogue-log" class="dialogue-log hidden" />
+        <ui:VisualElement class="dialogue-tools">
+            <ui:Button name="dialogue-log-button" class="dialogue-tool" />
+            <ui:Button name="dialogue-auto" class="dialogue-tool" />
+            <ui:Button name="dialogue-skip" class="dialogue-tool" />
+        </ui:VisualElement>
+        <ui:VisualElement name="dialogue-box" class="dialogue-box">
+            <ui:Label name="dialogue-speaker" class="dialogue-speaker" />
+            <ui:Label name="dialogue-text" class="dialogue-text" />
+            <ui:VisualElement name="dialogue-options" class="dialogue-options" />
+            <ui:Label name="dialogue-next" class="dialogue-next hidden" text="▼" />
+        </ui:VisualElement>
+    </ui:VisualElement>
 </ui:UXML>

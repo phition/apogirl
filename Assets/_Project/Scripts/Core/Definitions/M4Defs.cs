@@ -203,6 +203,21 @@ namespace ApoGirl.Core.Definitions
 
         /// <summary>M7: 탐험 화면에 그릴 스프라이트 키 (비면 이름으로 추정: 쪽지·공문 = 종이, 그 밖 = 웅크린 사람).</summary>
         public string SpriteKey = "";
+
+        /// <summary>
+        /// 그 자리 대화 (동료가 될 인물): Yarn 노드. 비면 작은 선택지 창. 노드의 선택지는 #choice:{Choices의 Id}.
+        /// 대화 뒤에는 SceneEventId 이벤트의 컷을 깐다.
+        /// </summary>
+        public string DialogueNode = "";
+
+        /// <summary>대화 배경 컷을 빌려 올 이벤트 (보통 이 조우의 후속 이벤트).</summary>
+        public string SceneEventId = "";
+
+        /// <summary>
+        /// 후속 이벤트(SceneEventId)를 귀환을 기다리지 않고 그 자리에서 이어서 치르는가 (현장에서 벌어지는 장면일 때만).
+        /// 조건이 맞으면 같은 컷에서 이벤트 대사·선택지가 이어지고, 고른 것은 탐험 결과에 담겨 귀환 때 적용된다.
+        /// </summary>
+        public bool PlayEventInField;
     }
 
     [Serializable]

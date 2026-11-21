@@ -261,6 +261,7 @@ namespace ApoGirl.EditorTools
                 Id = "DOHYEON", Floor = 2, RoomId = "ROOM_3F_ROOM_CLASSROOM_5", X = 9.5f, SpriteKey = "npc_dohyeon_hiding",
                 FlagsAll = { "DH_HEARD" }, FlagsNone = { "DH_RESCUED", "DH_LEFT", "DH_HELPED" },
                 PromptKey = "enc.DOHYEON.prompt",
+                DialogueNode = "ENC_DOHYEON", SceneEventId = "EVT_DH_02_ARRIVAL",
                 Choices =
                 {
                     new EncounterChoiceDef { Id = "TAKE", TextKey = "enc.DOHYEON.take", SetFlags = { "DH_RESCUED" }, StressDelta = -3 },
@@ -449,6 +450,7 @@ namespace ApoGirl.EditorTools
                 Id = "NURSE", Floor = 1, RoomId = "ROOM_HOUSE_203", X = 10f, SpriteKey = "npc_nurse_hiding",
                 FlagsAll = { "A2_STARTED" }, FlagsNone = { "NURSE_FOUND", "NURSE_DECLINED" },
                 PromptKey = "enc.NURSE.prompt",
+                DialogueNode = "ENC_NURSE", SceneEventId = "EVT_A2_NURSE_JOIN",
                 Choices =
                 {
                     new EncounterChoiceDef { Id = "INVITE", TextKey = "enc.NURSE.invite", SetFlags = { "NURSE_FOUND" }, StressDelta = -4 },
@@ -539,6 +541,7 @@ namespace ApoGirl.EditorTools
                 Id = "BYSTANDER", Floor = 0, RoomId = "ROOM_SUBWAY_OFFICE_2", X = 10f, SpriteKey = "npc_bystander_sitting",
                 FlagsAll = { "A2_STARTED" }, FlagsNone = { "BYSTANDER_MET" },
                 PromptKey = "enc.BYSTANDER.prompt",
+                DialogueNode = "ENC_BYSTANDER", SceneEventId = "EVT_A2_BYSTANDER",
                 Choices =
                 {
                     new EncounterChoiceDef { Id = "TAKE", TextKey = "enc.BYSTANDER.take", SetFlags = { "BYSTANDER_MET", "BYSTANDER_TAKEN" }, StressDelta = 10 },
@@ -634,6 +637,7 @@ namespace ApoGirl.EditorTools
                 Id = "RINGLEADER", Floor = 1, RoomId = "ROOM_MART_OFFICE_2", X = 7f, SpriteKey = "npc_ringleader_sitting",
                 FlagsAll = { "MART_GROUP_MET" }, FlagsNone = { "RINGLEADER_MET" },
                 PromptKey = "enc.RINGLEADER.prompt",
+                DialogueNode = "ENC_RINGLEADER", SceneEventId = "EVT_A3_RINGLEADER", PlayEventInField = true,
                 Choices =
                 {
                     new EncounterChoiceDef { Id = "FACE", TextKey = "enc.RINGLEADER.face", SetFlags = { "RINGLEADER_MET" }, StressDelta = 12 },

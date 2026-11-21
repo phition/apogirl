@@ -9,6 +9,7 @@ using ApoGirl.Core.State;
 using ApoGirl.Data;
 using ApoGirl.Exploration.Model;
 using ApoGirl.Presentation.App;
+using ApoGirl.Presentation.Dialogue;
 using ApoGirl.Presentation.Text;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -92,6 +93,13 @@ namespace ApoGirl.Exploration.Runtime
         private readonly List<string> _quickSlots = new List<string>();
         private readonly List<string> _usedItems = new List<string>();
         private readonly List<string> _runFlags = new List<string>();
+
+        /// <summary>그 자리 대화 (동료가 될 인물): 탐험 HUD 위 대화 창과, 치른 이벤트.</summary>
+        private FieldDialogue _fieldDialogue;
+        private readonly List<FieldEventChoice> _fieldEvents = new List<FieldEventChoice>();
+
+        /// <summary>조우 대화가 진행 중 (세계는 멈춰 있고 작은 선택지 창은 숨긴다).</summary>
+        public bool InFieldDialogue { get; private set; }
 
         // 적대적 생존자에게 붙잡힘 → 암전 후 귀환 (문서 13장 4항: 암전·짧은 문장 연출)
         private const float ConfrontSeconds = 2.2f;
@@ -373,6 +381,7 @@ namespace ApoGirl.Exploration.Runtime
             document.sortingOrder = 10;
             document.visualTreeAsset = _hudLayout;
             _hud = new ExpeditionHud(document.rootVisualElement, this);
+            _fieldDialogue = new FieldDialogue(document.rootVisualElement);
             UpdateZombieViews();
 
             // 물자가 다시 채워진 뒤 첫 방문: 누군가 머물다 간 흔적
@@ -391,6 +400,13 @@ namespace ApoGirl.Exploration.Runtime
 
             if (OpenEncounter != null)
             {
+                // 조우 대화: Space·Enter로 다음 줄 (세계는 멈춘 채)
+                var keys = Keyboard.current;
+                if (InFieldDialogue && keys != null && (keys.spaceKey.wasPressedThisFrame || keys.enterKey.wasPressedThisFrame))
+                {
+                    _fieldDialogue.Advance();
+                }
+
                 _hud.Refresh();
                 return;
             }
@@ -488,6 +504,12 @@ namespace ApoGirl.Exploration.Runtime
                     break;
                 case TargetKind.Encounter:
                     OpenEncounter = target;
+                    if (_fieldDialogue != null && _fieldDialogue.HasNode(target.Encounter.DialogueNode))
+                    {
+                        InFieldDialogue = true;
+                        StartCoroutine(FieldDialogueRoutine(target));
+                    }
+
                     break;
                 case TargetKind.Door:
                     Sfx("sfx_door_open", 0.8f);
@@ -753,17 +775,80 @@ namespace ApoGirl.Exploration.Runtime
         public void ChooseEncounter(int choiceIndex)
         {
             var target = OpenEncounter;
-            if (target == null || choiceIndex < 0 || choiceIndex >= target.Encounter.Choices.Count)
+            if (target == null || InFieldDialogue || choiceIndex < 0 || choiceIndex >= target.Encounter.Choices.Count)
             {
                 return;
             }
 
+            ApplyEncounterChoice(target, choiceIndex);
+            OpenEncounter = null;
+        }
+
+        /// <summary>
+        /// 그 자리 대화: 이벤트 컷 위에서 조우 대사·선택지 → (현장 장면이면) 같은 컷에서 후속 이벤트 대사·선택지.
+        /// 후속 이벤트에서 고른 것은 탐험 결과(FieldEvents)에 담아 귀환 때 적용한다.
+        /// </summary>
+        private System.Collections.IEnumerator FieldDialogueRoutine(ExplorationTarget target)
+        {
+            var encounter = target.Encounter;
+            var token = destroyCancellationToken;
+            string picked = null;
+            var task = _fieldDialogue.Run(encounter.DialogueNode, encounter.SceneEventId, null, id => picked = id, token);
+            while (!task.IsCompleted)
+            {
+                yield return null;
+            }
+
+            if (task.IsFaulted)
+            {
+                Debug.LogException(task.Exception);
+            }
+
+            // 대사가 선택 없이 끝났으면(노드 오류 등) 마지막 선택지(보통 물러서기)로
+            var index = encounter.Choices.FindIndex(c => c.Id == picked);
+            if (index < 0)
+            {
+                index = encounter.Choices.Count - 1;
+            }
+
+            if (index >= 0)
+            {
+                ApplyEncounterChoice(target, index);
+            }
+
+            if (encounter.PlayEventInField && GameApp.Session != null)
+            {
+                var choices = GameApp.Session.PreviewFieldEvent(encounter.SceneEventId, _runFlags, out var ev);
+                if (ev != null && _fieldDialogue.HasNode(ev.Node))
+                {
+                    string chosen = null;
+                    task = _fieldDialogue.Run(ev.Node, ev.Id, choices, id => chosen = id, token);
+                    while (!task.IsCompleted)
+                    {
+                        yield return null;
+                    }
+
+                    if (task.IsFaulted)
+                    {
+                        Debug.LogException(task.Exception);
+                    }
+
+                    _fieldEvents.Add(new FieldEventChoice { EventId = ev.Id, ChoiceId = chosen ?? "" });
+                }
+            }
+
+            InFieldDialogue = false;
+            OpenEncounter = null;
+        }
+
+        /// <summary>조우 선택 반영: 플래그·단서·스트레스, 대상이 사라지거나 더는 말을 걸 수 없게.</summary>
+        private void ApplyEncounterChoice(ExplorationTarget target, int choiceIndex)
+        {
             var choice = target.Encounter.Choices[choiceIndex];
             _runFlags.AddRange(choice.SetFlags);
             _runClues.AddRange(choice.AddClues);
             _runStress = Math.Max(0, _runStress + (int)choice.StressDelta);
             _runFlags.Add(EncounterRules.ChoiceFlag(target.Encounter, choice));
-            OpenEncounter = null;
             if (choice.Removes)
             {
                 target.Area.Targets.Remove(target);
@@ -1067,6 +1152,8 @@ namespace ApoGirl.Exploration.Runtime
             {
                 if (!Result.Clues.Contains(clue)) Result.Clues.Add(clue);
             }
+
+            Result.FieldEvents.AddRange(_fieldEvents);
 
             if (DawnReturn && status != ExtractStatus.Down)
             {

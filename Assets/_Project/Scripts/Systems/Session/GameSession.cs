@@ -113,6 +113,49 @@ namespace ApoGirl.Systems.Session
 
         public IReadOnlyList<EventChoiceView> PendingChoices => _runner?.PendingChoices;
 
+        /// <summary>
+        /// 탐험 중 그 자리에서 이어 치를 이벤트 미리 보기: 탐험에서 방금 생긴 플래그(runFlags)까지 켠 셈 치고
+        /// 이벤트 조건과 선택지를 판정한다. 지금 치를 수 없으면 null. 상태는 바꾸지 않는다.
+        /// </summary>
+        public IReadOnlyList<EventChoiceView> PreviewFieldEvent(string eventId, IEnumerable<string> runFlags, out EventDef ev)
+        {
+            ev = null;
+            var action = _runner?.PendingExpeditionAction;
+            if (State == null || action == null || !_db.TryGetEvent(eventId ?? "", out var def) || !EventScheduler.IsAvailable(State, def))
+            {
+                return null;
+            }
+
+            var added = new List<string>();
+            foreach (var flag in runFlags ?? Enumerable.Empty<string>())
+            {
+                if (State.Flags.Add(flag))
+                {
+                    added.Add(flag);
+                }
+            }
+
+            try
+            {
+                var calendar = State.Calendar;
+                var context = new EventContext { Phase = calendar.Phase, Day = calendar.Day, ActionId = action.Id, ActionCategory = action.Category };
+                if (!ConditionEvaluator.IsMet(State, def.Condition, context, _db.Balance))
+                {
+                    return null;
+                }
+
+                ev = def;
+                return EventResolver.Choices(State, def, context, _db.Balance);
+            }
+            finally
+            {
+                foreach (var flag in added)
+                {
+                    State.Flags.Remove(flag);
+                }
+            }
+        }
+
         // ── 게임 시작·저장 ──
 
         /// <summary>다음 NewGame에 적용할 회차 시작 보너스 (타이틀에서 고른다). 적용 후 비운다.</summary>

@@ -420,6 +420,18 @@ namespace ApoGirl.Presentation.Screens
                     }
                 }
 
+                // 탐험에서 돌아오면 탐험 정산(결과 카드)부터 보여 주고, 그 뒤에 이어지는 이벤트를 진행한다
+                var expeditionSlot = outcome.Expedition != null;
+                if (expeditionSlot && outcome.StopForPresentation)
+                {
+                    var closed = false;
+                    ShowResult(outcome, () => closed = true);
+                    while (!closed)
+                    {
+                        yield return null;
+                    }
+                }
+
                 while (_session.HasPendingEvent)
                 {
                     yield return PlayPendingEvent();
@@ -427,7 +439,12 @@ namespace ApoGirl.Presentation.Screens
 
                 // 창고에 갇혀 있는 날: 그날의 대사가 곧 연출이라 결과 카드는 생략한다 (끝난 판은 그대로 보여 줌)
                 var confined = !_session.IsEnded && _session.Definitions.TryGetAction(outcome.ActionId ?? "", out var slotAction) && slotAction.Confined;
-                if (outcome.StopForPresentation && !confined)
+                var resultShown = expeditionSlot && outcome.StopForPresentation;
+                if (resultShown)
+                {
+                    // 결과 카드는 이벤트 앞에서 이미 보여 줬다
+                }
+                else if (outcome.StopForPresentation && !confined)
                 {
                     var closed = false;
                     ShowResult(outcome, () => closed = true);

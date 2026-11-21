@@ -125,6 +125,12 @@ namespace ApoGirl.Core.Simulation
 
         public bool HasPendingExpedition => _pending != null;
 
+        /// <summary>대기 중인 탐험 슬롯의 행동 (탐험 중 이벤트 조건 판정용).</summary>
+        public ActionDef PendingExpeditionAction => _pending?.Action;
+
+        /// <summary>탐험 중 치른 이벤트가 이어 부른 다음 이벤트 (슬롯을 끝낼 때 바로 시작).</summary>
+        private string _chainedEventId;
+
         public ExpeditionRequest PendingRequest => _pending?.Outcome.ExpeditionRequest;
 
         /// <summary>true면 이벤트에서 멈추고 ResolveEvent를 기다린다 (false면 IEventChooser가 즉시 고른다).</summary>
@@ -307,8 +313,11 @@ namespace ApoGirl.Core.Simulation
             var context = new EventContext { Phase = calendar.Phase, Day = calendar.Day, ActionId = action.Id, ActionCategory = action.Category };
             if (!IsGameOver)
             {
+                var chained = _chainedEventId;
+                _chainedEventId = null;
                 ev = outcome.IntrusionTriggered && _db.TryGetEvent(Balance.IntrusionEventId, out var intrusion)
                     ? intrusion
+                    : !string.IsNullOrEmpty(chained) && _db.TryGetEvent(chained, out var next) ? next
                     : EventScheduler.Pick(_state, _db, context, _random);
             }
 
@@ -412,6 +421,38 @@ namespace ApoGirl.Core.Simulation
                     Choices = EventResolver.Choices(_state, next, pending.Context, Balance),
                 };
             }
+        }
+
+        /// <summary>
+        /// 탐험 중 치른 이벤트를 적용한다. 이미 본 1회성 이벤트·없는 이벤트는 건너뛰고,
+        /// 고른 선택지를 지금 고를 수 없으면(조건·비용이 바뀜) 고를 수 있는 첫 선택지로 마무리한다.
+        /// </summary>
+        private void ApplyFieldEvents(ActionDef action, ExpeditionResult result, SlotOutcome outcome)
+        {
+            var calendar = _state.Calendar;
+            var context = new EventContext { Phase = calendar.Phase, Day = calendar.Day, ActionId = action.Id, ActionCategory = action.Category };
+            foreach (var field in result.FieldEvents)
+            {
+                if (field == null || !_db.TryGetEvent(field.EventId, out var ev) || !EventScheduler.IsAvailable(_state, ev))
+                {
+                    continue;
+                }
+
+                EventResolver.Begin(_state, ev, context, Balance, outcome.Delta);
+                var choices = EventResolver.Choices(_state, ev, context, Balance);
+                var choiceId = choices.Exists(c => c.Id == field.ChoiceId && c.Enabled)
+                    ? field.ChoiceId
+                    : choices.Find(c => c.Enabled)?.Id ?? EventResolver.ContinueChoiceId;
+                var chosen = EventResolver.Choose(_state, ev, choiceId, context, Balance, _random, outcome.Delta);
+                outcome.Events.Add(chosen);
+                var nextId = string.IsNullOrEmpty(chosen.NextEventId) ? ev.ThenEventId : chosen.NextEventId;
+                if (!string.IsNullOrEmpty(nextId))
+                {
+                    _chainedEventId = nextId;
+                }
+            }
+
+            CheckGameOver();
         }
 
         /// <summary>DeferEvents가 꺼져 있으면 선택자로 바로 진행.</summary>
@@ -667,6 +708,9 @@ namespace ApoGirl.Core.Simulation
 
             // 조우 선택 플래그에 세력이 반응한다 (예: 더불어 마트와 거래 → 평판 +)
             FactionRules.OnFlagsSet(_state, _db, result.Flags, delta);
+
+            // 탐험 중 그 자리에서 치른 이벤트: 시작·선택 효과를 지금 적용하고 본 것으로 기록 (허브에서 다시 뜨지 않는다)
+            ApplyFieldEvents(action, result, outcome);
 
             // M6: 정찰 정보는 한 번 쓰면 사라진다
             _state.Flags.Remove(ScoutRules.FlagFor(action.LocationId));

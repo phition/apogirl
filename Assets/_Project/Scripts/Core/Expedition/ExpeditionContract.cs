@@ -145,6 +145,16 @@ namespace ApoGirl.Core.Expedition
 
         /// <summary>이번에 뒤진 상자 키 (DepletingContainers 지역이면 거점이 기록한다).</summary>
         public List<string> SearchedContainers = new List<string>();
+
+        /// <summary>탐험 중 그 자리에서 치른 이벤트와 고른 선택지 (귀환 때 효과를 적용하고 본 것으로 기록).</summary>
+        public List<FieldEventChoice> FieldEvents = new List<FieldEventChoice>();
+    }
+
+    /// <summary>탐험 중 그 자리에서 치른 이벤트 하나.</summary>
+    public sealed class FieldEventChoice
+    {
+        public string EventId = "";
+        public string ChoiceId = "";
     }
 
     /// <summary>탐험 실행기. M1은 헤드리스 확률 모델, M2b부터 실시간 탐험 씬이 같은 계약을 구현한다.</summary>

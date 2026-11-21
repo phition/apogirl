@@ -221,7 +221,13 @@ namespace ApoGirl.Exploration.Runtime
         private void RefreshEncounter()
         {
             var target = _director.OpenEncounter;
-            _encounterPanel.EnableInClassList("hidden", target == null);
+            // 그 자리 대화 중에는 대화 창이 대신한다
+            _encounterPanel.EnableInClassList("hidden", target == null || _director.InFieldDialogue);
+            if (_director.InFieldDialogue)
+            {
+                return;
+            }
+
             if (target == null || target == _shownEncounter)
             {
                 _shownEncounter = target;
