@@ -3,18 +3,22 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using UnityEditor;
+using UnityEditor.Build;
 using UnityEditor.Build.Reporting;
 using UnityEngine;
 
 namespace ApoGirl.EditorTools
 {
     /// <summary>
-    /// 테스트용 단독 실행 파일 (Windows 64비트). 메뉴 ApoGirl/Build/Windows Test Build.
-    /// 출력: 프로젝트 폴더의 Builds/Windows/LastSemester_날짜시각/ (git에서 제외).
+    /// 테스트용 단독 실행 파일. 메뉴 ApoGirl/Build/Windows Test Build, ApoGirl/Build/Android Test APK.
+    /// 출력: 프로젝트 폴더의 Builds/Windows/LastSemester_날짜시각/, Builds/Android/LastSemester_날짜시각/ (git에서 제외).
+    /// 안드로이드는 터치 조작이 아직 없어 탐험을 자동(헤드리스)으로 진행한다 (GameApp).
     /// </summary>
     public static class BuildMenu
     {
         public const string OutputRoot = "Builds/Windows";
+        public const string AndroidOutputRoot = "Builds/Android";
+        public const string AndroidPackage = "com.apogirl.lastsemester";
 
         [MenuItem("ApoGirl/Build/Windows Test Build")]
         public static void BuildWindowsMenu()
@@ -63,6 +67,87 @@ namespace ApoGirl.EditorTools
             }
 
             return report;
+        }
+
+        [MenuItem("ApoGirl/Build/Android Test APK")]
+        public static void BuildAndroidMenu()
+        {
+            var report = BuildAndroid(false);
+            if (report != null && report.summary.result == BuildResult.Succeeded)
+            {
+                EditorUtility.RevealInFinder(report.summary.outputPath);
+            }
+        }
+
+        [MenuItem("ApoGirl/Build/Android Test APK (Development)")]
+        public static void BuildAndroidDevelopmentMenu() => BuildAndroid(true);
+
+        /// <summary>APK 하나를 만든다 (ARM64, IL2CPP, 가로 화면, Unity 디버그 키 서명). 처음에는 플랫폼 전환으로 오래 걸린다.</summary>
+        public static BuildReport BuildAndroid(bool development)
+        {
+            var scenes = EditorBuildSettings.scenes.Where(s => s.enabled).Select(s => s.path).ToArray();
+            if (scenes.Length == 0)
+            {
+                Debug.LogError("[Build] 빌드할 씬이 없다 (Build Settings).");
+                return null;
+            }
+
+            // 직접 설치(사이드로드)용 설정: 패키지 이름, 64비트 ARM, 가로 고정, 디버그 키
+            PlayerSettings.SetApplicationIdentifier(NamedBuildTarget.Android, AndroidPackage);
+            PlayerSettings.SetScriptingBackend(NamedBuildTarget.Android, ScriptingImplementation.IL2CPP);
+            PlayerSettings.Android.targetArchitectures = AndroidArchitecture.ARM64;
+            PlayerSettings.Android.useCustomKeystore = false;
+            PlayerSettings.defaultInterfaceOrientation = UIOrientation.AutoRotation;
+            PlayerSettings.allowedAutorotateToLandscapeLeft = true;
+            PlayerSettings.allowedAutorotateToLandscapeRight = true;
+            PlayerSettings.allowedAutorotateToPortrait = false;
+            PlayerSettings.allowedAutorotateToPortraitUpsideDown = false;
+            EditorUserBuildSettings.buildAppBundle = false;
+
+            var folder = Path.Combine(AndroidOutputRoot, PlayerSettings.productName + "_" + DateTime.Now.ToString("yyyyMMdd_HHmm") + (development ? "_dev" : ""));
+            Directory.CreateDirectory(folder);
+            var apk = Path.Combine(folder, PlayerSettings.productName + ".apk");
+            var options = new BuildPlayerOptions
+            {
+                scenes = scenes,
+                locationPathName = apk,
+                target = BuildTarget.Android,
+                targetGroup = BuildTargetGroup.Android,
+                options = development ? BuildOptions.Development | BuildOptions.AllowDebugging : BuildOptions.None,
+            };
+
+            var report = BuildPipeline.BuildPlayer(options);
+            var summary = report.summary;
+            if (summary.result == BuildResult.Succeeded)
+            {
+                File.WriteAllText(Path.Combine(folder, "읽어 주세요.txt"), AndroidReadme(development), new UTF8Encoding(true));
+                Debug.Log($"[Build] 성공: {Path.GetFullPath(apk)} ({summary.totalSize / (1024f * 1024f):0.0} MB, {summary.totalTime.TotalSeconds:0}초)");
+            }
+            else
+            {
+                Debug.LogError($"[Build] 실패: {summary.result}, 오류 {summary.totalErrors}개");
+            }
+
+            return report;
+        }
+
+        private static string AndroidReadme(bool development)
+        {
+            return string.Join("\r\n", new[]
+            {
+                $"〈마지막 학기 (가제)〉 안드로이드 테스트 빌드 {DateTime.Now:yyyy-MM-dd HH:mm}{(development ? " (개발 빌드)" : "")}",
+                "",
+                "설치: " + PlayerSettings.productName + ".apk를 휴대폰에 옮겨 연다. '출처를 알 수 없는 앱 설치'를 허용해야 한다.",
+                "  PC에 연결했다면: adb install -r " + PlayerSettings.productName + ".apk",
+                "  안드로이드 8.0(API 26) 이상, 64비트 기기. 화면은 가로로 고정된다.",
+                "",
+                "[주의]",
+                "  터치 조작이 아직 없어 탐험은 자동(헤드리스 확률 모델)으로 진행된다. 결과 카드만 나온다.",
+                "  디버그 패널(F1)·계획 보드(Tab) 같은 키보드 단축키는 쓸 수 없다. 허브는 눌러서 쓴다.",
+                "",
+                "[저장 위치]",
+                "  /Android/data/" + AndroidPackage + "/files (세이브, 엔딩 갤러리 Gallery.json)",
+            });
         }
 
         private static string Readme(bool development)

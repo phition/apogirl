@@ -62,7 +62,8 @@ namespace ApoGirl.Presentation.App
             var gallery = new EndingGallery(Application.persistentDataPath);
             Session = new GameSession(database.Build(), new SaveService(saveDirectory, new GameStateSerializer()), null, gallery)
             {
-                UseRealtimeExpeditions = true,
+                // 휴대폰에는 아직 터치 조작이 없어 탐험을 헤드리스 확률 모델로 자동 진행한다
+                UseRealtimeExpeditions = !Application.isMobilePlatform,
                 InteractiveEvents = true,
             };
         }
