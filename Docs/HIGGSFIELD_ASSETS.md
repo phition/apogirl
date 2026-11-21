@@ -622,7 +622,7 @@ ART_PROMPTS 6장의 21장에 하나를 더한다.
 
 - **무엇을 어디에 쓸지는 데이터**: `Resources/Art/exploration_art.json` (`ExplorationArtMap.cs`). 지역·방 템플릿별 벽(방 안·복도·방 바깥벽), 문·출구, 컨테이너, 조우 물건, 흩어 놓는 장식(바닥·벽, 밀도). 바깥 길 장식은 템플릿 `OUT_ENTRY` / `OUT_ESCAPE`.
 - **기준점·9조각**: `ExplorationPixel/sprite_meta.json` (창문 테두리, 가방 끈 자리 등) → `Editor/ArtImportSettings`.
-- **주인공**: `player_{옷}_{무기}_{동작}_{0..15}` — 옷 4(uniform·guard·padding·riot) × 무기 5(none·mop·bat·pipe·baton) = 20벌, 동작 5(idle·walk·run·crouch·attack 또는 shove) × 16프레임. 무기는 그림 안에 같이 그려져 있어 팔이 겹치지 않는다. 없는 차림은 `PlayerPrefix`가 교복+그 무기 → 그 옷+맨손 → 교복+맨손 순서로 물러난다.
+- **주인공**: `player_{옷}_{무기}_{동작}_{0..15}` — 옷 6(uniform·summer·winter·guard·padding·riot) × 무기 5(none·mop·bat·pipe·baton) = 30벌, 동작 5(idle·walk·run·crouch·attack 또는 shove) × 16프레임. 무기는 그림 안에 같이 그려져 있어 팔이 겹치지 않는다. 없는 차림은 `PlayerPrefix`가 교복+그 무기 → 그 옷+맨손 → 교복+맨손 순서로 물러난다.
 - **가방**: `bag_{school|hiking|tote}_{brown|blue|pink|red|yellow|green}`. 색은 판(시드)마다 하나. 붙일 자리는 프레임마다 `player_anchors.json`(등 쪽 어깨 위치·기울기).
 - **좀비·생존자·조우 인물**: 16프레임 동작(대기·걷기·기절·휴면 등), `SpriteFlipbook`.
 - **환경**: 벽 23종(지역·특수 교실·거리·골목), 문 4종(닫힘·열림), 출구 2종, 계단(위·아래·무너짐), 소품 약 320종. 교실 책상은 옆모습, 모니터·TV는 평면형.
@@ -633,7 +633,14 @@ ART_PROMPTS 6장의 21장에 하나를 더한다.
 - **좀비 반응**: `zombie_{종류}_hit_{0..7}`(맞음)·`_pushed_{0..7}`(밀림)·`_sleep_{0..15}`(선 채로 잠듦), 생존자 `survivor_hit_`·`survivor_pushed_`. 반응은 `ExpeditionDirector.React` → `ReactAnimSeconds` 동안 보이고 기절 동작으로 이어진다.
 - **계단실**: 가까이 붙은 계단을 한 칸으로 묶어 복도 벽이 뚫린 어두운 공간 안에 둔다. 건물·길 아래 땅속 단면은 그리지 않는다.
 - 만드는 도구는 저장소 밖 `I:/workshop/code_temp/apogirl/tools/` (gen_env·gen_player·gen_attack·gen_chars → install_env·install_player·install_chars → make_special·bag_colors·make_anchors·fix_idle·make_art_map). API 키는 저장소에 두지 않는다.
-- 화면 확인용: `ExpeditionDebug.Start(행동, 슬롯, 무기, 옷, 가방, 도구)`, `.Room(템플릿 글자)`, `ExpeditionDirector.DebugGoTo(층 또는 -1 진입로/-2 탈출로, x)`.
+- 화면 확인용: `ExpeditionDebug.Start(행동, 슬롯, 무기, 옷, 가방, 도구)`, `.Room(템플릿 글자)`, `ExpeditionDirector.DebugGoTo(층 또는 -1 진입로/-2 탈출로, x)`, `DebugPeek(방 ID)`(문틈 살피기를 붙잡아 둔다, null이면 그만).
+
+### 8.4 계절 교복·어둠 시야 (2026-11-21)
+
+- **계절 교복**: 방어구가 없으면 계절에 맞는 교복으로 나간다. 여름 `summer`(반팔 셔츠·니트 조끼·리본), 겨울 `winter`(더플코트·목도리·검은 스타킹), 봄·가을은 `uniform`(블레이저). 계절 → 옷 키는 입상과 같은 `standing_map.json` `SeasonOutfit` 표 (`StandingConfig.PlayerOutfitToken`, 탐험 `ExpeditionDirector.RefreshLook`·허브 단면도 `HubSectionView.PlayerPrefix`). 대걸레는 이번에 걸레 머리가 달린 그림으로 다시 그렸다(여름·겨울).
+- **어둠 시야** (`ExpeditionDirector`): 밤·황혼은 어디서나, 낮에도 방 안은 전기가 끊겨 어둡다(`IsDarkIn`). 어두운 곳에서는 장식·수색할 곳·조우 인물도 좀비와 같은 규칙으로(맨눈 `NightViewDistance` 안, 손전등을 켜면 앞쪽 `FlashlightViewDistance`) 보이고 나머지는 사라진다 (`UpdateFog`, 나타나고 사라지는 빠르기 `FogFadeSpeed`). 문·계단·출구·창은 건물 구조라 늘 보인다. 낮 방 안에서도 손전등이 켜진다. 수색 속도는 예전처럼 밤·황혼만 느리다.
+- **문틈**: 낮 복도로 열린 문은 `PeekRange`, 낮 방은 문 근처 `RoomPeekRange`(2.5)만, 밤에는 아무것도 보이지 않고 "귀를 기울여 보자 (S)" 안내.
+- **창 너머 실루엣**: 창 유리 자리마다 `WindowMask`(SpriteMask)를 두고 실루엣은 그 안에서만 보인다. 유리 바로 위에 그린다(복도 쪽 -3, 방 안 -1) — 예전에는 방 안 유리(-2) 뒤에 그려져 유리에 가리고 창 밖 벽에만 비쳤다.
 
 ## 9. 예비 에셋 (P4: 앞으로 추가될 수 있는 것)
 
