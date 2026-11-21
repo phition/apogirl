@@ -110,6 +110,7 @@ Button.selected { border-color: var(--accent); background-color: var(--accent-so
     background-color: rgba(18, 19, 22, 0.6);
 }
 .standing-layer { position: absolute; left: 0; top: 0; right: 0; bottom: 0; }
+.standing-eyes { -unity-background-scale-mode: stretch-to-fill; }
 .vitals-mini {
     width: 230px;
     margin-left: 10px;

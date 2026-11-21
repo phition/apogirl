@@ -63,7 +63,41 @@ namespace ApoGirl.Presentation.Screens
             public string Portrait = "";
         }
 
+        /// <summary>눈 조각 (깜빡임·시선): 전신 그림마다 Eyes/{blink|gaze_left|gaze_right}_{그림}.png, 자리는 Rect (캔버스 좌표).</summary>
+        [Serializable]
+        public sealed class EyesConfig
+        {
+            public string Folder = "Standing/Eyes";
+            public float CanvasWidth = 680f;
+            public float CanvasHeight = 1024f;
+            public float[] Rect = { 318f, 72f, 104f, 56f };
+            public float BlinkMin = 2.5f;
+            public float BlinkMax = 6f;
+            public float BlinkTime = 0.13f;
+            public float GazeMin = 9f;
+            public float GazeMax = 18f;
+            public float GazeTime = 1.3f;
+        }
+
+        /// <summary>
+        /// 영상에서 뽑은 동작 프레임 (Motion/{동작}/m_##.png, 전신 그림과 같은 자리·비율).
+        /// Picture 그림이 골라졌을 때만: Idle을 반복하다가 MoveMin~MoveMax초마다 Moves 중 하나를 한 번.
+        /// </summary>
+        [Serializable]
+        public sealed class MotionConfig
+        {
+            public string Folder = "Standing/Motion";
+            public string Picture = "base";
+            public float Fps = 12f;
+            public string Idle = "idle";
+            public string[] Moves = Array.Empty<string>();
+            public float MoveMin = 12f;
+            public float MoveMax = 24f;
+        }
+
         public string Folder = "Standing";
+        public EyesConfig Eyes = new EyesConfig();
+        public MotionConfig Motion = new MotionConfig();
 
         /// <summary>
         /// "Layers" = 같은 캔버스 조각을 겹친다. "Whole" = 한 가지씩 바뀐 전신 그림 중 하나를 고른다
@@ -213,12 +247,53 @@ namespace ApoGirl.Presentation.Screens
         private IVisualElementScheduledItem _reactEnd;
         private bool _lastWarnings;
 
+        // ── 살아 있는 입상: 눈 깜빡임·시선, 동작 프레임 ──
+        private readonly VisualElement _eyes = new VisualElement { pickingMode = PickingMode.Ignore };
+        private readonly Dictionary<string, List<Texture2D>> _clips = new Dictionary<string, List<Texture2D>>();
+        private readonly System.Random _random = new System.Random();
+        private string _picture = "";
+        private float _nextBlink;
+        private float _nextGaze;
+        private float _eyesUntil;
+        private bool _eyesShown;
+        private float _nextMove;
+        private string _clip;
+        private float _clipStart;
+
         public StandingView(VisualElement host, Func<GameState> state, Func<BalanceConfig> balance)
         {
             _host = host;
             _state = state;
             _balance = balance;
+            _eyes.AddToClassList("standing-eyes");
+            _eyes.style.position = Position.Absolute;
+            _eyes.style.display = DisplayStyle.None;
+            _host.RegisterCallback<GeometryChangedEvent>(_ => PlaceEyes());
+            var now = Now;
+            _nextBlink = now + Range(_config.Eyes.BlinkMin, _config.Eyes.BlinkMax);
+            _nextGaze = now + Range(_config.Eyes.GazeMin, _config.Eyes.GazeMax);
+            _nextMove = now + Range(_config.Motion.MoveMin, _config.Motion.MoveMax);
+            _host.schedule.Execute(Tick).Every(40);
         }
+
+        /// <summary>지금 보이는 전신 그림 이름 (stand_ 뒤, 디버그·테스트용).</summary>
+        public string Picture => _picture;
+
+        /// <summary>지금 재생 중인 동작 (없으면 null).</summary>
+        public string PlayingClip => _clip;
+
+        /// <summary>디버그: 동작 하나를 바로 재생.</summary>
+        public void PlayMove(string clip)
+        {
+            if (Clip(clip) != null)
+            {
+                _clip = clip;
+                _clipStart = Now;
+            }
+        }
+
+        /// <summary>디버그: 눈 조각 하나를 잠깐 보인다 (blink, gaze_left, gaze_right).</summary>
+        public void ShowEyesNow(string kind, float seconds) => ShowEyes(kind, seconds, Now);
 
         /// <summary>지금 고른 조각 (디버그·테스트용).</summary>
         public StandingLook Current { get; private set; }
@@ -252,7 +327,17 @@ namespace ApoGirl.Presentation.Screens
             if (_config.Mode == "Whole")
             {
                 // 한 장 고르기: 우선순위에서 처음으로 그림이 있는 것, 없으면 기본 입상
-                StoryArt.SetContain(_host, WholePicture(look) ?? basePiece);
+                var picture = WholePicture(look, out var pictureName);
+                _picture = picture != null ? pictureName : "base";
+                StoryArt.SetContain(_host, picture ?? basePiece);
+                HideEyes();
+                _host.Add(_eyes);
+                PlaceEyes();
+                if (!HasMotion)
+                {
+                    _clip = null;
+                }
+
                 return;
             }
 
@@ -296,8 +381,9 @@ namespace ApoGirl.Presentation.Screens
 
         private Texture2D Piece(string name) => StoryArt.Load(_config.Folder + "/stand_" + name);
 
-        private Texture2D WholePicture(StandingLook look)
+        private Texture2D WholePicture(StandingLook look, out string pictureName)
         {
+            pictureName = null;
             foreach (var kind in _config.WholePriority)
             {
                 IEnumerable<string> names;
@@ -316,12 +402,160 @@ namespace ApoGirl.Presentation.Screens
                     var texture = Piece(name);
                     if (texture != null)
                     {
+                        pictureName = name;
                         return texture;
                     }
                 }
             }
 
             return null;
+        }
+
+        // ── 살아 있는 입상 ──
+
+        private static float Now => Time.realtimeSinceStartup;
+
+        private float Range(float min, float max) => min + (float)_random.NextDouble() * Math.Max(0f, max - min);
+
+        private bool HasMotion => _config.Mode == "Whole" && _picture == _config.Motion.Picture && Clip(_config.Motion.Idle) != null;
+
+        private List<Texture2D> Clip(string name)
+        {
+            if (string.IsNullOrEmpty(name))
+            {
+                return null;
+            }
+
+            if (!_clips.TryGetValue(name, out var frames))
+            {
+                frames = new List<Texture2D>();
+                for (var i = 0; i < 500; i++)
+                {
+                    var frame = StoryArt.Load(_config.Motion.Folder + "/" + name + "/m_" + i.ToString("00"));
+                    if (frame == null) break;
+                    frames.Add(frame);
+                }
+
+                _clips[name] = frames;
+            }
+
+            return frames.Count > 0 ? frames : null;
+        }
+
+        private void Tick()
+        {
+            if (_config.Mode != "Whole" || _host.panel == null || _host.ClassListContains("fallback"))
+            {
+                return;
+            }
+
+            var now = Now;
+            if (HasMotion)
+            {
+                HideEyes();
+                TickMotion(now);
+                return;
+            }
+
+            TickEyes(now);
+        }
+
+        private void TickMotion(float now)
+        {
+            var motion = _config.Motion;
+            if (_clip == null)
+            {
+                _clip = motion.Idle;
+                _clipStart = now;
+            }
+
+            if (_clip == motion.Idle && now >= _nextMove && motion.Moves.Length > 0)
+            {
+                var move = motion.Moves[_random.Next(motion.Moves.Length)];
+                if (Clip(move) != null)
+                {
+                    _clip = move;
+                    _clipStart = now;
+                }
+
+                _nextMove = now + Range(motion.MoveMin, motion.MoveMax);
+            }
+
+            var frames = Clip(_clip) ?? Clip(motion.Idle);
+            var index = (int)((now - _clipStart) * Math.Max(1f, motion.Fps));
+            if (_clip != motion.Idle && index >= frames.Count)
+            {
+                // 한 번 하는 동작이 끝나면 숨쉬기로
+                _clip = motion.Idle;
+                _clipStart = now;
+                frames = Clip(_clip);
+                index = 0;
+            }
+
+            StoryArt.SetContain(_host, frames[index % frames.Count]);
+        }
+
+        private void TickEyes(float now)
+        {
+            var eyes = _config.Eyes;
+            if (_eyesShown && now >= _eyesUntil)
+            {
+                HideEyes();
+            }
+
+            if (now >= _nextBlink)
+            {
+                _nextBlink = now + Range(eyes.BlinkMin, eyes.BlinkMax);
+                if (!_eyesShown) ShowEyes("blink", eyes.BlinkTime, now);
+            }
+            else if (now >= _nextGaze)
+            {
+                _nextGaze = now + Range(eyes.GazeMin, eyes.GazeMax);
+                ShowEyes(_random.Next(2) == 0 ? "gaze_left" : "gaze_right", eyes.GazeTime, now);
+                // 곁눈질이 끝난 뒤에 깜빡이게
+                _nextBlink = Math.Max(_nextBlink, now + eyes.GazeTime + 0.3f);
+            }
+        }
+
+        private void ShowEyes(string kind, float seconds, float now)
+        {
+            var texture = StoryArt.Load(_config.Eyes.Folder + "/" + kind + "_" + _picture);
+            if (texture == null)
+            {
+                return;
+            }
+
+            _eyes.style.backgroundImage = new StyleBackground(texture);
+            _eyes.style.display = DisplayStyle.Flex;
+            _eyesShown = true;
+            _eyesUntil = now + seconds;
+            PlaceEyes();
+        }
+
+        private void HideEyes()
+        {
+            _eyes.style.display = DisplayStyle.None;
+            _eyesShown = false;
+        }
+
+        /// <summary>눈 조각 자리: 입상 그림은 칸 안에 비율을 지켜 가운데 맞춤(contain)으로 그려진다.</summary>
+        private void PlaceEyes()
+        {
+            var eyes = _config.Eyes;
+            var width = _host.resolvedStyle.width;
+            var height = _host.resolvedStyle.height;
+            if (float.IsNaN(width) || width <= 0 || eyes.Rect == null || eyes.Rect.Length < 4)
+            {
+                return;
+            }
+
+            var scale = Math.Min(width / eyes.CanvasWidth, height / eyes.CanvasHeight);
+            var left = (width - eyes.CanvasWidth * scale) / 2f;
+            var top = (height - eyes.CanvasHeight * scale) / 2f;
+            _eyes.style.left = left + eyes.Rect[0] * scale;
+            _eyes.style.top = top + eyes.Rect[1] * scale;
+            _eyes.style.width = eyes.Rect[2] * scale;
+            _eyes.style.height = eyes.Rect[3] * scale;
         }
 
         private Texture2D Portrait(string face)
