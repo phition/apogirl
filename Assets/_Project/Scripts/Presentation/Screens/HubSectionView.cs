@@ -104,6 +104,9 @@ namespace ApoGirl.Presentation.Screens
         public KeyValue[] NpcSprites = Array.Empty<KeyValue>();
         public TeacherDef Teacher = new TeacherDef();
 
+        /// <summary>단면도 뒤 바깥 풍경 (마을·하늘·날씨).</summary>
+        public HubSkyConfig Sky = new HubSkyConfig();
+
         private static HubSectionConfig _loaded;
 
         public static HubSectionConfig Load()
@@ -137,6 +140,7 @@ namespace ApoGirl.Presentation.Screens
         private readonly VisualElement _building;
         private readonly VisualElement _actorLayer;
         private readonly VisualElement _roomPanel;
+        private readonly HubSkyView _skyView;
         private Actor _player;
         private Actor _teacher;
         private string _builtSignature;
@@ -148,6 +152,9 @@ namespace ApoGirl.Presentation.Screens
             _host = host;
             _session = session;
             _sky = Add(_host, "hub-sky");
+            _sky.pickingMode = PickingMode.Ignore;
+            var skyOrigin = Add(_sky, "hub-sky-origin");
+            _skyView = new HubSkyView(skyOrigin, _host.parent ?? _host, _config.Sky, _config.Scale);
             _building = Add(_host, "hub-building");
             _actorLayer = Add(_host, "hub-actors");
             _actorLayer.pickingMode = PickingMode.Ignore;
@@ -312,6 +319,7 @@ namespace ApoGirl.Presentation.Screens
             var shell = Place(_building, "hub-shell", -8, shellTop - 6, _config.Width + 16, _config.FloorHeight * 3 + 6);
             Tile(shell, "wall_brick");
             Place(_building, "hub-ground", -400, ArtHeight - _config.Ground, _config.Width + 800, _config.Ground + 40);
+            _skyView.Build(_config.Width, shellTop - 6, ArtHeight - _config.Ground);
 
             // 계단실 (오른쪽 끝, 층마다)
             for (var floor = 0; floor < 3; floor++)
@@ -708,6 +716,8 @@ namespace ApoGirl.Presentation.Screens
                 actor.Tick(dt, this);
             }
 
+            _skyView.Tick(dt);
+
             _lightTimer += dt;
             if (_lightTimer > 0.3f)
             {
@@ -722,6 +732,10 @@ namespace ApoGirl.Presentation.Screens
             _sky.EnableInClassList("night", night);
             _host.parent?.EnableInClassList("night", night);
             var blackout = _session.State != null && _session.State.Base.IsBlackout();
+            if (_session.State != null)
+            {
+                _skyView.Apply(night, _session.State.Base.Weather, Core.Rules.CalendarRules.GetSeason(_session.State.Calendar.Week));
+            }
             foreach (var room in _rooms.Values)
             {
                 var occupied = _actors.Any(a => a.Floor == room.Def.Floor && a.X >= room.Def.X && a.X < room.Def.X + room.Def.Width && !room.Def.Roof);

@@ -17,6 +17,9 @@ namespace ApoGirl.Core.Definitions
 
         bool TryGetItem(string id, out ItemDef item);
 
+        /// <summary>모든 아이템 정의 (디버그 장비 주기 등).</summary>
+        IEnumerable<ItemDef> Items { get; }
+
         bool TryGetLootTable(string id, out LootTableDef table);
 
         bool TryGetLocation(string id, out LocationDef location);
@@ -154,6 +157,8 @@ namespace ApoGirl.Core.Definitions
         }
 
         public bool TryGetItem(string id, out ItemDef item) => _items.TryGetValue(id ?? "", out item);
+
+        public IEnumerable<ItemDef> Items => _items.Values;
 
         public bool TryGetLootTable(string id, out LootTableDef table) => _lootTables.TryGetValue(id ?? "", out table);
 

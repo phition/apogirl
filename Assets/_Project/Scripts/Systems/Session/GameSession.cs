@@ -501,7 +501,14 @@ namespace ApoGirl.Systems.Session
         }
 
         /// <summary>디버그 "지역·시설 전부 해금"에서 지역 플래그 외에 함께 켜는 플래그 (UI·1막 계획).</summary>
-        private static readonly string[] DebugUnlockExtraFlags = { "NIGHT_RUNS", "UI_ALL", "UI_DEFENSE", "CRUTCH_PLAN", "POWER_PLAN" };
+        private static readonly string[] DebugUnlockExtraFlags =
+        {
+            "NIGHT_RUNS", "UI_ALL", "UI_DEFENSE", "CRUTCH_PLAN", "POWER_PLAN",
+            // 거처 선택별 해금(교실 / 창고)은 둘 다 켠다 — 디버그에서는 모든 거점 행동을 본다
+            "CLASSROOM_MOVED_IN", "STAYED_STORAGE",
+            // 교실동 특수실 발견 (단면도 방·수업이 열린다)
+            "SEARCHED_NURSE", "SEARCHED_HOMEEC", "SEARCHED_COMPUTER", "SEARCHED_SCIENCE", "SEARCHED_MUSIC", "SEARCHED_BROADCAST",
+        };
 
         /// <summary>
         /// 디버그: 모든 탐험 지역과 시설을 연다.
@@ -532,6 +539,35 @@ namespace ApoGirl.Systems.Session
             {
                 State.Base.Facilities.TryGetValue(facility.Id, out var level);
                 State.Base.Facilities[facility.Id] = Math.Max(level, 1);
+            }
+
+            StateChanged?.Invoke();
+        }
+
+        /// <summary>디버그: 아이템을 창고에 넣는다 (장비는 해당 칸이 비어 있으면 바로 장착).</summary>
+        public void DebugGiveItem(string itemId)
+        {
+            if (!_db.TryGetItem(itemId, out var item))
+            {
+                return;
+            }
+
+            EffectApplier.AddItem(State, itemId, 1, new StateDelta());
+            var loadout = State.Loadout;
+            switch (item.Slot)
+            {
+                case EquipSlot.Backpack when string.IsNullOrEmpty(loadout.Backpack):
+                    loadout.Backpack = itemId;
+                    break;
+                case EquipSlot.Weapon when string.IsNullOrEmpty(loadout.MainWeapon):
+                    loadout.MainWeapon = itemId;
+                    break;
+                case EquipSlot.Tool when string.IsNullOrEmpty(loadout.Tool):
+                    loadout.Tool = itemId;
+                    break;
+                case EquipSlot.Armor when string.IsNullOrEmpty(loadout.Armor):
+                    loadout.Armor = itemId;
+                    break;
             }
 
             StateChanged?.Invoke();

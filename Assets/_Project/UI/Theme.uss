@@ -241,7 +241,7 @@ Button.selected { border-color: var(--accent); background-color: var(--accent-so
     transition-duration: 0.25s;
     transition-timing-function: ease-out-cubic;
 }
-.board.closed { translate: 0 620px; opacity: 0; }
+.board.closed { translate: 0 720px; opacity: 0; }
 /* 보드가 열리면 입상은 왼쪽에 그대로 두고, 선생님 한마디는 보드 위로 올린다 */
 .board-open .teacher-box { bottom: 700px; transition-property: bottom; transition-duration: 0.25s; }
 .board-open .vitals-mini { display: none; }
@@ -601,6 +601,11 @@ Button.selected { border-color: var(--accent); background-color: var(--accent-so
 .section-frame.night { background-color: rgb(14, 18, 30); }
 .section { position: relative; }
 .hub-sky { position: absolute; left: -2000px; right: -2000px; top: -400px; bottom: 0; }
+.hub-sky-origin { position: absolute; left: 2000px; top: 400px; width: 0; height: 0; overflow: visible; }
+.hub-star { background-color: rgb(235, 238, 255); }
+.hub-sun.heat { -unity-background-image-tint-color: rgb(255, 214, 150); scale: 1.3 1.3; }
+.hub-rain { width: 2px; height: 18px; background-color: rgba(190, 205, 225, 0.55); rotate: 7deg; }
+.hub-snow { width: 4px; height: 4px; border-radius: 2px; background-color: rgba(250, 252, 255, 0.9); }
 .hub-building { position: absolute; left: 0; top: 0; right: 0; bottom: 0; }
 .hub-actors { position: absolute; left: 0; top: 0; right: 0; bottom: 0; }
 .hub-shell { -unity-background-image-tint-color: rgb(150, 150, 150); }
@@ -749,11 +754,11 @@ Button.selected { border-color: var(--accent); background-color: var(--accent-so
 .fac-desc { font-size: 17px; color: var(--text-dim); white-space: normal; margin-bottom: 12px; }
 .fac-status { font-size: 17px; white-space: normal; margin-top: 8px; }
 .fac-effect { font-size: 15px; color: var(--ok); white-space: normal; margin-top: 2px; }
-.fac-gauge { flex-direction: row; height: 34px; margin-top: 8px; border-radius: 4px; overflow: visible; }
-.fac-band { height: 22px; justify-content: flex-start; }
-.fac-band-label { font-size: 12px; color: rgb(20, 20, 22); -unity-text-align: middle-center; height: 22px; }
-.fac-marker { position: absolute; top: -4px; width: 4px; height: 30px; margin-left: -2px; background-color: rgb(245, 240, 230); border-radius: 2px; }
-.fac-marker-value { position: absolute; top: 30px; left: -20px; width: 44px; -unity-text-align: middle-center; font-size: 13px; color: rgb(245, 240, 230); }
+.fac-gauge { flex-direction: row; height: 58px; margin-top: 10px; overflow: visible; }
+.fac-band { height: 34px; justify-content: center; }
+.fac-band-label { font-size: 15px; -unity-font-style: bold; color: rgb(255, 255, 255); -unity-text-align: middle-center; height: 34px; text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7); }
+.fac-marker { position: absolute; top: -5px; width: 6px; height: 44px; margin-left: -3px; background-color: rgb(255, 255, 255); border-width: 1px; border-color: rgb(20, 20, 22); border-radius: 2px; }
+.fac-marker-value { position: absolute; top: 42px; left: -22px; width: 50px; -unity-text-align: middle-center; font-size: 15px; -unity-font-style: bold; color: rgb(255, 255, 255); }
 .tier-hostile { background-color: rgb(176, 72, 64); }
 .tier-wary { background-color: rgb(196, 140, 80); }
 .tier-neutral { background-color: rgb(150, 150, 140); }

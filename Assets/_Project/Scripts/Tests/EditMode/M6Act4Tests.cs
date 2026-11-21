@@ -113,6 +113,18 @@ namespace ApoGirl.Tests.EditMode
                 {
                     Assert.GreaterOrEqual(session.State.Base.Facilities[facility.Id], 1, facility.Id + " 열림");
                 }
+
+                // 거처 선택별 거점 행동(교실 수업·창고 방어)과 특수실도 함께 열린다
+                foreach (var id in new[] { "ACT_EDU_SCIENCE", "ACT_EDU_MUSIC", "ACT_EDU_ENGINEERING", "ACT_NIGHT_WORK", "ACT_SURV_COVERS" })
+                {
+                    Assert.IsTrue(session.IsUnlocked(db.GetAction(id)), id + " 해금");
+                }
+
+                // 디버그 장비 주기: 빈 칸이면 바로 장착
+                session.State.Loadout.Tool = "";
+                session.DebugGiveItem("ITEM_TOOL_FLASHLIGHT");
+                Assert.AreEqual("ITEM_TOOL_FLASHLIGHT", session.State.Loadout.Tool);
+                Assert.IsTrue(session.State.Storage.Any(i => i.ItemId == "ITEM_TOOL_FLASHLIGHT"));
             }
             finally
             {

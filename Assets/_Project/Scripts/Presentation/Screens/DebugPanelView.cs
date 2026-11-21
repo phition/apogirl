@@ -99,6 +99,25 @@ namespace ApoGirl.Presentation.Screens
             });
             Add("debug.unlock_all", () => _session.DebugUnlockAll());
 
+            // 장비 주기: 장비 칸이 있는 아이템 (가방·무기·도구·방어구·소모품)
+            var gear = _session.Definitions.Items.Where(i => i.Slot != ApoGirl.Core.Definitions.EquipSlot.None)
+                .OrderBy(i => i.Slot).ThenBy(i => i.Id).ToList();
+            if (gear.Count > 0)
+            {
+                var labels = gear.Select(i => Loc.Item(i.Id) + " (" + i.Id + ")").ToList();
+                var gearPicker = new DropdownField(Loc.T("debug.give_item"), labels, 0);
+                gearPicker.AddToClassList("debug-dropdown");
+                _panel.Add(gearPicker);
+                Add("debug.give_item", () => _session.DebugGiveItem(gear[Math.Max(0, gearPicker.index)].Id));
+                Add("debug.give_basic_gear", () =>
+                {
+                    foreach (var id in new[] { "ITEM_BAG_HIKING", "ITEM_WEAPON_PIPE", "ITEM_TOOL_FLASHLIGHT", "ITEM_ARMOR_PADDING", "ITEM_BANDAGE", "ITEM_SNACK" })
+                    {
+                        _session.DebugGiveItem(id);
+                    }
+                });
+            }
+
             Add("debug.events_interactive", () =>
             {
                 _session.InteractiveEvents = !_session.InteractiveEvents;
