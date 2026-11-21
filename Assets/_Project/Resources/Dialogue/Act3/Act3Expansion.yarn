@@ -269,13 +269,21 @@ tags: calendar autumn
 title: EVT_RND_A3_PERSIMMON
 tags: act3 random autumn
 ---
-<<if seen("EVT_RND_A3_PERSIMMON") % 2 == 1>>
+<<if seen("EVT_RND_A3_PERSIMMON") % 3 == 1>>
     운동장 담장 옆 감나무에 감이 주황색으로 매달려 있었다. 아무도 따지 않은 감.
-<<else>>
+<<elseif seen("EVT_RND_A3_PERSIMMON") % 3 == 2>>
     감나무 꼭대기에 까치 한 마리가 앉아 홍시를 쪼고 있었다.
+<<else>>
+    밤사이 떨어진 홍시가 운동장에 주황색 점처럼 흩어져 있었다.
+<<endif>>
+<<if seen("EVT_RND_A3_PERSIMMON") > 2>>
+    감나무 가지가 날마다 조금씩 가벼워졌다.
 <<endif>>
 -> 장대로 감을 딴다 #choice:PICK
     장대를 휘두르다 감이 떨어져 터졌다. 그래도 몇 개는 멀쩡했다. 창가에 늘어놓으니 방이 환해졌다.
+    <<if flag("TEACHER_REINFECTED")>>
+        제일 잘 익은 것 하나를 선생님 머리맡에 두었다.
+    <<endif>>
 -> 까치밥으로 남겨 둔다 #choice:LEAVE_FOR_BIRDS
     윤 선생님: 꼭대기 몇 개는 남겨 두는 거야. 까치밥. 겨울에 새들도 먹어야지.
     그 말이 이상하게 오래 남았다.

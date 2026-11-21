@@ -22,8 +22,8 @@ title: PROLOGUE_BIRTHDAY
 
 title: PROLOGUE_PERSONALITY
 ---
-{friend()}: 근데 너 그 검사 해 봤어? 그 엠비티....와이? I야, E야?
--> 알아. 내 네 글자는… #choice:PERSONALITY.KNOW
+{friend()}: 근데 너 그 검사 해 봤어? 그… 엠비티… 와이? 
+-> I 야. 나는… #choice:PERSONALITY.KNOW
     <<input personality>>
     {friend()}: 오, 역시. 딱 너 같다.
 -> 몰라. 해 본 적 없어. #choice:PERSONALITY.QUIZ
