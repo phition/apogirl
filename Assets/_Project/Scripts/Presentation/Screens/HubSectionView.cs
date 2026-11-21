@@ -51,6 +51,37 @@ namespace ApoGirl.Presentation.Screens
 
             /// <summary>이 방에 지어 놓은 설비 그림 (조건이 맞으면 방 패널의 방 그림 위에 겹친다).</summary>
             public BuiltDef[] Built = Array.Empty<BuiltDef>();
+
+            /// <summary>지어 놓으면 단면도에 실제로 놓이는 구조물 (옥상 빗물받이·텃밭·안테나 등, 조건은 Flag/MinDefense).</summary>
+            public BuiltPropDef[] BuiltProps = Array.Empty<BuiltPropDef>();
+        }
+
+        [Serializable]
+        public sealed class BuiltPropDef
+        {
+            public string Flag = "";
+            public int MinDefense;
+            public string Key = "";
+            public float X;
+            public float Y;
+        }
+
+        /// <summary>방 사이 벽과 문, 건물 바깥 벽.</summary>
+        [Serializable]
+        public sealed class WallDef
+        {
+            public float Width = 8;
+            public float OuterWidth = 10;
+            public string OuterTex = "wall_brick";
+            public string DoorClosed = "door_school_closed";
+            public string DoorOpen = "door_school_open";
+
+            /// <summary>문 그림 크기 배율 (방 높이에 맞춤).</summary>
+            public float DoorScale = 0.85f;
+
+            /// <summary>걷는 사람이 이만큼 가까우면 열린다 (그림 픽셀), 지나간 뒤 이만큼 있다 닫힌다 (초).</summary>
+            public float OpenDistance = 26;
+            public float CloseDelay = 0.35f;
         }
 
         [Serializable]
@@ -104,6 +135,15 @@ namespace ApoGirl.Presentation.Screens
         public KeyValue[] NpcSprites = Array.Empty<KeyValue>();
         public TeacherDef Teacher = new TeacherDef();
 
+        public WallDef Walls = new WallDef();
+
+        /// <summary>계단실 그림: 아래층들(오르는 계단), 맨 위층(옥상 문).</summary>
+        public string StairsUp = "prop_stairs_up";
+        public string StairsTop = "prop_stairs_down";
+
+        /// <summary>옥상 난간 위 철조망 (가로로 이어 붙인다).</summary>
+        public string RoofFence = "";
+
         /// <summary>단면도 뒤 바깥 풍경 (마을·하늘·날씨).</summary>
         public HubSkyConfig Sky = new HubSkyConfig();
 
@@ -141,6 +181,7 @@ namespace ApoGirl.Presentation.Screens
         private readonly VisualElement _actorLayer;
         private readonly VisualElement _roomPanel;
         private readonly HubSkyView _skyView;
+        private readonly List<DoorView> _doors = new List<DoorView>();
         private Actor _player;
         private Actor _teacher;
         private string _builtSignature;
@@ -256,6 +297,10 @@ namespace ApoGirl.Presentation.Screens
             foreach (var room in _config.Rooms)
             {
                 parts.Add(IsOpen(state, room) ? "1" : "0");
+                foreach (var built in room.BuiltProps)
+                {
+                    parts.Add(BuiltShown(state, built) ? "b" : "-");
+                }
             }
 
             return string.Join(",", parts);
@@ -321,16 +366,26 @@ namespace ApoGirl.Presentation.Screens
             Place(_building, "hub-ground", -400, ArtHeight - _config.Ground, _config.Width + 800, _config.Ground + 40);
             _skyView.Build(_config.Width, shellTop - 6, ArtHeight - _config.Ground);
 
-            // 계단실 (오른쪽 끝, 층마다)
+            // 계단실 (오른쪽 끝, 층마다): 아래층은 오르는 계단, 맨 위층은 옥상 문. 그림이 층 높이면 칸을 채운다
             for (var floor = 0; floor < 3; floor++)
             {
                 var stairs = Place(_building, "hub-stairs", _config.StairsX, FloorBottom(floor) - _config.FloorHeight, _config.StairsWidth, _config.FloorHeight);
-                var key = floor < 2 ? "prop_stairs_up" : "prop_stairs_down";
-                var texture = Tex(key);
+                var texture = Tex(floor < 2 ? _config.StairsUp : _config.StairsTop) ?? Tex(floor < 2 ? "prop_stairs_up" : "prop_stairs_down");
                 if (texture != null)
                 {
-                    var art = Place(stairs, "hub-prop", (_config.StairsWidth - texture.width) * 0.5f, _config.FloorHeight - texture.height - 6, texture.width, texture.height);
-                    Image(art, texture);
+                    var full = texture.height >= _config.FloorHeight - 10;
+                    var art = full
+                        ? Place(stairs, "hub-prop", 0, 0, _config.StairsWidth, _config.FloorHeight)
+                        : Place(stairs, "hub-prop", (_config.StairsWidth - texture.width) * 0.5f, _config.FloorHeight - texture.height - 6, texture.width, texture.height);
+                    if (full)
+                    {
+                        art.style.backgroundImage = new StyleBackground(texture);
+                        art.style.backgroundSize = new StyleBackgroundSize(new BackgroundSize(Length.Percent(100), Length.Percent(100)));
+                    }
+                    else
+                    {
+                        Image(art, texture);
+                    }
                 }
             }
 
@@ -354,13 +409,30 @@ namespace ApoGirl.Presentation.Screens
                 }
                 else
                 {
-                    // 옥상: 난간
+                    // 옥상: 철조망(난간 위, 소품 뒤) + 난간
+                    var fence = Tex(_config.RoofFence);
+                    if (fence != null)
+                    {
+                        var strip = Place(element, "hub-fence", 0, height - 16 - fence.height, def.Width, fence.height);
+                        strip.pickingMode = PickingMode.Ignore;
+                        Tile(strip, _config.RoofFence, bottomAligned: true);
+                    }
+
                     Place(element, "hub-parapet", 0, height - 18, def.Width, 8);
                 }
 
                 foreach (var prop in def.Props)
                 {
                     AddProp(element, prop, height - 8);
+                }
+
+                // 지어 놓은 구조물 (빗물받이·텃밭·안테나 등): 조건이 맞으면 그 자리에 실제로 놓인다
+                foreach (var built in def.BuiltProps)
+                {
+                    if (BuiltShown(state, built))
+                    {
+                        AddProp(element, new HubSectionConfig.PropDef { Key = built.Key, X = built.X, Y = built.Y }, height - 8);
+                    }
                 }
 
                 if (def.Id == shelter)
@@ -371,10 +443,14 @@ namespace ApoGirl.Presentation.Screens
                     }
                 }
 
-                view.Dark = Place(element, "hub-dark", 0, 0, def.Width, height);
-                view.Dark.pickingMode = PickingMode.Ignore;
-                view.Glow = Place(element, "hub-glow", 0, 0, def.Width, height);
-                view.Glow.pickingMode = PickingMode.Ignore;
+                // 옥상에는 어둡게 덮는 막을 두지 않는다 (하늘·구름·비가 가리지 않게, 밤에는 소품 색만 낮춘다)
+                if (!def.Roof)
+                {
+                    view.Dark = Place(element, "hub-dark", 0, 0, def.Width, height);
+                    view.Dark.pickingMode = PickingMode.Ignore;
+                    view.Glow = Place(element, "hub-glow", 0, 0, def.Width, height);
+                    view.Glow.pickingMode = PickingMode.Ignore;
+                }
 
                 var name = new Label(RoomName(def));
                 name.AddToClassList("hub-room-name");
@@ -395,7 +471,84 @@ namespace ApoGirl.Presentation.Screens
                 });
             }
 
+            BuildWalls();
+
         }
+
+        /// <summary>
+        /// 층마다 방 사이 벽과 문, 건물 양쪽 바깥 벽. 문은 방과 방, 방과 계단실 사이에 있고 걷는 사람이 지나갈 때 열린다.
+        /// </summary>
+        private void BuildWalls()
+        {
+            _doors.Clear();
+            var walls = _config.Walls;
+            for (var floor = 0; floor < 3; floor++)
+            {
+                var top = FloorBottom(floor) - _config.FloorHeight;
+                var edges = new SortedSet<float> { _config.StairsX };
+                foreach (var room in _config.Rooms.Where(r => !r.Roof && r.Floor == floor))
+                {
+                    if (room.X > 0.5f) edges.Add(room.X);
+                    if (room.X + room.Width < _config.StairsX - 0.5f) edges.Add(room.X + room.Width);
+                }
+
+                // 바깥 벽 (벽돌)
+                foreach (var x in new[] { -walls.OuterWidth + 2, _config.Width - 2 })
+                {
+                    var outer = Place(_building, "hub-outer-wall", x, top - 6, walls.OuterWidth, _config.FloorHeight + 6);
+                    outer.pickingMode = PickingMode.Ignore;
+                    Tile(outer, walls.OuterTex);
+                }
+
+                // 안쪽 벽과 문
+                var closed = Tex(walls.DoorClosed);
+                foreach (var x in edges)
+                {
+                    var wall = Place(_building, "hub-wall", x - walls.Width * 0.5f, top + 5, walls.Width, _config.FloorHeight - 5);
+                    wall.pickingMode = PickingMode.Ignore;
+                    if (closed == null)
+                    {
+                        continue;
+                    }
+
+                    var w = closed.width * walls.DoorScale;
+                    var h = closed.height * walls.DoorScale;
+                    var door = Place(_building, "hub-door", x - w * 0.5f, FloorBottom(floor) - 8 - h, w, h);
+                    door.pickingMode = PickingMode.Ignore;
+                    Image(door, closed);
+                    _doors.Add(new DoorView { Floor = floor, X = x, Element = door });
+                }
+            }
+        }
+
+        /// <summary>걷는 사람이 가까우면 문을 열고, 지나간 뒤 잠깐 있다 닫는다.</summary>
+        private void TickDoors(float dt)
+        {
+            if (_doors.Count == 0)
+            {
+                return;
+            }
+
+            var walls = _config.Walls;
+            foreach (var door in _doors)
+            {
+                var near = _actors.Any(a => a.Walking && a.Floor == door.Floor && Mathf.Abs(a.X - door.X) < walls.OpenDistance);
+                door.Hold = near ? walls.CloseDelay : Mathf.Max(0f, door.Hold - dt);
+                var open = door.Hold > 0f;
+                if (open != door.Open)
+                {
+                    door.Open = open;
+                    var texture = Tex(open ? walls.DoorOpen : walls.DoorClosed);
+                    if (texture != null)
+                    {
+                        Image(door.Element, texture);
+                    }
+                }
+            }
+        }
+
+        private static bool BuiltShown(GameState state, HubSectionConfig.BuiltPropDef built) =>
+            (string.IsNullOrEmpty(built.Flag) || state.Flags.Contains(built.Flag)) && state.Base.Defense >= built.MinDefense;
 
         private void AddProp(VisualElement room, HubSectionConfig.PropDef prop, float floorY)
         {
@@ -717,6 +870,7 @@ namespace ApoGirl.Presentation.Screens
             }
 
             _skyView.Tick(dt);
+            TickDoors(dt);
 
             _lightTimer += dt;
             if (_lightTimer > 0.3f)
@@ -738,6 +892,13 @@ namespace ApoGirl.Presentation.Screens
             }
             foreach (var room in _rooms.Values)
             {
+                if (room.Dark == null)
+                {
+                    // 옥상: 막 없이 소품만 밤빛으로
+                    room.Element.EnableInClassList("night", night);
+                    continue;
+                }
+
                 var occupied = _actors.Any(a => a.Floor == room.Def.Floor && a.X >= room.Def.X && a.X < room.Def.X + room.Def.Width && !room.Def.Roof);
                 room.Dark.EnableInClassList("night", night && !occupied);
                 room.Dark.EnableInClassList("dim", night && occupied);
@@ -804,6 +965,15 @@ namespace ApoGirl.Presentation.Screens
 
         private static Texture2D Tex(string key) => StoryArt.Load(Pixel + key);
 
+        private sealed class DoorView
+        {
+            public int Floor;
+            public float X;
+            public VisualElement Element;
+            public bool Open;
+            public float Hold;
+        }
+
         private sealed class RoomView
         {
             public HubSectionConfig.RoomDef Def;
@@ -837,7 +1007,7 @@ namespace ApoGirl.Presentation.Screens
 
             public Texture2D Current { get; private set; }
 
-            private bool Walking => _path.Count > 0;
+            public bool Walking => _path.Count > 0;
 
             public void SetLook(Texture2D[] idle, Texture2D[] walk)
             {

@@ -426,18 +426,6 @@
           "X": 120
         },
         {
-          "Key": "decor_pail",
-          "X": 200
-        },
-        {
-          "Key": "decor_plant",
-          "X": 420
-        },
-        {
-          "Key": "decor_plant",
-          "X": 446
-        },
-        {
           "Key": "decor_laundry",
           "X": 600
         }
@@ -446,6 +434,23 @@
         "ACT_DAILY_ROOFTOP",
         "ACT_SURV_RAIN_BARREL",
         "ACT_SURV_GARDEN"
+      ],
+      "BuiltProps": [
+        {
+          "Flag": "RAIN_BARRELS",
+          "Key": "hub_roof_rain",
+          "X": 220
+        },
+        {
+          "Flag": "ROOF_GARDEN",
+          "Key": "hub_roof_garden",
+          "X": 430
+        },
+        {
+          "Flag": "POWER_RESTORED",
+          "Key": "hub_roof_antenna",
+          "X": 690
+        }
       ]
     }
   ],
@@ -557,5 +562,18 @@
     "SnowFlakes": 240,
     "Stars": 45,
     "FarFill": "#596d77"
+  },
+  "StairsUp": "hub_stair_up",
+  "StairsTop": "hub_stair_roof",
+  "RoofFence": "hub_roof_fence",
+  "Walls": {
+    "Width": 8,
+    "OuterWidth": 10,
+    "OuterTex": "wall_brick",
+    "DoorClosed": "door_school_closed",
+    "DoorOpen": "door_school_open",
+    "DoorScale": 0.85,
+    "OpenDistance": 26,
+    "CloseDelay": 0.35
   }
 }

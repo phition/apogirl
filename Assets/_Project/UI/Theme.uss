@@ -613,6 +613,10 @@ Button.selected { border-color: var(--accent); background-color: var(--accent-so
 .hub-stairs { background-color: rgb(28, 30, 36); border-left-width: 2px; border-color: rgb(70, 72, 76); }
 .hub-room { overflow: hidden; background-color: rgb(58, 56, 54); }
 .hub-room.roof { background-color: rgba(0, 0, 0, 0); }
+.hub-room.roof.locked > .hub-room-name { color: var(--text-dim); }
+.hub-room.roof.night .hub-prop, .hub-room.roof.night .hub-fence { -unity-background-image-tint-color: rgb(96, 104, 132); }
+.hub-wall { background-color: rgb(74, 72, 70); border-left-width: 1px; border-right-width: 1px; border-color: rgb(40, 38, 36); }
+.hub-outer-wall { -unity-background-image-tint-color: rgb(160, 150, 150); border-left-width: 1px; border-right-width: 1px; border-color: rgb(40, 30, 28); }
 .hub-room.roof { overflow: visible; }
 .hub-room:hover > .hub-room-name { background-color: rgba(185, 163, 122, 0.85); color: rgb(20, 20, 22); }
 .hub-room.locked > .hub-dark { background-color: rgba(6, 7, 10, 0.86); }
