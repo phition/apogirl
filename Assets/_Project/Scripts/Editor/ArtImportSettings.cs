@@ -76,6 +76,14 @@ namespace ApoGirl.EditorTools
             importer.textureCompression = TextureImporterCompression.CompressedHQ;
             importer.wrapMode = TextureWrapMode.Clamp;
             importer.filterMode = FilterMode.Bilinear;
+
+            // 허브 단면도 뒷배경(PixelLab 픽셀 아트): 정수 배로 그리므로 점 필터, 밉맵·압축 없이
+            if (path.StartsWith(Root + "UI/HubSky/"))
+            {
+                importer.mipmapEnabled = false;
+                importer.filterMode = FilterMode.Point;
+                importer.textureCompression = TextureImporterCompression.Uncompressed;
+            }
         }
 
         /// <summary>
