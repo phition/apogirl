@@ -61,6 +61,7 @@
     "hubroom.COMPUTER": "컴퓨터실",
     "hub.room_locked": "아직 열지 않은 곳",
     "settle.title": "{0}주차 · {1}",
+    "settle.stamp": "{0}주",
     "faction.trade.title": "거래",
     "faction.trade.none": "이 세력과는 거래할 수 있는 것이 없다.",
     "faction.trade.give": "주는 것",

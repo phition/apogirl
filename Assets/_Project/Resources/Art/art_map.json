@@ -31,6 +31,38 @@
     {
       "Name": "정 반장",
       "Portrait": "char_banjang"
+    },
+    {
+      "Name": "{FRIEND}",
+      "Portrait": "char_friend"
+    },
+    {
+      "Name": "강철",
+      "Portrait": "char_gangcheol"
+    },
+    {
+      "Name": "DJ",
+      "Portrait": "char_dj"
+    },
+    {
+      "Name": "민규",
+      "Portrait": "char_mingyu"
+    },
+    {
+      "Name": "준",
+      "Portrait": "char_jun"
+    },
+    {
+      "Name": "백",
+      "Portrait": "char_baek"
+    },
+    {
+      "Name": "구조대",
+      "Portrait": "char_rescue"
+    },
+    {
+      "Name": "오 씨",
+      "Portrait": "char_oh"
     }
   ],
   "Events": [
@@ -233,16 +265,298 @@
     {
       "Event": "EVT_SYS_STORAGE_NIGHT",
       "Image": "Backgrounds/bg_storage"
+    },
+    {
+      "Event": "EVT_A1_STORE_UNLOCK",
+      "Image": "Events/evt_a1_store_gate"
+    },
+    {
+      "Event": "EVT_A1_PHARMACY_UNLOCK",
+      "Image": "Events/evt_a1_store_gate"
+    },
+    {
+      "Event": "EVT_A1_ATTENDANCE",
+      "Image": "Events/evt_a1_attendance"
+    },
+    {
+      "Event": "EVT_A1_FAR_ROTOR",
+      "Image": "Events/evt_a1_far_rotor"
+    },
+    {
+      "Event": "EVT_A1_TEACHER_FIRST_DAY",
+      "Image": "Events/evt_a1_teacher_first_day"
+    },
+    {
+      "Event": "EVT_TALK_05",
+      "Image": "Events/evt_talk_rooftop_stars"
+    },
+    {
+      "Event": "EVT_CAL_MIDTERM",
+      "Image": "Events/evt_cal_midterm"
+    },
+    {
+      "Event": "EVT_CAL_TEACHERS_DAY",
+      "Image": "Events/evt_cal_teachers_day"
+    },
+    {
+      "Event": "EVT_CAL_SPORTS_DAY",
+      "Image": "Events/evt_cal_sports_day"
+    },
+    {
+      "Event": "EVT_CAL_BIRTHDAY",
+      "Image": "Events/evt_cal_birthday"
+    },
+    {
+      "Event": "EVT_DH_01_KNOCK",
+      "Image": "Events/evt_dh_knock"
+    },
+    {
+      "Event": "EVT_A2_NURSE_JOIN",
+      "Image": "Events/evt_a2_nurse_join"
+    },
+    {
+      "Event": "EVT_A2_PROSTHETIC_DONE",
+      "Image": "Events/evt_a2_prosthetic"
+    },
+    {
+      "Event": "EVT_A2_SAGEORI_MARK",
+      "Image": "Events/evt_a2_sageori_mark"
+    },
+    {
+      "Event": "EVT_A2_SAGEORI_TOLL",
+      "Image": "Events/evt_a2_sageori_toll"
+    },
+    {
+      "Event": "EVT_A2_UBC_LEAFLET",
+      "Image": "Events/evt_a2_ubc_leaflet"
+    },
+    {
+      "Event": "EVT_A2_SUBWAY_UNLOCK",
+      "Image": "Events/evt_a2_subway_gate"
+    },
+    {
+      "Event": "EVT_A2_RESIDENTIAL_UNLOCK",
+      "Image": "Events/evt_a2_residential"
+    },
+    {
+      "Event": "EVT_A2_BYSTANDER",
+      "Image": "Events/evt_a2_bystander"
+    },
+    {
+      "Event": "EVT_A2_RATION_FIGHT",
+      "Image": "Events/evt_a2_ration_fight"
+    },
+    {
+      "Event": "EVT_CAL_RAINY_SEASON",
+      "Image": "Events/evt_cal_rainy_season"
+    },
+    {
+      "Event": "EVT_CAL_SUMMER_FESTIVAL",
+      "Image": "Events/evt_cal_summer_festival"
+    },
+    {
+      "Event": "EVT_CAL_LIBERATION",
+      "Image": "Events/evt_cal_liberation"
+    },
+    {
+      "Event": "EVT_A3_MART_GROUP",
+      "Image": "Events/evt_a3_mart_group"
+    },
+    {
+      "Event": "EVT_A3_POLICE",
+      "Image": "Events/evt_a3_police"
+    },
+    {
+      "Event": "EVT_A3_POLICE_UNLOCK",
+      "Image": "Events/evt_a3_police"
+    },
+    {
+      "Event": "EVT_A3_WANDERER_1",
+      "Image": "Events/evt_a3_wanderer"
+    },
+    {
+      "Event": "EVT_A3_UBC_SOS",
+      "Image": "Events/evt_a3_ubc_sos"
+    },
+    {
+      "Event": "EVT_A3_MART_SPLIT",
+      "Image": "Events/evt_a3_mart_split"
+    },
+    {
+      "Event": "EVT_A3_SAGEORI_KID",
+      "Image": "Events/evt_a3_sageori_kid"
+    },
+    {
+      "Event": "EVT_A3_TEACHER_CONFESS",
+      "Image": "Events/evt_a3_teacher_confess"
+    },
+    {
+      "Event": "EVT_A3_DJ_SHOW",
+      "Image": "Events/evt_a3_dj_show"
+    },
+    {
+      "Event": "EVT_CAL_CHUSEOK",
+      "Image": "Events/evt_cal_chuseok"
+    },
+    {
+      "Event": "EVT_CAL_SCHOOL_FESTIVAL",
+      "Image": "Events/evt_cal_school_festival"
+    },
+    {
+      "Event": "EVT_CAL_KIMJANG",
+      "Image": "Events/evt_cal_kimjang"
+    },
+    {
+      "Event": "EVT_DAY_INTRUSION",
+      "Image": "Events/evt_day_intrusion"
+    },
+    {
+      "Event": "EVT_A4_FIRST_SNOW",
+      "Image": "Events/evt_a4_first_snow"
+    },
+    {
+      "Event": "EVT_A4_SAGEORI_ULTIMATUM",
+      "Image": "Events/evt_a4_sageori_gate"
+    },
+    {
+      "Event": "EVT_A4_SAGEORI_TRUCE_END",
+      "Image": "Events/evt_a4_sageori_gate"
+    },
+    {
+      "Event": "EVT_A4_FINALE_RAID",
+      "Image": "Events/evt_a4_finale_raid"
+    },
+    {
+      "Event": "EVT_A4_FINALE_RAID_KANGCHEOL",
+      "Image": "Events/evt_a4_finale_raid"
+    },
+    {
+      "Event": "EVT_A4_FINALE_RAID_ALLY",
+      "Image": "Events/evt_a4_raid_ally"
+    },
+    {
+      "Event": "EVT_A4_MART_LEAVES",
+      "Image": "Events/evt_a4_mart_leaves"
+    },
+    {
+      "Event": "EVT_A4_MINGYU_VISIT",
+      "Image": "Events/evt_a4_mingyu_visit"
+    },
+    {
+      "Event": "EVT_A4_UBC_LAST_SHOW",
+      "Image": "Events/evt_a4_ubc_last_show"
+    },
+    {
+      "Event": "EVT_A4_BLOOD_MATCH",
+      "Image": "Events/evt_a4_blood"
+    },
+    {
+      "Event": "EVT_A4_BLOOD_MISMATCH",
+      "Image": "Events/evt_a4_blood"
+    },
+    {
+      "Event": "EVT_A4_BLOOD_UNKNOWN",
+      "Image": "Events/evt_a4_blood"
+    },
+    {
+      "Event": "EVT_DH_08_FAREWELL",
+      "Image": "Events/evt_a4_farewell"
+    },
+    {
+      "Event": "EVT_HR_05_FAREWELL",
+      "Image": "Events/evt_a4_farewell"
+    },
+    {
+      "Event": "EVT_NURSE_06_FAREWELL",
+      "Image": "Events/evt_a4_farewell"
+    },
+    {
+      "Event": "EVT_BY_05_FAREWELL",
+      "Image": "Events/evt_a4_farewell"
+    },
+    {
+      "Event": "EVT_CAL_CHRISTMAS",
+      "Image": "Events/evt_cal_christmas"
+    },
+    {
+      "Event": "EVT_CAL_NEW_YEAR",
+      "Image": "Events/evt_cal_new_year"
+    },
+    {
+      "Event": "EVT_CAL_SEOLLAL",
+      "Image": "Events/evt_cal_seollal"
+    },
+    {
+      "Event": "EVT_CAL_DAEBOREUM",
+      "Image": "Events/evt_cal_daeboreum"
+    },
+    {
+      "Event": "EVT_OUTING_SPRING",
+      "Image": "Events/evt_outing_spring"
+    },
+    {
+      "Event": "EVT_OUTING_SUMMER",
+      "Image": "Events/evt_outing_summer"
+    },
+    {
+      "Event": "EVT_OUTING_AUTUMN",
+      "Image": "Events/evt_outing_autumn"
+    },
+    {
+      "Event": "EVT_OUTING_WINTER",
+      "Image": "Events/evt_outing_winter"
+    },
+    {
+      "Event": "EVT_TRIP_DEPART",
+      "Image": "Events/evt_trip_depart"
+    },
+    {
+      "Event": "EVT_TRIP_NIGHT",
+      "Image": "Events/evt_trip_night"
+    },
+    {
+      "Event": "EVT_TRIP_RETURN",
+      "Image": "Events/evt_trip_return"
+    },
+    {
+      "Event": "EVT_SYS_FIRST_INJURY",
+      "Image": "Events/evt_sys_first_injury"
+    },
+    {
+      "Event": "EVT_SYS_RAW_WATER",
+      "Image": "Events/evt_sys_raw_water"
+    },
+    {
+      "Event": "EVT_SYS_FIRST_DISH",
+      "Image": "Events/evt_sys_first_dish"
+    },
+    {
+      "Event": "EVT_SYS_FIRST_MUSIC",
+      "Image": "Events/evt_sys_first_music"
+    },
+    {
+      "Event": "EVT_SYS_ROOM_HOMEEC",
+      "Image": "Events/evt_sys_room_homeec"
+    },
+    {
+      "Event": "EVT_SYS_ROOM_COMPUTER",
+      "Image": "Events/evt_sys_room_computer"
+    },
+    {
+      "Event": "EVT_SYS_ROOM_MUSIC",
+      "Image": "Events/evt_sys_room_music"
     }
   ],
   "Backdrops": [
     {
       "Flag": "CLASSROOM_MOVED_IN",
-      "Image": "Backgrounds/bg_classroom"
+      "Image": "Backgrounds/bg_classroom",
+      "Night": "Backgrounds/bg_classroom_night"
     },
     {
       "Flag": "",
-      "Image": "Backgrounds/bg_storage"
+      "Image": "Backgrounds/bg_storage",
+      "Night": "Backgrounds/bg_storage_night"
     }
   ],
   "Locations": [
@@ -519,12 +833,320 @@
     {
       "Key": "npc.NPC_RINGLEADER",
       "Image": "avatar_ringleader"
+    },
+    {
+      "Key": "act.ACT_EDU_HUMANITIES",
+      "Image": "icon_act_humanities"
+    },
+    {
+      "Key": "act.ACT_EDU_MEDICINE",
+      "Image": "icon_act_medicine"
+    },
+    {
+      "Key": "act.ACT_EDU_SELFDEFENSE",
+      "Image": "icon_act_selfdefense"
+    },
+    {
+      "Key": "act.ACT_EDU_SURVIVAL",
+      "Image": "icon_act_survival"
+    },
+    {
+      "Key": "act.ACT_EDU_ENGINEERING",
+      "Image": "icon_act_engineering"
+    },
+    {
+      "Key": "act.ACT_EDU_SCIENCE",
+      "Image": "icon_act_science"
+    },
+    {
+      "Key": "act.ACT_EDU_MUSIC",
+      "Image": "icon_act_music"
+    },
+    {
+      "Key": "act.ACT_EDU_MIND",
+      "Image": "icon_act_mind"
+    },
+    {
+      "Key": "act.ACT_DAILY_TUTOR_DOHYEON",
+      "Image": "icon_act_tutor"
+    },
+    {
+      "Key": "act.ACT_SURV_TRAP",
+      "Image": "icon_act_trap"
+    },
+    {
+      "Key": "act.ACT_SURV_COVERS",
+      "Image": "icon_act_covers"
+    },
+    {
+      "Key": "act.ACT_SURV_CLEAN",
+      "Image": "icon_act_clean"
+    },
+    {
+      "Key": "act.ACT_SURV_MAKE_CRUTCH",
+      "Image": "icon_act_crutch"
+    },
+    {
+      "Key": "act.ACT_SURV_MAKE_PROSTHETIC",
+      "Image": "icon_act_prosthetic"
+    },
+    {
+      "Key": "act.ACT_TREAT_INFECTION",
+      "Image": "icon_act_treat_infection"
+    },
+    {
+      "Key": "act.ACT_CARE_TEACHER",
+      "Image": "icon_act_care_teacher"
+    },
+    {
+      "Key": "act.ACT_REST_DAY",
+      "Image": "icon_act_rest_day"
+    },
+    {
+      "Key": "act.ACT_REST_NIGHT",
+      "Image": "icon_act_rest_night"
+    },
+    {
+      "Key": "act.ACT_NIGHT_DIARY",
+      "Image": "icon_act_diary"
+    },
+    {
+      "Key": "act.ACT_NIGHT_TALK",
+      "Image": "icon_act_talk"
+    },
+    {
+      "Key": "act.ACT_NIGHT_WATCH",
+      "Image": "icon_act_watch"
+    },
+    {
+      "Key": "act.ACT_NIGHT_WORK",
+      "Image": "icon_act_night_work"
+    },
+    {
+      "Key": "act.ACT_DAILY_ROOFTOP",
+      "Image": "icon_act_rooftop"
+    },
+    {
+      "Key": "act.ACT_INTRUSION",
+      "Image": "icon_act_intrusion"
+    },
+    {
+      "Key": "act.ACT_STORAGE_WAIT",
+      "Image": "icon_act_confined"
+    },
+    {
+      "Key": "act.ACT_EXP_DAY_SCHOOL",
+      "Image": "icon_act_exp_school"
+    },
+    {
+      "Key": "act.ACT_EXP_NIGHT_SCHOOL",
+      "Image": "icon_act_exp_school"
+    },
+    {
+      "Key": "act.ACT_EXP_TUTORIAL",
+      "Image": "icon_act_exp_school"
+    },
+    {
+      "Key": "act.ACT_EXP_DAY_STORE",
+      "Image": "icon_act_exp_store"
+    },
+    {
+      "Key": "act.ACT_EXP_NIGHT_STORE",
+      "Image": "icon_act_exp_store"
+    },
+    {
+      "Key": "act.ACT_EXP_DAY_PHARMACY",
+      "Image": "icon_act_exp_pharmacy"
+    },
+    {
+      "Key": "act.ACT_EXP_NIGHT_PHARMACY",
+      "Image": "icon_act_exp_pharmacy"
+    },
+    {
+      "Key": "act.ACT_EXP_DAY_RESIDENTIAL",
+      "Image": "icon_act_exp_residential"
+    },
+    {
+      "Key": "act.ACT_EXP_DAY_SUBWAY",
+      "Image": "icon_act_exp_subway"
+    },
+    {
+      "Key": "act.ACT_EXP_NIGHT_SUBWAY",
+      "Image": "icon_act_exp_subway"
+    },
+    {
+      "Key": "act.ACT_EXP_DAY_MART",
+      "Image": "icon_act_exp_mart"
+    },
+    {
+      "Key": "act.ACT_EXP_NIGHT_MART",
+      "Image": "icon_act_exp_mart"
+    },
+    {
+      "Key": "act.ACT_EXP_DAY_POLICE",
+      "Image": "icon_act_exp_police"
+    },
+    {
+      "Key": "act.ACT_EXP_NIGHT_POLICE",
+      "Image": "icon_act_exp_police"
+    },
+    {
+      "Key": "act.ACT_EXP_DAY_WATERWORKS",
+      "Image": "icon_act_exp_waterworks"
+    },
+    {
+      "Key": "act.ACT_EXP_NIGHT_WATERWORKS",
+      "Image": "icon_act_exp_waterworks"
+    },
+    {
+      "Key": "act.ACT_OUTING_SPRING",
+      "Image": "icon_act_outing"
+    },
+    {
+      "Key": "act.ACT_OUTING_SUMMER",
+      "Image": "icon_act_outing"
+    },
+    {
+      "Key": "act.ACT_OUTING_AUTUMN",
+      "Image": "icon_act_outing"
+    },
+    {
+      "Key": "act.ACT_OUTING_WINTER",
+      "Image": "icon_act_outing"
+    },
+    {
+      "Key": "act.ACT_SCHOOL_TRIP",
+      "Image": "icon_act_trip"
+    },
+    {
+      "Key": "act.ACT_TRIP_NIGHT",
+      "Image": "icon_act_trip"
+    },
+    {
+      "Key": "act.forced_rest",
+      "Image": "icon_act_forced_rest"
+    },
+    {
+      "Key": "faction.FAC_SAGEORI",
+      "Image": "icon_faction_sageori"
+    },
+    {
+      "Key": "faction.FAC_MART",
+      "Image": "icon_faction_mart"
+    },
+    {
+      "Key": "faction.FAC_UBC",
+      "Image": "icon_faction_ubc"
+    },
+    {
+      "Key": "npc.teacher",
+      "Image": "icon_npc_teacher"
+    },
+    {
+      "Key": "npc.banjang",
+      "Image": "icon_npc_banjang"
+    },
+    {
+      "Key": "npc.gangcheol",
+      "Image": "icon_npc_gangcheol"
+    },
+    {
+      "Key": "npc.dj",
+      "Image": "icon_npc_dj"
+    },
+    {
+      "Key": "prof.Science",
+      "Image": "icon_prof_science"
+    },
+    {
+      "Key": "prof.Music",
+      "Image": "icon_prof_music"
+    },
+    {
+      "Key": "vital.Cleanliness",
+      "Image": "icon_vital_cleanliness"
+    },
+    {
+      "Key": "status.injured",
+      "Image": "icon_status_injured"
+    },
+    {
+      "Key": "status.infected",
+      "Image": "icon_status_infected"
+    },
+    {
+      "Key": "status.confined",
+      "Image": "icon_status_confined"
+    },
+    {
+      "Key": "weather.snow",
+      "Image": "icon_weather_snow"
+    },
+    {
+      "Key": "weather.storm",
+      "Image": "icon_weather_storm"
+    },
+    {
+      "Key": "weather.fog",
+      "Image": "icon_weather_fog"
+    },
+    {
+      "Key": "menu.record",
+      "Image": "icon_menu_record"
+    },
+    {
+      "Key": "menu.school",
+      "Image": "icon_menu_school"
+    },
+    {
+      "Key": "menu.people",
+      "Image": "icon_menu_people"
+    },
+    {
+      "Key": "menu.diary",
+      "Image": "icon_menu_diary"
+    },
+    {
+      "Key": "menu.plan",
+      "Image": "icon_menu_plan"
+    },
+    {
+      "Key": "menu.settings",
+      "Image": "icon_menu_settings"
+    },
+    {
+      "Key": "ctl.speed_1",
+      "Image": "icon_speed_1"
+    },
+    {
+      "Key": "ctl.speed_2",
+      "Image": "icon_speed_2"
+    },
+    {
+      "Key": "ctl.speed_4",
+      "Image": "icon_speed_4"
+    },
+    {
+      "Key": "ctl.skip",
+      "Image": "icon_skip"
+    },
+    {
+      "Key": "ctl.pause",
+      "Image": "icon_pause"
     }
   ],
   "Factions": [
     {
       "Location": "FAC_MART",
       "Image": "Portraits/char_banjang_neutral"
+    },
+    {
+      "Location": "FAC_SAGEORI",
+      "Image": "Portraits/char_gangcheol_neutral"
+    },
+    {
+      "Location": "FAC_UBC",
+      "Image": "Portraits/char_dj_neutral"
     }
   ]
 }

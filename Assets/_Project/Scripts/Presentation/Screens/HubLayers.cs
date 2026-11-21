@@ -32,6 +32,9 @@ namespace ApoGirl.Presentation.Screens
             _recordButton = root.Q<Button>("record-button");
             _baseButton = root.Q<Button>("base-button");
             _planButton = root.Q<Button>("plan-open-button");
+            StoryArt.SetIcon(_recordButton, StoryArt.Icon("menu.record"), 22f);
+            StoryArt.SetIcon(_baseButton, StoryArt.Icon("menu.people"), 22f);
+            StoryArt.SetIcon(_planButton, StoryArt.Icon("menu.plan"), 26f);
 
             root.Q<Label>("drawer-left-title").text = Loc.T("hud.record_title");
             root.Q<Label>("drawer-right-title").text = Loc.T("hud.base_title");
@@ -150,6 +153,7 @@ namespace ApoGirl.Presentation.Screens
                 var cell = _cells[i];
                 var empty = string.IsNullOrEmpty(slot.ActionId);
                 cell.text = empty ? "·" : Loc.Action(slot.ActionId, "short");
+                StoryArt.SetIcon(cell, empty ? null : SlotIcon(slot), 22f);
                 cell.tooltip = empty ? Loc.T("planner.empty") : Loc.Action(slot.ActionId);
                 cell.EnableInClassList("empty", empty);
                 cell.EnableInClassList("locked", slot.Locked);
@@ -158,6 +162,24 @@ namespace ApoGirl.Presentation.Screens
                 cell.EnableInClassList("done", executing && i < current);
                 cell.EnableInClassList("current", executing && i == current);
             }
+        }
+
+        /// <summary>칸 아이콘: 강제 휴식 → 행동 아이콘 → 행동 분류 아이콘.</summary>
+        private UnityEngine.Texture2D SlotIcon(PlannedSlot slot)
+        {
+            if (slot.ForcedRest && !slot.Locked)
+            {
+                var forced = StoryArt.Icon("act.forced_rest");
+                if (forced != null) return forced;
+            }
+
+            var icon = StoryArt.Icon("act." + slot.ActionId);
+            if (icon == null && _session.Definitions.TryGetAction(slot.ActionId, out var action))
+            {
+                icon = StoryArt.Icon("cat." + action.Category);
+            }
+
+            return icon;
         }
     }
 

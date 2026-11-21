@@ -293,7 +293,8 @@
       ],
       "Actions": [
         "ACT_EDU_COOKING"
-      ]
+      ],
+      "Art": "Story/Backgrounds/bg_homeec"
     },
     {
       "Id": "BROADCAST",
@@ -349,7 +350,8 @@
       ],
       "Actions": [
         "ACT_EDU_MUSIC"
-      ]
+      ],
+      "Art": "Story/Backgrounds/bg_music"
     },
     {
       "Id": "COMPUTER",
@@ -370,7 +372,8 @@
           "X": 108
         }
       ],
-      "Actions": []
+      "Actions": [],
+      "Art": "Story/Backgrounds/bg_computer"
     },
     {
       "Id": "GYM",

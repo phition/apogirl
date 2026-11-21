@@ -15,6 +15,9 @@ namespace ApoGirl.Presentation.Art
     {
         public const string PlayerSpeaker = "{PLAYER}";
 
+        /// <summary>친구(지우) 화자 키: 대사 이름은 플레이어가 정한 호칭이라 표에는 이 키로 둔다.</summary>
+        public const string FriendSpeaker = "{FRIEND}";
+
         [Serializable]
         private sealed class SpeakerEntry
         {
@@ -35,6 +38,9 @@ namespace ApoGirl.Presentation.Art
         {
             public string Flag = "";
             public string Image = "";
+
+            /// <summary>밤 그림 (결산 화면 뒤 등, 없으면 Image).</summary>
+            public string Night = "";
         }
 
         [Serializable]
@@ -102,14 +108,14 @@ namespace ApoGirl.Presentation.Art
 
         public static Texture2D Ui(string key) => Load("UI/" + key);
 
-        /// <summary>허브 배경: 플래그가 맞는 첫 그림 (빈 플래그 = 기본).</summary>
-        public static Texture2D Backdrop(GameState state)
+        /// <summary>허브 배경: 플래그가 맞는 첫 그림 (빈 플래그 = 기본). night면 밤 그림이 있으면 그것.</summary>
+        public static Texture2D Backdrop(GameState state, bool night = false)
         {
             foreach (var entry in Map.Backdrops)
             {
                 if (string.IsNullOrEmpty(entry.Flag) || (state != null && state.Flags.Contains(entry.Flag)))
                 {
-                    return Story(entry.Image);
+                    return night && !string.IsNullOrEmpty(entry.Night) ? Story(entry.Night) ?? Story(entry.Image) : Story(entry.Image);
                 }
             }
 
@@ -230,7 +236,7 @@ namespace ApoGirl.Presentation.Art
                 return null;
             }
 
-            var key = speaker == playerName ? PlayerSpeaker : speaker;
+            var key = speaker == playerName ? PlayerSpeaker : speaker == Dialogue.YarnFunctions.Friend() ? FriendSpeaker : speaker;
             foreach (var entry in Map.Speakers)
             {
                 if (entry.Name != key)

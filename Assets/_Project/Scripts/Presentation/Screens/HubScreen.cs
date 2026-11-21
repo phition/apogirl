@@ -247,6 +247,7 @@ namespace ApoGirl.Presentation.Screens
             _root.Q<Button>("save-button").text = Loc.T("hub.save");
             _root.Q<Button>("save-button").clicked += ShowSaveCard;
             _root.Q<Button>("menu-button").text = Loc.T("hub.menu");
+            StoryArt.SetIcon(_root.Q<Button>("menu-button"), StoryArt.Icon("menu.settings"), 22f);
             _root.Q<Button>("menu-button").clicked += ShowMenuCard;
             _root.Q<Button>("plan-open-button").clicked += () => _layers.ToggleBoard();
 
@@ -273,6 +274,7 @@ namespace ApoGirl.Presentation.Screens
                     Refresh();
                 });
                 button.name = "speed-" + speed;
+                StoryArt.SetIcon(button, StoryArt.Icon(speed == ExecutionSpeed.Normal ? "ctl.speed_1" : speed == ExecutionSpeed.Fast ? "ctl.speed_2" : "ctl.skip"), 18f);
                 speedButtons.Add(button);
             }
         }

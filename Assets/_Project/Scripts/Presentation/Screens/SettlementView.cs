@@ -45,6 +45,21 @@ namespace ApoGirl.Presentation.Screens
             _right.Clear();
             _buttons.Clear();
 
+            // 뒤: 거처의 밤 (어둡게), 왼쪽 쪽 위: 한 주 끝 도장
+            var night = StoryArt.Backdrop(state, true);
+            _sheet.style.backgroundImage = night != null ? new StyleBackground(night) : new StyleBackground(StyleKeyword.Null);
+            _sheet.style.backgroundSize = new StyleBackgroundSize(new BackgroundSize(BackgroundSizeType.Cover));
+            _sheet.style.unityBackgroundImageTintColor = new UnityEngine.Color(0.42f, 0.42f, 0.48f, 1f);
+            var stamp = StoryArt.Ui("Paper/ui_stamp_week_done");
+            if (stamp != null)
+            {
+                var mark = new Label(Loc.F("settle.stamp", summary.Week));
+                mark.AddToClassList("settle-stamp");
+                mark.style.backgroundImage = new StyleBackground(stamp);
+                mark.pickingMode = PickingMode.Ignore;
+                _left.Add(mark);
+            }
+
             // ── 왼쪽 쪽: 일기 ──
             var season = UiText.Season(CalendarRules.GetSeason(summary.Week));
             Add(_left, Loc.F("settle.title", summary.Week, season), "settle-title");

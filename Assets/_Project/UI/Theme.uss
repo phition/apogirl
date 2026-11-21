@@ -675,6 +675,8 @@ Button.selected { border-color: var(--accent); background-color: var(--accent-so
 }
 .settle-page { position: absolute; top: 13%; bottom: 17%; }
 .settle-left { left: 7.6%; width: 39.4%; padding: 6px 18px; }
+.settle-stamp { position: absolute; right: 6px; top: -18px; width: 150px; height: 96px; -unity-background-scale-mode: scale-to-fit; rotate: -9deg; opacity: 0.85;
+    font-size: 22px; -unity-font-style: bold; color: rgb(178, 46, 40); -unity-text-align: middle-center; }
 .settle-right { left: 53.4%; width: 39.4%; padding: 6px 18px; }
 .settle-title { font-size: 30px; -unity-font-style: bold; color: rgb(44, 38, 32); margin-bottom: 12px; }
 .settle-diary { font-size: 21px; color: rgb(52, 46, 40); white-space: normal; margin-bottom: 14px; }
@@ -739,6 +741,10 @@ Button.selected { border-color: var(--accent); background-color: var(--accent-so
 .hub-room-built { position: absolute; left: 4px; right: 4px; bottom: 2px; height: 74px; flex-direction: row; justify-content: flex-end; }
 .hub-room-built-item { width: 74px; height: 74px; margin-left: 2px; }
 .action-card.with-icon { padding-left: 56px; background-position-y: center; }
+.dock-cell.with-icon { padding-left: 28px; -unity-text-align: middle-left; }
+.hud-button.with-icon { padding-left: 32px; }
+.dock-plan.with-icon { padding-left: 38px; }
+.dock-speed .small-button.with-icon { padding-left: 26px; }
 .hub-room-action.with-icon { padding-left: 36px; }
 .hub-room-built.standalone { position: relative; left: 0; right: 0; bottom: 0; justify-content: flex-start; margin-bottom: 6px; }
 

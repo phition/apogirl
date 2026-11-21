@@ -165,6 +165,7 @@ namespace ApoGirl.Presentation.Screens
             _injury = Row(panel);
             _injury.AddToClassList("danger");
             _injury.style.whiteSpace = WhiteSpace.Normal;
+            StoryArt.SetIcon(_injury, StoryArt.Icon("status.injured"), 22f);
 
             _symptom = Row(panel);
             _symptom.AddToClassList("danger");
