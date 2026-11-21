@@ -508,7 +508,7 @@ namespace ApoGirl.Presentation.Screens
                 _nextBlink = now + Range(eyes.BlinkMin, eyes.BlinkMax);
                 if (!_eyesShown) ShowEyes("blink", eyes.BlinkTime, now);
             }
-            else if (now >= _nextGaze)
+            else if (now >= _nextGaze && !_eyesShown)
             {
                 _nextGaze = now + Range(eyes.GazeMin, eyes.GazeMax);
                 ShowEyes(_random.Next(2) == 0 ? "gaze_left" : "gaze_right", eyes.GazeTime, now);
