@@ -149,6 +149,9 @@ namespace ApoGirl.Presentation.Screens
 
         private static HubSectionConfig _loaded;
 
+        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
+        private static void ResetLoaded() => _loaded = null;
+
         public static HubSectionConfig Load()
         {
             if (_loaded == null)

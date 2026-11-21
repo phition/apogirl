@@ -73,6 +73,14 @@ namespace ApoGirl.Presentation.Art
         private static ArtMap _map;
         private static readonly Dictionary<string, Texture2D> Cache = new Dictionary<string, Texture2D>();
 
+        /// <summary>플레이를 시작할 때 표·그림 캐시를 비운다 (도메인 다시 불러오기를 끈 에디터에서 지난 플레이의 "그림 없음"이 남지 않게).</summary>
+        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
+        private static void ResetCache()
+        {
+            _map = null;
+            Cache.Clear();
+        }
+
         private static ArtMap Map
         {
             get
