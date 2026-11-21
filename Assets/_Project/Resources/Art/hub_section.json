@@ -95,7 +95,7 @@
       "Floor": 0,
       "X": 250,
       "Width": 170,
-      "Wall": "wall_kitchen",
+      "Wall": "wall_homeec",
       "FloorTex": "wall_floor_homeec",
       "Facility": "CAFETERIA",
       "Props": [
@@ -553,8 +553,9 @@
     "CloudSpeed": 6,
     "CloudsClear": 3,
     "CloudsRain": 8,
-    "RainDrops": 110,
+    "RainDrops": 190,
     "SnowFlakes": 70,
-    "Stars": 45
+    "Stars": 45,
+    "FarFill": "#596d77"
   }
 }

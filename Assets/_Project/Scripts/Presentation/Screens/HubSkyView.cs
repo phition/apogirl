@@ -31,6 +31,9 @@ namespace ApoGirl.Presentation.Screens
         /// <summary>먼 마을 띠의 밑변: 옥상 바닥에서 아래로 (그림 픽셀). 아래쪽은 건물에 가린다.</summary>
         public float FarSink = 24;
 
+        /// <summary>먼 마을 띠 아래를 채우는 색 (건물 옆으로 띠 밑변이 떠 보이지 않게, 띠 아래쪽 평균색).</summary>
+        public string FarFill = "#596d77";
+
         /// <summary>해·달 자리 (단면도 왼쪽 위에서, 그림 픽셀).</summary>
         public float SunX = 60;
         public float SunY = 8;
@@ -68,6 +71,7 @@ namespace ApoGirl.Presentation.Screens
         private readonly List<VisualElement> _stars = new List<VisualElement>();
         private readonly System.Random _random = new System.Random(7);
         private VisualElement _far;
+        private VisualElement _farFill;
         private VisualElement _near;
         private VisualElement _sun;
         private VisualElement _moon;
@@ -118,6 +122,7 @@ namespace ApoGirl.Presentation.Screens
             if (far != null)
             {
                 _far = Strip(far, roofFloor + _config.FarSink - far.height);
+                _farFill = Place(_layer, _left, roofFloor + _config.FarSink - 1, _right - _left, ground - roofFloor - _config.FarSink + 1);
             }
 
             _cloudLayer = Place(_layer, _left, _skyTop, _right - _left, ground - _skyTop);
@@ -167,7 +172,9 @@ namespace ApoGirl.Presentation.Screens
             _frame.style.backgroundSize = new StyleBackgroundSize(new BackgroundSize(Length.Percent(100), Length.Percent(100)));
 
             var town = Parse(palette.Town);
-            if (_far != null) _far.style.unityBackgroundImageTintColor = town * new Color(0.85f, 0.88f, 0.95f, 1f);
+            var farTint = town * new Color(0.85f, 0.88f, 0.95f, 1f);
+            if (_far != null) _far.style.unityBackgroundImageTintColor = farTint;
+            if (_farFill != null) _farFill.style.backgroundColor = Parse(_config.FarFill) * farTint;
             if (_near != null) _near.style.unityBackgroundImageTintColor = town;
 
             Show(_sun, !night && !rain);
