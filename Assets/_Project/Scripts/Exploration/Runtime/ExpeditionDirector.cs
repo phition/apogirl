@@ -145,6 +145,9 @@ namespace ApoGirl.Exploration.Runtime
         private bool _tutorialHidden;
         private bool _tutorialOpenedBag;
         private float _searchNoiseTimer;
+
+        /// <summary>이번 프레임에 수색 중인가 (수색 소리는 이 동안만 반복해서 울린다).</summary>
+        private bool _searching;
         private float _shoveTimer;
         private bool _crouching;
         private Light2D _flashlight;
@@ -405,6 +408,7 @@ namespace ApoGirl.Exploration.Runtime
 
         private void Update()
         {
+            _searching = false;
             if (IsFinished || _hud == null)
             {
                 return;
@@ -1047,13 +1051,15 @@ namespace ApoGirl.Exploration.Runtime
                     {
                         _searchNoiseTimer = SearchNoiseInterval;
                         EmitNoise(CurrentArea, X, _balance.SearchNoise);
-                        Sfx("sfx_search", 0.6f);
                     }
+
+                    _searching = true;
 
                     var searchRate = 1f + Request.Modifier("SearchSpeed");
                     Nearest.SearchProgress += (IsDark && !FlashlightOn ? dt / _balance.DarkSearchMultiplier : dt) * searchRate;
                     if (Nearest.SearchProgress >= Nearest.SearchSeconds)
                     {
+                        _searching = false;
                         _log.ContainersSearched++;
                         Nearest.MarkSearched();
                         if (!string.IsNullOrEmpty(Nearest.LootKey))
@@ -2505,6 +2511,22 @@ namespace ApoGirl.Exploration.Runtime
             else Presentation.Audio.Sound.StopLoop("tension");
             if (dormantNear) Presentation.Audio.Sound.Loop("crowd", "Sfx/sfx_z_dormant_crowd", Presentation.Audio.SoundCategory.Ambience);
             else Presentation.Audio.Sound.StopLoop("crowd");
+        }
+
+        /// <summary>
+        /// 수색 소리: E를 누르고 수색하는 동안만 반복해서 울리고, 다 뒤지거나 손을 떼거나 화면이 멈춘 프레임에 바로 끊는다.
+        /// (예전에는 0.5초마다 한 번씩 울려서 수색이 끝난 뒤에도 마지막 소리가 끝까지 남았다)
+        /// </summary>
+        private void LateUpdate()
+        {
+            if (_searching && !IsFinished)
+            {
+                Presentation.Audio.Sound.Loop("search", "Sfx/sfx_search", Presentation.Audio.SoundCategory.Sfx, 0.6f);
+            }
+            else
+            {
+                Presentation.Audio.Sound.StopLoop("search");
+            }
         }
 
         private void OnDestroy()
