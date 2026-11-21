@@ -570,9 +570,9 @@
     "Width": 8,
     "OuterWidth": 10,
     "OuterTex": "wall_brick",
-    "DoorClosed": "door_school_closed",
-    "DoorOpen": "door_school_open",
-    "DoorScale": 0.72,
+    "DoorHeight": 70,
+    "DoorLine": 2,
+    "DoorPanel": 14,
     "OpenDistance": 26,
     "CloseDelay": 0.35
   }

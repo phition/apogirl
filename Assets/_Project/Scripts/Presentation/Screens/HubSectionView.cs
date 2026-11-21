@@ -73,11 +73,13 @@ namespace ApoGirl.Presentation.Screens
             public float Width = 8;
             public float OuterWidth = 10;
             public string OuterTex = "wall_brick";
-            public string DoorClosed = "door_school_closed";
-            public string DoorOpen = "door_school_open";
-
-            /// <summary>문 그림 크기 배율 (방 높이에 맞춤).</summary>
-            public float DoorScale = 0.85f;
+            /// <summary>
+            /// 고전 단면도 방식: 닫힌 문은 벽 속의 가는 선, 열리면 문 높이만큼 벽이 비고 문짝이 한쪽으로 젖혀져 보인다.
+            /// 높이는 인물 키에 맞춘다 (학생 64, 선생님 75 그림 픽셀).
+            /// </summary>
+            public float DoorHeight = 70;
+            public float DoorLine = 2;
+            public float DoorPanel = 14;
 
             /// <summary>걷는 사람이 이만큼 가까우면 열린다 (그림 픽셀), 지나간 뒤 이만큼 있다 닫힌다 (초).</summary>
             public float OpenDistance = 26;
@@ -421,12 +423,15 @@ namespace ApoGirl.Presentation.Screens
                         Tile(strip, _config.RoofFence, bottomAligned: true);
                     }
 
-                    Place(element, "hub-parapet", 0, height - 18, def.Width, 8);
+                    // 옥상 바닥(슬래브): 벽돌 윗면(height - 6)까지 채워 하늘이 비치는 틈이 없게
+                    Place(element, "hub-parapet", 0, height - 18, def.Width, 13);
                 }
 
+                // 소품 바닥선: 방은 바닥 띠 위, 옥상은 슬래브 윗면에서 조금 들어간 곳 (닿아 보이게)
+                var propFloor = def.Roof ? height - 15 : height - 8;
                 foreach (var prop in def.Props)
                 {
-                    AddProp(element, prop, height - 8);
+                    AddProp(element, prop, propFloor);
                 }
 
                 // 지어 놓은 구조물 (빗물받이·텃밭·안테나 등): 조건이 맞으면 그 자리에 실제로 놓인다
@@ -434,7 +439,7 @@ namespace ApoGirl.Presentation.Screens
                 {
                     if (BuiltShown(state, built))
                     {
-                        AddProp(element, new HubSectionConfig.PropDef { Key = built.Key, X = built.X, Y = built.Y }, height - 8);
+                        AddProp(element, new HubSectionConfig.PropDef { Key = built.Key, X = built.X, Y = built.Y }, propFloor);
                     }
                 }
 
@@ -503,23 +508,24 @@ namespace ApoGirl.Presentation.Screens
                     Tile(outer, walls.OuterTex);
                 }
 
-                // 안쪽 벽과 문
-                var closed = Tex(walls.DoorClosed);
+                // 안쪽 벽과 문: 벽은 문 위(늘)·문 높이(닫혔을 때만) 두 토막, 문은 선(닫힘)과 문짝(열림)
+                var floorY = FloorBottom(floor) - 6;
+                var doorTop = floorY - walls.DoorHeight;
                 foreach (var x in edges)
                 {
-                    var wall = Place(_building, "hub-wall", x - walls.Width * 0.5f, top + 5, walls.Width, _config.FloorHeight - 5);
-                    wall.pickingMode = PickingMode.Ignore;
-                    if (closed == null)
-                    {
-                        continue;
-                    }
-
-                    var w = closed.width * walls.DoorScale;
-                    var h = closed.height * walls.DoorScale;
-                    var door = Place(_building, "hub-door", x - w * 0.5f, FloorBottom(floor) - 8 - h, w, h);
-                    door.pickingMode = PickingMode.Ignore;
-                    Image(door, closed);
-                    _doors.Add(new DoorView { Floor = floor, X = x, Element = door });
+                    var left = x - walls.Width * 0.5f;
+                    var upper = Place(_building, "hub-wall", left, top + 5, walls.Width, doorTop - (top + 5));
+                    upper.pickingMode = PickingMode.Ignore;
+                    var lower = Place(_building, "hub-wall", left, doorTop, walls.Width, floorY - doorTop + 4);
+                    lower.pickingMode = PickingMode.Ignore;
+                    var lintel = Place(_building, "hub-door-frame", left - 1, doorTop - 2, walls.Width + 2, 2);
+                    lintel.pickingMode = PickingMode.Ignore;
+                    var line = Place(_building, "hub-door-line", x - walls.DoorLine * 0.5f, doorTop, walls.DoorLine, floorY - doorTop);
+                    line.pickingMode = PickingMode.Ignore;
+                    var panel = Place(_building, "hub-door-panel", x + walls.Width * 0.5f, doorTop, walls.DoorPanel, floorY - doorTop);
+                    panel.pickingMode = PickingMode.Ignore;
+                    panel.AddToClassList("hidden");
+                    _doors.Add(new DoorView { Floor = floor, X = x, Lower = lower, Line = line, Panel = panel });
                 }
             }
         }
@@ -535,17 +541,32 @@ namespace ApoGirl.Presentation.Screens
             var walls = _config.Walls;
             foreach (var door in _doors)
             {
-                var near = _actors.Any(a => a.Walking && a.Floor == door.Floor && Mathf.Abs(a.X - door.X) < walls.OpenDistance);
-                door.Hold = near ? walls.CloseDelay : Mathf.Max(0f, door.Hold - dt);
+                Actor nearest = null;
+                foreach (var actor in _actors)
+                {
+                    if (actor.Walking && actor.Floor == door.Floor && Mathf.Abs(actor.X - door.X) < walls.OpenDistance
+                        && (nearest == null || Mathf.Abs(actor.X - door.X) < Mathf.Abs(nearest.X - door.X)))
+                    {
+                        nearest = actor;
+                    }
+                }
+
+                door.Hold = nearest != null ? walls.CloseDelay : Mathf.Max(0f, door.Hold - dt);
                 var open = door.Hold > 0f;
+                if (nearest != null)
+                {
+                    // 문짝은 사람이 있는 반대쪽으로 젖혀져 길을 막지 않는다
+                    var side = nearest.X < door.X ? 1f : -1f;
+                    var left = side > 0 ? door.X + walls.Width * 0.5f : door.X - walls.Width * 0.5f - walls.DoorPanel;
+                    door.Panel.style.left = Px(left);
+                }
+
                 if (open != door.Open)
                 {
                     door.Open = open;
-                    var texture = Tex(open ? walls.DoorOpen : walls.DoorClosed);
-                    if (texture != null)
-                    {
-                        Image(door.Element, texture);
-                    }
+                    door.Lower.EnableInClassList("hidden", open);
+                    door.Line.EnableInClassList("hidden", open);
+                    door.Panel.EnableInClassList("hidden", !open);
                 }
             }
         }
@@ -972,7 +993,9 @@ namespace ApoGirl.Presentation.Screens
         {
             public int Floor;
             public float X;
-            public VisualElement Element;
+            public VisualElement Lower;
+            public VisualElement Line;
+            public VisualElement Panel;
             public bool Open;
             public float Hold;
         }
