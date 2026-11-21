@@ -80,19 +80,30 @@ namespace ApoGirl.Presentation.Screens
         }
 
         /// <summary>
+        /// 영상 묶음 하나: 전신 그림 Picture가 골라지고 (Face가 비었거나 지금 표정과 같을 때) Idle을 반복하다가
+        /// MoveMin~MoveMax초마다 Moves 중 하나를 한 번 (힉스필드 3·4차 문서).
+        /// </summary>
+        [Serializable]
+        public sealed class MotionSet
+        {
+            public string Picture = "";
+            public string Face = "";
+            public string Idle = "";
+            public string[] Moves = Array.Empty<string>();
+            public float MoveMin = 12f;
+            public float MoveMax = 24f;
+        }
+
+        /// <summary>
         /// 영상에서 뽑은 동작 프레임 (Motion/{동작}/m_##.png, 전신 그림과 같은 자리·비율).
-        /// Picture 그림이 골라졌을 때만: Idle을 반복하다가 MoveMin~MoveMax초마다 Moves 중 하나를 한 번.
+        /// Sets 순서대로 처음 맞는 묶음을 쓴다 (표정을 정한 묶음을 표정 없는 묶음보다 앞에 둔다).
         /// </summary>
         [Serializable]
         public sealed class MotionConfig
         {
             public string Folder = "Standing/Motion";
-            public string Picture = "base";
             public float Fps = 12f;
-            public string Idle = "idle";
-            public string[] Moves = Array.Empty<string>();
-            public float MoveMin = 12f;
-            public float MoveMax = 24f;
+            public MotionSet[] Sets = Array.Empty<MotionSet>();
         }
 
         public string Folder = "Standing";
@@ -148,6 +159,17 @@ namespace ApoGirl.Presentation.Screens
 
             var key = Load().SeasonOutfitKey(week);
             return key != "" ? key : "uniform";
+        }
+
+        /// <summary>전신 그림과 지금 표정에 맞는 영상 묶음 (없으면 null: 눈 깜빡임·시선만).</summary>
+        public MotionSet PickMotion(string picture, string face)
+        {
+            foreach (var set in Motion.Sets)
+            {
+                if (set.Picture == picture && (string.IsNullOrEmpty(set.Face) || set.Face == face)) return set;
+            }
+
+            return null;
         }
 
         public static StandingConfig Load()
@@ -280,6 +302,7 @@ namespace ApoGirl.Presentation.Screens
         private float _nextMove;
         private string _clip;
         private float _clipStart;
+        private StandingConfig.MotionSet _set;
 
         public StandingView(VisualElement host, Func<GameState> state, Func<BalanceConfig> balance)
         {
@@ -293,7 +316,6 @@ namespace ApoGirl.Presentation.Screens
             var now = Now;
             _nextBlink = now + Range(_config.Eyes.BlinkMin, _config.Eyes.BlinkMax);
             _nextGaze = now + Range(_config.Eyes.GazeMin, _config.Eyes.GazeMax);
-            _nextMove = now + Range(_config.Motion.MoveMin, _config.Motion.MoveMax);
             _host.schedule.Execute(Tick).Every(40);
         }
 
@@ -354,11 +376,7 @@ namespace ApoGirl.Presentation.Screens
                 HideEyes();
                 _host.Add(_eyes);
                 PlaceEyes();
-                if (!HasMotion)
-                {
-                    _clip = null;
-                }
-
+                UseMotion(_config.PickMotion(_picture, look.Face));
                 return;
             }
 
@@ -438,7 +456,38 @@ namespace ApoGirl.Presentation.Screens
 
         private float Range(float min, float max) => min + (float)_random.NextDouble() * Math.Max(0f, max - min);
 
-        private bool HasMotion => _config.Mode == "Whole" && _picture == _config.Motion.Picture && Clip(_config.Motion.Idle) != null;
+        private bool HasMotion => _config.Mode == "Whole" && _set != null && Clip(_set.Idle) != null;
+
+        /// <summary>영상 묶음이 바뀌면 처음부터 다시 재생하고, 이제 안 쓰는 동작 프레임은 메모리에서 놓는다.</summary>
+        private void UseMotion(StandingConfig.MotionSet set)
+        {
+            if (set == _set)
+            {
+                return;
+            }
+
+            _set = set;
+            _clip = null;
+            _nextMove = Now + (set != null ? Range(set.MoveMin, set.MoveMax) : 0f);
+            var keep = new HashSet<string>();
+            if (set != null)
+            {
+                keep.Add(set.Idle);
+                foreach (var move in set.Moves) keep.Add(move);
+            }
+
+            var drop = new List<string>();
+            foreach (var name in _clips.Keys)
+            {
+                if (!keep.Contains(name)) drop.Add(name);
+            }
+
+            foreach (var name in drop)
+            {
+                foreach (var frame in _clips[name]) Resources.UnloadAsset(frame);
+                _clips.Remove(name);
+            }
+        }
 
         private List<Texture2D> Clip(string name)
         {
@@ -483,7 +532,7 @@ namespace ApoGirl.Presentation.Screens
 
         private void TickMotion(float now)
         {
-            var motion = _config.Motion;
+            var motion = _set;
             if (_clip == null)
             {
                 _clip = motion.Idle;
@@ -503,7 +552,7 @@ namespace ApoGirl.Presentation.Screens
             }
 
             var frames = Clip(_clip) ?? Clip(motion.Idle);
-            var index = (int)((now - _clipStart) * Math.Max(1f, motion.Fps));
+            var index = (int)((now - _clipStart) * Math.Max(1f, _config.Motion.Fps));
             if (_clip != motion.Idle && index >= frames.Count)
             {
                 // 한 번 하는 동작이 끝나면 숨쉬기로
