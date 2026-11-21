@@ -173,3 +173,17 @@ Character reference sheet of a 17-year-old Korean male high school student, seco
 
 - 이벤트 컷과 인물 표정은 `Resources/Art/Story/Events`, `Portraits`로 옮기고 `art_map.json`에 잇는다. 선배 화자 초상은 `Speakers`에 등록한다(지금은 대사에서 말하지 않으니 표정은 장면 컷·출석 장면에 쓴다).
 - 좌석 엔딩 컷은 좌석 선택 기능(설계 승인 뒤 만듦)이 정하는 "남은 사람" 플래그에 따라 완치 엔딩 그림을 바꿔 끼운다.
+
+## 7. 받은 뒤 점검 (2026-11-22) — 다시 만들 것
+
+36장 중 32장 연결. 아래 넷은 다시 만든다(같은 파일 이름으로 `ArtInbox/illustrations/`에 덮어쓰기).
+
+| 파일 | 문제 | 상태 | 고친 프롬프트 (`[F-ILLU]` 뒤, 끝에 `[안전]`) |
+|---|---|---|---|
+| `evt_talk_12.png` | 선생님과 학생이 한 이불 속에 나란히 누워 있다 (13장 위반) | **연결 안 함** | `Night, a nurse office: a middle-aged male teacher with glasses lies alone on a narrow cot under a blanket, eyes half closed; a 16-year-old girl in a school uniform and cardigan sits upright on a chair beside the cot, holding his hand resting on the blanket edge. A damp towel folded on a basin, a closed diary on the bedside table, a small lamp. Respectful distance, quiet, tender, like a student visiting a sick teacher.` |
+| `evt_a4_sageori_after.png` | 담에 흐르고 눈 위에 고인 빨간 페인트가 피처럼 보인다 | **연결 안 함** | `Winter morning after a long night, trampled snow along a school wall, a tipped-over can of bright yellow paint with a short yellow streak on the snow, a yellow spray-painted X on the wall, a 12-year-old boy in a huge dark raincoat with rolled sleeves standing alone at the open school gate, breath fogging. No red, nothing that looks like blood.` |
+| `evt_sv_join.png` | 2막인데 선생님 두 발이 다 있다 (왼쪽 무릎 아래 절단) | 연결함, 고치면 교체 | 3장 프롬프트에 덧붙임: `The teacher's left trouser leg is folded and pinned below the knee, no left foot, he stands on his right leg with two crutches.` |
+| `evt_a4_cured.png` | 침상에 앉은 선생님 두 다리가 다 있다 | 연결함, 고치면 교체 | 4장 프롬프트에 덧붙임: `The teacher's left trouser leg ends in a simple homemade prosthetic below the knee, a crutch leaning on the cot.` |
+
+- `ending_seat_empty_seat`·`ending_seat_second_heli`는 받았지만 엔딩 화면은 그림 한 장만 쓰므로 아직 쓰는 곳이 없다 (`Resources/Art/Story/Endings`에만 둠).
+- 선택 항목 `ENDING_HIDDEN_STAY`(고친 안)는 오지 않았다.
