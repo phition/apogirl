@@ -95,6 +95,7 @@ namespace ApoGirl.Presentation.Screens
             {
                 scroll.mode = ScrollViewMode.Vertical;
                 scroll.horizontalScrollerVisibility = ScrollerVisibility.Hidden;
+                scroll.verticalScrollerVisibility = ScrollerVisibility.Hidden;
             }
 
             _drawer.AddToClassList("diary");
@@ -408,8 +409,7 @@ namespace ApoGirl.Presentation.Screens
                 }
 
                 sticker.Add(badge);
-                var name = UiText.Proficiency(proficiency);
-                Add(sticker, name.Split('·')[0], "diary-sticker-name");
+                Add(sticker, Loc.Lookup(Loc.UiTable, "prof." + proficiency + ".short") ?? UiText.Proficiency(proficiency).Split('·')[0], "diary-sticker-name");
                 Add(sticker, level == 0 ? Loc.T("diary.prof_none") : new string('★', level), "diary-sticker-level");
                 Hover(sticker, Loc.T("prof." + proficiency + ".hint"));
                 row.Add(sticker);
