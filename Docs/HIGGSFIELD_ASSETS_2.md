@@ -406,6 +406,8 @@ A candid instant-photo style snapshot of the same girl in the school [장소], [
 
 ## 9. 받은 뒤 내가 하는 일
 
+> **연결 (2026-11-21)**: 214장 받음(일러스트 105, UI 105, 선생님 입상 4). 무엇을 어디에 연결했는지는 [UI_REDESIGN_PROPOSAL.md](UI_REDESIGN_PROPOSAL.md) 10절 "힉스필드 2차 에셋 연결". 가져오기 도구는 `code_temp/apogirl/tools/art_import2.py`, 표는 `scratch/art_map2.py`. 1장(주인공 입상 조각)은 아직 받지 않았다.
+
 1. 입상: 기준 그림과 차이 나는 부분을 오려 조각으로 만들고, 위치를 맞춰 겹친다. 맞지 않는 조각은 목록으로 알려 다시 요청한다.
 2. 가방은 회색을 여섯 색으로 물들인다.
 3. 인물 표정은 배경을 지우고 `art_map.json`의 `Speakers`에 넣는다.
