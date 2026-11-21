@@ -716,7 +716,7 @@ namespace ApoGirl.Presentation.Screens
             }
 
             // 주인공
-            var prefix = PlayerPrefix(state.Loadout.Armor, state.Loadout.MainWeapon);
+            var prefix = PlayerPrefix(state.Loadout.Armor, state.Loadout.MainWeapon, state.Calendar.Week);
             _player ??= NewActor("player");
             _player.SetLook(Frames(prefix + "idle_"), Frames(prefix + "walk_"));
             if (resetPositions)
@@ -831,10 +831,10 @@ namespace ApoGirl.Presentation.Screens
             actor = null;
         }
 
-        /// <summary>주인공 그림 접두어: player_{옷}_{무기}_ (없으면 교복·맨손 쪽으로 물러난다).</summary>
-        private string PlayerPrefix(string armorId, string weaponId)
+        /// <summary>주인공 그림 접두어: player_{옷}_{무기}_ (옷은 방어구, 없으면 계절 교복. 그림이 없으면 교복·맨손 쪽으로 물러난다).</summary>
+        private string PlayerPrefix(string armorId, string weaponId, int week)
         {
-            var armor = Token(armorId, "ITEM_ARMOR_", "uniform");
+            var armor = StandingConfig.PlayerOutfitToken(armorId, week);
             var weapon = Token(weaponId, "ITEM_WEAPON_", "none");
             foreach (var prefix in new[] { $"player_{armor}_{weapon}_", $"player_uniform_{weapon}_", $"player_{armor}_none_", "player_uniform_none_" })
             {

@@ -10,6 +10,7 @@ using ApoGirl.Data;
 using ApoGirl.Exploration.Model;
 using ApoGirl.Presentation.App;
 using ApoGirl.Presentation.Dialogue;
+using ApoGirl.Presentation.Screens;
 using ApoGirl.Presentation.Text;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -889,10 +890,10 @@ namespace ApoGirl.Exploration.Runtime
             RefreshLook();
         }
 
-        /// <summary>장비에 맞는 주인공 그림을 고른다 (옷 = 방어구, 손 = 주무기). 무기가 부서지면 다시 부른다.</summary>
+        /// <summary>장비에 맞는 주인공 그림을 고른다 (옷 = 방어구, 없으면 계절 교복, 손 = 주무기). 무기가 부서지면 다시 부른다.</summary>
         private void RefreshLook()
         {
-            var armor = ExplorationArt.ItemToken(_armor?.Id, "ITEM_ARMOR_", "uniform");
+            var armor = StandingConfig.PlayerOutfitToken(_armor?.Id, Request.Week);
             var weapon = ExplorationArt.ItemToken(_weapon?.Id, "ITEM_WEAPON_", "none");
             _lookPrefix = ExplorationArt.PlayerPrefix(armor, weapon);
         }

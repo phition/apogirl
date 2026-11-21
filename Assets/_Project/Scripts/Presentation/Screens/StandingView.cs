@@ -125,6 +125,31 @@ namespace ApoGirl.Presentation.Screens
 
         private static StandingConfig _loaded;
 
+        /// <summary>방어구가 없을 때 입는 계절 교복 키 (SeasonOutfit, 없으면 빈 문자열). 탐험·단면도 주인공 그림도 이 키를 쓴다.</summary>
+        public string SeasonOutfitKey(int week)
+        {
+            var season = CalendarRules.GetSeason(week).ToString();
+            foreach (var entry in SeasonOutfit)
+            {
+                if (entry.Season == season) return entry.Key;
+            }
+
+            return "";
+        }
+
+        /// <summary>주인공 픽셀 그림의 옷 이름: 방어구가 있으면 그것, 없으면 계절 교복, 그것도 없으면 uniform (동복).</summary>
+        public static string PlayerOutfitToken(string armorId, int week)
+        {
+            const string prefix = "ITEM_ARMOR_";
+            if (!string.IsNullOrEmpty(armorId) && armorId.StartsWith(prefix, StringComparison.Ordinal))
+            {
+                return armorId.Substring(prefix.Length).ToLowerInvariant();
+            }
+
+            var key = Load().SeasonOutfitKey(week);
+            return key != "" ? key : "uniform";
+        }
+
         public static StandingConfig Load()
         {
             if (_loaded == null)
@@ -179,11 +204,7 @@ namespace ApoGirl.Presentation.Screens
             look.Outfit = Find(config.Armor, loadout.Armor) ?? "";
             if (look.Outfit == "")
             {
-                var season = CalendarRules.GetSeason(state.Calendar.Week).ToString();
-                foreach (var entry in config.SeasonOutfit)
-                {
-                    if (entry.Season == season) look.Outfit = entry.Key;
-                }
+                look.Outfit = config.SeasonOutfitKey(state.Calendar.Week);
             }
 
             // 머리: 주가 지날수록 길어진다
