@@ -4067,6 +4067,18 @@ MonoBehaviour:
     m_Key: faction.log.week
     m_Metadata:
       m_Items: []
+  - m_Id: 709646884290560
+    m_Key: settle.stamp
+    m_Metadata:
+      m_Items: []
+  - m_Id: 709646951399424
+    m_Key: debug.give_item
+    m_Metadata:
+      m_Items: []
+  - m_Id: 709646951399425
+    m_Key: debug.give_basic_gear
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
