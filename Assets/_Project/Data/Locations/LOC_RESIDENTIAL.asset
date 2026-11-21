@@ -210,10 +210,13 @@ MonoBehaviour:
           StressDelta: 0
           Removes: 0
         SpriteKey: 
+        DialogueNode: 
+        SceneEventId: 
+        PlayEventInField: 0
       - Id: NURSE
         Floor: 1
         RoomId: ROOM_HOUSE_203
-        X: 10
+        X: 10.6
         FlagsAll:
         - A2_STARTED
         FlagsNone:
@@ -236,6 +239,9 @@ MonoBehaviour:
           StressDelta: 0
           Removes: 1
         SpriteKey: npc_nurse_hiding
+        DialogueNode: ENC_NURSE
+        SceneEventId: EVT_A2_NURSE_JOIN
+        PlayEventInField: 0
       HostileChanceMultiplier: 1
       HostileSpots: []
     NightVariant:

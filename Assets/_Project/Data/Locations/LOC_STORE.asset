@@ -230,6 +230,9 @@ MonoBehaviour:
           StressDelta: 5
           Removes: 1
         SpriteKey: 
+        DialogueNode: 
+        SceneEventId: 
+        PlayEventInField: 0
       HostileChanceMultiplier: 1
       HostileSpots: []
     NightVariant:

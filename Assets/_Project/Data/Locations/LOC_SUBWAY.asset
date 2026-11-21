@@ -276,10 +276,13 @@ MonoBehaviour:
           StressDelta: 0
           Removes: 0
         SpriteKey: 
+        DialogueNode: 
+        SceneEventId: 
+        PlayEventInField: 0
       - Id: BYSTANDER
         Floor: 0
         RoomId: ROOM_SUBWAY_OFFICE_2
-        X: 10
+        X: 9.2
         FlagsAll:
         - A2_STARTED
         FlagsNone:
@@ -311,6 +314,9 @@ MonoBehaviour:
           StressDelta: 6
           Removes: 1
         SpriteKey: npc_bystander_sitting
+        DialogueNode: ENC_BYSTANDER
+        SceneEventId: EVT_A2_BYSTANDER
+        PlayEventInField: 0
       HostileChanceMultiplier: 1
       HostileSpots: []
     NightVariant:
@@ -371,6 +377,9 @@ MonoBehaviour:
           StressDelta: 0
           Removes: 0
         SpriteKey: 
+        DialogueNode: 
+        SceneEventId: 
+        PlayEventInField: 0
       HostileChanceMultiplier: 1
       HostileSpots: []
     Tutorial: 0

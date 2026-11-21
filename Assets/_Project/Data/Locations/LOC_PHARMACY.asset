@@ -286,6 +286,9 @@ MonoBehaviour:
           StressDelta: 0
           Removes: 0
         SpriteKey: 
+        DialogueNode: 
+        SceneEventId: 
+        PlayEventInField: 0
       HostileChanceMultiplier: 1
       HostileSpots: []
     NightVariant:
@@ -346,6 +349,9 @@ MonoBehaviour:
           StressDelta: 0
           Removes: 0
         SpriteKey: 
+        DialogueNode: 
+        SceneEventId: 
+        PlayEventInField: 0
       - Id: BLOOD_FRIDGE
         Floor: 1
         RoomId: ROOM_PH_CLINIC_1
@@ -371,6 +377,9 @@ MonoBehaviour:
           StressDelta: 0
           Removes: 0
         SpriteKey: prop_fridge
+        DialogueNode: 
+        SceneEventId: 
+        PlayEventInField: 0
       HostileChanceMultiplier: 1
       HostileSpots: []
     Tutorial: 0

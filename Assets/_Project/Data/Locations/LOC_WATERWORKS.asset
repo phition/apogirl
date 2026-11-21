@@ -320,6 +320,9 @@ MonoBehaviour:
           StressDelta: 0
           Removes: 0
         SpriteKey: 
+        DialogueNode: 
+        SceneEventId: 
+        PlayEventInField: 0
       HostileChanceMultiplier: 1
       HostileSpots: []
     NightVariant:
@@ -388,6 +391,9 @@ MonoBehaviour:
           StressDelta: 0
           Removes: 0
         SpriteKey: 
+        DialogueNode: 
+        SceneEventId: 
+        PlayEventInField: 0
       - Id: RESEARCH_MEMO
         Floor: 2
         RoomId: ROOM_WATER_LAB_2
@@ -413,6 +419,9 @@ MonoBehaviour:
           StressDelta: 0
           Removes: 0
         SpriteKey: 
+        DialogueNode: 
+        SceneEventId: 
+        PlayEventInField: 0
       HostileChanceMultiplier: 1
       HostileSpots: []
     Tutorial: 0

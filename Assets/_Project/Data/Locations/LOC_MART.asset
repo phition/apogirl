@@ -333,10 +333,13 @@ MonoBehaviour:
           StressDelta: 0
           Removes: 0
         SpriteKey: npc_mart_adults_idle
+        DialogueNode: 
+        SceneEventId: 
+        PlayEventInField: 0
       - Id: RINGLEADER
         Floor: 1
         RoomId: ROOM_MART_OFFICE_2
-        X: 7
+        X: 8.5
         FlagsAll:
         - MART_GROUP_MET
         FlagsNone:
@@ -357,6 +360,9 @@ MonoBehaviour:
           StressDelta: 6
           Removes: 0
         SpriteKey: npc_ringleader_sitting
+        DialogueNode: ENC_RINGLEADER
+        SceneEventId: EVT_A3_RINGLEADER
+        PlayEventInField: 1
       HostileChanceMultiplier: 1
       HostileSpots: []
     NightVariant:

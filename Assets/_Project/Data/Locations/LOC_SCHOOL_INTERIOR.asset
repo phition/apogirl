@@ -891,7 +891,7 @@ MonoBehaviour:
       - Id: DOHYEON
         Floor: 2
         RoomId: ROOM_3F_ROOM_CLASSROOM_5
-        X: 9.5
+        X: 8.85
         FlagsAll:
         - DH_HEARD
         FlagsNone:
@@ -922,6 +922,9 @@ MonoBehaviour:
           StressDelta: 4
           Removes: 1
         SpriteKey: npc_dohyeon_hiding
+        DialogueNode: ENC_DOHYEON
+        SceneEventId: EVT_DH_02_ARRIVAL
+        PlayEventInField: 0
       - Id: SCHOOL_NOTICE
         Floor: 0
         RoomId: ROOM_1F_ROOM_OFFICE_0
@@ -949,6 +952,9 @@ MonoBehaviour:
           StressDelta: 0
           Removes: 1
         SpriteKey: 
+        DialogueNode: 
+        SceneEventId: 
+        PlayEventInField: 0
       HostileChanceMultiplier: 0
       HostileSpots: []
     NightVariant:
@@ -1050,7 +1056,7 @@ MonoBehaviour:
       - Id: DOHYEON
         Floor: 2
         RoomId: ROOM_3F_ROOM_CLASSROOM_5
-        X: 9.5
+        X: 8.85
         FlagsAll:
         - DH_HEARD
         FlagsNone:
@@ -1081,6 +1087,9 @@ MonoBehaviour:
           StressDelta: 4
           Removes: 1
         SpriteKey: npc_dohyeon_hiding
+        DialogueNode: ENC_DOHYEON
+        SceneEventId: EVT_DH_02_ARRIVAL
+        PlayEventInField: 0
       - Id: SCHOOL_NOTICE
         Floor: 0
         RoomId: ROOM_1F_ROOM_OFFICE_0
@@ -1108,6 +1117,9 @@ MonoBehaviour:
           StressDelta: 0
           Removes: 1
         SpriteKey: 
+        DialogueNode: 
+        SceneEventId: 
+        PlayEventInField: 0
       HostileChanceMultiplier: 1
       HostileSpots: []
     Tutorial: 0
