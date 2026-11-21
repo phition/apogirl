@@ -91,6 +91,12 @@ namespace ApoGirl.Presentation.Screens
             _session = session;
             _drawer = root.Q("drawer-left");
             _panel = root.Q("status-panel");
+            if (_panel is ScrollView scroll)
+            {
+                scroll.mode = ScrollViewMode.Vertical;
+                scroll.horizontalScrollerVisibility = ScrollerVisibility.Hidden;
+            }
+
             _drawer.AddToClassList("diary");
             var page = StoryArt.Load(_config.Page);
             if (page != null)
@@ -147,13 +153,13 @@ namespace ApoGirl.Presentation.Screens
             // ── 선생님의 한마디 ──
             if (_session.HasMetTeacher)
             {
-                var comment = LineRules.Pick(state, _session.Definitions, LineKind.TeacherComment, EventContext.FromCalendar(state));
-                if (comment != null)
+                var comment = TeacherNote(state);
+                if (!string.IsNullOrEmpty(comment))
                 {
                     var box = new VisualElement();
                     box.AddToClassList("diary-teacher");
                     Add(box, Loc.T("diary.teacher"), "diary-teacher-head");
-                    Add(box, StoryText.Format(Loc.T(comment.TextKey), state), "diary-teacher-text");
+                    Add(box, StoryText.Format(comment, state), "diary-teacher-text");
                     var underline = StoryArt.Load(_config.Underline);
                     if (underline != null)
                     {
@@ -168,6 +174,27 @@ namespace ApoGirl.Presentation.Screens
             }
 
             KoreanFont.ApplyDeep(_drawer);
+        }
+
+        /// <summary>
+        /// 생활기록부의 "행동 특성 및 종합 의견"을 선생님 말투로: 이번 주에 가장 많이 오른 능력치가 있으면 그것을,
+        /// 없으면 지금 가장 높은 능력치를 두고 한 줄 (문구는 diary.teacher.grew.* / diary.teacher.best.*).
+        /// </summary>
+        private string TeacherNote(GameState state)
+        {
+            var delta = _session.LastWeekSummary?.Delta;
+            if (delta != null && delta.Stats.Count > 0)
+            {
+                var grew = delta.Stats.OrderByDescending(p => p.Value).First();
+                if (grew.Value >= _config.DeltaMark)
+                {
+                    var text = Loc.Lookup(Loc.UiTable, "diary.teacher.grew." + grew.Key);
+                    if (!string.IsNullOrEmpty(text)) return text;
+                }
+            }
+
+            var best = Enum.GetValues(typeof(StatType)).Cast<StatType>().OrderByDescending(s => state.Player.GetStat(s)).First();
+            return Loc.Lookup(Loc.UiTable, "diary.teacher.best." + best) ?? Loc.T("diary.teacher.default");
         }
 
         // ── 사진 ──
@@ -381,7 +408,8 @@ namespace ApoGirl.Presentation.Screens
                 }
 
                 sticker.Add(badge);
-                Add(sticker, UiText.Proficiency(proficiency), "diary-sticker-name");
+                var name = UiText.Proficiency(proficiency);
+                Add(sticker, name.Split('·')[0], "diary-sticker-name");
                 Add(sticker, level == 0 ? Loc.T("diary.prof_none") : new string('★', level), "diary-sticker-level");
                 Hover(sticker, Loc.T("prof." + proficiency + ".hint"));
                 row.Add(sticker);
