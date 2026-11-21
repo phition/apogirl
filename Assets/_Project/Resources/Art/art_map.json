@@ -63,6 +63,10 @@
     {
       "Name": "오 씨",
       "Portrait": "char_oh"
+    },
+    {
+      "Name": "선배",
+      "Portrait": "char_senior"
     }
   ],
   "Events": [
@@ -545,6 +549,94 @@
     {
       "Event": "EVT_SYS_ROOM_MUSIC",
       "Image": "Events/evt_sys_room_music"
+    },
+    {
+      "Event": "EVT_NPC_SURVIVOR_A_01",
+      "Image": "Events/evt_sv_meet"
+    },
+    {
+      "Event": "EVT_NPC_SURVIVOR_A_02",
+      "Image": "Events/evt_sv_join"
+    },
+    {
+      "Event": "EVT_SV_01_ERRAND",
+      "Image": "Events/evt_sv_errand"
+    },
+    {
+      "Event": "EVT_SV_02_SCAR",
+      "Image": "Events/evt_sv_scar"
+    },
+    {
+      "Event": "EVT_SV_03_RECOGNIZED",
+      "Image": "Events/evt_sv_recognized"
+    },
+    {
+      "Event": "EVT_SV_04_FAREWELL",
+      "Image": "Events/evt_sv_attendance"
+    },
+    {
+      "Event": "EVT_A4_SEAT_CHOICE",
+      "Image": "Events/evt_a4_seat_choice"
+    },
+    {
+      "Event": "EVT_A4_SEAT_COUNT",
+      "Image": "Events/evt_a4_seat_count"
+    },
+    {
+      "Event": "EVT_A4_OPENING",
+      "Image": "Events/evt_a4_opening"
+    },
+    {
+      "Event": "EVT_A4_WATERWORKS_UNLOCK",
+      "Image": "Events/evt_a4_waterworks_map"
+    },
+    {
+      "Event": "EVT_A4_WATERWORKS_LATE",
+      "Image": "Events/evt_a4_waterworks_map"
+    },
+    {
+      "Event": "EVT_A4_RESEARCH_MEMO",
+      "Image": "Events/evt_a4_research_memo"
+    },
+    {
+      "Event": "EVT_A4_NOTICE",
+      "Image": "Events/evt_a4_notice"
+    },
+    {
+      "Event": "EVT_A4_TRUTH_LINK",
+      "Image": "Events/evt_a4_truth_link"
+    },
+    {
+      "Event": "EVT_A4_CURED",
+      "Image": "Events/evt_a4_cured"
+    },
+    {
+      "Event": "EVT_A4_CURE_ATTEMPT",
+      "Image": "Events/evt_a4_cure_attempt"
+    },
+    {
+      "Event": "EVT_A4_RESCUE_ROUTE",
+      "Image": "Events/evt_a4_rescue_route"
+    },
+    {
+      "Event": "EVT_A4_UBC_RELAY",
+      "Image": "Events/evt_a4_ubc_relay"
+    },
+    {
+      "Event": "EVT_A4_DH_MOTHER",
+      "Image": "Events/evt_a4_dh_mother"
+    },
+    {
+      "Event": "EVT_A4_FUEL",
+      "Image": "Events/evt_a4_fuel"
+    },
+    {
+      "Event": "EVT_TALK_13",
+      "Image": "Events/evt_talk_13"
+    },
+    {
+      "Event": "EVT_A4_CURE_HINT",
+      "Image": "Events/evt_a4_cure_hint"
     }
   ],
   "Backdrops": [
