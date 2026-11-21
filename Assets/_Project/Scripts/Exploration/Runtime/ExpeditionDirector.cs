@@ -1112,6 +1112,21 @@ namespace ApoGirl.Exploration.Runtime
             return true;
         }
 
+        private ExplorationTarget _debugPeek;
+
+        /// <summary>디버그·화면 확인: 그 방 문 앞으로 가서 W를 누르고 있는 것처럼 문틈을 살핀다 (null이면 그만).</summary>
+        public bool DebugPeek(string roomId)
+        {
+            _debugPeek = roomId == null ? null : _targets.Find(t => t.Kind == TargetKind.Door && t.Room.Door.RoomId == roomId);
+            if (_debugPeek == null)
+            {
+                return roomId == null;
+            }
+
+            MoveTo(_debugPeek.Area, _debugPeek.X);
+            return true;
+        }
+
         /// <summary>디버그·화면 확인: 복도(층) 또는 바깥 길(floor = -1 진입로, -2 탈출로)의 그 자리로 간다.</summary>
         public bool DebugGoTo(int floor, float x)
         {
@@ -2113,7 +2128,7 @@ namespace ApoGirl.Exploration.Runtime
         private bool HandleDoorSenses(Keyboard keyboard, float dt)
         {
             var door = Nearest != null && Nearest.IsDoorway ? Nearest : null;
-            if (door != null && keyboard.wKey.isPressed)
+            if (door != null && (keyboard.wKey.isPressed || door == _debugPeek))
             {
                 if (door.Kind == TargetKind.Door)
                 {
