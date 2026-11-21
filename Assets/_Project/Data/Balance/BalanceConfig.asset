@@ -376,6 +376,28 @@ MonoBehaviour:
     OverweightSpeedMultiplier: 0.6
     SearchSpeedPerCraft: 0.003
     MaxSearchSpeedBonus: 0.3
+    SearchTimeMultiplier: 0.7
+    StressSearchThreshold: 60
+    StressSearchMaxExtra: 0.5
+    StaminaBase: 100
+    StaminaPerStat: 0.5
+    StaminaRunDrain: 16
+    StaminaRegen: 14
+    StaminaRegenDelay: 0.8
+    StaminaRecoverToRun: 25
+    StaminaAttackCost: 15
+    StaminaShoveCost: 12
+    StaminaFatiguePenalty: 0.004
+    StaminaInjuryPenalty: 0.25
+    StaminaMinCapRatio: 0.3
+    HideSeconds: 1.5
+    HideAgilityFactor: 0.01
+    HideMinSeconds: 0.4
+    HideSleepDebtThreshold: 2
+    HideSleepChancePerDebt: 0.015
+    HideSleepClockMultiplier: 2
+    WakePerPress: 0.12
+    WakeDecay: 0.3
     BackpackWidth: 6
     BackpackHeight: 4
     StrandedFatigue: 10

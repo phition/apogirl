@@ -4343,6 +4343,34 @@ MonoBehaviour:
     m_Key: exp.prompt_peeking_dark
     m_Metadata:
       m_Items: []
+  - m_Id: 850124631982080
+    m_Key: exp.hiding
+    m_Metadata:
+      m_Items: []
+  - m_Id: 850124749422592
+    m_Key: exp.hidden_asleep
+    m_Metadata:
+      m_Items: []
+  - m_Id: 850124749422593
+    m_Key: exp.prompt_wake
+    m_Metadata:
+      m_Items: []
+  - m_Id: 850124749422594
+    m_Key: exp.fell_asleep
+    m_Metadata:
+      m_Items: []
+  - m_Id: 850124749422595
+    m_Key: exp.woke_up
+    m_Metadata:
+      m_Items: []
+  - m_Id: 850124749422596
+    m_Key: exp.out_of_breath
+    m_Metadata:
+      m_Items: []
+  - m_Id: 850124749422597
+    m_Key: exp.stamina
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
