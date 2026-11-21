@@ -572,7 +572,7 @@
     "OuterTex": "wall_brick",
     "DoorClosed": "door_school_closed",
     "DoorOpen": "door_school_open",
-    "DoorScale": 0.85,
+    "DoorScale": 0.72,
     "OpenDistance": 26,
     "CloseDelay": 0.35
   }
