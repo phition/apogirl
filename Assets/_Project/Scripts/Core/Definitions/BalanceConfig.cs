@@ -466,6 +466,10 @@ namespace ApoGirl.Core.Definitions
         /// <summary>병세 단계마다 선생님 지도 보정(1 초과분)이 줄어드는 비율.</summary>
         public float MentorDecayPerStage = 0.2f;
 
+        // ── 구조 헬기 (4막 끝, BoardingRules) ──
+        /// <summary>헬기 1회 탑승 정원. 넘으면 구조 전날 밤에 한 명을 남기는 선택.</summary>
+        public int RescueSeats = 8;
+
         // ── M6 날씨 (계절별 가중치: 맑음·비·폭염·한파) ──
         public WeatherOdds[] WeatherBySeason =
         {

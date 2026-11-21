@@ -24,6 +24,12 @@ namespace ApoGirl.Core.Endings
         /// <summary>판정에 쓴 점수 (디버그 표시용).</summary>
         public float Score;
 
+        /// <summary>조건이 맞아 고른 엔딩 변형 (없으면 null).</summary>
+        public EndingVariantDef Variant;
+
+        /// <summary>엔딩 그림 이름: 변형 그림이 있으면 그것, 아니면 엔딩 ID.</summary>
+        public string ArtKey => Variant != null && !string.IsNullOrEmpty(Variant.Image) ? Variant.Image : Ending?.Id;
+
         public bool IsBad => Ending != null && Ending.Category == EndingCategory.Bad;
     }
 
@@ -80,7 +86,16 @@ namespace ApoGirl.Core.Endings
             result.Score = best == null ? 0f : bestScore;
             if (best != null)
             {
-                result.CutKeys.AddRange(best.CutKeys);
+                foreach (var variant in best.Variants)
+                {
+                    if (IsMet(state, variant.Condition, context, db.Balance))
+                    {
+                        result.Variant = variant;
+                        break;
+                    }
+                }
+
+                result.CutKeys.AddRange(result.Variant != null && result.Variant.CutKeys.Count > 0 ? result.Variant.CutKeys : best.CutKeys);
             }
 
             if (!bad)

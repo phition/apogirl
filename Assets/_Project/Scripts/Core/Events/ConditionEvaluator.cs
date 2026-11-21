@@ -207,6 +207,7 @@ namespace ApoGirl.Core.Events
                 case ValueKind.FactionKnown: return state.Factions.TryGetValue(key ?? "", out var known) && known.Known ? 1 : 0;
                 case ValueKind.FactionTier:
                     return (int)Rules.FactionRules.TierOf(state.Factions.TryGetValue(key ?? "", out var tiered) ? tiered.Standing : 0);
+                case ValueKind.BoardingCount: return Rules.BoardingRules.CandidateCount(state);
                 case ValueKind.BloodCompatible:
                     return Enum.TryParse<BloodType>(key, out var recipient) && BloodRules.CanDonate(state.Player.Profile.BloodType, recipient) ? 1 : 0;
                 default: throw new ArgumentOutOfRangeException(nameof(kind), kind, null);
@@ -240,6 +241,7 @@ namespace ApoGirl.Core.Events
                 case ValueKind.TeacherStage:
                 case ValueKind.WeeksToRescue:
                 case ValueKind.Traps:
+                case ValueKind.BoardingCount:
                     return true;
                 case ValueKind.Weather:
                     return Enum.TryParse<WeatherType>(key, out _);

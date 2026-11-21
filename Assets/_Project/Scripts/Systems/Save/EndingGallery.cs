@@ -18,6 +18,9 @@ namespace ApoGirl.Systems.Save
 
         /// <summary>처음 본 시각 (UTC, ISO 8601).</summary>
         public string FirstSeenUtc { get; set; } = "";
+
+        /// <summary>본 엔딩 변형 ID (좌석 선택 등으로 그림·컷이 바뀐 판). 갤러리 칸은 엔딩 하나.</summary>
+        public List<string> Variants { get; set; } = new List<string>();
     }
 
     /// <summary>
@@ -43,7 +46,7 @@ namespace ApoGirl.Systems.Save
         public bool IsUnlocked(string endingId) => _entries.ContainsKey(endingId ?? "");
 
         /// <summary>엔딩을 봤다고 기록하고 저장한다. 처음 본 엔딩이면 true.</summary>
-        public bool Record(string endingId, int week)
+        public bool Record(string endingId, int week, string variantId = null)
         {
             if (string.IsNullOrEmpty(endingId))
             {
@@ -58,6 +61,8 @@ namespace ApoGirl.Systems.Save
             }
 
             entry.Count++;
+            if (entry.Variants == null) entry.Variants = new List<string>();
+            if (!string.IsNullOrEmpty(variantId) && !entry.Variants.Contains(variantId)) entry.Variants.Add(variantId);
             Save();
             return isNew;
         }

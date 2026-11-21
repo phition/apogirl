@@ -40,7 +40,8 @@ namespace ApoGirl.Presentation.Screens
             parent.Add(_root);
 
             // 엔딩 원화 (M6-5, 영상 대신): 그림 위에 글자가 읽히도록 컷 무대에 어두운 판을 깐다
-            var art = Art.StoryArt.Ending(result.Ending?.Id);
+            // 엔딩 변형 그림이 아직 없으면 엔딩 기본 그림
+            var art = Art.StoryArt.Ending(result.ArtKey) ?? Art.StoryArt.Ending(result.Ending?.Id);
             Art.StoryArt.SetCover(_root, art);
             _root.EnableInClassList("with-art", art != null);
 

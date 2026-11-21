@@ -684,7 +684,7 @@ namespace ApoGirl.Systems.Session
             }
 
             Ending = EndingResolver.Resolve(State, _db);
-            EndingIsNew = Ending.Ending != null && Gallery != null && Gallery.Record(Ending.Ending.Id, State.Calendar.Week);
+            EndingIsNew = Ending.Ending != null && Gallery != null && Gallery.Record(Ending.Ending.Id, State.Calendar.Week, Ending.Variant?.Id);
         }
 
         private void Attach(GameState state)

@@ -157,6 +157,19 @@ namespace ApoGirl.Core.Events
                         }
                     }
                 }
+
+                foreach (var variant in ending.Variants)
+                {
+                    var where = ending.Id + "/" + variant.Id;
+                    if (string.IsNullOrEmpty(variant.Id)) Add(issues, IssueSeverity.Error, ending.Id, "엔딩 변형 ID 없음");
+                    if (IsEmpty(variant.Condition)) Add(issues, IssueSeverity.Warning, where, "조건 없는 엔딩 변형 (항상 기본 컷을 가린다)");
+                    CheckCondition(db, where, variant.Condition, npcIds, issues);
+                    if (input?.UiKeys == null) continue;
+                    foreach (var key in variant.CutKeys)
+                    {
+                        if (!input.UiKeys.Contains(key)) Add(issues, IssueSeverity.Error, where, "변형 컷 문자열 없음: " + key);
+                    }
+                }
             }
 
             if (db.Extras.Endings.Count > 0)

@@ -59,6 +59,12 @@
       "Condition": { "FlagsAll": [ "SV_NAME_KEPT" ], "NpcStatuses": [ { "NpcId": "NPC_SURVIVOR_A", "Status": "Joined" } ] } },
     { "Id": "EP_SENIOR_LAUGH", "Kind": "EndingEpilogue", "Group": "NPC_SURVIVOR_A", "Priority": 30, "TextKey": "line.ep_senior_laugh",
       "Condition": { "FlagsAll": [ "SV_LAUGHED" ], "NpcStatuses": [ { "NpcId": "NPC_SURVIVOR_A", "Status": "Joined" } ] } },
+    { "Id": "EP_SENIOR_CAT", "Kind": "EndingEpilogue", "Group": "NPC_SURVIVOR_A", "Priority": 40, "TextKey": "line.ep_senior_cat",
+      "Condition": { "FlagsAll": [ "SEAT_STAY_SENIOR" ] } },
+    { "Id": "EP_SEAT_EMPTY", "Kind": "EndingEpilogue", "Group": "SEAT_EMPTY", "Priority": 10, "TextKey": "line.ep_seat_empty",
+      "Condition": { "FlagsAny": [ "SEAT_STAY_TEACHERS", "SEAT_STAY_FRIEND", "SEAT_STAY_RINGLEADER", "SEAT_STAY_BYSTANDER", "SEAT_STAY_SELF" ] } },
+    { "Id": "EP_SEAT_SAGEORI_CHILD", "Kind": "EndingEpilogue", "Group": "SEAT_EMPTY", "Priority": 20, "TextKey": "line.ep_seat_sageori_child",
+      "Condition": { "FlagsAny": [ "SEAT_STAY_TEACHERS", "SEAT_STAY_FRIEND", "SEAT_STAY_RINGLEADER", "SEAT_STAY_BYSTANDER", "SEAT_STAY_SELF" ], "AnyChecks": [ { "Kind": "Flag", "Key": "JUN_MEDIATED", "Op": "GreaterOrEqual", "Value": 1 }, { "Kind": "FactionTier", "Key": "FAC_SAGEORI", "Op": "GreaterOrEqual", "Value": 4 } ] } },
 
     { "Id": "EP_JUN", "Kind": "EndingEpilogue", "Group": "JUN", "Priority": 0, "TextKey": "line.ep_jun",
       "Condition": { "FlagsAll": [ "JUN_JOINS" ] } },

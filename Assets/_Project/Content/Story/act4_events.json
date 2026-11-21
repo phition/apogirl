@@ -966,6 +966,150 @@
       }
     },
     {
+      "Id": "EVT_A4_SEAT_CHOICE",
+      "Kind": "Night",
+      "Priority": 110,
+      "Condition": {
+        "WeekMin": 52,
+        "Days": [
+          5
+        ],
+        "Phase": "Night",
+        "FlagsAll": [
+          "TEACHER_CURED"
+        ],
+        "FlagsNone": [
+          "SEAT_CHOICE"
+        ],
+        "Checks": [
+          {
+            "Kind": "BoardingCount",
+            "Op": "GreaterOrEqual",
+            "Value": 9
+          }
+        ]
+      },
+      "OnShow": {
+        "SetFlags": [
+          "SEAT_CHOICE"
+        ],
+        "Vitals": [
+          {
+            "Vital": "Stress",
+            "Amount": 5
+          }
+        ]
+      },
+      "Choices": [
+        {
+          "Id": "TEACHERS",
+          "Effect": {
+            "SetFlags": [
+              "SEAT_STAY_TEACHERS"
+            ],
+            "Npcs": [
+              {
+                "NpcId": "NPC_TEACHER",
+                "Affinity": 3
+              },
+              {
+                "NpcId": "NPC_NURSE",
+                "Affinity": 3
+              }
+            ]
+          }
+        },
+        {
+          "Id": "FRIEND",
+          "Effect": {
+            "SetFlags": [
+              "SEAT_STAY_FRIEND"
+            ],
+            "Hidden": [
+              {
+                "Hidden": "Hope",
+                "Amount": 2
+              }
+            ]
+          }
+        },
+        {
+          "Id": "RINGLEADER",
+          "Effect": {
+            "SetFlags": [
+              "SEAT_STAY_RINGLEADER"
+            ],
+            "Npcs": [
+              {
+                "NpcId": "NPC_RINGLEADER",
+                "Trust": 3
+              },
+              {
+                "NpcId": "NPC_SURVIVOR_A",
+                "Trust": 2
+              }
+            ]
+          }
+        },
+        {
+          "Id": "BYSTANDER",
+          "Effect": {
+            "SetFlags": [
+              "SEAT_STAY_BYSTANDER"
+            ],
+            "Npcs": [
+              {
+                "NpcId": "NPC_BYSTANDER",
+                "Trust": 3
+              },
+              {
+                "NpcId": "NPC_SURVIVOR_A",
+                "Trust": 2
+              }
+            ]
+          }
+        },
+        {
+          "Id": "SENIOR",
+          "Effect": {
+            "SetFlags": [
+              "SEAT_STAY_SENIOR"
+            ],
+            "Npcs": [
+              {
+                "NpcId": "NPC_SURVIVOR_A",
+                "Affinity": 3
+              }
+            ]
+          }
+        },
+        {
+          "Id": "SELF",
+          "Effect": {
+            "SetFlags": [
+              "SEAT_STAY_SELF"
+            ],
+            "Hidden": [
+              {
+                "Hidden": "Humanity",
+                "Amount": 2
+              }
+            ],
+            "Npcs": [
+              {
+                "NpcId": "NPC_TEACHER",
+                "Affinity": 3
+              },
+              {
+                "NpcId": "NPC_RINGLEADER",
+                "Trust": 3
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
       "Id": "EVT_A4_NIGHT_BEFORE",
       "Kind": "Night",
       "Priority": 100,

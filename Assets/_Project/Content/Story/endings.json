@@ -95,7 +95,93 @@
         "ending.ENDING_HIDDEN_CURE.cut2",
         "ending.ENDING_HIDDEN_CURE.cut3"
       ],
-      "Color": "#2A3040"
+      "Color": "#2A3040",
+      "Variants": [
+        {
+          "Id": "SEAT_TEACHERS",
+          "Condition": {
+            "FlagsAll": [
+              "SEAT_STAY_TEACHERS"
+            ]
+          },
+          "CutKeys": [
+            "ending.ENDING_HIDDEN_CURE.seat_teachers.cut1",
+            "ending.ENDING_HIDDEN_CURE.seat_teachers.cut2",
+            "ending.ENDING_HIDDEN_CURE.seat_teachers.cut3"
+          ],
+          "Image": "ending_seat_teachers"
+        },
+        {
+          "Id": "SEAT_FRIEND",
+          "Condition": {
+            "FlagsAll": [
+              "SEAT_STAY_FRIEND"
+            ]
+          },
+          "CutKeys": [
+            "ending.ENDING_HIDDEN_CURE.seat_friend.cut1",
+            "ending.ENDING_HIDDEN_CURE.seat_friend.cut2",
+            "ending.ENDING_HIDDEN_CURE.seat_friend.cut3"
+          ],
+          "Image": "ending_seat_friend"
+        },
+        {
+          "Id": "SEAT_RINGLEADER",
+          "Condition": {
+            "FlagsAll": [
+              "SEAT_STAY_RINGLEADER"
+            ]
+          },
+          "CutKeys": [
+            "ending.ENDING_HIDDEN_CURE.seat_ringleader.cut1",
+            "ending.ENDING_HIDDEN_CURE.seat_ringleader.cut2",
+            "ending.ENDING_HIDDEN_CURE.seat_ringleader.cut3"
+          ],
+          "Image": "ending_seat_ringleader"
+        },
+        {
+          "Id": "SEAT_BYSTANDER",
+          "Condition": {
+            "FlagsAll": [
+              "SEAT_STAY_BYSTANDER"
+            ]
+          },
+          "CutKeys": [
+            "ending.ENDING_HIDDEN_CURE.seat_bystander.cut1",
+            "ending.ENDING_HIDDEN_CURE.seat_bystander.cut2",
+            "ending.ENDING_HIDDEN_CURE.seat_bystander.cut3"
+          ],
+          "Image": "ending_seat_bystander"
+        },
+        {
+          "Id": "SEAT_SENIOR",
+          "Condition": {
+            "FlagsAll": [
+              "SEAT_STAY_SENIOR"
+            ]
+          },
+          "CutKeys": [
+            "ending.ENDING_HIDDEN_CURE.seat_senior.cut1",
+            "ending.ENDING_HIDDEN_CURE.seat_senior.cut2",
+            "ending.ENDING_HIDDEN_CURE.seat_senior.cut3"
+          ],
+          "Image": "ending_seat_senior"
+        },
+        {
+          "Id": "SEAT_SELF",
+          "Condition": {
+            "FlagsAll": [
+              "SEAT_STAY_SELF"
+            ]
+          },
+          "CutKeys": [
+            "ending.ENDING_HIDDEN_CURE.seat_self.cut1",
+            "ending.ENDING_HIDDEN_CURE.seat_self.cut2",
+            "ending.ENDING_HIDDEN_CURE.seat_self.cut3"
+          ],
+          "Image": "ending_seat_self"
+        }
+      ]
     },
     {
       "Id": "ENDING_HIDDEN_STAY",

@@ -26,6 +26,23 @@ namespace ApoGirl.Core.Definitions
         public float Weight = 1f;
     }
 
+    /// <summary>
+    /// 엔딩 변형: 같은 엔딩 안에서 조건(예: 좌석 선택으로 남은 사람)에 따라 컷 문구와 그림을 바꾼다.
+    /// 정의 순서대로 처음 맞는 하나만 쓴다. 갤러리 칸은 엔딩 하나로 둔다.
+    /// </summary>
+    [Serializable]
+    public sealed class EndingVariantDef
+    {
+        public string Id = "";
+        public ConditionDef Condition = new ConditionDef();
+
+        /// <summary>비어 있지 않으면 엔딩의 CutKeys 대신 쓴다.</summary>
+        public List<string> CutKeys = new List<string>();
+
+        /// <summary>Resources/Art/Story/Endings 아래 그림 이름. 비거나 그림이 없으면 엔딩 ID 그림.</summary>
+        public string Image = "";
+    }
+
     /// <summary>엔딩 하나. 제목은 UI 키 "ending.{Id}.title", 후일담은 CutKeys 순서대로.</summary>
     [Serializable]
     public sealed class EndingDef
@@ -47,6 +64,9 @@ namespace ApoGirl.Core.Definitions
 
         /// <summary>후일담 배경색 (#RRGGBB). 일러스트가 들어오기 전까지의 분위기 색.</summary>
         public string Color = "#1E2230";
+
+        /// <summary>조건별 컷·그림 변형 (처음 맞는 하나).</summary>
+        public List<EndingVariantDef> Variants = new List<EndingVariantDef>();
 
         public string TitleKey => "ending." + Id + ".title";
     }

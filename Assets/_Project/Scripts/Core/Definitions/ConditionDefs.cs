@@ -94,6 +94,9 @@ namespace ApoGirl.Core.Definitions
 
         /// <summary>세력 평판 단계 (FactionTier: 적대 0 … 동맹 4).</summary>
         FactionTier,
+
+        /// <summary>좌석 선택 전 헬기 탑승 후보 수 (BoardingRules.Candidates).</summary>
+        BoardingCount,
     }
 
     public enum CompareOp
