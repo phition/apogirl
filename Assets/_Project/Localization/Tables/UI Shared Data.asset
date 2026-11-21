@@ -4079,6 +4079,266 @@ MonoBehaviour:
     m_Key: debug.give_basic_gear
     m_Metadata:
       m_Items: []
+  - m_Id: 812842147397632
+    m_Key: diary.date
+    m_Metadata:
+      m_Items: []
+  - m_Id: 812842340335616
+    m_Key: diary.photo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 812842340335617
+    m_Key: diary.body
+    m_Metadata:
+      m_Items: []
+  - m_Id: 812842340335618
+    m_Key: diary.stats
+    m_Metadata:
+      m_Items: []
+  - m_Id: 812842340335619
+    m_Key: diary.profs
+    m_Metadata:
+      m_Items: []
+  - m_Id: 812842340335620
+    m_Key: diary.prof_none
+    m_Metadata:
+      m_Items: []
+  - m_Id: 812842340335621
+    m_Key: diary.teacher
+    m_Metadata:
+      m_Items: []
+  - m_Id: 812842340335622
+    m_Key: diary.derived
+    m_Metadata:
+      m_Items: []
+  - m_Id: 812842340335623
+    m_Key: diary.vital.Hp.good
+    m_Metadata:
+      m_Items: []
+  - m_Id: 812842340335624
+    m_Key: diary.vital.Hp.hurt
+    m_Metadata:
+      m_Items: []
+  - m_Id: 812842340335625
+    m_Key: diary.vital.Hp.danger
+    m_Metadata:
+      m_Items: []
+  - m_Id: 812842340335626
+    m_Key: diary.vital.Fatigue.fresh
+    m_Metadata:
+      m_Items: []
+  - m_Id: 812842340335627
+    m_Key: diary.vital.Fatigue.bit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 812842340335628
+    m_Key: diary.vital.Fatigue.tired
+    m_Metadata:
+      m_Items: []
+  - m_Id: 812842340335629
+    m_Key: diary.vital.Fatigue.limit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 812842340335630
+    m_Key: diary.vital.Stress.calm
+    m_Metadata:
+      m_Items: []
+  - m_Id: 812842340335631
+    m_Key: diary.vital.Stress.okay
+    m_Metadata:
+      m_Items: []
+  - m_Id: 812842340335632
+    m_Key: diary.vital.Stress.tense
+    m_Metadata:
+      m_Items: []
+  - m_Id: 812842340335633
+    m_Key: diary.vital.Stress.edge
+    m_Metadata:
+      m_Items: []
+  - m_Id: 812842340335634
+    m_Key: diary.vital.Cleanliness.clean
+    m_Metadata:
+      m_Items: []
+  - m_Id: 812842340335635
+    m_Key: diary.vital.Cleanliness.grubby
+    m_Metadata:
+      m_Items: []
+  - m_Id: 812842340335636
+    m_Key: diary.vital.Cleanliness.dirty
+    m_Metadata:
+      m_Items: []
+  - m_Id: 812842340335637
+    m_Key: stat.Stamina.hint
+    m_Metadata:
+      m_Items: []
+  - m_Id: 812842340335638
+    m_Key: stat.Strength.hint
+    m_Metadata:
+      m_Items: []
+  - m_Id: 812842340335639
+    m_Key: stat.Agility.hint
+    m_Metadata:
+      m_Items: []
+  - m_Id: 812842340335640
+    m_Key: stat.Intellect.hint
+    m_Metadata:
+      m_Items: []
+  - m_Id: 812842340335641
+    m_Key: stat.Craft.hint
+    m_Metadata:
+      m_Items: []
+  - m_Id: 812842340335642
+    m_Key: stat.Willpower.hint
+    m_Metadata:
+      m_Items: []
+  - m_Id: 812842340335643
+    m_Key: stat.Empathy.hint
+    m_Metadata:
+      m_Items: []
+  - m_Id: 812842340335644
+    m_Key: stat.Leadership.hint
+    m_Metadata:
+      m_Items: []
+  - m_Id: 812842340335645
+    m_Key: prof.Medicine.hint
+    m_Metadata:
+      m_Items: []
+  - m_Id: 812842340335646
+    m_Key: prof.Survival.hint
+    m_Metadata:
+      m_Items: []
+  - m_Id: 812842340335647
+    m_Key: prof.Engineering.hint
+    m_Metadata:
+      m_Items: []
+  - m_Id: 812842340335648
+    m_Key: prof.SelfDefense.hint
+    m_Metadata:
+      m_Items: []
+  - m_Id: 812842340335649
+    m_Key: prof.Cooking.hint
+    m_Metadata:
+      m_Items: []
+  - m_Id: 812842340335650
+    m_Key: prof.Humanities.hint
+    m_Metadata:
+      m_Items: []
+  - m_Id: 812842340335651
+    m_Key: prof.Mind.hint
+    m_Metadata:
+      m_Items: []
+  - m_Id: 812842340335652
+    m_Key: prof.Science.hint
+    m_Metadata:
+      m_Items: []
+  - m_Id: 812842340335653
+    m_Key: prof.Music.hint
+    m_Metadata:
+      m_Items: []
+  - m_Id: 813338551664640
+    m_Key: diary.teacher.default
+    m_Metadata:
+      m_Items: []
+  - m_Id: 813338631356416
+    m_Key: diary.teacher.grew.Stamina
+    m_Metadata:
+      m_Items: []
+  - m_Id: 813338631356417
+    m_Key: diary.teacher.grew.Strength
+    m_Metadata:
+      m_Items: []
+  - m_Id: 813338631356418
+    m_Key: diary.teacher.grew.Agility
+    m_Metadata:
+      m_Items: []
+  - m_Id: 813338631356419
+    m_Key: diary.teacher.grew.Intellect
+    m_Metadata:
+      m_Items: []
+  - m_Id: 813338631356420
+    m_Key: diary.teacher.grew.Craft
+    m_Metadata:
+      m_Items: []
+  - m_Id: 813338631356421
+    m_Key: diary.teacher.grew.Willpower
+    m_Metadata:
+      m_Items: []
+  - m_Id: 813338631356422
+    m_Key: diary.teacher.grew.Empathy
+    m_Metadata:
+      m_Items: []
+  - m_Id: 813338631356423
+    m_Key: diary.teacher.grew.Leadership
+    m_Metadata:
+      m_Items: []
+  - m_Id: 813338631356424
+    m_Key: diary.teacher.best.Stamina
+    m_Metadata:
+      m_Items: []
+  - m_Id: 813338631356425
+    m_Key: diary.teacher.best.Strength
+    m_Metadata:
+      m_Items: []
+  - m_Id: 813338631356426
+    m_Key: diary.teacher.best.Agility
+    m_Metadata:
+      m_Items: []
+  - m_Id: 813338631356427
+    m_Key: diary.teacher.best.Intellect
+    m_Metadata:
+      m_Items: []
+  - m_Id: 813338635550720
+    m_Key: diary.teacher.best.Craft
+    m_Metadata:
+      m_Items: []
+  - m_Id: 813338635550721
+    m_Key: diary.teacher.best.Willpower
+    m_Metadata:
+      m_Items: []
+  - m_Id: 813338635550722
+    m_Key: diary.teacher.best.Empathy
+    m_Metadata:
+      m_Items: []
+  - m_Id: 813338635550723
+    m_Key: diary.teacher.best.Leadership
+    m_Metadata:
+      m_Items: []
+  - m_Id: 813679439527936
+    m_Key: prof.Medicine.short
+    m_Metadata:
+      m_Items: []
+  - m_Id: 813679523414016
+    m_Key: prof.Survival.short
+    m_Metadata:
+      m_Items: []
+  - m_Id: 813679523414017
+    m_Key: prof.Engineering.short
+    m_Metadata:
+      m_Items: []
+  - m_Id: 813679523414018
+    m_Key: prof.SelfDefense.short
+    m_Metadata:
+      m_Items: []
+  - m_Id: 813679523414019
+    m_Key: prof.Cooking.short
+    m_Metadata:
+      m_Items: []
+  - m_Id: 813679523414020
+    m_Key: prof.Humanities.short
+    m_Metadata:
+      m_Items: []
+  - m_Id: 813679523414021
+    m_Key: prof.Mind.short
+    m_Metadata:
+      m_Items: []
+  - m_Id: 813679523414022
+    m_Key: prof.Science.short
+    m_Metadata:
+      m_Items: []
+  - m_Id: 813679523414023
+    m_Key: prof.Music.short
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
