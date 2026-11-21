@@ -1,0 +1,272 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e24ce4e6e4507494299ec76a5be73c10, type: 3}
+  m_Name: EVT_A4_SEAT_COUNT
+  m_EditorClassIdentifier: ApoGirl.Data::ApoGirl.Data.EventDefinitionAsset
+  _id: EVT_A4_SEAT_COUNT
+  _definition:
+    Id: EVT_A4_SEAT_COUNT
+    Kind: 2
+    Condition:
+      WeekMin: 41
+      WeekMax: 44
+      Days: 
+      Phase: 2
+      Seasons: 
+      Month: 0
+      DayOfMonth: 0
+      ActionCategories: 
+      ActionIds: []
+      FlagsAll:
+      - RESCUE_ANNOUNCED
+      FlagsAny: []
+      FlagsNone:
+      - SEAT_COUNT
+      CluesAll: []
+      Checks: []
+      AnyChecks: []
+      NpcStatuses: []
+      IsBirthday: 0
+    Priority: 70
+    Weight: 1
+    Once: 1
+    CooldownWeeks: 0
+    DialogueNode: 
+    OnShow:
+      Stats: []
+      Vitals: []
+      Resources: []
+      Hidden:
+      - Hidden: 1
+        Amount: 1
+      SleepDebt: 0
+      Conscience: 0
+      SetFlags:
+      - SEAT_COUNT
+      ClearFlags: []
+      AddClues: []
+      EndingTags: []
+      Npcs: []
+      Items: []
+      Defense: 0
+      Threat: 0
+      Facilities: []
+      AddTraits: []
+      Proficiencies: []
+      TeacherMobility: 0
+      RestorePower: 0
+      TreatInjury: 0
+      CookDish: 0
+      PurifyWater: 0
+      PurifyRate: 1
+      RaidStrength: 0
+      TeacherReinfect: 0
+      TeacherInfection: 0
+      TraumaCare: 0
+      Traps: 0
+      IntrusionResponse: 
+      Factions: []
+    ThenEventId: 
+    Choices:
+    - Id: LIST_NOW
+      TextKey: 
+      Condition:
+        WeekMin: 0
+        WeekMax: 0
+        Days: 
+        Phase: 0
+        Seasons: 
+        Month: 0
+        DayOfMonth: 0
+        ActionCategories: 
+        ActionIds: []
+        FlagsAll: []
+        FlagsAny: []
+        FlagsNone: []
+        CluesAll: []
+        Checks: []
+        AnyChecks: []
+        NpcStatuses: []
+        IsBirthday: 0
+      Costs: []
+      HasCheck: 0
+      Check:
+        BaseRate: 0.5
+        StatWeights: []
+        UsesProficiency: 0
+        Proficiency: 0
+        ProficiencyWeight: 0.05
+      Effect:
+        Stats:
+        - Stat: 7
+          Amount: 1
+        Vitals:
+        - Vital: 2
+          Amount: 3
+        Resources: []
+        Hidden: []
+        SleepDebt: 0
+        Conscience: 0
+        SetFlags:
+        - SEAT_LIST_DRAFTED
+        ClearFlags: []
+        AddClues: []
+        EndingTags: []
+        Npcs: []
+        Items: []
+        Defense: 0
+        Threat: 0
+        Facilities: []
+        AddTraits: []
+        Proficiencies: []
+        TeacherMobility: 0
+        RestorePower: 0
+        TreatInjury: 0
+        CookDish: 0
+        PurifyWater: 0
+        PurifyRate: 1
+        RaidStrength: 0
+        TeacherReinfect: 0
+        TeacherInfection: 0
+        TraumaCare: 0
+        Traps: 0
+        IntrusionResponse: 
+        Factions: []
+      OnFailure:
+        Stats: []
+        Vitals: []
+        Resources: []
+        Hidden: []
+        SleepDebt: 0
+        Conscience: 0
+        SetFlags: []
+        ClearFlags: []
+        AddClues: []
+        EndingTags: []
+        Npcs: []
+        Items: []
+        Defense: 0
+        Threat: 0
+        Facilities: []
+        AddTraits: []
+        Proficiencies: []
+        TeacherMobility: 0
+        RestorePower: 0
+        TreatInjury: 0
+        CookDish: 0
+        PurifyWater: 0
+        PurifyRate: 1
+        RaidStrength: 0
+        TeacherReinfect: 0
+        TeacherInfection: 0
+        TraumaCare: 0
+        Traps: 0
+        IntrusionResponse: 
+        Factions: []
+      NextEventId: 
+    - Id: NOT_YET
+      TextKey: 
+      Condition:
+        WeekMin: 0
+        WeekMax: 0
+        Days: 
+        Phase: 0
+        Seasons: 
+        Month: 0
+        DayOfMonth: 0
+        ActionCategories: 
+        ActionIds: []
+        FlagsAll: []
+        FlagsAny: []
+        FlagsNone: []
+        CluesAll: []
+        Checks: []
+        AnyChecks: []
+        NpcStatuses: []
+        IsBirthday: 0
+      Costs: []
+      HasCheck: 0
+      Check:
+        BaseRate: 0.5
+        StatWeights: []
+        UsesProficiency: 0
+        Proficiency: 0
+        ProficiencyWeight: 0.05
+      Effect:
+        Stats: []
+        Vitals:
+        - Vital: 2
+          Amount: -2
+        Resources: []
+        Hidden:
+        - Hidden: 3
+          Amount: 1
+        SleepDebt: 0
+        Conscience: 0
+        SetFlags: []
+        ClearFlags: []
+        AddClues: []
+        EndingTags: []
+        Npcs: []
+        Items: []
+        Defense: 0
+        Threat: 0
+        Facilities: []
+        AddTraits: []
+        Proficiencies: []
+        TeacherMobility: 0
+        RestorePower: 0
+        TreatInjury: 0
+        CookDish: 0
+        PurifyWater: 0
+        PurifyRate: 1
+        RaidStrength: 0
+        TeacherReinfect: 0
+        TeacherInfection: 0
+        TraumaCare: 0
+        Traps: 0
+        IntrusionResponse: 
+        Factions: []
+      OnFailure:
+        Stats: []
+        Vitals: []
+        Resources: []
+        Hidden: []
+        SleepDebt: 0
+        Conscience: 0
+        SetFlags: []
+        ClearFlags: []
+        AddClues: []
+        EndingTags: []
+        Npcs: []
+        Items: []
+        Defense: 0
+        Threat: 0
+        Facilities: []
+        AddTraits: []
+        Proficiencies: []
+        TeacherMobility: 0
+        RestorePower: 0
+        TreatInjury: 0
+        CookDish: 0
+        PurifyWater: 0
+        PurifyRate: 1
+        RaidStrength: 0
+        TeacherReinfect: 0
+        TeacherInfection: 0
+        TraumaCare: 0
+        Traps: 0
+        IntrusionResponse: 
+        Factions: []
+      NextEventId: 
+    ReviewAct: 0
+    ReviewFromWeek: 1
