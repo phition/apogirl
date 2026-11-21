@@ -410,7 +410,8 @@ namespace ApoGirl.Presentation.Screens
 
                 sticker.Add(badge);
                 Add(sticker, Loc.Lookup(Loc.UiTable, "prof." + proficiency + ".short") ?? UiText.Proficiency(proficiency).Split('·')[0], "diary-sticker-name");
-                Add(sticker, level == 0 ? Loc.T("diary.prof_none") : new string('★', level), "diary-sticker-level");
+                // 아직 못 배운 것은 흐린 스티커만 (별은 배운 단계만큼)
+                Add(sticker, level == 0 ? "" : new string('★', level), "diary-sticker-level");
                 Hover(sticker, Loc.T("prof." + proficiency + ".hint"));
                 row.Add(sticker);
             }
