@@ -42,4 +42,4 @@
 - Unity 6.6은 허브 UIDocument 옆에 PanelRenderer를 런타임에 붙여 UXML 사본을 그린다. 탐험 중 허브를 숨길 때 `HubScreen.SetPanelRendererEnabled(false)`로 함께 끈다.
 - 플레이 기록: `persistentDataPath/PlayLogs/expeditions.jsonl` (디버그 사용 판·자동 테스트 제외) → 메뉴 `ApoGirl/Exploration/Summarize Play Logs`, `Apply Play Logs To Headless Models`.
 - 탐험 아트(픽셀 아트): `Editor/PixelArtBuilder.cs` → 메뉴 `ApoGirl/Art/Build Exploration Sprites`가 `Resources/Art/Exploration/*.png`(캐릭터·좀비·소품·벽 타일, CC0 오피스 타일셋 조각)를 생성한다. 런타임은 `ExplorationArt`가 키로 불러오고, 없으면 사각형으로 대체한다. 외부 에셋 출처는 `Art/ThirdParty/*/CREDITS.md`.
-- 탐험 슬롯은 2단계: `GameSession.Step()`이 `AwaitingExpedition`을 돌려주면 탐험 씬(Additive) → `CompleteExpedition(result)`. 디버그 패널에서 헤드리스(자동) 탐험으로 전환 가능.
+- 탐험 슬롯은 2단계: `GameSession.Step()`이 `AwaitingExpedition`을 돌려주면 탐험 씬(Additive) → `CompleteExpedition(result)`. 디버그 패널에서 헤드리스(자동) 탐험으로 전환 가능. 귀환하면 결과 카드 → 이어지는 이벤트 순. 동료가 될 인물과의 조우는 탐험 화면 위 대화(`FieldDialogue`, `EncounterDef.DialogueNode`, `Events/Encounters.yarn`), 현장 장면(`PlayEventInField`)은 그 자리에서 치르고 `ExpeditionResult.FieldEvents`로 귀환 때 적용 ([Docs/M7_PLAN.md](Docs/M7_PLAN.md) 끝 절).
