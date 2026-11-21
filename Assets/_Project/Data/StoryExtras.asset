@@ -2900,6 +2900,94 @@ MonoBehaviour:
     Priority: 30
     TextKey: line.ep_senior_laugh
     Group: NPC_SURVIVOR_A
+  - Id: EP_SENIOR_CAT
+    Kind: 8
+    Condition:
+      WeekMin: 0
+      WeekMax: 0
+      Days: 
+      Phase: 0
+      Seasons: 
+      Month: 0
+      DayOfMonth: 0
+      ActionCategories: 
+      ActionIds: []
+      FlagsAll:
+      - SEAT_STAY_SENIOR
+      FlagsAny: []
+      FlagsNone: []
+      CluesAll: []
+      Checks: []
+      AnyChecks: []
+      NpcStatuses: []
+      IsBirthday: 0
+    Priority: 40
+    TextKey: line.ep_senior_cat
+    Group: NPC_SURVIVOR_A
+  - Id: EP_SEAT_EMPTY
+    Kind: 8
+    Condition:
+      WeekMin: 0
+      WeekMax: 0
+      Days: 
+      Phase: 0
+      Seasons: 
+      Month: 0
+      DayOfMonth: 0
+      ActionCategories: 
+      ActionIds: []
+      FlagsAll: []
+      FlagsAny:
+      - SEAT_STAY_TEACHERS
+      - SEAT_STAY_FRIEND
+      - SEAT_STAY_RINGLEADER
+      - SEAT_STAY_BYSTANDER
+      - SEAT_STAY_SELF
+      FlagsNone: []
+      CluesAll: []
+      Checks: []
+      AnyChecks: []
+      NpcStatuses: []
+      IsBirthday: 0
+    Priority: 10
+    TextKey: line.ep_seat_empty
+    Group: SEAT_EMPTY
+  - Id: EP_SEAT_SAGEORI_CHILD
+    Kind: 8
+    Condition:
+      WeekMin: 0
+      WeekMax: 0
+      Days: 
+      Phase: 0
+      Seasons: 
+      Month: 0
+      DayOfMonth: 0
+      ActionCategories: 
+      ActionIds: []
+      FlagsAll: []
+      FlagsAny:
+      - SEAT_STAY_TEACHERS
+      - SEAT_STAY_FRIEND
+      - SEAT_STAY_RINGLEADER
+      - SEAT_STAY_BYSTANDER
+      - SEAT_STAY_SELF
+      FlagsNone: []
+      CluesAll: []
+      Checks: []
+      AnyChecks:
+      - Kind: 31
+        Key: JUN_MEDIATED
+        Op: 0
+        Value: 1
+      - Kind: 36
+        Key: FAC_SAGEORI
+        Op: 0
+        Value: 4
+      NpcStatuses: []
+      IsBirthday: 0
+    Priority: 20
+    TextKey: line.ep_seat_sageori_child
+    Group: SEAT_EMPTY
   - Id: EP_JUN
     Kind: 8
     Condition:
@@ -5413,6 +5501,7 @@ MonoBehaviour:
     - ending.ENDING_BAD_EXPEDITION.cut2
     - ending.ENDING_BAD_EXPEDITION.cut3
     Color: '#2A1E22'
+    Variants: []
   - Id: ENDING_BAD_RAID
     Category: 0
     Priority: 0
@@ -5442,6 +5531,7 @@ MonoBehaviour:
     - ending.ENDING_BAD_RAID.cut2
     - ending.ENDING_BAD_RAID.cut3
     Color: '#241C1C'
+    Variants: []
   - Id: ENDING_BAD_STARVATION
     Category: 0
     Priority: 0
@@ -5471,6 +5561,7 @@ MonoBehaviour:
     - ending.ENDING_BAD_STARVATION.cut2
     - ending.ENDING_BAD_STARVATION.cut3
     Color: '#262420'
+    Variants: []
   - Id: ENDING_BAD_COLLAPSE
     Category: 0
     Priority: 0
@@ -5500,6 +5591,7 @@ MonoBehaviour:
     - ending.ENDING_BAD_COLLAPSE.cut2
     - ending.ENDING_BAD_COLLAPSE.cut3
     Color: '#1E2026'
+    Variants: []
   - Id: ENDING_BAD_INFECTION
     Category: 0
     Priority: 0
@@ -5529,6 +5621,7 @@ MonoBehaviour:
     - ending.ENDING_BAD_INFECTION.cut2
     - ending.ENDING_BAD_INFECTION.cut3
     Color: '#22262A'
+    Variants: []
   - Id: ENDING_BAD_WOUNDS
     Category: 0
     Priority: 0
@@ -5557,6 +5650,7 @@ MonoBehaviour:
     - ending.ENDING_BAD_WOUNDS.cut2
     - ending.ENDING_BAD_WOUNDS.cut3
     Color: '#22201E'
+    Variants: []
   - Id: ENDING_HIDDEN_CURE
     Category: 6
     Priority: 520
@@ -5586,6 +5680,157 @@ MonoBehaviour:
     - ending.ENDING_HIDDEN_CURE.cut2
     - ending.ENDING_HIDDEN_CURE.cut3
     Color: '#2A3040'
+    Variants:
+    - Id: SEAT_TEACHERS
+      Condition:
+        WeekMin: 0
+        WeekMax: 0
+        Days: 
+        Phase: 0
+        Seasons: 
+        Month: 0
+        DayOfMonth: 0
+        ActionCategories: 
+        ActionIds: []
+        FlagsAll:
+        - SEAT_STAY_TEACHERS
+        FlagsAny: []
+        FlagsNone: []
+        CluesAll: []
+        Checks: []
+        AnyChecks: []
+        NpcStatuses: []
+        IsBirthday: 0
+      CutKeys:
+      - ending.ENDING_HIDDEN_CURE.seat_teachers.cut1
+      - ending.ENDING_HIDDEN_CURE.seat_teachers.cut2
+      - ending.ENDING_HIDDEN_CURE.seat_teachers.cut3
+      Image: ending_seat_teachers
+    - Id: SEAT_FRIEND
+      Condition:
+        WeekMin: 0
+        WeekMax: 0
+        Days: 
+        Phase: 0
+        Seasons: 
+        Month: 0
+        DayOfMonth: 0
+        ActionCategories: 
+        ActionIds: []
+        FlagsAll:
+        - SEAT_STAY_FRIEND
+        FlagsAny: []
+        FlagsNone: []
+        CluesAll: []
+        Checks: []
+        AnyChecks: []
+        NpcStatuses: []
+        IsBirthday: 0
+      CutKeys:
+      - ending.ENDING_HIDDEN_CURE.seat_friend.cut1
+      - ending.ENDING_HIDDEN_CURE.seat_friend.cut2
+      - ending.ENDING_HIDDEN_CURE.seat_friend.cut3
+      Image: ending_seat_friend
+    - Id: SEAT_RINGLEADER
+      Condition:
+        WeekMin: 0
+        WeekMax: 0
+        Days: 
+        Phase: 0
+        Seasons: 
+        Month: 0
+        DayOfMonth: 0
+        ActionCategories: 
+        ActionIds: []
+        FlagsAll:
+        - SEAT_STAY_RINGLEADER
+        FlagsAny: []
+        FlagsNone: []
+        CluesAll: []
+        Checks: []
+        AnyChecks: []
+        NpcStatuses: []
+        IsBirthday: 0
+      CutKeys:
+      - ending.ENDING_HIDDEN_CURE.seat_ringleader.cut1
+      - ending.ENDING_HIDDEN_CURE.seat_ringleader.cut2
+      - ending.ENDING_HIDDEN_CURE.seat_ringleader.cut3
+      Image: ending_seat_ringleader
+    - Id: SEAT_BYSTANDER
+      Condition:
+        WeekMin: 0
+        WeekMax: 0
+        Days: 
+        Phase: 0
+        Seasons: 
+        Month: 0
+        DayOfMonth: 0
+        ActionCategories: 
+        ActionIds: []
+        FlagsAll:
+        - SEAT_STAY_BYSTANDER
+        FlagsAny: []
+        FlagsNone: []
+        CluesAll: []
+        Checks: []
+        AnyChecks: []
+        NpcStatuses: []
+        IsBirthday: 0
+      CutKeys:
+      - ending.ENDING_HIDDEN_CURE.seat_bystander.cut1
+      - ending.ENDING_HIDDEN_CURE.seat_bystander.cut2
+      - ending.ENDING_HIDDEN_CURE.seat_bystander.cut3
+      Image: ending_seat_bystander
+    - Id: SEAT_SENIOR
+      Condition:
+        WeekMin: 0
+        WeekMax: 0
+        Days: 
+        Phase: 0
+        Seasons: 
+        Month: 0
+        DayOfMonth: 0
+        ActionCategories: 
+        ActionIds: []
+        FlagsAll:
+        - SEAT_STAY_SENIOR
+        FlagsAny: []
+        FlagsNone: []
+        CluesAll: []
+        Checks: []
+        AnyChecks: []
+        NpcStatuses: []
+        IsBirthday: 0
+      CutKeys:
+      - ending.ENDING_HIDDEN_CURE.seat_senior.cut1
+      - ending.ENDING_HIDDEN_CURE.seat_senior.cut2
+      - ending.ENDING_HIDDEN_CURE.seat_senior.cut3
+      Image: ending_seat_senior
+    - Id: SEAT_SELF
+      Condition:
+        WeekMin: 0
+        WeekMax: 0
+        Days: 
+        Phase: 0
+        Seasons: 
+        Month: 0
+        DayOfMonth: 0
+        ActionCategories: 
+        ActionIds: []
+        FlagsAll:
+        - SEAT_STAY_SELF
+        FlagsAny: []
+        FlagsNone: []
+        CluesAll: []
+        Checks: []
+        AnyChecks: []
+        NpcStatuses: []
+        IsBirthday: 0
+      CutKeys:
+      - ending.ENDING_HIDDEN_CURE.seat_self.cut1
+      - ending.ENDING_HIDDEN_CURE.seat_self.cut2
+      - ending.ENDING_HIDDEN_CURE.seat_self.cut3
+      Image: ending_seat_self
   - Id: ENDING_HIDDEN_STAY
     Category: 6
     Priority: 510
@@ -5615,6 +5860,7 @@ MonoBehaviour:
     - ending.ENDING_HIDDEN_STAY.cut2
     - ending.ENDING_HIDDEN_STAY.cut3
     Color: '#1A2024'
+    Variants: []
   - Id: ENDING_HIDDEN_TRUTH
     Category: 6
     Priority: 500
@@ -5647,6 +5893,7 @@ MonoBehaviour:
     - ending.ENDING_HIDDEN_TRUTH.cut2
     - ending.ENDING_HIDDEN_TRUTH.cut3
     Color: '#1A1E2A'
+    Variants: []
   - Id: ENDING_NARR_CONFRONT
     Category: 5
     Priority: 350
@@ -5682,6 +5929,7 @@ MonoBehaviour:
     - ending.ENDING_NARR_CONFRONT.cut2
     - ending.ENDING_NARR_CONFRONT.cut3
     Color: '#2E2A30'
+    Variants: []
   - Id: ENDING_NARR_OVERCOME
     Category: 5
     Priority: 340
@@ -5724,6 +5972,7 @@ MonoBehaviour:
     - ending.ENDING_NARR_OVERCOME.cut2
     - ending.ENDING_NARR_OVERCOME.cut3
     Color: '#283040'
+    Variants: []
   - Id: ENDING_DOCTOR
     Category: 3
     Priority: 300
@@ -5773,6 +6022,7 @@ MonoBehaviour:
     - ending.ENDING_DOCTOR.cut2
     - ending.ENDING_DOCTOR.cut3
     Color: '#1E3036'
+    Variants: []
   - Id: ENDING_ENGINEER
     Category: 3
     Priority: 300
@@ -5815,6 +6065,7 @@ MonoBehaviour:
     - ending.ENDING_ENGINEER.cut2
     - ending.ENDING_ENGINEER.cut3
     Color: '#2A2E24'
+    Variants: []
   - Id: ENDING_GUARD
     Category: 3
     Priority: 300
@@ -5864,6 +6115,7 @@ MonoBehaviour:
     - ending.ENDING_GUARD.cut2
     - ending.ENDING_GUARD.cut3
     Color: '#2C2420'
+    Variants: []
   - Id: ENDING_LEADER
     Category: 3
     Priority: 300
@@ -5913,6 +6165,7 @@ MonoBehaviour:
     - ending.ENDING_LEADER.cut2
     - ending.ENDING_LEADER.cut3
     Color: '#2A2636'
+    Variants: []
   - Id: ENDING_WRITER
     Category: 3
     Priority: 300
@@ -5955,6 +6208,7 @@ MonoBehaviour:
     - ending.ENDING_WRITER.cut2
     - ending.ENDING_WRITER.cut3
     Color: '#302A22'
+    Variants: []
   - Id: ENDING_EDUCATOR
     Category: 3
     Priority: 305
@@ -6004,6 +6258,7 @@ MonoBehaviour:
     - ending.ENDING_EDUCATOR.cut2
     - ending.ENDING_EDUCATOR.cut3
     Color: '#26302A'
+    Variants: []
   - Id: ENDING_TOGETHER
     Category: 4
     Priority: 280
@@ -6046,6 +6301,7 @@ MonoBehaviour:
     - ending.ENDING_TOGETHER.cut2
     - ending.ENDING_TOGETHER.cut3
     Color: '#2A3030'
+    Variants: []
   - Id: ENDING_LONE
     Category: 4
     Priority: 280
@@ -6085,6 +6341,7 @@ MonoBehaviour:
     - ending.ENDING_LONE.cut2
     - ending.ENDING_LONE.cut3
     Color: '#1E2428'
+    Variants: []
   - Id: ENDING_BALANCED
     Category: 2
     Priority: 200
@@ -6124,6 +6381,7 @@ MonoBehaviour:
     - ending.ENDING_BALANCED.cut2
     - ending.ENDING_BALANCED.cut3
     Color: '#24303A'
+    Variants: []
   - Id: ENDING_NARR_UNHEALED
     Category: 5
     Priority: 150
@@ -6160,6 +6418,7 @@ MonoBehaviour:
     - ending.ENDING_NARR_UNHEALED.cut2
     - ending.ENDING_NARR_UNHEALED.cut3
     Color: '#1C2230'
+    Variants: []
   - Id: ENDING_SURVIVOR
     Category: 1
     Priority: 100
@@ -6188,6 +6447,7 @@ MonoBehaviour:
     - ending.ENDING_SURVIVOR.cut2
     - ending.ENDING_SURVIVOR.cut3
     Color: '#20283A'
+    Variants: []
   _roles:
   - Id: GUARD
     Modifiers:

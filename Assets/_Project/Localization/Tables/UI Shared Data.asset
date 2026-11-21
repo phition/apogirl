@@ -4391,6 +4391,90 @@ MonoBehaviour:
     m_Key: line.ep_senior_laugh
     m_Metadata:
       m_Items: []
+  - m_Id: 887651883565056
+    m_Key: ending.ENDING_HIDDEN_CURE.seat_teachers.cut1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 887652042948608
+    m_Key: ending.ENDING_HIDDEN_CURE.seat_teachers.cut2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 887652042948609
+    m_Key: ending.ENDING_HIDDEN_CURE.seat_teachers.cut3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 887652042948610
+    m_Key: ending.ENDING_HIDDEN_CURE.seat_friend.cut1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 887652042948611
+    m_Key: ending.ENDING_HIDDEN_CURE.seat_friend.cut2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 887652042948612
+    m_Key: ending.ENDING_HIDDEN_CURE.seat_friend.cut3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 887652042948613
+    m_Key: ending.ENDING_HIDDEN_CURE.seat_ringleader.cut1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 887652042948614
+    m_Key: ending.ENDING_HIDDEN_CURE.seat_ringleader.cut2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 887652042948615
+    m_Key: ending.ENDING_HIDDEN_CURE.seat_ringleader.cut3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 887652042948616
+    m_Key: ending.ENDING_HIDDEN_CURE.seat_bystander.cut1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 887652051337216
+    m_Key: ending.ENDING_HIDDEN_CURE.seat_bystander.cut2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 887652051337217
+    m_Key: ending.ENDING_HIDDEN_CURE.seat_bystander.cut3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 887652051337218
+    m_Key: ending.ENDING_HIDDEN_CURE.seat_senior.cut1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 887652051337219
+    m_Key: ending.ENDING_HIDDEN_CURE.seat_senior.cut2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 887652051337220
+    m_Key: ending.ENDING_HIDDEN_CURE.seat_senior.cut3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 887652051337221
+    m_Key: ending.ENDING_HIDDEN_CURE.seat_self.cut1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 887652051337222
+    m_Key: ending.ENDING_HIDDEN_CURE.seat_self.cut2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 887652051337223
+    m_Key: ending.ENDING_HIDDEN_CURE.seat_self.cut3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 887652051337224
+    m_Key: line.ep_senior_cat
+    m_Metadata:
+      m_Items: []
+  - m_Id: 887652051337225
+    m_Key: line.ep_seat_empty
+    m_Metadata:
+      m_Items: []
+  - m_Id: 887652051337226
+    m_Key: line.ep_seat_sageori_child
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

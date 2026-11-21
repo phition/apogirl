@@ -329,6 +329,7 @@ MonoBehaviour:
     TeacherInfectionColdBonus: 2
     TeacherStageSize: 25
     MentorDecayPerStage: 0.2
+    RescueSeats: 8
     WeatherBySeason:
     - Season: 0
       Clear: 6
