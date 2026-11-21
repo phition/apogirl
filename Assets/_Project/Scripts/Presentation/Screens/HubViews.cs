@@ -123,24 +123,10 @@ namespace ApoGirl.Presentation.Screens
         }
     }
 
-    /// <summary>생활기록부 서랍(생명 수치·능력치·숙련도)과 거점 서랍(시설·동료·세력).</summary>
+    /// <summary>거점 서랍(시설·동료·세력). 생활기록부 서랍은 RecordDiaryView.</summary>
     internal sealed class StatusPanelView
     {
-        private static readonly VitalType[] ShownVitals =
-        {
-            VitalType.Hp, VitalType.Fatigue, VitalType.Stress, VitalType.Cleanliness, VitalType.Satiety, VitalType.Hydration,
-        };
-
         private readonly GameSession _session;
-        private readonly Dictionary<StatType, Label> _stats = new Dictionary<StatType, Label>();
-        private readonly Dictionary<ProficiencyType, Label> _proficiencies = new Dictionary<ProficiencyType, Label>();
-        private readonly Dictionary<VitalType, ProgressBar> _vitals = new Dictionary<VitalType, ProgressBar>();
-        private readonly Label _sleepDebt;
-        private readonly Label _conscience;
-        private readonly Label _derived;
-        private readonly VisualElement _statsSection = new VisualElement();
-        private readonly VisualElement _profSection = new VisualElement();
-        private readonly VisualElement _debtSection = new VisualElement();
         private readonly VisualElement _baseSection = new VisualElement();
         private readonly Label _baseInfo;
 
@@ -148,53 +134,6 @@ namespace ApoGirl.Presentation.Screens
         {
             _session = session;
             var panel = root.Q("status-panel");
-
-            panel.Add(Header("status.vitals"));
-            foreach (var vital in ShownVitals)
-            {
-                // 포만·수분은 −100 ~ +100 (가운데 0)
-                var centered = vital == VitalType.Satiety || vital == VitalType.Hydration;
-                var bar = new ProgressBar { lowValue = centered ? -100 : 0, highValue = 100 };
-                bar.AddToClassList("vital-bar");
-                bar.AddToClassList("vital-" + vital.ToString().ToLowerInvariant());
-                StoryArt.SetIcon(bar, StoryArt.Icon("vital." + vital), 22f);
-                panel.Add(bar);
-                _vitals[vital] = bar;
-            }
-
-            _injury = Row(panel);
-            _injury.AddToClassList("danger");
-            _injury.style.whiteSpace = WhiteSpace.Normal;
-            StoryArt.SetIcon(_injury, StoryArt.Icon("status.injured"), 22f);
-
-            _symptom = Row(panel);
-            _symptom.AddToClassList("danger");
-            StoryArt.SetIcon(_symptom, StoryArt.Icon("status.symptom"), 22f);
-
-            panel.Add(_debtSection);
-            _sleepDebt = Row(_debtSection);
-            _conscience = Row(_debtSection);
-            StoryArt.SetIcon(_sleepDebt, StoryArt.Icon("status.sleep_debt"), 22f);
-            StoryArt.SetIcon(_conscience, StoryArt.Icon("status.conscience"), 22f);
-
-            panel.Add(_statsSection);
-            _statsSection.Add(Header("status.stats"));
-            foreach (StatType stat in Enum.GetValues(typeof(StatType)))
-            {
-                _stats[stat] = Row(_statsSection);
-                StoryArt.SetIcon(_stats[stat], StoryArt.Icon("stat." + stat), 22f);
-            }
-
-            _derived = Row(_statsSection);
-            _derived.AddToClassList("derived");
-
-            panel.Add(_profSection);
-            _profSection.Add(Header("status.proficiency"));
-            foreach (ProficiencyType proficiency in Enum.GetValues(typeof(ProficiencyType)))
-            {
-                _proficiencies[proficiency] = Row(_profSection);
-                StoryArt.SetIcon(_proficiencies[proficiency], StoryArt.Icon("prof." + proficiency), 22f);
-            }
 
             // 거점·동료·세력은 오른쪽 서랍 (없으면 같은 패널 아래에)
             var basePanel = root.Q("base-panel") ?? panel;
@@ -257,8 +196,6 @@ namespace ApoGirl.Presentation.Screens
             _factionSection.EnableInClassList("hidden", !any);
         }
 
-        private readonly Label _symptom;
-        private readonly Label _injury;
         private readonly VisualElement _companions = new VisualElement();
 
         /// <summary>합류한 동료: 누르면 역할이 차례로 바뀐다 (계획 단계에서만).</summary>
@@ -293,28 +230,7 @@ namespace ApoGirl.Presentation.Screens
         public void Refresh()
         {
             var state = _session.State;
-            var player = state.Player;
             var balance = _session.Definitions.Balance;
-
-            foreach (var pair in _vitals)
-            {
-                var value = player.Vitals.GetVital(pair.Key);
-                pair.Value.value = value;
-                pair.Value.title = UiText.Vital(pair.Key) + " " + value;
-                if (pair.Key == VitalType.Satiety || pair.Key == VitalType.Hydration)
-                {
-                    var band = UpkeepRules.Band(pair.Key == VitalType.Satiety ? balance.SatietyBands : balance.HydrationBands, value);
-                    pair.Value.title = UiText.Vital(pair.Key) + " " + (value > 0 ? "+" : "") + value + (band != null ? " · " + Loc.T("band." + band.Key) : "");
-                }
-
-                var basic = pair.Key == VitalType.Hp || pair.Key == VitalType.Stress || pair.Key == VitalType.Fatigue || pair.Key == VitalType.Cleanliness
-                            || pair.Key == VitalType.Satiety || pair.Key == VitalType.Hydration;
-                pair.Value.EnableInClassList("hidden", !basic && !Disclosure.Has(state, "UI_RESOURCES"));
-            }
-
-            _statsSection.EnableInClassList("hidden", !Disclosure.Has(state, "UI_STATS"));
-            _profSection.EnableInClassList("hidden", !Disclosure.Has(state, "UI_PROFICIENCY"));
-            _debtSection.EnableInClassList("hidden", !Disclosure.Has(state, "UI_SLEEPDEBT"));
 
             var facilities = state.Base.Facilities.Where(f => f.Value > 0).Select(f => Loc.T("facility." + f.Key)).ToList();
             var people = new List<string>();
@@ -331,37 +247,8 @@ namespace ApoGirl.Presentation.Screens
 
             _baseInfo.text = Loc.F("status.facilities", facilities.Count > 0 ? string.Join(", ", facilities) : "-") + "\n" + string.Join("\n", people);
 
-            // 부상: 의약품으로 치료하기 전까지 체력이 회복되지 않는다
-            var injured = InjuryRules.IsInjured(state, balance);
-            _injury.text = Loc.T("status.injured");
-            _injury.EnableInClassList("hidden", !injured);
-
-            // M6: 증상 (감염도 숫자는 숨긴다, 문서 5.3)
-            var symptom = InfectionRules.SymptomLevel(state);
-            _symptom.text = Loc.T("symptom." + symptom);
-            _symptom.EnableInClassList("hidden", symptom == 0);
-
             RefreshCompanions(state);
             RefreshFactions(state);
-
-            _sleepDebt.text = Loc.T("status.sleep_debt") + "  " + Pips(player.SleepDebt, balance.SleepDebtMax);
-            _sleepDebt.EnableInClassList("danger", player.SleepDebt >= 3);
-            _conscience.text = Loc.T("status.conscience") + "  " + player.Conscience + " / " + balance.ConscienceMax;
-
-            foreach (var pair in _stats)
-            {
-                pair.Value.text = UiText.Stat(pair.Key) + "  " + player.GetStat(pair.Key);
-            }
-
-            _derived.text = Loc.T("status.combat") + " " + DerivedStats.CombatPower(state, balance)
-                            + "   " + Loc.T("status.stress_threshold") + " " + DerivedStats.StressThreshold(state, balance);
-
-            foreach (var pair in _proficiencies)
-            {
-                var level = player.ProficiencyLevel(pair.Key);
-                pair.Value.text = UiText.Proficiency(pair.Key) + "  " + Loc.F("status.level", level);
-                pair.Value.EnableInClassList("dim", level == 0);
-            }
         }
 
         private static Label Header(string key)
@@ -377,11 +264,6 @@ namespace ApoGirl.Presentation.Screens
             label.AddToClassList("status-row");
             parent.Add(label);
             return label;
-        }
-
-        private static string Pips(int value, int max)
-        {
-            return new string('■', Math.Max(0, value)) + new string('□', Math.Max(0, max - value));
         }
     }
 

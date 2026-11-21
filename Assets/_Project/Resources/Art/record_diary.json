@@ -1,0 +1,110 @@
+{
+  "Page": "UI/ui_paper_diary_page",
+  "Polaroid": "UI/Paper/ui_paper_polaroid",
+  "PhotoRect": [
+    0.052,
+    0.055,
+    0.948,
+    0.765
+  ],
+  "Tape": "UI/Paper/ui_paper_tape",
+  "NoteBody": "UI/Paper/ui_paper_note_yellow",
+  "NoteStats": "UI/Paper/ui_paper_note_blue",
+  "Circle": "UI/Paper/ui_mark_circle_red",
+  "Underline": "UI/Paper/ui_mark_underline_red",
+  "StatBoxes": 10,
+  "StatBoxMax": 250,
+  "DeltaMark": 3,
+  "PhotoKinds": [
+    "Story",
+    "Calendar",
+    "Night",
+    "Random"
+  ],
+  "Vitals": [
+    {
+      "Vital": "Hp",
+      "From": 70,
+      "Key": "good",
+      "Tone": "ok"
+    },
+    {
+      "Vital": "Hp",
+      "From": 40,
+      "Key": "hurt",
+      "Tone": "warn"
+    },
+    {
+      "Vital": "Hp",
+      "From": 0,
+      "Key": "danger",
+      "Tone": "danger"
+    },
+    {
+      "Vital": "Fatigue",
+      "From": 80,
+      "Key": "limit",
+      "Tone": "danger"
+    },
+    {
+      "Vital": "Fatigue",
+      "From": 55,
+      "Key": "tired",
+      "Tone": "warn"
+    },
+    {
+      "Vital": "Fatigue",
+      "From": 25,
+      "Key": "bit",
+      "Tone": "ok"
+    },
+    {
+      "Vital": "Fatigue",
+      "From": 0,
+      "Key": "fresh",
+      "Tone": "ok"
+    },
+    {
+      "Vital": "Stress",
+      "From": 80,
+      "Key": "edge",
+      "Tone": "danger"
+    },
+    {
+      "Vital": "Stress",
+      "From": 50,
+      "Key": "tense",
+      "Tone": "warn"
+    },
+    {
+      "Vital": "Stress",
+      "From": 20,
+      "Key": "okay",
+      "Tone": "ok"
+    },
+    {
+      "Vital": "Stress",
+      "From": 0,
+      "Key": "calm",
+      "Tone": "ok"
+    },
+    {
+      "Vital": "Cleanliness",
+      "From": 70,
+      "Key": "clean",
+      "Tone": "ok"
+    },
+    {
+      "Vital": "Cleanliness",
+      "From": 50,
+      "Key": "grubby",
+      "Tone": "warn"
+    },
+    {
+      "Vital": "Cleanliness",
+      "From": 0,
+      "Key": "dirty",
+      "Tone": "danger"
+    }
+  ]
+}

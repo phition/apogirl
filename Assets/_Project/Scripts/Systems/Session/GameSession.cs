@@ -46,6 +46,9 @@ namespace ApoGirl.Systems.Session
         /// <summary>주간 정산 완료 (자동 저장 이후).</summary>
         public event Action<WeekSummary> WeekEnded;
 
+        /// <summary>마지막으로 끝난 주의 결산 (생활기록부의 "이번 주에 오른 것"). 불러오기·새 게임이면 비어 있다.</summary>
+        public WeekSummary LastWeekSummary { get; private set; }
+
         public event Action<GameStatus> GameEnded;
 
         /// <summary>실시간 탐험 슬롯 도달: UI가 탐험 씬을 열고 CompleteExpedition(result)로 돌려줘야 한다.</summary>
@@ -462,6 +465,7 @@ namespace ApoGirl.Systems.Session
             if (_runner.IsWeekComplete)
             {
                 var summary = _runner.FinishWeek();
+                LastWeekSummary = summary;
                 _executing = false;
                 if (State.Status == GameStatus.Playing)
                 {
@@ -685,6 +689,7 @@ namespace ApoGirl.Systems.Session
 
         private void Attach(GameState state)
         {
+            LastWeekSummary = null;
             State = state ?? throw new ArgumentNullException(nameof(state));
             _weekSnapshot = null;
             Ending = null;

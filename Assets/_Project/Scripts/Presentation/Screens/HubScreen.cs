@@ -50,6 +50,7 @@ namespace ApoGirl.Presentation.Screens
         private ExpeditionPrepView _prep;
         private SettlementView _settlement;
         private FactionView _faction;
+        private RecordDiaryView _diary;
         private EventDialoguePlayer _dialoguePlayer;
         private VisualElement _teacherAvatar;
         private HubLayers _layers;
@@ -83,6 +84,7 @@ namespace ApoGirl.Presentation.Screens
 
             _topBar = new TopBarView(_root, _session);
             _status = new StatusPanelView(_root, _session) { FactionClicked = ShowFactionCard };
+            _diary = new RecordDiaryView(_root, _session);
             _palette = new PaletteView(_root, _session);
             _planner = new PlannerView(_root, _session, () => _palette.SelectedActionId, ShowToast);
             _planSide = new PlanSideView(_root, _session);
@@ -288,6 +290,7 @@ namespace ApoGirl.Presentation.Screens
 
             _topBar.Refresh();
             _status.Refresh();
+            _diary.Refresh();
             _palette.Refresh();
             var warned = _planSide.Refresh();
             _planner.Refresh(warned);
