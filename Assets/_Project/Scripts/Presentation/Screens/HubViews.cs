@@ -95,9 +95,10 @@ namespace ApoGirl.Presentation.Screens
             var calendar = state.Calendar;
             var season = UiText.Season(CalendarRules.GetSeason(calendar.Week));
             StoryArt.SetIcon(_calendar, StoryArt.Icon("season." + CalendarRules.GetSeason(calendar.Week)), 28f);
+            var date = CalendarRules.DateOf(calendar.Week, Math.Max(1, calendar.Day), _session.Definitions.Balance);
             _calendar.text = _session.IsPlanning
-                ? Loc.F("hub.calendar_planning", calendar.Week, season)
-                : Loc.F("hub.calendar", calendar.Week, season, calendar.Day, UiText.Phase(calendar.Phase));
+                ? Loc.F("hub.calendar_planning", calendar.Week, date.Month, date.Day, season)
+                : Loc.F("hub.calendar", calendar.Week, date.Month, date.Day, season, UiText.Phase(calendar.Phase));
 
             foreach (var pair in _resources)
             {
