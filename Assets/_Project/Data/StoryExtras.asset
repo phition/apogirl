@@ -2797,6 +2797,109 @@ MonoBehaviour:
     Priority: 30
     TextKey: line.ep_ringleader_closed
     Group: NPC_RINGLEADER
+  - Id: EP_SENIOR
+    Kind: 8
+    Condition:
+      WeekMin: 0
+      WeekMax: 0
+      Days: 
+      Phase: 0
+      Seasons: 
+      Month: 0
+      DayOfMonth: 0
+      ActionCategories: 
+      ActionIds: []
+      FlagsAll: []
+      FlagsAny: []
+      FlagsNone: []
+      CluesAll: []
+      Checks: []
+      AnyChecks: []
+      NpcStatuses:
+      - NpcId: NPC_SURVIVOR_A
+        Status: 2
+      IsBirthday: 0
+    Priority: 0
+    TextKey: line.ep_senior
+    Group: NPC_SURVIVOR_A
+  - Id: EP_SENIOR_STOOD
+    Kind: 8
+    Condition:
+      WeekMin: 0
+      WeekMax: 0
+      Days: 
+      Phase: 0
+      Seasons: 
+      Month: 0
+      DayOfMonth: 0
+      ActionCategories: 
+      ActionIds: []
+      FlagsAll:
+      - SV_STOOD_FOR
+      FlagsAny: []
+      FlagsNone: []
+      CluesAll: []
+      Checks: []
+      AnyChecks: []
+      NpcStatuses:
+      - NpcId: NPC_SURVIVOR_A
+        Status: 2
+      IsBirthday: 0
+    Priority: 20
+    TextKey: line.ep_senior_stood
+    Group: NPC_SURVIVOR_A
+  - Id: EP_SENIOR_NAME
+    Kind: 8
+    Condition:
+      WeekMin: 0
+      WeekMax: 0
+      Days: 
+      Phase: 0
+      Seasons: 
+      Month: 0
+      DayOfMonth: 0
+      ActionCategories: 
+      ActionIds: []
+      FlagsAll:
+      - SV_NAME_KEPT
+      FlagsAny: []
+      FlagsNone: []
+      CluesAll: []
+      Checks: []
+      AnyChecks: []
+      NpcStatuses:
+      - NpcId: NPC_SURVIVOR_A
+        Status: 2
+      IsBirthday: 0
+    Priority: 30
+    TextKey: line.ep_senior_name
+    Group: NPC_SURVIVOR_A
+  - Id: EP_SENIOR_LAUGH
+    Kind: 8
+    Condition:
+      WeekMin: 0
+      WeekMax: 0
+      Days: 
+      Phase: 0
+      Seasons: 
+      Month: 0
+      DayOfMonth: 0
+      ActionCategories: 
+      ActionIds: []
+      FlagsAll:
+      - SV_LAUGHED
+      FlagsAny: []
+      FlagsNone: []
+      CluesAll: []
+      Checks: []
+      AnyChecks: []
+      NpcStatuses:
+      - NpcId: NPC_SURVIVOR_A
+        Status: 2
+      IsBirthday: 0
+    Priority: 30
+    TextKey: line.ep_senior_laugh
+    Group: NPC_SURVIVOR_A
   - Id: EP_JUN
     Kind: 8
     Condition:

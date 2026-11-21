@@ -4375,6 +4375,22 @@ MonoBehaviour:
     m_Key: exp.woke_bitten
     m_Metadata:
       m_Items: []
+  - m_Id: 878903676911616
+    m_Key: line.ep_senior
+    m_Metadata:
+      m_Items: []
+  - m_Id: 878903735631872
+    m_Key: line.ep_senior_stood
+    m_Metadata:
+      m_Items: []
+  - m_Id: 878903735631873
+    m_Key: line.ep_senior_name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 878903735631874
+    m_Key: line.ep_senior_laugh
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
