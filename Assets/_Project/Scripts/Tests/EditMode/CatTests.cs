@@ -1,4 +1,5 @@
 using ApoGirl.Core.Definitions;
+using ApoGirl.Core.Effects;
 using ApoGirl.Core.Events;
 using ApoGirl.Core.Rules;
 using ApoGirl.Core.State;
