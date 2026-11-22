@@ -56,6 +56,6 @@
     "Snap": true,
     "SnapMaxTexel": 0.01,
     "Steps": 6,
-    "StepStrength": 0.7
+    "StepStrength": 0.5
   }
 }
