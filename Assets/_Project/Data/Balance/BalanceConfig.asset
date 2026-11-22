@@ -600,6 +600,20 @@ MonoBehaviour:
       Rain: 1
       Heat: 0
       Cold: 5
+    Disasters:
+    - Id: MONSOON
+      FromWeek: 15
+      ToWeek: 19
+      Weather: 1
+      ForceChance: 0.75
+    - Id: SNOWSTORM
+      FromWeek: 42
+      ToWeek: 46
+      Weather: 3
+      ForceChance: 0.8
+    FloodMoveMultiplier: 0.7
+    FloodNoiseMultiplier: 1.5
+    MonsoonHeadlessDeepMultiplier: 0.6
     RainNoiseBonus: -0.25
     RainRaidMultiplier: 0.6
     HeatExtraWater: 1

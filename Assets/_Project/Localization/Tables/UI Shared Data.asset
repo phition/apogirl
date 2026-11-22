@@ -5951,6 +5951,54 @@ MonoBehaviour:
     m_Key: res.Battery
     m_Metadata:
       m_Items: []
+  - m_Id: 1214015329288192
+    m_Key: disaster.MONSOON
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1214015392202752
+    m_Key: disaster.SNOWSTORM
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1214015392202753
+    m_Key: disaster.MONSOON.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1214015392202754
+    m_Key: disaster.SNOWSTORM.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1214015392202755
+    m_Key: prep.disaster.MONSOON
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1214015392202756
+    m_Key: prep.disaster.SNOWSTORM
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1214015392202757
+    m_Key: exp.disaster.MONSOON
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1214015392202758
+    m_Key: exp.disaster.SNOWSTORM
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1214015392202759
+    m_Key: exp.flooded
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1214015392202760
+    m_Key: exp.blocked.MONSOON
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1214015392202761
+    m_Key: exp.blocked.SNOWSTORM
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1214015392202762
+    m_Key: exp.exit_blocked.SNOWSTORM
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
