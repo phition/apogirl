@@ -20,9 +20,14 @@ namespace ApoGirl.Core.Rules
         public static bool IsUnlocked(GameState state, BalanceConfig balance, string npcId) =>
             Find(balance, npcId) != null && state.Flags.Contains(Flag(balance, npcId));
 
-        /// <summary>지금 효과가 있다: 얻었고, 합류해 있고, 호감이 기준 이상.</summary>
+        /// <summary>지금 효과가 있다: 얻었고, 합류해 있고, 호감이 기준 이상. 들르는 인물(Visitor)은 얻었으면 켜진다.</summary>
         public static bool IsActive(GameState state, BalanceConfig balance, string npcId)
         {
+            if (Find(balance, npcId)?.Visitor == true)
+            {
+                return IsUnlocked(state, balance, npcId);
+            }
+
             return IsUnlocked(state, balance, npcId) && state.Npcs.TryGetValue(npcId ?? "", out var npc)
                    && npc.Status == NpcStatus.Joined && npc.Affinity >= balance.SpecialMinAffinity;
         }

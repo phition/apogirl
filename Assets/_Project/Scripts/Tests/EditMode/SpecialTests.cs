@@ -37,6 +37,17 @@ namespace ApoGirl.Tests.EditMode
         }
 
         [Test]
+        public void Wanderer_Visitor_ActiveWithFlagOnly()
+        {
+            var balance = new BalanceConfig();
+            var state = new GameState();
+            Assert.IsFalse(SpecialRules.IsActive(state, balance, "NPC_WANDERER"), "방문 사다리를 끝내지 않았으면 없다");
+            state.Flags.Add(SpecialRules.Flag(balance, "NPC_WANDERER"));
+            Assert.IsTrue(SpecialRules.IsActive(state, balance, "NPC_WANDERER"), "합류·호감 없이 깃발만으로 켜진다");
+            Assert.AreEqual(1f, SpecialRules.Value(state, balance, SpecialKind.DeepExitKnown));
+        }
+
+        [Test]
         public void Nurse_MedicineCostDown_OnlyForTwoOrMore()
         {
             var balance = new BalanceConfig();

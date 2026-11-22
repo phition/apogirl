@@ -377,7 +377,7 @@ namespace ApoGirl.Core.Definitions
             new CompanionSpecialDef { NpcId = "NPC_BYSTANDER", Kind = SpecialKind.WeeklyStressRelief, Value = 3 },
             new CompanionSpecialDef { NpcId = "NPC_RINGLEADER", Kind = SpecialKind.TributeCut, Value = 2, Target = "FAC_SAGEORI" },
             new CompanionSpecialDef { NpcId = "NPC_SURVIVOR_A", Kind = SpecialKind.DefenseBonus, Value = 10 },
-            new CompanionSpecialDef { NpcId = "NPC_WANDERER", Kind = SpecialKind.DeepExitKnown, Value = 1 },
+            new CompanionSpecialDef { NpcId = "NPC_WANDERER", Kind = SpecialKind.DeepExitKnown, Value = 1, Visitor = true },
         };
 
         /// <summary>함께한 시간 (역할 재기획 4절): 주인공이 방 스케줄을 하면 그 방 동료 호감 +1 (적성 역할이면 + 보너스), 한 사람당 주 상한.</summary>

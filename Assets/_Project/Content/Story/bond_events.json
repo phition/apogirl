@@ -1069,6 +1069,124 @@
           }
         }
       ]
+    },
+    {
+      "Id": "EVT_BOND_WANDERER_1",
+      "Kind": "Story",
+      "Priority": 0,
+      "Condition": {
+        "FlagsAll": [
+          "FORCED_ONLY"
+        ]
+      },
+      "OnShow": {
+        "SetFlags": [
+          "BOND_WANDERER_1"
+        ]
+      },
+      "Choices": [
+        {
+          "Id": "LEARN_TRAILS",
+          "Effect": {
+            "Stats": [
+              {
+                "Stat": "Intellect",
+                "Amount": 1
+              }
+            ]
+          }
+        },
+        {
+          "Id": "SHARE_CANDY",
+          "Effect": {
+            "Hidden": [
+              {
+                "Hidden": "Isolation",
+                "Amount": -1
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "Id": "EVT_BOND_WANDERER_2",
+      "Kind": "Story",
+      "Priority": 0,
+      "Condition": {
+        "FlagsAll": [
+          "FORCED_ONLY"
+        ]
+      },
+      "OnShow": {
+        "SetFlags": [
+          "BOND_WANDERER_2"
+        ]
+      },
+      "Choices": [
+        {
+          "Id": "FIND_NORTH",
+          "Effect": {
+            "Stats": [
+              {
+                "Stat": "Willpower",
+                "Amount": 1
+              }
+            ]
+          }
+        },
+        {
+          "Id": "ASK_WALKING",
+          "Effect": {
+            "Hidden": [
+              {
+                "Hidden": "SelfAwareness",
+                "Amount": 1
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "Id": "EVT_BOND_WANDERER_3",
+      "Kind": "Story",
+      "Priority": 0,
+      "Condition": {
+        "FlagsAll": [
+          "FORCED_ONLY"
+        ]
+      },
+      "OnShow": {
+        "SetFlags": [
+          "BOND_WANDERER_3",
+          "SPECIAL_NPC_WANDERER"
+        ]
+      },
+      "Choices": [
+        {
+          "Id": "TAKE_COMPASS",
+          "Effect": {
+            "Hidden": [
+              {
+                "Hidden": "Hope",
+                "Amount": 1
+              }
+            ]
+          }
+        },
+        {
+          "Id": "PROMISE_SOUTH",
+          "Effect": {
+            "Hidden": [
+              {
+                "Hidden": "Humanity",
+                "Amount": 1
+              }
+            ]
+          }
+        }
+      ]
     }
   ]
 }

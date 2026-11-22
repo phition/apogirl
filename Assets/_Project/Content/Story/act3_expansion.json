@@ -116,8 +116,8 @@
       "Condition": { "WeekMin": 35, "Phase": "Day", "FlagsAll": [ "WANDERER_RETURN" ], "FlagsAny": [ "WANDERER_SHARED", "WANDERER_SHELTERED" ], "FlagsNone": [ "WANDERER_3" ] },
       "OnShow": { "SetFlags": [ "WANDERER_3" ], "Defense": 3 },
       "Choices": [
-        { "Id": "THANK", "Effect": { "Hidden": [ { "Hidden": "Hope", "Amount": 1 } ] } },
-        { "Id": "ASK_STAY", "Effect": { "Hidden": [ { "Hidden": "Humanity", "Amount": 1 } ], "Vitals": [ { "Vital": "Stress", "Amount": -4 } ] } }
+        { "Id": "THANK", "NextEventId": "EVT_BOND_WANDERER_3", "Effect": { "Hidden": [ { "Hidden": "Hope", "Amount": 1 } ] } },
+        { "Id": "ASK_STAY", "NextEventId": "EVT_BOND_WANDERER_3", "Effect": { "Hidden": [ { "Hidden": "Humanity", "Amount": 1 } ], "Vitals": [ { "Vital": "Stress", "Amount": -4 } ] } }
       ] },
 
     { "Id": "EVT_CAL_HANGEUL", "Kind": "Calendar", "Priority": 75, "Condition": { "Month": 10, "DayOfMonth": 9 },

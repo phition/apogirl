@@ -73,6 +73,9 @@ namespace ApoGirl.Core.Definitions
 
         /// <summary>대상 (TributeCut이면 세력 ID).</summary>
         public string Target = "";
+
+        /// <summary>합류하지 않고 들르는 인물 (유랑자): 방문 사다리 마지막 장면의 깃발만 있으면 켜진다 (합류·호감 검사 없음).</summary>
+        public bool Visitor;
     }
 
     /// <summary>윤 선생님 호감 구간 (기획 C.1): 선생님 수업의 성공률·숙련 경험치·대성공 보정.</summary>

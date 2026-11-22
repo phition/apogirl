@@ -495,6 +495,7 @@
       "Choices": [
         {
           "Id": "SHARE",
+          "NextEventId": "EVT_BOND_WANDERER_1",
           "Effect": {
             "Resources": [
               {
@@ -529,6 +530,7 @@
         },
         {
           "Id": "SHELTER",
+          "NextEventId": "EVT_BOND_WANDERER_1",
           "Effect": {
             "Resources": [
               {
@@ -570,6 +572,7 @@
       "Choices": [
         {
           "Id": "HELP_GIFT",
+          "NextEventId": "EVT_BOND_WANDERER_2",
           "Condition": {
             "FlagsAny": [
               "WANDERER_SHARED",
