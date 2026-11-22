@@ -587,6 +587,38 @@ MonoBehaviour:
     m_Key: ACT_SURV_MAKE_PROSTHETIC.short
     m_Metadata:
       m_Items: []
+  - m_Id: 1176256296271872
+    m_Key: ACT_CLUB_BOARDGAME.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1176256354992128
+    m_Key: ACT_CLUB_BOARDGAME.short
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1176256354992129
+    m_Key: ACT_CLUB_SINGING.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1176256354992130
+    m_Key: ACT_CLUB_SINGING.short
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1176256354992131
+    m_Key: ACT_CLUB_SPORTS.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1176256354992132
+    m_Key: ACT_CLUB_SPORTS.short
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1176256354992133
+    m_Key: ACT_CLUB_STUDY.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1176256354992134
+    m_Key: ACT_CLUB_STUDY.short
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

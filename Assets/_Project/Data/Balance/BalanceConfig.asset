@@ -393,6 +393,22 @@ MonoBehaviour:
     HeadlessLikedItemNightChance: 0.15
     HeadlessRooftopChance: 0.25
     HeadlessCdChance: 0.3
+    ClubAffinity: 4
+    ClubLikedAffinity: 7
+    ClubSceneCount: 3
+    ClubLikes:
+    - NpcId: NPC_NURSE
+      Activity: STUDY
+    - NpcId: NPC_DOHYEON
+      Activity: SPORTS
+    - NpcId: NPC_RINGLEADER
+      Activity: SPORTS
+    - NpcId: NPC_BYSTANDER
+      Activity: SINGING
+    - NpcId: NPC_SURVIVOR_A
+      Activity: SINGING
+    - NpcId: NPC_WANDERER
+      Activity: BOARDGAME
     CatFoodPerWeek: 1
     CatComfortStressMin: 60
     CatComfortStress: 4
