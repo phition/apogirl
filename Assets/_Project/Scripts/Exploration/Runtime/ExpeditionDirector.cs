@@ -2050,6 +2050,18 @@ namespace ApoGirl.Exploration.Runtime
             MoveTo(CurrentArea, x);
         }
 
+        /// <summary>디버그: 다른 층 복도의 x 자리로 옮긴다 (캡처용).</summary>
+        public void DebugMoveToFloor(int floor, float x)
+        {
+            if (floor < 0 || floor >= _corridors.Count)
+            {
+                return;
+            }
+
+            _log.DebugUsed = true;
+            MoveTo(_corridors[floor], x);
+        }
+
         /// <summary>디버그: 후처리·빛 기둥 켜고 끄기 (전후 비교·캡처용).</summary>
         public void ToggleLook()
         {
@@ -3059,7 +3071,8 @@ namespace ApoGirl.Exploration.Runtime
                 AddFog(child.gameObject, target);
                 if (child.name != "WallDecor")
                 {
-                    ExplorationLook.AddCaster(child.gameObject, ExplorationLook.Settings.Shadows.Decor);   // 바닥에 선 큰 장식만 (높이로 거른다)
+                    // 바닥에 선 큰 장식만 (벽에 걸린 게시판 등은 뺀다)
+                    ExplorationLook.AddCaster(child.gameObject, ExplorationLook.Settings.Shadows.Decor, _world.TransformPoint(target.Origin).y);
                 }
             }
         }

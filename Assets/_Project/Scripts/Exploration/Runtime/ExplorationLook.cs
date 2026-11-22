@@ -87,7 +87,8 @@ namespace ApoGirl.Exploration.Runtime
         public static void Reload() => _config = null;
 
         /// <summary>그림자를 드리울 물건 (설정의 종류가 켜져 있고 그림이 충분히 클 때).</summary>
-        public static void AddCaster(GameObject go, bool kindEnabled)
+        /// <param name="floorY">주면 바닥에 선 것만 (그림 아래 끝이 바닥 + 0.5 유닛보다 높으면 벽에 걸린 것이라 뺀다)</param>
+        public static void AddCaster(GameObject go, bool kindEnabled, float? floorY = null)
         {
             var shadows = Settings.Shadows;
             if (go == null || !kindEnabled || shadows == null || !shadows.Enabled)
@@ -96,7 +97,8 @@ namespace ApoGirl.Exploration.Runtime
             }
 
             var renderer = go.GetComponent<SpriteRenderer>();
-            if (renderer == null || renderer.sprite == null || renderer.bounds.size.y < shadows.MinCasterHeight || go.GetComponent<ShadowCaster2D>() != null)
+            if (renderer == null || renderer.sprite == null || renderer.bounds.size.y < shadows.MinCasterHeight || go.GetComponent<ShadowCaster2D>() != null
+                || (floorY.HasValue && renderer.bounds.min.y > floorY.Value + 0.5f))
             {
                 return;
             }
