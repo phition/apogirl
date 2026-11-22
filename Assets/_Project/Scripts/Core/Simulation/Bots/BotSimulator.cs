@@ -33,6 +33,22 @@ namespace ApoGirl.Core.Simulation.Bots
         public int TeacherInfection;
         public int Threat;
         public int Defense;
+
+        /// <summary>동료 (주간 정산 직후): 합류 수, 부상 중, 가벼운 상처, 적성 역할을 맡아 효과가 있는 수.</summary>
+        public int Companions;
+        public int CompanionsInjured;
+        public int CompanionsMinor;
+        public int CompanionsOnAptitude;
+    }
+
+    /// <summary>동료 탐험 한 번 (역할 재기획 P5 진단).</summary>
+    public sealed class BotOutingSample
+    {
+        public int Week;
+        public string NpcId = "";
+        public int Resources;
+        public bool Item;
+        public OutingWound Wound;
     }
 
     /// <summary>탐험 한 번.</summary>
@@ -99,6 +115,7 @@ namespace ApoGirl.Core.Simulation.Bots
 
         public readonly List<BotWeekSample> Weeks = new List<BotWeekSample>();
         public readonly List<BotExpeditionSample> Expeditions = new List<BotExpeditionSample>();
+        public readonly List<BotOutingSample> Outings = new List<BotOutingSample>();
 
         public bool Survived => Status == GameStatus.Rescued;
     }
@@ -168,6 +185,7 @@ namespace ApoGirl.Core.Simulation.Bots
             {
                 // 1주차는 창고·탈출로 모두 잠겨 있다 (잠긴 칸은 전략이 건드리지 않음)
                 BotTrader.Trade(state, db);
+                BotRoles.Assign(state, db, config);
                 BotPlanner.Plan(state, db, config, strategy, botRandom);
 
                 runner.PrepareWeek();
@@ -183,7 +201,7 @@ namespace ApoGirl.Core.Simulation.Bots
 
                 var week = state.Calendar.Week;
                 runner.FinishWeek();
-                result.Weeks.Add(Sample(state, week));
+                result.Weeks.Add(Sample(state, week, db));
             }
 
             Finish(result, state, db);
@@ -192,6 +210,15 @@ namespace ApoGirl.Core.Simulation.Bots
 
         private static void Record(BotRunResult result, SlotOutcome outcome)
         {
+            foreach (var back in outcome.OutingReturns ?? new List<OutingReturn>())
+            {
+                result.Outings.Add(new BotOutingSample
+                {
+                    Week = outcome.Week, NpcId = back.NpcId, Resources = back.Resources.Sum(r => r.Amount),
+                    Item = !string.IsNullOrEmpty(back.ItemId), Wound = back.Wound,
+                });
+            }
+
             var expedition = outcome.Expedition;
             var request = outcome.ExpeditionRequest;
             if (expedition == null || request == null)
@@ -217,12 +244,17 @@ namespace ApoGirl.Core.Simulation.Bots
             });
         }
 
-        private static BotWeekSample Sample(GameState state, int week)
+        private static BotWeekSample Sample(GameState state, int week, IDefinitionDatabase db)
         {
             var b = state.Base;
             var v = state.Player.Vitals;
+            var joined = state.Npcs.Where(n => n.Value.Status == NpcStatus.Joined).ToList();
             return new BotWeekSample
             {
+                Companions = joined.Count,
+                CompanionsInjured = joined.Count(n => n.Value.InjuredWeeks > 0),
+                CompanionsMinor = joined.Count(n => n.Value.MinorWoundWeeks > 0),
+                CompanionsOnAptitude = joined.Count(n => RoleRules.HasAptitude(db.Balance, n.Key, n.Value.Role) && RoleRules.IsActive(state, n.Key, db.Balance)),
                 Week = week,
                 Food = b.GetResource(ResourceType.Food),
                 Water = b.GetResource(ResourceType.Water),

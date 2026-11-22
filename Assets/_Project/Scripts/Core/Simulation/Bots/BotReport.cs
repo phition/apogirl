@@ -47,6 +47,9 @@ namespace ApoGirl.Core.Simulation.Bots
             ("teacher_infection", w => w.TeacherInfection),
             ("threat", w => w.Threat),
             ("defense", w => w.Defense),
+            ("companions", w => w.Companions),
+            ("companions_injured", w => w.CompanionsInjured),
+            ("companions_minor", w => w.CompanionsMinor),
         };
 
         private static readonly string[] ValueNames = BotSimulator.TrackedValues().Select(v => v.Name).ToArray();
@@ -310,6 +313,27 @@ namespace ApoGirl.Core.Simulation.Bots
                 var list = g.ToList();
                 sb.AppendLine($"| {g.Key.LocationId} | {(g.Key.Night ? "밤" : "낮")} | {list.Count} | {Rate(list)} | {P(list.Count(e => e.Bitten), list.Count)} " +
                               $"| {F(list.Average(e => e.Food))} | {F(list.Average(e => e.Water))} | {F(list.Average(e => e.Medicine))} | {F(list.Average(e => e.Materials))} |");
+            }
+
+            sb.AppendLine();
+
+            // 동료 탐험 (역할 재기획 8절): 외출 횟수·물자·다침, 동시에 부상인 동료 (목표 평균 1명 미만)
+            sb.AppendLine("## 동료 탐험 (역할 재기획 P5)");
+            sb.AppendLine();
+            sb.AppendLine("| 전략 | 외출 / 동료·주 | 물자 / 외출 | 물자 / 주 | 기호품 | 가벼운 상처 · 부상 (외출당) | 동시 부상 평균 · 최대 | 적성 역할 비율 |");
+            sb.AppendLine("|---|---|---|---|---|---|---|---|");
+            foreach (var g in runs.GroupBy(r => r.StrategyId))
+            {
+                var list = g.ToList();
+                var outings = list.SelectMany(r => r.Outings).ToList();
+                var weeks = list.SelectMany(r => r.Weeks).ToList();
+                var companionWeeks = Math.Max(1, weeks.Sum(w => w.Companions));
+                var withCompanions = weeks.Where(w => w.Companions > 0).ToList();
+                sb.AppendLine($"| {g.Key} | {F(outings.Count / (float)companionWeeks)} | {(outings.Count == 0 ? "-" : F(outings.Average(o => o.Resources)))} " +
+                              $"| {F(outings.Sum(o => o.Resources) / (float)Math.Max(1, weeks.Count))} | {P(outings.Count(o => o.Item), outings.Count)} " +
+                              $"| {P(outings.Count(o => o.Wound == OutingWound.Minor), outings.Count)} · {P(outings.Count(o => o.Wound == OutingWound.Severe), outings.Count)} " +
+                              $"| {(withCompanions.Count == 0 ? "-" : F(withCompanions.Average(w => w.CompanionsInjured)))} · {weeks.Select(w => w.CompanionsInjured).DefaultIfEmpty(0).Max()} " +
+                              $"| {P(weeks.Sum(w => w.CompanionsOnAptitude), companionWeeks)} |");
             }
 
             sb.AppendLine();

@@ -21,6 +21,15 @@ namespace ApoGirl.Core.Simulation.Bots
         /// <summary>난이도 ID (BalanceConfig.Difficulties). 봇은 되돌리기·자동 수색을 쓰지 않는다.</summary>
         public string Difficulty = "STANDARD";
 
+        /// <summary>동료 역할 배정 (역할 재기획 P5): "Aptitude" = 적성 우선, "Keep"·빈 값 = 합류 때 역할 그대로. BotRoles.</summary>
+        public string RoleAssignment = "";
+
+        /// <summary>적성 역할을 맡길 수 없고 지금 역할이 효과 없을 때 고르는 순서.</summary>
+        public List<string> RolePriority = new List<string>();
+
+        /// <summary>봇이 역할을 바꾸지 않는 인물 (고양이 등).</summary>
+        public List<string> RoleKeepNpcs = new List<string>();
+
         /// <summary>행동 묶음 (이름 → 후보). 칸·규칙의 후보에 행동 ID 대신 쓸 수 있다.</summary>
         public Dictionary<string, BotGroupDef> Groups = new Dictionary<string, BotGroupDef>();
 

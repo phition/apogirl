@@ -2,6 +2,9 @@
   "RunsPerStrategy": 40,
   "BaseSeed": 1000,
   "MaxWeeks": 60,
+  "RoleAssignment": "Aptitude",
+  "RolePriority": ["MEDIC", "HOUSE", "GUARD", "SCOUT", "STUDY", "COMFORT"],
+  "RoleKeepNpcs": ["NPC_CAT"],
   "Groups": {
     "EXP_DAY": {
       "Pick": "Random",
