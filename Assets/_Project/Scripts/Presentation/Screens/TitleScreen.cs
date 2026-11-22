@@ -88,6 +88,17 @@ namespace ApoGirl.Presentation.Screens
             var opening = new OpeningVideo(root, _session.IsNewGamePlus);
             yield return opening.Play();
 
+            // 타이틀 글자·안내를 걷고 등굣길의 끝(봄 교문)을 배경으로 깐다
+            _message.text = "";
+            root.Q("title-logo")?.AddToClassList("hidden");
+            root.Q<Label>("title-label").AddToClassList("hidden");
+            root.Q<Label>("subtitle-label").AddToClassList("hidden");
+            var backdrop = opening.PrologueBackdrop;
+            if (backdrop != null)
+            {
+                Art.StoryArt.SetCover(root.Q("screen"), backdrop);
+            }
+
             var flow = new PrologueFlow(root, _session, project);
             _advance = flow.Advance;
             StartCoroutine(opening.Reveal());

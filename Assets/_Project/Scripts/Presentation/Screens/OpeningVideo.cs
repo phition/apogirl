@@ -27,6 +27,9 @@ namespace ApoGirl.Presentation.Screens
             public float Reveal = 1f;
             public float HintDelay = 2.5f;
             public float PrepareTimeout = 6f;
+
+            /// <summary>프롤로그 대화 뒤 배경 (Story/ 아래 경로). 영상 마지막 교문 컷에서 이어진다.</summary>
+            public string PrologueBackdrop = "";
         }
 
         private readonly VisualElement _root;
@@ -42,6 +45,9 @@ namespace ApoGirl.Presentation.Screens
             var text = Resources.Load<TextAsset>("Art/opening_video");
             _config = text != null ? JsonUtility.FromJson<Config>(text.text) : null;
         }
+
+        /// <summary>프롤로그 배경 그림 (없으면 null).</summary>
+        public Texture2D PrologueBackdrop => string.IsNullOrEmpty(_config?.PrologueBackdrop) ? null : Art.StoryArt.Story(_config.PrologueBackdrop);
 
         /// <summary>영상을 끝까지(또는 건너뛸 때까지) 틀고, 검은 막을 덮은 채로 돌아온다. 영상이 없으면 막 없이 바로 돌아온다.</summary>
         public IEnumerator Play()
