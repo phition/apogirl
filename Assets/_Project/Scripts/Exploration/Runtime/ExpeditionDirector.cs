@@ -2094,6 +2094,9 @@ namespace ApoGirl.Exploration.Runtime
             _look.ApplyShadows(_flashlight);
             _look.ApplyShadows(_flashlightHot);
             _look.ApplyShadows(_flashlightSpill);
+            _look.ApplyNormals(_flashlight);
+            _look.ApplyNormals(_flashlightHot);
+            _look.ApplyNormals(_flashlightSpill);
         }
 
         private void SetupLight(bool day)

@@ -6,7 +6,7 @@ using UnityEngine.Rendering.Universal;
 namespace ApoGirl.Exploration.Runtime
 {
     /// <summary>
-    /// 탐험 화면의 '보이는 맛' (Resources/Art/exploration_look.json): 1단계 후처리 색 보정·블룸·비네트·톤매핑과 빛 기둥(볼류메트릭), 2단계 그림자·도트 빛.
+    /// 탐험 화면의 '보이는 맛' (Resources/Art/exploration_look.json): 1단계 후처리 색 보정·블룸·비네트·톤매핑과 빛 기둥(볼류메트릭), 2단계 그림자·도트 빛, 3단계 그림에서 만든 노멀.
     /// - 후처리는 탐험 카메라에만 켠다 (전역 Volume이지만 허브 카메라는 후처리를 쓰지 않는다).
     /// - 색 보정은 픽셀마다 색만 바꿔 도트 모양을 그대로 둔다. 블룸은 밝은 곳(손전등·창문)에만 걸리게 문턱을 높게.
     /// - 디버그 F9: 후처리·빛 기둥·그림자·도트 빛 켜고 끄기 (전후 비교, 기록에 영향 없음).
@@ -74,6 +74,25 @@ namespace ApoGirl.Exploration.Runtime
             public float StepStrength = 0.5f;
         }
 
+        /// <summary>
+        /// 3단계 노멀 (같은 셰이더의 NormalsRendering 패스): 노멀맵 파일 없이 그림에서 바로 화소 단위 굴곡을 만든다.
+        /// 손전등 빛만 노멀을 쓴다 (빛이 비스듬히 닿는 쪽이 밝고 반대쪽이 어둡다).
+        /// </summary>
+        [Serializable]
+        public sealed class NormalConfig
+        {
+            public bool Enabled = true;
+
+            /// <summary>굴곡 세기 (0이면 평평).</summary>
+            public float Strength = 2f;
+
+            /// <summary>밝기를 높이에 섞는 비율 (0 = 외곽선만 둥글게, 1 = 밝은 곳이 튀어나옴).</summary>
+            public float LumaWeight = 0.5f;
+
+            /// <summary>빛이 그림 평면에서 떨어진 높이 (유닛). 낮을수록 비스듬해 굴곡이 세게 보이고 먼 곳이 어두워진다.</summary>
+            public float LightDistance = 2f;
+        }
+
         [Serializable]
         public sealed class Config
         {
@@ -82,6 +101,7 @@ namespace ApoGirl.Exploration.Runtime
             public Profile Night = new Profile();
             public ShadowConfig Shadows = new ShadowConfig();
             public PixelLightConfig PixelLight = new PixelLightConfig();
+            public NormalConfig Normals = new NormalConfig();
         }
 
         private const string DefaultLitShader = "Universal Render Pipeline/2D/Sprite-Lit-Default";
@@ -90,6 +110,8 @@ namespace ApoGirl.Exploration.Runtime
         private static readonly int PixelSnapMaxTexelId = Shader.PropertyToID("_ApoPixelSnapMaxTexel");
         private static readonly int LightStepsId = Shader.PropertyToID("_ApoLightSteps");
         private static readonly int LightStepStrengthId = Shader.PropertyToID("_ApoLightStepStrength");
+        private static readonly int NormalStrengthId = Shader.PropertyToID("_ApoNormalStrength");
+        private static readonly int NormalLumaWeightId = Shader.PropertyToID("_ApoNormalLumaWeight");
         private Material _pixelMaterial;
 
         private static Config _config;
@@ -185,6 +207,21 @@ namespace ApoGirl.Exploration.Runtime
             ApplyPixelGlobal();
         }
 
+        private bool NormalsOn => On && _pixelMaterial != null && Settings.Normals != null && Settings.Normals.Enabled;
+
+        /// <summary>노멀을 쓰는 빛 (손전등).</summary>
+        public void ApplyNormals(Light2D light)
+        {
+            if (light == null)
+            {
+                return;
+            }
+
+            var normals = Settings.Normals ?? new NormalConfig();
+            light.normalMapQuality = NormalsOn ? Light2D.NormalMapQuality.Accurate : Light2D.NormalMapQuality.Disabled;
+            light.normalMapDistance = Mathf.Max(0.1f, normals.LightDistance);
+        }
+
         /// <summary>도트 빛: 기본 조명 머티리얼을 쓰는 스프라이트를 도트 빛 머티리얼로 (다른 머티리얼은 그대로). 새로 생긴 그림을 위해 다시 불러도 된다.</summary>
         public void ApplyPixelLight(Transform root)
         {
@@ -203,7 +240,13 @@ namespace ApoGirl.Exploration.Runtime
             }
         }
 
-        private void ApplyPixelGlobal() => Shader.SetGlobalFloat(PixelLightOnId, On && _pixelMaterial != null ? 1f : 0f);
+        private void ApplyPixelGlobal()
+        {
+            Shader.SetGlobalFloat(PixelLightOnId, On && _pixelMaterial != null ? 1f : 0f);
+            var normals = Settings.Normals ?? new NormalConfig();
+            Shader.SetGlobalFloat(NormalStrengthId, NormalsOn ? Mathf.Max(0f, normals.Strength) : 0f);
+            Shader.SetGlobalFloat(NormalLumaWeightId, Mathf.Clamp01(normals.LumaWeight));
+        }
 
         public void Toggle()
         {
