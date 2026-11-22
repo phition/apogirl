@@ -478,7 +478,10 @@ namespace ApoGirl.Exploration.Runtime
             {
                 var parent = area.Root != null ? area.Root.transform : _world;
                 var origin = area.Root != null ? Vector2.zero : area.Origin;
-                BuildingView.Rect(parent, "FloodWater", origin, new Vector2(area.Width, 0.75f), new Color(0.2f, 0.32f, 0.42f, 0.55f), 6);
+                // 그림(deep_flood_water, 반투명 물 띠)이 있으면 이어 붙이고, 없으면 반투명 사각형
+                var water = ExplorationArt.Get("deep_flood_water");
+                var depth = water != null ? water.bounds.size.y : 0.75f;
+                ExplorationArt.Tiled(parent, "FloodWater", "deep_flood_water", origin, new Vector2(area.Width, depth), 6, new Color(0.2f, 0.32f, 0.42f, 0.55f));
             }
         }
 
@@ -2051,7 +2054,7 @@ namespace ApoGirl.Exploration.Runtime
         private void CreateEncounter(ExplorationArea area, EncounterDef encounter)
         {
             var key = ExplorationArt.Encounter(encounter.Id)
-                ?? (encounter.Collectible && ExplorationArt.Get(encounter.SpriteKey) == null ? "prop_paper"   // CD 그림이 아직 없으면 종이 자리
+                ?? (encounter.Collectible && ExplorationArt.Get(encounter.SpriteKey) == null ? "prop_paper"   // CD 그림(prop_cd)이 없으면 종이 자리
                 : !string.IsNullOrEmpty(encounter.SpriteKey) ? encounter.SpriteKey
                 : encounter.Id.Contains("NOTE") || encounter.Id.Contains("NOTICE") ? "prop_paper" : "person_student_crouch");
             var view = Prop(area, "Encounter_" + encounter.Id, key, encounter.X, new Vector2(0.6f, 1.5f), new Color(0.55f, 0.62f, 0.75f), 9);

@@ -694,6 +694,63 @@
  ],
  "Decor": [
   {
+   "Location": "LOC_RESIDENTIAL",
+   "Template": "DEEP",
+   "Floor": [
+    "decor_deep_car",
+    "decor_deep_pillar",
+    "decor_deep_pillar"
+   ],
+   "Wall": [],
+   "FloorDensity": 0.1,
+   "WallDensity": 0
+  },
+  {
+   "Location": "LOC_SUBWAY",
+   "Template": "DEEP",
+   "Floor": [
+    "decor_deep_fan",
+    "decor_deep_cart"
+   ],
+   "Wall": [],
+   "FloorDensity": 0.1,
+   "WallDensity": 0
+  },
+  {
+   "Location": "LOC_MART",
+   "Template": "DEEP",
+   "Floor": [
+    "decor_deep_pallet",
+    "decor_deep_curtain",
+    "decor_deep_pallet"
+   ],
+   "Wall": [],
+   "FloorDensity": 0.1,
+   "WallDensity": 0
+  },
+  {
+   "Location": "LOC_POLICE",
+   "Template": "DEEP",
+   "Floor": [
+    "decor_deep_shelf",
+    "decor_deep_cage"
+   ],
+   "Wall": [],
+   "FloorDensity": 0.1,
+   "WallDensity": 0
+  },
+  {
+   "Location": "LOC_WATERWORKS",
+   "Template": "DEEP",
+   "Floor": [
+    "decor_deep_valve",
+    "decor_deep_drums"
+   ],
+   "Wall": [],
+   "FloorDensity": 0.1,
+   "WallDensity": 0
+  },
+  {
    "Location": "",
    "Template": "OUT_ENTRY",
    "Floor": [

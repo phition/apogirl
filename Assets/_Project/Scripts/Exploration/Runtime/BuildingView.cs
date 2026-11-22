@@ -343,15 +343,39 @@ namespace ApoGirl.Exploration.Runtime
 
                 Rect(_root, "DeepCeiling", new Vector2(0f, y + h - 0.15f), new Vector2(length, 0.3f), new Color(0.07f, 0.07f, 0.075f), -3);
 
-                // 천장 배관 두 줄과 케이블 트레이
-                Rect(_root, "DeepPipe", new Vector2(0f, y + h - 0.55f), new Vector2(length, 0.16f), new Color(0.28f, 0.24f, 0.2f), -4);
-                Rect(_root, "DeepPipe", new Vector2(0f, y + h - 0.8f), new Vector2(length, 0.1f), new Color(0.22f, 0.24f, 0.26f), -4);
-                Rect(_root, "DeepTray", new Vector2(0f, y + h - 1.05f), new Vector2(length, 0.06f), new Color(0.18f, 0.18f, 0.19f), -4);
+                // 천장 배관 두 줄과 케이블 트레이: 그림 띠(deep_ceiling)가 있으면 이어 붙이고, 없으면 사각형
+                var ceiling = ExplorationArt.Get("deep_ceiling");
+                var bandBottom = y + h - 1.05f;
+                if (ceiling != null)
+                {
+                    var band = ceiling.bounds.size.y;
+                    bandBottom = y + h - 0.15f - band;
+                    ExplorationArt.Tiled(_root, "DeepCeilingBand", "deep_ceiling", new Vector2(0f, bandBottom), new Vector2(length, band), -4, Color.clear);
+                }
+                else
+                {
+                    Rect(_root, "DeepPipe", new Vector2(0f, y + h - 0.55f), new Vector2(length, 0.16f), new Color(0.28f, 0.24f, 0.2f), -4);
+                    Rect(_root, "DeepPipe", new Vector2(0f, y + h - 0.8f), new Vector2(length, 0.1f), new Color(0.22f, 0.24f, 0.26f), -4);
+                    Rect(_root, "DeepTray", new Vector2(0f, y + h - 1.05f), new Vector2(length, 0.06f), new Color(0.18f, 0.18f, 0.19f), -4);
+                }
+
+                var lamp = ExplorationArt.Get("deep_lamp");
                 for (var x = 5f; x < length - 2f; x += 9f)
                 {
-                    // 배관 받침과 희미한 비상등
-                    Rect(_root, "DeepBracket", new Vector2(x, y + h - 1.05f), new Vector2(0.08f, 0.9f), new Color(0.2f, 0.2f, 0.21f), -4);
-                    Rect(_root, "DeepLamp", new Vector2(x + 1.2f, y + h - 1.4f), new Vector2(0.3f, 0.12f), new Color(0.45f, 0.62f, 0.5f, 0.8f), -3);
+                    // 배관 받침과 희미한 비상등 (등 그림은 띠 바로 아래에 매단다)
+                    if (ceiling == null)
+                    {
+                        Rect(_root, "DeepBracket", new Vector2(x, y + h - 1.05f), new Vector2(0.08f, 0.9f), new Color(0.2f, 0.2f, 0.21f), -4);
+                    }
+
+                    if (lamp != null)
+                    {
+                        ExplorationArt.Place(_root, "DeepLamp", "deep_lamp", new Vector2(x + 1.35f, bandBottom - lamp.bounds.size.y), -3, Vector2.zero, Color.clear);
+                    }
+                    else
+                    {
+                        Rect(_root, "DeepLamp", new Vector2(x + 1.2f, y + h - 1.4f), new Vector2(0.3f, 0.12f), new Color(0.45f, 0.62f, 0.5f, 0.8f), -3);
+                    }
                 }
 
                 // 벽 아래 물자국 (벽 그림이 없을 때만 — 그림에는 이미 그려져 있다)
@@ -359,7 +383,49 @@ namespace ApoGirl.Exploration.Runtime
                 {
                     Rect(_root, "DeepStain", new Vector2(0f, y + 0.15f), new Vector2(length, 0.45f), new Color(0.09f, 0.1f, 0.1f, 0.85f), -5);
                 }
+
+                // 지역 장식 (그림 표 Decor의 Template "DEEP"): 계단·문·출구·상자 자리를 피해서
+                var deepRule = ExplorationArt.Decor(_locationId, DeepDecorTemplate);
+                if (deepRule != null && deepRule.Template == DeepDecorTemplate)
+                {
+                    var blocked = BlockedOnFloor(floor);
+                    Scatter(_root, deepRule, length, y, blocked, blocked, StableHash(_locationId) + floor * 7919);
+                }
             }
+        }
+
+        /// <summary>깊은 곳 장식 규칙의 Template 이름 (방 템플릿 ID와 겹치지 않는다).</summary>
+        private const string DeepDecorTemplate = "DEEP";
+
+        /// <summary>그 층에서 장식을 놓지 않을 자리: 계단·깊은 문·출구·상자 앞.</summary>
+        private List<(float, float)> BlockedOnFloor(int floor)
+        {
+            var blocked = new List<(float, float)>();
+            foreach (var connector in _layout.Connectors)
+            {
+                if (connector.Floor == floor)
+                {
+                    blocked.Add((connector.X - 2.6f, connector.X + 2.6f));   // 계단실·문 폭
+                }
+            }
+
+            foreach (var exit in _layout.Exits)
+            {
+                if (exit.Floor == floor)
+                {
+                    blocked.Add((exit.X - 1.5f, exit.X + 1.5f));
+                }
+            }
+
+            foreach (var container in _layout.Containers)
+            {
+                if (container.Floor == floor)
+                {
+                    blocked.Add((container.X - 1.1f, container.X + 1.1f));
+                }
+            }
+
+            return blocked;
         }
 
         /// <summary>깊은 곳 벽 그림: 지역 것(wall_deep_residential 등)이 있으면 그것, 없으면 공통 wall_deep.</summary>
