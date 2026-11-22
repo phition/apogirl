@@ -79,7 +79,8 @@ namespace ApoGirl.Core.Expedition
             ApplyHostile(request, result);
             ApplyLikedItem(request, result);
             ApplyRooftop(request, result);
-            ApplyCollectibles(request, result);
+            var deep = ApplyDeep(request, result);
+            ApplyCollectibles(request, result, deep);
             return result;
         }
 
@@ -115,8 +116,51 @@ namespace ApoGirl.Core.Expedition
         }
 
         /// <summary>옥상(4층)까지 올라가 본 판: 확률로 옥상 플래그를 남긴다. 따로 뽑은 난수로 (다른 결과를 흔들지 않는다).</summary>
-        /// <summary>줍는 조우(CD, 기획 A.3): 무사히 돌아온 탐험에서 확률로 첫 선택지(챙긴다). 따로 뽑은 난수로.</summary>
-        private void ApplyCollectibles(ExpeditionRequest request, ExpeditionResult result)
+        /// <summary>
+        /// 깊은 곳 (기획 B): 깊은 곳이 있는 지역에서 무사히 돌아온 판은 확률로 깊이 들어가 봤다고 본다.
+        /// 들어갔으면 깊은 곳 상자의 전리품 표에서 물건 하나(확률)와 스트레스. 따로 뽑은 난수로 (다른 결과를 흔들지 않는다).
+        /// </summary>
+        private bool ApplyDeep(ExpeditionRequest request, ExpeditionResult result)
+        {
+            if (result.Status != ExtractStatus.Extracted || !_db.TryGetLocation(request.LocationId, out var location)
+                || location.Layout == null || location.Layout.DeepFloors <= 0)
+            {
+                return false;
+            }
+
+            var balance = _db.Balance;
+            var random = new SeededRandom(SeededRandom.CreateState(request.Seed ^ 0xDEE9));
+            var chance = balance.HeadlessDeepChance + (request.KnowsDeepExits ? balance.HeadlessDeepSpecialBonus : 0f);
+            if (random.NextDouble() >= chance)
+            {
+                return false;
+            }
+
+            result.StressDelta += balance.HeadlessDeepStress;
+            var layout = location.Layout;
+            var tables = layout.Containers.Where(c => layout.IsDeep(c.Floor) && !string.IsNullOrEmpty(c.LootTableId))
+                .Select(c => c.LootTableId).Distinct().OrderBy(id => id, StringComparer.Ordinal).ToList();
+            if (tables.Count > 0 && random.NextDouble() < balance.HeadlessDeepItemChance
+                && _db.TryGetLootTable(tables[random.Range(0, tables.Count - 1)], out var table) && table.Entries.Count > 0)
+            {
+                var total = table.Entries.Sum(e => Math.Max(0, e.Weight));
+                var roll = random.Range(0, Math.Max(0, total - 1));
+                foreach (var entry in table.Entries)
+                {
+                    roll -= Math.Max(0, entry.Weight);
+                    if (roll < 0)
+                    {
+                        result.Loot.Add(new ItemStack { ItemId = entry.ItemId, Count = Math.Max(1, entry.MinCount) });
+                        break;
+                    }
+                }
+            }
+
+            return true;
+        }
+
+        /// <summary>줍는 조우(CD, 기획 A.3): 무사히 돌아온 탐험에서 확률로 첫 선택지(챙긴다). 깊은 곳의 CD는 깊이 들어간 판만. 따로 뽑은 난수로.</summary>
+        private void ApplyCollectibles(ExpeditionRequest request, ExpeditionResult result, bool deep)
         {
             if (result.Status != ExtractStatus.Extracted || !_db.TryGetLocation(request.LocationId, out var location))
             {
@@ -126,6 +170,11 @@ namespace ApoGirl.Core.Expedition
             var random = new SeededRandom(SeededRandom.CreateState(request.Seed ^ 0x0C0D15));
             foreach (var encounter in EncounterRules.Active(location, request.TimeOfDay, request.Flags).Where(e => e.Collectible && e.Choices.Count > 0).ToList())
             {
+                if (location.Layout != null && location.Layout.IsDeep(encounter.Floor) && !deep)
+                {
+                    continue;
+                }
+
                 if (random.NextDouble() < _db.Balance.HeadlessCdChance)
                 {
                     EncounterRules.Apply(result, encounter, encounter.Choices[0]);

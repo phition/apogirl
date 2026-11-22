@@ -98,6 +98,15 @@ namespace ApoGirl.Core.Definitions
     {
         Stairs,
         Ladder,
+
+        /// <summary>깊은 문 (기획 B): 겉 건물 ↔ 깊은 곳, 양쪽에 하나씩 둔다. 낡은 철제 방화문.</summary>
+        DeepDoor,
+
+        /// <summary>일방 출구 (기획 B): 깊은 곳 → 겉 건물, 나가기만 한다. 안쪽에 푸시 바가 달린 비상구.</summary>
+        OneWayExit,
+
+        /// <summary>일방 출구의 바깥쪽: 손잡이 없는 민짜 철문. 지나갈 수 없다 ("안에서만 열린다").</summary>
+        OneWayBack,
     }
 
     public enum ContainerKind
@@ -115,7 +124,7 @@ namespace ApoGirl.Core.Definitions
         Alternate,
     }
 
-    /// <summary>계단·사다리: 같은 X 위치에서 TargetFloor로 이동.</summary>
+    /// <summary>계단·사다리: 같은 X 위치에서 TargetFloor로 이동. 깊은 문·일방 출구는 TargetX로 (음수면 같은 X).</summary>
     [Serializable]
     public sealed class ConnectorDef
     {
@@ -123,6 +132,11 @@ namespace ApoGirl.Core.Definitions
         public int Floor;
         public float X;
         public int TargetFloor;
+        public float TargetX = -1f;
+
+        public bool IsStairs => Kind == ConnectorKind.Stairs || Kind == ConnectorKind.Ladder;
+
+        public float ArrivalX => TargetX >= 0f ? TargetX : X;
 
         /// <summary>무너져서 쓸 수 없는 계단 (보이기만 하고 지나갈 수 없다. 다른 쪽 계단으로 돌아가야 한다).</summary>
         public bool Collapsed;
@@ -230,6 +244,27 @@ namespace ApoGirl.Core.Definitions
         public string RooftopFlag = "";
 
         public bool IsRooftop(int floor) => RooftopFloor >= 0 && floor == RooftopFloor;
+
+        /// <summary>
+        /// 깊은 곳 층 수 (기획 B, 0 = 없음). 깊은 곳 층 번호는 겉 층 뒤에 붙는다: Floors, Floors + 1, … (= 지하 1, 지하 2, …).
+        /// 그래서 층 번호로 찾는 배치(좀비·상자·조우·계단)는 깊은 곳에도 그대로 쓴다.
+        /// </summary>
+        public int DeepFloors;
+
+        /// <summary>깊은 곳 복도 길이.</summary>
+        public float DeepCorridorLength = 40f;
+
+        /// <summary>깊은 곳 이름 문구 키 (예: deep.LOC_SUBWAY, 화면 위 층 표시 "지하 1 · 역무 구역").</summary>
+        public string DeepNameKey = "";
+
+        public int TotalFloors => Floors + Math.Max(0, DeepFloors);
+
+        public bool IsDeep(int floor) => DeepFloors > 0 && floor >= Floors && floor < TotalFloors;
+
+        /// <summary>깊은 곳 층의 몇 번째 지하인가 (지하 1 = 1).</summary>
+        public int DeepLevel(int floor) => floor - Floors + 1;
+
+        public float CorridorLengthOf(int floor) => IsDeep(floor) ? DeepCorridorLength : CorridorLength;
 
         public List<ConnectorDef> Connectors = new List<ConnectorDef>();
         public List<DoorDef> Doors = new List<DoorDef>();

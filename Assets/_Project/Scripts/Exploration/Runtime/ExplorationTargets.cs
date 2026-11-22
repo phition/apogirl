@@ -37,6 +37,9 @@ namespace ApoGirl.Exploration.Runtime
 
         /// <summary>옥상 (건물 맨 위층 복도 자리): 방·좀비가 없고, 벽 대신 철조망 너머로 마을이 보인다. 조명은 바깥 밝기.</summary>
         public bool IsRoof;
+
+        /// <summary>깊은 곳 복도 (기획 B): 늘 어둡고 소리가 울린다. 깊은 문·일방 출구로만 오간다.</summary>
+        public bool IsDeep;
         public int Floor;
         public Vector2 Origin;
         public float Width;

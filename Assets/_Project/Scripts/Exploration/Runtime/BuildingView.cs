@@ -43,6 +43,7 @@ namespace ApoGirl.Exploration.Runtime
             _root = root;
             _layout = layout;
             BuildCorridors();
+            BuildDeep();
         }
 
         public float FloorHeight => _layout.FloorHeight;
@@ -64,7 +65,18 @@ namespace ApoGirl.Exploration.Runtime
             }
         }
 
-        public float FloorY(int floor) => floor * _layout.FloorHeight;
+        /// <summary>
+        /// 층 바닥의 높이. 깊은 곳 층(기획 B)은 건물 아래 멀리 따로 그린다 (지하 1이 위, 지하 2가 그 아래).
+        /// 땅속 단면처럼 붙여 그리면 겉 건물에서 보이므로, 화면에는 지금 층만 보인다는 점을 이용해 떼어 둔다.
+        /// </summary>
+        public float FloorY(int floor) => _layout.IsDeep(floor)
+            ? DeepTopY - _layout.DeepLevel(floor) * _layout.FloorHeight
+            : floor * _layout.FloorHeight;
+
+        /// <summary>깊은 곳 맨 위 천장 높이 (바깥 길 -70보다 아래).</summary>
+        private const float DeepTopY = -120f;
+
+        private static readonly Color DeepWallColor = new Color(0.13f, 0.14f, 0.15f);
 
         /// <summary>창틀 두께 (유닛): 창 그림 가장자리 2픽셀.</summary>
         private const float WindowFrame = 2f / 36f;
@@ -307,6 +319,37 @@ namespace ApoGirl.Exploration.Runtime
             }
         }
 
+        /// <summary>
+        /// 깊은 곳 복도 (기획 B): 콘크리트 벽, 천장의 배관·케이블 트레이, 꺼진 듯 희미한 비상등. 늘 어둡다(조명은 ExplorationLighting).
+        /// </summary>
+        private void BuildDeep()
+        {
+            var h = _layout.FloorHeight;
+            var length = _layout.DeepCorridorLength;
+            for (var floor = _layout.Floors; floor < _layout.TotalFloors; floor++)
+            {
+                var y = FloorY(floor);
+                Rect(_root, "DeepRock", new Vector2(-20f, y - 2f), new Vector2(length + 40f, h + 4f), new Color(0.025f, 0.025f, 0.03f), -10);
+                ExplorationArt.Tiled(_root, "DeepWall" + floor, "wall_deep", new Vector2(0f, y + 0.15f), new Vector2(length, h - 0.3f), -6, DeepWallColor);
+                Rect(_root, "DeepSlab", new Vector2(0f, y - 0.15f), new Vector2(length, 0.3f), new Color(0.07f, 0.07f, 0.075f), -3);
+                Rect(_root, "DeepCeiling", new Vector2(0f, y + h - 0.15f), new Vector2(length, 0.3f), new Color(0.07f, 0.07f, 0.075f), -3);
+
+                // 천장 배관 두 줄과 케이블 트레이
+                Rect(_root, "DeepPipe", new Vector2(0f, y + h - 0.55f), new Vector2(length, 0.16f), new Color(0.28f, 0.24f, 0.2f), -4);
+                Rect(_root, "DeepPipe", new Vector2(0f, y + h - 0.8f), new Vector2(length, 0.1f), new Color(0.22f, 0.24f, 0.26f), -4);
+                Rect(_root, "DeepTray", new Vector2(0f, y + h - 1.05f), new Vector2(length, 0.06f), new Color(0.18f, 0.18f, 0.19f), -4);
+                for (var x = 5f; x < length - 2f; x += 9f)
+                {
+                    // 배관 받침과 희미한 비상등
+                    Rect(_root, "DeepBracket", new Vector2(x, y + h - 1.05f), new Vector2(0.08f, 0.9f), new Color(0.2f, 0.2f, 0.21f), -4);
+                    Rect(_root, "DeepLamp", new Vector2(x + 1.2f, y + h - 1.4f), new Vector2(0.3f, 0.12f), new Color(0.45f, 0.62f, 0.5f, 0.8f), -3);
+                }
+
+                // 벽 아래 물자국
+                Rect(_root, "DeepStain", new Vector2(0f, y + 0.15f), new Vector2(length, 0.45f), new Color(0.09f, 0.1f, 0.1f, 0.85f), -5);
+            }
+        }
+
         private void BuildCorridors()
         {
             var h = _layout.FloorHeight;
@@ -363,7 +406,7 @@ namespace ApoGirl.Exploration.Runtime
                     continue;   // 옥상 위는 하늘
                 }
 
-                Rect(_root, "Slab", new Vector2(0f, FloorY(floor) - 0.15f), new Vector2(length, 0.3f), new Color(0.09f, 0.09f, 0.1f), -3);
+                Rect(_root, "Slab", new Vector2(0f, floor * h - 0.15f), new Vector2(length, 0.3f), new Color(0.09f, 0.09f, 0.1f), -3);
             }
 
             // 복도에 흩어 놓는 장식 (그림 표의 Decor): 문·창·계단·출구·컨테이너를 피해서

@@ -68,6 +68,14 @@ namespace ApoGirl.Exploration.Runtime
         /// <summary>복도 한 층: 일정 간격으로 햇빛 줄기 + 줄기가 닿는 바닥의 번진 빛.</summary>
         public void AddCorridor(ExplorationArea corridor)
         {
+            if (corridor.IsDeep)
+            {
+                // 깊은 곳에는 햇빛이 들지 않는다: 먼지만 (손전등 빛 안에서만 보인다)
+                AddDust(corridor);
+                _snapped = false;
+                return;
+            }
+
             // 층마다 한두 곳에만 빛이 든다 (자리는 층마다 다르고 늘 같다)
             var random = new System.Random(7919 * (corridor.Floor + 1) + Mathf.RoundToInt(corridor.Width * 13f));
             var count = random.Next(Mathf.Max(0, _balance.SunbeamsPerFloorMin), Mathf.Max(_balance.SunbeamsPerFloorMin, _balance.SunbeamsPerFloorMax) + 1);
@@ -231,6 +239,11 @@ namespace ApoGirl.Exploration.Runtime
             if (area == null)
             {
                 return 1f;
+            }
+
+            if (area.IsDeep)
+            {
+                return _balance.DeepAmbient;   // 깊은 곳은 늘 어둡다
             }
 
             switch (_phase)

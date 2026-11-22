@@ -483,6 +483,29 @@ namespace ApoGirl.Core.Definitions
         /// <summary>헤드리스(자동) 탐험에서 그 지역의 CD(줍는 조우)를 찾아 챙기는 확률 (기획 A.3, 휴대폰에서도 모을 수 있게).</summary>
         public float HeadlessCdChance = 0.3f;
 
+        // ── 탐험의 깊이 (기획 B) ──
+
+        /// <summary>헤드리스(자동) 탐험에서 깊은 곳까지 들어가 보는 확률 (깊은 곳이 있는 지역, 무사히 돌아온 판).</summary>
+        public float HeadlessDeepChance = 0.35f;
+
+        /// <summary>유랑자 특기(깊은 곳 출구를 안다)가 있으면 더하는 확률.</summary>
+        public float HeadlessDeepSpecialBonus = 0.15f;
+
+        /// <summary>헤드리스에서 깊은 곳에 들어갔을 때 깊은 곳 전리품 표에서 물건 하나를 줍는 확률.</summary>
+        public float HeadlessDeepItemChance = 0.6f;
+
+        /// <summary>헤드리스에서 깊은 곳에 들어갔을 때의 스트레스 (어둡고 길을 잃는다).</summary>
+        public int HeadlessDeepStress = 2;
+
+        /// <summary>깊은 곳에서는 소리가 울린다: 소음 반경 배율.</summary>
+        public float DeepNoiseMultiplier = 1.2f;
+
+        /// <summary>깊은 곳 밝기 (늘 어둡다, 1 = 복도 기본).</summary>
+        public float DeepAmbient = 0.22f;
+
+        /// <summary>일방 출구: 한 번 누르면 "정말 나갈까?", 이 시간 안에 다시 누르면 나간다 (초).</summary>
+        public float OneWayConfirmSeconds = 3f;
+
         /// <summary>좋아하는 물건 (기획 D.4). 기호품 칸에는 이 표에 있는 물건만 고를 수 있다.</summary>
         public LikedItemsDef[] LikedItems =
         {

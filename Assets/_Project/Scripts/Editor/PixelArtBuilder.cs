@@ -474,6 +474,46 @@ namespace ApoGirl.EditorTools
             for (var y = 4; y <= 36; y += 4) HLine(exitLocked, 2, 25, y, C(62, 64, 68)); // 셔터
             Save("prop_exit_locked", Finish(exitLocked), 0.5f, 0f); n++;
 
+            // 깊은 문 (기획 B): 낡은 철제 방화문. 붉은 녹, 노랑·검정 경고 테이프, 문 위의 꺼진 초록 비상등, 문틈의 푸른빛
+            var deep = New(28, 46);
+            Fill(deep, 0, 0, 27, 41, C(44, 40, 38));
+            Fill(deep, 3, 0, 24, 38, C(92, 70, 58));
+            for (var y = 0; y <= 41; y++)
+            {
+                var stripe = (y / 3) % 2 == 0 ? C(214, 178, 40) : C(28, 28, 28);
+                deep.SetPixel(1, y, stripe);
+                deep.SetPixel(26, y, stripe);
+            }
+
+            for (var x = 1; x <= 26; x++) deep.SetPixel(x, 40, (x / 3) % 2 == 0 ? C(214, 178, 40) : C(28, 28, 28));
+            for (var i = 0; i < 14; i++) deep.SetPixel(5 + (i * 7) % 18, 3 + (i * 11) % 33, C(140, 72, 40));   // 녹
+            Fill(deep, 6, 18, 9, 21, C(150, 150, 140));     // 손잡이
+            VLine(deep, 24, 0, 38, C(70, 110, 140));        // 문틈 푸른빛
+            Fill(deep, 9, 42, 18, 45, C(30, 52, 36));       // 꺼진 비상등
+            Save("prop_deep_door", Finish(deep), 0.5f, 0f); n++;
+
+            // 일방 출구 안쪽: 푸시 바가 달린 비상구, 문 위에 켜진 유도등 (달리는 사람, 글자 없음)
+            var push = New(28, 46);
+            Fill(push, 0, 0, 27, 41, C(52, 56, 60));
+            Fill(push, 2, 0, 25, 39, C(118, 124, 128));
+            Fill(push, 4, 18, 23, 20, C(200, 200, 196));    // 푸시 바
+            Fill(push, 4, 21, 5, 22, C(90, 90, 90));
+            Fill(push, 22, 21, 23, 22, C(90, 90, 90));
+            Fill(push, 7, 42, 20, 45, C(50, 200, 90));      // 켜진 유도등
+            Fill(push, 12, 43, 13, 45, C(240, 255, 240));   // 달리는 사람
+            push.SetPixel(11, 43, C(240, 255, 240));
+            push.SetPixel(14, 44, C(240, 255, 240));
+            push.SetPixel(16, 43, C(240, 255, 240));
+            Save("prop_exit_pushbar", Finish(push), 0.5f, 0f); n++;
+
+            // 일방 출구 바깥쪽: 손잡이 없는 민짜 철문
+            var blank = New(28, 46);
+            Fill(blank, 0, 0, 27, 41, C(48, 50, 54));
+            Fill(blank, 2, 0, 25, 39, C(96, 100, 104));
+            HLine(blank, 2, 25, 30, C(86, 90, 94));
+            HLine(blank, 2, 25, 10, C(86, 90, 94));
+            Save("prop_exit_blank", Finish(blank), 0.5f, 0f); n++;
+
             // 교실 명패
             var plate = New(12, 5);
             Fill(plate, 0, 0, 11, 4, C(200, 196, 182));
@@ -743,6 +783,8 @@ namespace ApoGirl.EditorTools
             Save("wall_corridor", WallTile(C(116, 132, 118), C(170, 170, 160), C(60, 64, 60), true), 0f, 0f, tiled: true); n++;
             // 복도에서 보이는 교실 벽 (조금 따뜻한 톤)
             Save("wall_room_outside", WallTile(C(128, 118, 100), C(178, 172, 158), C(66, 60, 52), false), 0f, 0f, tiled: true); n++;
+            // 깊은 곳 (기획 B): 콘크리트 (어두운 회색, 늘 어두운 곳이라 밝기는 조명이 정한다)
+            Save("wall_deep", WallTile(C(84, 86, 88), C(110, 112, 112), C(52, 54, 56), false), 0f, 0f, tiled: true); n++;
             // 교실 안
             Save("wall_classroom", WallTile(C(140, 110, 78), C(186, 178, 160), C(84, 64, 44), false), 0f, 0f, tiled: true); n++;
             // 화장실 (타일)

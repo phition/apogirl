@@ -63,6 +63,9 @@ namespace ApoGirl.Core.Expedition
         /// <summary>출정 시점의 플래그 (탐험 조우 조건).</summary>
         public HashSet<string> Flags = new HashSet<string>();
 
+        /// <summary>깊은 곳의 일방 출구 위치를 안다 (유랑자 특기, 기획 B). 들어가면 출구 자리를 알려 주고, 헤드리스는 깊이 들어갈 확률이 오른다.</summary>
+        public bool KnowsDeepExits;
+
         /// <summary>특성 배율 (키 = TraitModifierKind 이름: SearchSpeed, NoiseMultiplier, RunSpeed, StealthBonus).</summary>
         public Dictionary<string, float> Modifiers = new Dictionary<string, float>();
 
@@ -197,6 +200,7 @@ namespace ApoGirl.Core.Expedition
             {
                 var difficulty = Rules.DifficultyRules.Get(state, db.Balance);
                 request.HarmMultiplier = difficulty.Harm;
+                request.KnowsDeepExits = Rules.SpecialRules.Value(state, db.Balance, SpecialKind.DeepExitKnown) > 0f;
                 request.HumanThreatMultiplier = difficulty.HumanThreat * Rules.FactionRules.HostileMultiplier(state, db);
             }
 

@@ -362,6 +362,15 @@ namespace ApoGirl.Exploration.Runtime
                 case TargetKind.Connector when target.Connector.Collapsed:
                     _prompt.text = Loc.T("exp.prompt_stairs_collapsed");
                     break;
+                case TargetKind.Connector when target.Connector.Kind == ConnectorKind.DeepDoor:
+                    _prompt.text = Loc.T(target.Area.IsDeep ? "exp.prompt_deep_door_back" : "exp.prompt_deep_door");
+                    break;
+                case TargetKind.Connector when target.Connector.Kind == ConnectorKind.OneWayExit:
+                    _prompt.text = Loc.T("exp.prompt_oneway_exit");
+                    break;
+                case TargetKind.Connector when target.Connector.Kind == ConnectorKind.OneWayBack:
+                    _prompt.text = Loc.T("exp.prompt_oneway_back");
+                    break;
                 case TargetKind.Passage:
                     _prompt.text = Loc.T("exp.prompt_enter_building");
                     break;
@@ -369,7 +378,10 @@ namespace ApoGirl.Exploration.Runtime
                     _prompt.text = Loc.F("exp.prompt_go_outside", target.LinkArea.Label);
                     break;
                 case TargetKind.Connector:
-                    _prompt.text = Loc.F(target.Connector.TargetFloor > target.Floor ? "exp.prompt_up" : "exp.prompt_down", target.Connector.TargetFloor + 1);
+                    _prompt.text = target.Area.IsDeep
+                        // 깊은 곳 계단: 층 번호가 클수록 더 깊다 (지하 1 → 지하 2는 내려가기)
+                        ? Loc.F(target.Connector.TargetFloor > target.Floor ? "exp.prompt_deep_down" : "exp.prompt_deep_up", _director.Location.Layout.DeepLevel(target.Connector.TargetFloor))
+                        : Loc.F(target.Connector.TargetFloor > target.Floor ? "exp.prompt_up" : "exp.prompt_down", target.Connector.TargetFloor + 1);
                     break;
                 case TargetKind.Exit:
                     _prompt.text = Loc.T(!target.Locked ? "exp.prompt_exit"

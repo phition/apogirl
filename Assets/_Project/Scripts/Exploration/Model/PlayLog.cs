@@ -22,6 +22,9 @@ namespace ApoGirl.Exploration.Model
         public int HpDelta;
         public bool DuskAwakened;
         public bool DawnReturn;
+
+        /// <summary>깊은 곳에 머문 시간 (초, 기획 B.4: 헤드리스 보정용).</summary>
+        public float DeepSeconds;
         public int ContainersSearched;
         public int RoomsEntered;
         public int TimesSpotted;

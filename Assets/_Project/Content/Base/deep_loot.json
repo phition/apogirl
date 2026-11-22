@@ -1,0 +1,172 @@
+{
+  "LootTables": [
+    {
+      "Id": "LOOT_RESIDENTIAL_DEEP",
+      "MinRolls": 2,
+      "MaxRolls": 3,
+      "EmptyChance": 0.05,
+      "Entries": [
+        {
+          "ItemId": "ITEM_FUEL_CAN",
+          "Weight": 2
+        },
+        {
+          "ItemId": "ITEM_CANNED_FOOD",
+          "Weight": 3
+        },
+        {
+          "ItemId": "ITEM_WATER_BOTTLE",
+          "Weight": 2
+        },
+        {
+          "ItemId": "ITEM_TOOL_CROWBAR",
+          "Weight": 1
+        },
+        {
+          "ItemId": "ITEM_BAG_HIKING",
+          "Weight": 1
+        },
+        {
+          "ItemId": "ITEM_MEDKIT",
+          "Weight": 1
+        },
+        {
+          "ItemId": "ITEM_BATTERY",
+          "Weight": 2
+        },
+        {
+          "ItemId": "ITEM_DUCT_TAPE",
+          "Weight": 2
+        }
+      ]
+    },
+    {
+      "Id": "LOOT_SUBWAY_DEEP",
+      "MinRolls": 2,
+      "MaxRolls": 3,
+      "EmptyChance": 0.05,
+      "Entries": [
+        {
+          "ItemId": "ITEM_MEDKIT",
+          "Weight": 2
+        },
+        {
+          "ItemId": "ITEM_BATTERY",
+          "Weight": 3
+        },
+        {
+          "ItemId": "ITEM_TOOL_FLASHLIGHT",
+          "Weight": 1
+        },
+        {
+          "ItemId": "ITEM_WEAPON_PIPE",
+          "Weight": 1
+        },
+        {
+          "ItemId": "ITEM_OLD_MAP",
+          "Weight": 1
+        },
+        {
+          "ItemId": "ITEM_SCRAP",
+          "Weight": 3
+        },
+        {
+          "ItemId": "ITEM_WATER_BOTTLE",
+          "Weight": 2
+        }
+      ]
+    },
+    {
+      "Id": "LOOT_MART_DEEP",
+      "MinRolls": 2,
+      "MaxRolls": 3,
+      "EmptyChance": 0.05,
+      "Entries": [
+        {
+          "ItemId": "ITEM_CANNED_FOOD",
+          "Weight": 6
+        },
+        {
+          "ItemId": "ITEM_WATER_BOTTLE",
+          "Weight": 5
+        },
+        {
+          "ItemId": "ITEM_INSTANT_NOODLE",
+          "Weight": 3
+        },
+        {
+          "ItemId": "ITEM_VITAMIN",
+          "Weight": 2
+        },
+        {
+          "ItemId": "ITEM_TUNA_CAN",
+          "Weight": 1
+        },
+        {
+          "ItemId": "ITEM_GAS_CANISTER",
+          "Weight": 1
+        }
+      ]
+    },
+    {
+      "Id": "LOOT_POLICE_DEEP",
+      "MinRolls": 1,
+      "MaxRolls": 2,
+      "EmptyChance": 0.1,
+      "Entries": [
+        {
+          "ItemId": "ITEM_ARMOR_RIOT",
+          "Weight": 1
+        },
+        {
+          "ItemId": "ITEM_WEAPON_BATON",
+          "Weight": 2
+        },
+        {
+          "ItemId": "ITEM_MEDKIT",
+          "Weight": 2
+        },
+        {
+          "ItemId": "ITEM_ANTIBIOTIC",
+          "Weight": 1
+        },
+        {
+          "ItemId": "ITEM_BATTERY",
+          "Weight": 2
+        },
+        {
+          "ItemId": "ITEM_TOOL_FLASHLIGHT",
+          "Weight": 1
+        }
+      ]
+    },
+    {
+      "Id": "LOOT_WATER_DEEP",
+      "MinRolls": 1,
+      "MaxRolls": 2,
+      "EmptyChance": 0.1,
+      "Entries": [
+        {
+          "ItemId": "ITEM_ANTIBIOTIC",
+          "Weight": 4
+        },
+        {
+          "ItemId": "ITEM_MEDKIT",
+          "Weight": 2
+        },
+        {
+          "ItemId": "ITEM_VITAMIN",
+          "Weight": 2
+        },
+        {
+          "ItemId": "ITEM_WATER_BOTTLE",
+          "Weight": 3
+        },
+        {
+          "ItemId": "ITEM_BATTERY",
+          "Weight": 1
+        }
+      ]
+    }
+  ]
+}

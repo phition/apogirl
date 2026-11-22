@@ -252,7 +252,7 @@ namespace ApoGirl.Exploration.Runtime
         public bool IsDark => Request.TimeOfDay == ExpeditionTime.Night || DuskAwakened;
 
         /// <summary>그 공간에서 눈이 어둠 규칙을 따르는가: 밤·황혼이면 어디든, 낮에도 방 안은 전기가 끊겨 기본이 어둡다.</summary>
-        public bool IsDarkIn(ExplorationArea area) => IsDark || (area != null && area.IsRoom);
+        public bool IsDarkIn(ExplorationArea area) => IsDark || (area != null && (area.IsRoom || area.IsDeep));
 
         /// <summary>지금 있는 곳이 어두운가 (손전등이 켜지고 HUD에 손전등 상태가 보인다).</summary>
         public bool DarkHere => IsDarkIn(CurrentArea);
@@ -366,10 +366,10 @@ namespace ApoGirl.Exploration.Runtime
                 if (PeekTarget != null)
                 {
                     var other = PeekArea;
-                    return Loc.F("exp.peeking_into", other.IsRoom || other.IsOutdoor || other.IsRoof ? other.Label : Loc.F("exp.corridor", other.Floor + 1));
+                    return Loc.F("exp.peeking_into", other.IsRoom || other.IsOutdoor || other.IsRoof || other.IsDeep ? other.Label : Loc.F("exp.corridor", other.Floor + 1));
                 }
 
-                if (InRoom || CurrentArea.IsOutdoor || CurrentArea.IsRoof)
+                if (InRoom || CurrentArea.IsOutdoor || CurrentArea.IsRoof || CurrentArea.IsDeep)
                 {
                     return CurrentArea.Label;
                 }
@@ -479,6 +479,11 @@ namespace ApoGirl.Exploration.Runtime
                 }
             }
 
+            if (CurrentArea != null && CurrentArea.IsDeep)
+            {
+                _deepSeconds += dt;
+            }
+
             HandleInput(dt);
             UpdateStamina(dt);
             StepThreats(dt);
@@ -510,6 +515,38 @@ namespace ApoGirl.Exploration.Runtime
                 case TargetKind.Connector when target.Connector.Collapsed:
                     Sfx("sfx_door_locked");
                     _hud?.ShowMessage("exp.stairs_collapsed");
+                    break;
+                case TargetKind.Connector when target.Connector.Kind == ConnectorKind.OneWayBack:
+                    Sfx("sfx_door_locked");
+                    _hud?.ShowMessage("exp.oneway_back");
+                    break;
+                case TargetKind.Connector when target.Connector.Kind == ConnectorKind.OneWayExit:
+                    if (_oneWayArmed != target || Time.time > _oneWayArmedUntil)
+                    {
+                        // 정말 나갈까? (나가면 다시 못 들어온다)
+                        _oneWayArmed = target;
+                        _oneWayArmedUntil = Time.time + _balance.OneWayConfirmSeconds;
+                        _hud?.ShowMessage("exp.oneway_confirm");
+                        break;
+                    }
+
+                    _oneWayArmed = null;
+                    Sfx("sfx_door_open", 0.9f);
+                    EmitNoise(CurrentArea, X, _balance.DoorNoise);
+                    MoveTo(_corridors[target.Connector.TargetFloor], target.Connector.ArrivalX);
+                    Sfx("sfx_door_locked", 0.8f);   // 철컥: 등 뒤에서 잠긴다
+                    _hud?.ShowMessage("exp.oneway_shut");
+                    break;
+                case TargetKind.Connector when target.Connector.Kind == ConnectorKind.DeepDoor:
+                    Sfx("sfx_door_force", 0.7f);   // 무거운 쇳소리
+                    EmitNoise(CurrentArea, X, _balance.DoorNoise);
+                    MoveTo(_corridors[target.Connector.TargetFloor], target.Connector.ArrivalX);
+                    EmitNoise(CurrentArea, X, _balance.DoorNoise);
+                    if (CurrentArea.IsDeep)
+                    {
+                        OnEnteredDeep();
+                    }
+
                     break;
                 case TargetKind.Passage:
                     Sfx("sfx_door_open", 0.8f);
@@ -1464,16 +1501,19 @@ namespace ApoGirl.Exploration.Runtime
             var layout = Location.Layout;
             _building = new BuildingView(_world, layout, Location.Id);
 
-            for (var floor = 0; floor < layout.Floors; floor++)
+            for (var floor = 0; floor < layout.TotalFloors; floor++)
             {
+                var deep = layout.IsDeep(floor);
                 _corridors.Add(new ExplorationArea
                 {
                     Floor = floor,
                     Origin = new Vector2(0f, _building.FloorY(floor)),
-                    Width = layout.CorridorLength,
+                    Width = layout.CorridorLengthOf(floor),
                     Built = true,
                     IsRoof = layout.IsRooftop(floor),
-                    Label = layout.IsRooftop(floor) ? Loc.T("exp.rooftop") : "",
+                    IsDeep = deep,
+                    Label = layout.IsRooftop(floor) ? Loc.T("exp.rooftop")
+                        : deep ? Loc.F("exp.deep_floor", layout.DeepLevel(floor), Loc.T(layout.DeepNameKey)) : "",
                 });
             }
 
@@ -1481,7 +1521,7 @@ namespace ApoGirl.Exploration.Runtime
 
             // 계단실: 가까이 붙은 계단(올라가는·내려가는)을 한 칸으로 묶어, 복도 벽이 뚫린 어두운 공간 안에 계단을 둔다
             var wells = new List<(int Floor, float Min, float Max)>();
-            foreach (var connector in layout.Connectors)
+            foreach (var connector in layout.Connectors.Where(c => c.IsStairs))
             {
                 var index = wells.FindIndex(w => w.Floor == connector.Floor && connector.X > w.Min - 4f && connector.X < w.Max + 4f);
                 if (index < 0)
@@ -1498,7 +1538,7 @@ namespace ApoGirl.Exploration.Runtime
             {
                 var origin = _corridors[well.Floor].Origin;
                 var left = Mathf.Max(0f, well.Min - 1.1f);
-                var right = Mathf.Min(layout.CorridorLength, well.Max + 1.1f);
+                var right = Mathf.Min(layout.CorridorLengthOf(well.Floor), well.Max + 1.1f);
                 var top = layout.FloorHeight - 0.75f;
                 BuildingView.Rect(_world, "Stairwell", origin + new Vector2(left, 0.15f), new Vector2(right - left, top - 0.15f), new Color(0.05f, 0.055f, 0.07f), -5);
                 BuildingView.Rect(_world, "StairwellBack", origin + new Vector2(left + 0.25f, 0.15f), new Vector2(right - left - 0.5f, top - 0.45f), new Color(0.1f, 0.11f, 0.12f), -5);
@@ -1508,10 +1548,15 @@ namespace ApoGirl.Exploration.Runtime
                 BuildingView.Rect(_world, "StairwellLintel", origin + new Vector2(left - 0.14f, top), new Vector2(right - left + 0.28f, 0.16f), new Color(0.3f, 0.31f, 0.29f), -4);
             }
 
-            foreach (var connector in layout.Connectors)
+            foreach (var connector in layout.Connectors.Where(c => !c.IsStairs))
+            {
+                CreateDeepConnector(connector);
+            }
+
+            foreach (var connector in layout.Connectors.Where(c => c.IsStairs))
             {
                 var stairsKey = connector.Collapsed && ExplorationArt.Get("prop_stairs_collapsed") != null ? "prop_stairs_collapsed"
-                    : connector.TargetFloor > connector.Floor ? "prop_stairs_up" : "prop_stairs_down";
+                    : (connector.TargetFloor > connector.Floor) != layout.IsDeep(connector.Floor) ? "prop_stairs_up" : "prop_stairs_down";   // 깊은 곳은 번호가 클수록 아래
                 var view = Prop(_corridors[connector.Floor], "Stairs", stairsKey,
                     connector.X, new Vector2(1f, 2.7f), connector.Collapsed ? new Color(0.25f, 0.24f, 0.23f) : new Color(0.32f, 0.38f, 0.5f), -3);
                 var stairsRenderer = view.GetComponent<SpriteRenderer>();
@@ -1624,6 +1669,67 @@ namespace ApoGirl.Exploration.Runtime
             }
 
             SetupBag();
+        }
+
+        // ── 탐험의 깊이 (기획 B) ──
+
+        private ExplorationTarget _oneWayArmed;
+        private float _oneWayArmedUntil;
+        private bool _deepEntered;
+        private float _deepSeconds;
+
+        /// <summary>깊은 문(낡은 철제 방화문)·일방 출구(안: 푸시 바 비상구, 밖: 손잡이 없는 민짜 철문).</summary>
+        private void CreateDeepConnector(ConnectorDef connector)
+        {
+            if (connector.Floor >= _corridors.Count || connector.TargetFloor >= _corridors.Count)
+            {
+                Debug.LogWarning($"깊은 곳 연결의 층을 찾을 수 없음: {connector.Floor} → {connector.TargetFloor}");
+                return;
+            }
+
+            string key;
+            Color color;
+            switch (connector.Kind)
+            {
+                case ConnectorKind.DeepDoor:
+                    key = "prop_deep_door";
+                    color = new Color(0.45f, 0.28f, 0.2f);
+                    break;
+                case ConnectorKind.OneWayExit:
+                    key = "prop_exit_pushbar";
+                    color = new Color(0.3f, 0.5f, 0.36f);
+                    break;
+                default:
+                    key = "prop_exit_blank";
+                    color = new Color(0.32f, 0.33f, 0.35f);
+                    break;
+            }
+
+            var area = _corridors[connector.Floor];
+            var view = Prop(area, "DeepLink_" + connector.Kind, key, connector.X, new Vector2(1.6f, 3f), color, 0);
+            AddTarget(new ExplorationTarget { Kind = TargetKind.Connector, Area = area, X = connector.X, Connector = connector, View = view });
+        }
+
+        /// <summary>깊은 곳에 처음 들어섰을 때: 한 줄. 유랑자에게 들은 게 있으면 일방 출구 자리를 알려 준다.</summary>
+        private void OnEnteredDeep()
+        {
+            if (_deepEntered)
+            {
+                return;
+            }
+
+            _deepEntered = true;
+            var layout = Location.Layout;
+            var exit = layout.Connectors.Find(c => c.Kind == ConnectorKind.OneWayExit);
+            if (Request.KnowsDeepExits && exit != null)
+            {
+                var side = exit.X < layout.CorridorLengthOf(exit.Floor) * 0.5f ? Loc.T("exp.side_west") : Loc.T("exp.side_east");
+                _hud?.ShowText(Loc.F("exp.deep_exit_hint", layout.DeepLevel(exit.Floor), side), 3200);
+            }
+            else
+            {
+                _hud?.ShowMessage("exp.deep_enter");
+            }
         }
 
         /// <summary>학교 밖 지역(튜토리얼 제외)에는 바깥 길이 있다: 진입로와 탈출로.</summary>
@@ -2129,6 +2235,15 @@ namespace ApoGirl.Exploration.Runtime
                 _threat.AddLink(AreaId(link.LinkArea), link.LinkX, AreaId(link.Area), link.X);
             }
 
+            // 깊은 문: 쫓아오는 좀비가 따라 들어올 수 있다 (일방 출구는 등 뒤에서 닫혀 따라오지 못한다)
+            foreach (var connector in Location.Layout.Connectors.Where(c => c.Kind == ConnectorKind.DeepDoor))
+            {
+                if (connector.Floor < _corridors.Count && connector.TargetFloor < _corridors.Count)
+                {
+                    _threat.AddLink(AreaId(_corridors[connector.Floor]), connector.X, AreaId(_corridors[connector.TargetFloor]), connector.ArrivalX);
+                }
+            }
+
             foreach (var room in _rooms)
             {
                 var corridorId = AreaId(_corridors[room.Floor]);
@@ -2210,7 +2325,8 @@ namespace ApoGirl.Exploration.Runtime
             else
             {
                 var start = Location.Layout.Exits.Find(e => e.Kind == ExitKind.Main);
-                var floor = _corridors.Count > 1 ? random.Range(0, _corridors.Count - 1) : 0;
+                var outerFloors = Location.Layout.Floors;   // 깊은 곳에는 생존자를 두지 않는다
+                var floor = outerFloors > 1 ? random.Range(0, outerFloors - 1) : 0;
                 area = _corridors[floor];
                 var startNearLeft = start == null || start.Floor != floor || start.X < area.Width / 2f;
                 x = startNearLeft
@@ -2663,6 +2779,7 @@ namespace ApoGirl.Exploration.Runtime
                 _log.HpDelta = Result.HpDelta;
                 _log.DuskAwakened = DuskAwakened;
                 _log.DawnReturn = DawnReturn;
+                _log.DeepSeconds = _deepSeconds;
                 _log.Resources = Result.ResourceLoot;
                 _log.Items.Clear();
                 foreach (var item in Result.Loot)
@@ -2688,6 +2805,11 @@ namespace ApoGirl.Exploration.Runtime
             }
 
             radius *= _noiseMultiplier;
+            if (area.IsDeep)
+            {
+                radius *= _balance.DeepNoiseMultiplier;   // 깊은 곳은 소리가 울린다
+            }
+
             _threat.Emit(new NoiseEvent(AreaId(area), x, radius));
             EmitThroughWalls(area, x, radius);
             if (DebugOverlay)

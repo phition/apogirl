@@ -24,11 +24,11 @@ namespace ApoGirl.EditorTools
                 Save("LOC_SCHOOL_INTERIOR", WithCd(School(), "CD_01", 2, "ROOM_3F_ROOM_MUSIC_7")),
                 Save("LOC_STORE", WithCd(Store(), "CD_02", 0, "ROOM_STORE_OFFICE_1")),
                 Save("LOC_PHARMACY", WithCd(Pharmacy(), "CD_03", 1, "ROOM_PH_CLINIC_1")),
-                Save("LOC_RESIDENTIAL", WithCd(Residential(), "CD_04", 0, "ROOM_HOUSE_101")),
-                Save("LOC_SUBWAY", WithCd(Subway(), "CD_05", 0, "ROOM_SUBWAY_OFFICE_2")),
-                Save("LOC_MART", WithCd(Mart(), "CD_06", 0, "ROOM_MART_OFFICE_1")),
-                Save("LOC_POLICE", WithCd(Police(), "CD_07", 1, "ROOM_POLICE_OFFICE_2")),
-                Save("LOC_WATERWORKS", WithCd(Waterworks(), "CD_08", 2, "ROOM_WATER_LAB_2")),
+                Save("LOC_RESIDENTIAL", WithCd(ResidentialDeep(Residential()), "CD_04", 3, "", 12f)),
+                Save("LOC_SUBWAY", WithCd(SubwayDeep(Subway()), "CD_05", 3, "", 12f)),
+                Save("LOC_MART", WithCd(MartDeep(Mart()), "CD_06", 3, "", 38f)),
+                Save("LOC_POLICE", WithCd(PoliceDeep(Police()), "CD_07", 1, "ROOM_POLICE_OFFICE_2")),
+                Save("LOC_WATERWORKS", WithCd(WaterworksDeep(Waterworks()), "CD_08", 5, "", 30f)),
             };
 
             var database = AssetDatabase.LoadAssetAtPath<DefinitionDatabaseAsset>(ContentPipeline.DatabasePath);
@@ -41,6 +41,11 @@ namespace ApoGirl.EditorTools
         private static LocationAsset Save(string id, LocationDef definition)
         {
             definition.Id = id;
+            foreach (var issue in ApoGirl.Core.Expedition.DeepRules.Issues(definition.Layout))
+            {
+                Debug.LogError($"[Locations] {id} 깊은 곳 배치: {issue}");
+            }
+
             var path = $"{Folder}/{id}.asset";
             var asset = AssetDatabase.LoadAssetAtPath<LocationAsset>(path);
             if (asset == null)
@@ -57,9 +62,142 @@ namespace ApoGirl.EditorTools
 
         // ── 공통 도우미 ──
 
+        // ── 탐험의 깊이 (기획 B): 깊은 문·깊은 복도·일방 출구 ──
+        // 깊은 곳 층 번호 = 겉 층 수 + (지하 단계 - 1). 문 자리는 모든 시드에서 같다.
+        // 초반(주택가·지하철): 깊은 문 1, 깊은 곳 2층. 중반(마트·파출소): 깊은 문 2 (지하 1 서쪽, 지하 2 동쪽). 후반(정수장): 2, 3층.
+
+        private static void Deep(BuildingLayoutDef layout, int floors, float length, string locationId, float stairsX)
+        {
+            layout.DeepFloors = floors;
+            layout.DeepCorridorLength = length;
+            layout.DeepNameKey = "deep." + locationId;
+            for (var level = 1; level < floors; level++)
+            {
+                var upper = DeepFloor(layout, level);
+                layout.Connectors.Add(new ConnectorDef { Kind = ConnectorKind.Stairs, Floor = upper, X = stairsX, TargetFloor = upper + 1 });
+                layout.Connectors.Add(new ConnectorDef { Kind = ConnectorKind.Stairs, Floor = upper + 1, X = stairsX - 1.4f, TargetFloor = upper });
+            }
+        }
+
+        private static int DeepFloor(BuildingLayoutDef layout, int level) => layout.Floors + level - 1;
+
+        /// <summary>깊은 문 하나: 겉 층의 outerX ↔ 지하 level의 deepX (양쪽에 문).</summary>
+        private static void DeepDoor(BuildingLayoutDef layout, int outerFloor, float outerX, int level, float deepX)
+        {
+            var deep = DeepFloor(layout, level);
+            layout.Connectors.Add(new ConnectorDef { Kind = ConnectorKind.DeepDoor, Floor = outerFloor, X = outerX, TargetFloor = deep, TargetX = deepX });
+            layout.Connectors.Add(new ConnectorDef { Kind = ConnectorKind.DeepDoor, Floor = deep, X = deepX, TargetFloor = outerFloor, TargetX = outerX });
+        }
+
+        /// <summary>일방 출구: 지하 level의 deepX → 겉 층의 outerX (겉에는 손잡이 없는 철문만 보인다).</summary>
+        private static void OneWay(BuildingLayoutDef layout, int level, float deepX, int outerFloor, float outerX)
+        {
+            var deep = DeepFloor(layout, level);
+            layout.Connectors.Add(new ConnectorDef { Kind = ConnectorKind.OneWayExit, Floor = deep, X = deepX, TargetFloor = outerFloor, TargetX = outerX });
+            layout.Connectors.Add(new ConnectorDef { Kind = ConnectorKind.OneWayBack, Floor = outerFloor, X = outerX, TargetFloor = deep, TargetX = deepX });
+        }
+
+        private static void DeepBox(BuildingLayoutDef layout, string id, int level, float x, ContainerKind kind, string loot)
+        {
+            layout.Containers.Add(C(id, kind, DeepFloor(layout, level), x, loot));
+        }
+
+        /// <summary>주택가: 빌라 세 동을 잇는 지하 주차장. 1층 가운데 방화문 → 지하 1 서쪽, 지하 2 서쪽 끝 비상구 → 2층.</summary>
+        private static LocationDef ResidentialDeep(LocationDef location)
+        {
+            var layout = location.Layout;
+            Deep(layout, 2, 44f, "LOC_RESIDENTIAL", 40f);
+            DeepDoor(layout, 0, 36f, 1, 3f);
+            OneWay(layout, 2, 4f, 1, 48f);
+            DeepBox(layout, "C_RES_DEEP_TRUNK", 1, 14f, ContainerKind.Box, "LOOT_RESIDENTIAL_DEEP");
+            DeepBox(layout, "C_RES_DEEP_LOCKER", 1, 26f, ContainerKind.Locker, "LOOT_RESIDENTIAL_DEEP");
+            DeepBox(layout, "C_RES_DEEP_STORAGE", 2, 22f, ContainerKind.Cabinet, "LOOT_RESIDENTIAL_DEEP");
+            DeepBox(layout, "C_RES_DEEP_BOX", 2, 32f, ContainerKind.Box, "LOOT_HOUSE_KITCHEN");
+            location.DayVariant.Spawns.Add(Crowd("ENEMY_WANDERER", DeepFloor(layout, 1), "", 20f, 2, 1.5f));
+            location.DayVariant.Spawns.Add(Walk("ENEMY_LISTENER", DeepFloor(layout, 2), "", 28f, 1, 0f));
+            location.NightVariant.Spawns.Add(Walk("ENEMY_WANDERER", DeepFloor(layout, 1), "", 20f, 2, 6f));
+            location.NightVariant.Spawns.Add(Walk("ENEMY_WANDERER", DeepFloor(layout, 2), "", 26f, 2, 6f));
+            return location;
+        }
+
+        /// <summary>지하철역: 역무 구역·환기 통로. 승강장 층 방화문 → 지하 1, 지하 2 끝 비상구 → 대합실.</summary>
+        private static LocationDef SubwayDeep(LocationDef location)
+        {
+            var layout = location.Layout;
+            Deep(layout, 2, 48f, "LOC_SUBWAY", 44f);
+            DeepDoor(layout, 0, 40f, 1, 3f);
+            OneWay(layout, 2, 5f, 1, 56f);
+            DeepBox(layout, "C_SUB_DEEP_CABINET", 1, 16f, ContainerKind.Cabinet, "LOOT_SUBWAY_DEEP");
+            DeepBox(layout, "C_SUB_DEEP_LOCKER", 1, 30f, ContainerKind.Locker, "LOOT_SUBWAY_DEEP");
+            DeepBox(layout, "C_SUB_DEEP_DESK", 2, 20f, ContainerKind.Desk, "LOOT_SUBWAY_DEEP");
+            DeepBox(layout, "C_SUB_DEEP_BOX", 2, 34f, ContainerKind.Box, "LOOT_SUBWAY_OFFICE");
+            location.DayVariant.Spawns.Add(Crowd("ENEMY_WANDERER", DeepFloor(layout, 1), "", 24f, 3, 2f));
+            location.DayVariant.Spawns.Add(Walk("ENEMY_LISTENER", DeepFloor(layout, 2), "", 30f, 1, 0f));
+            location.NightVariant.Spawns.Add(Walk("ENEMY_WANDERER", DeepFloor(layout, 1), "", 22f, 2, 8f));
+            location.NightVariant.Spawns.Add(Walk("ENEMY_LISTENER", DeepFloor(layout, 2), "", 28f, 1, 0f));
+            return location;
+        }
+
+        /// <summary>마트·물류창고: 하역장·냉동 창고. 깊은 문 둘 (1층 계산대 뒤 → 지하 1 서쪽, 2층 창고 사이 → 지하 2 동쪽), 비상구 → 2층.</summary>
+        private static LocationDef MartDeep(LocationDef location)
+        {
+            var layout = location.Layout;
+            Deep(layout, 2, 50f, "LOC_MART", 26f);
+            DeepDoor(layout, 0, 82f, 1, 4f);
+            DeepDoor(layout, 1, 45f, 2, 46f);
+            OneWay(layout, 2, 4f, 1, 75f);
+            DeepBox(layout, "C_MART_DEEP_FREEZER_A", 1, 14f, ContainerKind.Fridge, "LOOT_MART_DEEP");
+            DeepBox(layout, "C_MART_DEEP_PALLET_A", 1, 36f, ContainerKind.Box, "LOOT_MART_DEEP");
+            DeepBox(layout, "C_MART_DEEP_PALLET_B", 2, 16f, ContainerKind.Box, "LOOT_MART_DEEP");
+            DeepBox(layout, "C_MART_DEEP_FREEZER_B", 2, 32f, ContainerKind.Fridge, "LOOT_MART_WAREHOUSE");
+            location.DayVariant.Spawns.Add(Crowd("ENEMY_WANDERER", DeepFloor(layout, 1), "", 20f, 3, 2f));
+            location.DayVariant.Spawns.Add(Crowd("ENEMY_WANDERER", DeepFloor(layout, 2), "", 28f, 2, 1.5f));
+            location.NightVariant.Spawns.Add(Walk("ENEMY_WANDERER", DeepFloor(layout, 1), "", 22f, 2, 8f));
+            location.NightVariant.Spawns.Add(Walk("ENEMY_LISTENER", DeepFloor(layout, 2), "", 26f, 1, 0f));
+            return location;
+        }
+
+        /// <summary>파출소: 지하 보관실·옆 건물 기계실. 깊은 문 둘 (1층 → 지하 1 서쪽, 2층 → 지하 2 동쪽), 비상구 → 2층 서쪽.</summary>
+        private static LocationDef PoliceDeep(LocationDef location)
+        {
+            var layout = location.Layout;
+            Deep(layout, 2, 40f, "LOC_POLICE", 20f);
+            DeepDoor(layout, 0, 34f, 1, 4f);
+            DeepDoor(layout, 1, 27f, 2, 36f);
+            OneWay(layout, 2, 3f, 1, 8f);
+            DeepBox(layout, "C_POLICE_DEEP_EVIDENCE", 1, 12f, ContainerKind.Locker, "LOOT_POLICE_DEEP");
+            DeepBox(layout, "C_POLICE_DEEP_CABINET", 1, 30f, ContainerKind.Cabinet, "LOOT_POLICE_OFFICE");
+            DeepBox(layout, "C_POLICE_DEEP_LOCKER", 2, 14f, ContainerKind.Locker, "LOOT_POLICE_DEEP");
+            DeepBox(layout, "C_POLICE_DEEP_TOOLBOX", 2, 27f, ContainerKind.Box, "LOOT_SUBWAY_OFFICE");
+            location.DayVariant.Spawns.Add(Crowd("ENEMY_WANDERER", DeepFloor(layout, 1), "", 24f, 2, 1.5f));
+            location.NightVariant.Spawns.Add(Walk("ENEMY_WANDERER", DeepFloor(layout, 1), "", 22f, 2, 6f));
+            location.NightVariant.Spawns.Add(Walk("ENEMY_LISTENER", DeepFloor(layout, 2), "", 18f, 1, 0f));
+            return location;
+        }
+
+        /// <summary>정수장 연구동: 배관 갤러리·약품 저장고 3층. 깊은 문 둘 (1층 → 지하 1 서쪽, 2층 → 지하 2 동쪽), 지하 3 비상구 → 3층.</summary>
+        private static LocationDef WaterworksDeep(LocationDef location)
+        {
+            var layout = location.Layout;
+            Deep(layout, 3, 50f, "LOC_WATERWORKS", 24f);
+            DeepDoor(layout, 0, 70f, 1, 4f);
+            DeepDoor(layout, 1, 38f, 2, 46f);
+            OneWay(layout, 3, 6f, 2, 46f);
+            DeepBox(layout, "C_WATER_DEEP_VALVE", 1, 14f, ContainerKind.Box, "LOOT_SUBWAY_OFFICE");
+            DeepBox(layout, "C_WATER_DEEP_CHEM_A", 2, 32f, ContainerKind.Cabinet, "LOOT_WATER_DEEP");
+            DeepBox(layout, "C_WATER_DEEP_CHEM_B", 3, 16f, ContainerKind.Cabinet, "LOOT_WATER_DEEP");
+            DeepBox(layout, "C_WATER_DEEP_CRATE", 3, 38f, ContainerKind.Box, "LOOT_WATER_DEEP");
+            location.DayVariant.Spawns.Add(Crowd("ENEMY_WANDERER", DeepFloor(layout, 1), "", 30f, 2, 1.5f));
+            location.DayVariant.Spawns.Add(Crowd("ENEMY_WANDERER", DeepFloor(layout, 3), "", 42f, 3, 2f));
+            location.NightVariant.Spawns.Add(Walk("ENEMY_WANDERER", DeepFloor(layout, 1), "", 30f, 2, 8f));
+            location.NightVariant.Spawns.Add(Walk("ENEMY_LISTENER", DeepFloor(layout, 2), "", 20f, 1, 0f));
+            location.NightVariant.Spawns.Add(Walk("ENEMY_WANDERER", DeepFloor(layout, 3), "", 38f, 2, 6f));
+            return location;
+        }
+
         /// <summary>
         /// CD 한 장 (기획 A.2): 지역마다 늘 같은 자리, 낮·밤 모두. 챙기면 깃발 {id}.
-        /// 2막 이후 4장(주택가·지하철·마트·정수장)은 깊은 곳(기획 B)이 생기면 그리로 옮긴다. 그때까지는 보통 방.
+        /// 2막 이후 4장(주택가·지하철·마트·정수장)은 깊은 곳(기획 B) 복도에 둔다 (RoomId 비움, 층 = 깊은 곳 층).
         /// </summary>
         private static LocationDef WithCd(LocationDef location, string id, int floor, string roomId, float x = 4f)
         {
