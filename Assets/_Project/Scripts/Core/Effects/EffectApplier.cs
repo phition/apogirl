@@ -90,7 +90,12 @@ namespace ApoGirl.Core.Effects
 
             foreach (var change in effect.Npcs)
             {
-                ChangeNpc(state, change, balance, delta);
+                // 기획 C.4 ①: 이벤트로 오르는 동료 호감은 배율 (정의를 바꾸지 않게 사본으로)
+                var scaled = Rules.BondRules.ScaleContentGain(change.NpcId, change.Affinity, balance);
+                ChangeNpc(state, scaled == change.Affinity ? change : new NpcChange
+                {
+                    NpcId = change.NpcId, Affinity = scaled, Trust = change.Trust, SetStatus = change.SetStatus, SetRole = change.SetRole,
+                }, balance, delta);
             }
 
             foreach (var item in effect.Items)

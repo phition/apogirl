@@ -16,7 +16,7 @@ namespace ApoGirl.Presentation.Screens
     internal static class PeopleUi
     {
         /// <summary>호감 단계 (수치는 보이지 않는다, 기획 D.1): 0 서먹 · 1 데면데면 · 2 편함 · 3 가까움 · 4 믿음.</summary>
-        public static int BondTier(int affinity) => affinity < 0 ? 0 : affinity < 20 ? 1 : affinity < 50 ? 2 : affinity < 80 ? 3 : 4;
+        public static int BondTier(int affinity, BalanceConfig balance) => BondRules.Tier(affinity, balance);
 
         public static int Affinity(GameState state, string id)
         {
@@ -29,9 +29,9 @@ namespace ApoGirl.Presentation.Screens
         }
 
         /// <summary>그 사람과의 거리를 말로: bond.{ID}.{단계}, 없으면 bond.generic.{단계}.</summary>
-        public static string BondPhrase(GameState state, string id)
+        public static string BondPhrase(GameState state, BalanceConfig balance, string id)
         {
-            var tier = BondTier(Affinity(state, id));
+            var tier = BondTier(Affinity(state, id), balance);
             var text = Loc.Lookup(Loc.UiTable, "bond." + id + "." + tier);
             return string.IsNullOrEmpty(text) ? Loc.T("bond.generic." + tier) : text;
         }
@@ -156,7 +156,7 @@ namespace ApoGirl.Presentation.Screens
             }
 
             info.Add(nameRow);
-            var bond = new Label(PeopleUi.BondPhrase(state, id));
+            var bond = new Label(PeopleUi.BondPhrase(state, balance, id));
             bond.AddToClassList("person-bond");
             info.Add(bond);
             top.Add(info);
@@ -303,7 +303,7 @@ namespace ApoGirl.Presentation.Screens
             var name = new Label(PeopleUi.Name(id));
             name.AddToClassList("person-name");
             info.Add(name);
-            var bond = new Label(PeopleUi.BondPhrase(state, id));
+            var bond = new Label(PeopleUi.BondPhrase(state, balance, id));
             bond.AddToClassList("person-bond");
             info.Add(bond);
             var body = GiveRules.Body(state, id) ?? new BodyState();

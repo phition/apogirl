@@ -293,6 +293,17 @@ namespace ApoGirl.Core.Definitions
             new NourishmentBand { Min = -100, Key = "DEHYDRATED", Hp = -10, Stress = 5 },
         };
 
+        // ── 관계 단계 (기획 C절) ──
+
+        /// <summary>관계 단계 경계: 이 값 이상이면 다음 단계 (0 미만 서먹 · 0~ 데면데면 · 20~ 편함 · 50~ 가까움 · 80~ 믿음).</summary>
+        public int[] BondTierMins = { 0, 20, 50, 80 };
+
+        /// <summary>C.2 ① 역할 효율: 관계 단계별로 역할 효과에 곱한다 (서먹 ×0.5, 가까움 ×1.25, 믿음 ×1.5).</summary>
+        public float[] BondRoleMultipliers = { 0.5f, 1f, 1f, 1.25f, 1.5f };
+
+        /// <summary>C.4 ①: 이벤트 효과로 오르는 동료 호감 배율 (선생님·떨어질 때·배분은 제외).</summary>
+        public float CompanionAffinityGainScale = 2f;
+
         // ── 동료 몸 상태·이번 주 배분 (기획 D절) ──
 
         /// <summary>동료·선생님의 하루 포만·수분 감소. 기본 식사는 공용 식량에서 주인공이 먹은 비율만큼 채운다 (식량을 더 쓰지 않는다).</summary>
