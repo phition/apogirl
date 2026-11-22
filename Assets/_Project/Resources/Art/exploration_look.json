@@ -38,5 +38,16 @@
     "VignetteColor": "#05070C",
     "FlashlightVolume": 0.18,
     "SunbeamVolume": 0.0
+  },
+  "Shadows": {
+    "_설명": "손전등 빛을 사물·사람이 가려 뒤쪽 벽에 그림자 (ShadowCaster2D, 모양은 스프라이트 외곽선). MinCasterHeight 유닛보다 작은 그림은 빼고.",
+    "Enabled": true,
+    "Intensity": 0.75,
+    "Softness": 0.3,
+    "MinCasterHeight": 0.8,
+    "Zombies": true,
+    "People": true,
+    "Containers": true,
+    "Decor": true
   }
 }

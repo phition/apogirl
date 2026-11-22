@@ -38,12 +38,33 @@ namespace ApoGirl.Exploration.Runtime
             public float SunbeamVolume;
         }
 
+        /// <summary>
+        /// 2단계 그림자 (ShadowCaster2D): 손전등 빛을 사물·사람이 가려 뒤쪽 벽에 그림자가 진다. 그림자 모양은 스프라이트 외곽선.
+        /// 낮 전체 조명·햇빛 줄기는 그림자를 만들지 않는다.
+        /// </summary>
+        [Serializable]
+        public sealed class ShadowConfig
+        {
+            public bool Enabled = true;
+            public float Intensity = 0.75f;
+            public float Softness = 0.3f;
+
+            /// <summary>이보다 낮은 그림(유닛)은 그림자를 만들지 않는다 (종이·작은 소품).</summary>
+            public float MinCasterHeight = 0.8f;
+
+            public bool Zombies = true;
+            public bool People = true;
+            public bool Containers = true;
+            public bool Decor = true;
+        }
+
         [Serializable]
         public sealed class Config
         {
             public bool Enabled = true;
             public Profile Day = new Profile();
             public Profile Night = new Profile();
+            public ShadowConfig Shadows = new ShadowConfig();
         }
 
         private static Config _config;
@@ -62,6 +83,44 @@ namespace ApoGirl.Exploration.Runtime
             }
         }
 
+        /// <summary>탐험마다 설정을 다시 읽는다 (조정하며 바로 보기). 월드를 짓기 전에 부른다.</summary>
+        public static void Reload() => _config = null;
+
+        /// <summary>그림자를 드리울 물건 (설정의 종류가 켜져 있고 그림이 충분히 클 때).</summary>
+        public static void AddCaster(GameObject go, bool kindEnabled)
+        {
+            var shadows = Settings.Shadows;
+            if (go == null || !kindEnabled || shadows == null || !shadows.Enabled)
+            {
+                return;
+            }
+
+            var renderer = go.GetComponent<SpriteRenderer>();
+            if (renderer == null || renderer.sprite == null || renderer.bounds.size.y < shadows.MinCasterHeight || go.GetComponent<ShadowCaster2D>() != null)
+            {
+                return;
+            }
+
+            var caster = go.AddComponent<ShadowCaster2D>();
+            caster.castingOption = ShadowCaster2D.ShadowCastingOptions.CastShadow;
+            caster.selfShadows = false;
+            caster.useRendererSilhouette = true;   // 자기 그림은 그림자에 덮이지 않는다
+        }
+
+        /// <summary>그림자를 만드는 빛 (손전등).</summary>
+        public void ApplyShadows(Light2D light)
+        {
+            if (light == null)
+            {
+                return;
+            }
+
+            var shadows = Settings.Shadows ?? new ShadowConfig();
+            light.shadowsEnabled = On && shadows.Enabled;
+            light.shadowIntensity = shadows.Intensity;
+            light.shadowSoftness = shadows.Softness;
+        }
+
         private Volume _volume;
         private Profile _profile = new Profile();
 
@@ -73,7 +132,6 @@ namespace ApoGirl.Exploration.Runtime
 
         public void Setup(Camera camera, Transform parent, bool day)
         {
-            _config = null;   // 탐험마다 설정을 다시 읽는다 (조정하며 바로 보기)
             On = Settings.Enabled;
             _profile = (day ? Settings.Day : Settings.Night) ?? new Profile();
             camera.allowHDR = true;

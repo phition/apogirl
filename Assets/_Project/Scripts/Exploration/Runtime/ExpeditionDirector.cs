@@ -402,6 +402,7 @@ namespace ApoGirl.Exploration.Runtime
             var session = GameApp.EnsureSession(_fallbackDatabase);
             _db = session.Definitions;
             _balance = _db.Balance;
+            ExplorationLook.Reload();
             Request = GameApp.ActiveExpedition ?? CreateDebugRequest(session);
             _standalone = GameApp.ActiveExpedition == null;
 
@@ -1969,6 +1970,7 @@ namespace ApoGirl.Exploration.Runtime
             var view = Prop(area, "Encounter_" + encounter.Id, key, encounter.X, new Vector2(0.6f, 1.5f), new Color(0.55f, 0.62f, 0.75f), 9);
             ExplorationArt.Animate(view, key, 6f);   // 숨 쉬는 사람 등 (프레임이 있을 때만)
             AddFog(view, area);
+            ExplorationLook.AddCaster(view, ExplorationLook.Settings.Shadows.People);
             AddTarget(new ExplorationTarget { Kind = TargetKind.Encounter, Area = area, X = encounter.X, Encounter = encounter, View = view });
         }
 
@@ -1982,6 +1984,7 @@ namespace ApoGirl.Exploration.Runtime
                 : ContainerSprite(container.Kind));
             var view = Prop(area, "Container_" + container.Id, sprite, container.X, size, new Color(0.55f, 0.45f, 0.3f), 1);
             AddFog(view, area);
+            ExplorationLook.AddCaster(view, ExplorationLook.Settings.Shadows.Containers);
             var target = new ExplorationTarget
             {
                 Kind = TargetKind.Container,
@@ -2073,6 +2076,11 @@ namespace ApoGirl.Exploration.Runtime
             {
                 _lighting.BeamVolume = _look.SunbeamVolume;
             }
+
+            // 2단계 그림자: 손전등 빛만 그림자를 만든다
+            _look.ApplyShadows(_flashlight);
+            _look.ApplyShadows(_flashlightHot);
+            _look.ApplyShadows(_flashlightSpill);
         }
 
         private void SetupLight(bool day)
@@ -2378,6 +2386,7 @@ namespace ApoGirl.Exploration.Runtime
                     var body = ExplorationArt.Get($"zombie_{kind}_walk_0") != null
                         ? ExplorationArt.Place(_world, "Zombie_" + zombie.Id, $"zombie_{kind}_walk_0", Vector2.zero, 6, Vector2.zero, Color.white)
                         : BuildingView.Rect(_world, "Zombie_" + zombie.Id, Vector2.zero, Vector2.one, new Color(0.42f, 0.5f, 0.4f), 6);
+                    ExplorationLook.AddCaster(body, ExplorationLook.Settings.Shadows.Zombies);
                     var marker = BuildingView.Rect(_world, "Awareness_" + zombie.Id, Vector2.zero, Vector2.one, Color.yellow, 12);
                     _zombieViews.Add(new ZombieView
                     {
@@ -2435,6 +2444,7 @@ namespace ApoGirl.Exploration.Runtime
                 var body = sprites
                     ? ExplorationArt.Place(_world, "Survivor_" + unit.Id, "survivor_idle", Vector2.zero, 6, Vector2.zero, Color.white)
                     : BuildingView.Rect(_world, "Survivor_" + unit.Id, Vector2.zero, Vector2.one, SurvivorTint, 6);
+                ExplorationLook.AddCaster(body, ExplorationLook.Settings.Shadows.People);
                 var marker = BuildingView.Rect(_world, "Awareness_" + unit.Id, Vector2.zero, Vector2.one, Color.yellow, 12);
                 _zombieViews.Add(new ZombieView
                 {
@@ -3047,6 +3057,10 @@ namespace ApoGirl.Exploration.Runtime
                 }
 
                 AddFog(child.gameObject, target);
+                if (child.name != "WallDecor")
+                {
+                    ExplorationLook.AddCaster(child.gameObject, ExplorationLook.Settings.Shadows.Decor);   // 바닥에 선 큰 장식만 (높이로 거른다)
+                }
             }
         }
 
