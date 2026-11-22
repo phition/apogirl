@@ -117,7 +117,7 @@ namespace ApoGirl.Tests.EditMode
             EffectApplier.Apply(state, effect, db.Balance, delta);
             Assert.IsTrue(ConditionEvaluator.IsMet(state, condition, DayRest(), db.Balance));
             Assert.AreEqual("guard", state.Npcs["NPC_X"].Role);
-            Assert.AreEqual(12, delta.NpcAffinity["NPC_X"]);
+            Assert.AreEqual((int)System.Math.Round(12 * db.Balance.CompanionAffinityGainScale), delta.NpcAffinity["NPC_X"], "이벤트로 오르는 동료 호감은 배율 (기획 C.4)");
 
             EffectApplier.Apply(state, new GameEffect { Npcs = { new NpcChange { NpcId = EffectApplier.TeacherNpcId, Affinity = 5 } } }, db.Balance, delta);
             Assert.AreEqual(5, state.Teacher.Affinity, "NPC_TEACHER = 윤 선생님 호감");
