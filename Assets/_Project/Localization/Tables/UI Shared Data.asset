@@ -5403,6 +5403,42 @@ MonoBehaviour:
     m_Key: settle.outing_nothing
     m_Metadata:
       m_Items: []
+  - m_Id: 1124577001619456
+    m_Key: people.minor_wound
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1124577089699840
+    m_Key: people.outing_forecast
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1124577089699841
+    m_Key: people.outing_held
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1124577089699842
+    m_Key: people.outing_held_again
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1124577089699843
+    m_Key: people.outing_away
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1124577089699844
+    m_Key: people.outing_stay
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1124577089699845
+    m_Key: people.outing_let_go
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1124577089699846
+    m_Key: hub.room_away
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1124577089699847
+    m_Key: plan.outing_note
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
