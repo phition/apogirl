@@ -81,6 +81,49 @@ namespace ApoGirl.Exploration.Runtime
             public ContainerRule[] Containers = Array.Empty<ContainerRule>();
             public EncounterRule[] Encounters = Array.Empty<EncounterRule>();
             public DecorRule[] Decor = Array.Empty<DecorRule>();
+            public CombatRule Combat = new CombatRule();
+        }
+
+        [Serializable]
+        public sealed class ImpactEntry
+        {
+            /// <summary>무기 그림 토큰 (bat·pipe·baton·mop …).</summary>
+            public string Weapon = "";
+
+            /// <summary>공격 동작 진행도(0~1) 중 맞는 순간. 16프레임 휘두르기면 8번째 프레임 = 0.5.</summary>
+            public float At = 0.5f;
+        }
+
+        /// <summary>
+        /// 타격 연출: 공격은 그림에서 무기가 닿는 순간에 판정하고, 그때 맞은 자리에 타격 이펙트를 띄운다.
+        /// 이펙트 그림 fx_hit_0..n(파일 수로 셈)이 있으면 그것을 한 번 돌리고, 없으면 코드 그림(흰 십자 번쩍임).
+        /// </summary>
+        [Serializable]
+        public sealed class CombatRule
+        {
+            public ImpactEntry[] ImpactAt = Array.Empty<ImpactEntry>();
+            public float DefaultImpactAt = 0.5f;
+            public float FxFramesPerSecond = 24f;
+            public float FxHeight = 1.1f;
+            public float FxScale = 1f;
+        }
+
+        /// <summary>타격 연출 설정 (exploration_art.json의 Combat).</summary>
+        public static CombatRule Combat => Map.Combat ?? new CombatRule();
+
+        /// <summary>그 무기의 맞는 순간 (공격 동작 진행도 0~1).</summary>
+        public static float ImpactAt(string weaponToken)
+        {
+            var combat = Combat;
+            foreach (var entry in combat.ImpactAt)
+            {
+                if (entry.Weapon == weaponToken)
+                {
+                    return Mathf.Clamp01(entry.At);
+                }
+            }
+
+            return Mathf.Clamp01(combat.DefaultImpactAt);
         }
 
         [Serializable]

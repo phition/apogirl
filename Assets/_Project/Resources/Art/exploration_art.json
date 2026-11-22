@@ -1226,5 +1226,17 @@
    "FloorDensity": 0.13,
    "WallDensity": 0.12
   }
- ]
+ ],
+ "Combat": {
+  "ImpactAt": [
+   { "Weapon": "bat", "At": 0.5 },
+   { "Weapon": "pipe", "At": 0.5 },
+   { "Weapon": "baton", "At": 0.5 },
+   { "Weapon": "mop", "At": 0.38 }
+  ],
+  "DefaultImpactAt": 0.5,
+  "FxFramesPerSecond": 24,
+  "FxHeight": 1.1,
+  "FxScale": 1
+ }
 }

@@ -574,7 +574,7 @@ namespace ApoGirl.Exploration.Runtime
         private void BuildRooftop(float y)
         {
             var h = _layout.FloorHeight;
-            var length = _layout.CorridorLength;
+            var length = _layout.CorridorLengthOf(_layout.RooftopFloor);
             Rect(_root, "RoofSky", new Vector2(-30f, y), new Vector2(length + 60f, h + 30f), RoofSkyColor, -10);
             ExplorationArt.Tiled(_root, "RoofTown", "roof_town", new Vector2(-8f, y), new Vector2(length + 16f, h), -8, new Color(0.42f, 0.46f, 0.5f));
             ExplorationArt.Tiled(_root, "RoofFence", "roof_fence", new Vector2(-0.6f, y), new Vector2(length + 1.2f, h), -6, new Color(0.5f, 0.52f, 0.54f, 0.5f));

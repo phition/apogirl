@@ -21,6 +21,7 @@ MonoBehaviour:
       CorridorLength: 124
       RooftopFloor: 3
       RooftopFlag: REACHED_ROOFTOP
+      RooftopLength: 100
       DeepFloors: 0
       DeepCorridorLength: 40
       DeepNameKey: 
@@ -85,18 +86,6 @@ MonoBehaviour:
         TargetFloor: 1
         TargetX: -1
         Collapsed: 1
-      - Kind: 0
-        Floor: 2
-        X: 121
-        TargetFloor: 3
-        TargetX: -1
-        Collapsed: 0
-      - Kind: 0
-        Floor: 3
-        X: 119.6
-        TargetFloor: 2
-        TargetX: -1
-        Collapsed: 0
       Doors:
       - RoomId: ROOM_1F_ROOM_OFFICE_0
         TemplateId: ROOM_OFFICE
@@ -718,7 +707,7 @@ MonoBehaviour:
       - Id: C_4F_HALL_LOCKER_B
         Kind: 0
         Floor: 3
-        X: 117.5
+        X: 79
         SearchSeconds: 3
         LootTableId: LOOT_SCHOOL_LOCKER
         SpriteKey: prop_roof_locker
@@ -762,7 +751,7 @@ MonoBehaviour:
         StartsLocked: 0
       - Kind: 1
         Floor: 3
-        X: 123
+        X: 99
         StartsLocked: 1
     DayRunSeconds: 360
     NightRunSeconds: 360

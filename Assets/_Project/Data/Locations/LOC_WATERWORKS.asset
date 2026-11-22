@@ -21,6 +21,7 @@ MonoBehaviour:
       CorridorLength: 100
       RooftopFloor: -1
       RooftopFlag: 
+      RooftopLength: 0
       DeepFloors: 3
       DeepCorridorLength: 50
       DeepNameKey: deep.LOC_WATERWORKS

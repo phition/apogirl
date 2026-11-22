@@ -30,6 +30,8 @@ namespace ApoGirl.Presentation.Dialogue
         private readonly Button _skipButton;
         private readonly List<string> _history = new List<string>();
         private readonly VisualElement _portrait;
+        private readonly VisualElement _portraitFrame;
+        private readonly VisualElement _box;
 
         /// <summary>말하는 사람 → 초상화 (M6-5). 비거나 null을 돌려주면 초상화를 숨긴다.</summary>
         public Func<string, Texture2D> PortraitFor { get; set; }
@@ -51,11 +53,24 @@ namespace ApoGirl.Presentation.Dialogue
             _log = root.Q<ScrollView>("dialogue-log");
             root.Q("dialogue-box").RegisterCallback<PointerDownEvent>(_ => Advance());
 
-            // 초상화: 대화창 왼쪽 위에 선 그림 (그림이 없으면 숨김)
-            _portrait = new VisualElement { name = "dialogue-portrait", pickingMode = PickingMode.Ignore };
-            _portrait.AddToClassList("dialogue-portrait");
-            _portrait.AddToClassList("hidden");
-            _layer.Insert(0, _portrait);
+            // 초상화: 대화창 안 왼쪽, 글 앞에 선 그림 (그림이 없으면 숨김).
+            // 가는 둥근 액자만 두르고 배경은 비운다 — 다시 그린 초상은 배경이 투명하다.
+            _box = root.Q("dialogue-box");
+            var body = new VisualElement { name = "dialogue-body", pickingMode = PickingMode.Ignore };
+            body.AddToClassList("dialogue-body");
+            while (_box.childCount > 0)
+            {
+                body.Add(_box[0]);
+            }
+
+            _portraitFrame = new VisualElement { name = "dialogue-portrait", pickingMode = PickingMode.Ignore };
+            _portraitFrame.AddToClassList("dialogue-portrait");
+            _portraitFrame.AddToClassList("hidden");
+            _portrait = new VisualElement { name = "dialogue-portrait-image", pickingMode = PickingMode.Ignore };
+            _portrait.AddToClassList("dialogue-portrait-image");
+            _portraitFrame.Add(_portrait);
+            _box.Add(_portraitFrame);
+            _box.Add(body);
 
             _autoButton = Tool(root, "dialogue-auto", Loc.T("dialogue.auto"), () =>
             {
@@ -94,9 +109,23 @@ namespace ApoGirl.Presentation.Dialogue
         {
             _typing?.Pause();
             _layer.AddToClassList("hidden");
-            _portrait.AddToClassList("hidden");
+            ShowPortrait(null);
             SetScene(null);
             Sound.StopVoice();
+        }
+
+        /// <summary>말하는 사람 초상 (null이면 액자째 숨기고 글이 왼쪽 끝부터).</summary>
+        private void ShowPortrait(Texture2D portrait)
+        {
+            StoryArt.SetContain(_portrait, portrait);
+            if (portrait != null)
+            {
+                // 발치(아래)에 붙여 세운다
+                _portrait.style.backgroundPositionY = new StyleBackgroundPosition(new BackgroundPosition(BackgroundPositionKeyword.Bottom));
+            }
+
+            _portraitFrame.EnableInClassList("hidden", portrait == null);
+            _box.EnableInClassList("with-portrait", portrait != null);
         }
 
         /// <summary>대화 뒤에 깔 사건 그림 (null이면 지운다).</summary>
@@ -129,8 +158,7 @@ namespace ApoGirl.Presentation.Dialogue
             _speaker.text = speaker ?? "";
             _speaker.EnableInClassList("hidden", string.IsNullOrEmpty(speaker));
             var portrait = string.IsNullOrEmpty(speaker) ? null : PortraitFor?.Invoke(speaker);
-            StoryArt.SetCover(_portrait, portrait);
-            _portrait.EnableInClassList("hidden", portrait == null);
+            ShowPortrait(portrait);
             _history.Add(string.IsNullOrEmpty(speaker) ? text : speaker + ": " + text);
             Sound.OnLine(speaker, text);
             _full = text ?? "";

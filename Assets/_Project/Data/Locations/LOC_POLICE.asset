@@ -21,6 +21,7 @@ MonoBehaviour:
       CorridorLength: 52
       RooftopFloor: -1
       RooftopFlag: 
+      RooftopLength: 0
       DeepFloors: 2
       DeepCorridorLength: 40
       DeepNameKey: deep.LOC_POLICE

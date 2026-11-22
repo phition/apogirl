@@ -140,6 +140,11 @@ namespace ApoGirl.Exploration.Runtime
 
         /// <summary>주인공 그림 접두어 (옷·무기에 따라, 예: player_padding_bat_)와 지금 프레임 키, 등에 멘 가방 그림.</summary>
         private string _lookPrefix = "player_";
+        private string _weaponToken = "none";
+
+        /// <summary>휘두른 뒤 무기가 닿을 때까지 남은 시간 (음수 = 기다리는 타격 없음)과 그 방향.</summary>
+        private float _strikeDelay = -1f;
+        private int _strikeDirection = 1;
         private string _playerFrameKey = "";
         private SpriteRenderer _bagRenderer;
         private float _noiseMultiplier = 1f;
@@ -1042,13 +1047,50 @@ namespace ApoGirl.Exploration.Runtime
             _attackAnim = AttackAnimSeconds;
             EmitNoise(CurrentArea, X, _weapon.AttackNoise);
             Sfx("sfx_swing");
-            var hit = _threat.Strike(Snapshot, _facingRight ? 1 : -1, _weapon.WeaponPower, _weapon.StunSeconds, _balance.ShoveRange + 0.3f);
+
+            // 판정은 그림에서 무기가 닿는 순간에 (exploration_art.json Combat.ImpactAt)
+            _strikeDirection = _facingRight ? 1 : -1;
+            _strikeDelay = AttackAnimSeconds * ExplorationArt.ImpactAt(_weaponToken);
+            if (_strikeDelay <= 0f)
+            {
+                ResolveStrike();
+            }
+
+            return true;
+        }
+
+        /// <summary>기다리던 타격을 센다: 숨었거나 무기가 없어졌으면 헛친 것으로.</summary>
+        private void UpdateStrike(float dt)
+        {
+            if (_strikeDelay < 0f)
+            {
+                return;
+            }
+
+            _strikeDelay -= dt;
+            if (_strikeDelay > 0f)
+            {
+                return;
+            }
+
+            _strikeDelay = -1f;
+            if (_weapon != null && !Hidden && !IsFinished)
+            {
+                ResolveStrike();
+            }
+        }
+
+        /// <summary>무기가 닿는 순간: 맞은 좀비에게 타격·반응 동작·이펙트, 무기 내구도.</summary>
+        private bool ResolveStrike()
+        {
+            var hit = _threat.Strike(Snapshot, _strikeDirection, _weapon.WeaponPower, _weapon.StunSeconds, _balance.ShoveRange + 0.3f);
             if (hit == null)
             {
                 return false;
             }
 
             _weaponWear++;
+            SpawnHitFx(hit);
             React(hit, "hit_");
             Sfx("sfx_hit");
             _hud?.ShowMessage(hit.IsDown ? "exp.zombie_down" : "exp.hit");
@@ -1220,6 +1262,7 @@ namespace ApoGirl.Exploration.Runtime
         {
             var armor = StandingConfig.PlayerOutfitToken(_armor?.Id, Request.Week);
             var weapon = ExplorationArt.ItemToken(_weapon?.Id, "ITEM_WEAPON_", "none");
+            _weaponToken = weapon;
             _lookPrefix = ExplorationArt.PlayerPrefix(armor, weapon);
         }
 
@@ -1314,6 +1357,8 @@ namespace ApoGirl.Exploration.Runtime
             {
                 _attackTimer -= dt;
             }
+
+            UpdateStrike(dt);
 
             if (_input.QuickSlot >= 0)
             {
@@ -3394,6 +3439,25 @@ namespace ApoGirl.Exploration.Runtime
                 view.ReactPose = pose;
                 view.ReactStart = Time.time;
             }
+        }
+
+        /// <summary>맞은 자리(좀비 몸의 주인공 쪽, 가슴 높이)에 타격 이펙트를 한 번 띄운다.</summary>
+        private void SpawnHitFx(ZombieUnit unit)
+        {
+            var view = _zombieViews.Find(v => v.Unit == unit);
+            if (view == null || view.Body == null)
+            {
+                return;
+            }
+
+            var combat = ExplorationArt.Combat;
+            var side = X < unit.X ? -1f : 1f;
+            var go = new GameObject("HitFx");
+            go.transform.SetParent(view.Body.parent, false);
+            go.transform.localPosition = view.Body.localPosition + new Vector3(side * 0.25f, combat.FxHeight, 0f);
+            go.transform.localScale = Vector3.one * combat.FxScale;
+            var fx = go.AddComponent<HitFx>();
+            fx.Play(side < 0f, combat.FxFramesPerSecond);
         }
 
         /// <summary>반응 동작 중이면 그 프레임 키 (끝났거나 그림이 없으면 null). 반응 중에는 주인공 쪽을 본다.</summary>

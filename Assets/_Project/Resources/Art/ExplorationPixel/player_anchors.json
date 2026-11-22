@@ -1234,115 +1234,115 @@
 },
 {
 "Key": "player_guard_mop_crouch_0",
-"X": -0.386,
-"Y": 0.674,
-"Angle": -5.3,
-"Lift": 0.167
+"X": -0.144,
+"Y": 0.786,
+"Angle": -12.5,
+"Lift": 0.0
 },
 {
 "Key": "player_guard_mop_crouch_1",
-"X": -0.387,
-"Y": 0.657,
-"Angle": -4.4,
-"Lift": 0.167
+"X": -0.137,
+"Y": 0.789,
+"Angle": -11.6,
+"Lift": 0.0
 },
 {
 "Key": "player_guard_mop_crouch_2",
-"X": -0.404,
-"Y": 0.642,
-"Angle": -3.8,
-"Lift": 0.167
+"X": -0.14,
+"Y": 0.783,
+"Angle": -11.9,
+"Lift": 0.0
 },
 {
 "Key": "player_guard_mop_crouch_3",
-"X": -0.435,
-"Y": 0.634,
-"Angle": -3.8,
-"Lift": 0.167
+"X": -0.146,
+"Y": 0.767,
+"Angle": -12.9,
+"Lift": 0.0
 },
 {
 "Key": "player_guard_mop_crouch_4",
-"X": -0.434,
-"Y": 0.65,
-"Angle": -4.3,
-"Lift": 0.167
+"X": -0.151,
+"Y": 0.765,
+"Angle": -13.9,
+"Lift": 0.0
 },
 {
 "Key": "player_guard_mop_crouch_5",
-"X": -0.419,
-"Y": 0.668,
-"Angle": -5.5,
-"Lift": 0.167
+"X": -0.156,
+"Y": 0.795,
+"Angle": -14.3,
+"Lift": 0.0
 },
 {
 "Key": "player_guard_mop_crouch_6",
-"X": -0.429,
-"Y": 0.661,
-"Angle": -5.6,
-"Lift": 0.167
+"X": -0.159,
+"Y": 0.816,
+"Angle": -14.4,
+"Lift": 0.028
 },
 {
 "Key": "player_guard_mop_crouch_7",
-"X": -0.442,
-"Y": 0.652,
-"Angle": -5.1,
-"Lift": 0.167
+"X": -0.158,
+"Y": 0.802,
+"Angle": -14.3,
+"Lift": 0.0
 },
 {
 "Key": "player_guard_mop_crouch_8",
-"X": -0.43,
-"Y": 0.661,
-"Angle": -5.6,
-"Lift": 0.167
+"X": -0.156,
+"Y": 0.773,
+"Angle": -14.1,
+"Lift": 0.0
 },
 {
 "Key": "player_guard_mop_crouch_9",
-"X": -0.4,
-"Y": 0.677,
-"Angle": -6.2,
-"Lift": 0.167
+"X": -0.153,
+"Y": 0.757,
+"Angle": -13.6,
+"Lift": 0.0
 },
 {
 "Key": "player_guard_mop_crouch_10",
-"X": -0.394,
-"Y": 0.674,
-"Angle": -5.4,
-"Lift": 0.167
+"X": -0.145,
+"Y": 0.766,
+"Angle": -12.6,
+"Lift": 0.0
 },
 {
 "Key": "player_guard_mop_crouch_11",
-"X": -0.409,
-"Y": 0.655,
-"Angle": -3.8,
-"Lift": 0.167
+"X": -0.137,
+"Y": 0.782,
+"Angle": -11.6,
+"Lift": 0.0
 },
 {
 "Key": "player_guard_mop_crouch_12",
-"X": -0.419,
-"Y": 0.639,
-"Angle": -2.8,
-"Lift": 0.167
+"X": -0.14,
+"Y": 0.784,
+"Angle": -12.0,
+"Lift": 0.0
 },
 {
 "Key": "player_guard_mop_crouch_13",
-"X": -0.417,
-"Y": 0.634,
-"Angle": -3.5,
-"Lift": 0.167
+"X": -0.147,
+"Y": 0.767,
+"Angle": -12.9,
+"Lift": 0.0
 },
 {
 "Key": "player_guard_mop_crouch_14",
-"X": -0.405,
-"Y": 0.652,
-"Angle": -5.0,
-"Lift": 0.167
+"X": -0.15,
+"Y": 0.755,
+"Angle": -13.2,
+"Lift": 0.0
 },
 {
 "Key": "player_guard_mop_crouch_15",
-"X": -0.391,
-"Y": 0.675,
-"Angle": -5.7,
-"Lift": 0.167
+"X": -0.15,
+"Y": 0.769,
+"Angle": -13.3,
+"Lift": 0.0
 },
 {
 "Key": "player_guard_mop_idle_0",
@@ -5413,9 +5413,9 @@
 },
 {
 "Key": "player_padding_pipe_run_5",
-"X": -0.039,
+"X": -0.041,
 "Y": 1.221,
-"Angle": 12.0,
+"Angle": 12.4,
 "Lift": 0.0
 },
 {
@@ -5469,9 +5469,9 @@
 },
 {
 "Key": "player_padding_pipe_run_13",
-"X": -0.042,
+"X": -0.045,
 "Y": 1.221,
-"Angle": 12.2,
+"Angle": 12.8,
 "Lift": 0.0
 },
 {
@@ -6834,115 +6834,115 @@
 },
 {
 "Key": "player_riot_mop_crouch_0",
-"X": -0.211,
-"Y": 0.877,
-"Angle": -1.1,
-"Lift": 0.167
+"X": -0.172,
+"Y": 0.867,
+"Angle": -16.1,
+"Lift": 0.083
 },
 {
 "Key": "player_riot_mop_crouch_1",
-"X": -0.223,
-"Y": 0.891,
-"Angle": -0.9,
-"Lift": 0.167
+"X": -0.176,
+"Y": 0.884,
+"Angle": -15.4,
+"Lift": 0.083
 },
 {
 "Key": "player_riot_mop_crouch_2",
-"X": -0.226,
-"Y": 0.919,
-"Angle": -1.2,
-"Lift": 0.167
+"X": -0.179,
+"Y": 0.878,
+"Angle": -15.6,
+"Lift": 0.083
 },
 {
 "Key": "player_riot_mop_crouch_3",
-"X": -0.22,
-"Y": 0.943,
-"Angle": -2.3,
-"Lift": 0.167
+"X": -0.18,
+"Y": 0.849,
+"Angle": -16.6,
+"Lift": 0.083
 },
 {
 "Key": "player_riot_mop_crouch_4",
-"X": -0.196,
-"Y": 0.945,
-"Angle": -3.1,
-"Lift": 0.167
+"X": -0.177,
+"Y": 0.825,
+"Angle": -17.3,
+"Lift": 0.083
 },
 {
 "Key": "player_riot_mop_crouch_5",
-"X": -0.178,
-"Y": 0.929,
-"Angle": -2.3,
-"Lift": 0.167
+"X": -0.171,
+"Y": 0.818,
+"Angle": -17.3,
+"Lift": 0.083
 },
 {
 "Key": "player_riot_mop_crouch_6",
-"X": -0.173,
-"Y": 0.913,
-"Angle": -1.6,
-"Lift": 0.167
+"X": -0.169,
+"Y": 0.817,
+"Angle": -17.2,
+"Lift": 0.083
 },
 {
 "Key": "player_riot_mop_crouch_7",
-"X": -0.186,
-"Y": 0.892,
-"Angle": -1.4,
-"Lift": 0.167
+"X": -0.169,
+"Y": 0.817,
+"Angle": -17.2,
+"Lift": 0.083
 },
 {
 "Key": "player_riot_mop_crouch_8",
-"X": -0.211,
-"Y": 0.877,
-"Angle": -1.1,
-"Lift": 0.167
+"X": -0.169,
+"Y": 0.817,
+"Angle": -17.2,
+"Lift": 0.083
 },
 {
 "Key": "player_riot_mop_crouch_9",
-"X": -0.224,
-"Y": 0.891,
-"Angle": -0.9,
-"Lift": 0.167
+"X": -0.169,
+"Y": 0.824,
+"Angle": -17.2,
+"Lift": 0.083
 },
 {
 "Key": "player_riot_mop_crouch_10",
-"X": -0.226,
-"Y": 0.919,
-"Angle": -1.3,
-"Lift": 0.167
+"X": -0.17,
+"Y": 0.838,
+"Angle": -17.1,
+"Lift": 0.083
 },
 {
 "Key": "player_riot_mop_crouch_11",
-"X": -0.221,
-"Y": 0.944,
-"Angle": -2.5,
-"Lift": 0.167
+"X": -0.17,
+"Y": 0.845,
+"Angle": -17.1,
+"Lift": 0.083
 },
 {
 "Key": "player_riot_mop_crouch_12",
-"X": -0.199,
-"Y": 0.946,
-"Angle": -3.4,
-"Lift": 0.167
+"X": -0.17,
+"Y": 0.845,
+"Angle": -17.1,
+"Lift": 0.083
 },
 {
 "Key": "player_riot_mop_crouch_13",
-"X": -0.178,
-"Y": 0.93,
-"Angle": -2.4,
-"Lift": 0.167
+"X": -0.17,
+"Y": 0.845,
+"Angle": -17.1,
+"Lift": 0.083
 },
 {
 "Key": "player_riot_mop_crouch_14",
-"X": -0.173,
-"Y": 0.913,
-"Angle": -1.5,
-"Lift": 0.167
+"X": -0.17,
+"Y": 0.845,
+"Angle": -17.1,
+"Lift": 0.083
 },
 {
 "Key": "player_riot_mop_crouch_15",
-"X": -0.185,
-"Y": 0.892,
-"Angle": -1.4,
-"Lift": 0.167
+"X": -0.17,
+"Y": 0.85,
+"Angle": -16.9,
+"Lift": 0.083
 },
 {
 "Key": "player_riot_mop_idle_0",
@@ -7058,9 +7058,9 @@
 },
 {
 "Key": "player_riot_mop_run_0",
-"X": 0.122,
-"Y": 1.259,
-"Angle": 6.6,
+"X": 0.19,
+"Y": 1.248,
+"Angle": -0.5,
 "Lift": 0.167
 },
 {
@@ -7100,23 +7100,23 @@
 },
 {
 "Key": "player_riot_mop_run_6",
-"X": 0.164,
-"Y": 1.255,
-"Angle": -0.2,
+"X": 0.185,
+"Y": 1.253,
+"Angle": -4.0,
 "Lift": 0.167
 },
 {
 "Key": "player_riot_mop_run_7",
-"X": 0.107,
-"Y": 1.266,
-"Angle": 6.6,
+"X": 0.185,
+"Y": 1.253,
+"Angle": -4.0,
 "Lift": 0.167
 },
 {
 "Key": "player_riot_mop_run_8",
-"X": 0.122,
-"Y": 1.259,
-"Angle": 6.6,
+"X": 0.191,
+"Y": 1.249,
+"Angle": -0.8,
 "Lift": 0.167
 },
 {
@@ -7156,16 +7156,16 @@
 },
 {
 "Key": "player_riot_mop_run_14",
-"X": 0.165,
-"Y": 1.256,
-"Angle": -0.5,
+"X": 0.185,
+"Y": 1.253,
+"Angle": -4.1,
 "Lift": 0.167
 },
 {
 "Key": "player_riot_mop_run_15",
-"X": 0.107,
-"Y": 1.267,
-"Angle": 6.6,
+"X": 0.185,
+"Y": 1.253,
+"Angle": -4.1,
 "Lift": 0.167
 },
 {
@@ -8549,9 +8549,9 @@
 },
 {
 "Key": "player_summer_bat_crouch_5",
-"X": -0.071,
-"Y": 0.916,
-"Angle": -19.8,
+"X": -0.072,
+"Y": 0.945,
+"Angle": -20.0,
 "Lift": 0.056
 },
 {
@@ -8920,37 +8920,37 @@
 },
 {
 "Key": "player_summer_bat_walk_10",
-"X": -0.147,
-"Y": 1.201,
-"Angle": 4.5,
+"X": -0.148,
+"Y": 1.208,
+"Angle": 4.3,
 "Lift": 0.028
 },
 {
 "Key": "player_summer_bat_walk_11",
-"X": -0.146,
+"X": -0.148,
 "Y": 1.208,
-"Angle": 4.4,
+"Angle": 4.3,
 "Lift": 0.028
 },
 {
 "Key": "player_summer_bat_walk_12",
 "X": -0.148,
-"Y": 1.209,
-"Angle": 4.2,
+"Y": 1.208,
+"Angle": 4.3,
 "Lift": 0.028
 },
 {
 "Key": "player_summer_bat_walk_13",
-"X": -0.151,
-"Y": 1.195,
+"X": -0.152,
+"Y": 1.202,
 "Angle": 3.9,
 "Lift": 0.028
 },
 {
 "Key": "player_summer_bat_walk_14",
-"X": -0.153,
-"Y": 1.195,
-"Angle": 3.8,
+"X": -0.152,
+"Y": 1.202,
+"Angle": 3.9,
 "Lift": 0.028
 },
 {
@@ -9256,30 +9256,30 @@
 },
 {
 "Key": "player_summer_baton_idle_10",
-"X": -0.108,
+"X": -0.094,
 "Y": 1.213,
-"Angle": 8.3,
+"Angle": 8.4,
 "Lift": 0.0
 },
 {
 "Key": "player_summer_baton_idle_11",
-"X": -0.118,
+"X": -0.094,
 "Y": 1.213,
-"Angle": 7.5,
+"Angle": 8.4,
 "Lift": 0.0
 },
 {
 "Key": "player_summer_baton_idle_12",
-"X": -0.126,
-"Y": 1.214,
-"Angle": 6.3,
+"X": -0.094,
+"Y": 1.213,
+"Angle": 8.4,
 "Lift": 0.0
 },
 {
 "Key": "player_summer_baton_idle_13",
-"X": -0.133,
+"X": -0.136,
 "Y": 1.214,
-"Angle": 5.6,
+"Angle": 5.3,
 "Lift": 0.0
 },
 {
@@ -9760,72 +9760,72 @@
 },
 {
 "Key": "player_summer_mop_idle_2",
-"X": -0.506,
-"Y": 1.393,
-"Angle": -1.8,
+"X": -0.504,
+"Y": 1.391,
+"Angle": -0.8,
 "Lift": 0.167
 },
 {
 "Key": "player_summer_mop_idle_3",
-"X": -0.506,
-"Y": 1.393,
-"Angle": -1.9,
+"X": -0.504,
+"Y": 1.391,
+"Angle": -0.8,
 "Lift": 0.167
 },
 {
 "Key": "player_summer_mop_idle_4",
-"X": -0.506,
-"Y": 1.393,
-"Angle": -1.9,
+"X": -0.504,
+"Y": 1.391,
+"Angle": -0.8,
 "Lift": 0.167
 },
 {
 "Key": "player_summer_mop_idle_5",
-"X": -0.506,
-"Y": 1.393,
-"Angle": -1.9,
+"X": -0.504,
+"Y": 1.391,
+"Angle": -0.8,
 "Lift": 0.167
 },
 {
 "Key": "player_summer_mop_idle_6",
-"X": -0.506,
-"Y": 1.393,
-"Angle": -1.9,
+"X": -0.504,
+"Y": 1.391,
+"Angle": -0.8,
 "Lift": 0.167
 },
 {
 "Key": "player_summer_mop_idle_7",
-"X": -0.508,
-"Y": 1.392,
-"Angle": -1.3,
+"X": -0.496,
+"Y": 1.385,
+"Angle": 2.4,
 "Lift": 0.167
 },
 {
 "Key": "player_summer_mop_idle_8",
-"X": -0.512,
-"Y": 1.389,
-"Angle": -0.2,
+"X": -0.496,
+"Y": 1.385,
+"Angle": 2.4,
 "Lift": 0.167
 },
 {
 "Key": "player_summer_mop_idle_9",
-"X": -0.512,
-"Y": 1.388,
-"Angle": 0.6,
+"X": -0.496,
+"Y": 1.385,
+"Angle": 2.4,
 "Lift": 0.167
 },
 {
 "Key": "player_summer_mop_idle_10",
-"X": -0.506,
-"Y": 1.387,
-"Angle": 1.2,
+"X": -0.496,
+"Y": 1.385,
+"Angle": 2.4,
 "Lift": 0.167
 },
 {
 "Key": "player_summer_mop_idle_11",
-"X": -0.499,
+"X": -0.496,
 "Y": 1.385,
-"Angle": 2.0,
+"Angle": 2.4,
 "Lift": 0.167
 },
 {
@@ -10936,7 +10936,7 @@
 },
 {
 "Key": "player_summer_pipe_idle_10",
-"X": -0.117,
+"X": -0.118,
 "Y": 1.215,
 "Angle": 4.3,
 "Lift": 0.0
@@ -12434,86 +12434,86 @@
 },
 {
 "Key": "player_uniform_mop_crouch_0",
-"X": -0.188,
-"Y": 0.719,
-"Angle": -8.1,
+"X": -0.187,
+"Y": 0.718,
+"Angle": -8.0,
 "Lift": 0.167
 },
 {
 "Key": "player_uniform_mop_crouch_1",
-"X": -0.191,
-"Y": 0.727,
-"Angle": -8.5,
+"X": -0.187,
+"Y": 0.718,
+"Angle": -8.0,
 "Lift": 0.167
 },
 {
 "Key": "player_uniform_mop_crouch_2",
-"X": -0.193,
-"Y": 0.741,
-"Angle": -8.6,
+"X": -0.187,
+"Y": 0.718,
+"Angle": -8.0,
 "Lift": 0.167
 },
 {
 "Key": "player_uniform_mop_crouch_3",
-"X": -0.191,
-"Y": 0.756,
-"Angle": -8.9,
+"X": -0.187,
+"Y": 0.718,
+"Angle": -8.0,
 "Lift": 0.167
 },
 {
 "Key": "player_uniform_mop_crouch_4",
-"X": -0.19,
-"Y": 0.771,
-"Angle": -9.1,
+"X": -0.187,
+"Y": 0.718,
+"Angle": -8.0,
 "Lift": 0.167
 },
 {
 "Key": "player_uniform_mop_crouch_5",
-"X": -0.193,
-"Y": 0.77,
-"Angle": -8.8,
+"X": -0.187,
+"Y": 0.718,
+"Angle": -8.0,
 "Lift": 0.167
 },
 {
 "Key": "player_uniform_mop_crouch_6",
-"X": -0.193,
-"Y": 0.755,
-"Angle": -8.5,
+"X": -0.194,
+"Y": 0.721,
+"Angle": -8.7,
 "Lift": 0.167
 },
 {
 "Key": "player_uniform_mop_crouch_7",
-"X": -0.19,
-"Y": 0.756,
-"Angle": -8.8,
+"X": -0.194,
+"Y": 0.721,
+"Angle": -8.7,
 "Lift": 0.167
 },
 {
 "Key": "player_uniform_mop_crouch_8",
-"X": -0.187,
-"Y": 0.763,
-"Angle": -8.8,
+"X": -0.194,
+"Y": 0.721,
+"Angle": -8.7,
 "Lift": 0.167
 },
 {
 "Key": "player_uniform_mop_crouch_9",
-"X": -0.188,
-"Y": 0.748,
-"Angle": -8.4,
+"X": -0.194,
+"Y": 0.721,
+"Angle": -8.7,
 "Lift": 0.167
 },
 {
 "Key": "player_uniform_mop_crouch_10",
-"X": -0.188,
-"Y": 0.725,
-"Angle": -8.1,
+"X": -0.194,
+"Y": 0.721,
+"Angle": -8.7,
 "Lift": 0.167
 },
 {
 "Key": "player_uniform_mop_crouch_11",
-"X": -0.189,
-"Y": 0.719,
-"Angle": -8.2,
+"X": -0.194,
+"Y": 0.721,
+"Angle": -8.7,
 "Lift": 0.167
 },
 {
@@ -12638,22 +12638,22 @@
 {
 "Key": "player_uniform_mop_idle_13",
 "X": 0.184,
-"Y": 1.38,
-"Angle": 0.7,
+"Y": 1.367,
+"Angle": 0.8,
 "Lift": 0.167
 },
 {
 "Key": "player_uniform_mop_idle_14",
 "X": 0.184,
-"Y": 1.387,
+"Y": 1.367,
 "Angle": 0.8,
 "Lift": 0.167
 },
 {
 "Key": "player_uniform_mop_idle_15",
-"X": 0.185,
-"Y": 1.387,
-"Angle": 0.9,
+"X": 0.189,
+"Y": 1.386,
+"Angle": 1.3,
 "Lift": 0.167
 },
 {
@@ -14814,79 +14814,79 @@
 },
 {
 "Key": "player_winter_baton_idle_4",
-"X": -0.1,
+"X": -0.101,
 "Y": 1.215,
 "Angle": 4.9,
 "Lift": 0.0
 },
 {
 "Key": "player_winter_baton_idle_5",
-"X": -0.097,
-"Y": 1.214,
-"Angle": 5.2,
+"X": -0.101,
+"Y": 1.215,
+"Angle": 4.9,
 "Lift": 0.0
 },
 {
 "Key": "player_winter_baton_idle_6",
-"X": -0.091,
-"Y": 1.214,
-"Angle": 5.9,
+"X": -0.101,
+"Y": 1.215,
+"Angle": 4.9,
 "Lift": 0.0
 },
 {
 "Key": "player_winter_baton_idle_7",
-"X": -0.084,
-"Y": 1.213,
-"Angle": 6.6,
+"X": -0.101,
+"Y": 1.215,
+"Angle": 4.9,
 "Lift": 0.0
 },
 {
 "Key": "player_winter_baton_idle_8",
-"X": -0.08,
-"Y": 1.213,
-"Angle": 7.1,
+"X": -0.101,
+"Y": 1.215,
+"Angle": 4.9,
 "Lift": 0.0
 },
 {
 "Key": "player_winter_baton_idle_9",
-"X": -0.081,
-"Y": 1.213,
-"Angle": 7.0,
+"X": -0.099,
+"Y": 1.215,
+"Angle": 5.1,
 "Lift": 0.0
 },
 {
 "Key": "player_winter_baton_idle_10",
-"X": -0.085,
-"Y": 1.214,
-"Angle": 6.5,
+"X": -0.099,
+"Y": 1.215,
+"Angle": 5.1,
 "Lift": 0.0
 },
 {
 "Key": "player_winter_baton_idle_11",
-"X": -0.089,
-"Y": 1.214,
-"Angle": 6.2,
+"X": -0.099,
+"Y": 1.215,
+"Angle": 5.1,
 "Lift": 0.0
 },
 {
 "Key": "player_winter_baton_idle_12",
-"X": -0.09,
-"Y": 1.214,
-"Angle": 6.0,
+"X": -0.099,
+"Y": 1.215,
+"Angle": 5.1,
 "Lift": 0.0
 },
 {
 "Key": "player_winter_baton_idle_13",
-"X": -0.092,
-"Y": 1.214,
-"Angle": 5.8,
+"X": -0.099,
+"Y": 1.215,
+"Angle": 5.1,
 "Lift": 0.0
 },
 {
 "Key": "player_winter_baton_idle_14",
-"X": -0.094,
-"Y": 1.214,
-"Angle": 5.5,
+"X": -0.099,
+"Y": 1.215,
+"Angle": 5.1,
 "Lift": 0.0
 },
 {
@@ -16501,9 +16501,9 @@
 },
 {
 "Key": "player_winter_pipe_idle_5",
-"X": -0.063,
-"Y": 1.231,
-"Angle": -3.4,
+"X": -0.062,
+"Y": 1.233,
+"Angle": -4.1,
 "Lift": 0.0
 },
 {

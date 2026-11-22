@@ -293,7 +293,7 @@ namespace ApoGirl.EditorTools
 
         private static LocationDef School()
         {
-            var layout = new BuildingLayoutDef { Floors = 4, FloorHeight = 4f, CorridorLength = 124f, RooftopFloor = 3, RooftopFlag = "REACHED_ROOFTOP" };
+            var layout = new BuildingLayoutDef { Floors = 4, FloorHeight = 4f, CorridorLength = 124f, RooftopFloor = 3, RooftopFlag = "REACHED_ROOFTOP", RooftopLength = 100f };
             layout.RoomTemplates.Add(new RoomTemplateDef
             {
                 Id = "ROOM_CLASSROOM", Width = 14f, DefaultLootTableId = "LOOT_SCHOOL_GENERAL",
@@ -405,7 +405,9 @@ namespace ApoGirl.EditorTools
                 if (f == layout.RooftopFloor)
                 {
                     // 옥상: 복도 사물함 대신 비바람에 녹슨 창고함 (상자 번호가 밀리지 않게 자리만 그대로 둔다)
+                    // 옥상은 복도보다 짧다(RooftopLength 100): 두 창고함 모두 그 안에
                     lockerA.X = 96f;
+                    lockerB.X = 79f;
                     lockerA.SpriteKey = "prop_roof_locker";
                     lockerB.SpriteKey = "prop_roof_locker";
                 }
@@ -427,7 +429,11 @@ namespace ApoGirl.EditorTools
             }
 
             layout.Exits.Add(new ExitDef { Kind = ExitKind.Main, Floor = 0, X = 56f });
-            layout.Exits.Add(new ExitDef { Kind = ExitKind.Alternate, Floor = 3, X = 123f, StartsLocked = true });
+            layout.Exits.Add(new ExitDef { Kind = ExitKind.Alternate, Floor = 3, X = 99f, StartsLocked = true });
+
+            // 옥상이 짧아 오른쪽 계단은 3층까지만 (옥상 끝 밖으로 나가는 계단은 뺀다)
+            layout.Connectors.RemoveAll(c => (c.Floor == layout.RooftopFloor && c.X > layout.RooftopLength)
+                || (c.TargetFloor == layout.RooftopFloor && c.Floor != layout.RooftopFloor && c.X > layout.RooftopLength));
 
             // 도현 (첫 NPC, M4 결정): 밤의 노크 소리를 들은 뒤(DH_HEARD) 3층 3-5 교실에 있다
             EncounterDef Dohyeon() => new EncounterDef

@@ -253,6 +253,9 @@ namespace ApoGirl.Core.Definitions
         /// <summary>옥상에 처음 올라서면 남기는 플래그 (귀환 뒤 거점 옥상 해금 이벤트의 조건).</summary>
         public string RooftopFlag = "";
 
+        /// <summary>옥상 길이 (0 = 복도와 같다). 옥상은 X = 0 ~ 이 길이만 걸을 수 있다 — 넘는 계단·출구는 두지 않는다.</summary>
+        public float RooftopLength;
+
         public bool IsRooftop(int floor) => RooftopFloor >= 0 && floor == RooftopFloor;
 
         /// <summary>
@@ -274,7 +277,8 @@ namespace ApoGirl.Core.Definitions
         /// <summary>깊은 곳 층의 몇 번째 지하인가 (지하 1 = 1).</summary>
         public int DeepLevel(int floor) => floor - Floors + 1;
 
-        public float CorridorLengthOf(int floor) => IsDeep(floor) ? DeepCorridorLength : CorridorLength;
+        public float CorridorLengthOf(int floor) => IsDeep(floor) ? DeepCorridorLength
+            : IsRooftop(floor) && RooftopLength > 0f ? Math.Min(RooftopLength, CorridorLength) : CorridorLength;
 
         public List<ConnectorDef> Connectors = new List<ConnectorDef>();
         public List<DoorDef> Doors = new List<DoorDef>();

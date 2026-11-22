@@ -21,6 +21,7 @@ MonoBehaviour:
       CorridorLength: 40
       RooftopFloor: -1
       RooftopFlag: 
+      RooftopLength: 0
       DeepFloors: 0
       DeepCorridorLength: 40
       DeepNameKey: 
