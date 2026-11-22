@@ -277,6 +277,19 @@ MonoBehaviour:
       Roles:
       - GUARD
       - COMFORT
+    TogetherAffinity: 1
+    TogetherAptitudeBonus: 1
+    TogetherWeeklyCap: 2
+    TogetherAptitudeWeeklyCap: 3
+    TeacherTogetherAffinity: 1
+    TeacherTogetherWeeklyCap: 1
+    TeacherCareActionId: ACT_CARE_TEACHER
+    TeacherIllFlags:
+    - TEACHER_REINFECTED
+    - TEACHER_BEDRIDDEN
+    - TEACHER_ISOLATED
+    TeacherAbsentFlags:
+    - TEACHER_LEFT_BEHIND
     GiveFoodSatiety: 45
     GiveFoodStress: -3
     GiveWaterHydration: 55
