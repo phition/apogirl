@@ -352,6 +352,19 @@ namespace ApoGirl.Core.Simulation.Bots
 
             sb.AppendLine();
 
+            // 동아리 (확장 7): 판마다 동아리 횟수, 동아리 개인 장면
+            sb.AppendLine("## 동아리 (확장 7)");
+            sb.AppendLine();
+            sb.AppendLine("| 전략 | 평균 동아리 횟수 | 개인 장면 평균 | 개인 장면 1편 이상 |");
+            sb.AppendLine("|---|---|---|---|");
+            foreach (var g in runs.GroupBy(r => r.StrategyId))
+            {
+                var list = g.ToList();
+                sb.AppendLine($"| {g.Key} | {F((float)list.Average(r => r.ClubSessions))} | {F((float)list.Average(r => r.ClubScenes))} | {P(list.Count(r => r.ClubScenes > 0), list.Count)} |");
+            }
+
+            sb.AppendLine();
+
             // 고양이 (확장 2): 끝났을 때 눌러앉아 있던 판, 동료 없이 끝난 판 가운데 고양이가 있던 판
             sb.AppendLine("## 고양이 (확장 2)");
             sb.AppendLine();

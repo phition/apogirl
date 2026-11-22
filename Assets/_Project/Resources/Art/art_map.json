@@ -1027,6 +1027,22 @@
       "Image": "icon_act_talk"
     },
     {
+      "Key": "act.ACT_CLUB_BOARDGAME",
+      "Image": "icon_act_talk"
+    },
+    {
+      "Key": "act.ACT_CLUB_SINGING",
+      "Image": "icon_act_music"
+    },
+    {
+      "Key": "act.ACT_CLUB_SPORTS",
+      "Image": "icon_act_selfdefense"
+    },
+    {
+      "Key": "act.ACT_CLUB_STUDY",
+      "Image": "icon_craft_study_corner"
+    },
+    {
       "Key": "act.ACT_NIGHT_WATCH",
       "Image": "icon_act_watch"
     },

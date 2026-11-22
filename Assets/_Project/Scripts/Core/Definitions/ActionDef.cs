@@ -128,5 +128,10 @@ namespace ApoGirl.Core.Definitions
 
         public bool IsRest => Category == ActionCategory.Rest;
         public bool IsExpedition => Category == ActionCategory.Expedition;
+
+        /// <summary>방과후 동아리 활동 (확장 7): BOARDGAME·SINGING·SPORTS·STUDY. 비어 있으면 동아리가 아니다. 한 주에 하나만.</summary>
+        public string ClubActivity = "";
+
+        public bool IsClub => !string.IsNullOrEmpty(ClubActivity);
     }
 }

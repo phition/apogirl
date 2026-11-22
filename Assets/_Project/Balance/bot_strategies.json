@@ -90,6 +90,15 @@
         1
       ]
     },
+    "CLUB": {
+      "Pick": "Random",
+      "Actions": [
+        "ACT_CLUB_BOARDGAME",
+        "ACT_CLUB_SINGING",
+        "ACT_CLUB_SPORTS",
+        "ACT_CLUB_STUDY"
+      ]
+    },
     "BUILD": {
       "Pick": "First",
       "Actions": [
@@ -430,7 +439,7 @@
         "ACT_REST_NIGHT",
         "ACT_NIGHT_TALK|ACT_REST_NIGHT",
         "EXP_NIGHT",
-        "ACT_REST_NIGHT",
+        "CLUB|ACT_REST_NIGHT",
         "ACT_NIGHT_DIARY|ACT_REST_NIGHT",
         "ACT_REST_NIGHT"
       ],
@@ -609,7 +618,7 @@
       ],
       "Night": [
         "ACT_NIGHT_TALK|ACT_REST_NIGHT",
-        "ACT_REST_NIGHT",
+        "CLUB|ACT_REST_NIGHT",
         "ACT_CARE_TEACHER|ACT_NIGHT_TALK|ACT_REST_NIGHT",
         "EXP_NIGHT|ACT_REST_NIGHT",
         "ACT_REST_NIGHT",

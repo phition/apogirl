@@ -498,6 +498,12 @@ namespace ApoGirl.Presentation.Screens
                 }
             }
 
+            // 동아리 (확장 7): 같이 한 사람 말풍선
+            if (outcome.Club != null)
+            {
+                _section.ShowBubble(outcome.Club.NpcId, Loc.T("club.bubble." + outcome.Club.Activity), 0.2f + shown++ * 0.6f);
+            }
+
             // 동료 탐험에서 돌아온 사람: 구해 온 것 말풍선
             foreach (var back in outcome.OutingReturns ?? new List<OutingReturn>())
             {
@@ -1056,6 +1062,11 @@ namespace ApoGirl.Presentation.Screens
             if (together.Length > 0)
             {
                 detail += "  · " + together;
+            }
+
+            foreach (var line in PeopleUi.ClubLines(outcome.Club))
+            {
+                detail += "  · " + line;
             }
 
             var outings = PeopleUi.OutingLines(outcome.OutingDepartures, outcome.OutingReturns);

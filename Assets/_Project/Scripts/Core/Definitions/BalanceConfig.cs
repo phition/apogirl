@@ -483,6 +483,28 @@ namespace ApoGirl.Core.Definitions
         /// <summary>헤드리스(자동) 탐험에서 그 지역의 CD(줍는 조우)를 찾아 챙기는 확률 (기획 A.3, 휴대폰에서도 모을 수 있게).</summary>
         public float HeadlessCdChance = 0.3f;
 
+        // ── 방과후 동아리 (확장 7) ──
+
+        /// <summary>동아리를 같이 한 사람의 호감.</summary>
+        public int ClubAffinity = 4;
+
+        /// <summary>그 사람이 좋아하는 활동이었을 때의 호감.</summary>
+        public int ClubLikedAffinity = 7;
+
+        /// <summary>좋아하는 활동을 이만큼 같이 하면 그 사람의 동아리 개인 장면이 열린다.</summary>
+        public int ClubSceneCount = 3;
+
+        /// <summary>동료마다 좋아하는 활동.</summary>
+        public ClubLikeDef[] ClubLikes =
+        {
+            new ClubLikeDef { NpcId = "NPC_NURSE", Activity = "STUDY" },
+            new ClubLikeDef { NpcId = "NPC_DOHYEON", Activity = "SPORTS" },
+            new ClubLikeDef { NpcId = "NPC_RINGLEADER", Activity = "SPORTS" },
+            new ClubLikeDef { NpcId = "NPC_BYSTANDER", Activity = "SINGING" },
+            new ClubLikeDef { NpcId = "NPC_SURVIVOR_A", Activity = "SINGING" },
+            new ClubLikeDef { NpcId = "NPC_WANDERER", Activity = "BOARDGAME" },
+        };
+
         // ── 고양이 '급식' (확장 2) ──
 
         /// <summary>눌러앉은 고양이가 주마다 먹는 식량 (모자라면 먹지 않는다: 알아서 쥐를 잡는다).</summary>

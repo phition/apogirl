@@ -511,6 +511,9 @@ namespace ApoGirl.Presentation.Screens
                 case PlanEditResult.WrongSlot:
                     _notify(Loc.T("plan.edit_wrong_slot"));
                     break;
+                case PlanEditResult.WeeklyLimit:
+                    _notify(Loc.T("plan.edit_weekly_limit"));
+                    break;
             }
         }
 

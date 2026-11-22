@@ -23,6 +23,9 @@ namespace ApoGirl.Core.Simulation
         /// <summary>이 칸에 곁에 있던 사람 (함께한 시간). 비어 있으면 혼자. Absent = 외출해 자리에 없던 사람.</summary>
         public List<TogetherEntry> Together = new List<TogetherEntry>();
 
+        /// <summary>동아리를 같이 한 사람 (확장 7, 동아리가 아니거나 같이 할 사람이 없으면 null).</summary>
+        public ClubOutcome Club;
+
         /// <summary>동료 탐험: 이 낮 칸에 나간 동료, 이 밤 칸에 돌아온 동료와 구해 온 것.</summary>
         public List<string> OutingDepartures = new List<string>();
         public List<OutingReturn> OutingReturns = new List<OutingReturn>();
@@ -263,6 +266,7 @@ namespace ApoGirl.Core.Simulation
 
             // 함께한 시간: 이 방에 서 있던 동료·가르친 선생님의 호감 (역할 재기획 4절)
             outcome.Together = TogetherRules.Apply(_state, _db, action, delta);
+            outcome.Club = ClubRules.Apply(_state, _db, action, delta);   // 확장 7: 장면보다 먼저 (같이 한 사람 깃발)
             return FinishSlot(action, violation, outcome);
         }
 

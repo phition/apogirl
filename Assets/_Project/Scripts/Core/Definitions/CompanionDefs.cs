@@ -20,6 +20,14 @@ namespace ApoGirl.Core.Definitions
         public string[] Items = Array.Empty<string>();
     }
 
+    /// <summary>동아리 (확장 7): 이 동료가 좋아하는 활동 (BOARDGAME·SINGING·SPORTS·STUDY).</summary>
+    [Serializable]
+    public sealed class ClubLikeDef
+    {
+        public string NpcId = "";
+        public string Activity = "";
+    }
+
     /// <summary>적성 (역할 재기획 3절): 이 동료와 잘 맞는 역할. 맡기면 효과가 커진다.</summary>
     [Serializable]
     public sealed class RoleAptitudeDef

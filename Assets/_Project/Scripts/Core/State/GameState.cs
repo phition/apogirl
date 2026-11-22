@@ -9,7 +9,7 @@ namespace ApoGirl.Core.State
     public sealed class GameState
     {
         /// <summary>현재 세이브 포맷 버전. 마이그레이션 시 증가시킨다.</summary>
-        public const int CurrentSaveVersion = 9;
+        public const int CurrentSaveVersion = 10;
 
         public int SaveVersion { get; set; } = CurrentSaveVersion;
         public GameStatus Status { get; set; } = GameStatus.Playing;
@@ -62,6 +62,9 @@ namespace ApoGirl.Core.State
 
         /// <summary>방송반 콘솔에서 고른 CD ID (허브 배경음). 비면 기본 허브 소리. v9에서 추가.</summary>
         public string CdTrack { get; set; } = "";
+
+        /// <summary>동아리를 같이 할 사람 (확장 7, 인물 서랍에서 고른다). 비면 호감이 가장 높은 사람. v10에서 추가.</summary>
+        public string ClubPartner { get; set; } = "";
     }
 
     /// <summary>외부 세력과의 관계.</summary>
@@ -247,6 +250,9 @@ namespace ApoGirl.Core.State
         /// <summary>선생님의 몸 상태와 배분 기록. v7.</summary>
         public BodyState Body { get; set; } = new BodyState();
         public Dictionary<string, int> GiftLog { get; set; } = new Dictionary<string, int>();
+
+        /// <summary>동아리 활동(BOARDGAME 등) → 같이 한 횟수 (확장 7). v10에서 추가.</summary>
+        public Dictionary<string, int> ClubCounts { get; set; } = new Dictionary<string, int>();
     }
 
     /// <summary>친구 (문서 7.3). 재회 변주용 플래그는 GameState.Flags에 둔다.</summary>

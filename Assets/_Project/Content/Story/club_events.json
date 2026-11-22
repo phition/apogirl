@@ -1,0 +1,496 @@
+{
+  "Events": [
+    {
+      "Id": "EVT_CLUB_BOARDGAME",
+      "Kind": "Night",
+      "Priority": 40,
+      "Once": false,
+      "Condition": {
+        "Phase": "Night",
+        "ActionIds": [
+          "ACT_CLUB_BOARDGAME"
+        ]
+      }
+    },
+    {
+      "Id": "EVT_CLUB_SINGING",
+      "Kind": "Night",
+      "Priority": 40,
+      "Once": false,
+      "Condition": {
+        "Phase": "Night",
+        "ActionIds": [
+          "ACT_CLUB_SINGING"
+        ]
+      }
+    },
+    {
+      "Id": "EVT_CLUB_SPORTS",
+      "Kind": "Night",
+      "Priority": 40,
+      "Once": false,
+      "Condition": {
+        "Phase": "Night",
+        "ActionIds": [
+          "ACT_CLUB_SPORTS"
+        ]
+      }
+    },
+    {
+      "Id": "EVT_CLUB_STUDY",
+      "Kind": "Night",
+      "Priority": 40,
+      "Once": false,
+      "Condition": {
+        "Phase": "Night",
+        "ActionIds": [
+          "ACT_CLUB_STUDY"
+        ]
+      }
+    },
+    {
+      "Id": "EVT_CLUB_BOND_NURSE",
+      "Kind": "Night",
+      "Priority": 45,
+      "Condition": {
+        "Phase": "Night",
+        "ActionIds": [
+          "ACT_CLUB_BOARDGAME",
+          "ACT_CLUB_SINGING",
+          "ACT_CLUB_SPORTS",
+          "ACT_CLUB_STUDY"
+        ],
+        "FlagsAll": [
+          "CLUB_SCENE_NPC_NURSE",
+          "CLUB_WITH_NPC_NURSE"
+        ],
+        "FlagsNone": [
+          "CLUB_BOND_NURSE"
+        ]
+      },
+      "OnShow": {
+        "SetFlags": [
+          "CLUB_BOND_NURSE"
+        ],
+        "Hidden": [
+          {
+            "Hidden": "Hope",
+            "Amount": 1
+          }
+        ]
+      },
+      "Choices": [
+        {
+          "Id": "TEACH_BACK",
+          "Effect": {
+            "Npcs": [
+              {
+                "NpcId": "NPC_NURSE",
+                "Affinity": 4
+              }
+            ],
+            "Vitals": [
+              {
+                "Vital": "Stress",
+                "Amount": -3
+              }
+            ],
+            "Stats": [
+              {
+                "Stat": "Intellect",
+                "Amount": 1
+              }
+            ]
+          }
+        },
+        {
+          "Id": "THANK",
+          "Effect": {
+            "Npcs": [
+              {
+                "NpcId": "NPC_NURSE",
+                "Affinity": 5
+              }
+            ],
+            "Vitals": [
+              {
+                "Vital": "Stress",
+                "Amount": -3
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "Id": "EVT_CLUB_BOND_DOHYEON",
+      "Kind": "Night",
+      "Priority": 45,
+      "Condition": {
+        "Phase": "Night",
+        "ActionIds": [
+          "ACT_CLUB_BOARDGAME",
+          "ACT_CLUB_SINGING",
+          "ACT_CLUB_SPORTS",
+          "ACT_CLUB_STUDY"
+        ],
+        "FlagsAll": [
+          "CLUB_SCENE_NPC_DOHYEON",
+          "CLUB_WITH_NPC_DOHYEON"
+        ],
+        "FlagsNone": [
+          "CLUB_BOND_DOHYEON"
+        ]
+      },
+      "OnShow": {
+        "SetFlags": [
+          "CLUB_BOND_DOHYEON"
+        ],
+        "Hidden": [
+          {
+            "Hidden": "Hope",
+            "Amount": 1
+          }
+        ]
+      },
+      "Choices": [
+        {
+          "Id": "RACE_AGAIN",
+          "Effect": {
+            "Npcs": [
+              {
+                "NpcId": "NPC_DOHYEON",
+                "Affinity": 4
+              }
+            ],
+            "Vitals": [
+              {
+                "Vital": "Stress",
+                "Amount": -3
+              }
+            ],
+            "Stats": [
+              {
+                "Stat": "Stamina",
+                "Amount": 1
+              }
+            ]
+          }
+        },
+        {
+          "Id": "LISTEN",
+          "Effect": {
+            "Npcs": [
+              {
+                "NpcId": "NPC_DOHYEON",
+                "Affinity": 5
+              }
+            ],
+            "Vitals": [
+              {
+                "Vital": "Stress",
+                "Amount": -3
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "Id": "EVT_CLUB_BOND_RINGLEADER",
+      "Kind": "Night",
+      "Priority": 45,
+      "Condition": {
+        "Phase": "Night",
+        "ActionIds": [
+          "ACT_CLUB_BOARDGAME",
+          "ACT_CLUB_SINGING",
+          "ACT_CLUB_SPORTS",
+          "ACT_CLUB_STUDY"
+        ],
+        "FlagsAll": [
+          "CLUB_SCENE_NPC_RINGLEADER",
+          "CLUB_WITH_NPC_RINGLEADER"
+        ],
+        "FlagsNone": [
+          "CLUB_BOND_RINGLEADER"
+        ]
+      },
+      "OnShow": {
+        "SetFlags": [
+          "CLUB_BOND_RINGLEADER"
+        ],
+        "Hidden": [
+          {
+            "Hidden": "Hope",
+            "Amount": 1
+          }
+        ]
+      },
+      "Choices": [
+        {
+          "Id": "KEEP_RUNNING",
+          "Effect": {
+            "Npcs": [
+              {
+                "NpcId": "NPC_RINGLEADER",
+                "Affinity": 4
+              }
+            ],
+            "Vitals": [
+              {
+                "Vital": "Stress",
+                "Amount": -3
+              }
+            ],
+            "Stats": [
+              {
+                "Stat": "Willpower",
+                "Amount": 1
+              }
+            ]
+          }
+        },
+        {
+          "Id": "SIT_DOWN",
+          "Effect": {
+            "Npcs": [
+              {
+                "NpcId": "NPC_RINGLEADER",
+                "Affinity": 5
+              }
+            ],
+            "Vitals": [
+              {
+                "Vital": "Stress",
+                "Amount": -3
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "Id": "EVT_CLUB_BOND_BYSTANDER",
+      "Kind": "Night",
+      "Priority": 45,
+      "Condition": {
+        "Phase": "Night",
+        "ActionIds": [
+          "ACT_CLUB_BOARDGAME",
+          "ACT_CLUB_SINGING",
+          "ACT_CLUB_SPORTS",
+          "ACT_CLUB_STUDY"
+        ],
+        "FlagsAll": [
+          "CLUB_SCENE_NPC_BYSTANDER",
+          "CLUB_WITH_NPC_BYSTANDER"
+        ],
+        "FlagsNone": [
+          "CLUB_BOND_BYSTANDER"
+        ]
+      },
+      "OnShow": {
+        "SetFlags": [
+          "CLUB_BOND_BYSTANDER"
+        ],
+        "Hidden": [
+          {
+            "Hidden": "Hope",
+            "Amount": 1
+          }
+        ]
+      },
+      "Choices": [
+        {
+          "Id": "SING_TOGETHER",
+          "Effect": {
+            "Npcs": [
+              {
+                "NpcId": "NPC_BYSTANDER",
+                "Affinity": 5
+              }
+            ],
+            "Vitals": [
+              {
+                "Vital": "Stress",
+                "Amount": -3
+              }
+            ]
+          }
+        },
+        {
+          "Id": "JUST_LISTEN",
+          "Effect": {
+            "Npcs": [
+              {
+                "NpcId": "NPC_BYSTANDER",
+                "Affinity": 4
+              }
+            ],
+            "Vitals": [
+              {
+                "Vital": "Stress",
+                "Amount": -3
+              }
+            ],
+            "Stats": [
+              {
+                "Stat": "Empathy",
+                "Amount": 1
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "Id": "EVT_CLUB_BOND_SENIOR",
+      "Kind": "Night",
+      "Priority": 45,
+      "Condition": {
+        "Phase": "Night",
+        "ActionIds": [
+          "ACT_CLUB_BOARDGAME",
+          "ACT_CLUB_SINGING",
+          "ACT_CLUB_SPORTS",
+          "ACT_CLUB_STUDY"
+        ],
+        "FlagsAll": [
+          "CLUB_SCENE_NPC_SURVIVOR_A",
+          "CLUB_WITH_NPC_SURVIVOR_A"
+        ],
+        "FlagsNone": [
+          "CLUB_BOND_SENIOR"
+        ]
+      },
+      "OnShow": {
+        "SetFlags": [
+          "CLUB_BOND_SENIOR"
+        ],
+        "Hidden": [
+          {
+            "Hidden": "Hope",
+            "Amount": 1
+          }
+        ]
+      },
+      "Choices": [
+        {
+          "Id": "HUM_ALONG",
+          "Effect": {
+            "Npcs": [
+              {
+                "NpcId": "NPC_SURVIVOR_A",
+                "Affinity": 5
+              }
+            ],
+            "Vitals": [
+              {
+                "Vital": "Stress",
+                "Amount": -3
+              }
+            ]
+          }
+        },
+        {
+          "Id": "ASK_SONG",
+          "Effect": {
+            "Npcs": [
+              {
+                "NpcId": "NPC_SURVIVOR_A",
+                "Affinity": 4
+              }
+            ],
+            "Vitals": [
+              {
+                "Vital": "Stress",
+                "Amount": -3
+              }
+            ],
+            "Stats": [
+              {
+                "Stat": "Empathy",
+                "Amount": 1
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "Id": "EVT_CLUB_BOND_WANDERER",
+      "Kind": "Night",
+      "Priority": 45,
+      "Condition": {
+        "Phase": "Night",
+        "ActionIds": [
+          "ACT_CLUB_BOARDGAME",
+          "ACT_CLUB_SINGING",
+          "ACT_CLUB_SPORTS",
+          "ACT_CLUB_STUDY"
+        ],
+        "FlagsAll": [
+          "CLUB_SCENE_NPC_WANDERER",
+          "CLUB_WITH_NPC_WANDERER"
+        ],
+        "FlagsNone": [
+          "CLUB_BOND_WANDERER"
+        ]
+      },
+      "OnShow": {
+        "SetFlags": [
+          "CLUB_BOND_WANDERER"
+        ],
+        "Hidden": [
+          {
+            "Hidden": "Hope",
+            "Amount": 1
+          }
+        ]
+      },
+      "Choices": [
+        {
+          "Id": "PLAY_ON",
+          "Effect": {
+            "Npcs": [
+              {
+                "NpcId": "NPC_WANDERER",
+                "Affinity": 4
+              }
+            ],
+            "Vitals": [
+              {
+                "Vital": "Stress",
+                "Amount": -3
+              }
+            ],
+            "Stats": [
+              {
+                "Stat": "Intellect",
+                "Amount": 1
+              }
+            ]
+          }
+        },
+        {
+          "Id": "ASK_MOUNTAIN",
+          "Effect": {
+            "Npcs": [
+              {
+                "NpcId": "NPC_WANDERER",
+                "Affinity": 5
+              }
+            ],
+            "Vitals": [
+              {
+                "Vital": "Stress",
+                "Amount": -3
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -202,7 +202,8 @@
         "ACT_EDU_HUMANITIES",
         "ACT_EDU_SURVIVAL",
         "ACT_NIGHT_STUDY",
-        "ACT_DAILY_TUTOR_DOHYEON"
+        "ACT_DAILY_TUTOR_DOHYEON",
+        "ACT_CLUB_STUDY"
       ]
     },
     {
@@ -259,7 +260,8 @@
         }
       ],
       "Actions": [
-        "ACT_EDU_MIND"
+        "ACT_EDU_MIND",
+        "ACT_CLUB_BOARDGAME"
       ]
     },
     {
@@ -352,7 +354,8 @@
         }
       ],
       "Actions": [
-        "ACT_EDU_MUSIC"
+        "ACT_EDU_MUSIC",
+        "ACT_CLUB_SINGING"
       ],
       "Art": "Story/Backgrounds/bg_music"
     },
@@ -402,7 +405,8 @@
         }
       ],
       "Actions": [
-        "ACT_EDU_SELFDEFENSE"
+        "ACT_EDU_SELFDEFENSE",
+        "ACT_CLUB_SPORTS"
       ]
     },
     {

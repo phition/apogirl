@@ -23,6 +23,9 @@ namespace ApoGirl.Core.Planning
 
         /// <summary>낮 전용 행동을 밤에 두는 등 슬롯 태그 불일치.</summary>
         WrongSlot,
+
+        /// <summary>한 주에 한 번만 둘 수 있는 행동 (동아리, 확장 7).</summary>
+        WeeklyLimit,
     }
 
     /// <summary>주간 계획 편집 (문서 4.3 플래너 UX). 편집 후 강제 휴식 표시를 다시 계산한다.</summary>
@@ -85,6 +88,11 @@ namespace ApoGirl.Core.Planning
             if (!IsUnlocked(state, db, action))
             {
                 return PlanEditResult.NotUnlocked;
+            }
+
+            if (action.IsClub && ClubRules.InPlan(state, db, slotIndex) > 0)
+            {
+                return PlanEditResult.WeeklyLimit;
             }
 
             state.Plan.Slots[slotIndex].ActionId = actionId;

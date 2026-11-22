@@ -38,6 +38,30 @@ namespace ApoGirl.Presentation.Screens
 
         public static string Name(string id) => Loc.T("npc." + id);
 
+        /// <summary>동아리 결과 한 줄들 (확장 7): 누구와, 좋아하는 활동이었는지, 개인 장면이 열렸는지.</summary>
+        public static List<string> ClubLines(ClubOutcome club)
+        {
+            var lines = new List<string>();
+            if (club == null)
+            {
+                return lines;
+            }
+
+            var name = Name(club.NpcId);
+            lines.Add(Loc.F("result.club", ApoGirl.Core.Text.KoreanJosa.Attach(name, "과/와")));
+            if (club.Liked)
+            {
+                lines.Add(Loc.F("result.club_liked", ApoGirl.Core.Text.KoreanJosa.Attach(name, "은/는")));
+            }
+
+            if (club.SceneUnlocked)
+            {
+                lines.Add(Loc.F("result.club_scene", ApoGirl.Core.Text.KoreanJosa.Attach(name, "이/가")));
+            }
+
+            return lines;
+        }
+
         /// <summary>둥근 뱃지 (그림이 없으면 이름 첫 글자).</summary>
         public static VisualElement Badge(string id, float size)
         {
@@ -287,6 +311,24 @@ namespace ApoGirl.Presentation.Screens
                 card.Add(label);
             }
 
+            // 동아리 (확장 7): 계획 중에 이번 주 같이 할 사람을 고른다 (다시 누르면 자동: 호감이 가장 높은 사람)
+            if (id != GiveRules.TeacherId && _session.IsPlanning && ClubOpen(state) && ClubRules.CanJoin(state, id))
+            {
+                var picked = state.ClubPartner == id;
+                var club = new Button(() =>
+                {
+                    state.ClubPartner = picked ? "" : id;
+                    Changed?.Invoke();
+                    if (Changed == null)
+                    {
+                        Refresh();
+                    }
+                }) { text = Loc.T(picked ? "people.club_picked" : "people.club_pick") };
+                club.AddToClassList("person-stay");
+                club.EnableInClassList("on", picked);
+                card.Add(club);
+            }
+
             // 동료 탐험: 계획 중에만 붙잡을 수 있다 (한 주만, 2주 연속이면 답답해한다)
             if (id != GiveRules.TeacherId && _session.IsPlanning && OutingRules.WantsOut(state, _session.Definitions, id))
             {
@@ -338,6 +380,13 @@ namespace ApoGirl.Presentation.Screens
             }
         }
 
+        /// <summary>동아리 행동이 하나라도 열렸는가.</summary>
+        private bool ClubOpen(GameState state)
+        {
+            var db = _session.Definitions;
+            return db.Actions.Any(a => a.IsClub && ApoGirl.Core.Planning.PlanEditing.IsUnlocked(state, db, a));
+        }
+
         private static string RoleText(GameState state, string id)
         {
             if (id == GiveRules.TeacherId)
@@ -383,6 +432,13 @@ namespace ApoGirl.Presentation.Screens
             if (npc.MinorWoundWeeks > 0)
             {
                 yield return Loc.T("people.minor_wound");
+            }
+
+            // 동아리 (확장 7): 한 번이라도 같이 해 봤으면 좋아하는 활동을 느낌 문구로
+            var liked = ClubRules.LikedActivity(balance, id);
+            if (liked.Length > 0 && npc.ClubCounts.Values.Sum() > 0)
+            {
+                yield return Loc.T("people.club_likes." + liked);
             }
 
             // 특기 (기획 C.2 ②): 켜져 있으면 무엇을 해 주는지, 마음이 멀어져 꺼졌으면 그 사실만

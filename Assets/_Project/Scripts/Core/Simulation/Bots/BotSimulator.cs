@@ -107,6 +107,10 @@ namespace ApoGirl.Core.Simulation.Bots
         /// <summary>확장 2: 끝났을 때 고양이가 눌러앉아 있었다.</summary>
         public bool Cat;
 
+        /// <summary>확장 7: 동아리를 한 횟수(동료 모두 합), 본 동아리 개인 장면 수.</summary>
+        public int ClubSessions;
+        public int ClubScenes;
+
         /// <summary>M7-2 진단: 판이 끝났을 때 조건을 만족한 (배드 제외) 엔딩.</summary>
         public readonly List<string> EligibleEndings = new List<string>();
 
@@ -311,6 +315,8 @@ namespace ApoGirl.Core.Simulation.Bots
             result.TeacherCured = flags.Contains(InfectionRules.FlagTeacherCured);
             result.FinalChoice = string.Join("+", FinalChoiceFlags.Where(flags.Contains));
             result.Cds = CdRules.Count(state);
+            result.ClubSessions = state.Npcs.Values.Sum(n => n.ClubCounts.Values.Sum());
+            result.ClubScenes = state.Flags.Count(f => f.StartsWith("CLUB_BOND_", StringComparison.Ordinal));
 
             var context = EventContext.FromCalendar(state);
             foreach (var candidate in db.Extras.Endings.Where(e => e.Category != Definitions.EndingCategory.Bad))

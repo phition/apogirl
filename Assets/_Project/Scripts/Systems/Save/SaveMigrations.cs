@@ -18,6 +18,7 @@ namespace ApoGirl.Systems.Save
                 yield return new V6ToV7();
                 yield return new V7ToV8();
                 yield return new V8ToV9();
+                yield return new V9ToV10();
             }
         }
 
@@ -164,6 +165,16 @@ namespace ApoGirl.Systems.Save
         private sealed class V8ToV9 : ISaveMigration
         {
             public int FromVersion => 8;
+
+            public void Migrate(JObject root)
+            {
+            }
+        }
+
+        /// <summary>v10: 방과후 동아리 (확장 7). 같이 할 사람(ClubPartner)·동료별 활동 횟수(ClubCounts). 새 필드는 기본값으로 채워진다.</summary>
+        private sealed class V9ToV10 : ISaveMigration
+        {
+            public int FromVersion => 9;
 
             public void Migrate(JObject root)
             {
