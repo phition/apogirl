@@ -1,0 +1,987 @@
+{
+  "Tabs": [
+    {
+      "Id": "resources",
+      "Title": "자원·소모",
+      "Kind": "Fields",
+      "Hint": "하루·한 주에 드는 양과 거점에서 저절로 생기는 양. 소모는 2인 기준.",
+      "Rows": [
+        {
+          "Field": "DailyFood",
+          "Group": "하루 소모",
+          "Name": "하루 식량",
+          "Unit": "개/일",
+          "When": "Now"
+        },
+        {
+          "Field": "DailyWater",
+          "Group": "하루 소모",
+          "Name": "하루 식수",
+          "Unit": "개/일",
+          "When": "Now"
+        },
+        {
+          "Field": "HeatExtraWater",
+          "Group": "하루 소모",
+          "Name": "폭염 날 식수 추가",
+          "Unit": "개/일",
+          "When": "Now"
+        },
+        {
+          "Field": "SatietyDailyDrain",
+          "Group": "포만·수분",
+          "Name": "포만 하루 감소",
+          "Unit": "점",
+          "When": "Now"
+        },
+        {
+          "Field": "HydrationDailyDrain",
+          "Group": "포만·수분",
+          "Name": "수분 하루 감소",
+          "Unit": "점",
+          "When": "Now"
+        },
+        {
+          "Field": "MealSatiety",
+          "Group": "포만·수분",
+          "Name": "한 끼 포만 회복",
+          "Unit": "점",
+          "When": "Now",
+          "Note": "0 아래일 때만 먹는다"
+        },
+        {
+          "Field": "DrinkHydration",
+          "Group": "포만·수분",
+          "Name": "한 번 마실 때 수분",
+          "Unit": "점",
+          "When": "Now"
+        },
+        {
+          "Field": "StarvationThreshold",
+          "Group": "포만·수분",
+          "Name": "굶주림 문턱",
+          "Unit": "점",
+          "When": "Now"
+        },
+        {
+          "Field": "StarvationHpLoss",
+          "Group": "포만·수분",
+          "Name": "굶주림 체력 손실",
+          "Unit": "/일",
+          "When": "Now"
+        },
+        {
+          "Field": "DehydrationThreshold",
+          "Group": "포만·수분",
+          "Name": "탈수 문턱",
+          "Unit": "점",
+          "When": "Now"
+        },
+        {
+          "Field": "DehydrationHpLoss",
+          "Group": "포만·수분",
+          "Name": "탈수 체력 손실",
+          "Unit": "/일",
+          "When": "Now"
+        },
+        {
+          "Field": "WinterFoodMultiplier",
+          "Group": "겨울·부패",
+          "Name": "겨울 식량 배율",
+          "Unit": "×",
+          "When": "Now",
+          "Note": "40~52주"
+        },
+        {
+          "Field": "WinterWeeklyFuel",
+          "Group": "겨울·부패",
+          "Name": "겨울 난방 연료",
+          "Unit": "개/주",
+          "When": "NextWeek"
+        },
+        {
+          "Field": "NoHeatStress",
+          "Group": "겨울·부패",
+          "Name": "난방 없을 때 스트레스",
+          "Unit": "/주",
+          "When": "NextWeek"
+        },
+        {
+          "Field": "FoodSpoilageThreshold",
+          "Group": "겨울·부패",
+          "Name": "식량 부패 문턱",
+          "Unit": "개",
+          "When": "NextWeek",
+          "Note": "넘는 몫이 상한다"
+        },
+        {
+          "Field": "FoodSpoilageRate",
+          "Group": "겨울·부패",
+          "Name": "넘는 몫 중 상하는 비율",
+          "Unit": "비율",
+          "When": "NextWeek",
+          "Min": 0,
+          "Max": 1
+        },
+        {
+          "Field": "WeeklyRawWater",
+          "Group": "거점 생산",
+          "Name": "생활용수 (매주)",
+          "Unit": "개/주",
+          "When": "NextWeek",
+          "Note": "정수해야 식수"
+        },
+        {
+          "Field": "RainCollectWater",
+          "Group": "거점 생산",
+          "Name": "비 오는 주 빗물",
+          "Unit": "개/주",
+          "When": "NextWeek"
+        },
+        {
+          "Field": "RainBarrelWater",
+          "Group": "거점 생산",
+          "Name": "빗물통 추가",
+          "Unit": "개/주",
+          "When": "NextWeek"
+        },
+        {
+          "Field": "RoofGardenFood",
+          "Group": "거점 생산",
+          "Name": "옥상 텃밭 식량",
+          "Unit": "개/주",
+          "When": "NextWeek",
+          "Note": "겨울 제외"
+        },
+        {
+          "Field": "CatFoodPerWeek",
+          "Group": "거점 생산",
+          "Name": "고양이 식량",
+          "Unit": "개/주",
+          "When": "NextWeek"
+        }
+      ]
+    },
+    {
+      "Id": "expedition",
+      "Title": "탐험 수확",
+      "Kind": "Expedition",
+      "Hint": "지역 × 낮·밤 헤드리스(봇·자동) 탐험 모델. 자원은 최소~최대. 아래는 공통 수치."
+    },
+    {
+      "Id": "expedition_common",
+      "Title": "탐험 공통",
+      "Kind": "Fields",
+      "Hint": "상자·깊은 곳·CD·동료 외출. 실시간 탐험의 상자 전리품 표는 다음 단계에서 붙인다.",
+      "Rows": [
+        {
+          "Field": "BaseEmptyContainerRate",
+          "Group": "상자",
+          "Name": "처음부터 빈 상자 비율",
+          "Unit": "비율",
+          "When": "NextExpedition",
+          "Min": 0,
+          "Max": 1
+        },
+        {
+          "Field": "RestockFraction",
+          "Group": "상자",
+          "Name": "매달 다시 차는 비율",
+          "Unit": "비율",
+          "When": "NextWeek",
+          "Min": 0,
+          "Max": 1
+        },
+        {
+          "Field": "HeadlessDeepChance",
+          "Group": "헤드리스 탐험",
+          "Name": "깊은 곳에 들어갈 확률",
+          "Unit": "확률",
+          "When": "NextExpedition",
+          "Min": 0,
+          "Max": 1
+        },
+        {
+          "Field": "HeadlessDeepItemChance",
+          "Group": "헤드리스 탐험",
+          "Name": "깊은 곳 특별 물건 확률",
+          "Unit": "확률",
+          "When": "NextExpedition",
+          "Min": 0,
+          "Max": 1
+        },
+        {
+          "Field": "HeadlessDeepSpecialBonus",
+          "Group": "헤드리스 탐험",
+          "Name": "유랑자 특기 추가",
+          "Unit": "확률",
+          "When": "NextExpedition",
+          "Min": 0,
+          "Max": 1
+        },
+        {
+          "Field": "MonsoonHeadlessDeepMultiplier",
+          "Group": "헤드리스 탐험",
+          "Name": "장마 때 깊은 곳 배율",
+          "Unit": "×",
+          "When": "NextExpedition"
+        },
+        {
+          "Field": "HeadlessCdChance",
+          "Group": "헤드리스 탐험",
+          "Name": "CD를 줍는 확률",
+          "Unit": "확률",
+          "When": "NextExpedition",
+          "Min": 0,
+          "Max": 1
+        },
+        {
+          "Field": "HeadlessRooftopChance",
+          "Group": "헤드리스 탐험",
+          "Name": "옥상에 오를 확률",
+          "Unit": "확률",
+          "When": "NextExpedition",
+          "Min": 0,
+          "Max": 1
+        },
+        {
+          "Field": "OutingYieldShare",
+          "Group": "동료 외출",
+          "Name": "외출 수확 (주인공 대비)",
+          "Unit": "비율",
+          "When": "NextWeek",
+          "Min": 0,
+          "Max": 2
+        }
+      ]
+    },
+    {
+      "Id": "stress",
+      "Title": "스트레스·수면",
+      "Kind": "Fields",
+      "Hint": "쉬지 않고 몰아붙일 때의 대가와 정신 붕괴.",
+      "Rows": [
+        {
+          "Field": "ViolationFatigue",
+          "Group": "강제 휴식 위반",
+          "Name": "위반 피로",
+          "Unit": "점",
+          "When": "Now"
+        },
+        {
+          "Field": "ViolationStress",
+          "Group": "강제 휴식 위반",
+          "Name": "위반 스트레스",
+          "Unit": "점",
+          "When": "Now"
+        },
+        {
+          "Field": "ForcedRestViolationSleepDebt",
+          "Group": "강제 휴식 위반",
+          "Name": "위반 수면 부채",
+          "Unit": "단계",
+          "When": "Now"
+        },
+        {
+          "Field": "NightExpeditionSleepDebt",
+          "Group": "수면 부채",
+          "Name": "밤 탐험 수면 부채",
+          "Unit": "단계",
+          "When": "Now"
+        },
+        {
+          "Field": "ConsecutiveExpeditionSleepDebt",
+          "Group": "수면 부채",
+          "Name": "연속 탐험 수면 부채",
+          "Unit": "단계",
+          "When": "Now"
+        },
+        {
+          "Field": "NightRestStreakToRepay",
+          "Group": "수면 부채",
+          "Name": "갚는 데 필요한 연속 밤 휴식",
+          "Unit": "번",
+          "When": "Now"
+        },
+        {
+          "Field": "NightRestRepayAmount",
+          "Group": "수면 부채",
+          "Name": "한 번에 갚는 양",
+          "Unit": "단계",
+          "When": "Now"
+        },
+        {
+          "Field": "ReducedRestMultiplier",
+          "Group": "수면 부채",
+          "Name": "새벽 귀환 뒤 휴식 회복",
+          "Unit": "×",
+          "When": "Now"
+        },
+        {
+          "Field": "StressThresholdBase",
+          "Group": "스트레스 한계·붕괴",
+          "Name": "스트레스 한계 기본",
+          "Unit": "점",
+          "When": "Now"
+        },
+        {
+          "Field": "StressThresholdPerWillpower",
+          "Group": "스트레스 한계·붕괴",
+          "Name": "의지력 1당 한계",
+          "Unit": "점",
+          "When": "Now"
+        },
+        {
+          "Field": "StressThresholdCap",
+          "Group": "스트레스 한계·붕괴",
+          "Name": "한계 상한",
+          "Unit": "점",
+          "When": "Now"
+        },
+        {
+          "Field": "CollapseStress",
+          "Group": "스트레스 한계·붕괴",
+          "Name": "붕괴 스트레스",
+          "Unit": "점",
+          "When": "NextWeek"
+        },
+        {
+          "Field": "CollapseWeeks",
+          "Group": "스트레스 한계·붕괴",
+          "Name": "붕괴까지 연속 주",
+          "Unit": "주",
+          "When": "NextWeek"
+        },
+        {
+          "Field": "ColdDailyStress",
+          "Group": "날씨·탐험",
+          "Name": "한파 하루 스트레스",
+          "Unit": "/일",
+          "When": "Now"
+        },
+        {
+          "Field": "HeadlessDeepStress",
+          "Group": "날씨·탐험",
+          "Name": "깊은 곳 스트레스",
+          "Unit": "점",
+          "When": "NextExpedition"
+        },
+        {
+          "Field": "SearchTimeMultiplier",
+          "Group": "날씨·탐험",
+          "Name": "수색 시간 배율",
+          "Unit": "×",
+          "When": "NextExpedition"
+        },
+        {
+          "Field": "StressSearchThreshold",
+          "Group": "날씨·탐험",
+          "Name": "수색이 느려지는 스트레스",
+          "Unit": "점",
+          "When": "NextExpedition"
+        }
+      ]
+    },
+    {
+      "Id": "injury",
+      "Title": "부상·감염",
+      "Kind": "Fields",
+      "Hint": "부상·상처 감염·물림·감염 진행·선생님 재감염.",
+      "Rows": [
+        {
+          "Field": "InjuryHpFraction",
+          "Group": "부상",
+          "Name": "부상 문턱 (한 번 잃은 체력)",
+          "Unit": "비율",
+          "When": "Now",
+          "Min": 0,
+          "Max": 1
+        },
+        {
+          "Field": "InjuryMedicineCost",
+          "Group": "부상",
+          "Name": "치료 의약품",
+          "Unit": "개",
+          "When": "Now"
+        },
+        {
+          "Field": "BeatenHpLoss",
+          "Group": "부상",
+          "Name": "생존자에게 맞을 때 체력",
+          "Unit": "점",
+          "When": "Now"
+        },
+        {
+          "Field": "BeatenStress",
+          "Group": "부상",
+          "Name": "맞을 때 스트레스",
+          "Unit": "점",
+          "When": "Now"
+        },
+        {
+          "Field": "StartingCleanliness",
+          "Group": "청결·상처 감염",
+          "Name": "시작 청결",
+          "Unit": "점",
+          "When": "NewGame"
+        },
+        {
+          "Field": "CleanlinessWeeklyDecay",
+          "Group": "청결·상처 감염",
+          "Name": "청결 주간 감소",
+          "Unit": "점/주",
+          "When": "NextWeek"
+        },
+        {
+          "Field": "WoundCleanThreshold",
+          "Group": "청결·상처 감염",
+          "Name": "깨끗하다고 보는 청결",
+          "Unit": "점",
+          "When": "Now"
+        },
+        {
+          "Field": "WoundInfectionBase",
+          "Group": "청결·상처 감염",
+          "Name": "깨끗할 때 상처 감염",
+          "Unit": "점",
+          "When": "Now"
+        },
+        {
+          "Field": "WoundInfectionDirty",
+          "Group": "청결·상처 감염",
+          "Name": "더러울 때 상처 감염 최대",
+          "Unit": "점",
+          "When": "Now"
+        },
+        {
+          "Field": "BiteDirtyBonus",
+          "Group": "청결·상처 감염",
+          "Name": "더러울 때 물림 감염 추가",
+          "Unit": "×",
+          "When": "Now"
+        },
+        {
+          "Field": "BiteChanceOnDownDay",
+          "Group": "물림·응급 처치",
+          "Name": "낮에 쓰러지면 물릴 확률",
+          "Unit": "확률",
+          "When": "Now",
+          "Min": 0,
+          "Max": 1
+        },
+        {
+          "Field": "BiteChanceOnDownNight",
+          "Group": "물림·응급 처치",
+          "Name": "밤에 쓰러지면 물릴 확률",
+          "Unit": "확률",
+          "When": "Now",
+          "Min": 0,
+          "Max": 1
+        },
+        {
+          "Field": "BiteInfection",
+          "Group": "물림·응급 처치",
+          "Name": "물렸을 때 감염",
+          "Unit": "점",
+          "When": "Now"
+        },
+        {
+          "Field": "BiteInfectionTreated",
+          "Group": "물림·응급 처치",
+          "Name": "응급 처치 성공 때 감염",
+          "Unit": "점",
+          "When": "Now"
+        },
+        {
+          "Field": "FirstAidBaseChance",
+          "Group": "물림·응급 처치",
+          "Name": "응급 처치 기본 확률",
+          "Unit": "확률",
+          "When": "Now",
+          "Min": 0,
+          "Max": 1
+        },
+        {
+          "Field": "FirstAidPerMedicineLevel",
+          "Group": "물림·응급 처치",
+          "Name": "의학 숙련 1당 확률",
+          "Unit": "확률",
+          "When": "Now",
+          "Min": 0,
+          "Max": 1
+        },
+        {
+          "Field": "InfectionWeeklyGrowth",
+          "Group": "감염 진행",
+          "Name": "주인공 감염 주간 진행",
+          "Unit": "점/주",
+          "When": "NextWeek"
+        },
+        {
+          "Field": "InfectionGrowthReducePerMedicineLevel",
+          "Group": "감염 진행",
+          "Name": "의학 숙련 1당 진행 감소",
+          "Unit": "점",
+          "When": "NextWeek"
+        },
+        {
+          "Field": "InfectionGrowthMin",
+          "Group": "감염 진행",
+          "Name": "주간 진행 최소",
+          "Unit": "점/주",
+          "When": "NextWeek"
+        },
+        {
+          "Field": "TeacherInfectionWeekly",
+          "Group": "선생님 재감염",
+          "Name": "선생님 주간 진행",
+          "Unit": "점/주",
+          "When": "NextWeek"
+        },
+        {
+          "Field": "TeacherInfectionReducePerMedicineLevel",
+          "Group": "선생님 재감염",
+          "Name": "의학 숙련 1당 감소",
+          "Unit": "점",
+          "When": "NextWeek"
+        },
+        {
+          "Field": "TeacherInfectionMinWeekly",
+          "Group": "선생님 재감염",
+          "Name": "주간 진행 최소",
+          "Unit": "점/주",
+          "When": "NextWeek"
+        },
+        {
+          "Field": "TeacherInfectionColdBonus",
+          "Group": "선생님 재감염",
+          "Name": "한파 추가 진행",
+          "Unit": "점/주",
+          "When": "NextWeek"
+        },
+        {
+          "Field": "OutingInjuryChance",
+          "Group": "동료 다침",
+          "Name": "외출 다칠 확률",
+          "Unit": "확률",
+          "When": "NextWeek",
+          "Min": 0,
+          "Max": 1
+        },
+        {
+          "Field": "OutingScoutInjuryChance",
+          "Group": "동료 다침",
+          "Name": "정찰 외출 다칠 확률",
+          "Unit": "확률",
+          "When": "NextWeek",
+          "Min": 0,
+          "Max": 1
+        },
+        {
+          "Field": "OutingSevereShare",
+          "Group": "동료 다침",
+          "Name": "다쳤을 때 부상 비율",
+          "Unit": "비율",
+          "When": "NextWeek",
+          "Min": 0,
+          "Max": 1
+        }
+      ]
+    },
+    {
+      "Id": "threat",
+      "Title": "위협",
+      "Kind": "Fields",
+      "Hint": "밤 습격·위협도·방어·낮 생존자·낮 침입.",
+      "Rows": [
+        {
+          "Field": "RaidStartWeek",
+          "Group": "밤 습격",
+          "Name": "습격 시작 주",
+          "Unit": "주",
+          "When": "NextWeek"
+        },
+        {
+          "Field": "RaidBaseChance",
+          "Group": "밤 습격",
+          "Name": "습격 기본 확률",
+          "Unit": "확률",
+          "When": "NextWeek",
+          "Min": 0,
+          "Max": 1
+        },
+        {
+          "Field": "RaidChancePerPoint",
+          "Group": "밤 습격",
+          "Name": "(위협−방어) 1당 확률",
+          "Unit": "확률",
+          "When": "NextWeek",
+          "Min": 0,
+          "Max": 1
+        },
+        {
+          "Field": "RaidMaxChance",
+          "Group": "밤 습격",
+          "Name": "습격 확률 상한",
+          "Unit": "확률",
+          "When": "NextWeek",
+          "Min": 0,
+          "Max": 1
+        },
+        {
+          "Field": "RaidBasePower",
+          "Group": "밤 습격",
+          "Name": "거점 기본 방어력",
+          "Unit": "점",
+          "When": "NextWeek"
+        },
+        {
+          "Field": "RaidDefenseWeight",
+          "Group": "밤 습격",
+          "Name": "방어도 가중치",
+          "Unit": "×",
+          "When": "NextWeek"
+        },
+        {
+          "Field": "RaidRepelStress",
+          "Group": "밤 습격",
+          "Name": "막았을 때 스트레스",
+          "Unit": "점",
+          "When": "NextWeek"
+        },
+        {
+          "Field": "RaidBreachStress",
+          "Group": "밤 습격",
+          "Name": "뚫렸을 때 스트레스",
+          "Unit": "점",
+          "When": "NextWeek"
+        },
+        {
+          "Field": "RaidBreachHp",
+          "Group": "밤 습격",
+          "Name": "뚫렸을 때 체력",
+          "Unit": "점",
+          "When": "NextWeek"
+        },
+        {
+          "Field": "RaidBreachFood",
+          "Group": "밤 습격",
+          "Name": "뚫렸을 때 식량",
+          "Unit": "개",
+          "When": "NextWeek"
+        },
+        {
+          "Field": "ThreatPerDayExpedition",
+          "Group": "위협도·방어",
+          "Name": "낮 탐험 위협도",
+          "Unit": "점",
+          "When": "Now"
+        },
+        {
+          "Field": "ThreatPerNightExpedition",
+          "Group": "위협도·방어",
+          "Name": "밤 탐험 위협도",
+          "Unit": "점",
+          "When": "Now"
+        },
+        {
+          "Field": "ThreatWeekly",
+          "Group": "위협도·방어",
+          "Name": "매주 위협도",
+          "Unit": "점/주",
+          "When": "NextWeek"
+        },
+        {
+          "Field": "ThreatMax",
+          "Group": "위협도·방어",
+          "Name": "위협도 상한",
+          "Unit": "점",
+          "When": "Now"
+        },
+        {
+          "Field": "TrapPower",
+          "Group": "위협도·방어",
+          "Name": "함정 방어력",
+          "Unit": "점",
+          "When": "NextWeek"
+        },
+        {
+          "Field": "AlarmPower",
+          "Group": "위협도·방어",
+          "Name": "경보장치 방어력",
+          "Unit": "점",
+          "When": "NextWeek"
+        },
+        {
+          "Field": "MaxTraps",
+          "Group": "위협도·방어",
+          "Name": "함정 최대",
+          "Unit": "개",
+          "When": "Now"
+        },
+        {
+          "Field": "BroadcastRaidMultiplier",
+          "Group": "배율",
+          "Name": "방송한 주 습격",
+          "Unit": "×",
+          "When": "NextWeek"
+        },
+        {
+          "Field": "RainRaidMultiplier",
+          "Group": "배율",
+          "Name": "비 오는 주 습격",
+          "Unit": "×",
+          "When": "NextWeek"
+        },
+        {
+          "Field": "CatRaidDamageScale",
+          "Group": "배율",
+          "Name": "고양이가 있을 때 피해",
+          "Unit": "×",
+          "When": "NextWeek"
+        },
+        {
+          "Field": "HostileStartWeek",
+          "Group": "낮 생존자",
+          "Name": "생존자 등장 시작 주",
+          "Unit": "주",
+          "When": "NextExpedition"
+        },
+        {
+          "Field": "HostileChancePerExposure",
+          "Group": "낮 생존자",
+          "Name": "노출도 1당 등장 확률",
+          "Unit": "확률",
+          "When": "NextExpedition",
+          "Min": 0,
+          "Max": 1
+        },
+        {
+          "Field": "HeadlessHostileCaughtChance",
+          "Group": "낮 생존자",
+          "Name": "헤드리스: 붙잡힐 확률",
+          "Unit": "확률",
+          "When": "NextExpedition",
+          "Min": 0,
+          "Max": 1
+        },
+        {
+          "Field": "IntrusionStartWeek",
+          "Group": "낮 침입 (3막~)",
+          "Name": "침입 시작 주",
+          "Unit": "주",
+          "When": "NextWeek"
+        },
+        {
+          "Field": "IntrusionWeeklyChanceAct3",
+          "Group": "낮 침입 (3막~)",
+          "Name": "3막 주간 확률",
+          "Unit": "확률",
+          "When": "NextWeek",
+          "Min": 0,
+          "Max": 1
+        },
+        {
+          "Field": "IntrusionWeeklyChanceAct4",
+          "Group": "낮 침입 (3막~)",
+          "Name": "4막 주간 확률",
+          "Unit": "확률",
+          "When": "NextWeek",
+          "Min": 0,
+          "Max": 1
+        },
+        {
+          "Field": "IntrusionStrength",
+          "Group": "낮 침입 (3막~)",
+          "Name": "깡패 기본 세기",
+          "Unit": "점",
+          "When": "NextWeek"
+        },
+        {
+          "Field": "IntrusionHideBaseChance",
+          "Group": "낮 침입 (3막~)",
+          "Name": "숨기 기본 확률",
+          "Unit": "확률",
+          "When": "NextWeek",
+          "Min": 0,
+          "Max": 1
+        }
+      ]
+    },
+    {
+      "Id": "companions",
+      "Title": "동료",
+      "Kind": "Fields",
+      "Hint": "호감이 오르내리는 양, 위기 이탈, 역할, 외출.",
+      "Rows": [
+        {
+          "Field": "TogetherAffinity",
+          "Group": "호감",
+          "Name": "함께한 시간 호감",
+          "Unit": "점",
+          "When": "Now"
+        },
+        {
+          "Field": "TogetherAptitudeBonus",
+          "Group": "호감",
+          "Name": "적성 방 추가",
+          "Unit": "점",
+          "When": "Now"
+        },
+        {
+          "Field": "TogetherWeeklyCap",
+          "Group": "호감",
+          "Name": "함께한 시간 주 상한",
+          "Unit": "점",
+          "When": "Now"
+        },
+        {
+          "Field": "CompanionAffinityGainScale",
+          "Group": "호감",
+          "Name": "이벤트 호감 배율",
+          "Unit": "×",
+          "When": "Now"
+        },
+        {
+          "Field": "NeglectWeeks",
+          "Group": "호감",
+          "Name": "소홀 판정 주",
+          "Unit": "주",
+          "When": "NextWeek"
+        },
+        {
+          "Field": "NeglectAffinity",
+          "Group": "호감",
+          "Name": "소홀할 때 호감 감소",
+          "Unit": "점",
+          "When": "NextWeek"
+        },
+        {
+          "Field": "ClubAffinity",
+          "Group": "호감",
+          "Name": "동아리 호감",
+          "Unit": "점",
+          "When": "Now"
+        },
+        {
+          "Field": "ClubLikedAffinity",
+          "Group": "호감",
+          "Name": "좋아하는 동아리 호감",
+          "Unit": "점",
+          "When": "Now"
+        },
+        {
+          "Field": "BroadcastReplyChance",
+          "Group": "호감",
+          "Name": "방송 응답 확률",
+          "Unit": "확률",
+          "When": "Now",
+          "Min": 0,
+          "Max": 1
+        },
+        {
+          "Field": "CrisisLeaveBelowAffinity",
+          "Group": "위기",
+          "Name": "떠날 후보 호감 (미만)",
+          "Unit": "점",
+          "When": "NextWeek"
+        },
+        {
+          "Field": "CrisisLeavePerWeek",
+          "Group": "위기",
+          "Name": "한 주 예고 인원",
+          "Unit": "명",
+          "When": "NextWeek"
+        },
+        {
+          "Field": "RaidCoverMinAffinity",
+          "Group": "위기",
+          "Name": "대신 막아설 호감",
+          "Unit": "점",
+          "When": "NextWeek"
+        },
+        {
+          "Field": "RaidCoverChance",
+          "Group": "위기",
+          "Name": "대신 막아설 확률",
+          "Unit": "확률",
+          "When": "NextWeek",
+          "Min": 0,
+          "Max": 1
+        },
+        {
+          "Field": "RoleCapacity",
+          "Group": "역할",
+          "Name": "역할 정원",
+          "Unit": "명",
+          "When": "Now"
+        },
+        {
+          "Field": "RoleExtraRoomBonus",
+          "Group": "역할",
+          "Name": "방 하나 늘 때 효과",
+          "Unit": "비율",
+          "When": "Now",
+          "Min": 0,
+          "Max": 1
+        },
+        {
+          "Field": "RoleAptitudeMultiplier",
+          "Group": "역할",
+          "Name": "적성 역할 배율",
+          "Unit": "×",
+          "When": "Now"
+        },
+        {
+          "Field": "CompanionStressRoleThreshold",
+          "Group": "역할",
+          "Name": "효과가 주는 스트레스",
+          "Unit": "점",
+          "When": "Now"
+        },
+        {
+          "Field": "CompanionStressedRoleMultiplier",
+          "Group": "역할",
+          "Name": "스트레스 높을 때 효과",
+          "Unit": "×",
+          "When": "Now"
+        },
+        {
+          "Field": "OutingExtraChance",
+          "Group": "외출",
+          "Name": "주 2번 나갈 확률",
+          "Unit": "확률",
+          "When": "NextWeek",
+          "Min": 0,
+          "Max": 1
+        },
+        {
+          "Field": "OutingDailyCap",
+          "Group": "외출",
+          "Name": "하루 외출 최대",
+          "Unit": "명",
+          "When": "NextWeek"
+        },
+        {
+          "Field": "OutingStress",
+          "Group": "외출",
+          "Name": "외출 스트레스",
+          "Unit": "점",
+          "When": "NextWeek"
+        }
+      ]
+    },
+    {
+      "Id": "difficulty",
+      "Title": "난이도",
+      "Kind": "Difficulty",
+      "Hint": "난이도별 배율. 1 = 그대로. 지금 판의 난이도에만 바로 먹는다."
+    },
+    {
+      "Id": "all",
+      "Title": "전체",
+      "Kind": "All",
+      "Hint": "BalanceConfig의 모든 수치 (절 순서). 배열·표는 요약만 보인다."
+    }
+  ]
+}

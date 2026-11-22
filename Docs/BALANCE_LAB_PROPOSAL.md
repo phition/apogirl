@@ -4,6 +4,14 @@
 > 게임 안에서 중요 수치를 표로 보고 바로 고치고, 그 자리에서 봇을 돌려 결과를 `Docs/BOT_ENDING_LOG.md`에 이어 적는다.
 > 느낌은 "삼국지 파워업 키트의 에디트 창"이다. 칸을 눌러 숫자를 바꾸면 게임이 곧바로 그 값으로 돈다.
 
+**진행 (2026-11-23)**
+- D-1 덮어쓰기 파일 · D-2 에디터 + 개발 빌드 · D-3 단추로 기록: 추천안대로 확정.
+- L1·L2 완료: 허브 F1 → "밸런스 표". 탭 ①~⑧(탐험 공통 탭을 따로 둠), 검색, 칸 고치기(Enter·휠·Shift+휠), 바뀐 칸 노란색, 전부 되돌리기, "언제부터".
+  - 코드: `Core/Balance/BalanceLab.cs`(칸 모델), `Systems/Content/BalanceLabJson.cs`, `Presentation/Screens/BalanceLabView.cs`.
+  - 데이터: `Resources/Balance/balance_lab_layout.json`, 절 이름 `Resources/Balance/balance_sections.json`(Sync Balance Asset이 만든다).
+  - 정의 DB는 이제 밸런스·탐험 모델·전리품 표를 사본으로 넘긴다(`DefinitionDatabaseAsset.Build`). 실행 중 고친 값이 에셋에 남지 않는다.
+- 아직: 탐험 중 여는 키, 상자 전리품 표 펼치기, 일괄 배율 단추·도움 지표(L2 나머지), L3~L6.
+
 ---
 
 ## 1. 왜 필요한가
@@ -75,7 +83,7 @@
 
 ## 4. 표 (탭) 구성
 
-어떤 수치를 어느 탭에 어떤 이름으로 보일지는 **코드가 아니라 데이터**로 둔다: `Assets/_Project/Balance/balance_lab_layout.json` (CLAUDE.md 작업 원칙 3).
+어떤 수치를 어느 탭에 어떤 이름으로 보일지는 **코드가 아니라 데이터**로 둔다: `Assets/_Project/Resources/Balance/balance_lab_layout.json` (CLAUDE.md 작업 원칙 3).
 
 - 수치마다 적는 것: 필드 이름, 한국어 이름, 단위, 한 칸 단계, 최소·최대, 설명 한 줄.
 - 여기 없는 수치는 "전체" 탭에서 자동으로 보인다.

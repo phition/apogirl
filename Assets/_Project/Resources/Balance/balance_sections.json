@@ -1,0 +1,600 @@
+{
+  "Sections": [
+    {
+      "Title": "시작",
+      "Fields": [
+        "BaseStatValue",
+        "StartingHp"
+      ]
+    },
+    {
+      "Title": "부상·청결 (사용자 요청)",
+      "Fields": [
+        "InjuryHpFraction",
+        "InjuryHpFractionPerMedicineLevel",
+        "InjuryMedicineCost",
+        "FirstAidNarrativeMinLoss",
+        "FirstAidSkilledLevel",
+        "InjuredFlag",
+        "WoundInfectionBase",
+        "WoundInfectionDirty",
+        "WoundCleanThreshold",
+        "BiteDirtyBonus",
+        "StartingCleanliness",
+        "CleanlinessWeeklyDecay",
+        "InitialResources"
+      ]
+    },
+    {
+      "Title": "범위",
+      "Fields": [
+        "StatMax",
+        "VitalMax",
+        "HiddenMax",
+        "ConscienceMax",
+        "SleepDebtMax",
+        "ProficiencyMaxLevel",
+        "NpcAffinityMax",
+        "NpcAffinityMin"
+      ]
+    },
+    {
+      "Title": "달력·이벤트 (M3)",
+      "Fields": [
+        "StartMonth",
+        "StartDayOfMonth",
+        "StartWeekday",
+        "RandomEventsPerDay",
+        "RandomEventsPerWeek",
+        "RandomEventChance"
+      ]
+    },
+    {
+      "Title": "M4: 시작·습격·장비",
+      "Fields": [
+        "TutorialActionId",
+        "StorageWaitActionId",
+        "TutorialDay",
+        "IntroEventId",
+        "OpeningEventId",
+        "NgPlusOpeningEventId",
+        "RaidStartWeek",
+        "RaidBaseChance",
+        "RaidChancePerPoint",
+        "RaidMaxChance",
+        "RaidStrengthVariance",
+        "RaidPowerVariance",
+        "RaidDefenseWeight",
+        "RaidBasePower",
+        "RaidRepelStress",
+        "RaidRepelDefenseLoss",
+        "RaidBreachStress",
+        "RaidBreachHp",
+        "RaidBreachFood",
+        "RaidBreachDefenseLoss",
+        "RaidThreatRelief",
+        "ThreatPerDayExpedition",
+        "ThreatPerNightExpedition",
+        "ThreatWeekly",
+        "ThreatMax",
+        "DefenseMax",
+        "PocketWidth",
+        "PocketHeight",
+        "DownLosesEquipment",
+        "PhoneLightMultiplier"
+      ]
+    },
+    {
+      "Title": "성장",
+      "Fields": [
+        "GrowthBands",
+        "GreatSuccessGainMultiplier",
+        "FailureGainMultiplier",
+        "TeacherDirectMultiplier",
+        "TeacherGuidanceMultiplier",
+        "RoutineBonusPerStep",
+        "RoutineBonusMax",
+        "RoutineBonusMaxForJ",
+        "ProficiencyXpThresholds",
+        "GreatSuccessBonusXp"
+      ]
+    },
+    {
+      "Title": "판정",
+      "Fields": [
+        "CheckMinChance",
+        "CheckMaxChance",
+        "GreatSuccessRatio",
+        "StressCheckPenaltyPerPoint",
+        "FatigueCheckPenaltyPerPoint"
+      ]
+    },
+    {
+      "Title": "수면 부채 (문서 6.3.2-(5), 인덱스 = 단계 0~5)",
+      "Fields": [
+        "SleepDebtEfficiencyPenalty",
+        "SleepDebtCheckPenalty",
+        "SleepDebtStressMultiplier",
+        "SleepDebtForcedRestStage",
+        "NightExpeditionSleepDebt",
+        "ForcedRestViolationSleepDebt",
+        "ConsecutiveExpeditionSleepDebt",
+        "NightRestStreakToRepay",
+        "NightRestRepayAmount"
+      ]
+    },
+    {
+      "Title": "강제 휴식 위반 (문서 4.2)",
+      "Fields": [
+        "ViolationFatigue",
+        "ViolationStress"
+      ]
+    },
+    {
+      "Title": "소모 (2인 기준, 문서 9.1 / 5.4)",
+      "Fields": [
+        "DailyFood",
+        "DailyWater"
+      ]
+    },
+    {
+      "Title": "포만·수분 (사용자 요청: 0이 가운데, +면 배부름, −면 허기짐)",
+      "Fields": [
+        "SatietyDailyDrain",
+        "HydrationDailyDrain",
+        "MealSatiety",
+        "DrinkHydration",
+        "StarvationThreshold",
+        "FirstDishFlag",
+        "CookingDishes",
+        "StarvationHpLoss",
+        "DehydrationThreshold",
+        "DehydrationHpLoss",
+        "SatietyBands",
+        "HydrationBands"
+      ]
+    },
+    {
+      "Title": "관계 단계 (기획 C절)",
+      "Fields": [
+        "BondTierMins",
+        "BondRoleMultipliers",
+        "TeacherBondBands",
+        "TeacherFormalNoteBelow",
+        "TeacherCloseNoteAffinity",
+        "NeglectWeeks",
+        "NeglectAffinity",
+        "NeglectFloor",
+        "GuardRoleId",
+        "ScoutRoleId",
+        "InjuredGuardAffinity",
+        "NurseUntreatedAffinity",
+        "SeniorEmptyRuns",
+        "SeniorEmptyAffinity",
+        "NoLessonWeeks",
+        "NoLessonAffinity",
+        "CompanionAffinityGainScale"
+      ]
+    },
+    {
+      "Title": "동료 몸 상태·이번 주 배분 (기획 D절)",
+      "Fields": [
+        "CompanionSatietyDailyDrain",
+        "CompanionHydrationDailyDrain",
+        "CompanionMealSatiety",
+        "CompanionDrinkHydration",
+        "CompanionInjuredDailyStress",
+        "CompanionWeeklyStressRecovery",
+        "CompanionStressRoleThreshold",
+        "CompanionStressedRoleMultiplier",
+        "RoleCapacity",
+        "RoleExtraRoomBonus",
+        "RoleAptitudeMultiplier",
+        "RoleAptitudes",
+        "SpecialFlagPrefix",
+        "SpecialMinAffinity",
+        "CompanionSpecials"
+      ]
+    },
+    {
+      "Title": "위기 때 남느냐 떠나느냐 (기획 C.2 ③)",
+      "Fields": [
+        "CrisisLeaveBelowAffinity",
+        "CrisisLeavePerWeek",
+        "CrisisLeaveFlagPrefix",
+        "RaidCoverMinAffinity",
+        "RaidCoverChance",
+        "RaidCoverHpScale",
+        "RaidCoverInjuryWeeks",
+        "TogetherAffinity",
+        "TogetherAptitudeBonus",
+        "TogetherWeeklyCap",
+        "TogetherAptitudeWeeklyCap",
+        "TeacherTogetherAffinity",
+        "TeacherTogetherWeeklyCap",
+        "TeacherCareActionId",
+        "TeacherIllFlags",
+        "TeacherAbsentFlags",
+        "OutingExtraChance",
+        "OutingScoutCount",
+        "OutingDailyCap",
+        "OutingExcludedNpcs",
+        "OutingYieldShare",
+        "OutingScoutAptitudeBonus",
+        "OutingHaul",
+        "OutingLackWeight",
+        "OutingLikedChance",
+        "OutingStress",
+        "OutingSatietyDrain",
+        "OutingHydrationDrain",
+        "OutingInjuryChance",
+        "OutingScoutInjuryChance",
+        "OutingSevereShare",
+        "OutingSevereWeeks",
+        "OutingMinorStress",
+        "OutingSevereStress",
+        "OutingHeldBackStress",
+        "GiveFoodSatiety",
+        "GiveFoodStress",
+        "GiveWaterHydration",
+        "GiveWaterStress",
+        "GiveMedicineInjuryWeeks",
+        "GiveMedicineStress",
+        "GiveAffinityBasic",
+        "GiveAffinityMedicineInjured",
+        "GiveAffinityLiked",
+        "GiveLikedStress",
+        "GiveOtherGiftStress",
+        "GiftRepeatWeeks",
+        "HubCompanionLineAffinity",
+        "HubCompanionLineEvery",
+        "HeadlessLikedItemDayChance",
+        "HeadlessLikedItemNightChance",
+        "HeadlessRooftopChance",
+        "HeadlessCdChance"
+      ]
+    },
+    {
+      "Title": "방과후 동아리 (확장 7)",
+      "Fields": [
+        "ClubAffinity",
+        "ClubLikedAffinity",
+        "ClubSceneCount",
+        "ClubLikes"
+      ]
+    },
+    {
+      "Title": "전력 = 유지력 (2026-11-22)",
+      "Fields": [
+        "PowerUpgradeBatteries",
+        "PowerUpgradeBatteriesPerLevel",
+        "PowerUpgradeMinBatteries",
+        "PowerUpgradeAmount",
+        "PowerMaxCapacity",
+        "Appliances"
+      ]
+    },
+    {
+      "Title": "방송반 송출 (확장 5)",
+      "Fields": [
+        "BroadcastReplyChance",
+        "BroadcastRaidMultiplier",
+        "BroadcastRiskFaction"
+      ]
+    },
+    {
+      "Title": "고양이 '급식' (확장 2)",
+      "Fields": [
+        "CatFoodPerWeek",
+        "CatComfortStressMin",
+        "CatComfortStress",
+        "CatRaidDamageScale"
+      ]
+    },
+    {
+      "Title": "탐험의 깊이 (기획 B)",
+      "Fields": [
+        "HeadlessDeepChance",
+        "HeadlessDeepSpecialBonus",
+        "HeadlessDeepItemChance",
+        "HeadlessDeepStress",
+        "DeepNoiseMultiplier",
+        "DeepAmbient",
+        "OneWayConfirmSeconds",
+        "LikedItems"
+      ]
+    },
+    {
+      "Title": "난이도 (M7-3: M7-d 배율, M7-e 이야기 중심 편의)",
+      "Fields": [
+        "DefaultDifficulty",
+        "Difficulties"
+      ]
+    },
+    {
+      "Title": "적대적 생존자 (낮 탐험, M7 추가 요청)",
+      "Fields": [
+        "HostileEnemyId",
+        "HostileStartWeek",
+        "HostileChanceByAct",
+        "HostileChancePerExposure",
+        "ExposureDecayPerWeek",
+        "MaxExposure",
+        "IntrusionChancePerExposure",
+        "HostileWeightsByAct",
+        "HostileCountMinByAct",
+        "HostileCountMaxByAct",
+        "BeatenHpLoss",
+        "BeatenStress",
+        "BeatenTraumaRecoveryLoss",
+        "RobbedStress",
+        "EvictedStress",
+        "MaxAssaultTrauma",
+        "DayTraumaStressPerLevel",
+        "TraumaRecoveryWeeks",
+        "HeadlessHostileCaughtChance",
+        "HeadlessHostileCaughtPerExtra",
+        "HeadlessHostileCaughtMax"
+      ]
+    },
+    {
+      "Title": "탐험 상자: 기본 빈 상자, 고갈, 매달 복구",
+      "Fields": [
+        "BaseEmptyContainerRate",
+        "RestockFraction"
+      ]
+    },
+    {
+      "Title": "낮 침입 (깡패, 3막부터)",
+      "Fields": [
+        "IntrusionStartWeek",
+        "IntrusionWeeklyChanceAct3",
+        "IntrusionWeeklyChanceAct4",
+        "IntrusionEventId",
+        "IntrusionActionId",
+        "IntrusionStrength",
+        "IntrusionStrengthAct4Bonus",
+        "IntrusionStrengthVariance",
+        "IntrusionLossLost",
+        "IntrusionLossHidden",
+        "IntrusionLossYield",
+        "IntrusionHideBaseChance",
+        "IntrusionHideAlarmBonus",
+        "IntrusionHidePerDefense",
+        "IntrusionWinStress",
+        "IntrusionLoseHp",
+        "IntrusionLoseStress",
+        "IntrusionYieldStress",
+        "IntrusionHideStress",
+        "IntrusionInjuryWeeks"
+      ]
+    },
+    {
+      "Title": "거점 생산",
+      "Fields": [
+        "RainBarrelWater",
+        "RainCollectWater",
+        "WeeklyRawWater",
+        "RoofGardenFood"
+      ]
+    },
+    {
+      "Title": "거점 방어 작업",
+      "Fields": [
+        "TrapPower",
+        "AwayDefenseFactor",
+        "MaxTraps",
+        "AlarmPower",
+        "ReinforcedDefenseMax",
+        "CoveredThreatMultiplier"
+      ]
+    },
+    {
+      "Title": "M7-2 후반 압박 (M7-f, 문서 9.0 \"자원 압박이 서서히 상승\")",
+      "Fields": [
+        "WinterFoodMultiplier",
+        "WinterWeeklyFuel",
+        "NoHeatStress",
+        "FoodSpoilageThreshold",
+        "FoodSpoilageRate"
+      ]
+    },
+    {
+      "Title": "M6 주인공 감염 (문서 3.1.1): 쓰러지면 물릴 수 있다. 응급 처치 성공 시 감염이 휴면",
+      "Fields": [
+        "BiteChanceOnDownDay",
+        "BiteChanceOnDownNight",
+        "BiteInfection",
+        "BiteInfectionTreated",
+        "FirstAidBaseChance",
+        "FirstAidPerMedicineLevel",
+        "InfectionWeeklyGrowth",
+        "InfectionGrowthReducePerMedicineLevel",
+        "InfectionGrowthMin"
+      ]
+    },
+    {
+      "Title": "M6 선생님 재감염 (문서 5.3.1, 7.2)",
+      "Fields": [
+        "TeacherInfectionWeekly",
+        "TeacherInfectionReducePerMedicineLevel",
+        "TeacherInfectionMinWeekly",
+        "TeacherInfectionColdBonus",
+        "TeacherStageSize",
+        "MentorDecayPerStage"
+      ]
+    },
+    {
+      "Title": "구조 헬기 (4막 끝, BoardingRules)",
+      "Fields": [
+        "RescueSeats"
+      ]
+    },
+    {
+      "Title": "M6 날씨 (계절별 가중치: 맑음·비·폭염·한파)",
+      "Fields": [
+        "WeatherBySeason"
+      ]
+    },
+    {
+      "Title": "계절 재해 (확장 6, DisasterRules): 장마(침수)·폭설(진입로 막힘)",
+      "Fields": [
+        "Disasters",
+        "FloodMoveMultiplier",
+        "FloodNoiseMultiplier",
+        "MonsoonHeadlessDeepMultiplier",
+        "RainNoiseBonus",
+        "RainRaidMultiplier",
+        "HeatExtraWater",
+        "ColdDailyStress"
+      ]
+    },
+    {
+      "Title": "정신 붕괴 (M5 배드 엔딩): 주간 정산 때 스트레스가 이 값 이상인 주가 연속 CollapseWeeks면 종료",
+      "Fields": [
+        "CollapseStress",
+        "CollapseWeeks"
+      ]
+    },
+    {
+      "Title": "휴식",
+      "Fields": [
+        "DayRestActionId",
+        "NightRestActionId",
+        "ReducedRestMultiplier",
+        "DownLockedRestSlots"
+      ]
+    },
+    {
+      "Title": "파생 수치 (문서 5.1.2)",
+      "Fields": [
+        "CombatStrength",
+        "CombatAgility",
+        "CombatStamina",
+        "CombatPerSelfDefenseLevel",
+        "StressThresholdBase",
+        "StressThresholdPerWillpower",
+        "StressThresholdPerMindLevel",
+        "StressThresholdCap"
+      ]
+    },
+    {
+      "Title": "실시간 탐험 (M2b, 문서 6.3.7)",
+      "Fields": [
+        "WalkSpeed",
+        "RunSpeed",
+        "CrouchSpeed",
+        "BaseCarryWeight",
+        "CarryWeightPerStrength",
+        "OverweightSpeedMultiplier",
+        "SearchSpeedPerCraft",
+        "MaxSearchSpeedBonus",
+        "SearchTimeMultiplier",
+        "StressSearchThreshold",
+        "StressSearchMaxExtra"
+      ]
+    },
+    {
+      "Title": "탐험 스태미너 (달리기·싸움)",
+      "Fields": [
+        "StaminaBase",
+        "StaminaPerStat",
+        "StaminaRunDrain",
+        "StaminaRegen",
+        "StaminaRegenDelay",
+        "StaminaRecoverToRun",
+        "StaminaAttackCost",
+        "StaminaShoveCost",
+        "StaminaFatiguePenalty",
+        "StaminaInjuryPenalty",
+        "StaminaMinCapRatio"
+      ]
+    },
+    {
+      "Title": "숨기 (Space 누르고 있기)",
+      "Fields": [
+        "HideSeconds",
+        "HideAgilityFactor",
+        "HideMinSeconds",
+        "HideSleepDebtThreshold",
+        "HideSleepChancePerDebt",
+        "HideSleepClockMultiplier",
+        "WakePerPress",
+        "WakeDecay",
+        "BackpackWidth",
+        "BackpackHeight",
+        "StrandedFatigue",
+        "StrandedStress"
+      ]
+    },
+    {
+      "Title": "탐험 위협 (M2b-2, 문서 6.3.2·6.3.5)",
+      "Fields": [
+        "CrouchNoise",
+        "WalkNoise",
+        "RunNoise",
+        "DoorNoise",
+        "StairsNoise",
+        "SearchNoise",
+        "DropNoise",
+        "ShoveNoise",
+        "OverweightNoiseMultiplier",
+        "StirThreshold",
+        "StirDecayPerSecond",
+        "StirPerNoiseUnit",
+        "PresenceStirPerSecond",
+        "PresenceRange",
+        "ChainWakeRadius",
+        "SearchDuration",
+        "LostLingerSeconds",
+        "LostRetreatDay",
+        "LostRetreatNight",
+        "PatrolRange",
+        "AwarenessDecayPerSecond",
+        "CrouchSightMultiplier",
+        "HideBlockDistance",
+        "ShoveRange",
+        "ShoveStunSeconds",
+        "ShovePush",
+        "ShoveCooldown",
+        "DownRemainingHp",
+        "ActivitySight",
+        "ActivityHearing",
+        "ActivitySpeed",
+        "ActivityStir",
+        "AwakenedSight",
+        "AwakenedHearing",
+        "AwakenedSpeed"
+      ]
+    },
+    {
+      "Title": "밤·조명 (M2b-3, 문서 6.3.5-(2))",
+      "Fields": [
+        "NightAmbientIntensity",
+        "DawnAmbientIntensity",
+        "DayCorridorAmbient",
+        "DayRoomAmbient",
+        "SunbeamIntensity",
+        "SunbeamSpacing",
+        "SunbeamsPerFloorMin",
+        "SunbeamsPerFloorMax",
+        "ApproachRoadWidth",
+        "EscapeRouteWidth",
+        "RoomWindowLightIntensity",
+        "DarknessVisibility",
+        "FlashlightExposure",
+        "DarkSearchMultiplier",
+        "NightViewDistance",
+        "ZombieHearingBonus",
+        "WallNoiseFactor",
+        "PeekRange",
+        "RoomPeekRange",
+        "FogFadeSpeed",
+        "PeekVisibility",
+        "ListenSeconds",
+        "ListenBreathRange",
+        "FlashlightViewDistance"
+      ]
+    }
+  ]
+}

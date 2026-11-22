@@ -23,18 +23,28 @@ namespace ApoGirl.Data
         /// <summary>빈 참조는 건너뛰고, 빈 ID·중복 ID는 예외로 알린다.</summary>
         public IDefinitionDatabase Build()
         {
-            var balance = _balance != null ? _balance.Config : new BalanceConfig();
+            // 밸런스 표(Docs/BALANCE_LAB_PROPOSAL.md)가 실행 중에 값을 고치므로, 고칠 수 있는 정의는 사본으로 넘긴다.
+            // 원본(에셋)을 그대로 넘기면 에디터에서 플레이를 멈춘 뒤에도 고친 값이 에셋에 남아 봇 메뉴 등에 섞인다.
+            var balance = Copy(_balance != null ? _balance.Config : new BalanceConfig());
             return new InMemoryDefinitionDatabase(
                 balance,
                 _actions.Where(a => a != null).Select(a => a.ToDefinition()),
-                _expeditionModels.Where(m => m != null).Select(m => m.ToDefinition()),
+                _expeditionModels.Where(m => m != null).Select(m => Copy(m.ToDefinition())),
                 _items.Where(i => i != null).Select(i => i.ToDefinition()),
-                _lootTables.Where(t => t != null).Select(t => t.ToDefinition()),
+                _lootTables.Where(t => t != null).Select(t => Copy(t.ToDefinition())),
                 _locations.Where(l => l != null).Select(l => l.ToDefinition()),
                 _enemies.Where(e => e != null).Select(e => e.ToDefinition()),
                 _events.Where(e => e != null).Select(e => e.ToDefinition()),
                 _npcs.Where(n => n != null).Select(n => n.ToDefinition()),
                 _extras != null ? _extras.ToDefinition() : null);
+        }
+
+        /// <summary>유니티 직렬화와 같은 규칙으로 깊은 사본을 만든다.</summary>
+        private static T Copy<T>(T source) where T : new()
+        {
+            var copy = new T();
+            JsonUtility.FromJsonOverwrite(JsonUtility.ToJson(source), copy);
+            return copy;
         }
 
 #if UNITY_EDITOR

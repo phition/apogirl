@@ -6287,6 +6287,190 @@ MonoBehaviour:
     m_Key: plan.expedition_day_locked
     m_Metadata:
       m_Items: []
+  - m_Id: 1300069939953664
+    m_Key: debug.balance_lab
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1300069998673920
+    m_Key: lab.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1300069998673921
+    m_Key: lab.close
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1300069998673922
+    m_Key: lab.revert_all
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1300069998673923
+    m_Key: lab.search
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1300069998673924
+    m_Key: lab.col.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1300069998673925
+    m_Key: lab.col.baseline
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1300069998673926
+    m_Key: lab.col.value
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1300069998673927
+    m_Key: lab.col.unit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1300069998673928
+    m_Key: lab.col.when
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1300069998673929
+    m_Key: lab.col.note
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1300069998673930
+    m_Key: lab.when.Now
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1300069998673931
+    m_Key: lab.when.NextWeek
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1300069998673932
+    m_Key: lab.when.NextExpedition
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1300069998673933
+    m_Key: lab.when.NewGame
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1300069998673934
+    m_Key: lab.when.Unknown
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1300069998673935
+    m_Key: lab.changed_none
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1300069998673936
+    m_Key: lab.changed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1300069998673937
+    m_Key: lab.revert
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1300069998673938
+    m_Key: lab.col.region
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1300069998673939
+    m_Key: lab.col.time
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1300069998673940
+    m_Key: lab.day
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1300069998673941
+    m_Key: lab.night
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1300069998673942
+    m_Key: lab.col.difficulty
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1300069998673943
+    m_Key: lab.res.Food
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1300069998673944
+    m_Key: lab.res.Water
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1300069998673945
+    m_Key: lab.res.Medicine
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1300069998673946
+    m_Key: lab.res.Materials
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1300069998673947
+    m_Key: lab.res.Fuel
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1300069998673948
+    m_Key: lab.res.Battery
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1300070002868224
+    m_Key: lab.stat.BaseDownChance
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1300070002868225
+    m_Key: lab.stat.Fatigue
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1300070002868226
+    m_Key: lab.stat.StressMin
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1300070002868227
+    m_Key: lab.stat.StressMax
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1300070002868228
+    m_Key: lab.stat.EncounterChance
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1300070002868229
+    m_Key: lab.diff.Consumption
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1300070002868230
+    m_Key: lab.diff.Harm
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1300070002868231
+    m_Key: lab.diff.HumanThreat
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1300070002868232
+    m_Key: lab.diff.Infection
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1300070002868233
+    m_Key: lab.diff.Yield
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1300070002868234
+    m_Key: lab.diff.FoodYield
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1300070002868235
+    m_Key: lab.diff.WaterYield
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1300070002868236
+    m_Key: lab.diff.MedicineYield
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1300070002868237
+    m_Key: lab.other_section
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1300070002868238
+    m_Key: lab.help
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1300070002868239
+    m_Key: lab.difficulty_current
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

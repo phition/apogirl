@@ -39,6 +39,7 @@ namespace ApoGirl.Presentation.Screens
         private PlanSideView _planSide;
         private CardOverlay _card;
         private DebugPanelView _debug;
+        private BalanceLabView _lab;
         private EndingView _ending;
         private Label _teacherLine;
         private Button _runButton;
@@ -112,7 +113,8 @@ namespace ApoGirl.Presentation.Screens
             };
             _teacherBox = _root.Q("teacher-box");
             _card = new CardOverlay(_root);
-            _debug = new DebugPanelView(_root.Q("debug-panel"), _session, ForceEvent, ShowEnd);
+            _lab = new BalanceLabView(_root, _session, Refresh);
+            _debug = new DebugPanelView(_root.Q("debug-panel"), _session, ForceEvent, ShowEnd, () => _lab.Toggle());
             _dialogueView = new DialogueView(_root)
             {
                 PortraitFor = speaker => StoryArt.Portrait(speaker, YarnFunctions.Name(), _session.State),
@@ -220,6 +222,17 @@ namespace ApoGirl.Presentation.Screens
             if (keyboard.f1Key.wasPressedThisFrame)
             {
                 _debug.Toggle();
+            }
+
+            // 밸런스 표가 열려 있으면 허브 단축키는 쉬고, Esc는 표를 닫는다
+            if (_lab.IsOpen)
+            {
+                if (keyboard.escapeKey.wasPressedThisFrame)
+                {
+                    _lab.Hide();
+                }
+
+                return;
             }
 
             var busy = _card.IsOpen || _dialogueView.IsOpen || (_ending != null && _ending.IsOpen) || _settlement.IsOpen || _prep.IsOpen || _give.IsOpen;

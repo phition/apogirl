@@ -60,6 +60,26 @@ namespace ApoGirl.EditorTools
             balance.EditorSetConfig(new BalanceConfig());
             EditorUtility.SetDirty(balance);
             AssetDatabase.SaveAssets();
+            WriteBalanceSections();
+        }
+
+        /// <summary>밸런스 표 "전체" 탭의 절 이름: BalanceConfig.cs의 "// ── 절 ──" 줄을 뽑아 Resources에 둔다 (빌드에서도 쓰게).</summary>
+        public static void WriteBalanceSections()
+        {
+            if (!File.Exists(BalanceLabJson.BalanceSourcePath))
+            {
+                return;
+            }
+
+            var json = BalanceLabJson.WriteSections(BalanceLabJson.ExtractSections(File.ReadAllText(BalanceLabJson.BalanceSourcePath)));
+            if (File.Exists(BalanceLabJson.SectionsPath) && File.ReadAllText(BalanceLabJson.SectionsPath) == json)
+            {
+                return;
+            }
+
+            Directory.CreateDirectory(Path.GetDirectoryName(BalanceLabJson.SectionsPath));
+            File.WriteAllText(BalanceLabJson.SectionsPath, json);
+            AssetDatabase.ImportAsset(BalanceLabJson.SectionsPath);
         }
 
         /// <summary>가져오기 전체 과정. 검증 오류 수를 돌려준다.</summary>

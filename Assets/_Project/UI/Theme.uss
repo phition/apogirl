@@ -967,3 +967,46 @@ Button.selected { border-color: var(--accent); background-color: var(--accent-so
 
 /* 단면도 말풍선 */
 .hub-bubble { position: absolute; width: 300px; padding: 6px 12px; background-color: rgb(244, 240, 230); color: rgb(30, 28, 26); border-radius: 12px; border-width: 2px; border-color: rgb(60, 56, 50); font-size: 20px; -unity-text-align: middle-center; white-space: normal; }
+
+/* ── 밸런스 표 (BalanceLabView, Docs/BALANCE_LAB_PROPOSAL.md) ── */
+.lab-overlay { position: absolute; left: 0; top: 0; right: 0; bottom: 0; background-color: rgba(0, 0, 0, 0.55); align-items: center; justify-content: center; }
+.lab-window { width: 94%; height: 92%; padding: 10px 14px; background-color: #171a24; border-width: 1px; border-color: #6a6aa0; border-radius: 6px; }
+.lab-header { flex-direction: row; align-items: center; }
+.lab-title { font-size: 20px; -unity-font-style: bold; color: var(--accent); flex-grow: 1; }
+.lab-search { width: 280px; margin-right: 8px; }
+.lab-search > Label { min-width: 40px; }
+.lab-tabs { flex-direction: row; flex-wrap: wrap; margin: 8px 0 4px 0; }
+.lab-tab { margin-right: 4px; }
+.lab-tab.selected { background-color: var(--accent-soft); border-color: var(--accent); border-width: 1px; }
+.lab-hint { color: var(--text-dim); font-size: 14px; margin: 2px 0 6px 2px; }
+.lab-body { flex-grow: 1; background-color: rgba(255, 255, 255, 0.02); }
+.lab-row { flex-direction: row; align-items: center; min-height: 26px; border-bottom-width: 1px; border-color: rgba(255, 255, 255, 0.05); }
+.lab-row:hover { background-color: rgba(255, 255, 255, 0.04); }
+.lab-row-dirty { background-color: rgba(231, 176, 74, 0.08); }
+.lab-head { background-color: #232838; }
+.lab-head .lab-cell { color: var(--accent); -unity-font-style: bold; }
+.lab-group { margin-top: 10px; padding: 3px 6px; -unity-font-style: bold; color: #e3e6f0; background-color: rgba(106, 106, 160, 0.25); }
+.lab-cell { font-size: 14px; padding: 0 6px; white-space: nowrap; overflow: hidden; }
+.lab-c-name { width: 280px; }
+.lab-c-base { width: 80px; color: var(--text-dim); -unity-text-align: middle-right; }
+.lab-c-value { width: 100px; }
+.lab-c-summary { width: 420px; color: var(--text-dim); }
+.lab-c-unit { width: 70px; color: var(--text-dim); }
+.lab-c-when { width: 90px; color: #9fb7e0; }
+.lab-c-note { flex-grow: 1; color: var(--text-dim); font-size: 13px; }
+.lab-c-region { width: 120px; -unity-font-style: bold; }
+.lab-c-time { width: 40px; }
+.lab-c-range { width: 112px; flex-direction: row; align-items: center; }
+.lab-c-num { width: 76px; }
+.lab-mini { width: 46px; }
+.lab-tilde { padding: 0 1px; color: var(--text-dim); }
+.lab-day .lab-c-time { color: #e7d9b0; }
+.lab-night .lab-c-time { color: #8fa4e0; }
+.lab-night { background-color: rgba(28, 36, 68, 0.35); }
+.lab-current { background-color: rgba(231, 176, 74, 0.1); }
+.lab-edit { margin: 1px 2px; }
+.lab-edit > .unity-text-field__input, .lab-edit .unity-base-text-field__input { font-size: 14px; padding: 0 4px; -unity-text-align: middle-right; background-color: #0f1118; }
+.lab-dirty > .unity-text-field__input, .lab-dirty .unity-base-text-field__input { background-color: #5a4515; color: #ffe08a; -unity-font-style: bold; }
+.lab-changed { margin-top: 6px; padding: 4px 6px; font-size: 14px; color: var(--text-dim); white-space: normal; }
+.lab-changed.lab-changed-on { color: #ffe08a; background-color: rgba(231, 176, 74, 0.12); }
+.lab-help { font-size: 12px; color: var(--text-dim); margin-top: 2px; }

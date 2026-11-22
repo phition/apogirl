@@ -16,7 +16,7 @@ namespace ApoGirl.Presentation.Screens
         private readonly GameSession _session;
         private readonly Label _status;
 
-        public DebugPanelView(VisualElement panel, GameSession session, Action<string> forceEvent = null, Action showEnd = null)
+        public DebugPanelView(VisualElement panel, GameSession session, Action<string> forceEvent = null, Action showEnd = null, Action openBalanceLab = null)
         {
             _panel = panel;
             _session = session;
@@ -24,6 +24,12 @@ namespace ApoGirl.Presentation.Screens
             var title = new Label(Loc.T("debug.title"));
             title.AddToClassList("section-header");
             _panel.Add(title);
+
+            // 밸런스 표 (Docs/BALANCE_LAB_PROPOSAL.md)
+            if (openBalanceLab != null)
+            {
+                Add("debug.balance_lab", openBalanceLab);
+            }
 
             Add("debug.resources", () =>
             {
