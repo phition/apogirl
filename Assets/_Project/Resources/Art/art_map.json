@@ -720,11 +720,11 @@
     },
     {
       "Key": "act.ACT_SURV_REPAIR_GENERATOR",
-      "Image": "icon_craft_bike_generator"
+      "Image": "item_tool_wrench"
     },
     {
       "Key": "act.ACT_SURV_UPGRADE_POWER",
-      "Image": "icon_craft_bike_generator"
+      "Image": "icon_act_power"
     },
     {
       "Key": "act.ACT_EDU_COOKING",
@@ -768,7 +768,7 @@
     },
     {
       "Key": "res.Battery",
-      "Image": "icon_res_power"
+      "Image": "item_battery"
     },
     {
       "Key": "res.Fuel",
@@ -1040,15 +1040,15 @@
     },
     {
       "Key": "act.ACT_BROADCAST_SONG",
-      "Image": "icon_craft_radio_antenna"
+      "Image": "icon_fac_broadcast"
     },
     {
       "Key": "act.ACT_BROADCAST_INFO",
-      "Image": "icon_craft_radio_antenna"
+      "Image": "icon_fac_broadcast"
     },
     {
       "Key": "act.ACT_BROADCAST_LETTER",
-      "Image": "icon_craft_radio_antenna"
+      "Image": "icon_fac_broadcast"
     },
     {
       "Key": "act.ACT_CLUB_BOARDGAME",
