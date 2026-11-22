@@ -3257,6 +3257,467 @@ MonoBehaviour:
     Priority: 0
     TextKey: line.m_last_stand
     Group: 
+  - Id: EP_DOHYEON_CLOSE
+    Kind: 8
+    Condition:
+      WeekMin: 0
+      WeekMax: 0
+      Days: 
+      Phase: 0
+      Seasons: 
+      Month: 0
+      DayOfMonth: 0
+      ActionCategories: 
+      ActionIds: []
+      FlagsAll: []
+      FlagsAny: []
+      FlagsNone: []
+      CluesAll: []
+      Checks:
+      - Kind: 8
+        Key: NPC_DOHYEON
+        Op: 0
+        Value: 80
+      AnyChecks: []
+      NpcStatuses:
+      - NpcId: NPC_DOHYEON
+        Status: 2
+      IsBirthday: 0
+    Priority: 25
+    TextKey: line.ep_dohyeon_close
+    Group: NPC_DOHYEON
+  - Id: EP_DOHYEON_DISTANT
+    Kind: 8
+    Condition:
+      WeekMin: 0
+      WeekMax: 0
+      Days: 
+      Phase: 0
+      Seasons: 
+      Month: 0
+      DayOfMonth: 0
+      ActionCategories: 
+      ActionIds: []
+      FlagsAll: []
+      FlagsAny: []
+      FlagsNone: []
+      CluesAll: []
+      Checks:
+      - Kind: 8
+        Key: NPC_DOHYEON
+        Op: 5
+        Value: 20
+      AnyChecks: []
+      NpcStatuses:
+      - NpcId: NPC_DOHYEON
+        Status: 2
+      IsBirthday: 0
+    Priority: 5
+    TextKey: line.ep_dohyeon_distant
+    Group: NPC_DOHYEON
+  - Id: EP_DOHYEON_LEFT
+    Kind: 8
+    Condition:
+      WeekMin: 0
+      WeekMax: 0
+      Days: 
+      Phase: 0
+      Seasons: 
+      Month: 0
+      DayOfMonth: 0
+      ActionCategories: 
+      ActionIds: []
+      FlagsAll:
+      - CRISIS_LEFT_NPC_DOHYEON
+      FlagsAny: []
+      FlagsNone: []
+      CluesAll: []
+      Checks: []
+      AnyChecks: []
+      NpcStatuses: []
+      IsBirthday: 0
+    Priority: 60
+    TextKey: line.ep_dohyeon_left
+    Group: NPC_DOHYEON
+  - Id: EP_NURSE_CLOSE
+    Kind: 8
+    Condition:
+      WeekMin: 0
+      WeekMax: 0
+      Days: 
+      Phase: 0
+      Seasons: 
+      Month: 0
+      DayOfMonth: 0
+      ActionCategories: 
+      ActionIds: []
+      FlagsAll: []
+      FlagsAny: []
+      FlagsNone: []
+      CluesAll: []
+      Checks:
+      - Kind: 8
+        Key: NPC_NURSE
+        Op: 0
+        Value: 80
+      AnyChecks: []
+      NpcStatuses:
+      - NpcId: NPC_NURSE
+        Status: 2
+      IsBirthday: 0
+    Priority: 25
+    TextKey: line.ep_nurse_close
+    Group: NPC_NURSE
+  - Id: EP_NURSE_DISTANT
+    Kind: 8
+    Condition:
+      WeekMin: 0
+      WeekMax: 0
+      Days: 
+      Phase: 0
+      Seasons: 
+      Month: 0
+      DayOfMonth: 0
+      ActionCategories: 
+      ActionIds: []
+      FlagsAll: []
+      FlagsAny: []
+      FlagsNone: []
+      CluesAll: []
+      Checks:
+      - Kind: 8
+        Key: NPC_NURSE
+        Op: 5
+        Value: 20
+      AnyChecks: []
+      NpcStatuses:
+      - NpcId: NPC_NURSE
+        Status: 2
+      IsBirthday: 0
+    Priority: 5
+    TextKey: line.ep_nurse_distant
+    Group: NPC_NURSE
+  - Id: EP_NURSE_LEFT
+    Kind: 8
+    Condition:
+      WeekMin: 0
+      WeekMax: 0
+      Days: 
+      Phase: 0
+      Seasons: 
+      Month: 0
+      DayOfMonth: 0
+      ActionCategories: 
+      ActionIds: []
+      FlagsAll:
+      - CRISIS_LEFT_NPC_NURSE
+      FlagsAny: []
+      FlagsNone: []
+      CluesAll: []
+      Checks: []
+      AnyChecks: []
+      NpcStatuses: []
+      IsBirthday: 0
+    Priority: 60
+    TextKey: line.ep_nurse_left
+    Group: NPC_NURSE
+  - Id: EP_BYSTANDER_CLOSE
+    Kind: 8
+    Condition:
+      WeekMin: 0
+      WeekMax: 0
+      Days: 
+      Phase: 0
+      Seasons: 
+      Month: 0
+      DayOfMonth: 0
+      ActionCategories: 
+      ActionIds: []
+      FlagsAll: []
+      FlagsAny: []
+      FlagsNone: []
+      CluesAll: []
+      Checks:
+      - Kind: 8
+        Key: NPC_BYSTANDER
+        Op: 0
+        Value: 80
+      AnyChecks: []
+      NpcStatuses:
+      - NpcId: NPC_BYSTANDER
+        Status: 2
+      IsBirthday: 0
+    Priority: 25
+    TextKey: line.ep_bystander_close
+    Group: NPC_BYSTANDER
+  - Id: EP_BYSTANDER_DISTANT
+    Kind: 8
+    Condition:
+      WeekMin: 0
+      WeekMax: 0
+      Days: 
+      Phase: 0
+      Seasons: 
+      Month: 0
+      DayOfMonth: 0
+      ActionCategories: 
+      ActionIds: []
+      FlagsAll: []
+      FlagsAny: []
+      FlagsNone: []
+      CluesAll: []
+      Checks:
+      - Kind: 8
+        Key: NPC_BYSTANDER
+        Op: 5
+        Value: 20
+      AnyChecks: []
+      NpcStatuses:
+      - NpcId: NPC_BYSTANDER
+        Status: 2
+      IsBirthday: 0
+    Priority: 5
+    TextKey: line.ep_bystander_distant
+    Group: NPC_BYSTANDER
+  - Id: EP_BYSTANDER_LEFT
+    Kind: 8
+    Condition:
+      WeekMin: 0
+      WeekMax: 0
+      Days: 
+      Phase: 0
+      Seasons: 
+      Month: 0
+      DayOfMonth: 0
+      ActionCategories: 
+      ActionIds: []
+      FlagsAll:
+      - CRISIS_LEFT_NPC_BYSTANDER
+      FlagsAny: []
+      FlagsNone: []
+      CluesAll: []
+      Checks: []
+      AnyChecks: []
+      NpcStatuses: []
+      IsBirthday: 0
+    Priority: 60
+    TextKey: line.ep_bystander_left
+    Group: NPC_BYSTANDER
+  - Id: EP_RINGLEADER_CLOSE
+    Kind: 8
+    Condition:
+      WeekMin: 0
+      WeekMax: 0
+      Days: 
+      Phase: 0
+      Seasons: 
+      Month: 0
+      DayOfMonth: 0
+      ActionCategories: 
+      ActionIds: []
+      FlagsAll: []
+      FlagsAny: []
+      FlagsNone: []
+      CluesAll: []
+      Checks:
+      - Kind: 8
+        Key: NPC_RINGLEADER
+        Op: 0
+        Value: 80
+      AnyChecks: []
+      NpcStatuses:
+      - NpcId: NPC_RINGLEADER
+        Status: 2
+      IsBirthday: 0
+    Priority: 25
+    TextKey: line.ep_ringleader_close
+    Group: NPC_RINGLEADER
+  - Id: EP_RINGLEADER_DISTANT
+    Kind: 8
+    Condition:
+      WeekMin: 0
+      WeekMax: 0
+      Days: 
+      Phase: 0
+      Seasons: 
+      Month: 0
+      DayOfMonth: 0
+      ActionCategories: 
+      ActionIds: []
+      FlagsAll: []
+      FlagsAny: []
+      FlagsNone: []
+      CluesAll: []
+      Checks:
+      - Kind: 8
+        Key: NPC_RINGLEADER
+        Op: 5
+        Value: 20
+      AnyChecks: []
+      NpcStatuses:
+      - NpcId: NPC_RINGLEADER
+        Status: 2
+      IsBirthday: 0
+    Priority: 5
+    TextKey: line.ep_ringleader_distant
+    Group: NPC_RINGLEADER
+  - Id: EP_RINGLEADER_LEFT
+    Kind: 8
+    Condition:
+      WeekMin: 0
+      WeekMax: 0
+      Days: 
+      Phase: 0
+      Seasons: 
+      Month: 0
+      DayOfMonth: 0
+      ActionCategories: 
+      ActionIds: []
+      FlagsAll:
+      - CRISIS_LEFT_NPC_RINGLEADER
+      FlagsAny: []
+      FlagsNone: []
+      CluesAll: []
+      Checks: []
+      AnyChecks: []
+      NpcStatuses: []
+      IsBirthday: 0
+    Priority: 60
+    TextKey: line.ep_ringleader_left
+    Group: NPC_RINGLEADER
+  - Id: EP_SENIOR_CLOSE
+    Kind: 8
+    Condition:
+      WeekMin: 0
+      WeekMax: 0
+      Days: 
+      Phase: 0
+      Seasons: 
+      Month: 0
+      DayOfMonth: 0
+      ActionCategories: 
+      ActionIds: []
+      FlagsAll:
+      - BOND_SENIOR_1
+      FlagsAny: []
+      FlagsNone: []
+      CluesAll: []
+      Checks:
+      - Kind: 8
+        Key: NPC_SURVIVOR_A
+        Op: 0
+        Value: 80
+      AnyChecks: []
+      NpcStatuses:
+      - NpcId: NPC_SURVIVOR_A
+        Status: 2
+      IsBirthday: 0
+    Priority: 25
+    TextKey: line.ep_senior_close
+    Group: NPC_SURVIVOR_A
+  - Id: EP_SENIOR_DISTANT
+    Kind: 8
+    Condition:
+      WeekMin: 0
+      WeekMax: 0
+      Days: 
+      Phase: 0
+      Seasons: 
+      Month: 0
+      DayOfMonth: 0
+      ActionCategories: 
+      ActionIds: []
+      FlagsAll: []
+      FlagsAny: []
+      FlagsNone: []
+      CluesAll: []
+      Checks:
+      - Kind: 8
+        Key: NPC_SURVIVOR_A
+        Op: 5
+        Value: 20
+      AnyChecks: []
+      NpcStatuses:
+      - NpcId: NPC_SURVIVOR_A
+        Status: 2
+      IsBirthday: 0
+    Priority: 5
+    TextKey: line.ep_senior_distant
+    Group: NPC_SURVIVOR_A
+  - Id: EP_SENIOR_LEFT
+    Kind: 8
+    Condition:
+      WeekMin: 0
+      WeekMax: 0
+      Days: 
+      Phase: 0
+      Seasons: 
+      Month: 0
+      DayOfMonth: 0
+      ActionCategories: 
+      ActionIds: []
+      FlagsAll:
+      - CRISIS_LEFT_NPC_SURVIVOR_A
+      FlagsAny: []
+      FlagsNone: []
+      CluesAll: []
+      Checks: []
+      AnyChecks: []
+      NpcStatuses: []
+      IsBirthday: 0
+    Priority: 60
+    TextKey: line.ep_senior_left
+    Group: NPC_SURVIVOR_A
+  - Id: EP_WANDERER
+    Kind: 8
+    Condition:
+      WeekMin: 0
+      WeekMax: 0
+      Days: 
+      Phase: 0
+      Seasons: 
+      Month: 0
+      DayOfMonth: 0
+      ActionCategories: 
+      ActionIds: []
+      FlagsAll:
+      - BOND_WANDERER_3
+      FlagsAny: []
+      FlagsNone: []
+      CluesAll: []
+      Checks: []
+      AnyChecks: []
+      NpcStatuses: []
+      IsBirthday: 0
+    Priority: 0
+    TextKey: line.ep_wanderer
+    Group: NPC_WANDERER
+  - Id: EP_TEACHER_DIPLOMA
+    Kind: 8
+    Condition:
+      WeekMin: 0
+      WeekMax: 0
+      Days: 
+      Phase: 0
+      Seasons: 
+      Month: 0
+      DayOfMonth: 0
+      ActionCategories: 
+      ActionIds: []
+      FlagsAll:
+      - TEACHER_DIPLOMAS
+      FlagsAny: []
+      FlagsNone: []
+      CluesAll: []
+      Checks: []
+      AnyChecks: []
+      NpcStatuses:
+      - NpcId: NPC_TEACHER
+        Status: 2
+      IsBirthday: 0
+    Priority: 0
+    TextKey: line.ep_teacher_diploma
+    Group: TEACHER_DIPLOMA
   - Id: DIARY_DEFAULT
     Kind: 0
     Condition:
@@ -6286,6 +6747,10 @@ MonoBehaviour:
         Key: Humanity
         Op: 0
         Value: 60
+      - Kind: 38
+        Key: 60
+        Op: 0
+        Value: 2
       AnyChecks: []
       NpcStatuses: []
       IsBirthday: 0
