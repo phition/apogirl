@@ -123,7 +123,7 @@ flat orthographic side view, muted realistic colors, thin dark outline, slightly
 - 지역 장식 10: 빌라 주차장 차·기둥, 지하철 환풍기·수레, 마트 팔레트·비닐 커튼, 경찰서 증거물 선반·철망 보관함, 정수장 밸브·약품 통. `exploration_art.json` Decor의 `Template: "DEEP"` 규칙(바닥 밀도 0.1, 벽 장식 없음)으로 깊은 층마다 흩뿌리고, 계단·문·출구·상자 근처는 비운다 (`BlockedOnFloor`).
 - 침수 물 `deep_flood_water`(수면 아래 반투명, 가로로 이어 붙임)는 `ExpeditionDirector.BuildFlood`, CD 케이스 `prop_cd`는 CD 조우 자리. 그림이 없으면 예전 코드 그림.
 - 도구: `code_temp/apogirl/tools/gen_deep_p2.py`(생성), `install_deep_p2.py`(고른 후보 자르기·설치·기준점).
-- 확인: 빌라 지하 2층 캡처(천장 띠·비상등·차·CD). 침수 물은 장마 기간에만 보여 아직 게임 화면으로 보지 못했다.
+- 확인: 다섯 지역 깊은 층 캡처 — 빌라(천장 띠·비상등·차·CD), 지하철(수레), 마트(비닐 커튼), 경찰서(철망 보관함), 정수장 장마 침수 층(반투명 물이 정강이까지, 약품 통이 잠김). 디버그 탐험도 세션의 주·날씨를 받아 장마·폭설 지도가 보인다.
 
 ## 7. 만들지 않는 것
 

@@ -1587,6 +1587,7 @@ namespace ApoGirl.Exploration.Runtime
                 Stats = new Dictionary<StatType, int>(player.Stats),
                 Hp = player.Vitals.Hp,
                 Week = session.State.Calendar.Week,
+                WeatherId = session.State.Base.Weather.ToString(),   // 장마·폭설 지도도 디버그 탐험에서 보이게
             };
             request.Loadout.Tool = _debugTool ?? "";
             request.LootedContainers.UnionWith(session.State.Exploration.LootedContainers);
