@@ -356,7 +356,7 @@ namespace ApoGirl.Core.Rules
                     hash = (hash ^ c) * 16777619;
                 }
 
-                var seed = state.Seed ^ SeedSalt ^ (state.Calendar.Week * 7919) ^ (purpose * 104729) ^ hash;
+                var seed = (state.Rng?.Seed ?? 0) ^ SeedSalt ^ (state.Calendar.Week * 7919) ^ (purpose * 104729) ^ hash;
                 return new SeededRandom(SeededRandom.CreateState(seed));
             }
         }
