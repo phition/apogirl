@@ -1,6 +1,6 @@
 # 탐험의 깊이(B) 픽셀 아트 프롬프트 — PixelLab (2026-11-22)
 
-깊은 곳(지하 층)을 채울 PixelLab 프롬프트다. **P1 12장은 만들어 넣었다 (2026-11-22)** — P2는 아직 코드 그림.
+깊은 곳(지하 층)을 채울 PixelLab 프롬프트다. **P1 12장·P2 14장 모두 만들어 넣었다 (2026-11-22).**
 탐험 화면은 픽셀 아트라 힉스필드가 아니라 PixelLab으로 만든다 (힉스필드 8차 문서 6절).
 
 - 만드는 도구: `code_temp/apogirl/tools/pixellab.py`의 `image_pro` (generate-image-v2), 옥상 때 쓴 `gen_roof.py`와 같은 방식 → 새 스크립트 `gen_deep.py`.
@@ -116,6 +116,14 @@ flat orthographic side view, muted realistic colors, thin dark outline, slightly
 - 막힌 문은 `ExpeditionDirector.CreateDeepConnector`가 `BlockedBy`(장마·폭설)에 따라 고른다. 지역 벽은 `BuildingView.DeepWallKey`(`wall_deep_{지역}` → `wall_deep`).
 - 함께 바꾼 것: **계단 그림** — 사용자 스케치대로 정면에서 오르다 꺾이는 한 장(오른쪽 위 = 오르는 계단, 왼쪽 아래 = 내리는 계단)을 가운데 난간 선에서 나눠 `prop_stairs_up`·`prop_stairs_down`으로, 날개가 무너진 판에서 `prop_stairs_collapsed`(위)·`prop_stairs_collapsed_down`(아래). 정면 그림·옆모습 사선(바닥 밑으로 꺼짐)은 시도했다가 바꿨다: 2D 탐험 카메라가 바닥선 아래를 보여 주지 않아 내리는 계단이 어색했다. 도구 `gen_stairs_fork.py`·`install_stairs_fork.py`.
 - 도구: `code_temp/apogirl/tools/gen_deep.py`(생성), `install_deep.py 키=후보[:flip]`(투명 여백 자르기 + 계단 어둡게), `sheet.py`·`tilesheet.py`(후보 한눈에 보기).
+
+## 6.2 P2 결과 (2026-11-22)
+
+- 천장 배관 띠 `deep_ceiling`(가로로 이어 붙임, 기준점 [0,0])과 그 아래 매달린 비상등 `deep_lamp`. 천장 그림이 있으면 예전 배관·선반 사각형과 받침대는 그리지 않는다 (`BuildingView.BuildDeep`).
+- 지역 장식 10: 빌라 주차장 차·기둥, 지하철 환풍기·수레, 마트 팔레트·비닐 커튼, 경찰서 증거물 선반·철망 보관함, 정수장 밸브·약품 통. `exploration_art.json` Decor의 `Template: "DEEP"` 규칙(바닥 밀도 0.1, 벽 장식 없음)으로 깊은 층마다 흩뿌리고, 계단·문·출구·상자 근처는 비운다 (`BlockedOnFloor`).
+- 침수 물 `deep_flood_water`(수면 아래 반투명, 가로로 이어 붙임)는 `ExpeditionDirector.BuildFlood`, CD 케이스 `prop_cd`는 CD 조우 자리. 그림이 없으면 예전 코드 그림.
+- 도구: `code_temp/apogirl/tools/gen_deep_p2.py`(생성), `install_deep_p2.py`(고른 후보 자르기·설치·기준점).
+- 확인: 빌라 지하 2층 캡처(천장 띠·비상등·차·CD). 침수 물은 장마 기간에만 보여 아직 게임 화면으로 보지 못했다.
 
 ## 7. 만들지 않는 것
 
