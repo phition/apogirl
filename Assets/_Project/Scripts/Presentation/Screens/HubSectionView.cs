@@ -131,6 +131,9 @@ namespace ApoGirl.Presentation.Screens
         public float WalkSpeed = 110;
         public string ShelterFlag = "";
         public string ShelterRoom = "";
+
+        /// <summary>동료 탐험: 나가고 들어오는 현관 방.</summary>
+        public string Entrance = "ENTRANCE";
         public string DefaultShelter = "";
         public PropDef[] ShelterProps = Array.Empty<PropDef>();
         public RoomDef[] Rooms = Array.Empty<RoomDef>();
@@ -195,6 +198,9 @@ namespace ApoGirl.Presentation.Screens
         private DayPhase _phase = DayPhase.Day;
         private bool _executing;
 
+        /// <summary>이번 낮 칸에 밖에 나간 동료 (밤 칸이 시작되면 현관으로 돌아온다).</summary>
+        private readonly HashSet<string> _outToday = new HashSet<string>();
+
         public HubSectionView(VisualElement host, GameSession session)
         {
             _host = host;
@@ -249,14 +255,54 @@ namespace ApoGirl.Presentation.Screens
             var changed = executing && (phase != _phase || !_executing);
             _phase = phase;
             _executing = executing;
+            if (!executing)
+            {
+                // 실행이 끝나면 모두 제자리 (외출 표시도 지운다)
+                _outToday.Clear();
+                foreach (var actor in _actors)
+                {
+                    actor.SetAway(false);
+                }
+
+                UpdateAwayMarks();
+            }
+
             if (changed)
             {
+                // 동료 탐험 (역할 재기획 5.4절): 낮 칸 시작에 그날 나가는 사람은 현관으로 걸어가 사라지고, 밤 칸 시작에 현관으로 돌아온다
+                var returning = new HashSet<string>(_outToday);
+                _outToday.Clear();
+                var state = _session.State;
+                if (phase == DayPhase.Day && state != null)
+                {
+                    foreach (var pair in state.Npcs.Where(n => n.Value.Status == NpcStatus.Joined && n.Value.OutingDays.Contains(state.Calendar.Day)))
+                    {
+                        _outToday.Add(pair.Key);
+                    }
+                }
+
+                var door = EntranceSpot();
                 // 밤에는 경비 말고는 지내는 곳으로 돌아가 쉬고, 낮에는 맡은 방으로 간다
                 foreach (var actor in _actors.Where(a => a.Kind == "npc"))
                 {
+                    if (_outToday.Contains(actor.Id) && door.HasValue)
+                    {
+                        actor.WalkTo(door.Value.Floor, door.Value.X, this);
+                        actor.HideOnArrive = true;
+                        continue;
+                    }
+
+                    if (returning.Contains(actor.Id) && door.HasValue)
+                    {
+                        actor.SetAway(false);
+                        actor.Place(door.Value.Floor, door.Value.X);
+                    }
+
                     var night = phase == DayPhase.Night && !actor.Guard;
                     actor.WalkTo(night ? actor.HomeFloor : actor.PostFloor, night ? actor.HomeX : actor.PostX, this);
                 }
+
+                UpdateAwayMarks();
             }
 
             ApplyLight();
@@ -296,6 +342,35 @@ namespace ApoGirl.Presentation.Screens
             }
 
             return seconds;
+        }
+
+        /// <summary>현관 안쪽, 바깥문 가까운 자리 (현관 방이 없으면 null).</summary>
+        private (int Floor, float X)? EntranceSpot()
+        {
+            if (string.IsNullOrEmpty(_config.Entrance) || !_rooms.TryGetValue(_config.Entrance, out var room))
+            {
+                return null;
+            }
+
+            return (room.Def.Floor, room.Def.X + Mathf.Min(14f, room.Def.Width * 0.2f));
+        }
+
+        /// <summary>밖에 나간 동료가 맡은 방은 이름 옆에 "외출" (방이 비어 보이는 까닭).</summary>
+        private void UpdateAwayMarks()
+        {
+            var awayRooms = new HashSet<string>(_actors.Where(a => a.Kind == "npc" && _outToday.Contains(a.Id) && !string.IsNullOrEmpty(a.PostRoom))
+                .Select(a => a.PostRoom));
+            foreach (var room in _rooms.Values)
+            {
+                if (room.Name == null || !room.Open)
+                {
+                    continue;
+                }
+
+                var away = awayRooms.Contains(room.Def.Id);
+                room.Name.text = away ? RoomName(room.Def) + "  " + Loc.T("hub.room_away") : RoomName(room.Def);
+                room.Element.EnableInClassList("away", away);
+            }
         }
 
         private string Signature(GameState state)
@@ -466,6 +541,7 @@ namespace ApoGirl.Presentation.Screens
                 name.AddToClassList("hub-room-name");
                 name.pickingMode = PickingMode.Ignore;
                 element.Add(name);
+                view.Name = name;
                 element.EnableInClassList("locked", !open);
                 element.EnableInClassList("shelter", def.Id == shelter);
                 if (!open)
@@ -774,11 +850,23 @@ namespace ApoGirl.Presentation.Screens
                 actor.HomeX = home.Def.X + home.Def.Width * (0.12f + 0.1f * (index % 4));
                 actor.PostFloor = room.Def.Floor;
                 actor.PostX = room.Def.X + room.Def.Width * (0.2f + 0.18f * (index % 3));
+                actor.PostRoom = room.Def.Id;
                 var atNight = _executing && _phase == DayPhase.Night && !actor.Guard;
                 actor.Place(atNight ? actor.HomeFloor : actor.PostFloor, atNight ? actor.HomeX : actor.PostX);
+
+                // 밖에 나가 있는 낮: 현관에 숨겨 둔다 (밤 칸이 시작되면 거기서 걸어 들어온다)
+                var door = EntranceSpot();
+                if (_executing && _phase == DayPhase.Day && _outToday.Contains(pair.Key) && door.HasValue)
+                {
+                    actor.Place(door.Value.Floor, door.Value.X);
+                    actor.SetAway(true);
+                }
+
                 actor.Phase = index * 0.37f;
                 index++;
             }
+
+            UpdateAwayMarks();
         }
 
         private string TeacherKey(GameState state, out bool canWalk, out string room)
@@ -930,7 +1018,7 @@ namespace ApoGirl.Presentation.Screens
                     continue;
                 }
 
-                var occupied = _actors.Any(a => a.Floor == room.Def.Floor && a.X >= room.Def.X && a.X < room.Def.X + room.Def.Width && !room.Def.Roof);
+                var occupied = _actors.Any(a => !a.Away && a.Floor == room.Def.Floor && a.X >= room.Def.X && a.X < room.Def.X + room.Def.Width && !room.Def.Roof);
                 room.Dark.EnableInClassList("night", night && !occupied);
                 room.Dark.EnableInClassList("dim", night && occupied);
                 room.Dark.EnableInClassList("blackout", night && blackout && !occupied);
@@ -956,7 +1044,7 @@ namespace ApoGirl.Presentation.Screens
         /// <summary>그 사람이 단면도에 보이면 머리 위에 말풍선을 띄우고 true. 안 보이면 false (허브가 다른 곳에 띄운다).</summary>
         public bool ShowBubble(string id, string text, float delay, float seconds = 2.4f)
         {
-            if (string.IsNullOrEmpty(id) || !_actors.Any(a => a.Id == id && !a.Element.ClassListContains("hidden")))
+            if (string.IsNullOrEmpty(id) || !_actors.Any(a => a.Id == id && !a.Away && !a.Element.ClassListContains("hidden")))
             {
                 return false;
             }
@@ -1069,6 +1157,7 @@ namespace ApoGirl.Presentation.Screens
             public VisualElement Element;
             public VisualElement Dark;
             public VisualElement Glow;
+            public Label Name;
             public bool Open;
         }
 
@@ -1096,6 +1185,22 @@ namespace ApoGirl.Presentation.Screens
             public float HomeX;
             public int PostFloor;
             public float PostX;
+
+            /// <summary>맡은 방 ID (외출 표시).</summary>
+            public string PostRoom;
+
+            /// <summary>걸어가 닿으면 사라진다 (현관에서 밖으로 나가는 동료).</summary>
+            public bool HideOnArrive;
+
+            /// <summary>밖에 나가 단면도에 없다.</summary>
+            public bool Away { get; private set; }
+
+            public void SetAway(bool away)
+            {
+                Away = away;
+                HideOnArrive = false;
+                Element.EnableInClassList("away", away);
+            }
 
             public Texture2D Current { get; private set; }
 
@@ -1163,6 +1268,11 @@ namespace ApoGirl.Presentation.Screens
                             _facingLeft = dx < 0;
                         }
                     }
+                }
+
+                if (HideOnArrive && !Walking)
+                {
+                    SetAway(true);
                 }
 
                 var frames = Walking ? _walk : _idle;

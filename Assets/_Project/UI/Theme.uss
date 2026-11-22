@@ -644,6 +644,8 @@ Button.selected { border-color: var(--accent); background-color: var(--accent-so
 .hub-room.shelter > .hub-room-name { border-left-width: 3px; border-color: var(--accent); }
 .hub-room.locked > .hub-room-name { color: var(--text-dim); }
 .hub-actor { position: absolute; }
+.hub-actor.away { display: none; }
+.hub-room.away > .hub-room-name { color: var(--accent); }
 .hub-room-panel {
     position: absolute;
     width: 260px;
@@ -870,6 +872,9 @@ Button.selected { border-color: var(--accent); background-color: var(--accent-so
 .person-bar { height: 20px; margin: 1px 0; }
 .person-bar .unity-progress-bar__title { font-size: 13px; }
 .person-flag { font-size: 14px; color: var(--danger); margin-top: 3px; white-space: normal; }
+.person-outing { font-size: 14px; color: var(--accent); margin-top: 3px; white-space: normal; }
+.person-stay { margin: 6px 0 0 0; padding: 3px 10px; font-size: 14px; align-self: flex-start; }
+.person-stay.on { border-color: var(--accent); color: var(--accent); }
 .people-dim { font-size: 14px; color: var(--text-dim); white-space: normal; margin: 6px 2px; }
 
 /* ── 이번 주 배분하기 (GiveSheetView, 기획 D.3) ── */

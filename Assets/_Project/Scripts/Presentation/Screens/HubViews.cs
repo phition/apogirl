@@ -569,6 +569,11 @@ namespace ApoGirl.Presentation.Screens
             var projection = _session.ProjectedSleepDebt();
             var end = projection.Length > 0 ? projection[projection.Length - 1] : _session.State.Player.SleepDebt;
             _forecast.text = Loc.F("plan.forecast", _session.State.Player.SleepDebt, end);
+            if (OutingRules.Plan(_session.State, _session.Definitions).Count > 0)
+            {
+                // 동료 탐험: 미리보기는 지금 상태 기준이라 외출하는 동료가 있으면 실제와 달라질 수 있다
+                _forecast.text += "\n" + Loc.T("plan.outing_note");
+            }
             _forecast.EnableInClassList("danger", end >= 3);
             return warned;
         }

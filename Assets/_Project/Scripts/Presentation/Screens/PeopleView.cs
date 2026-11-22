@@ -190,12 +190,16 @@ namespace ApoGirl.Presentation.Screens
     {
         private readonly GameSession _session;
         private readonly ScrollView _panel;
+        private Dictionary<string, List<OutingPlan>> _outings = new Dictionary<string, List<OutingPlan>>();
 
         public PeopleDrawerView(VisualElement root, GameSession session)
         {
             _session = session;
             _panel = root.Q<ScrollView>("people-panel");
         }
+
+        /// <summary>"이번 주는 남아 줘"를 바꿨을 때 (허브가 계획 보드·서랍을 새로 그린다).</summary>
+        public Action Changed { get; set; }
 
         public void Refresh()
         {
@@ -207,6 +211,7 @@ namespace ApoGirl.Presentation.Screens
             _panel.Clear();
             var state = _session.State;
             var balance = _session.Definitions.Balance;
+            _outings = _session.IsPlanning ? OutingRules.Plan(state, _session.Definitions) : new Dictionary<string, List<OutingPlan>>();
             var recipients = GiveRules.Recipients(state, balance);
             if (recipients.Count == 0)
             {
@@ -267,7 +272,62 @@ namespace ApoGirl.Presentation.Screens
                 card.Add(label);
             }
 
+            foreach (var line in OutingFlags(state, id))
+            {
+                var label = new Label(line);
+                label.AddToClassList("person-outing");
+                card.Add(label);
+            }
+
+            // 동료 탐험: 계획 중에만 붙잡을 수 있다 (한 주만, 2주 연속이면 답답해한다)
+            if (id != GiveRules.TeacherId && _session.IsPlanning && OutingRules.WantsOut(state, _session.Definitions, id))
+            {
+                var npc = state.Npcs[id];
+                var toggle = new Button(() =>
+                {
+                    npc.StayHome = !npc.StayHome;
+                    Changed?.Invoke();
+                    if (Changed == null)
+                    {
+                        Refresh();
+                    }
+                }) { text = Loc.T(npc.StayHome ? "people.outing_let_go" : "people.outing_stay") };
+                toggle.AddToClassList("person-stay");
+                toggle.EnableInClassList("on", npc.StayHome);
+                card.Add(toggle);
+            }
+
             return card;
+        }
+
+        /// <summary>동료 탐험 줄: 계획 중 예고(날짜 없이)·붙잡음, 실행 중 밖에 나가 있음.</summary>
+        private IEnumerable<string> OutingFlags(GameState state, string id)
+        {
+            if (id == GiveRules.TeacherId || !state.Npcs.TryGetValue(id, out var npc))
+            {
+                yield break;
+            }
+
+            if (_session.IsPlanning)
+            {
+                var who = ApoGirl.Core.Text.KoreanJosa.Attach(PeopleUi.Name(id), "이/가");
+                if (npc.StayHome && OutingRules.WantsOut(state, _session.Definitions, id))
+                {
+                    yield return Loc.F("people.outing_held", who);
+                    if (npc.StayStreak >= 1)
+                    {
+                        yield return Loc.T("people.outing_held_again");
+                    }
+                }
+                else if (_outings.ContainsKey(id))
+                {
+                    yield return Loc.F("people.outing_forecast", who);
+                }
+            }
+            else if (npc.Away)
+            {
+                yield return Loc.T("people.outing_away");
+            }
         }
 
         private static string RoleText(GameState state, string id)
@@ -299,6 +359,11 @@ namespace ApoGirl.Presentation.Screens
             if (npc.InjuredWeeks > 0)
             {
                 yield return Loc.F("people.injured", npc.InjuredWeeks);
+            }
+
+            if (npc.MinorWoundWeeks > 0)
+            {
+                yield return Loc.T("people.minor_wound");
             }
 
             // 역할 재기획: 적성은 느낌 문구로만, 정원을 넘었거나 방이 아직 없으면 그 사실만

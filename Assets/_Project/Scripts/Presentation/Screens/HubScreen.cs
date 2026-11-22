@@ -130,7 +130,7 @@ namespace ApoGirl.Presentation.Screens
                     Refresh();
                 },
             };
-            _people = new PeopleDrawerView(_root, _session);
+            _people = new PeopleDrawerView(_root, _session) { Changed = Refresh };
             _give = new GiveSheetView(_root, _session);
             _teacherBox.RegisterCallback<ClickEvent>(_ =>
             {

@@ -212,6 +212,8 @@ namespace ApoGirl.Tests.EditMode
             var state = State(db);
             var npc = Join(state, A);
             npc.StayHome = true;
+            Assert.IsTrue(OutingRules.WantsOut(state, db, A), "붙잡아도 나가고 싶어 하는 마음은 그대로 (서랍 토글)");
+            Assert.IsFalse(OutingRules.Plan(state, db).ContainsKey(A));
             OutingRules.Schedule(state, db);
             Assert.IsEmpty(npc.OutingDays, "붙잡으면 나가지 않는다");
             Assert.AreEqual(0, npc.Body.Stress, "첫 주는 괜찮다");

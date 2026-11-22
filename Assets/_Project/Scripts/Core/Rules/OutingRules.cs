@@ -134,6 +134,16 @@ namespace ApoGirl.Core.Rules
             }
         }
 
+        /// <summary>
+        /// 이번 주 밖에 나가 보고 싶어 하는가 (붙잡기와 상관없이: 나갈 수 있고, 가 본 곳이 있고, 갇힌 주가 아니다).
+        /// 인물 서랍의 "이번 주는 남아 줘" 토글을 보여 줄지 정한다.
+        /// </summary>
+        public static bool WantsOut(GameState state, IDefinitionDatabase db, string npcId)
+        {
+            return state.Npcs.TryGetValue(npcId ?? "", out var npc) && CanGoOut(npc, npcId, db.Balance)
+                   && !IsConfinedWeek(state, db) && VisitedLocations(state, db).Count > 0;
+        }
+
         /// <summary>나갈 수 있는 동료인가 (부상·가벼운 상처·스트레스·호감 음수·외출하지 않는 인물 제외).</summary>
         public static bool CanGoOut(NpcState npc, string id, BalanceConfig balance)
         {
