@@ -83,11 +83,11 @@ namespace ApoGirl.Exploration.Runtime
         {
             public bool Enabled = true;
 
-            /// <summary>굴곡 세기 (0이면 평평).</summary>
-            public float Strength = 2f;
+            /// <summary>굴곡 세기 (0이면 평평). 도트는 이웃 화소 밝기 차이가 작아 10 안팎이 알맞다 (캡처로 12).</summary>
+            public float Strength = 12f;
 
             /// <summary>밝기를 높이에 섞는 비율 (0 = 외곽선만 둥글게, 1 = 밝은 곳이 튀어나옴).</summary>
-            public float LumaWeight = 0.5f;
+            public float LumaWeight = 0.7f;
 
             /// <summary>빛이 그림 평면에서 떨어진 높이 (유닛). 낮을수록 비스듬해 굴곡이 세게 보이고 먼 곳이 어두워진다.</summary>
             public float LightDistance = 2f;
