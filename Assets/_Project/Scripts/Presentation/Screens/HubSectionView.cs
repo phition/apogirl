@@ -116,6 +116,9 @@ namespace ApoGirl.Presentation.Screens
             public string[] GoneFlags = Array.Empty<string>();
             public string IsolatedFlag = "";
             public string IsolatedRoom = "";
+
+            /// <summary>역할 재기획 3.1: 선생님은 역할 없이 이 방(교실)에 있다. 닫혀 있으면 지내는 곳.</summary>
+            public string Room = "";
         }
 
         public int Scale = 2;
@@ -133,7 +136,6 @@ namespace ApoGirl.Presentation.Screens
         public RoomDef[] Rooms = Array.Empty<RoomDef>();
         public string[] ShelterActions = Array.Empty<string>();
         public KeyValue[] CategoryRooms = Array.Empty<KeyValue>();
-        public KeyValue[] RoleRooms = Array.Empty<KeyValue>();
         public KeyValue[] NpcSprites = Array.Empty<KeyValue>();
         public TeacherDef Teacher = new TeacherDef();
 
@@ -761,7 +763,8 @@ namespace ApoGirl.Presentation.Screens
                     continue;
                 }
 
-                var roleRoom = _config.RoleRooms.FirstOrDefault(r => r.Role == pair.Value.Role)?.Room;
+                // 역할 재기획: 역할의 방 묶음에서 열린 방 (코어 규칙, 같은 역할 둘째 사람은 다음 방)
+                var roleRoom = ApoGirl.Core.Rules.RoleRules.RoomFor(state, _session.Definitions, pair.Key);
                 var room = roleRoom != null && _rooms.TryGetValue(roleRoom, out var rr) && rr.Open ? rr : home;
                 var actor = NewActor("npc");
                 actor.Id = pair.Key;
@@ -799,6 +802,7 @@ namespace ApoGirl.Presentation.Screens
                 return teacher.Ill;
             }
 
+            room = string.IsNullOrEmpty(teacher.Room) ? null : teacher.Room;
             switch (state.Teacher.MobilityStage)
             {
                 case 0: return teacher.Seated;

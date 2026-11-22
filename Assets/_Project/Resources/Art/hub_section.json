@@ -483,36 +483,6 @@
       "Room": "ENTRANCE"
     }
   ],
-  "RoleRooms": [
-    {
-      "Role": "GUARD",
-      "Room": "ENTRANCE"
-    },
-    {
-      "Role": "COOK",
-      "Room": "CAFETERIA"
-    },
-    {
-      "Role": "MEDIC",
-      "Room": "INFIRMARY"
-    },
-    {
-      "Role": "TUTOR",
-      "Room": "CLASSROOM"
-    },
-    {
-      "Role": "MOOD",
-      "Room": "MUSIC"
-    },
-    {
-      "Role": "SCOUT",
-      "Room": "ROOFTOP"
-    },
-    {
-      "Role": "MECHANIC",
-      "Room": "STORAGE"
-    }
-  ],
   "NpcSprites": [
     {
       "Npc": "NPC_DOHYEON",
@@ -532,6 +502,7 @@
     }
   ],
   "Teacher": {
+    "Room": "CLASSROOM",
     "Seated": "hub_teacher_seated",
     "Crutch": "hub_teacher_crutch",
     "Cane": "hub_teacher_cane",

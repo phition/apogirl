@@ -105,7 +105,7 @@
       ] },
 
     { "Id": "EVT_DH_02_ARRIVAL", "Kind": "Story", "Priority": 88, "Condition": { "FlagsAll": [ "DH_RESCUED" ], "ActionCategories": [ "Expedition" ] },
-      "OnShow": { "Npcs": [ { "NpcId": "NPC_DOHYEON", "SetStatus": "Joined", "SetRole": "student", "Affinity": 5 } ], "Defense": 3, "Hidden": [ { "Hidden": "Humanity", "Amount": 2 } ] },
+      "OnShow": { "Npcs": [ { "NpcId": "NPC_DOHYEON", "SetStatus": "Joined", "Affinity": 5 } ], "Defense": 3, "Hidden": [ { "Hidden": "Humanity", "Amount": 2 } ] },
       "Choices": [
         { "Id": "WELCOME", "Effect": { "Npcs": [ { "NpcId": "NPC_DOHYEON", "Affinity": 5 } ], "Hidden": [ { "Hidden": "Hope", "Amount": 1 } ] } },
         { "Id": "RULES", "Effect": { "Npcs": [ { "NpcId": "NPC_DOHYEON", "Trust": 4 } ], "Stats": [ { "Stat": "Leadership", "Amount": 2 } ] } }
@@ -113,7 +113,7 @@
 
     { "Id": "EVT_DH_02_DOOR", "Kind": "Night", "Priority": 70, "Condition": { "Phase": "Night", "FlagsAll": [ "DH_HELPED" ], "FlagsNone": [ "DH_RESCUED" ] },
       "Choices": [
-        { "Id": "ACCEPT", "Effect": { "SetFlags": [ "DH_RESCUED" ], "Npcs": [ { "NpcId": "NPC_DOHYEON", "SetStatus": "Joined", "SetRole": "student", "Affinity": 8 } ], "Defense": 3, "Hidden": [ { "Hidden": "Humanity", "Amount": 2 } ] } },
+        { "Id": "ACCEPT", "Effect": { "SetFlags": [ "DH_RESCUED" ], "Npcs": [ { "NpcId": "NPC_DOHYEON", "SetStatus": "Joined", "Affinity": 8 } ], "Defense": 3, "Hidden": [ { "Hidden": "Humanity", "Amount": 2 } ] } },
         { "Id": "REFUSE", "Effect": { "SetFlags": [ "DH_REFUSED" ], "Npcs": [ { "NpcId": "NPC_DOHYEON", "SetStatus": "Left", "Affinity": -5 } ], "Hidden": [ { "Hidden": "Humanity", "Amount": -4 }, { "Hidden": "Isolation", "Amount": 3 } ], "Resources": [ { "Resource": "Food", "Amount": 2 } ] } }
       ] },
 
@@ -127,7 +127,7 @@
     { "Id": "EVT_DH_04_HELPER", "Kind": "Story", "Priority": 35,
       "Condition": { "Phase": "Day", "NpcStatuses": [ { "NpcId": "NPC_DOHYEON", "Status": "Joined" } ], "Checks": [ { "Kind": "NpcAffinity", "Key": "NPC_DOHYEON", "Op": "GreaterOrEqual", "Value": 12 } ] },
       "Choices": [
-        { "Id": "TEACH", "Effect": { "Npcs": [ { "NpcId": "NPC_DOHYEON", "SetRole": "lookout", "Trust": 3 } ], "Defense": 4, "Stats": [ { "Stat": "Leadership", "Amount": 2 } ] } },
+        { "Id": "TEACH", "Effect": { "Npcs": [ { "NpcId": "NPC_DOHYEON", "SetRole": "GUARD", "Trust": 3 } ], "Defense": 4, "Stats": [ { "Stat": "Leadership", "Amount": 2 } ] } },
         { "Id": "PROTECT", "Effect": { "Npcs": [ { "NpcId": "NPC_DOHYEON", "Affinity": 3 } ], "Hidden": [ { "Hidden": "Humanity", "Amount": 1 } ], "Vitals": [ { "Vital": "Stress", "Amount": 2 } ] } }
       ] },
 

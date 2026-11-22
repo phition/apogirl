@@ -72,12 +72,29 @@ namespace ApoGirl.Core.Definitions
         public List<TraitModifier> Modifiers = new List<TraitModifier>();
     }
 
-    /// <summary>M6: 동료 역할 (경비·요리·간호·교사 …). 이름은 UI 키 "role.{Id}". 합류한 동료마다 보정이 더해진다.</summary>
+    /// <summary>M6: 동료 역할 (경비·정찰·간호·살림·공부·위로). 이름은 UI 키 "role.{Id}". 합류한 동료마다 보정이 더해진다.</summary>
     [Serializable]
     public sealed class RoleDef
     {
         public string Id = "";
         public List<TraitModifier> Modifiers = new List<TraitModifier>();
+
+        /// <summary>역할 재기획 2.1: 방 묶음 (서는 순서). 비어 있으면 방 없이 늘 맡길 수 있다.</summary>
+        public List<RoleRoomDef> Rooms = new List<RoleRoomDef>();
+
+        /// <summary>기본 역할 (경비·정찰): 방이 아직 열리지 않아도 맡길 수 있다 (그동안은 거처에 선다).</summary>
+        public bool Basic;
+    }
+
+    /// <summary>역할의 방 하나: 열림 조건 (늘 / 시설 레벨 1 이상 / 플래그)과 그 방에서 하는 스케줄 (함께한 시간).</summary>
+    [Serializable]
+    public sealed class RoleRoomDef
+    {
+        public string Id = "";
+        public bool Always;
+        public string Facility = "";
+        public string Flag = "";
+        public List<string> Actions = new List<string>();
     }
 
     [Serializable]

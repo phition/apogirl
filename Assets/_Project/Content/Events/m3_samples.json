@@ -150,7 +150,7 @@
         {
           "Id": "ACCEPT",
           "Effect": {
-            "Npcs": [ { "NpcId": "NPC_SURVIVOR_A", "SetStatus": "Joined", "SetRole": "scout", "Trust": 2 } ],
+            "Npcs": [ { "NpcId": "NPC_SURVIVOR_A", "SetStatus": "Joined", "SetRole": "SCOUT", "Trust": 2 } ],
             "Resources": [ { "Resource": "Intel", "Amount": 2 } ]
           }
         },

@@ -203,7 +203,6 @@ namespace ApoGirl.Presentation.Screens
         private void RefreshCompanions(GameState state)
         {
             _companions.Clear();
-            var roles = _session.Definitions.Extras.Roles;
             foreach (var pair in state.Npcs.Where(n => n.Value.Status == NpcStatus.Joined))
             {
                 var npcId = pair.Key;
@@ -211,6 +210,8 @@ namespace ApoGirl.Presentation.Screens
                 var roleName = string.IsNullOrEmpty(npc.Role) ? Loc.T("role.none") : Loc.T("role." + npc.Role);
                 var button = new Button(() =>
                 {
+                    // 역할 재기획: 방이 열린 역할만, 정원이 찬 역할은 건너뛴다 (마지막 다음은 역할 없음)
+                    var roles = Core.Rules.RoleRules.Choices(_session.State, _session.Definitions, npcId);
                     if (roles.Count == 0) return;
                     var index = roles.FindIndex(r => r.Id == npc.Role);
                     var next = index + 1 >= roles.Count ? "" : roles[index + 1].Id;

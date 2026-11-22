@@ -53,20 +53,24 @@ namespace ApoGirl.Core.Rules
 
             if (db.Extras.Roles.Count > 0)
             {
-                foreach (var npc in state.Npcs.Values)
+                foreach (var pair in state.Npcs)
                 {
+                    var npc = pair.Value;
                     if (npc.Status != NpcStatus.Joined || string.IsNullOrEmpty(npc.Role) || npc.InjuredWeeks > 0)
                     {
                         continue;
                     }
 
                     var role = db.Extras.Roles.Find(r => r.Id == npc.Role);
-                    if (role != null)
+                    var match = role == null ? 0f : Match(role.Modifiers, kind, key);
+                    if (match != 0f)
                     {
-                        // 기획 D-1: 스트레스가 높은 동료는 역할 효과가 준다. C.2 ①: 관계 단계에 따라 역할 효율이 달라진다
+                        // 기획 D-1: 스트레스가 높은 동료는 역할 효과가 준다. C.2 ①: 관계 단계에 따라 역할 효율이 달라진다.
+                        // 역할 재기획: 정원·열린 방 수·적성 배율 (RoleRules.EffectScale)
                         var scale = (GiveRules.IsStressed(npc, db.Balance) ? db.Balance.CompanionStressedRoleMultiplier : 1f)
-                                    * BondRules.RoleMultiplier(npc, db.Balance);
-                        total += Match(role.Modifiers, kind, key) * scale;
+                                    * BondRules.RoleMultiplier(npc, db.Balance)
+                                    * RoleRules.EffectScale(state, db, pair.Key, role);
+                        total += match * scale;
                     }
                 }
             }

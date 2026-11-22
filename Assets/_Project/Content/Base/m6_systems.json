@@ -132,6 +132,28 @@
   "Roles": [
     {
       "Id": "GUARD",
+      "Basic": true,
+      "Rooms": [
+        {
+          "Id": "ENTRANCE",
+          "Always": true,
+          "Actions": [
+            "ACT_SURV_BARRICADE",
+            "ACT_SURV_REINFORCE",
+            "ACT_NIGHT_WATCH",
+            "ACT_INTRUSION",
+            "ACT_SURV_TRAP",
+            "ACT_SURV_ALARM"
+          ]
+        },
+        {
+          "Id": "STAFFROOM",
+          "Facility": "STAFFROOM",
+          "Actions": [
+            "ACT_SURV_COVERS"
+          ]
+        }
+      ],
       "Modifiers": [
         {
           "Kind": "RaidGuard",
@@ -140,47 +162,27 @@
       ]
     },
     {
-      "Id": "COOK",
-      "Modifiers": [
+      "Id": "SCOUT",
+      "Basic": true,
+      "Rooms": [
         {
-          "Kind": "FoodSaving",
-          "Value": 1
-        }
-      ]
-    },
-    {
-      "Id": "MEDIC",
-      "Modifiers": [
-        {
-          "Kind": "InfectionResist",
-          "Value": 1
+          "Id": "ROOFTOP",
+          "Facility": "ROOFTOP",
+          "Actions": [
+            "ACT_DAILY_ROOFTOP",
+            "ACT_SURV_RAIN_BARREL",
+            "ACT_SURV_GARDEN"
+          ]
         },
         {
-          "Kind": "TeacherCare",
-          "Value": 1
+          "Id": "BROADCAST",
+          "Facility": "BROADCAST",
+          "Actions": [
+            "ACT_SCOUT_RADIO",
+            "ACT_SURV_RESTORE_POWER"
+          ]
         }
-      ]
-    },
-    {
-      "Id": "TUTOR",
-      "Modifiers": [
-        {
-          "Kind": "EducationGain",
-          "Value": 0.08
-        }
-      ]
-    },
-    {
-      "Id": "MOOD",
-      "Modifiers": [
-        {
-          "Kind": "RestRecovery",
-          "Value": 0.1
-        }
-      ]
-    },
-    {
-      "Id": "SCOUT",
+      ],
       "Modifiers": [
         {
           "Kind": "ExpeditionStress",
@@ -193,12 +195,122 @@
       ]
     },
     {
-      "Id": "MECHANIC",
+      "Id": "MEDIC",
+      "Rooms": [
+        {
+          "Id": "INFIRMARY",
+          "Facility": "INFIRMARY",
+          "Actions": [
+            "ACT_EDU_MEDICINE",
+            "ACT_TREAT_WOUND",
+            "ACT_TREAT_INFECTION",
+            "ACT_CARE_TEACHER"
+          ]
+        }
+      ],
       "Modifiers": [
         {
-          "Kind": "CheckBonus",
-          "Key": "Engineering",
+          "Kind": "InfectionResist",
+          "Value": 1
+        },
+        {
+          "Kind": "TeacherCare",
+          "Value": 1
+        }
+      ]
+    },
+    {
+      "Id": "HOUSE",
+      "Rooms": [
+        {
+          "Id": "HOMEEC",
+          "Flag": "SEARCHED_HOMEEC",
+          "Actions": [
+            "ACT_EDU_COOKING"
+          ]
+        },
+        {
+          "Id": "CAFETERIA",
+          "Facility": "CAFETERIA",
+          "Actions": []
+        },
+        {
+          "Id": "STORAGE",
+          "Always": true,
+          "Facility": "STORAGE",
+          "Actions": [
+            "ACT_SURV_MAKE_CRUTCH",
+            "ACT_SURV_MAKE_PROSTHETIC",
+            "ACT_NIGHT_WORK"
+          ]
+        }
+      ],
+      "Modifiers": [
+        {
+          "Kind": "FoodSaving",
+          "Value": 1
+        }
+      ]
+    },
+    {
+      "Id": "STUDY",
+      "Rooms": [
+        {
+          "Id": "CLASSROOM",
+          "Facility": "CLASSROOM",
+          "Actions": [
+            "ACT_EDU_HUMANITIES",
+            "ACT_EDU_SURVIVAL",
+            "ACT_NIGHT_STUDY",
+            "ACT_DAILY_TUTOR_DOHYEON"
+          ]
+        },
+        {
+          "Id": "LIBRARY",
+          "Facility": "LIBRARY",
+          "Actions": [
+            "ACT_EDU_MIND"
+          ]
+        },
+        {
+          "Id": "SCIENCE",
+          "Facility": "SCIENCE",
+          "Actions": [
+            "ACT_EDU_SCIENCE",
+            "ACT_EDU_ENGINEERING",
+            "ACT_SURV_PURIFY_WATER"
+          ]
+        }
+      ],
+      "Modifiers": [
+        {
+          "Kind": "EducationGain",
           "Value": 0.08
+        }
+      ]
+    },
+    {
+      "Id": "COMFORT",
+      "Rooms": [
+        {
+          "Id": "MUSIC",
+          "Flag": "SEARCHED_MUSIC",
+          "Actions": [
+            "ACT_EDU_MUSIC"
+          ]
+        },
+        {
+          "Id": "GYM",
+          "Facility": "GYM",
+          "Actions": [
+            "ACT_EDU_SELFDEFENSE"
+          ]
+        }
+      ],
+      "Modifiers": [
+        {
+          "Kind": "RestRecovery",
+          "Value": 0.1
         }
       ]
     }

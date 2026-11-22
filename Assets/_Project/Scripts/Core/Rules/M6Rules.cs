@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using ApoGirl.Core.Definitions;
 using ApoGirl.Core.Effects;
 using ApoGirl.Core.Random;
@@ -175,9 +177,145 @@ namespace ApoGirl.Core.Rules
         public static bool IsScouted(GameState state, string locationId) => state.Flags.Contains(FlagFor(locationId));
     }
 
-    /// <summary>동료 역할 (문서 6.4): 합류한 NPC에게만, 데이터에 있는 역할만 맡길 수 있다.</summary>
+    /// <summary>
+    /// 동료 역할 (문서 6.4, 역할 재기획 Docs/ROLE_ROOMS_PROPOSAL.md): 합류한 NPC에게만, 데이터에 있는 역할만 맡길 수 있다.
+    /// 역할마다 방 묶음이 있어 열린 방이 있어야 맡길 수 있고(기본 역할은 늘), 열린 방이 늘수록 효과가 커진다.
+    /// 한 역할의 정원(BalanceConfig.RoleCapacity)을 넘으면 늦게 붙은 사람은 효과가 없다.
+    /// </summary>
     public static class RoleRules
     {
+        public static RoleDef Find(IDefinitionDatabase db, string roleId) =>
+            string.IsNullOrEmpty(roleId) ? null : db.Extras.Roles.Find(r => r.Id == roleId);
+
+        public static bool IsRoomOpen(GameState state, RoleRoomDef room)
+        {
+            if (room == null)
+            {
+                return false;
+            }
+
+            if (room.Always || (!string.IsNullOrEmpty(room.Flag) && state.Flags.Contains(room.Flag)))
+            {
+                return true;
+            }
+
+            return !string.IsNullOrEmpty(room.Facility) && state.Base.Facilities.TryGetValue(room.Facility, out var level) && level > 0;
+        }
+
+        /// <summary>묶음에서 열린 방 수. 방이 없는 역할은 1로 친다.</summary>
+        public static int OpenRoomCount(GameState state, RoleDef role)
+        {
+            if (role == null)
+            {
+                return 0;
+            }
+
+            return role.Rooms.Count == 0 ? 1 : role.Rooms.Count(r => IsRoomOpen(state, r));
+        }
+
+        /// <summary>역할 단추에 나오는가: 기본 역할이거나 묶음에 열린 방이 있다.</summary>
+        public static bool IsAvailable(GameState state, RoleDef role) => role != null && (role.Basic || OpenRoomCount(state, role) > 0);
+
+        /// <summary>열린 방 수 배율: 1개 ×1, 하나 늘 때마다 + RoleExtraRoomBonus. 기본 역할은 방이 닫혀 있어도 ×1.</summary>
+        public static float RoomScale(GameState state, RoleDef role, BalanceConfig balance)
+        {
+            var open = OpenRoomCount(state, role);
+            if (open <= 0)
+            {
+                return role != null && role.Basic ? 1f : 0f;
+            }
+
+            return 1f + (open - 1) * balance.RoleExtraRoomBonus;
+        }
+
+        public static bool HasAptitude(BalanceConfig balance, string npcId, string roleId)
+        {
+            if (string.IsNullOrEmpty(roleId) || balance.RoleAptitudes == null)
+            {
+                return false;
+            }
+
+            foreach (var aptitude in balance.RoleAptitudes)
+            {
+                if (aptitude.NpcId == npcId && aptitude.Roles != null && Array.IndexOf(aptitude.Roles, roleId) >= 0)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        /// <summary>그 역할을 맡은 동료 (먼저 받은 순, 같으면 ID 순).</summary>
+        public static List<string> Holders(GameState state, string roleId) =>
+            state.Npcs.Where(n => n.Value.Status == NpcStatus.Joined && n.Value.Role == roleId)
+                .OrderBy(n => n.Value.RoleSinceWeek).ThenBy(n => n.Key, StringComparer.Ordinal)
+                .Select(n => n.Key).ToList();
+
+        /// <summary>정원 안에 들어 역할 효과를 받는가 (다침·자리 비움은 따로 본다).</summary>
+        public static bool IsActive(GameState state, string npcId, BalanceConfig balance)
+        {
+            if (!state.Npcs.TryGetValue(npcId ?? "", out var npc) || string.IsNullOrEmpty(npc.Role))
+            {
+                return false;
+            }
+
+            var index = Holders(state, npc.Role).IndexOf(npcId);
+            return index >= 0 && (balance.RoleCapacity <= 0 || index < balance.RoleCapacity);
+        }
+
+        /// <summary>
+        /// 역할 효과 배율 (정원·열린 방·적성). 관계 단계·스트레스 배율은 TraitRules에서 곱한다.
+        /// 맡을 수 없는 상태면 0.
+        /// </summary>
+        public static float EffectScale(GameState state, IDefinitionDatabase db, string npcId, RoleDef role)
+        {
+            var balance = db.Balance;
+            if (role == null || !IsActive(state, npcId, balance))
+            {
+                return 0f;
+            }
+
+            return RoomScale(state, role, balance) * (HasAptitude(balance, npcId, role.Id) ? balance.RoleAptitudeMultiplier : 1f);
+        }
+
+        /// <summary>
+        /// 동료가 설 방 ID: 묶음에서 열린 방을 차례로 (같은 역할 둘째 사람은 다음 열린 방, 모자라면 마지막 열린 방).
+        /// 열린 방이 없으면 null (거처).
+        /// </summary>
+        public static string RoomFor(GameState state, IDefinitionDatabase db, string npcId)
+        {
+            if (!state.Npcs.TryGetValue(npcId ?? "", out var npc))
+            {
+                return null;
+            }
+
+            var role = Find(db, npc.Role);
+            if (role == null)
+            {
+                return null;
+            }
+
+            var open = role.Rooms.Where(r => IsRoomOpen(state, r)).ToList();
+            if (open.Count == 0)
+            {
+                return null;
+            }
+
+            var index = Math.Max(0, Holders(state, npc.Role).IndexOf(npcId));
+            return open[Math.Min(index, open.Count - 1)].Id;
+        }
+
+        /// <summary>지금 이 동료에게 맡길 수 있는 역할 (단추 순환 순서). 정원이 찬 역할은 빠진다 (이미 맡은 역할은 남는다).</summary>
+        public static List<RoleDef> Choices(GameState state, IDefinitionDatabase db, string npcId)
+        {
+            state.Npcs.TryGetValue(npcId ?? "", out var npc);
+            var capacity = db.Balance.RoleCapacity;
+            return db.Extras.Roles.Where(r => IsAvailable(state, r)
+                                              && (npc?.Role == r.Id || capacity <= 0 || Holders(state, r.Id).Count < capacity)).ToList();
+        }
+
+        /// <summary>계획 단계에서 역할을 바꾼다. 맡을 수 없는 역할(방이 닫힘·정원이 참)은 거절한다.</summary>
         public static bool Assign(GameState state, IDefinitionDatabase db, string npcId, string roleId)
         {
             if (!state.Npcs.TryGetValue(npcId ?? "", out var npc) || npc.Status != NpcStatus.Joined)
@@ -185,12 +323,17 @@ namespace ApoGirl.Core.Rules
                 return false;
             }
 
-            if (!string.IsNullOrEmpty(roleId) && db.Extras.Roles.Find(r => r.Id == roleId) == null)
+            if (!string.IsNullOrEmpty(roleId) && !Choices(state, db, npcId).Exists(r => r.Id == roleId))
             {
                 return false;
             }
 
-            npc.Role = roleId ?? "";
+            if (npc.Role != (roleId ?? ""))
+            {
+                npc.Role = roleId ?? "";
+                npc.RoleSinceWeek = state.Calendar.Week;
+            }
+
             return true;
         }
     }

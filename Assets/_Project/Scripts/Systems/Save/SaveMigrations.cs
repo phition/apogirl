@@ -16,6 +16,7 @@ namespace ApoGirl.Systems.Save
                 yield return new V4ToV5();
                 yield return new V5ToV6();
                 yield return new V6ToV7();
+                yield return new V7ToV8();
             }
         }
 
@@ -113,6 +114,48 @@ namespace ApoGirl.Systems.Save
 
             public void Migrate(JObject root)
             {
+            }
+        }
+
+        /// <summary>
+        /// v8: 역할 재기획 (Docs/ROLE_ROOMS_PROPOSAL.md). 예전 역할 ID를 새 역할로 옮긴다:
+        /// 요리·정비 → 살림, 공부 친구 → 공부, 분위기 메이커 → 위로, 이벤트의 예전 이름(lookout → 경비, scout → 정찰, 그 밖의 모르는 이름 → 없음).
+        /// 역할을 받은 주(RoleSinceWeek)는 0으로 둔다 (정원이 넘치면 ID 순).
+        /// </summary>
+        private sealed class V7ToV8 : ISaveMigration
+        {
+            public int FromVersion => 7;
+
+            private static readonly Dictionary<string, string> Map = new Dictionary<string, string>
+            {
+                ["GUARD"] = "GUARD",
+                ["SCOUT"] = "SCOUT",
+                ["MEDIC"] = "MEDIC",
+                ["COOK"] = "HOUSE",
+                ["MECHANIC"] = "HOUSE",
+                ["TUTOR"] = "STUDY",
+                ["MOOD"] = "COMFORT",
+                ["lookout"] = "GUARD",
+                ["scout"] = "SCOUT",
+            };
+
+            public void Migrate(JObject root)
+            {
+                if (!(root["Npcs"] is JObject npcs))
+                {
+                    return;
+                }
+
+                foreach (var property in npcs.Properties())
+                {
+                    if (!(property.Value is JObject npc))
+                    {
+                        continue;
+                    }
+
+                    var role = npc.Value<string>("Role") ?? "";
+                    npc["Role"] = role.Length == 0 ? "" : Map.TryGetValue(role, out var mapped) ? mapped : "";
+                }
             }
         }
     }

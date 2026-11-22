@@ -261,9 +261,11 @@ namespace ApoGirl.Core.Effects
                 delta.NpcStatusChanges.Add(change.NpcId + ":" + change.SetStatus);
             }
 
-            if (!string.IsNullOrEmpty(change.SetRole))
+            if (!string.IsNullOrEmpty(change.SetRole) && npc.Role != change.SetRole)
             {
+                // 이벤트는 정원을 보지 않고 붙인다 (넘치면 늦게 붙은 사람은 효과 없음, RoleRules.IsActive)
                 npc.Role = change.SetRole;
+                npc.RoleSinceWeek = state.Calendar.Week;
             }
         }
 

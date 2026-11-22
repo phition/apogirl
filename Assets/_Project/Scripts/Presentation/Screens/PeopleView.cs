@@ -208,6 +208,25 @@ namespace ApoGirl.Presentation.Screens
                 yield return Loc.F("people.injured", npc.InjuredWeeks);
             }
 
+            // 역할 재기획: 적성은 느낌 문구로만, 정원을 넘었거나 방이 아직 없으면 그 사실만
+            var db = _session.Definitions;
+            var role = RoleRules.Find(db, npc.Role);
+            if (role != null)
+            {
+                if (!RoleRules.IsActive(state, id, balance))
+                {
+                    yield return Loc.T("people.role_overflow");
+                }
+                else if (RoleRules.RoomScale(state, role, balance) <= 0f)
+                {
+                    yield return Loc.T("people.role_no_room");
+                }
+                else if (RoleRules.HasAptitude(balance, id, role.Id))
+                {
+                    yield return Loc.T("people.aptitude." + id + "." + role.Id);
+                }
+            }
+
             if (GiveRules.IsStressed(npc, balance))
             {
                 yield return Loc.T("people.stressed");

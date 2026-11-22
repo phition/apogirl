@@ -344,6 +344,25 @@ namespace ApoGirl.Core.Definitions
         public int CompanionStressRoleThreshold = 70;
         public float CompanionStressedRoleMultiplier = 0.5f;
 
+        /// <summary>역할 재기획 (Docs/ROLE_ROOMS_PROPOSAL.md): 한 역할에 효과를 받는 사람 수, 넘치면 늦게 붙은 사람은 효과 없음.</summary>
+        public int RoleCapacity = 2;
+
+        /// <summary>묶음 안에서 열린 방이 하나 늘 때마다 역할 효과 가산 (1개 ×1, 2개 ×1.25, 3개 ×1.5).</summary>
+        public float RoleExtraRoomBonus = 0.25f;
+
+        /// <summary>적성 역할을 맡기면 효과 배율.</summary>
+        public float RoleAptitudeMultiplier = 1.25f;
+
+        /// <summary>적성 (3절). 동료 → 잘 맞는 역할.</summary>
+        public RoleAptitudeDef[] RoleAptitudes =
+        {
+            new RoleAptitudeDef { NpcId = "NPC_NURSE", Roles = new[] { "MEDIC" } },
+            new RoleAptitudeDef { NpcId = "NPC_DOHYEON", Roles = new[] { "SCOUT" } },
+            new RoleAptitudeDef { NpcId = "NPC_BYSTANDER", Roles = new[] { "COMFORT", "STUDY" } },
+            new RoleAptitudeDef { NpcId = "NPC_RINGLEADER", Roles = new[] { "HOUSE", "SCOUT" } },
+            new RoleAptitudeDef { NpcId = "NPC_SURVIVOR_A", Roles = new[] { "GUARD", "COMFORT" } },
+        };
+
         /// <summary>배분: 음식(식량 1)·마실 것(식수 1)·의약품(의약품 1)·기호품(창고 물건 1). 한 사람에게 종류별 주 1회.</summary>
         public int GiveFoodSatiety = 45;
         public int GiveFoodStress = -3;

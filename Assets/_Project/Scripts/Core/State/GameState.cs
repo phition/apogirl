@@ -9,7 +9,7 @@ namespace ApoGirl.Core.State
     public sealed class GameState
     {
         /// <summary>현재 세이브 포맷 버전. 마이그레이션 시 증가시킨다.</summary>
-        public const int CurrentSaveVersion = 7;
+        public const int CurrentSaveVersion = 8;
 
         public int SaveVersion { get; set; } = CurrentSaveVersion;
         public GameStatus Status { get; set; } = GameStatus.Playing;
@@ -355,6 +355,9 @@ namespace ApoGirl.Core.State
         public int Affinity { get; set; }
         public int Trust { get; set; }
         public string Role { get; set; } = "";
+
+        /// <summary>역할을 받은 주 (정원을 넘으면 먼저 받은 사람이 효과를 받는다). v8.</summary>
+        public int RoleSinceWeek { get; set; }
 
         /// <summary>낮 침입으로 다쳐 역할을 못 하는 남은 주 수.</summary>
         public int InjuredWeeks { get; set; }
