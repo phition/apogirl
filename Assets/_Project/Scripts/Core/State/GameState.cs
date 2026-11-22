@@ -250,9 +250,6 @@ namespace ApoGirl.Core.State
         /// <summary>선생님의 몸 상태와 배분 기록. v7.</summary>
         public BodyState Body { get; set; } = new BodyState();
         public Dictionary<string, int> GiftLog { get; set; } = new Dictionary<string, int>();
-
-        /// <summary>동아리 활동(BOARDGAME 등) → 같이 한 횟수 (확장 7). v10에서 추가.</summary>
-        public Dictionary<string, int> ClubCounts { get; set; } = new Dictionary<string, int>();
     }
 
     /// <summary>친구 (문서 7.3). 재회 변주용 플래그는 GameState.Flags에 둔다.</summary>
@@ -394,6 +391,9 @@ namespace ApoGirl.Core.State
 
         /// <summary>배분 기록: "kind:Food" / "item:ITEM_ID" → 마지막으로 받은 주. v7.</summary>
         public Dictionary<string, int> GiftLog { get; set; } = new Dictionary<string, int>();
+
+        /// <summary>동아리 활동(BOARDGAME 등) → 같이 한 횟수 (확장 7). v10에서 추가.</summary>
+        public Dictionary<string, int> ClubCounts { get; set; } = new Dictionary<string, int>();
     }
 
     /// <summary>동료·선생님의 몸 상태. 주인공 Vitals와 같은 척도 (스트레스 0~100, 포만·수분 −100~+100, 0 = 보통).</summary>
