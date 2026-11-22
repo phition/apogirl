@@ -5495,6 +5495,18 @@ MonoBehaviour:
     m_Key: special.NPC_WANDERER.desc
     m_Metadata:
       m_Items: []
+  - m_Id: 1151196416196608
+    m_Key: settle.raid_covered
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1151196470722560
+    m_Key: settle.leave_warn
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1151196470722561
+    m_Key: result.raid_covered
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

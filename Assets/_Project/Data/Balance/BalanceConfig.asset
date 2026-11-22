@@ -311,6 +311,13 @@ MonoBehaviour:
       Value: 1
       Target: 
       Visitor: 1
+    CrisisLeaveBelowAffinity: 0
+    CrisisLeavePerWeek: 1
+    CrisisLeaveFlagPrefix: LEAVE_WARN_
+    RaidCoverMinAffinity: 60
+    RaidCoverChance: 0.5
+    RaidCoverHpScale: 0
+    RaidCoverInjuryWeeks: 2
     TogetherAffinity: 1
     TogetherAptitudeBonus: 1
     TogetherWeeklyCap: 2
