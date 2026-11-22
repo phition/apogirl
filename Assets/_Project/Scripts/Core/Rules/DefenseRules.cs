@@ -174,7 +174,7 @@ namespace ApoGirl.Core.Rules
             EffectApplier.ChangeDefense(state, -balance.RaidBreachDefenseLoss, balance, delta);
 
             var companions = state.Npcs
-                .Where(n => n.Key != EffectApplier.TeacherNpcId && n.Value.Status == NpcStatus.Joined && n.Value.InjuredWeeks <= 0)
+                .Where(n => n.Key != EffectApplier.TeacherNpcId && n.Value.Status == NpcStatus.Joined && n.Value.InjuredWeeks <= 0 && !OutingRules.IsAwayNow(state, n.Value))
                 .Select(n => n.Key)
                 .OrderBy(id => id, StringComparer.Ordinal)
                 .ToList();

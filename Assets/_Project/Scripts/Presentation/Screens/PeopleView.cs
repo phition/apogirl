@@ -89,7 +89,7 @@ namespace ApoGirl.Presentation.Screens
             return string.IsNullOrEmpty(own) ? Loc.T("together.generic." + seed % 3) : own;
         }
 
-        /// <summary>결과 한 줄 꼬리: "윤 선생님, 도현과 함께 했다" (조사는 마지막 이름에 맞춘다).</summary>
+        /// <summary>결과 한 줄 꼬리: "윤 선생님, 도현과 함께 했다" / "하린은 탐험을 나가 자리에 없었다" (조사는 마지막 이름에 맞춘다).</summary>
         public static string TogetherLine(IReadOnlyList<TogetherEntry> together)
         {
             if (together == null || together.Count == 0)
@@ -97,9 +97,72 @@ namespace ApoGirl.Presentation.Screens
                 return "";
             }
 
-            var names = together.Select(t => Name(t.Id)).ToList();
-            names[names.Count - 1] = ApoGirl.Core.Text.KoreanJosa.Attach(names[names.Count - 1], "과/와");
-            return Loc.F("together.with", string.Join(", ", names));
+            var parts = new List<string>();
+            var present = together.Where(t => !t.Absent).Select(t => Name(t.Id)).ToList();
+            if (present.Count > 0)
+            {
+                present[present.Count - 1] = ApoGirl.Core.Text.KoreanJosa.Attach(present[present.Count - 1], "과/와");
+                parts.Add(Loc.F("together.with", string.Join(", ", present)));
+            }
+
+            var absent = together.Where(t => t.Absent).Select(t => Name(t.Id)).ToList();
+            if (absent.Count > 0)
+            {
+                absent[absent.Count - 1] = ApoGirl.Core.Text.KoreanJosa.Attach(absent[absent.Count - 1], "은/는");
+                parts.Add(Loc.F("together.absent", string.Join(", ", absent)));
+            }
+
+            return string.Join(" · ", parts);
+        }
+
+        /// <summary>동료 탐험 한 줄: 나감 / 돌아옴(구해 온 것·다침).</summary>
+        public static List<string> OutingLines(IReadOnlyList<string> departures, IReadOnlyList<OutingReturn> returns)
+        {
+            var lines = new List<string>();
+            foreach (var id in departures ?? new List<string>())
+            {
+                lines.Add(Loc.F("outing.left", ApoGirl.Core.Text.KoreanJosa.Attach(Name(id), "이/가")));
+            }
+
+            foreach (var back in returns ?? new List<OutingReturn>())
+            {
+                var who = ApoGirl.Core.Text.KoreanJosa.Attach(Name(back.NpcId), "이/가");
+                var haul = Haul(back.Resources, back.ItemId);
+                var line = haul.Length > 0 ? Loc.F("outing.back", who, haul) : Loc.F("outing.back_empty", who);
+                if (back.Wound != OutingWound.None)
+                {
+                    line += " · " + Loc.T(back.Wound == OutingWound.Severe ? "outing.wound_severe" : "outing.wound_minor");
+                }
+
+                lines.Add(line);
+            }
+
+            return lines;
+        }
+
+        /// <summary>"식량 3, 식수 2, 사탕" (자원 + 기호품).</summary>
+        public static string Haul(IEnumerable<ResourceAmount> resources, string itemId = "")
+        {
+            var parts = resources.Where(r => r.Amount > 0).Select(r => UiText.Resource(r.Resource) + " " + r.Amount).ToList();
+            if (!string.IsNullOrEmpty(itemId))
+            {
+                parts.Add(Loc.Item(itemId));
+            }
+
+            return string.Join(", ", parts);
+        }
+
+        /// <summary>돌아온 동료 머리 위 말풍선: 기호품을 주웠으면 그 이야기, 아니면 구해 온 것.</summary>
+        public static string ReturnBubble(OutingReturn back)
+        {
+            if (!string.IsNullOrEmpty(back.ItemFor))
+            {
+                return back.ItemFor == back.NpcId ? Loc.F("outing.bubble_item_self", Loc.Item(back.ItemId))
+                    : Loc.F("outing.bubble_item_for", Name(back.ItemFor), Loc.Item(back.ItemId));
+            }
+
+            var haul = Haul(back.Resources);
+            return haul.Length > 0 ? Loc.F("outing.bubble_haul", haul) : Loc.T("outing.bubble_empty");
         }
 
         /// <summary>고마워하는 말 한 줄: 좋아하는 물건이면 전용 문구, 아니면 그 사람 문구 셋 중 하나.</summary>

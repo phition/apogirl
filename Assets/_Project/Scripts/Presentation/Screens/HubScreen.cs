@@ -486,10 +486,20 @@ namespace ApoGirl.Presentation.Screens
             }
 
             var seed = outcome.Week * 31 + outcome.Day * 3 + (int)outcome.Phase;
+            var shown = 0;
             for (var i = 0; i < outcome.Together.Count; i++)
             {
                 var entry = outcome.Together[i];
-                _section.ShowBubble(entry.Id, PeopleUi.Together(entry.Id, entry.Aptitude, seed + i * 7), 0.2f + i * 0.6f);
+                if (!entry.Absent)
+                {
+                    _section.ShowBubble(entry.Id, PeopleUi.Together(entry.Id, entry.Aptitude, seed + i * 7), 0.2f + shown++ * 0.6f);
+                }
+            }
+
+            // 동료 탐험에서 돌아온 사람: 구해 온 것 말풍선
+            foreach (var back in outcome.OutingReturns ?? new List<OutingReturn>())
+            {
+                _section.ShowBubble(back.NpcId, PeopleUi.ReturnBubble(back), 0.2f + shown++ * 0.6f, 3f);
             }
         }
 
@@ -1033,6 +1043,12 @@ namespace ApoGirl.Presentation.Screens
             if (together.Length > 0)
             {
                 detail += "  · " + together;
+            }
+
+            var outings = PeopleUi.OutingLines(outcome.OutingDepartures, outcome.OutingReturns);
+            if (outings.Count > 0)
+            {
+                detail += "  · " + string.Join(" · ", outings);
             }
             var line = new Label(Loc.F("hud.ticker", outcome.Day, UiText.Phase(outcome.Phase), Loc.Action(outcome.ActionId, "short"), detail));
             line.AddToClassList("ticker-line");

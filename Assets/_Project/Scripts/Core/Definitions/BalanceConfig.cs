@@ -318,6 +318,7 @@ namespace ApoGirl.Core.Definitions
         public int NeglectAffinity = 2;
         public int NeglectFloor = 50;
         public string GuardRoleId = "GUARD";
+        public string ScoutRoleId = "SCOUT";
         public int InjuredGuardAffinity = 3;
         public int NurseUntreatedAffinity = 6;
         public int SeniorEmptyRuns = 2;
@@ -375,6 +376,36 @@ namespace ApoGirl.Core.Definitions
         public string TeacherCareActionId = "ACT_CARE_TEACHER";
         public string[] TeacherIllFlags = { "TEACHER_REINFECTED", "TEACHER_BEDRIDDEN", "TEACHER_ISOLATED" };
         public string[] TeacherAbsentFlags = { "TEACHER_LEFT_BEHIND" };
+
+        /// <summary>동료 탐험 (역할 재기획 5절): 주 1번(확률로 2번), 정찰 역할은 늘 2번. 같은 날 낮에 많아야 OutingDailyCap명.</summary>
+        public float OutingExtraChance = 0.4f;
+        public int OutingScoutCount = 2;
+        public int OutingDailyCap = 2;
+
+        /// <summary>외출하지 않는 인물 (고양이 등).</summary>
+        public string[] OutingExcludedNpcs = { "NPC_CAT" };
+
+        /// <summary>물자: 그 지역 헤드리스 낮 산출 × 비율 (정찰 적성이면 + 보너스). 가장 모자란 자원을 주는 곳에 가중치.</summary>
+        public float OutingYieldShare = 0.4f;
+        public float OutingScoutAptitudeBonus = 0.3f;
+        public float OutingLackWeight = 3f;
+        public float OutingLikedChance = 0.1f;
+
+        /// <summary>나갈 때 스트레스·포만·수분.</summary>
+        public int OutingStress = 8;
+        public int OutingSatietyDrain = 20;
+        public int OutingHydrationDrain = 25;
+
+        /// <summary>다침: 확률(정찰 역할은 낮게), 그 가운데 "부상" 비율. 가벼운 상처는 1주(다음 주 결산에 낫는다).</summary>
+        public float OutingInjuryChance = 0.25f;
+        public float OutingScoutInjuryChance = 0.15f;
+        public float OutingSevereShare = 0.2f;
+        public int OutingSevereWeeks = 2;
+        public int OutingMinorStress = 5;
+        public int OutingSevereStress = 15;
+
+        /// <summary>"이번 주는 남아 줘"를 2주 연속 켜면 답답해 스트레스.</summary>
+        public int OutingHeldBackStress = 3;
 
         /// <summary>배분: 음식(식량 1)·마실 것(식수 1)·의약품(의약품 1)·기호품(창고 물건 1). 한 사람에게 종류별 주 1회.</summary>
         public int GiveFoodSatiety = 45;

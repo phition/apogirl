@@ -20,8 +20,12 @@ namespace ApoGirl.Core.Simulation
         public DayPhase Phase;
         public string ActionId = "";
 
-        /// <summary>이 칸에 곁에 있던 사람 (함께한 시간). 비어 있으면 혼자.</summary>
+        /// <summary>이 칸에 곁에 있던 사람 (함께한 시간). 비어 있으면 혼자. Absent = 외출해 자리에 없던 사람.</summary>
         public List<TogetherEntry> Together = new List<TogetherEntry>();
+
+        /// <summary>동료 탐험: 이 낮 칸에 나간 동료, 이 밤 칸에 돌아온 동료와 구해 온 것.</summary>
+        public List<string> OutingDepartures = new List<string>();
+        public List<OutingReturn> OutingReturns = new List<OutingReturn>();
         public CheckResult Result;
         public bool ForcedRestViolated;
         public bool ConsecutiveExpedition;
@@ -153,6 +157,7 @@ namespace ApoGirl.Core.Simulation
         public void PrepareWeek()
         {
             PlanPreparer.ApplyForcedRest(_state, _db);
+            OutingRules.Schedule(_state, _db);   // 동료 탐험 일정 (역할 재기획 5절)
         }
 
         public SlotOutcome ExecuteNextSlot()
@@ -180,6 +185,10 @@ namespace ApoGirl.Core.Simulation
             var slot = _state.Plan.Slots[index];
             var outcome = new SlotOutcome { Week = calendar.Week, Day = calendar.Day, Phase = calendar.Phase };
             var delta = outcome.Delta;
+
+            // 동료 탐험: 낮 칸 시작에 나가고, 그날 밤 칸 시작에 돌아온다
+            outcome.OutingDepartures = OutingRules.Depart(_state, _db);
+            outcome.OutingReturns = OutingRules.Return(_state, _db, delta);
 
             if (calendar.Phase == DayPhase.Night)
             {
@@ -577,6 +586,7 @@ namespace ApoGirl.Core.Simulation
             InfectionRules.WeeklyTeacher(_state, _db);
             AssaultTraumaRules.Care(_state, 1, Balance);
             IntrusionRules.HealWeekly(_state);
+            OutingRules.FinishWeek(_state);
             _state.Exploration.DayExposure = Math.Max(0, _state.Exploration.DayExposure - Balance.ExposureDecayPerWeek);
             RecordWeek(calendar.Week);
             var diary = LineRules.Pick(_state, _db, LineKind.Diary, new EventContext { Phase = DayPhase.Night, Day = CalendarState.DaysPerWeek });

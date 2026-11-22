@@ -61,6 +61,13 @@ namespace ApoGirl.Core.Rules
                         continue;
                     }
 
+                    // 동료 탐험으로 자리를 비웠다 (역할 재기획 5.4절)
+                    var away = OutingRules.AwayFactor(state, npc, kind);
+                    if (away <= 0f)
+                    {
+                        continue;
+                    }
+
                     var role = db.Extras.Roles.Find(r => r.Id == npc.Role);
                     var match = role == null ? 0f : Match(role.Modifiers, kind, key);
                     if (match != 0f)
@@ -69,7 +76,8 @@ namespace ApoGirl.Core.Rules
                         // 역할 재기획: 정원·열린 방 수·적성 배율 (RoleRules.EffectScale)
                         var scale = (GiveRules.IsStressed(npc, db.Balance) ? db.Balance.CompanionStressedRoleMultiplier : 1f)
                                     * BondRules.RoleMultiplier(npc, db.Balance)
-                                    * RoleRules.EffectScale(state, db, pair.Key, role);
+                                    * RoleRules.EffectScale(state, db, pair.Key, role)
+                                    * away;
                         total += match * scale;
                     }
                 }

@@ -121,6 +121,11 @@ namespace ApoGirl.Core.Rules
                 case GiveKind.Medicine:
                     EffectApplier.ChangeResource(state, ResourceType.Medicine, -1, delta);
                     body.Stress = ClampStress(body.Stress + balance.GiveMedicineStress, balance);
+                    if (id != TeacherId && state.Npcs[id].MinorWoundWeeks > 0)
+                    {
+                        state.Npcs[id].MinorWoundWeeks = 0;   // 동료 탐험의 가벼운 상처는 의약품이면 바로 낫는다
+                    }
+
                     if (id != TeacherId && state.Npcs[id].InjuredWeeks > 0)
                     {
                         var npc = state.Npcs[id];

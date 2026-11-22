@@ -362,6 +362,21 @@ namespace ApoGirl.Core.State
         /// <summary>낮 침입으로 다쳐 역할을 못 하는 남은 주 수.</summary>
         public int InjuredWeeks { get; set; }
 
+        /// <summary>동료 탐험에서 입은 가벼운 상처 (역할·함께한 시간은 그대로, 탐험만 쉰다). 입은 주 다음 주 결산에 낫는다.</summary>
+        public int MinorWoundWeeks { get; set; }
+        public int MinorWoundWeek { get; set; }
+
+        /// <summary>이번 주 외출하는 날 (낮 슬롯, 1~7)과 갈 곳. 주 시작에 정하고 결산에 지운다.</summary>
+        public List<int> OutingDays { get; set; } = new List<int>();
+        public List<string> OutingLocations { get; set; } = new List<string>();
+
+        /// <summary>"이번 주는 남아 줘" (주 시작 전 계획 단계에서 켠다), 연속으로 붙잡은 주.</summary>
+        public bool StayHome { get; set; }
+
+        /// <summary>지금 외출 중 (그날 낮 칸 시작 ~ 그날 밤 칸 시작). 낮 칸 뒤 이벤트(침입 등)에서도 자리에 없다.</summary>
+        public bool Away { get; set; }
+        public int StayStreak { get; set; }
+
         /// <summary>동료의 몸 상태 (스트레스·포만·수분). v7에서 추가 (기획 D-1).</summary>
         public BodyState Body { get; set; } = new BodyState();
 

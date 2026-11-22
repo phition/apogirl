@@ -190,6 +190,17 @@ namespace ApoGirl.Presentation.Screens
                 }
             }
 
+            // 동료 탐험: 이번 주 동료들이 구해 온 것을 한 줄로 (역할 재기획 5.1절)
+            var returns = summary.Slots.Where(s => s.OutingReturns != null).SelectMany(s => s.OutingReturns).ToList();
+            if (returns.Count > 0)
+            {
+                var total = returns.SelectMany(r => r.Resources).GroupBy(r => r.Resource)
+                    .Select(g => new ResourceAmount(g.Key, g.Sum(r => r.Amount))).OrderBy(r => (int)r.Resource);
+                var items = returns.Where(r => !string.IsNullOrEmpty(r.ItemId)).Select(r => Loc.Item(r.ItemId));
+                var haul = string.Join(", ", new[] { PeopleUi.Haul(total) }.Concat(items).Where(t => t.Length > 0));
+                lines.Add(Loc.F("settle.outing_haul", returns.Select(r => r.NpcId).Distinct().Count(), haul.Length > 0 ? haul : Loc.T("settle.outing_nothing")));
+            }
+
             return lines;
         }
 

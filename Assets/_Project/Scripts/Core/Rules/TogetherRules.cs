@@ -12,6 +12,9 @@ namespace ApoGirl.Core.Rules
         public string Id = "";
         public bool Aptitude;
         public int Gained;
+
+        /// <summary>그 방 사람이지만 외출해 자리에 없었다 (호감 없음, "자리에 없었다" 한 줄).</summary>
+        public bool Absent;
     }
 
     /// <summary>
@@ -75,7 +78,7 @@ namespace ApoGirl.Core.Rules
                     continue;
                 }
 
-                result.Add(new TogetherEntry { Id = pair.Key, Aptitude = RoleRules.HasAptitude(balance, pair.Key, npc.Role) });
+                result.Add(new TogetherEntry { Id = pair.Key, Aptitude = RoleRules.HasAptitude(balance, pair.Key, npc.Role), Absent = OutingRules.IsAwayNow(state, npc) });
             }
 
             return result;
@@ -89,6 +92,11 @@ namespace ApoGirl.Core.Rules
             var present = Present(state, db, action);
             foreach (var entry in present)
             {
+                if (entry.Absent)
+                {
+                    continue;
+                }
+
                 var teacher = entry.Id == GiveRules.TeacherId;
                 var amount = teacher ? balance.TeacherTogetherAffinity
                     : balance.TogetherAffinity + (entry.Aptitude ? balance.TogetherAptitudeBonus : 0);
