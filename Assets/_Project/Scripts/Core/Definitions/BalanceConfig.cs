@@ -386,11 +386,11 @@ namespace ApoGirl.Core.Definitions
         public string[] OutingExcludedNpcs = { "NPC_CAT" };
 
         /// <summary>물자: 그 지역 헤드리스 낮 산출 × 비율 (정찰 적성이면 + 보너스). 가장 모자란 자원을 주는 곳에 가중치.</summary>
-        public float OutingYieldShare = 0.4f;
+        public float OutingYieldShare = 0.2f;   // P5: 0.4 → 0.2 (봇 배드 26% → 42%)
         public float OutingScoutAptitudeBonus = 0.3f;
 
         /// <summary>의약품은 동료가 잘 찾지 못한다 (약국 수색은 주인공 몫): 의약품 몫에만 더 곱한다. 감염 사망이 의약품에 크게 걸려 있다 (P5).</summary>
-        public float OutingMedicineShare = 0.25f;
+        public float OutingMedicineShare = 0f;   // P5: 의약품 몫이 감염 사망을 크게 줄여 0
         public float OutingLackWeight = 3f;
         public float OutingLikedChance = 0.1f;
 

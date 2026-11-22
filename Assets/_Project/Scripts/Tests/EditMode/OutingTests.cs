@@ -132,7 +132,7 @@ namespace ApoGirl.Tests.EditMode
             Assert.IsFalse(npc.Away);
             Assert.AreEqual(OutingWound.None, back.Wound);
             var gained = back.Resources.Sum(r => r.Amount);
-            Assert.Greater(gained, 0, "낮 산출 6~10·4~8의 40%");
+            Assert.Greater(gained, 0, "낮 산출 6~10·4~8의 OutingYieldShare만큼");
             Assert.LessOrEqual(gained, (int)System.Math.Ceiling((10 + 8) * db.Balance.OutingYieldShare) + 1);
             Assert.AreEqual(food + back.Resources.Where(r => r.Resource == ResourceType.Food).Sum(r => r.Amount), state.Base.GetResource(ResourceType.Food));
         }
