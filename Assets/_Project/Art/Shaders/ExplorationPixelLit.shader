@@ -59,7 +59,6 @@ Shader "ApoGirl/ExplorationPixelLit"
 
             TEXTURE2D(_MainTex);
             SAMPLER(sampler_MainTex);
-            float4 _MainTex_TexelSize;
             TEXTURE2D(_MaskTex);
             SAMPLER(sampler_MaskTex);
 
@@ -95,7 +94,10 @@ Shader "ApoGirl/ExplorationPixelLit"
             {
                 float2 dx = ddx(uv);
                 float2 dy = ddy(uv);
-                float2 size = _MainTex_TexelSize.zw;
+                // 텍스처 크기는 직접 읽는다 (_MainTex_TexelSize를 머티리얼 밖에 두면 스프라이트 배칭이 깨져 남의 그림을 그린다)
+                uint width, height;
+                _MainTex.GetDimensions(width, height);
+                float2 size = float2(width, height);
                 float det = dx.x * dy.y - dx.y * dy.x;
                 if (_ApoPixelLightOn < 0.5 || _ApoPixelSnap < 0.5 || size.x < 2.0 || abs(det) < 1e-12)
                 {
