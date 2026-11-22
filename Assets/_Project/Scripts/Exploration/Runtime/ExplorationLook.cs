@@ -71,7 +71,7 @@ namespace ApoGirl.Exploration.Runtime
             /// <summary>그림 한 화소가 화면 높이의 이 비율보다 크면 맞추지 않는다 (작은 그림을 크게 늘린 단색 벽·바닥이 큰 덩어리로 끊기지 않게).</summary>
             public float SnapMaxTexel = 0.01f;
             public float Steps = 6f;
-            public float StepStrength = 0.5f;
+            public float StepStrength = 0f;   // 사용자 결정 2026-11-22: 고리지는 빛보다 부드러운 빛이 낫다
         }
 
         /// <summary>
