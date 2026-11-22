@@ -267,7 +267,10 @@ namespace ApoGirl.Exploration.Runtime
             }
 
             var label = new Label(Loc.T(def.Label)) { pickingMode = PickingMode.Ignore };
-            label.style.fontSize = _config.LabelSize * Mathf.Clamp(def.Size / 100f, 0.7f, 1.2f);
+            var text = Loc.T(def.Label);
+            var fit = def.Size * 0.78f / Mathf.Max(1, text.Length);   // 한 줄에 들어가게
+            label.style.fontSize = Mathf.Min(_config.LabelSize * Mathf.Clamp(def.Size / 100f, 0.7f, 1.2f), fit);
+            label.style.whiteSpace = WhiteSpace.NoWrap;
             label.style.color = Color.white;
             label.style.unityTextAlign = TextAnchor.MiddleCenter;
             label.style.marginTop = label.style.marginBottom = 0;
