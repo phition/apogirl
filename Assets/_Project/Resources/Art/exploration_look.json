@@ -49,5 +49,12 @@
     "People": true,
     "Containers": true,
     "Decor": true
+  },
+  "PixelLight": {
+    "_설명": "도트 빛 (셰이더 ApoGirl/ExplorationPixelLit): Snap = 빛을 그림 한 화소마다 한 번만 읽어 빛 경계가 도트 격자를 따른다. Steps = 빛 세기 단계 수, StepStrength = 단계로 끊은 빛을 섞는 비율 (0 부드러움 ~ 1 딱 끊김).",
+    "Enabled": true,
+    "Snap": true,
+    "Steps": 6,
+    "StepStrength": 0.7
   }
 }

@@ -6,10 +6,10 @@ using UnityEngine.Rendering.Universal;
 namespace ApoGirl.Exploration.Runtime
 {
     /// <summary>
-    /// 탐험 화면의 '보이는 맛' 1단계 (Resources/Art/exploration_look.json): 후처리 색 보정·블룸·비네트·톤매핑과 빛 기둥(볼류메트릭).
+    /// 탐험 화면의 '보이는 맛' (Resources/Art/exploration_look.json): 1단계 후처리 색 보정·블룸·비네트·톤매핑과 빛 기둥(볼류메트릭), 2단계 그림자·도트 빛.
     /// - 후처리는 탐험 카메라에만 켠다 (전역 Volume이지만 허브 카메라는 후처리를 쓰지 않는다).
     /// - 색 보정은 픽셀마다 색만 바꿔 도트 모양을 그대로 둔다. 블룸은 밝은 곳(손전등·창문)에만 걸리게 문턱을 높게.
-    /// - 디버그 F9: 후처리·빛 기둥 켜고 끄기 (전후 비교, 기록에 영향 없음).
+    /// - 디버그 F9: 후처리·빛 기둥·그림자·도트 빛 켜고 끄기 (전후 비교, 기록에 영향 없음).
     /// </summary>
     public sealed class ExplorationLook
     {
@@ -58,6 +58,19 @@ namespace ApoGirl.Exploration.Runtime
             public bool Decor = true;
         }
 
+        /// <summary>
+        /// 2단계 도트 빛 (셰이더 ApoGirl/ExplorationPixelLit, 머티리얼 Resources/Art/exploration_pixel_lit):
+        /// 빛을 그림 한 화소마다 한 번만 읽어(Snap) 빛 경계가 도트 격자를 따르고, 빛 세기를 Steps 단계로 끊는다(StepStrength만큼 섞기).
+        /// </summary>
+        [Serializable]
+        public sealed class PixelLightConfig
+        {
+            public bool Enabled = true;
+            public bool Snap = true;
+            public float Steps = 6f;
+            public float StepStrength = 0.7f;
+        }
+
         [Serializable]
         public sealed class Config
         {
@@ -65,7 +78,15 @@ namespace ApoGirl.Exploration.Runtime
             public Profile Day = new Profile();
             public Profile Night = new Profile();
             public ShadowConfig Shadows = new ShadowConfig();
+            public PixelLightConfig PixelLight = new PixelLightConfig();
         }
+
+        private const string DefaultLitShader = "Universal Render Pipeline/2D/Sprite-Lit-Default";
+        private static readonly int PixelLightOnId = Shader.PropertyToID("_ApoPixelLightOn");
+        private static readonly int PixelSnapId = Shader.PropertyToID("_ApoPixelSnap");
+        private static readonly int LightStepsId = Shader.PropertyToID("_ApoLightSteps");
+        private static readonly int LightStepStrengthId = Shader.PropertyToID("_ApoLightStepStrength");
+        private Material _pixelMaterial;
 
         private static Config _config;
 
@@ -146,7 +167,38 @@ namespace ApoGirl.Exploration.Runtime
             _volume.priority = 10f;
             _volume.sharedProfile = Build(_profile);
             _volume.weight = On ? 1f : 0f;
+
+            var pixel = Settings.PixelLight;
+            _pixelMaterial = pixel != null && pixel.Enabled ? Resources.Load<Material>("Art/exploration_pixel_lit") : null;
+            if (pixel != null)
+            {
+                Shader.SetGlobalFloat(PixelSnapId, pixel.Snap ? 1f : 0f);
+                Shader.SetGlobalFloat(LightStepsId, Mathf.Max(0f, pixel.Steps));
+                Shader.SetGlobalFloat(LightStepStrengthId, Mathf.Clamp01(pixel.StepStrength));
+            }
+
+            ApplyPixelGlobal();
         }
+
+        /// <summary>도트 빛: 기본 조명 머티리얼을 쓰는 스프라이트를 도트 빛 머티리얼로 (다른 머티리얼은 그대로). 새로 생긴 그림을 위해 다시 불러도 된다.</summary>
+        public void ApplyPixelLight(Transform root)
+        {
+            if (_pixelMaterial == null || root == null)
+            {
+                return;
+            }
+
+            foreach (var renderer in root.GetComponentsInChildren<SpriteRenderer>(true))
+            {
+                var material = renderer.sharedMaterial;
+                if (material != null && material.shader != null && material.shader.name == DefaultLitShader)
+                {
+                    renderer.sharedMaterial = _pixelMaterial;
+                }
+            }
+        }
+
+        private void ApplyPixelGlobal() => Shader.SetGlobalFloat(PixelLightOnId, On && _pixelMaterial != null ? 1f : 0f);
 
         public void Toggle()
         {
@@ -155,6 +207,8 @@ namespace ApoGirl.Exploration.Runtime
             {
                 _volume.weight = On ? 1f : 0f;
             }
+
+            ApplyPixelGlobal();
         }
 
         public void Dispose()

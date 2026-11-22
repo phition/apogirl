@@ -1468,6 +1468,7 @@ namespace ApoGirl.Exploration.Runtime
             CloseContainer();
             Hidden = false;
             Nearest = null;
+            _look?.ApplyPixelLight(_world);   // 그 사이 새로 생긴 그림도 도트 빛으로
         }
 
         private void Finish(ExtractStatus status)
@@ -2132,6 +2133,7 @@ namespace ApoGirl.Exploration.Runtime
             _selfLight.shadowsEnabled = false;   // 그림자는 손전등만
 
             CollectFog(_world, null);
+            _look.ApplyPixelLight(_world);
             _lighting = new ExplorationLighting(_world, _balance, _building.FloorHeight, day ? ExplorationLighting.Phase.Day : ExplorationLighting.Phase.Night);
             foreach (var corridor in _corridors)
             {
