@@ -302,12 +302,20 @@ Button.selected { border-color: var(--accent); background-color: var(--accent-so
 /* 낮·밤 카드 (PlanLook): 낮 전용 상아색, 밤 전용 짙은 남색, 둘 다 되면 사선으로 반씩 */
 .action-card { overflow: hidden; border-width: 2px; border-color: rgba(0, 0, 0, 0); }
 .action-card.phase-day { background-color: var(--day-card); }
-.action-card.phase-day .action-name { color: var(--day-text); }
-.action-card.phase-day .action-info { color: var(--day-dim); }
-.action-card.phase-day .action-gains { color: #3f6b39; }
+/* 카드 글자는 모두 굵게, 바탕과 대비가 큰 색으로 */
+.action-card.phase-day .action-info,
+.action-card.phase-day .action-gains,
+.action-card.phase-night .action-info,
+.action-card.phase-night .action-gains,
+.action-card.phase-both .action-info,
+.action-card.phase-both .action-gains { -unity-font-style: bold; }
+.action-card.phase-day .action-name { color: #15120c; }
+.action-card.phase-day .action-info { color: #3a3226; }
+.action-card.phase-day .action-gains { color: #24521f; }
 .action-card.phase-night { background-color: var(--night-card); }
-.action-card.phase-night .action-name { color: var(--night-text); }
-.action-card.phase-night .action-info { color: var(--night-dim); }
+.action-card.phase-night .action-name { color: #ffffff; }
+.action-card.phase-night .action-info { color: #d2d7ea; }
+.action-card.phase-night .action-gains { color: #9fe08f; }
 .action-card.phase-both { background-color: var(--day-card); }
 .phase-split { position: absolute; left: 0; top: 0; right: 0; bottom: 0; --split-color: #1c2444; }
 /* 둘 다 되는 카드: 사선 위에서도 읽히게 글씨 띠 */
@@ -315,18 +323,19 @@ Button.selected { border-color: var(--accent); background-color: var(--accent-so
 .action-card.phase-both .action-info,
 .action-card.phase-both .action-gains,
 .action-card.phase-both .action-phases {
-    background-color: rgba(22, 24, 32, 0.78);
+    background-color: rgba(14, 16, 24, 0.88);
     border-radius: 3px;
     padding: 0 5px;
     margin: 1px 0;
 }
-.action-card.phase-both .action-name { color: var(--night-text); }
-.action-card.phase-both .action-info { color: #b9bccb; }
+.action-card.phase-both .action-name { color: #ffffff; }
+.action-card.phase-both .action-info { color: #e0e3ee; }
+.action-card.phase-both .action-gains { color: #9fe08f; }
 .action-card:hover { border-color: rgba(231, 176, 74, 0.55); }
 .action-card.selected { border-color: #e7b04a; border-width: 3px; }
 .card-icon { position: absolute; left: 4px; top: 50%; -unity-background-scale-mode: scale-to-fit; }
 .action-phases { flex-direction: row; padding: 2px 0; }
-.phase-chip { font-size: 13px; padding: 0 6px; margin-right: 4px; border-radius: 3px; -unity-font-style: bold; }
+.phase-chip { font-size: 14px; padding: 0 6px; margin-right: 4px; border-radius: 3px; -unity-font-style: bold; }
 .phase-chip-day { background-color: var(--day-card); color: var(--day-text); }
 .phase-chip-night { background-color: var(--night-card); color: var(--night-text); border-width: 1px; border-color: #3a4670; }
 .phase-chip.off { opacity: 0.3; }
