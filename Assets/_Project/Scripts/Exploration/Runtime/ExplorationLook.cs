@@ -218,9 +218,16 @@ namespace ApoGirl.Exploration.Runtime
             }
 
             var normals = Settings.Normals ?? new NormalConfig();
-            light.normalMapQuality = NormalsOn ? Light2D.NormalMapQuality.Accurate : Light2D.NormalMapQuality.Disabled;
-            light.normalMapDistance = Mathf.Max(0.1f, normals.LightDistance);
+            // Light2D는 노멀 설정을 읽기 전용으로만 열어 두어 직렬화 필드를 직접 바꾼다 (URP 17: m_NormalMapQuality·m_NormalMapDistance)
+            NormalQualityField?.SetValue(light, NormalsOn ? Light2D.NormalMapQuality.Accurate : Light2D.NormalMapQuality.Disabled);
+            NormalDistanceField?.SetValue(light, Mathf.Max(0.1f, normals.LightDistance));
         }
+
+        private static readonly System.Reflection.FieldInfo NormalQualityField =
+            typeof(Light2D).GetField("m_NormalMapQuality", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic);
+
+        private static readonly System.Reflection.FieldInfo NormalDistanceField =
+            typeof(Light2D).GetField("m_NormalMapDistance", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic);
 
         /// <summary>도트 빛: 기본 조명 머티리얼을 쓰는 스프라이트를 도트 빛 머티리얼로 (다른 머티리얼은 그대로). 새로 생긴 그림을 위해 다시 불러도 된다.</summary>
         public void ApplyPixelLight(Transform root)
