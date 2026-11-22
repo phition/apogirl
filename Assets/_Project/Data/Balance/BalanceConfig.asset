@@ -221,6 +221,21 @@ MonoBehaviour:
     - 1
     - 1.25
     - 1.5
+    TeacherBondBands:
+    - MinAffinity: 30
+      CheckBonus: 0.05
+      XpMultiplier: 1.1
+      GreatSuccessBonus: 0
+    - MinAffinity: 60
+      CheckBonus: 0.1
+      XpMultiplier: 1.2
+      GreatSuccessBonus: 0
+    - MinAffinity: 80
+      CheckBonus: 0.15
+      XpMultiplier: 1.3
+      GreatSuccessBonus: 0.05
+    TeacherFormalNoteBelow: 30
+    TeacherCloseNoteAffinity: 80
     CompanionAffinityGainScale: 2
     CompanionSatietyDailyDrain: 25
     CompanionHydrationDailyDrain: 30

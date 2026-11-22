@@ -5047,6 +5047,54 @@ MonoBehaviour:
     m_Key: npc.NPC_CAT
     m_Metadata:
       m_Items: []
+  - m_Id: 1084388040523776
+    m_Key: diary.teacher.formal.default
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1084388191518720
+    m_Key: diary.teacher.formal.Stamina
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1084388191518721
+    m_Key: diary.teacher.formal.Strength
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1084388191518722
+    m_Key: diary.teacher.formal.Agility
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1084388191518723
+    m_Key: diary.teacher.formal.Intellect
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1084388191518724
+    m_Key: diary.teacher.formal.Craft
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1084388191518725
+    m_Key: diary.teacher.formal.Willpower
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1084388191518726
+    m_Key: diary.teacher.formal.Empathy
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1084388191518727
+    m_Key: diary.teacher.formal.Leadership
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1084388191518728
+    m_Key: diary.teacher.close_tail.0
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1084388191518729
+    m_Key: diary.teacher.close_tail.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1084388191518730
+    m_Key: diary.teacher.close_tail.2
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
