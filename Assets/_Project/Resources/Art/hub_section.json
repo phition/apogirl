@@ -502,6 +502,10 @@
     {
       "Npc": "NPC_RINGLEADER",
       "Key": "hub_ringleader"
+    },
+    {
+      "Npc": "NPC_CAT",
+      "Key": "hub_cat"
     }
   ],
   "Teacher": {

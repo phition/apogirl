@@ -1735,7 +1735,10 @@
       "Weight": 1,
       "Condition": {
         "WeekMin": 15,
-        "Phase": "Day"
+        "Phase": "Day",
+        "FlagsNone": [
+          "CAT_FRIEND"
+        ]
       },
       "Choices": [
         {
@@ -1760,7 +1763,8 @@
               }
             ],
             "SetFlags": [
-              "CAT_FRIEND"
+              "CAT_FRIEND",
+              "CAT_FED_2"
             ]
           }
         },

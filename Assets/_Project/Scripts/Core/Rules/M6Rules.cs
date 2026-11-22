@@ -309,6 +309,11 @@ namespace ApoGirl.Core.Rules
         /// <summary>지금 이 동료에게 맡길 수 있는 역할 (단추 순환 순서). 정원이 찬 역할은 빠진다 (이미 맡은 역할은 남는다).</summary>
         public static List<RoleDef> Choices(GameState state, IDefinitionDatabase db, string npcId)
         {
+            if (CatRules.IsCat(npcId))
+            {
+                return new List<RoleDef>();   // 고양이는 역할을 맡지 않는다
+            }
+
             state.Npcs.TryGetValue(npcId ?? "", out var npc);
             var capacity = db.Balance.RoleCapacity;
             return db.Extras.Roles.Where(r => IsAvailable(state, r)

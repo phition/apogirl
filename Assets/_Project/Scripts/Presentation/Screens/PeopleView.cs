@@ -261,9 +261,17 @@ namespace ApoGirl.Presentation.Screens
             card.Add(top);
 
             var body = GiveRules.Body(state, id) ?? new BodyState();
-            card.Add(PeopleUi.Bar("vital.Stress", "vital-stress", false, body.Stress, UiText.Vital(VitalType.Stress) + " " + body.Stress));
+            var cat = CatRules.IsCat(id);   // 고양이는 관계·허기만 (확장 2)
+            if (!cat)
+            {
+                card.Add(PeopleUi.Bar("vital.Stress", "vital-stress", false, body.Stress, UiText.Vital(VitalType.Stress) + " " + body.Stress));
+            }
+
             card.Add(PeopleUi.Bar("vital.Satiety", "vital-satiety", true, body.Satiety, UiText.Vital(VitalType.Satiety) + " " + UiText.Signed(body.Satiety)));
-            card.Add(PeopleUi.Bar("vital.Hydration", "vital-hydration", true, body.Hydration, UiText.Vital(VitalType.Hydration) + " " + UiText.Signed(body.Hydration)));
+            if (!cat)
+            {
+                card.Add(PeopleUi.Bar("vital.Hydration", "vital-hydration", true, body.Hydration, UiText.Vital(VitalType.Hydration) + " " + UiText.Signed(body.Hydration)));
+            }
 
             foreach (var flag in Flags(state, balance, id))
             {
@@ -337,6 +345,11 @@ namespace ApoGirl.Presentation.Screens
                 return Loc.T("people.teacher_role");
             }
 
+            if (CatRules.IsCat(id))
+            {
+                return "";
+            }
+
             var npc = state.Npcs[id];
             return string.IsNullOrEmpty(npc.Role) ? Loc.T("role.none") : Loc.T("role." + npc.Role);
         }
@@ -352,6 +365,12 @@ namespace ApoGirl.Presentation.Screens
                     yield return Loc.T("teacher.stage." + Math.Min(stage, 4));
                 }
 
+                yield break;
+            }
+
+            if (CatRules.IsCat(id))
+            {
+                yield return Loc.T("people.cat_note");   // 확장 2: 무엇을 해 주는지 한 줄
                 yield break;
             }
 

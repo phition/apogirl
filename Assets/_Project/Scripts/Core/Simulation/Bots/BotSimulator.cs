@@ -104,6 +104,9 @@ namespace ApoGirl.Core.Simulation.Bots
         /// <summary>기획 A: 끝났을 때 가진 CD 수.</summary>
         public int Cds;
 
+        /// <summary>확장 2: 끝났을 때 고양이가 눌러앉아 있었다.</summary>
+        public bool Cat;
+
         /// <summary>M7-2 진단: 판이 끝났을 때 조건을 만족한 (배드 제외) 엔딩.</summary>
         public readonly List<string> EligibleEndings = new List<string>();
 
@@ -290,7 +293,8 @@ namespace ApoGirl.Core.Simulation.Bots
             result.RaidsRepelled = state.Exploration.RaidsRepelled;
             result.Intrusions = state.Exploration.Intrusions;
             result.IntrusionsLost = state.Exploration.IntrusionsLost;
-            result.Companions = state.Npcs.Count(n => n.Value.Status == NpcStatus.Joined);
+            result.Companions = state.Npcs.Count(n => n.Value.Status == NpcStatus.Joined && !CatRules.IsCat(n.Key));
+            result.Cat = CatRules.IsHome(state);
             result.Events = state.Events.Records.Count;
             foreach (var record in state.Events.Records)
             {

@@ -483,6 +483,20 @@ namespace ApoGirl.Core.Definitions
         /// <summary>헤드리스(자동) 탐험에서 그 지역의 CD(줍는 조우)를 찾아 챙기는 확률 (기획 A.3, 휴대폰에서도 모을 수 있게).</summary>
         public float HeadlessCdChance = 0.3f;
 
+        // ── 고양이 '급식' (확장 2) ──
+
+        /// <summary>눌러앉은 고양이가 주마다 먹는 식량 (모자라면 먹지 않는다: 알아서 쥐를 잡는다).</summary>
+        public int CatFoodPerWeek = 1;
+
+        /// <summary>주인공 스트레스가 이만큼 이상이면 주 결산 때 고양이가 무릎에 올라온다.</summary>
+        public int CatComfortStressMin = 60;
+
+        /// <summary>무릎에 올라왔을 때 스트레스 감소.</summary>
+        public int CatComfortStress = 4;
+
+        /// <summary>습격이 뚫렸을 때 피해 배율 (고양이가 먼저 털을 세워 경고한다).</summary>
+        public float CatRaidDamageScale = 0.85f;
+
         // ── 탐험의 깊이 (기획 B) ──
 
         /// <summary>헤드리스(자동) 탐험에서 깊은 곳까지 들어가 보는 확률 (깊은 곳이 있는 지역, 무사히 돌아온 판).</summary>

@@ -137,6 +137,9 @@ namespace ApoGirl.Core.Rules
 
         /// <summary>뚫렸을 때 주인공 앞을 막아서다 다친 동료 (기획 C.2 ③, 없으면 빈 문자열).</summary>
         public string CoveredNpcId = "";
+
+        /// <summary>뚫린 밤에 고양이가 먼저 털을 세워 경고했다 (확장 2, 피해가 조금 줄었다).</summary>
+        public bool CatWarned;
     }
 
     /// <summary>밤 습격 (문서 5.5): 방어도 vs 위협도 vs 전투력.</summary>
@@ -207,6 +210,8 @@ namespace ApoGirl.Core.Rules
                 state.Flags.Add(FlagBreached);
                 EffectApplier.ChangeVital(state, VitalType.Stress, balance.RaidBreachStress, balance, delta);
                 var scale = SpecialRules.RaidDamageScale(state, balance); // 도현 특기: 피해 −20%
+                scale *= CatRules.RaidDamageScale(state, balance, away);   // 확장 2: 고양이가 먼저 털을 세운다
+                result.CatWarned = !away && CatRules.IsHome(state);
                 if (!away)
                 {
                     // 관계가 높은 동료가 대신 다치기도 한다 (기획 C.2 ③)

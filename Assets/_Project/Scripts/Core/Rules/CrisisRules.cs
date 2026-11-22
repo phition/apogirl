@@ -32,7 +32,7 @@ namespace ApoGirl.Core.Rules
             }
 
             var candidates = state.Npcs
-                .Where(n => n.Key != EffectApplier.TeacherNpcId && n.Value.Status == NpcStatus.Joined
+                .Where(n => n.Key != EffectApplier.TeacherNpcId && !CatRules.IsCat(n.Key) && n.Value.Status == NpcStatus.Joined
                             && n.Value.Affinity < balance.CrisisLeaveBelowAffinity && !state.Flags.Contains(WarnFlag(balance, n.Key)))
                 .OrderBy(n => n.Value.Affinity)
                 .ThenBy(n => n.Key, StringComparer.Ordinal)
@@ -54,7 +54,7 @@ namespace ApoGirl.Core.Rules
         public static string RollCover(GameState state, BalanceConfig balance, IRandomService random)
         {
             var best = state.Npcs
-                .Where(n => n.Key != EffectApplier.TeacherNpcId && n.Value.Status == NpcStatus.Joined && n.Value.InjuredWeeks <= 0
+                .Where(n => n.Key != EffectApplier.TeacherNpcId && !CatRules.IsCat(n.Key) && n.Value.Status == NpcStatus.Joined && n.Value.InjuredWeeks <= 0
                             && !OutingRules.IsAwayNow(state, n.Value) && n.Value.Affinity >= balance.RaidCoverMinAffinity)
                 .OrderByDescending(n => n.Value.Affinity)
                 .ThenBy(n => n.Key, StringComparer.Ordinal)

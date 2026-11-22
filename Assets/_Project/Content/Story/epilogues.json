@@ -66,6 +66,12 @@
     { "Id": "EP_SEAT_SAGEORI_CHILD", "Kind": "EndingEpilogue", "Group": "SEAT_EMPTY", "Priority": 20, "TextKey": "line.ep_seat_sageori_child",
       "Condition": { "FlagsAny": [ "SEAT_STAY_TEACHERS", "SEAT_STAY_FRIEND", "SEAT_STAY_RINGLEADER", "SEAT_STAY_BYSTANDER", "SEAT_STAY_SELF" ], "AnyChecks": [ { "Kind": "Flag", "Key": "JUN_MEDIATED", "Op": "GreaterOrEqual", "Value": 1 }, { "Kind": "FactionTier", "Key": "FAC_SAGEORI", "Op": "GreaterOrEqual", "Value": 4 } ] } },
 
+    { "Id": "EP_CAT_HOME", "Kind": "EndingEpilogue", "Group": "NPC_CAT", "Priority": 10, "TextKey": "line.ep_cat_home",
+      "Condition": { "NpcStatuses": [ { "NpcId": "NPC_CAT", "Status": "Joined" } ], "FlagsNone": [ "SEAT_STAY_SENIOR" ] } },
+    { "Id": "EP_CAT_LONE", "Kind": "EndingEpilogue", "Group": "NPC_CAT", "Priority": 50, "TextKey": "line.ep_cat_lone",
+      "Condition": { "NpcStatuses": [ { "NpcId": "NPC_CAT", "Status": "Joined" } ], "FlagsNone": [ "SEAT_STAY_SENIOR" ],
+                     "Checks": [ { "Kind": "Companions", "Op": "Equal", "Value": 0 } ] } },
+
     { "Id": "EP_JUN", "Kind": "EndingEpilogue", "Group": "JUN", "Priority": 0, "TextKey": "line.ep_jun",
       "Condition": { "FlagsAll": [ "JUN_JOINS" ] } },
 

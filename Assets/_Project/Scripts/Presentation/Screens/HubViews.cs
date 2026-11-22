@@ -203,7 +203,7 @@ namespace ApoGirl.Presentation.Screens
         private void RefreshCompanions(GameState state)
         {
             _companions.Clear();
-            foreach (var pair in state.Npcs.Where(n => n.Value.Status == NpcStatus.Joined))
+            foreach (var pair in state.Npcs.Where(n => n.Value.Status == NpcStatus.Joined && !Core.Rules.CatRules.IsCat(n.Key)))
             {
                 var npcId = pair.Key;
                 var npc = pair.Value;

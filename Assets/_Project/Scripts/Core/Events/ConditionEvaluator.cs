@@ -171,18 +171,18 @@ namespace ApoGirl.Core.Events
                 case ValueKind.DiaryCount: return state.Diary.Count;
                 case ValueKind.Companions:
                     var joined = 0;
-                    foreach (var npc in state.Npcs.Values)
+                    foreach (var pair in state.Npcs)
                     {
-                        if (npc.Status == NpcStatus.Joined) joined++;
+                        if (pair.Value.Status == NpcStatus.Joined && !CatRules.IsCat(pair.Key)) joined++;   // 고양이는 사람 수에 들지 않는다
                     }
 
                     return joined;
                 case ValueKind.CloseCompanions:
                     var min = int.TryParse(key, out var parsed) ? parsed : 0;
                     var close = 0;
-                    foreach (var npc in state.Npcs.Values)
+                    foreach (var pair in state.Npcs)
                     {
-                        if (npc.Status == NpcStatus.Joined && npc.Affinity >= min) close++;
+                        if (pair.Value.Status == NpcStatus.Joined && pair.Value.Affinity >= min && !CatRules.IsCat(pair.Key)) close++;
                     }
 
                     return close;

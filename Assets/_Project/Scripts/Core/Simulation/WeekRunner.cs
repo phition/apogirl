@@ -89,6 +89,9 @@ namespace ApoGirl.Core.Simulation
 
         /// <summary>이번 주 처음 주운 CD (기획 A).</summary>
         public readonly List<string> CdFound = new List<string>();
+
+        /// <summary>이번 주 고양이가 무릎에 올라왔다 (확장 2).</summary>
+        public bool CatComforted;
     }
 
     /// <summary>
@@ -582,6 +585,7 @@ namespace ApoGirl.Core.Simulation
                 EffectApplier.ChangeVital(_state, VitalType.Stress, -relief, Balance, summary.Delta);
             }
             FactionRules.ApplyWeekly(_state, _db, Balance, summary.Delta);
+            summary.CatComforted = CatRules.ApplyWeekly(_state, Balance, summary.Delta); // 확장 2
             summary.CdFound.AddRange(_cdFound);
             summary.LeaveWarned.AddRange(CrisisRules.WarnWeekly(_state, Balance, _outcomes.Any(o => o.Raid != null && !o.Raid.Repelled)));
             if (calendar.Week >= Balance.RaidStartWeek - 1)

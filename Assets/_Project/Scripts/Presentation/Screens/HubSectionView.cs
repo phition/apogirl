@@ -307,6 +307,18 @@ namespace ApoGirl.Presentation.Screens
                         actor.Place(door.Value.Floor, door.Value.X);
                     }
 
+                    if (Core.Rules.CatRules.IsCat(actor.Id) && state != null)
+                    {
+                        // 고양이 (확장 2): 낮마다 열린 방 하나를 골라 돌아다니고, 밤엔 지내는 곳으로 온다
+                        var spot = CatRoom(state, phase);
+                        if (spot != null)
+                        {
+                            actor.PostFloor = spot.Def.Floor;
+                            actor.PostX = spot.Def.X + spot.Def.Width * 0.55f;
+                            actor.PostRoom = spot.Def.Id;
+                        }
+                    }
+
                     var night = phase == DayPhase.Night && !actor.Guard;
                     actor.WalkTo(night ? actor.HomeFloor : actor.PostFloor, night ? actor.HomeX : actor.PostX, this);
                 }
@@ -941,6 +953,10 @@ namespace ApoGirl.Presentation.Screens
                 // 역할 재기획: 역할의 방 묶음에서 열린 방 (코어 규칙, 같은 역할 둘째 사람은 다음 방)
                 var roleRoom = ApoGirl.Core.Rules.RoleRules.RoomFor(state, _session.Definitions, pair.Key);
                 var room = roleRoom != null && _rooms.TryGetValue(roleRoom, out var rr) && rr.Open ? rr : home;
+                if (Core.Rules.CatRules.IsCat(pair.Key))
+                {
+                    room = CatRoom(state, _phase) ?? home;   // 고양이는 맡은 방 없이 돌아다닌다
+                }
                 var actor = NewActor("npc");
                 actor.Id = pair.Key;
                 actor.SetLook(Frames(sprite + "_idle_", sprite), null);
@@ -966,6 +982,19 @@ namespace ApoGirl.Presentation.Screens
             }
 
             UpdateAwayMarks();
+        }
+
+        /// <summary>고양이가 이번 칸에 있을 방: 열린 방 가운데 (주·날·낮밤)로 정한 하나. 같은 칸이면 늘 같다.</summary>
+        private RoomView CatRoom(GameState state, DayPhase phase)
+        {
+            var open = _rooms.Values.Where(r => r.Open).OrderBy(r => r.Def.Id, StringComparer.Ordinal).ToList();
+            if (open.Count == 0)
+            {
+                return null;
+            }
+
+            var hash = (state.Calendar.Week * 31 + state.Calendar.Day * 7 + (int)phase * 3) * 2654435761u;
+            return open[(int)(hash % (uint)open.Count)];
         }
 
         private string TeacherKey(GameState state, out bool canWalk, out string room)

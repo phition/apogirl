@@ -183,6 +183,11 @@ namespace ApoGirl.Presentation.Screens
                     {
                         lines.Add(Loc.F("settle.raid_covered", Loc.T("npc." + slot.Raid.CoveredNpcId)));
                     }
+
+                    if (slot.Raid.CatWarned)
+                    {
+                        lines.Add(Loc.T("settle.raid_cat"));
+                    }
                 }
                 else if (slot.Expedition != null && slot.ExpeditionRequest != null)
                 {
@@ -209,6 +214,12 @@ namespace ApoGirl.Presentation.Screens
             foreach (var id in summary.CdFound)
             {
                 lines.Add(Loc.F("settle.cd_found", Loc.T("cd." + id + ".title")));
+            }
+
+            // 고양이 (확장 2): 지친 주에 무릎에 올라왔다
+            if (summary.CatComforted)
+            {
+                lines.Add(Loc.T("settle.cat_comfort"));
             }
 
             // 위기 이탈 예고 (기획 C.2 ③): 이유가 보이게

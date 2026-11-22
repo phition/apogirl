@@ -1,0 +1,87 @@
+{
+  "Events": [
+    {
+      "Id": "EVT_CAT_1",
+      "Kind": "Night",
+      "Priority": 22,
+      "Condition": {
+        "Phase": "Night",
+        "Days": [3],
+        "WeekMin": 9,
+        "FlagsNone": ["CAT_MET", "CAT_FRIEND"]
+      },
+      "OnShow": { "SetFlags": ["CAT_MET"] },
+      "Choices": [
+        {
+          "Id": "FEED",
+          "Effect": {
+            "Resources": [ { "Resource": "Food", "Amount": -1 } ],
+            "Vitals": [ { "Vital": "Stress", "Amount": -2 } ],
+            "SetFlags": ["CAT_FED_1"]
+          }
+        },
+        {
+          "Id": "WATCH",
+          "Effect": { "Vitals": [ { "Vital": "Stress", "Amount": -1 } ] }
+        }
+      ]
+    },
+    {
+      "Id": "EVT_CAT_2",
+      "Kind": "Night",
+      "Priority": 22,
+      "Condition": {
+        "Phase": "Night",
+        "Days": [6],
+        "WeekMin": 11,
+        "FlagsAll": ["CAT_FED_1"],
+        "FlagsNone": ["CAT_FED_2", "CAT_FRIEND"]
+      },
+      "Choices": [
+        {
+          "Id": "FEED",
+          "Effect": {
+            "Resources": [ { "Resource": "Food", "Amount": -1 } ],
+            "Vitals": [ { "Vital": "Stress", "Amount": -3 } ],
+            "Hidden": [ { "Hidden": "Hope", "Amount": 1 } ],
+            "SetFlags": ["CAT_FED_2", "CAT_FRIEND"]
+          }
+        },
+        {
+          "Id": "LEAVE",
+          "Effect": { "SetFlags": ["CAT_PASSED"] }
+        }
+      ]
+    },
+    {
+      "Id": "EVT_CAT_3",
+      "Kind": "Night",
+      "Priority": 22,
+      "Condition": {
+        "Phase": "Night",
+        "Days": [2],
+        "WeekMin": 13,
+        "FlagsAll": ["CAT_FED_2"],
+        "FlagsNone": ["CAT_HOME", "CAT_OUTSIDE"]
+      },
+      "Choices": [
+        {
+          "Id": "LET_IN",
+          "Effect": {
+            "Npcs": [ { "NpcId": "NPC_CAT", "SetStatus": "Joined", "Affinity": 20 } ],
+            "Vitals": [ { "Vital": "Stress", "Amount": -4 } ],
+            "Hidden": [ { "Hidden": "Hope", "Amount": 2 } ],
+            "SetFlags": ["CAT_HOME"]
+          }
+        },
+        {
+          "Id": "KEEP_OUT",
+          "Effect": {
+            "Vitals": [ { "Vital": "Stress", "Amount": -1 } ],
+            "SetFlags": ["CAT_OUTSIDE"]
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -24,7 +24,9 @@ namespace ApoGirl.Core.Rules
                 result.Add(TeacherId);
             }
 
-            result.AddRange(state.Npcs.Where(n => n.Value.Status == NpcStatus.Joined).Select(n => n.Key).OrderBy(k => k, StringComparer.Ordinal));
+            // 고양이는 맨 아래
+            result.AddRange(state.Npcs.Where(n => n.Value.Status == NpcStatus.Joined).Select(n => n.Key)
+                .OrderBy(k => CatRules.IsCat(k)).ThenBy(k => k, StringComparer.Ordinal));
             return result;
         }
 

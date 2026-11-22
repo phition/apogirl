@@ -829,6 +829,11 @@ namespace ApoGirl.Presentation.Screens
                 {
                     lines.Add(Loc.F("result.raid_covered", Loc.T("npc." + outcome.Raid.CoveredNpcId)));
                 }
+
+                if (outcome.Raid.CatWarned)
+                {
+                    lines.Add(Loc.T("result.raid_cat"));   // 확장 2: 고양이가 먼저 털을 세웠다
+                }
             }
 
             if (outcome.Intrusion != null)

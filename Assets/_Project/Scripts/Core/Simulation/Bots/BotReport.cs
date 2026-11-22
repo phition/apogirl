@@ -352,6 +352,20 @@ namespace ApoGirl.Core.Simulation.Bots
 
             sb.AppendLine();
 
+            // 고양이 (확장 2): 끝났을 때 눌러앉아 있던 판, 동료 없이 끝난 판 가운데 고양이가 있던 판
+            sb.AppendLine("## 고양이 (확장 2)");
+            sb.AppendLine();
+            sb.AppendLine("| 전략 | 고양이와 끝남 | 동료 없이 끝난 판 중 고양이 |");
+            sb.AppendLine("|---|---|---|");
+            foreach (var g in runs.GroupBy(r => r.StrategyId))
+            {
+                var list = g.ToList();
+                var alone = list.Where(r => r.Companions == 0).ToList();
+                sb.AppendLine($"| {g.Key} | {P(list.Count(r => r.Cat), list.Count)} | {(alone.Count == 0 ? "-" : P(alone.Count(r => r.Cat), alone.Count))} |");
+            }
+
+            sb.AppendLine();
+
             // 막 끝 자원 (13·26·39·52주)
             sb.AppendLine("## 막 끝 자원 평균 (식량 / 물 / 약, 살아 있는 판)");
             sb.AppendLine();
