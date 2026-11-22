@@ -1946,10 +1946,12 @@ namespace ApoGirl.Exploration.Runtime
                 }
             }
 
-            if (Hidden) return look + "crouch";
+            // 멈춰 웅크린 자세는 웅크려 걷기 첫 프레임 (낱장 crouch 그림은 가방 자리 표에 없어 가방이 사라진다)
+            var crouchStill = ExplorationArt.HasPixel(look + "crouch_0") ? look + "crouch_0" : look + "crouch";
+            if (Hidden) return crouchStill;
             if (_crouching)
             {
-                return _animMoving ? LoopFrame(look + "crouch_", _animTime, PixelSneakFps) ?? look + "crouch" : look + "crouch";
+                return _animMoving ? LoopFrame(look + "crouch_", _animTime, PixelSneakFps) ?? crouchStill : crouchStill;
             }
 
             if (!_animMoving) return LoopFrame(look + "idle_", Time.time, PixelIdleFps) ?? look + "idle";
@@ -2297,9 +2299,10 @@ namespace ApoGirl.Exploration.Runtime
             var worldX = origin.x + X;
             if (_playerSprites)
             {
-                _player.localPosition = new Vector3(worldX, origin.y + 0.15f, 0f);
                 _playerRenderer.flipX = !_facingRight;
                 _playerFrameKey = PlayerFrame(dt);
+                // 발이 그림 바닥보다 뜬 프레임(공격 도약·대걸레 그림)은 그만큼 내려 발을 바닥에 붙인다 (가방은 자식이라 함께 내려간다)
+                _player.localPosition = new Vector3(worldX, origin.y + 0.15f - ExplorationArt.FootLift(_playerFrameKey), 0f);
                 _playerRenderer.sprite = ExplorationArt.Get(_playerFrameKey);
                 _playerRenderer.color = Hidden ? new Color(1f, 1f, 1f, 0.3f) : Color.white;
                 if (_bagRenderer != null)

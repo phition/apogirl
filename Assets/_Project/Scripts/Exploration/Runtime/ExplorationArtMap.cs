@@ -90,6 +90,9 @@ namespace ApoGirl.Exploration.Runtime
             public float X;
             public float Y;
             public float Angle;
+
+            /// <summary>그 프레임에서 발이 그림 바닥보다 떠 있는 높이 (유닛). 이만큼 내려 그려 발을 바닥에 붙인다.</summary>
+            public float Lift;
         }
 
         [Serializable]
@@ -277,6 +280,28 @@ namespace ApoGirl.Exploration.Runtime
         /// </summary>
         public static bool TryGetBackAnchor(string spriteKey, out Vector2 position, out float angle)
         {
+            LoadAnchors();
+            if (spriteKey != null && _anchors.TryGetValue(spriteKey, out var found))
+            {
+                position = new Vector2(found.X, found.Y);
+                angle = found.Angle;
+                return true;
+            }
+
+            position = default;
+            angle = 0f;
+            return false;
+        }
+
+        /// <summary>주인공 프레임의 발 높이 (유닛, 표에 없으면 0): 공격·대걸레 그림처럼 발이 그림 바닥보다 뜬 프레임을 바닥에 붙일 때 쓴다.</summary>
+        public static float FootLift(string spriteKey)
+        {
+            LoadAnchors();
+            return spriteKey != null && _anchors.TryGetValue(spriteKey, out var found) ? found.Lift : 0f;
+        }
+
+        private static void LoadAnchors()
+        {
             if (_anchors == null)
             {
                 _anchors = new Dictionary<string, AnchorEntry>();
@@ -290,17 +315,6 @@ namespace ApoGirl.Exploration.Runtime
                     }
                 }
             }
-
-            if (spriteKey != null && _anchors.TryGetValue(spriteKey, out var found))
-            {
-                position = new Vector2(found.X, found.Y);
-                angle = found.Angle;
-                return true;
-            }
-
-            position = default;
-            angle = 0f;
-            return false;
         }
 
         /// <summary>프레임이 여러 장 있으면(key_0, key_1 …) 그 그림을 돌려 가며 보여 주는 부품을 붙인다 (숨 쉬는 조우 인물 등).</summary>
