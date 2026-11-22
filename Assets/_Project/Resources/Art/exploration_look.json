@@ -64,5 +64,11 @@
     "Strength": 12,
     "LumaWeight": 0.7,
     "LightDistance": 2
+  },
+  "SelfGlow": {
+    "_설명": "어둠 속 주인공 둘레의 희미한 빛. 반경 = 밤 시야 거리(BalanceConfig.NightViewDistance) × RadiusScale, 세기는 어두운 곳 DarkIntensity·조금 어두운 방 DimIntensity. 보이는 거리 규칙은 바꾸지 않는다. (예전 값: 반경 ×1, 0.55·0.35)",
+    "RadiusScale": 0.8,
+    "DarkIntensity": 0.42,
+    "DimIntensity": 0.28
   }
 }

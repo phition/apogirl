@@ -93,6 +93,20 @@ namespace ApoGirl.Exploration.Runtime
             public float LightDistance = 2f;
         }
 
+        /// <summary>어둠 속 주인공 둘레의 희미한 빛 (SelfGlow). 보이는 거리 규칙(NightViewDistance)은 그대로 두고 빛만 줄인다.</summary>
+        [Serializable]
+        public sealed class SelfGlowConfig
+        {
+            /// <summary>빛 반경 = NightViewDistance × 이 값.</summary>
+            public float RadiusScale = 0.8f;
+
+            /// <summary>어두운 곳(밤·어두운 방) 세기.</summary>
+            public float DarkIntensity = 0.42f;
+
+            /// <summary>조금 어두운 방(낮) 세기.</summary>
+            public float DimIntensity = 0.28f;
+        }
+
         [Serializable]
         public sealed class Config
         {
@@ -102,6 +116,7 @@ namespace ApoGirl.Exploration.Runtime
             public ShadowConfig Shadows = new ShadowConfig();
             public PixelLightConfig PixelLight = new PixelLightConfig();
             public NormalConfig Normals = new NormalConfig();
+            public SelfGlowConfig SelfGlow = new SelfGlowConfig();
         }
 
         private const string DefaultLitShader = "Universal Render Pipeline/2D/Sprite-Lit-Default";

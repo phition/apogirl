@@ -2130,8 +2130,9 @@ namespace ApoGirl.Exploration.Runtime
             _selfLight = glow.AddComponent<Light2D>();
             _selfLight.lightType = Light2D.LightType.Point;
             _selfLight.pointLightInnerRadius = 0.3f;
-            _selfLight.pointLightOuterRadius = _balance.NightViewDistance;
-            _selfLight.intensity = 0.55f;
+            var glowConfig = ExplorationLook.Settings.SelfGlow ?? new ExplorationLook.SelfGlowConfig();
+            _selfLight.pointLightOuterRadius = Mathf.Max(0.5f, _balance.NightViewDistance * glowConfig.RadiusScale);
+            _selfLight.intensity = glowConfig.DarkIntensity;
             _selfLight.color = new Color(0.8f, 0.85f, 1f);
             _selfLight.shadowsEnabled = false;   // 그림자는 손전등만
 
@@ -2254,7 +2255,8 @@ namespace ApoGirl.Exploration.Runtime
                 // 낮에도 어두운 방 안에서는 주인공 주변만 희미하게 보이게
                 var dimRoom = !IsDark && _lighting != null && _lighting.IsDimRoom(CurrentArea);
                 _selfLight.enabled = DarkHere || dimRoom;
-                _selfLight.intensity = IsDark ? 0.55f : 0.35f;
+                var glow = ExplorationLook.Settings.SelfGlow ?? new ExplorationLook.SelfGlowConfig();
+                _selfLight.intensity = IsDark ? glow.DarkIntensity : glow.DimIntensity;
                 _selfLight.transform.localPosition = center;
             }
 
