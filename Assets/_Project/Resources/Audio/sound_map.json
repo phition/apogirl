@@ -11,7 +11,11 @@
     { "Event": "EVT_A1_FINALE", "Clip": "Sfx/ui_raid_alarm" },
     { "Event": "EVT_A4_FINALE_RAID", "Clip": "Sfx/ui_raid_alarm" },
     { "Event": "EVT_A4_FINALE_RAID_ALLY", "Clip": "Sfx/ui_raid_alarm" },
-    { "Event": "EVT_A4_FINALE_RAID_KANGCHEOL", "Clip": "Sfx/ui_raid_alarm" }
+    { "Event": "EVT_A4_FINALE_RAID_KANGCHEOL", "Clip": "Sfx/ui_raid_alarm" },
+    { "Event": "EVT_BROADCAST_FIRST", "Clip": "Sfx/ui_school_jingle" },
+    { "Event": "EVT_BROADCAST_SONG", "Clip": "Sfx/sfx_mic_on" },
+    { "Event": "EVT_BROADCAST_INFO", "Clip": "Sfx/sfx_mic_on" },
+    { "Event": "EVT_BROADCAST_LETTER", "Clip": "Sfx/sfx_mic_on" }
   ],
   "Lines": [
     { "Speaker": "DJ", "Starts": "새벽시 어딘가에서", "Clip": "Voice/vo_dj_hello" },

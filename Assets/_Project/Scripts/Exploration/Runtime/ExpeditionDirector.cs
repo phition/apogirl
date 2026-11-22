@@ -575,11 +575,11 @@ namespace ApoGirl.Exploration.Runtime
                     Sfx("sfx_door_open", 0.9f);
                     EmitNoise(CurrentArea, X, _balance.DoorNoise);
                     MoveTo(_corridors[target.Connector.TargetFloor], target.Connector.ArrivalX);
-                    Sfx("sfx_door_locked", 0.8f);   // 철컥: 등 뒤에서 잠긴다
+                    Sfx("sfx_oneway_lock", 0.9f);   // 철컥: 등 뒤에서 잠긴다
                     _hud?.ShowMessage("exp.oneway_shut");
                     break;
                 case TargetKind.Connector when target.Connector.Kind == ConnectorKind.DeepDoor:
-                    Sfx("sfx_door_force", 0.7f);   // 무거운 쇳소리
+                    Sfx("sfx_deep_door_open", 0.8f);   // 무거운 쇳소리와 지하 바람
                     EmitNoise(CurrentArea, X, _balance.DoorNoise);
                     MoveTo(_corridors[target.Connector.TargetFloor], target.Connector.ArrivalX);
                     EmitNoise(CurrentArea, X, _balance.DoorNoise);
@@ -1154,6 +1154,11 @@ namespace ApoGirl.Exploration.Runtime
         private void ApplyEncounterChoice(ExplorationTarget target, int choiceIndex)
         {
             var choice = target.Encounter.Choices[choiceIndex];
+            if (target.Encounter.Collectible && choice.Removes)
+            {
+                Sfx("sfx_cd_pickup", 0.9f);   // 에셋 8차: CD 케이스 딸깍
+            }
+
             _runFlags.AddRange(choice.SetFlags);
             _runClues.AddRange(choice.AddClues);
             _runStress = Math.Max(0, _runStress + (int)choice.StressDelta);
@@ -1372,7 +1377,7 @@ namespace ApoGirl.Exploration.Runtime
                     _moveNoiseTimer = MoveNoiseInterval;
                     var radius = _crouching ? _balance.CrouchNoise : running ? _balance.RunNoise : _balance.WalkNoise;
                     EmitNoise(CurrentArea, X, IsOverweight ? radius * _balance.OverweightNoiseMultiplier : radius);
-                    Sfx(running && !_crouching ? "sfx_step_run" : "sfx_step_tile", _crouching ? 0.25f : running ? 0.7f : 0.45f);
+                    Sfx(InFlood ? "sfx_step_water" : running && !_crouching ? "sfx_step_run" : "sfx_step_tile", _crouching ? 0.25f : running ? 0.7f : 0.45f);
                 }
 
                 Nearest = FindNearest();
@@ -3052,7 +3057,28 @@ namespace ApoGirl.Exploration.Runtime
             else Presentation.Audio.Sound.StopLoop("tension");
             if (dormantNear) Presentation.Audio.Sound.Loop("crowd", "Sfx/sfx_z_dormant_crowd", Presentation.Audio.SoundCategory.Ambience);
             else Presentation.Audio.Sound.StopLoop("crowd");
+
+            // 깊은 곳 환경음 (에셋 8차): 침수된 층은 물소리, 그 밖의 깊은 곳은 지하 통로 울림
+            var deepAmb = CurrentArea == null || !CurrentArea.IsDeep ? null : InFlood ? "Sfx/amb_flooded" : "Sfx/amb_deep";
+            if (deepAmb != _deepAmbience)
+            {
+                Presentation.Audio.Sound.StopLoop("deep");
+                if (deepAmb != null) Presentation.Audio.Sound.Loop("deep", deepAmb, Presentation.Audio.SoundCategory.Ambience);
+                _deepAmbience = deepAmb;
+            }
+
+            // 깊은 문 앞에 서면 문틈 바람 한 번
+            var deepDoor = Nearest != null && Nearest.Kind == TargetKind.Connector && Nearest.Connector.Kind == ConnectorKind.DeepDoor ? Nearest : null;
+            if (deepDoor != null && deepDoor != _draftDoor)
+            {
+                Sfx("sfx_deep_draft", 0.6f);
+            }
+
+            _draftDoor = deepDoor;
         }
+
+        private string _deepAmbience;
+        private ExplorationTarget _draftDoor;
 
         /// <summary>
         /// 수색 소리: E를 누르고 수색하는 동안만 반복해서 울리고, 다 뒤지거나 손을 떼거나 화면이 멈춘 프레임에 바로 끊는다.

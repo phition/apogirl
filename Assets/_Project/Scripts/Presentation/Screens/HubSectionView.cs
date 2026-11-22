@@ -687,6 +687,18 @@ namespace ApoGirl.Presentation.Screens
             var slots = CdPlayer.Slots;
             var shelf = Place(room, "hub-cd-shelf", def.CdShelfX, floorY - def.CdShelfY - slotH - 2f, slots * slotW + 2f, slotH + 2f);
             shelf.pickingMode = PickingMode.Ignore;
+            var shelfArt = StoryArt.Ui("HubObj/hub_obj_cd_shelf");   // 에셋 8차: 나무 진열장·CD 케이스 (없으면 색 칸)
+            var caseArt = StoryArt.Ui("HubObj/hub_obj_cd_case");
+            if (shelfArt != null)
+            {
+                shelf.style.backgroundImage = new StyleBackground(shelfArt);
+                shelf.style.backgroundColor = Color.clear;
+                shelf.style.borderTopWidth = 0f;
+                shelf.style.borderBottomWidth = 0f;
+                shelf.style.borderLeftWidth = 0f;
+                shelf.style.borderRightWidth = 0f;
+            }
+
             for (var i = 0; i < slots; i++)
             {
                 var entry = i < CdPlayer.All.Count ? CdPlayer.All[i] : null;
@@ -696,7 +708,20 @@ namespace ApoGirl.Presentation.Screens
                 slot.EnableInClassList("owned", owned);
                 if (owned && ColorUtility.TryParseHtmlString(entry.Color, out var color))
                 {
-                    slot.style.backgroundColor = color;
+                    if (caseArt != null)
+                    {
+                        slot.style.backgroundImage = new StyleBackground(caseArt);
+                        slot.style.backgroundColor = Color.clear;
+                        slot.style.unityBackgroundImageTintColor = Color.Lerp(Color.white, color, 0.6f);
+                    }
+                    else
+                    {
+                        slot.style.backgroundColor = color;
+                    }
+                }
+                else if (caseArt != null && shelfArt != null)
+                {
+                    slot.style.backgroundColor = Color.clear;   // 빈 칸은 진열장 그림 그대로
                 }
             }
         }
@@ -708,6 +733,7 @@ namespace ApoGirl.Presentation.Screens
             var head = new Label(Loc.T("hub.cd.list_title") + "  ·  " + Loc.F("hub.cd.shelf", count, CdPlayer.Slots));
             head.AddToClassList("hub-room-panel-note");
             head.AddToClassList("hub-cd-head");
+            StoryArt.SetIcon(head, StoryArt.Ui("HubObj/hub_obj_cd_player"), 40f);   // 에셋 8차: 휴대용 CD 플레이어
             _roomPanel.Add(head);
             if (count == 0)
             {
@@ -734,12 +760,21 @@ namespace ApoGirl.Presentation.Screens
 
                 var button = new Button(() =>
                 {
-                    if (CdPlayer.IsPlaying(_session.State, id)) CdPlayer.Stop(_session.State);
-                    else CdPlayer.Play(_session.State, id);
+                    if (CdPlayer.IsPlaying(_session.State, id))
+                    {
+                        CdPlayer.Stop(_session.State);
+                        Sound.Play("Sfx/sfx_cd_stop", SoundCategory.Ui);
+                    }
+                    else
+                    {
+                        Sound.Play("Sfx/sfx_cd_insert", SoundCategory.Ui);
+                        CdPlayer.Play(_session.State, id);
+                    }
                     ShowRoomPanel(_cdRoomId);
                 }) { text = label };
                 button.AddToClassList("hub-room-action");
                 button.AddToClassList("hub-cd-track");
+                StoryArt.SetIcon(button, StoryArt.Icon("cd." + id), 28f);   // 에셋 8차 표지
                 button.EnableInClassList("playing", playing);
                 var weekText = state.CdWeeks.TryGetValue(id, out var week) ? "  ·  " + Loc.F("hub.cd.found_week", week) : "";
                 button.tooltip = Loc.T("cd." + id + ".owner") + weekText;

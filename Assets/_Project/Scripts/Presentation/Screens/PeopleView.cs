@@ -274,6 +274,10 @@ namespace ApoGirl.Presentation.Screens
             {
                 var role = new Label(roleText);
                 role.AddToClassList("person-role");
+                if (state.Npcs.TryGetValue(id, out var roleNpc) && !string.IsNullOrEmpty(roleNpc.Role))
+                {
+                    StoryArt.SetIcon(role, StoryArt.Icon("role." + roleNpc.Role), 18f);   // 에셋 8차 역할 아이콘
+                }
                 nameRow.Add(role);
             }
 
@@ -299,15 +303,17 @@ namespace ApoGirl.Presentation.Screens
 
             foreach (var flag in Flags(state, balance, id))
             {
-                var label = new Label(flag);
+                var label = new Label(flag.Text);
                 label.AddToClassList("person-flag");
+                SetFlagIcon(label, flag.Icon);
                 card.Add(label);
             }
 
             foreach (var line in OutingFlags(state, id))
             {
-                var label = new Label(line);
+                var label = new Label(line.Text);
                 label.AddToClassList("person-outing");
+                SetFlagIcon(label, line.Icon);
                 card.Add(label);
             }
 
@@ -344,6 +350,7 @@ namespace ApoGirl.Presentation.Screens
                 }) { text = Loc.T(npc.StayHome ? "people.outing_let_go" : "people.outing_stay") };
                 toggle.AddToClassList("person-stay");
                 toggle.EnableInClassList("on", npc.StayHome);
+                StoryArt.SetIcon(toggle, StoryArt.Icon("ctl.stay_home"), 18f);
                 card.Add(toggle);
             }
 
@@ -351,7 +358,7 @@ namespace ApoGirl.Presentation.Screens
         }
 
         /// <summary>동료 탐험 줄: 계획 중 예고(날짜 없이)·붙잡음, 실행 중 밖에 나가 있음.</summary>
-        private IEnumerable<string> OutingFlags(GameState state, string id)
+        private IEnumerable<Flag> OutingFlags(GameState state, string id)
         {
             if (id == GiveRules.TeacherId || !state.Npcs.TryGetValue(id, out var npc))
             {
@@ -363,7 +370,7 @@ namespace ApoGirl.Presentation.Screens
                 var who = ApoGirl.Core.Text.KoreanJosa.Attach(PeopleUi.Name(id), "이/가");
                 if (npc.StayHome && OutingRules.WantsOut(state, _session.Definitions, id))
                 {
-                    yield return Loc.F("people.outing_held", who);
+                    yield return new Flag(Loc.F("people.outing_held", who), "ctl.stay_home");
                     if (npc.StayStreak >= 1)
                     {
                         yield return Loc.T("people.outing_held_again");
@@ -376,7 +383,30 @@ namespace ApoGirl.Presentation.Screens
             }
             else if (npc.Away)
             {
-                yield return Loc.T("people.outing_away");
+                yield return new Flag(Loc.T("people.outing_away"), "status.away");
+            }
+        }
+
+        /// <summary>인물 카드 한 줄: 문구 + (있으면) 아이콘 키. 문자열은 아이콘 없이 그대로 바뀐다.</summary>
+        private readonly struct Flag
+        {
+            public readonly string Text;
+            public readonly string Icon;
+
+            public Flag(string text, string icon = null)
+            {
+                Text = text;
+                Icon = icon;
+            }
+
+            public static implicit operator Flag(string text) => new Flag(text);
+        }
+
+        private static void SetFlagIcon(VisualElement label, string iconKey)
+        {
+            if (!string.IsNullOrEmpty(iconKey))
+            {
+                StoryArt.SetIcon(label, StoryArt.Icon(iconKey), 16f);
             }
         }
 
@@ -403,7 +433,7 @@ namespace ApoGirl.Presentation.Screens
             return string.IsNullOrEmpty(npc.Role) ? Loc.T("role.none") : Loc.T("role." + npc.Role);
         }
 
-        private IEnumerable<string> Flags(GameState state, BalanceConfig balance, string id)
+        private IEnumerable<Flag> Flags(GameState state, BalanceConfig balance, string id)
         {
             if (id == GiveRules.TeacherId)
             {
@@ -426,12 +456,12 @@ namespace ApoGirl.Presentation.Screens
             var npc = state.Npcs[id];
             if (npc.InjuredWeeks > 0)
             {
-                yield return Loc.F("people.injured", npc.InjuredWeeks);
+                yield return new Flag(Loc.F("people.injured", npc.InjuredWeeks), "status.injured");
             }
 
             if (npc.MinorWoundWeeks > 0)
             {
-                yield return Loc.T("people.minor_wound");
+                yield return new Flag(Loc.T("people.minor_wound"), "status.minor_wound");
             }
 
             // 동아리 (확장 7): 한 번이라도 같이 해 봤으면 좋아하는 활동을 느낌 문구로
@@ -444,9 +474,9 @@ namespace ApoGirl.Presentation.Screens
             // 특기 (기획 C.2 ②): 켜져 있으면 무엇을 해 주는지, 마음이 멀어져 꺼졌으면 그 사실만
             if (SpecialRules.IsUnlocked(state, balance, id))
             {
-                yield return SpecialRules.IsActive(state, balance, id)
+                yield return new Flag(SpecialRules.IsActive(state, balance, id)
                     ? Loc.F("people.special_on", Loc.T("special." + id + ".name"), Loc.T("special." + id + ".desc"))
-                    : Loc.F("people.special_off", Loc.T("special." + id + ".name"));
+                    : Loc.F("people.special_off", Loc.T("special." + id + ".name")), "special." + id);
             }
 
             // 역할 재기획: 적성은 느낌 문구로만, 정원을 넘었거나 방이 아직 없으면 그 사실만

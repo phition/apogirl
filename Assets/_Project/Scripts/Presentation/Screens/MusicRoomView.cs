@@ -1,4 +1,5 @@
 using System;
+using ApoGirl.Presentation.Art;
 using ApoGirl.Presentation.Audio;
 using ApoGirl.Presentation.Text;
 using UnityEngine;
@@ -21,6 +22,11 @@ namespace ApoGirl.Presentation.Screens
             _root = new VisualElement { name = "music-room-view" };
             _root.AddToClassList("gallery-view");
             parent.Add(_root);
+            var backdrop = StoryArt.Story("Backgrounds/bg_title_music");   // 에셋 8차: 해 질 녘 방송실
+            if (backdrop != null)
+            {
+                StoryArt.SetCover(_root, backdrop);
+            }
 
             var room = CdPlayer.Room;
             var header = new Label(Loc.T("music.title"));
@@ -75,6 +81,11 @@ namespace ApoGirl.Presentation.Screens
 
                 var title = new Label(heard ? Loc.T("cd." + entry.Id + ".title") : Loc.T("music.locked"));
                 title.AddToClassList("gallery-title");
+                if (heard)
+                {
+                    StoryArt.SetIcon(title, StoryArt.Icon("cd." + entry.Id), 40f);   // CD 표지
+                }
+
                 card.Add(title);
 
                 if (heard)
@@ -110,10 +121,12 @@ namespace ApoGirl.Presentation.Screens
             if (_playing == id)
             {
                 Sound.StopLoop(CdPlayer.Channel);
+                Sound.Play("Sfx/sfx_cd_stop", SoundCategory.Ui);
                 _playing = "";
             }
             else
             {
+                Sound.Play("Sfx/sfx_cd_insert", SoundCategory.Ui);
                 CdPlayer.Preview(id);
                 _playing = id;
             }
