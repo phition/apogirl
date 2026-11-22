@@ -1621,27 +1621,27 @@ namespace ApoGirl.Exploration.Runtime
                 CreateDeepConnector(connector);
             }
 
-            // 계단 (옆모습): 오르는 계단은 층계참에서 오른쪽 위로, 내리는 계단은 왼쪽 아래 바닥 밑으로 꺼진다.
-            // 그림의 자리는 기준점(sprite_meta.json)이 정한다: 두 계단이 1.4칸 떨어져 층계참에서 만난다
-            var stairViews = new List<(ConnectorDef Connector, GameObject View, bool Down)>();
+            // 계단: 정면에서 오르다 꺾이는 그림 — 오르는 계단은 오른쪽 위로, 내리는 계단은 왼쪽 아래로 꺾여 어둠 속으로.
+            // 그림의 자리는 기준점(sprite_meta.json)이 정한다: 1.4칸 떨어진 두 계단이 가운데 선에서 맞붙어 한 장처럼 보인다
+            var stairViews = new List<(ConnectorDef Connector, GameObject View)>();
             foreach (var connector in layout.Connectors.Where(c => c.IsStairs))
             {
                 var down = (connector.TargetFloor > connector.Floor) == layout.IsDeep(connector.Floor);   // 깊은 곳은 번호가 클수록 아래
                 var stairsKey = StairsKey(connector.Collapsed, down);
                 var view = Prop(_corridors[connector.Floor], "Stairs", stairsKey,
-                    connector.X, new Vector2(1f, 2.7f), connector.Collapsed ? new Color(0.25f, 0.24f, 0.23f) : new Color(0.32f, 0.38f, 0.5f), down ? -1 : -3);
+                    connector.X, new Vector2(1f, 2.7f), connector.Collapsed ? new Color(0.25f, 0.24f, 0.23f) : new Color(0.32f, 0.38f, 0.5f), -3);
                 var stairsRenderer = view.GetComponent<SpriteRenderer>();
                 if (stairsRenderer != null && ExplorationArt.Get(stairsKey) != null)
                 {
                     stairsRenderer.color = new Color(0.78f, 0.78f, 0.8f);   // 계단실 안쪽이라 복도보다 조금 어둡게
                 }
-                stairViews.Add((connector, view, down));
+                stairViews.Add((connector, view));
                 AddTarget(new ExplorationTarget { Kind = TargetKind.Connector, Area = _corridors[connector.Floor], X = connector.X, Connector = connector, View = view });
             }
 
             // 계단실: 가까이 붙은 계단을 한 칸으로 묶어, 복도 벽이 뚫린 어두운 공간 안에 계단을 둔다 (폭은 계단 그림을 감싼다)
             var wells = new List<(int Floor, float Min, float Max)>();
-            foreach (var (connector, view, _) in stairViews)
+            foreach (var (connector, view) in stairViews)
             {
                 var (min, max) = StairsSpan(connector, view);
                 var index = wells.FindIndex(w => w.Floor == connector.Floor && min < w.Max + 2f && max > w.Min - 2f);
@@ -1667,24 +1667,6 @@ namespace ApoGirl.Exploration.Runtime
                 BuildingView.Rect(_world, "StairwellFrameL", origin + new Vector2(left - 0.14f, 0.15f), new Vector2(0.14f, top - 0.15f), new Color(0.3f, 0.31f, 0.29f), -4);
                 BuildingView.Rect(_world, "StairwellFrameR", origin + new Vector2(right, 0.15f), new Vector2(0.14f, top - 0.15f), new Color(0.3f, 0.31f, 0.29f), -4);
                 BuildingView.Rect(_world, "StairwellLintel", origin + new Vector2(left - 0.14f, top), new Vector2(right - left + 0.28f, 0.16f), new Color(0.3f, 0.31f, 0.29f), -4);
-            }
-
-            // 내리는 계단 자리는 바닥이 뚫려 있다: 바닥 판 위에 어두운 구멍을 덮고 그 위에 계단을 그린다
-            foreach (var (connector, view, down) in stairViews)
-            {
-                var renderer = view.GetComponent<SpriteRenderer>();
-                if (!down || renderer == null || renderer.sprite == null || ExplorationArt.Get(renderer.sprite.name) == null)
-                {
-                    continue;
-                }
-
-                var origin = _corridors[connector.Floor].Origin;
-                var bounds = renderer.bounds;
-                var bottom = bounds.min.y - origin.y;
-                if (bottom < 0.15f)
-                {
-                    BuildingView.Rect(_world, "StairwellPit", new Vector2(bounds.min.x, origin.y + bottom), new Vector2(bounds.size.x, 0.27f - bottom), new Color(0.03f, 0.03f, 0.04f), -2);
-                }
             }
 
             for (var i = 0; i < layout.Doors.Count; i++)
