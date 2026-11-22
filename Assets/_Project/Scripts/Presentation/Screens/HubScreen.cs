@@ -1064,9 +1064,9 @@ namespace ApoGirl.Presentation.Screens
                 detail += "  · " + together;
             }
 
-            foreach (var line in PeopleUi.ClubLines(outcome.Club))
+            foreach (var club in PeopleUi.ClubLines(outcome.Club))
             {
-                detail += "  · " + line;
+                detail += "  · " + club;
             }
 
             var outings = PeopleUi.OutingLines(outcome.OutingDepartures, outcome.OutingReturns);
