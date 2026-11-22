@@ -617,6 +617,28 @@ namespace ApoGirl.Exploration.Runtime
 
             return Loc.T("container." + container.Kind);
         }
+
+        /// <summary>마우스가 열린 창(배낭·전리품·조우) 위에 있는지 — 그때 클릭은 공격·상호작용이 아니다 (화면 좌표, 왼쪽 아래 원점).</summary>
+        public bool PointerOverPanel(Vector2 screenPosition)
+        {
+            var panel = _root?.panel;
+            if (panel == null)
+            {
+                return false;
+            }
+
+            var position = RuntimePanelUtils.ScreenToPanel(panel, new Vector2(screenPosition.x, Screen.height - screenPosition.y));
+            foreach (var element in new[] { _backpackPanel, _lootPanel, _encounterPanel })
+            {
+                if (element != null && element.resolvedStyle.display != DisplayStyle.None && element.resolvedStyle.visibility == Visibility.Visible
+                    && element.worldBound.Contains(position))
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
     }
 
     internal static class DefinitionLookupExtensions

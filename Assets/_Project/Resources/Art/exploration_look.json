@@ -70,5 +70,10 @@
     "RadiusScale": 0.8,
     "DarkIntensity": 0.42,
     "DimIntensity": 0.28
+  },
+  "Flashlight": {
+    "_설명": "손전등 겨누기: 바라보는 쪽에서 마우스 높이를 따라 위아래로 비춘다. AimMaxAngle = 최대 각도(도), AimSmoothing = 따라가는 빠르기 (클수록 즉시). 보이는 빛만 바뀌고 시야·발견 규칙은 그대로.",
+    "AimMaxAngle": 50,
+    "AimSmoothing": 14
   }
 }

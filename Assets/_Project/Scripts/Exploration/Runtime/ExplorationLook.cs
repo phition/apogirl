@@ -107,6 +107,14 @@ namespace ApoGirl.Exploration.Runtime
             public float DimIntensity = 0.28f;
         }
 
+        /// <summary>손전등 겨누기: 마우스 높이를 따라 위아래로 (도·부드러움).</summary>
+        [Serializable]
+        public sealed class FlashlightConfig
+        {
+            public float AimMaxAngle = 50f;
+            public float AimSmoothing = 14f;
+        }
+
         [Serializable]
         public sealed class Config
         {
@@ -117,6 +125,7 @@ namespace ApoGirl.Exploration.Runtime
             public PixelLightConfig PixelLight = new PixelLightConfig();
             public NormalConfig Normals = new NormalConfig();
             public SelfGlowConfig SelfGlow = new SelfGlowConfig();
+            public FlashlightConfig Flashlight = new FlashlightConfig();
         }
 
         private const string DefaultLitShader = "Universal Render Pipeline/2D/Sprite-Lit-Default";

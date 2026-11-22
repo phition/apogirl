@@ -1006,7 +1006,7 @@ namespace ApoGirl.Exploration.Runtime
         }
 
         /// <summary>
-        /// Q: 주무기가 있으면 공격 (타격 누적·쓰러뜨림·내구도 소모·무기 소음), 없으면 밀치기.
+        /// 좌클릭(Q): 주무기가 있으면 공격 (타격 누적·쓰러뜨림·내구도 소모·무기 소음), 없으면 밀치기.
         /// 정면전은 손해라는 감각을 위해 소음이 크고 내구도가 닳는다 (문서 6.3.5-(4)).
         /// </summary>
         public bool Attack()
@@ -1231,6 +1231,50 @@ namespace ApoGirl.Exploration.Runtime
         }
 
         // ── 입력 ──
+        // 마우스 왼쪽 = 공격·밀치기 (바라보는 방향), 오른쪽 = 수색(길게)·들어가기·쓰기. Q·E도 그대로 된다.
+        // 열린 창(배낭·전리품·조우) 위에서의 클릭은 창이 받는다.
+
+        private bool MouseFree(Mouse mouse) => mouse != null && (_hud == null || !_hud.PointerOverPanel(mouse.position.ReadValue()));
+
+        private bool AttackPressed(Keyboard keyboard)
+        {
+            var mouse = Mouse.current;
+            return keyboard.qKey.wasPressedThisFrame || (mouse != null && mouse.leftButton.wasPressedThisFrame && MouseFree(mouse));
+        }
+
+        private bool InteractPressed(Keyboard keyboard)
+        {
+            var mouse = Mouse.current;
+            return keyboard.eKey.wasPressedThisFrame || (mouse != null && mouse.rightButton.wasPressedThisFrame && MouseFree(mouse));
+        }
+
+        private bool InteractHeld(Keyboard keyboard)
+        {
+            var mouse = Mouse.current;
+            return keyboard.eKey.isPressed || (mouse != null && mouse.rightButton.isPressed && MouseFree(mouse));
+        }
+
+        /// <summary>
+        /// 손전등 겨누기 (도): 바라보는 쪽에서 마우스 높이를 따라 위(+)·아래(−), 최대 AimMaxAngle. 마우스가 등 뒤에 있으면 높이만 본다.
+        /// 보이는 빛만 바뀌고 규칙(시야·발견)은 그대로.
+        /// </summary>
+        private float _flashlightAim;
+
+        private void UpdateFlashlightAim(Vector3 center, float dt)
+        {
+            var mouse = Mouse.current;
+            var aim = ExplorationLook.Settings.Flashlight ?? new ExplorationLook.FlashlightConfig();
+            var target = 0f;
+            if (mouse != null && _camera != null && aim.AimMaxAngle > 0f)
+            {
+                var from = _camera.WorldToScreenPoint(_world.TransformPoint(center));
+                var to = mouse.position.ReadValue();
+                var dx = Mathf.Max(Mathf.Abs(to.x - from.x), Screen.height * 0.08f);   // 몸 가까이·등 뒤에서는 덜 꺾이게
+                target = Mathf.Clamp(Mathf.Atan2(to.y - from.y, dx) * Mathf.Rad2Deg, -aim.AimMaxAngle, aim.AimMaxAngle);
+            }
+
+            _flashlightAim = Mathf.Lerp(_flashlightAim, target, 1f - Mathf.Exp(-Mathf.Max(0.1f, aim.AimSmoothing) * dt));
+        }
 
         private void HandleInput(float dt)
         {
@@ -1290,7 +1334,7 @@ namespace ApoGirl.Exploration.Runtime
                 return;
             }
 
-            if (keyboard.qKey.wasPressedThisFrame)
+            if (AttackPressed(keyboard))
             {
                 Attack();
             }
@@ -1340,7 +1384,7 @@ namespace ApoGirl.Exploration.Runtime
 
             if (Nearest.Kind == TargetKind.Container && !Nearest.Searched)
             {
-                if (keyboard.eKey.isPressed)
+                if (InteractHeld(keyboard))
                 {
                     _searchNoiseTimer -= dt;
                     if (_searchNoiseTimer <= 0f)
@@ -1377,7 +1421,7 @@ namespace ApoGirl.Exploration.Runtime
                 return;
             }
 
-            if (keyboard.eKey.wasPressedThisFrame)
+            if (InteractPressed(keyboard))
             {
                 if (Nearest.Kind == TargetKind.Container && OpenContainer == Nearest)
                 {
@@ -2247,7 +2291,9 @@ namespace ApoGirl.Exploration.Runtime
                 var flicker = 1f + (Mathf.PerlinNoise(Time.time * 9f, 0.37f) - 0.5f) * 0.05f;
                 _flashlight.intensity = 0.85f * flicker;
                 _flashlight.transform.localPosition = center + new Vector3(_facingRight ? 0.25f : -0.25f, -0.25f, 0f);
-                _flashlight.transform.localRotation = Quaternion.Euler(0f, 0f, (_facingRight ? -90f : 90f) + sway - (_crouching ? 0f : 3f) * (_facingRight ? 1f : -1f));
+                UpdateFlashlightAim(center, Time.unscaledDeltaTime);
+                var tilt = _flashlightAim - (_crouching ? 0f : 3f);   // 위가 + (바라보는 쪽 기준)
+                _flashlight.transform.localRotation = Quaternion.Euler(0f, 0f, (_facingRight ? -90f + tilt : 90f - tilt) + sway);
             }
 
             if (_selfLight != null)
