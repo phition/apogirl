@@ -67,6 +67,9 @@ namespace ApoGirl.Exploration.Runtime
         {
             public bool Enabled = true;
             public bool Snap = true;
+
+            /// <summary>그림 한 화소가 화면 높이의 이 비율보다 크면 맞추지 않는다 (작은 그림을 크게 늘린 단색 벽·바닥이 큰 덩어리로 끊기지 않게).</summary>
+            public float SnapMaxTexel = 0.01f;
             public float Steps = 6f;
             public float StepStrength = 0.7f;
         }
@@ -84,6 +87,7 @@ namespace ApoGirl.Exploration.Runtime
         private const string DefaultLitShader = "Universal Render Pipeline/2D/Sprite-Lit-Default";
         private static readonly int PixelLightOnId = Shader.PropertyToID("_ApoPixelLightOn");
         private static readonly int PixelSnapId = Shader.PropertyToID("_ApoPixelSnap");
+        private static readonly int PixelSnapMaxTexelId = Shader.PropertyToID("_ApoPixelSnapMaxTexel");
         private static readonly int LightStepsId = Shader.PropertyToID("_ApoLightSteps");
         private static readonly int LightStepStrengthId = Shader.PropertyToID("_ApoLightStepStrength");
         private Material _pixelMaterial;
@@ -173,6 +177,7 @@ namespace ApoGirl.Exploration.Runtime
             if (pixel != null)
             {
                 Shader.SetGlobalFloat(PixelSnapId, pixel.Snap ? 1f : 0f);
+                Shader.SetGlobalFloat(PixelSnapMaxTexelId, pixel.SnapMaxTexel);
                 Shader.SetGlobalFloat(LightStepsId, Mathf.Max(0f, pixel.Steps));
                 Shader.SetGlobalFloat(LightStepStrengthId, Mathf.Clamp01(pixel.StepStrength));
             }

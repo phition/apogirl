@@ -2,7 +2,7 @@
 // - 화소 맞춤: 빛을 그림의 한 화소(텍셀) 가운데에서 한 번만 읽어, 빛 경계가 도트 격자를 따라 계단지게.
 // - 빛 계단: 빛 세기를 몇 단계로 끊어 레트로 음영처럼 (지각 밝기 기준, 세기는 섞는 비율).
 // - 전역 값 (ExplorationLook이 exploration_look.json PixelLight로 정한다, F9로 끔):
-//   _ApoPixelLightOn 0/1, _ApoPixelSnap 0/1, _ApoLightSteps 단계 수, _ApoLightStepStrength 0~1
+//   _ApoPixelLightOn 0/1, _ApoPixelSnap 0/1, _ApoPixelSnapMaxTexel, _ApoLightSteps 단계 수, _ApoLightStepStrength 0~1
 Shader "ApoGirl/ExplorationPixelLit"
 {
     Properties
@@ -66,6 +66,7 @@ Shader "ApoGirl/ExplorationPixelLit"
             // 전역 값 (머티리얼 값이 아님)
             float _ApoPixelLightOn;
             float _ApoPixelSnap;
+            float _ApoPixelSnapMaxTexel;   // 화면 높이 대비 한 화소 크기가 이보다 크면 맞추지 않는다 (작은 그림을 크게 늘린 단색 사각형)
             float _ApoLightSteps;
             float _ApoLightStepStrength;
 
@@ -97,6 +98,13 @@ Shader "ApoGirl/ExplorationPixelLit"
                 float2 size = _MainTex_TexelSize.zw;
                 float det = dx.x * dy.y - dx.y * dy.x;
                 if (_ApoPixelLightOn < 0.5 || _ApoPixelSnap < 0.5 || size.x < 2.0 || abs(det) < 1e-12)
+                {
+                    return lightingUV;
+                }
+
+                // 한 화소가 화면에서 차지하는 크기 (픽셀)
+                float texelPixels = 1.0 / max(length(dx * size), length(dy * size));
+                if (texelPixels > _ApoPixelSnapMaxTexel * _ScreenParams.y)
                 {
                     return lightingUV;
                 }
