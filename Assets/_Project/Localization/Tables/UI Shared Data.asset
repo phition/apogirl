@@ -6215,6 +6215,78 @@ MonoBehaviour:
     m_Key: opening.skip
     m_Metadata:
       m_Items: []
+  - m_Id: 1292733997400064
+    m_Key: palette.expedition_both
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1292734160977920
+    m_Key: palette.exp.LOC_SCHOOL_INTERIOR
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1292734160977921
+    m_Key: palette.exp.LOC_STORE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1292734160977922
+    m_Key: palette.exp.LOC_PHARMACY
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1292734160977923
+    m_Key: palette.exp.LOC_RESIDENTIAL
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1292734160977924
+    m_Key: palette.exp.LOC_SUBWAY
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1292734160977925
+    m_Key: palette.exp.LOC_MART
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1292734160977926
+    m_Key: palette.exp.LOC_POLICE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1292734160977927
+    m_Key: palette.exp.LOC_WATERWORKS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1292734160977928
+    m_Key: weekday.0
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1292734160977929
+    m_Key: weekday.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1292734160977930
+    m_Key: weekday.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1292734160977931
+    m_Key: weekday.3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1292734160977932
+    m_Key: weekday.4
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1292734160977933
+    m_Key: weekday.5
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1292734160977934
+    m_Key: weekday.6
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1292734160977935
+    m_Key: plan.expedition_night_locked
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1292734160977936
+    m_Key: plan.expedition_day_locked
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

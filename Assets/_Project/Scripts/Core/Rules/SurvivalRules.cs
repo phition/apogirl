@@ -205,6 +205,13 @@ namespace ApoGirl.Core.Rules
             return slotIndex % 2 == 0 ? DayPhase.Day : DayPhase.Night;
         }
 
+        /// <summary>그 주 day(1~7)의 요일: 0 = 월 … 5 = 토, 6 = 일.</summary>
+        public static int Weekday(int day, BalanceConfig balance)
+        {
+            var start = balance != null ? balance.StartWeekday : 0;
+            return (((start + day - 1) % 7) + 7) % 7;
+        }
+
         public static int DayOf(int slotIndex)
         {
             return slotIndex / 2 + 1;

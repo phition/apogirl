@@ -6218,6 +6218,78 @@ MonoBehaviour:
     m_Localized: "\uAC74\uB108\uB6F0\uAE30 \u25B6"
     m_Metadata:
       m_Items: []
+  - m_Id: 1292733997400064
+    m_Localized: "\uB0AE \uCE78\uC5D0 \uB193\uC73C\uBA74 \uB0AE \uD0D0\uD5D8, \uBC24 \uCE78\uC5D0 \uB193\uC73C\uBA74 \uBC24 \uD0D0\uD5D8"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1292734160977920
+    m_Localized: "\uAD50\uC2E4\uB3D9 \uD0D0\uD5D8"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1292734160977921
+    m_Localized: "\uD3B8\uC758\uC810 \uD0D0\uD5D8"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1292734160977922
+    m_Localized: "\uC57D\uAD6D\xB7\uC758\uC6D0 \uD0D0\uD5D8"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1292734160977923
+    m_Localized: "\uC8FC\uD0DD\uAC00 \uD0D0\uD5D8"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1292734160977924
+    m_Localized: "\uC9C0\uD558\uCCA0\uC5ED \uD0D0\uD5D8"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1292734160977925
+    m_Localized: "\uB9C8\uD2B8 \uD0D0\uD5D8"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1292734160977926
+    m_Localized: "\uD30C\uCD9C\uC18C \uD0D0\uD5D8"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1292734160977927
+    m_Localized: "\uC815\uC218\uC7A5 \uD0D0\uD5D8"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1292734160977928
+    m_Localized: "\uC6D4"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1292734160977929
+    m_Localized: "\uD654"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1292734160977930
+    m_Localized: "\uC218"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1292734160977931
+    m_Localized: "\uBAA9"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1292734160977932
+    m_Localized: "\uAE08"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1292734160977933
+    m_Localized: "\uD1A0"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1292734160977934
+    m_Localized: "\uC77C"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1292734160977935
+    m_Localized: "\uC774 \uC9C0\uC5ED\uC758 \uBC24 \uD0D0\uD5D8\uC740 \uC544\uC9C1 \uC5F4\uB9AC\uC9C0 \uC54A\uC558\uC5B4\uC694."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1292734160977936
+    m_Localized: "\uC774 \uC9C0\uC5ED\uC740 \uC9C0\uAE08 \uBC24\uC5D0\uB9CC \uAC08 \uC218 \uC788\uC5B4\uC694."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

@@ -339,11 +339,63 @@ namespace ApoGirl.Presentation.Screens
             _list.Clear();
             foreach (var action in _session.ActionsIn(_category))
             {
-                if (_session.IsUnlocked(action))
+                if (!_session.IsUnlocked(action))
                 {
-                    _list.Add(BuildCard(action));
+                    continue;
                 }
+
+                // 지역 탐험은 지역마다 카드 한 장: 낮 탐험이 열려 있으면 밤 탐험 카드는 따로 두지 않는다
+                if (IsLocationRun(action) && action.ExpeditionTime == ExpeditionTime.Night && Sibling(action, DayPhase.Day) != null)
+                {
+                    continue;
+                }
+
+                _list.Add(BuildCard(action));
             }
+        }
+
+        /// <summary>
+        /// 그 시간대 칸에 놓을 행동 ID. 지역 탐험 카드는 낮 칸이면 낮 탐험, 밤 칸이면 밤 탐험이 된다.
+        /// 고른 것이 없으면 "", 그 지역의 그 시간대 탐험이 아직 열리지 않았으면 null.
+        /// </summary>
+        public string ActionFor(DayPhase phase)
+        {
+            if (string.IsNullOrEmpty(SelectedActionId) || !_session.Definitions.TryGetAction(SelectedActionId, out var action) || !IsLocationRun(action))
+            {
+                return SelectedActionId;
+            }
+
+            return Sibling(action, phase)?.Id;
+        }
+
+        private static bool IsLocationRun(ActionDef action) =>
+            action.Category == ActionCategory.Expedition && !string.IsNullOrEmpty(action.LocationId);
+
+        private static ExpeditionTime TimeOf(DayPhase phase) => phase == DayPhase.Day ? ExpeditionTime.Day : ExpeditionTime.Night;
+
+        /// <summary>같은 지역의 그 시간대 탐험 (열린 것만). 자기 시간대면 자기 자신.</summary>
+        private ActionDef Sibling(ActionDef action, DayPhase phase)
+        {
+            if (action.ExpeditionTime == TimeOf(phase))
+            {
+                return action;
+            }
+
+            return _session.ActionsIn(ActionCategory.Expedition)
+                .FirstOrDefault(a => a.LocationId == action.LocationId && a.ExpeditionTime == TimeOf(phase) && _session.IsUnlocked(a));
+        }
+
+        private bool IsSelected(ActionDef action)
+        {
+            if (SelectedActionId == action.Id)
+            {
+                return true;
+            }
+
+            // 지역 카드: 같은 지역의 낮·밤 어느 쪽을 골라도 그 카드가 골린 것으로 보인다 (단면도에서 고른 경우)
+            return IsLocationRun(action) && _session.Definitions.TryGetAction(SelectedActionId ?? "", out var selected)
+                   && IsLocationRun(selected) && selected.LocationId == action.LocationId
+                   && Sibling(selected, DayPhase.Day)?.Id == Sibling(action, DayPhase.Day)?.Id;
         }
 
         private VisualElement BuildCard(ActionDef action)
@@ -351,18 +403,42 @@ namespace ApoGirl.Presentation.Screens
             var preview = _session.Preview(action.Id);
             var card = new Button(() =>
             {
-                SelectedActionId = SelectedActionId == action.Id ? "" : action.Id;
+                SelectedActionId = IsSelected(action) ? "" : action.Id;
                 Refresh();
             });
             card.AddToClassList("action-card");
-            var icon = StoryArt.Icon("act." + action.Id);
-            if (icon != null)
-            {
-                // 거점 행동 아이콘 (P4 제작품 그림)
-                StoryArt.SetIcon(card, icon, 40f);
-            }
-            card.EnableInClassList("selected", SelectedActionId == action.Id);
+            var locationRun = IsLocationRun(action);
+            var night = locationRun ? Sibling(action, DayPhase.Night) : null;
+            var day = locationRun ? Sibling(action, DayPhase.Day) : null;
+            var tag = locationRun ? (day != null && night != null ? SlotTag.Both : day != null ? SlotTag.DayOnly : SlotTag.NightOnly) : action.SlotTag;
+            PlanLook.Phase(card, tag);
+
+            // 거점 행동 아이콘 (P4 제작품 그림)
+            PlanLook.Icon(card, StoryArt.Icon("act." + action.Id), 40f);
+            card.EnableInClassList("selected", IsSelected(action));
             card.EnableInClassList("unaffordable", !preview.Affordable);
+
+            if (locationRun)
+            {
+                // 지역 카드: 이름은 지역만, 낮·밤 표시 (아직 열리지 않은 쪽은 흐리게)
+                var nameKey = "palette.exp." + action.LocationId;
+                var name = Loc.T(nameKey);
+                card.Add(Line(name == nameKey ? Loc.Action(action.Id) : name, "action-name"));
+                var phases = new VisualElement();
+                phases.AddToClassList("action-phases");
+                foreach (var (phase, found) in new[] { (DayPhase.Day, day), (DayPhase.Night, night) })
+                {
+                    var chip = Line(UiText.Phase(phase), "phase-chip");
+                    chip.AddToClassList(phase == DayPhase.Day ? "phase-chip-day" : "phase-chip-night");
+                    chip.EnableInClassList("off", found == null);
+                    phases.Add(chip);
+                }
+
+                card.Add(phases);
+                var key = tag == SlotTag.Both ? "palette.expedition_both" : tag == SlotTag.DayOnly ? "palette.expedition_day" : "palette.expedition_night";
+                card.Add(Line(Loc.T(key), "action-info"));
+                return card;
+            }
 
             card.Add(Line(Loc.Action(action.Id), "action-name"));
             if (preview.IsExpedition)
@@ -404,11 +480,12 @@ namespace ApoGirl.Presentation.Screens
     internal sealed class PlannerView
     {
         private readonly GameSession _session;
-        private readonly Func<string> _selectedAction;
+        private readonly Func<DayPhase, string> _selectedAction;
         private readonly Action<string> _notify;
         private readonly Button[] _cells = new Button[WeekPlan.SlotCount];
 
-        public PlannerView(VisualElement root, GameSession session, Func<string> selectedAction, Action<string> notify)
+        /// <param name="selectedAction">그 시간대 칸에 놓을 행동 (없으면 "", 그 시간대에 열리지 않은 지역 탐험이면 null).</param>
+        public PlannerView(VisualElement root, GameSession session, Func<DayPhase, string> selectedAction, Action<string> notify)
         {
             _session = session;
             _selectedAction = selectedAction;
@@ -421,8 +498,9 @@ namespace ApoGirl.Presentation.Screens
             header.Add(Corner());
             for (var day = 1; day <= CalendarState.DaysPerWeek; day++)
             {
-                var label = new Label(Loc.F("planner.day_header", day));
+                var label = new Label();
                 label.AddToClassList("planner-day");
+                PlanLook.Weekday(label, day, session.Definitions.Balance);
                 header.Add(label);
             }
 
@@ -439,6 +517,7 @@ namespace ApoGirl.Presentation.Screens
                     var index = CalendarRules.SlotIndex(day, phase);
                     var cell = new Button(() => OnClick(index));
                     cell.AddToClassList("slot");
+                    cell.AddToClassList(phase == DayPhase.Day ? "slot-day" : "slot-night");
                     cell.AddToClassList("no-click-sound");
                     cell.RegisterCallback<PointerDownEvent>(evt =>
                     {
@@ -490,8 +569,16 @@ namespace ApoGirl.Presentation.Screens
 
         private void OnClick(int index)
         {
-            var actionId = _selectedAction();
-            if (string.IsNullOrEmpty(actionId))
+            var phase = CalendarRules.PhaseOf(index);
+            var actionId = _selectedAction(phase);
+            if (actionId == null)
+            {
+                // 지역 카드인데 그 시간대 탐험이 아직 열리지 않았다
+                _notify(Loc.T(phase == DayPhase.Night ? "plan.expedition_night_locked" : "plan.expedition_day_locked"));
+                return;
+            }
+
+            if (actionId.Length == 0)
             {
                 _notify(Loc.T("plan.select_first"));
                 return;

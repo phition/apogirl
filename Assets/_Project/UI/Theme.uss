@@ -13,6 +13,14 @@
     --danger: #c9584f;
     --ok: #7fa37a;
     --locked: #3a3f55;
+    --day-card: #efe6d1;
+    --day-text: #2f2a22;
+    --day-dim: #6f6656;
+    --night-card: #1c2444;
+    --night-text: #e3e6f0;
+    --night-dim: #8f97b6;
+    --weekday-sat: #7fc3ea;
+    --weekday-sun: #e2685e;
 }
 
 .hidden {
@@ -189,9 +197,12 @@ Button.selected { border-color: var(--accent); background-color: var(--accent-so
     border-width: 0;
     color: var(--text);
 }
-.dock-cell.night { background-color: rgba(38, 42, 62, 0.9); }
+.dock-cell.day { background-color: rgba(216, 207, 186, 0.92); color: var(--day-text); }
+.dock-cell.day.empty { color: var(--day-dim); }
+.dock-cell.night { background-color: rgba(28, 36, 68, 0.94); color: var(--night-text); }
+.dock-cell.night.empty { color: var(--night-dim); }
 .dock-cell.empty { color: var(--text-dim); }
-.dock-cell.locked { background-color: var(--locked); }
+.dock-cell.locked, .dock-cell.locked.empty { background-color: var(--locked); color: var(--text-dim); }
 .dock-cell.forced { border-width: 1px; border-color: var(--warn); }
 .dock-cell.warned { border-width: 1px; border-color: var(--danger); }
 .dock-cell.done { opacity: 0.4; }
@@ -288,6 +299,40 @@ Button.selected { border-color: var(--accent); background-color: var(--accent-so
 .action-info { color: var(--text-dim); font-size: 15px; }
 .action-gains { color: var(--ok); font-size: 15px; }
 
+/* 낮·밤 카드 (PlanLook): 낮 전용 상아색, 밤 전용 짙은 남색, 둘 다 되면 사선으로 반씩 */
+.action-card { overflow: hidden; border-width: 2px; border-color: rgba(0, 0, 0, 0); }
+.action-card.phase-day { background-color: var(--day-card); }
+.action-card.phase-day .action-name { color: var(--day-text); }
+.action-card.phase-day .action-info { color: var(--day-dim); }
+.action-card.phase-day .action-gains { color: #3f6b39; }
+.action-card.phase-night { background-color: var(--night-card); }
+.action-card.phase-night .action-name { color: var(--night-text); }
+.action-card.phase-night .action-info { color: var(--night-dim); }
+.action-card.phase-both { background-color: var(--day-card); }
+.phase-split { position: absolute; left: 0; top: 0; right: 0; bottom: 0; --split-color: #1c2444; }
+/* 둘 다 되는 카드: 사선 위에서도 읽히게 글씨 띠 */
+.action-card.phase-both .action-name,
+.action-card.phase-both .action-info,
+.action-card.phase-both .action-gains,
+.action-card.phase-both .action-phases {
+    background-color: rgba(22, 24, 32, 0.78);
+    border-radius: 3px;
+    padding: 0 5px;
+    margin: 1px 0;
+}
+.action-card.phase-both .action-name { color: var(--night-text); }
+.action-card.phase-both .action-info { color: #b9bccb; }
+.action-card:hover { border-color: rgba(231, 176, 74, 0.55); }
+.action-card.selected { border-color: #e7b04a; border-width: 3px; }
+.card-icon { position: absolute; left: 4px; top: 50%; -unity-background-scale-mode: scale-to-fit; }
+.action-phases { flex-direction: row; padding: 2px 0; }
+.phase-chip { font-size: 13px; padding: 0 6px; margin-right: 4px; border-radius: 3px; -unity-font-style: bold; }
+.phase-chip-day { background-color: var(--day-card); color: var(--day-text); }
+.phase-chip-night { background-color: var(--night-card); color: var(--night-text); border-width: 1px; border-color: #3a4670; }
+.phase-chip.off { opacity: 0.3; }
+.weekday-sat { color: var(--weekday-sat); }
+.weekday-sun { color: var(--weekday-sun); }
+
 .planner-row { flex-direction: row; flex-grow: 1; }
 .planner-header { flex-grow: 0; }
 .planner-day, .planner-phase {
@@ -308,8 +353,13 @@ Button.selected { border-color: var(--accent); background-color: var(--accent-so
 }
 
 .slot.empty { color: var(--text-dim); }
+.slot.slot-day { background-color: #d8cfba; color: var(--day-text); }
+.slot.slot-day.empty { color: var(--day-dim); }
+.slot.slot-night { background-color: #222b4b; color: var(--night-text); }
+.slot.slot-night.empty { color: var(--night-dim); }
+.slot:hover { border-color: rgba(231, 176, 74, 0.6); border-width: 2px; }
 .slot.forced { border-color: var(--warn); border-width: 2px; }
-.slot.locked { background-color: var(--locked); }
+.slot.locked, .slot.locked.empty { background-color: var(--locked); color: var(--text-dim); }
 .slot.warned { border-color: var(--danger); border-width: 2px; }
 .slot.done { opacity: 0.4; }
 .slot.current { border-color: var(--accent); border-width: 3px; }

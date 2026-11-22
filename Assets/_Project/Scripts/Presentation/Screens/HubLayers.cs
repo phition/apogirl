@@ -150,14 +150,16 @@ namespace ApoGirl.Presentation.Screens
             {
                 var column = new VisualElement();
                 column.AddToClassList("dock-day");
-                var label = new Label(Loc.F("hud.dock_day", day));
+                var label = new Label();
                 label.AddToClassList("dock-day-label");
+                PlanLook.Weekday(label, day, session.Definitions.Balance);
                 column.Add(label);
                 foreach (var phase in new[] { DayPhase.Day, DayPhase.Night })
                 {
                     var index = CalendarRules.SlotIndex(day, phase);
                     var cell = new Button(onOpen);
                     cell.AddToClassList("dock-cell");
+                    cell.EnableInClassList("day", phase == DayPhase.Day);
                     cell.EnableInClassList("night", phase == DayPhase.Night);
                     _cells[index] = cell;
                     column.Add(cell);

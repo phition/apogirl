@@ -129,6 +129,9 @@ namespace ApoGirl.Core.Definitions
         public int StartMonth = 3;
         public int StartDayOfMonth = 16;
 
+        /// <summary>1일의 요일 (0 = 월 … 6 = 일). 3월 16일 월요일, 프롤로그 "월요일 아침"과 맞춘다 (계획 보드 요일 표시).</summary>
+        public int StartWeekday = 0;
+
         /// <summary>랜덤·위기 이벤트 빈도 상한 (반복 피로 방지).</summary>
         public int RandomEventsPerDay = 1;
         public int RandomEventsPerWeek = 3;

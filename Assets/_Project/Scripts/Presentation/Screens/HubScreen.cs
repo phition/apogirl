@@ -91,7 +91,7 @@ namespace ApoGirl.Presentation.Screens
             _status = new StatusPanelView(_root, _session) { FactionClicked = ShowFactionCard };
             _diary = new RecordDiaryView(_root, _session);
             _palette = new PaletteView(_root, _session);
-            _planner = new PlannerView(_root, _session, () => _palette.SelectedActionId, ShowToast);
+            _planner = new PlannerView(_root, _session, _palette.ActionFor, ShowToast);
             _planSide = new PlanSideView(_root, _session);
             _layers = new HubLayers(_root) { CanPlan = () => _session.IsPlanning };
             _dock = new DockView(_root, _session, () => _layers.ToggleBoard());

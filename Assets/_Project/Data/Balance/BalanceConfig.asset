@@ -44,6 +44,7 @@ MonoBehaviour:
     NpcAffinityMin: -100
     StartMonth: 3
     StartDayOfMonth: 16
+    StartWeekday: 0
     RandomEventsPerDay: 1
     RandomEventsPerWeek: 3
     RandomEventChance: 0.3
