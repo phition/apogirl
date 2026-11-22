@@ -43,3 +43,19 @@ MonoBehaviour:
       Weight: 1
       MinCount: 1
       MaxCount: 1
+    - ItemId: ITEM_COMIC
+      Weight: 1
+      MinCount: 1
+      MaxCount: 1
+    - ItemId: ITEM_KEYRING
+      Weight: 1
+      MinCount: 1
+      MaxCount: 1
+    - ItemId: ITEM_HAIR_TIE
+      Weight: 1
+      MinCount: 1
+      MaxCount: 1
+    - ItemId: ITEM_LIP_BALM
+      Weight: 1
+      MinCount: 1
+      MaxCount: 1

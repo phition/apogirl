@@ -43,3 +43,11 @@ MonoBehaviour:
       Weight: 1
       MinCount: 1
       MaxCount: 1
+    - ItemId: ITEM_OLD_MAP
+      Weight: 1
+      MinCount: 1
+      MaxCount: 1
+    - ItemId: ITEM_GUITAR_STRINGS
+      Weight: 1
+      MinCount: 1
+      MaxCount: 1

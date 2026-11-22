@@ -35,3 +35,11 @@ MonoBehaviour:
       Weight: 1
       MinCount: 1
       MaxCount: 1
+    - ItemId: ITEM_GUITAR_SCORE
+      Weight: 1
+      MinCount: 1
+      MaxCount: 1
+    - ItemId: ITEM_GUITAR_STRINGS
+      Weight: 1
+      MinCount: 1
+      MaxCount: 1

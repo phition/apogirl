@@ -214,6 +214,63 @@ MonoBehaviour:
       Key: DEHYDRATED
       Hp: -10
       Stress: 5
+    CompanionSatietyDailyDrain: 25
+    CompanionHydrationDailyDrain: 30
+    CompanionMealSatiety: 45
+    CompanionDrinkHydration: 55
+    CompanionInjuredDailyStress: 1
+    CompanionWeeklyStressRecovery: 6
+    CompanionStressRoleThreshold: 70
+    CompanionStressedRoleMultiplier: 0.5
+    GiveFoodSatiety: 45
+    GiveFoodStress: -3
+    GiveWaterHydration: 55
+    GiveWaterStress: -2
+    GiveMedicineInjuryWeeks: 1
+    GiveMedicineStress: -5
+    GiveAffinityBasic: 2
+    GiveAffinityMedicineInjured: 4
+    GiveAffinityLiked: 6
+    GiveLikedStress: -10
+    GiveOtherGiftStress: -3
+    GiftRepeatWeeks: 2
+    HubCompanionLineAffinity: 50
+    HubCompanionLineEvery: 4
+    HeadlessLikedItemDayChance: 0.3
+    HeadlessLikedItemNightChance: 0.15
+    LikedItems:
+    - NpcId: NPC_TEACHER
+      Items:
+      - ITEM_PAPERBACK
+      - ITEM_PEN
+    - NpcId: NPC_NURSE
+      Items:
+      - ITEM_COFFEE_MIX
+      - ITEM_HAND_CREAM
+    - NpcId: NPC_DOHYEON
+      Items:
+      - ITEM_COMIC
+      - ITEM_SPORTS_DRINK
+    - NpcId: NPC_BYSTANDER
+      Items:
+      - ITEM_KEYRING
+      - ITEM_STICKERS
+    - NpcId: NPC_RINGLEADER
+      Items:
+      - ITEM_HAIR_TIE
+      - ITEM_LIP_BALM
+    - NpcId: NPC_SURVIVOR_A
+      Items:
+      - ITEM_GUITAR_SCORE
+      - ITEM_GUITAR_STRINGS
+    - NpcId: NPC_WANDERER
+      Items:
+      - ITEM_OLD_MAP
+      - ITEM_CANDY
+    - NpcId: NPC_CAT
+      Items:
+      - ITEM_TUNA_CAN
+      - ITEM_CAT_TREAT
     DefaultDifficulty: STANDARD
     Difficulties:
     - Id: STORY

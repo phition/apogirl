@@ -27,3 +27,7 @@ MonoBehaviour:
       Weight: 4
       MinCount: 1
       MaxCount: 1
+    - ItemId: ITEM_SPORTS_DRINK
+      Weight: 1
+      MinCount: 1
+      MaxCount: 1

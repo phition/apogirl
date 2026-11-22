@@ -47,3 +47,31 @@ MonoBehaviour:
       Weight: 1
       MinCount: 1
       MaxCount: 1
+    - ItemId: ITEM_PAPERBACK
+      Weight: 1
+      MinCount: 1
+      MaxCount: 1
+    - ItemId: ITEM_PEN
+      Weight: 1
+      MinCount: 1
+      MaxCount: 1
+    - ItemId: ITEM_COMIC
+      Weight: 1
+      MinCount: 1
+      MaxCount: 1
+    - ItemId: ITEM_KEYRING
+      Weight: 1
+      MinCount: 1
+      MaxCount: 1
+    - ItemId: ITEM_STICKERS
+      Weight: 1
+      MinCount: 1
+      MaxCount: 1
+    - ItemId: ITEM_GUITAR_SCORE
+      Weight: 1
+      MinCount: 1
+      MaxCount: 1
+    - ItemId: ITEM_GUITAR_STRINGS
+      Weight: 1
+      MinCount: 1
+      MaxCount: 1

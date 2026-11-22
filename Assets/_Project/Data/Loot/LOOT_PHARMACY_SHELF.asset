@@ -35,3 +35,11 @@ MonoBehaviour:
       Weight: 2
       MinCount: 1
       MaxCount: 1
+    - ItemId: ITEM_HAND_CREAM
+      Weight: 1
+      MinCount: 1
+      MaxCount: 1
+    - ItemId: ITEM_LIP_BALM
+      Weight: 1
+      MinCount: 1
+      MaxCount: 1

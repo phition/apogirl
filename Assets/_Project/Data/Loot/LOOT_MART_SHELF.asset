@@ -43,3 +43,23 @@ MonoBehaviour:
       Weight: 1
       MinCount: 1
       MaxCount: 1
+    - ItemId: ITEM_KEYRING
+      Weight: 1
+      MinCount: 1
+      MaxCount: 1
+    - ItemId: ITEM_STICKERS
+      Weight: 1
+      MinCount: 1
+      MaxCount: 1
+    - ItemId: ITEM_HAIR_TIE
+      Weight: 1
+      MinCount: 1
+      MaxCount: 1
+    - ItemId: ITEM_TUNA_CAN
+      Weight: 1
+      MinCount: 1
+      MaxCount: 1
+    - ItemId: ITEM_CAT_TREAT
+      Weight: 1
+      MinCount: 1
+      MaxCount: 1

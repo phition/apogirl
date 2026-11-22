@@ -125,6 +125,22 @@ MonoBehaviour:
   - {fileID: 11400000, guid: e169cfd9a71fe6d48b5c95d47c9082d5, type: 2}
   - {fileID: 11400000, guid: c9ef5fc28ac3fec4ea9d6a13d4939c8b, type: 2}
   - {fileID: 11400000, guid: a12b992610029e9478881254fbfb1cb4, type: 2}
+  - {fileID: 11400000, guid: b263e74038d73a746ac6782182ddbac6, type: 2}
+  - {fileID: 11400000, guid: 55d1ece74291ca44387758a79627a99c, type: 2}
+  - {fileID: 11400000, guid: 151525d214c3b9d4e88f9009cbd543be, type: 2}
+  - {fileID: 11400000, guid: cd806033722d2d44a8b4d1d706e84724, type: 2}
+  - {fileID: 11400000, guid: ca89908fd4726c64d83d1ccdd9551bc2, type: 2}
+  - {fileID: 11400000, guid: f8af6a55ea4e1104eaa59b0f87b17e2c, type: 2}
+  - {fileID: 11400000, guid: a57ddae9ee6d8454d91179d59052bfec, type: 2}
+  - {fileID: 11400000, guid: 5d8dbc4c0464ff449bd5640276801efb, type: 2}
+  - {fileID: 11400000, guid: 50863c0f3a2ecee4ca4a012509a9c3d2, type: 2}
+  - {fileID: 11400000, guid: dab7dd220972d9549ad56e3534ce565e, type: 2}
+  - {fileID: 11400000, guid: eceb302ef05fd5d489e7e2ea5ab7f46b, type: 2}
+  - {fileID: 11400000, guid: 5d62c87a4f5eca448ba4bee412579297, type: 2}
+  - {fileID: 11400000, guid: 0ff26dc8946449d4d80a16ba44979cd3, type: 2}
+  - {fileID: 11400000, guid: 3ce4626918687844cb244543e962197e, type: 2}
+  - {fileID: 11400000, guid: 062ab33cd83755742901b77e95b233a8, type: 2}
+  - {fileID: 11400000, guid: e1ccae153e537584a974089ca263cf20, type: 2}
   _lootTables:
   - {fileID: 11400000, guid: 0c62355d086535b468d092c1e08024d2, type: 2}
   - {fileID: 11400000, guid: 10ed5d0d273efdf4da1523dfa0b61a11, type: 2}

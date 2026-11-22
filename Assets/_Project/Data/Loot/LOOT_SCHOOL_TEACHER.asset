@@ -39,3 +39,15 @@ MonoBehaviour:
       Weight: 1
       MinCount: 1
       MaxCount: 1
+    - ItemId: ITEM_PAPERBACK
+      Weight: 1
+      MinCount: 1
+      MaxCount: 1
+    - ItemId: ITEM_PEN
+      Weight: 1
+      MinCount: 1
+      MaxCount: 1
+    - ItemId: ITEM_COFFEE_MIX
+      Weight: 1
+      MinCount: 1
+      MaxCount: 1

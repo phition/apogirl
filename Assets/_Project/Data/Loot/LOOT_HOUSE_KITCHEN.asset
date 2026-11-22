@@ -35,3 +35,15 @@ MonoBehaviour:
       Weight: 1
       MinCount: 1
       MaxCount: 1
+    - ItemId: ITEM_COFFEE_MIX
+      Weight: 1
+      MinCount: 1
+      MaxCount: 1
+    - ItemId: ITEM_SPORTS_DRINK
+      Weight: 1
+      MinCount: 1
+      MaxCount: 1
+    - ItemId: ITEM_TUNA_CAN
+      Weight: 1
+      MinCount: 1
+      MaxCount: 1

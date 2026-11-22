@@ -35,3 +35,15 @@ MonoBehaviour:
       Weight: 2
       MinCount: 1
       MaxCount: 1
+    - ItemId: ITEM_CANDY
+      Weight: 1
+      MinCount: 1
+      MaxCount: 1
+    - ItemId: ITEM_SPORTS_DRINK
+      Weight: 1
+      MinCount: 1
+      MaxCount: 1
+    - ItemId: ITEM_GUITAR_SCORE
+      Weight: 1
+      MinCount: 1
+      MaxCount: 1
