@@ -963,8 +963,25 @@ namespace ApoGirl.Presentation.Screens
                 "",
                 false,
                 (Loc.F("menu.font_size", Loc.T("font." + FontClasses[_fontIndex])), CycleFontSize),
+                (Loc.T(_session.UseRealtimeExpeditions ? "menu.explore_manual" : "menu.explore_auto"), ToggleAutoExplore),
+                (Loc.F("menu.pad", Loc.T("menu.pad." + ControlPrefs.Pad)), CyclePadMode),
                 (Loc.T("menu.to_title"), () => GameApp.GoTo(GameApp.TitleScene)),
                 (Loc.T("common.close"), _card.Hide));
+        }
+
+        /// <summary>탐험 직접 조작 ↔ 자동(헤드리스). 다음 탐험부터.</summary>
+        private void ToggleAutoExplore()
+        {
+            ControlPrefs.AutoExplore = _session.UseRealtimeExpeditions;
+            _session.UseRealtimeExpeditions = !ControlPrefs.AutoExplore;
+            ShowMenuCard();
+        }
+
+        /// <summary>가상 패드: 자동(휴대폰에서만) → 항상 → 끄기.</summary>
+        private void CyclePadMode()
+        {
+            ControlPrefs.Pad = (PadMode)(((int)ControlPrefs.Pad + 1) % 3);
+            ShowMenuCard();
         }
 
         private void CycleFontSize()

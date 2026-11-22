@@ -1,0 +1,22 @@
+{
+  "Opacity": 0.6,
+  "StickRadius": 95,
+  "Deadzone": 0.2,
+  "RunThreshold": 0.85,
+  "VerticalThreshold": 0.6,
+  "StickZoneWidth": 0.45,
+  "AimZoneStart": 0.55,
+  "LabelSize": 24,
+  "Buttons": [
+    { "Id": "attack", "Label": "exp.pad.attack", "Right": 60, "Bottom": 70, "Size": 150 },
+    { "Id": "interact", "Label": "exp.pad.interact", "Right": 250, "Bottom": 50, "Size": 125 },
+    { "Id": "hide", "Label": "exp.pad.hide", "Right": 80, "Bottom": 250, "Size": 115 },
+    { "Id": "crouch", "Label": "exp.pad.crouch", "Right": 250, "Bottom": 210, "Size": 95, "Toggle": true },
+    { "Id": "flashlight", "Label": "exp.pad.flashlight", "Right": 410, "Bottom": 45, "Size": 95 },
+    { "Id": "backpack", "Label": "exp.pad.backpack", "Right": 70, "Bottom": 400, "Size": 95 },
+    { "Id": "quick1", "Label": "exp.pad.quick1", "Right": 420, "Bottom": 170, "Size": 75 },
+    { "Id": "quick2", "Label": "exp.pad.quick2", "Right": 420, "Bottom": 260, "Size": 75 },
+    { "Id": "quick3", "Label": "exp.pad.quick3", "Right": 330, "Bottom": 330, "Size": 75 },
+    { "Id": "quick4", "Label": "exp.pad.quick4", "Right": 230, "Bottom": 360, "Size": 75 }
+  ]
+}

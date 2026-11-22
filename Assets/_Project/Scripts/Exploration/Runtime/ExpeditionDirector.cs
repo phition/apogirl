@@ -444,6 +444,13 @@ namespace ApoGirl.Exploration.Runtime
             document.panelSettings = _panelSettings;
             document.sortingOrder = 10;
             document.visualTreeAsset = _hudLayout;
+            if (ControlPrefs.PadVisible)
+            {
+                // 휴대폰: 가상 패드 + 패드용 안내 문구 ("키.pad")
+                Loc.Variant = "pad";
+                _pad = new VirtualPad(document.rootVisualElement, VirtualPad.LoadConfig());
+            }
+
             _hud = new ExpeditionHud(document.rootVisualElement, this);
             _fieldDialogue = new FieldDialogue(document.rootVisualElement);
             UpdateZombieViews();
@@ -486,11 +493,13 @@ namespace ApoGirl.Exploration.Runtime
                 return;
             }
 
+            // 키보드·마우스·가상 패드를 한 번에 읽는다 (패드의 눌림은 읽을 때 지워져, 대화 중 누른 것이 뒤에 새지 않는다)
+            _input.Read(Keyboard.current, Mouse.current, MouseFree, _pad);
+
             if (OpenEncounter != null)
             {
                 // 조우 대화: Space·Enter로 다음 줄 (세계는 멈춘 채)
-                var keys = Keyboard.current;
-                if (InFieldDialogue && keys != null && (keys.spaceKey.wasPressedThisFrame || keys.enterKey.wasPressedThisFrame))
+                if (InFieldDialogue && _input.Advance)
                 {
                     _fieldDialogue.Advance();
                 }
@@ -873,9 +882,9 @@ namespace ApoGirl.Exploration.Runtime
         /// 숨을 곳(사물함·책상) 앞에서 Space를 누르고 있으면 HideSeconds에 걸쳐 숨는다. 새로 누른 뒤부터만 (나온 직후 계속 누르고 있어도 다시 숨지 않게).
         /// 처리 중이면 true (이동하지 않음).
         /// </summary>
-        private bool HandleHideHold(Keyboard keyboard, float dt)
+        private bool HandleHideHold(float dt)
         {
-            if (keyboard.spaceKey.wasPressedThisFrame)
+            if (_input.HideDown)
             {
                 _hideArmed = true;
             }
@@ -883,10 +892,10 @@ namespace ApoGirl.Exploration.Runtime
             var spot = Nearest;
             var canHide = spot != null && spot.Kind == TargetKind.Container
                           && (spot.Container.Kind == ContainerKind.Locker || spot.Container.Kind == ContainerKind.Desk);
-            if (!canHide || !keyboard.spaceKey.isPressed || !_hideArmed)
+            if (!canHide || !_input.HideHeld || !_hideArmed)
             {
                 HideProgress = 0f;
-                if (!keyboard.spaceKey.isPressed)
+                if (!_input.HideHeld)
                 {
                     _hideArmed = false;
                 }
@@ -907,13 +916,13 @@ namespace ApoGirl.Exploration.Runtime
         }
 
         /// <summary>숨어 있는 동안: Space로 나오기. 수면 부채가 쌓였으면 잠들 수 있고, 잠들면 Space 연타로 깬다.</summary>
-        private void HandleHidden(Keyboard keyboard, float dt)
+        private void HandleHidden(float dt)
         {
             HideProgress = 0f;
             if (Asleep)
             {
                 WakeProgress = Mathf.Max(0f, WakeProgress - _balance.WakeDecay * dt);
-                if (keyboard.spaceKey.wasPressedThisFrame)
+                if (_input.HideDown)
                 {
                     WakeProgress += _balance.WakePerPress;
                     if (WakeProgress >= 1f)
@@ -925,7 +934,7 @@ namespace ApoGirl.Exploration.Runtime
                 return;
             }
 
-            if (keyboard.spaceKey.wasPressedThisFrame)
+            if (_input.HideDown)
             {
                 ToggleHide();
                 return;
@@ -1241,23 +1250,11 @@ namespace ApoGirl.Exploration.Runtime
 
         private bool MouseFree(Mouse mouse) => mouse != null && (_hud == null || !_hud.PointerOverPanel(mouse.position.ReadValue()));
 
-        private bool AttackPressed(Keyboard keyboard)
-        {
-            var mouse = Mouse.current;
-            return keyboard.qKey.wasPressedThisFrame || (mouse != null && mouse.leftButton.wasPressedThisFrame && MouseFree(mouse));
-        }
+        private readonly ExplorationInput _input = new ExplorationInput();
+        private VirtualPad _pad;
 
-        private bool InteractPressed(Keyboard keyboard)
-        {
-            var mouse = Mouse.current;
-            return keyboard.eKey.wasPressedThisFrame || (mouse != null && mouse.rightButton.wasPressedThisFrame && MouseFree(mouse));
-        }
-
-        private bool InteractHeld(Keyboard keyboard)
-        {
-            var mouse = Mouse.current;
-            return keyboard.eKey.isPressed || (mouse != null && mouse.rightButton.isPressed && MouseFree(mouse));
-        }
+        /// <summary>가상 패드 (휴대폰이거나 메뉴에서 켰을 때만).</summary>
+        public VirtualPad Pad => _pad;
 
         /// <summary>
         /// 손전등 겨누기 (도): 바라보는 쪽에서 마우스 높이를 따라 위(+)·아래(−), 최대 AimMaxAngle. 마우스가 등 뒤에 있으면 높이만 본다.
@@ -1267,13 +1264,12 @@ namespace ApoGirl.Exploration.Runtime
 
         private void UpdateFlashlightAim(Vector3 center, float dt)
         {
-            var mouse = Mouse.current;
             var aim = ExplorationLook.Settings.Flashlight ?? new ExplorationLook.FlashlightConfig();
             var target = 0f;
-            if (mouse != null && _camera != null && aim.AimMaxAngle > 0f)
+            if (_input.AimScreen.HasValue && _camera != null && aim.AimMaxAngle > 0f)
             {
                 var from = _camera.WorldToScreenPoint(_world.TransformPoint(center));
-                var to = mouse.position.ReadValue();
+                var to = _input.AimScreen.Value;
                 var dx = Mathf.Max(Mathf.Abs(to.x - from.x), Screen.height * 0.08f);   // 몸 가까이·등 뒤에서는 덜 꺾이게
                 target = Mathf.Clamp(Mathf.Atan2(to.y - from.y, dx) * Mathf.Rad2Deg, -aim.AimMaxAngle, aim.AimMaxAngle);
             }
@@ -1284,24 +1280,23 @@ namespace ApoGirl.Exploration.Runtime
         private void HandleInput(float dt)
         {
             var keyboard = Keyboard.current;
-            if (keyboard == null)
+            if (keyboard != null)
             {
-                return;
+                if (keyboard.f2Key.wasPressedThisFrame)
+                {
+                    TimeScale = TimeScale > 1f ? 1f : 10f;
+                    _log.DebugUsed = true;
+                }
+
+                HandleDebugKeys(keyboard);
             }
 
-            if (keyboard.f2Key.wasPressedThisFrame)
-            {
-                TimeScale = TimeScale > 1f ? 1f : 10f;
-                _log.DebugUsed = true;
-            }
-
-            HandleDebugKeys(keyboard);
-            if (keyboard.fKey.wasPressedThisFrame)
+            if (_input.Flashlight)
             {
                 ToggleFlashlight();
             }
 
-            if (keyboard.tabKey.wasPressedThisFrame)
+            if (_input.Backpack)
             {
                 _hud.ToggleBackpack();
                 _tutorialOpenedBag = true;
@@ -1317,29 +1312,29 @@ namespace ApoGirl.Exploration.Runtime
                 _attackTimer -= dt;
             }
 
-            if (keyboard.digit1Key.wasPressedThisFrame) UseQuickSlot(0);
-            if (keyboard.digit2Key.wasPressedThisFrame) UseQuickSlot(1);
-            if (keyboard.digit3Key.wasPressedThisFrame) UseQuickSlot(2);
-            if (keyboard.digit4Key.wasPressedThisFrame) UseQuickSlot(3);
+            if (_input.QuickSlot >= 0)
+            {
+                UseQuickSlot(_input.QuickSlot);
+            }
 
             Nearest = FindNearest();
             if (Hidden)
             {
-                HandleHidden(keyboard, dt);
+                HandleHidden(dt);
                 return;
             }
 
-            if (HandleHideHold(keyboard, dt))
+            if (HandleHideHold(dt))
             {
                 return;
             }
 
-            if (HandleDoorSenses(keyboard, dt))
+            if (HandleDoorSenses(dt))
             {
                 return;
             }
 
-            if (AttackPressed(keyboard))
+            if (_input.Attack)
             {
                 Attack();
             }
@@ -1349,12 +1344,11 @@ namespace ApoGirl.Exploration.Runtime
                 _tutorialHidden = true;
             }
 
-            _crouching = keyboard.leftCtrlKey.isPressed;
+            _crouching = _input.Crouch;
             // 숨이 차면(스태미너 바닥) 다시 찰 때까지 걷기만
-            var running = keyboard.leftShiftKey.isPressed && !_crouching && !Exhausted && Stamina > 0f;
+            var running = _input.Run && !_crouching && !Exhausted && Stamina > 0f;
             _animRunning = running;
-            var move = (keyboard.dKey.isPressed || keyboard.rightArrowKey.isPressed ? 1f : 0f)
-                       - (keyboard.aKey.isPressed || keyboard.leftArrowKey.isPressed ? 1f : 0f);
+            var move = _input.Move;
             _animMoving = move != 0f;
             if (move != 0f)
             {
@@ -1389,7 +1383,7 @@ namespace ApoGirl.Exploration.Runtime
 
             if (Nearest.Kind == TargetKind.Container && !Nearest.Searched)
             {
-                if (InteractHeld(keyboard))
+                if (_input.InteractHeld)
                 {
                     _searchNoiseTimer -= dt;
                     if (_searchNoiseTimer <= 0f)
@@ -1426,7 +1420,7 @@ namespace ApoGirl.Exploration.Runtime
                 return;
             }
 
-            if (InteractPressed(keyboard))
+            if (_input.InteractDown)
             {
                 if (Nearest.Kind == TargetKind.Container && OpenContainer == Nearest)
                 {
@@ -2659,10 +2653,10 @@ namespace ApoGirl.Exploration.Runtime
         /// <summary>
         /// 문 앞 감각: W(누르고 있기) 문틈으로 살피기, S(누르고 있기) 귀 기울이기. 처리 중이면 true (이동하지 않음).
         /// </summary>
-        private bool HandleDoorSenses(Keyboard keyboard, float dt)
+        private bool HandleDoorSenses(float dt)
         {
             var door = Nearest != null && Nearest.IsDoorway ? Nearest : null;
-            if (door != null && (keyboard.wKey.isPressed || door == _debugPeek))
+            if (door != null && (_input.Peek || door == _debugPeek))
             {
                 if (door.Kind == TargetKind.Door)
                 {
@@ -2680,7 +2674,7 @@ namespace ApoGirl.Exploration.Runtime
             }
 
             PeekTarget = null;
-            if (door != null && keyboard.sKey.isPressed)
+            if (door != null && _input.Listen)
             {
                 var before = ListenProgress;
                 ListenProgress = Mathf.Min(1f, ListenProgress + dt / Mathf.Max(0.1f, _balance.ListenSeconds));
@@ -3098,6 +3092,11 @@ namespace ApoGirl.Exploration.Runtime
 
         private void OnDestroy()
         {
+            if (_pad != null)
+            {
+                Loc.Variant = null;
+            }
+
             _look.Dispose();
             Presentation.Audio.Sound.StopAllLoops();
         }

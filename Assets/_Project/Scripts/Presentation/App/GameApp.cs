@@ -63,8 +63,8 @@ namespace ApoGirl.Presentation.App
             Presentation.Audio.CdPlayer.Room = new MusicRoom(Application.persistentDataPath);
             Session = new GameSession(database.Build(), new SaveService(saveDirectory, new GameStateSerializer()), null, gallery)
             {
-                // 휴대폰에는 아직 터치 조작이 없어 탐험을 헤드리스 확률 모델로 자동 진행한다
-                UseRealtimeExpeditions = !Application.isMobilePlatform,
+                // 휴대폰은 가상 패드로 직접 탐험한다. 메뉴의 "탐험: 자동"을 고르면 헤드리스 확률 모델로 넘어간다
+                UseRealtimeExpeditions = !ControlPrefs.AutoExplore,
                 InteractiveEvents = true,
             };
         }
