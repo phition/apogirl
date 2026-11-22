@@ -1,0 +1,42 @@
+{
+  "_설명": "탐험 화면 후처리 (ExplorationLook). 색은 #RRGGBB. 스플릿 토닝은 회색(#808080)이 중립. 디버그 F9로 켜고 끈다.",
+  "Enabled": true,
+  "Day": {
+    "Tonemap": "Neutral",
+    "Exposure": 0.0,
+    "Contrast": 12,
+    "Saturation": -6,
+    "ColorFilter": "#FFF8EE",
+    "ShadowsTint": "#5A6E8C",
+    "HighlightsTint": "#C9A36E",
+    "SplitBalance": -15,
+    "BloomThreshold": 0.95,
+    "BloomIntensity": 0.35,
+    "BloomScatter": 0.55,
+    "BloomTint": "#FFE9C4",
+    "VignetteIntensity": 0.22,
+    "VignetteSmoothness": 0.45,
+    "VignetteColor": "#1A1410",
+    "FlashlightVolume": 0.0,
+    "SunbeamVolume": 0.12
+  },
+  "Night": {
+    "Tonemap": "Neutral",
+    "Exposure": 0.0,
+    "Contrast": 18,
+    "Saturation": -12,
+    "ColorFilter": "#E8EEFF",
+    "ShadowsTint": "#3E5478",
+    "HighlightsTint": "#D8B07A",
+    "SplitBalance": -30,
+    "BloomThreshold": 0.8,
+    "BloomIntensity": 0.6,
+    "BloomScatter": 0.65,
+    "BloomTint": "#FFE2B0",
+    "VignetteIntensity": 0.32,
+    "VignetteSmoothness": 0.5,
+    "VignetteColor": "#05070C",
+    "FlashlightVolume": 0.08,
+    "SunbeamVolume": 0.0
+  }
+}

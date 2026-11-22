@@ -50,6 +50,9 @@ namespace ApoGirl.Exploration.Runtime
         // 지금 값 (목표 값으로 부드럽게 따라간다)
         private float _angle;
         private float _intensity;
+
+        /// <summary>햇빛 줄기의 빛 기둥(볼류메트릭) 세기 (ExplorationLook, 0이면 끈다): 먼지 낀 공기에 빛줄기가 보인다.</summary>
+        public float BeamVolume { get; set; }
         private Color _color;
         private bool _snapped;
 
@@ -210,6 +213,8 @@ namespace ApoGirl.Exploration.Runtime
                 beam.transform.localScale = scale;
                 beam.color = _color;
                 beam.intensity = beamIntensity;
+                beam.volumetricEnabled = BeamVolume > 0f;
+                beam.volumeIntensity = BeamVolume * _intensity;
             }
 
             // 바닥에 닿는 곳: 줄기 끝을 따라 옆으로 움직이는 넓고 옅은 빛 (벽·바닥에 되비친 빛)

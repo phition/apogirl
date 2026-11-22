@@ -1169,6 +1169,8 @@
     "prep.disaster.SNOWSTORM": "폭설 — 1층 깊은 문과 1층 쪽문이 눈에 파묻혔다. 깊은 곳은 2층의 다른 문으로 들어가야 한다.",
     "exp.disaster.MONSOON": "장마철이다. 아래층에서 물 흐르는 소리가 들린다.",
     "exp.disaster.SNOWSTORM": "눈이 무릎까지 쌓였다. 1층 문 몇 개는 쓸 수 없겠다.",
+    "exp.look_on": "(디버그) 후처리·빛 기둥 켬",
+    "exp.look_off": "(디버그) 후처리·빛 기둥 끔",
     "exp.flooded": "물이 무릎까지 차 있다. 걸음마다 첨벙인다.",
     "exp.blocked.MONSOON": "문 너머까지 물이 가득 차 있다. 여기로는 못 나간다.",
     "exp.blocked.SNOWSTORM": "눈이 문을 막았다. 다른 문을 찾아야 한다.",

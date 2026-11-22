@@ -146,6 +146,9 @@ namespace ApoGirl.Exploration.Runtime
         private int _floodedFloor = -1;
         private bool _floodNoticed;
         private bool _disasterChanged;
+
+        /// <summary>후처리 색 보정·블룸·빛 기둥 (Resources/Art/exploration_look.json, F9 비교).</summary>
+        private readonly ExplorationLook _look = new ExplorationLook();
         private float _tutorialMoved;
         private float _tutorialCrouched;
         private bool _tutorialSearched;
@@ -2023,11 +2026,33 @@ namespace ApoGirl.Exploration.Runtime
             _maskAbove = BuildingView.Rect(_world, "FloorMaskAbove", Vector2.zero, new Vector2(600f, 60f), Color.black, 45);
             _maskBelow = BuildingView.Rect(_world, "FloorMaskBelow", Vector2.zero, new Vector2(600f, 60f), Color.black, 45);
             _shownArea = CurrentArea;
+            _look.Setup(_camera, transform, Request.TimeOfDay == ExpeditionTime.Day);
             SnapCamera();
         }
 
         private GameObject _maskAbove;
         private GameObject _maskBelow;
+
+        /// <summary>빛 기둥(볼류메트릭): 손전등 원뿔과 낮 햇빛 줄기가 공기 중에 보인다.</summary>
+        private void ApplyVolumes()
+        {
+            if (_flashlight != null)
+            {
+                _flashlight.volumetricEnabled = _look.FlashlightVolume > 0f;
+                _flashlight.volumeIntensity = _look.FlashlightVolume;
+            }
+
+            if (_flashlightHot != null)
+            {
+                _flashlightHot.volumetricEnabled = _look.FlashlightVolume > 0f;
+                _flashlightHot.volumeIntensity = _look.FlashlightVolume * 0.6f;
+            }
+
+            if (_lighting != null)
+            {
+                _lighting.BeamVolume = _look.SunbeamVolume;
+            }
+        }
 
         private void SetupLight(bool day)
         {
@@ -2080,6 +2105,7 @@ namespace ApoGirl.Exploration.Runtime
             }
 
             _areaFactor = _lighting.AmbientFactor(CurrentArea);
+            ApplyVolumes();
             SetAmbient(_ambientIntensity, _light.color);
         }
 
@@ -2779,6 +2805,14 @@ namespace ApoGirl.Exploration.Runtime
                 Clock.Tick(Clock.Length);
                 _log.DebugUsed = true;
             }
+
+            // 보이는 맛 비교 (기록에 영향 없음): 후처리·빛 기둥 켜고 끄기
+            if (keyboard.f9Key.wasPressedThisFrame)
+            {
+                _look.Toggle();
+                ApplyVolumes();
+                _hud?.ShowMessage(_look.On ? "exp.look_on" : "exp.look_off");
+            }
         }
 
         /// <summary>디버그 (F6): 무작위 아이템 하나를 배낭에.</summary>
@@ -2942,6 +2976,7 @@ namespace ApoGirl.Exploration.Runtime
 
         private void OnDestroy()
         {
+            _look.Dispose();
             Presentation.Audio.Sound.StopAllLoops();
         }
 
