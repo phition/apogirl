@@ -228,6 +228,18 @@
         {
           "ItemId": "ITEM_LIGHTER",
           "Weight": 1
+        },
+        {
+          "ItemId": "ITEM_COFFEE_MIX",
+          "Weight": 1
+        },
+        {
+          "ItemId": "ITEM_SPORTS_DRINK",
+          "Weight": 1
+        },
+        {
+          "ItemId": "ITEM_TUNA_CAN",
+          "Weight": 1
         }
       ]
     },
@@ -264,6 +276,34 @@
         {
           "ItemId": "ITEM_ARMOR_PADDING",
           "Weight": 1
+        },
+        {
+          "ItemId": "ITEM_PAPERBACK",
+          "Weight": 1
+        },
+        {
+          "ItemId": "ITEM_PEN",
+          "Weight": 1
+        },
+        {
+          "ItemId": "ITEM_COMIC",
+          "Weight": 1
+        },
+        {
+          "ItemId": "ITEM_KEYRING",
+          "Weight": 1
+        },
+        {
+          "ItemId": "ITEM_STICKERS",
+          "Weight": 1
+        },
+        {
+          "ItemId": "ITEM_GUITAR_SCORE",
+          "Weight": 1
+        },
+        {
+          "ItemId": "ITEM_GUITAR_STRINGS",
+          "Weight": 1
         }
       ]
     },
@@ -288,6 +328,18 @@
         {
           "ItemId": "ITEM_SCRAP",
           "Weight": 2
+        },
+        {
+          "ItemId": "ITEM_CANDY",
+          "Weight": 1
+        },
+        {
+          "ItemId": "ITEM_SPORTS_DRINK",
+          "Weight": 1
+        },
+        {
+          "ItemId": "ITEM_GUITAR_SCORE",
+          "Weight": 1
         }
       ]
     },
@@ -319,6 +371,14 @@
         },
         {
           "ItemId": "ITEM_MEDKIT",
+          "Weight": 1
+        },
+        {
+          "ItemId": "ITEM_OLD_MAP",
+          "Weight": 1
+        },
+        {
+          "ItemId": "ITEM_GUITAR_STRINGS",
           "Weight": 1
         }
       ]

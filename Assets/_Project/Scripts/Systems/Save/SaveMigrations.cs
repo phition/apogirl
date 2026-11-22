@@ -15,6 +15,7 @@ namespace ApoGirl.Systems.Save
                 yield return new V3ToV4();
                 yield return new V4ToV5();
                 yield return new V5ToV6();
+                yield return new V6ToV7();
             }
         }
 
@@ -102,6 +103,16 @@ namespace ApoGirl.Systems.Save
                 {
                     root["Events"] = new JObject();
                 }
+            }
+        }
+
+        /// <summary>v7: 동료·선생님 몸 상태(Body)와 배분 기록(GiftLog) 추가 (기획 D절). 새 필드는 기본값으로 채워진다.</summary>
+        private sealed class V6ToV7 : ISaveMigration
+        {
+            public int FromVersion => 6;
+
+            public void Migrate(JObject root)
+            {
             }
         }
     }

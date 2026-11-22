@@ -234,6 +234,26 @@
         {
           "ItemId": "ITEM_LIGHTER",
           "Weight": 1
+        },
+        {
+          "ItemId": "ITEM_KEYRING",
+          "Weight": 1
+        },
+        {
+          "ItemId": "ITEM_STICKERS",
+          "Weight": 1
+        },
+        {
+          "ItemId": "ITEM_HAIR_TIE",
+          "Weight": 1
+        },
+        {
+          "ItemId": "ITEM_TUNA_CAN",
+          "Weight": 1
+        },
+        {
+          "ItemId": "ITEM_CAT_TREAT",
+          "Weight": 1
         }
       ]
     },
@@ -289,6 +309,14 @@
         },
         {
           "ItemId": "ITEM_PAINKILLER",
+          "Weight": 1
+        },
+        {
+          "ItemId": "ITEM_OLD_MAP",
+          "Weight": 1
+        },
+        {
+          "ItemId": "ITEM_CANDY",
           "Weight": 1
         }
       ]

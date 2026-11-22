@@ -24,6 +24,7 @@
             <ui:VisualElement name="resources" class="resources" />
             <ui:Button name="record-button" class="hud-button" />
             <ui:Button name="base-button" class="hud-button" />
+            <ui:Button name="people-button" class="hud-button" />
             <ui:Button name="save-button" class="hud-button" />
             <ui:Button name="menu-button" class="hud-button" />
         </ui:VisualElement>
@@ -62,6 +63,14 @@
                 <ui:Button name="drawer-right-close" class="drawer-close" />
             </ui:VisualElement>
             <ui:ScrollView name="base-panel" class="drawer-body base-panel" />
+        </ui:VisualElement>
+
+        <ui:VisualElement name="drawer-people" class="drawer drawer-right drawer-people closed">
+            <ui:VisualElement class="drawer-head">
+                <ui:Label name="drawer-people-title" class="drawer-title" />
+                <ui:Button name="drawer-people-close" class="drawer-close" />
+            </ui:VisualElement>
+            <ui:ScrollView name="people-panel" class="drawer-body people-panel" />
         </ui:VisualElement>
 
         <ui:VisualElement name="board" class="board closed">
@@ -123,6 +132,19 @@
                     <ui:ScrollView name="fac-trades" class="fac-trades" />
                     <ui:ScrollView name="fac-log" class="fac-log" />
                 </ui:VisualElement>
+            </ui:VisualElement>
+        </ui:VisualElement>
+
+        <!-- 3겹: 이번 주 배분하기 (한 주 실행 직전) -->
+        <ui:VisualElement name="give-sheet" class="sheet give-sheet hidden">
+            <ui:VisualElement class="give-panel">
+                <ui:VisualElement class="give-head">
+                    <ui:Label name="give-title" class="give-title" />
+                    <ui:Label name="give-stock" class="give-stock" />
+                </ui:VisualElement>
+                <ui:Label name="give-hint" class="give-hint" />
+                <ui:ScrollView name="give-list" class="give-list" />
+                <ui:VisualElement name="give-buttons" class="give-buttons" />
             </ui:VisualElement>
         </ui:VisualElement>
 

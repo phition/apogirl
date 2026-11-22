@@ -61,7 +61,11 @@ namespace ApoGirl.Presentation.Text
             }
 
             // M3: 관계·아이템 (숨김 수치는 보여주지 않는다, 문서 5.3)
-            AppendGroup(lines, delta.NpcAffinity, id => Loc.F("result.affinity", Loc.T("npc." + id)));
+            // 호감은 수치 대신 느낌으로 (기획 D.1): 가까워졌다 / 서먹해졌다
+            var closer = delta.NpcAffinity.Where(p => p.Value > 0).Select(p => Loc.T("npc." + p.Key)).ToList();
+            var colder = delta.NpcAffinity.Where(p => p.Value < 0).Select(p => Loc.T("npc." + p.Key)).ToList();
+            if (closer.Count > 0) lines.Add(Loc.F("result.affinity_up", string.Join(", ", closer)));
+            if (colder.Count > 0) lines.Add(Loc.F("result.affinity_down", string.Join(", ", colder)));
             foreach (var change in delta.NpcStatusChanges)
             {
                 var parts = change.Split(':');

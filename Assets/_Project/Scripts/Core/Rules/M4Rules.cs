@@ -45,7 +45,9 @@ namespace ApoGirl.Core.Rules
                     var role = db.Extras.Roles.Find(r => r.Id == npc.Role);
                     if (role != null)
                     {
-                        total += Match(role.Modifiers, kind, key);
+                        // 기획 D-1: 스트레스가 높은 동료는 역할 효과가 준다
+                        var scale = GiveRules.IsStressed(npc, db.Balance) ? db.Balance.CompanionStressedRoleMultiplier : 1f;
+                        total += Match(role.Modifiers, kind, key) * scale;
                     }
                 }
             }

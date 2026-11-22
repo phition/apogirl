@@ -927,6 +927,22 @@
       "Image": "avatar_ringleader"
     },
     {
+      "Key": "npc.NPC_TEACHER",
+      "Image": "avatar_teacher"
+    },
+    {
+      "Key": "npc.NPC_SURVIVOR_A",
+      "Image": "avatar_senior"
+    },
+    {
+      "Key": "npc.NPC_WANDERER",
+      "Image": "avatar_wanderer"
+    },
+    {
+      "Key": "npc.NPC_CAT",
+      "Image": "avatar_cat"
+    },
+    {
       "Key": "act.ACT_EDU_HUMANITIES",
       "Image": "icon_act_humanities"
     },

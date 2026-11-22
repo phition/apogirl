@@ -733,6 +733,7 @@ namespace ApoGirl.Presentation.Screens
             else
             {
                 _teacher ??= NewActor("teacher");
+                _teacher.Id = ApoGirl.Core.Rules.GiveRules.TeacherId;
                 _teacher.SetLook(Frames(teacherKey + "_idle_", teacherKey), canWalk ? Frames(teacherKey + "_idle_", teacherKey) : null);
                 _teacher.CanWalk = canWalk;
                 var teacherHome = _rooms.TryGetValue(teacherRoom ?? shelter, out var r) && r.Open ? r : home;
@@ -763,6 +764,7 @@ namespace ApoGirl.Presentation.Screens
                 var roleRoom = _config.RoleRooms.FirstOrDefault(r => r.Role == pair.Value.Role)?.Room;
                 var room = roleRoom != null && _rooms.TryGetValue(roleRoom, out var rr) && rr.Open ? rr : home;
                 var actor = NewActor("npc");
+                actor.Id = pair.Key;
                 actor.SetLook(Frames(sprite + "_idle_", sprite), null);
                 actor.Guard = pair.Value.Role == "GUARD";
                 actor.HomeFloor = home.Def.Floor;
@@ -895,6 +897,7 @@ namespace ApoGirl.Presentation.Screens
 
             _skyView.Tick(dt);
             TickDoors(dt);
+            TickBubbles(dt);
 
             _lightTimer += dt;
             if (_lightTimer > 0.3f)
@@ -933,6 +936,62 @@ namespace ApoGirl.Presentation.Screens
 
         internal float StairsCenter => _config.StairsX + _config.StairsWidth * 0.5f;
         internal float WalkSpeed => _config.WalkSpeed;
+
+        // ── 말풍선 (이번 주 배분을 받은 사람이 고마워한다) ──
+
+        private sealed class Bubble
+        {
+            public string Id;
+            public Label Label;
+            public float Delay;
+            public float Left;
+        }
+
+        private readonly List<Bubble> _bubbles = new List<Bubble>();
+
+        /// <summary>그 사람이 단면도에 보이면 머리 위에 말풍선을 띄우고 true. 안 보이면 false (허브가 다른 곳에 띄운다).</summary>
+        public bool ShowBubble(string id, string text, float delay, float seconds = 2.4f)
+        {
+            if (string.IsNullOrEmpty(id) || !_actors.Any(a => a.Id == id && !a.Element.ClassListContains("hidden")))
+            {
+                return false;
+            }
+
+            var label = new Label(text) { pickingMode = PickingMode.Ignore };
+            label.AddToClassList("hub-bubble");
+            label.AddToClassList("hidden");
+            _actorLayer.Add(label);
+            _bubbles.Add(new Bubble { Id = id, Label = label, Delay = delay, Left = seconds });
+            return true;
+        }
+
+        private void TickBubbles(float dt)
+        {
+            for (var i = _bubbles.Count - 1; i >= 0; i--)
+            {
+                var bubble = _bubbles[i];
+                if (bubble.Delay > 0f)
+                {
+                    bubble.Delay -= dt;
+                    continue;
+                }
+
+                bubble.Left -= dt;
+                var actor = _actors.FirstOrDefault(a => a.Id == bubble.Id);
+                if (bubble.Left <= 0f || actor == null)
+                {
+                    bubble.Label.RemoveFromHierarchy();
+                    _bubbles.RemoveAt(i);
+                    continue;
+                }
+
+                var height = actor.Current != null ? actor.Current.height : 80;
+                bubble.Label.RemoveFromClassList("hidden");
+                bubble.Label.style.left = Px(actor.X) - 150f; // 말풍선 폭 300px (USS), 화면 픽셀
+                bubble.Label.style.top = Px(FloorBottom(actor.Floor) - 6 - height) - 44f;
+                bubble.Label.style.opacity = Mathf.Clamp01(bubble.Left / 0.4f);
+            }
+        }
 
         internal void PlaceActor(Actor actor)
         {
@@ -1019,6 +1078,9 @@ namespace ApoGirl.Presentation.Screens
             private bool _facingLeft;
 
             public string Kind;
+
+            /// <summary>사람 ID (선생님은 NPC_TEACHER, 동료는 NPC_…). 주인공은 비어 있다.</summary>
+            public string Id;
             public VisualElement Element;
             public int Scale;
             public int Floor;

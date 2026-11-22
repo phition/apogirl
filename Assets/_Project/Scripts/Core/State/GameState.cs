@@ -9,7 +9,7 @@ namespace ApoGirl.Core.State
     public sealed class GameState
     {
         /// <summary>현재 세이브 포맷 버전. 마이그레이션 시 증가시킨다.</summary>
-        public const int CurrentSaveVersion = 6;
+        public const int CurrentSaveVersion = 7;
 
         public int SaveVersion { get; set; } = CurrentSaveVersion;
         public GameStatus Status { get; set; } = GameStatus.Playing;
@@ -237,6 +237,10 @@ namespace ApoGirl.Core.State
         public bool Reinfected { get; set; }
         public int InfectionProgress { get; set; }
         public bool Alive { get; set; } = true;
+
+        /// <summary>선생님의 몸 상태와 배분 기록. v7.</summary>
+        public BodyState Body { get; set; } = new BodyState();
+        public Dictionary<string, int> GiftLog { get; set; } = new Dictionary<string, int>();
     }
 
     /// <summary>친구 (문서 7.3). 재회 변주용 플래그는 GameState.Flags에 둔다.</summary>
@@ -354,6 +358,20 @@ namespace ApoGirl.Core.State
 
         /// <summary>낮 침입으로 다쳐 역할을 못 하는 남은 주 수.</summary>
         public int InjuredWeeks { get; set; }
+
+        /// <summary>동료의 몸 상태 (스트레스·포만·수분). v7에서 추가 (기획 D-1).</summary>
+        public BodyState Body { get; set; } = new BodyState();
+
+        /// <summary>배분 기록: "kind:Food" / "item:ITEM_ID" → 마지막으로 받은 주. v7.</summary>
+        public Dictionary<string, int> GiftLog { get; set; } = new Dictionary<string, int>();
+    }
+
+    /// <summary>동료·선생님의 몸 상태. 주인공 Vitals와 같은 척도 (스트레스 0~100, 포만·수분 −100~+100, 0 = 보통).</summary>
+    public sealed class BodyState
+    {
+        public int Stress { get; set; }
+        public int Satiety { get; set; }
+        public int Hydration { get; set; }
     }
 
     public sealed class EventLogState

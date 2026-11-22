@@ -217,7 +217,7 @@ namespace ApoGirl.Presentation.Screens
                     _session.SetNpcRole(npcId, next);
                 })
                 {
-                    text = Loc.F("status.npc", Loc.T("npc." + npcId), npc.Affinity) + " · " + roleName,
+                    text = Loc.T("npc." + npcId) + " · " + roleName,
                     tooltip = string.IsNullOrEmpty(npc.Role) ? Loc.T("status.role_hint") : Loc.T("role." + npc.Role + ".desc"),
                 };
                 button.AddToClassList("small-button");

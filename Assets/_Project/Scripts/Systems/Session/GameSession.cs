@@ -335,6 +335,23 @@ namespace ApoGirl.Systems.Session
         public string TradeBlocker(string factionId, string offerId) =>
             IsPlanning ? FactionRules.TradeBlocker(State, _db, factionId, offerId) : "faction.trade.planning";
 
+        /// <summary>이번 주 배분 (기획 D.3): 한 주 실행 직전, 계획 단계에서만. 줄 수 없는 이유(UI 키), 줄 수 있으면 null.</summary>
+        public string GiveBlocker(string recipientId, GiveKind kind, string itemId = null) =>
+            IsPlanning ? GiveRules.Blocker(State, _db.Balance, recipientId, kind, itemId) : "give.blocked.planning";
+
+        /// <summary>준다. liked = 그 사람이 좋아하는 물건이었는가.</summary>
+        public bool Give(string recipientId, GiveKind kind, string itemId, out bool liked)
+        {
+            liked = false;
+            if (!IsPlanning || !GiveRules.Give(State, _db.Balance, recipientId, kind, itemId, new StateDelta(), out liked))
+            {
+                return false;
+            }
+
+            StateChanged?.Invoke();
+            return true;
+        }
+
         public bool SavePreset(string name) => EditBool(() => PlanEditing.SavePreset(State, name));
 
         public bool ApplyPreset(string name) => EditBool(() => PlanEditing.ApplyPreset(State, _db, name));

@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using ApoGirl.Core.Definitions;
 using ApoGirl.Core.Random;
@@ -76,7 +77,57 @@ namespace ApoGirl.Core.Expedition
             // 교실동 상자 고갈·적대적 생존자: 따로 뽑은 난수로 (기존 굴림 결과를 흔들지 않는다)
             ApplyDepletion(request, model, result);
             ApplyHostile(request, result);
+            ApplyLikedItem(request, result);
             return result;
+        }
+
+        /// <summary>기호품(기획 D.4): 그 지역 전리품 표에 있는 기호품 하나를 확률로 줍는다. 따로 뽑은 난수로 (자원 결과를 흔들지 않는다).</summary>
+        private void ApplyLikedItem(ExpeditionRequest request, ExpeditionResult result)
+        {
+            var balance = _db.Balance;
+            if (result.Status != ExtractStatus.Extracted || balance.LikedItems == null || !_db.TryGetLocation(request.LocationId, out var location))
+            {
+                return;
+            }
+
+            var chance = request.TimeOfDay == ExpeditionTime.Day ? balance.HeadlessLikedItemDayChance : balance.HeadlessLikedItemNightChance;
+            var random = new SeededRandom(SeededRandom.CreateState(request.Seed ^ 0x61F7ED));
+            if (chance <= 0f || random.NextDouble() >= chance)
+            {
+                return;
+            }
+
+            var liked = new HashSet<string>(balance.LikedItems.SelectMany(l => l.Items ?? Array.Empty<string>()));
+            var candidates = LootTableIds(location)
+                .SelectMany(id => _db.TryGetLootTable(id, out var table) ? table.Entries.Select(e => e.ItemId) : Enumerable.Empty<string>())
+                .Where(liked.Contains)
+                .Distinct()
+                .OrderBy(id => id, StringComparer.Ordinal)
+                .ToList();
+            if (candidates.Count == 0)
+            {
+                return;
+            }
+
+            result.Loot.Add(new ItemStack { ItemId = candidates[random.Range(0, candidates.Count - 1)], Count = 1 });
+        }
+
+        private static IEnumerable<string> LootTableIds(LocationDef location)
+        {
+            var layout = location.Layout;
+            var ids = new List<string> { location.DefaultLootTableId };
+            if (layout != null)
+            {
+                ids.AddRange(layout.Containers.Select(c => c.LootTableId));
+                ids.AddRange(layout.Doors.Select(d => d.LootTableId));
+                foreach (var template in layout.RoomTemplates)
+                {
+                    ids.Add(template.DefaultLootTableId);
+                    ids.AddRange(template.Containers.Select(c => c.LootTableId));
+                }
+            }
+
+            return ids.Where(id => !string.IsNullOrEmpty(id)).Distinct();
         }
 
         /// <summary>상자가 고갈되는 지역: 이번에 뒤질 상자를 남은 것 중에서 고르고, 남은 상자가 모자라면 수확을 그만큼 줄인다.</summary>

@@ -42,9 +42,11 @@ namespace ApoGirl.Core.Rules
             var difficulty = DifficultyRules.Get(state, balance);
             var baseFood = DailyFoodNeed(state.Calendar.Week, state.Calendar.Day, balance, difficulty.Consumption);
             var food = state.Calendar.Day % 2 == 0 ? Math.Max(0, baseFood - foodSaving) : baseFood;
+            var foodShare = Share(state, ResourceType.Food, food);
             Nourish(state, ResourceType.Food, food, VitalType.Satiety, balance.SatietyDailyDrain, balance.MealSatiety, balance, delta);
             var water = DifficultyRules.DailyShare(balance.DailyWater, difficulty.Consumption, state.Calendar.Day)
                         + (state.Base.Weather == WeatherType.Heat ? balance.HeatExtraWater : 0);
+            var waterShare = Share(state, ResourceType.Water, water);
             Nourish(state, ResourceType.Water, water, VitalType.Hydration, balance.HydrationDailyDrain, balance.DrinkHydration, balance, delta);
             if (state.Base.Weather == WeatherType.Cold && balance.ColdDailyStress > 0)
             {
@@ -54,6 +56,15 @@ namespace ApoGirl.Core.Rules
 
             ApplyBand(state, Band(balance.SatietyBands, state.Player.Vitals.Satiety), balance, delta);
             ApplyBand(state, Band(balance.HydrationBands, state.Player.Vitals.Hydration), balance, delta);
+
+            // 기획 D-1: 동료·선생님도 같은 공용 식사로 (그날 식량이 넉넉했던 비율만큼) 채운다. 식량을 더 쓰지 않는다.
+            GiveRules.ApplyDaily(state, balance, foodShare, waterShare);
+        }
+
+        /// <summary>그날 공용 식사가 넉넉한 비율 (0~1, 필요량이 없으면 1).</summary>
+        private static double Share(GameState state, ResourceType resource, int need)
+        {
+            return need <= 0 ? 1.0 : Math.Min(1.0, state.Base.GetResource(resource) / (double)need);
         }
 
         /// <summary>값이 Min 이상인 가장 높은 단계 (없으면 null).</summary>
@@ -126,6 +137,7 @@ namespace ApoGirl.Core.Rules
         public static void ApplyWeekly(GameState state, BalanceConfig balance, StateDelta delta)
         {
             EffectApplier.ChangeVital(state, VitalType.Cleanliness, -balance.CleanlinessWeeklyDecay, balance, delta);
+            GiveRules.ApplyWeekly(state, balance);
 
             if (state.Base.PowerRestored)
             {

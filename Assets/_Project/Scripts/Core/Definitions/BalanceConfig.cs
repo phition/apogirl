@@ -293,6 +293,59 @@ namespace ApoGirl.Core.Definitions
             new NourishmentBand { Min = -100, Key = "DEHYDRATED", Hp = -10, Stress = 5 },
         };
 
+        // ── 동료 몸 상태·이번 주 배분 (기획 D절) ──
+
+        /// <summary>동료·선생님의 하루 포만·수분 감소. 기본 식사는 공용 식량에서 주인공이 먹은 비율만큼 채운다 (식량을 더 쓰지 않는다).</summary>
+        public int CompanionSatietyDailyDrain = 25;
+        public int CompanionHydrationDailyDrain = 30;
+        public int CompanionMealSatiety = 45;
+        public int CompanionDrinkHydration = 55;
+
+        /// <summary>다친 동료의 하루 스트레스, 주마다 저절로 풀리는 스트레스.</summary>
+        public int CompanionInjuredDailyStress = 1;
+        public int CompanionWeeklyStressRecovery = 6;
+
+        /// <summary>스트레스가 이 이상인 동료는 역할 효과가 배율만큼 준다.</summary>
+        public int CompanionStressRoleThreshold = 70;
+        public float CompanionStressedRoleMultiplier = 0.5f;
+
+        /// <summary>배분: 음식(식량 1)·마실 것(식수 1)·의약품(의약품 1)·기호품(창고 물건 1). 한 사람에게 종류별 주 1회.</summary>
+        public int GiveFoodSatiety = 45;
+        public int GiveFoodStress = -3;
+        public int GiveWaterHydration = 55;
+        public int GiveWaterStress = -2;
+        public int GiveMedicineInjuryWeeks = 1;
+        public int GiveMedicineStress = -5;
+        public int GiveAffinityBasic = 2;
+        public int GiveAffinityMedicineInjured = 4;
+        public int GiveAffinityLiked = 6;
+        public int GiveLikedStress = -10;
+        public int GiveOtherGiftStress = -3;
+
+        /// <summary>같은 사람에게 같은 물건을 이 주 수 안에 다시 주면 호감·스트레스 효과가 반으로 준다.</summary>
+        public int GiftRepeatWeeks = 2;
+
+        /// <summary>허브 한 줄 멘트: 호감이 이 이상인 동료가 n번에 1번꼴로 대신 말한다 (경고·실행 중에는 선생님).</summary>
+        public int HubCompanionLineAffinity = 50;
+        public int HubCompanionLineEvery = 4;
+
+        /// <summary>헤드리스(자동) 탐험에서 그 지역 전리품 표에 있는 기호품 하나를 줍는 확률 (낮·밤).</summary>
+        public float HeadlessLikedItemDayChance = 0.3f;
+        public float HeadlessLikedItemNightChance = 0.15f;
+
+        /// <summary>좋아하는 물건 (기획 D.4). 기호품 칸에는 이 표에 있는 물건만 고를 수 있다.</summary>
+        public LikedItemsDef[] LikedItems =
+        {
+            new LikedItemsDef { NpcId = "NPC_TEACHER", Items = new[] { "ITEM_PAPERBACK", "ITEM_PEN" } },
+            new LikedItemsDef { NpcId = "NPC_NURSE", Items = new[] { "ITEM_COFFEE_MIX", "ITEM_HAND_CREAM" } },
+            new LikedItemsDef { NpcId = "NPC_DOHYEON", Items = new[] { "ITEM_COMIC", "ITEM_SPORTS_DRINK" } },
+            new LikedItemsDef { NpcId = "NPC_BYSTANDER", Items = new[] { "ITEM_KEYRING", "ITEM_STICKERS" } },
+            new LikedItemsDef { NpcId = "NPC_RINGLEADER", Items = new[] { "ITEM_HAIR_TIE", "ITEM_LIP_BALM" } },
+            new LikedItemsDef { NpcId = "NPC_SURVIVOR_A", Items = new[] { "ITEM_GUITAR_SCORE", "ITEM_GUITAR_STRINGS" } },
+            new LikedItemsDef { NpcId = "NPC_WANDERER", Items = new[] { "ITEM_OLD_MAP", "ITEM_CANDY" } },
+            new LikedItemsDef { NpcId = "NPC_CAT", Items = new[] { "ITEM_TUNA_CAN", "ITEM_CAT_TREAT" } },
+        };
+
         // ── 난이도 (M7-3: M7-d 배율, M7-e 이야기 중심 편의) ──
 
         public string DefaultDifficulty = "STANDARD";

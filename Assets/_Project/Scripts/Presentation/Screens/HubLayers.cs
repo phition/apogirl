@@ -17,9 +17,11 @@ namespace ApoGirl.Presentation.Screens
     {
         private readonly VisualElement _left;
         private readonly VisualElement _right;
+        private readonly VisualElement _people;
         private readonly VisualElement _board;
         private readonly Button _recordButton;
         private readonly Button _baseButton;
+        private readonly Button _peopleButton;
         private readonly Button _planButton;
         private readonly VisualElement _screen;
 
@@ -28,30 +30,37 @@ namespace ApoGirl.Presentation.Screens
             _screen = root.Q("screen");
             _left = root.Q("drawer-left");
             _right = root.Q("drawer-right");
+            _people = root.Q("drawer-people");
             _board = root.Q("board");
             _recordButton = root.Q<Button>("record-button");
             _baseButton = root.Q<Button>("base-button");
+            _peopleButton = root.Q<Button>("people-button");
             _planButton = root.Q<Button>("plan-open-button");
             StoryArt.SetIcon(_recordButton, StoryArt.Icon("menu.record"), 22f);
-            StoryArt.SetIcon(_baseButton, StoryArt.Icon("menu.people"), 22f);
+            StoryArt.SetIcon(_baseButton, StoryArt.Icon("menu.school"), 22f);
+            StoryArt.SetIcon(_peopleButton, StoryArt.Icon("menu.people"), 22f);
             StoryArt.SetIcon(_planButton, StoryArt.Icon("menu.plan"), 26f);
 
             root.Q<Label>("drawer-left-title").text = Loc.T("hud.record_title");
             root.Q<Label>("drawer-right-title").text = Loc.T("hud.base_title");
+            root.Q<Label>("drawer-people-title").text = Loc.T("hud.people_title");
             root.Q<Label>("board-title").text = Loc.T("hud.board_title");
             root.Q<Label>("board-hint").text = Loc.T("hud.board_hint");
-            foreach (var name in new[] { "drawer-left-close", "drawer-right-close", "board-close" })
+            foreach (var name in new[] { "drawer-left-close", "drawer-right-close", "drawer-people-close", "board-close" })
             {
                 root.Q<Button>(name).text = Loc.T("hud.close");
             }
 
             root.Q<Button>("drawer-left-close").clicked += () => Set(_left, false);
             root.Q<Button>("drawer-right-close").clicked += () => Set(_right, false);
+            root.Q<Button>("drawer-people-close").clicked += () => Set(_people, false);
             root.Q<Button>("board-close").clicked += () => Set(_board, false);
             _recordButton.text = Loc.T("hud.record");
             _baseButton.text = Loc.T("hud.base");
+            _peopleButton.text = Loc.T("hud.people");
             _recordButton.clicked += ToggleRecord;
             _baseButton.clicked += ToggleBase;
+            _peopleButton.clicked += TogglePeople;
             Sync();
         }
 
@@ -69,19 +78,35 @@ namespace ApoGirl.Presentation.Screens
 
         public void ToggleRecord() => Set(_left, !IsOpen(_left));
 
-        public void ToggleBase() => Set(_right, !IsOpen(_right));
+        // 오른쪽 서랍 둘(거점·인물)은 같은 자리라 하나만 연다
+        public void ToggleBase()
+        {
+            var open = !IsOpen(_right);
+            if (open) _people?.EnableInClassList("closed", true);
+            Set(_right, open);
+        }
+
+        public void TogglePeople()
+        {
+            var open = !IsOpen(_people);
+            if (open) _right?.EnableInClassList("closed", true);
+            Set(_people, open);
+        }
+
+        public bool PeopleOpen => IsOpen(_people);
 
         public void CloseAll()
         {
             Set(_board, false);
             Set(_left, false);
             Set(_right, false);
+            Set(_people, false);
         }
 
         /// <summary>Esc: 맨 위에 열린 것 하나를 닫는다. 닫은 것이 있으면 true.</summary>
         public bool CloseTop()
         {
-            foreach (var element in new[] { _board, _right, _left })
+            foreach (var element in new[] { _board, _people, _right, _left })
             {
                 if (IsOpen(element))
                 {
@@ -105,6 +130,7 @@ namespace ApoGirl.Presentation.Screens
         {
             _recordButton?.EnableInClassList("selected", IsOpen(_left));
             _baseButton?.EnableInClassList("selected", IsOpen(_right));
+            _peopleButton?.EnableInClassList("selected", IsOpen(_people));
             _planButton?.EnableInClassList("selected", IsOpen(_board));
             _screen?.EnableInClassList("board-open", IsOpen(_board));
         }

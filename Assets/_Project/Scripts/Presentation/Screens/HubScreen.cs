@@ -63,6 +63,11 @@ namespace ApoGirl.Presentation.Screens
         private VisualElement _sectionFrame;
         private VisualElement _teacherBox;
         private int _lastWarningCount = -1;
+        private PeopleDrawerView _people;
+        private GiveSheetView _give;
+
+        /// <summary>허브 한 줄 멘트를 누를 때마다 다음 사람·다음 말로 (기획 D.5).</summary>
+        private int _lineOffset;
 
         /// <summary>테스트용: 허브 진입 시 시작 이벤트를 자동으로 띄우지 않는다.</summary>
         public static bool AutoPlayOpening = true;
@@ -125,6 +130,13 @@ namespace ApoGirl.Presentation.Screens
                     Refresh();
                 },
             };
+            _people = new PeopleDrawerView(_root, _session);
+            _give = new GiveSheetView(_root, _session);
+            _teacherBox.RegisterCallback<ClickEvent>(_ =>
+            {
+                _lineOffset++;
+                Refresh();
+            });
             var yarnProject = Resources.Load<Yarn.Unity.YarnProject>(YarnProjectResource);
             if (yarnProject != null && yarnProject.Program != null)
             {
@@ -208,7 +220,14 @@ namespace ApoGirl.Presentation.Screens
                 _debug.Toggle();
             }
 
-            var busy = _card.IsOpen || _dialogueView.IsOpen || (_ending != null && _ending.IsOpen) || _settlement.IsOpen || _prep.IsOpen;
+            var busy = _card.IsOpen || _dialogueView.IsOpen || (_ending != null && _ending.IsOpen) || _settlement.IsOpen || _prep.IsOpen || _give.IsOpen;
+
+            // Esc: 배분 화면이 열려 있으면 닫는다 (실행하지 않고 계획으로)
+            if (_give.IsOpen && keyboard.escapeKey.wasPressedThisFrame)
+            {
+                _give.Hide();
+                return;
+            }
 
             // Esc: 세력 화면이 열려 있으면 먼저 닫는다
             if (_faction.IsOpen && keyboard.escapeKey.wasPressedThisFrame)
@@ -256,9 +275,16 @@ namespace ApoGirl.Presentation.Screens
             _runButton = _root.Q<Button>("run-button");
             _runButton.clicked += () =>
             {
-                if (_session.IsPlanning && !_card.IsOpen)
+                if (!_session.IsPlanning || _card.IsOpen || _give.IsOpen)
                 {
-                    StartCoroutine(RunWeek());
+                    return;
+                }
+
+                // 한 주 실행: ① 이번 주 배분하기 → ② 스케줄 실행 (배분할 사람이 없으면 바로 실행)
+                _layers.CloseAll();
+                if (!_give.Show(received => StartCoroutine(RunWeek(received))))
+                {
+                    StartCoroutine(RunWeek(null));
                 }
             };
 
@@ -296,6 +322,7 @@ namespace ApoGirl.Presentation.Screens
             _planner.Refresh(warned);
             _dock.Refresh(warned);
             _miniVitals.Refresh();
+            _people.Refresh();
             _debug.Refresh();
 
             // 입상: 계획을 고치다 경고가 늘면 잠깐 놀란 얼굴
@@ -339,13 +366,47 @@ namespace ApoGirl.Presentation.Screens
             var backdrop = StoryArt.Backdrop(_session.State);
             StoryArt.SetCover(_root.Q("backdrop"), backdrop);
             _root.Q("backdrop-label").EnableInClassList("hidden", backdrop != null);
-            var avatar = _session.HasMetTeacher ? StoryArt.Ui("avatar_teacher") : null;
+            // 한 줄 멘트: 보통은 윤 선생님, 가까워진 동료가 가끔 대신 말한다 (기획 D.5)
+            var speaker = _session.HasMetTeacher ? CompanionSpeaker(warned.Count > 0) : null;
+            var avatar = !_session.HasMetTeacher ? null : speaker != null ? StoryArt.Icon("npc." + speaker) : StoryArt.Ui("avatar_teacher");
             StoryArt.SetContain(_teacherAvatar, avatar);
             _teacherAvatar.EnableInClassList("hidden", avatar == null);
 
             // 선생님을 만나기 전 (1주차 창고): 혼잣말
-            _root.Q<Label>("teacher-name").text = _session.HasMetTeacher ? Loc.T("hub.teacher_name") : Loc.T("hub.alone_name");
-            _teacherLine.text = _session.HasMetTeacher ? TeacherLine(warned.Count > 0) : Loc.T(_session.IsExecuting ? "hub.alone_running" : "hub.alone_line");
+            _root.Q<Label>("teacher-name").text = !_session.HasMetTeacher ? Loc.T("hub.alone_name") : speaker != null ? Loc.T("npc." + speaker) : Loc.T("hub.teacher_name");
+            _teacherLine.text = !_session.HasMetTeacher ? Loc.T(_session.IsExecuting ? "hub.alone_running" : "hub.alone_line")
+                : speaker != null ? CompanionLine(speaker) : TeacherLine(warned.Count > 0);
+        }
+
+        /// <summary>
+        /// 이번에 한 줄 멘트를 할 동료 (없으면 null = 선생님). 실행 중·경고·수면 부채는 늘 선생님이 말한다.
+        /// 호감이 일정 이상인 동료만, 주마다(또는 멘트를 누를 때마다) 몇 번에 한 번 차례로 나온다.
+        /// </summary>
+        private string CompanionSpeaker(bool hasWarnings)
+        {
+            var state = _session.State;
+            var balance = _session.Definitions.Balance;
+            if (_session.IsExecuting || hasWarnings || state.Player.SleepDebt >= 3 || balance.HubCompanionLineEvery <= 0)
+            {
+                return null;
+            }
+
+            var close = state.Npcs.Where(n => n.Value.Status == NpcStatus.Joined && n.Value.Affinity >= balance.HubCompanionLineAffinity)
+                .Select(n => n.Key).OrderBy(k => k, System.StringComparer.Ordinal).ToList();
+            var turn = state.Calendar.Week + _lineOffset;
+            if (close.Count == 0 || turn % balance.HubCompanionLineEvery != 0)
+            {
+                return null;
+            }
+
+            return close[turn / balance.HubCompanionLineEvery % close.Count];
+        }
+
+        private string CompanionLine(string npcId)
+        {
+            var index = (_session.State.Calendar.Week + _lineOffset) % 3;
+            var text = Loc.Lookup(Loc.UiTable, "hubline." + npcId + "." + index);
+            return string.IsNullOrEmpty(text) ? Loc.T("hubline.generic." + index) : text;
         }
 
         private string TeacherLine(bool hasWarnings)
@@ -368,16 +429,49 @@ namespace ApoGirl.Presentation.Screens
 
             var line = ApoGirl.Core.Rules.LineRules.Pick(state, _session.Definitions, ApoGirl.Core.Definitions.LineKind.TeacherComment,
                 ApoGirl.Core.Events.EventContext.FromCalendar(state));
-            return line != null ? Loc.T(line.TextKey) : Loc.T("teacher.idle." + state.Calendar.Week % 4);
+            if (line != null)
+            {
+                return Loc.T(line.TextKey);
+            }
+
+            // 가까워진 선생님은 말투가 조금 풀린다 (기획 C.1)
+            var close = state.Teacher.Affinity >= _session.Definitions.Balance.HubCompanionLineAffinity;
+            return Loc.T((close ? "teacher.idle_close." : "teacher.idle.") + (state.Calendar.Week + _lineOffset) % 4);
         }
 
         // ── 실행 ──
 
-        private IEnumerator RunWeek()
+        /// <summary>배분을 받은 사람들이 차례로 고마워한다: 단면도 머리 위 말풍선, 안 보이면 알림 한 줄.</summary>
+        private void ShowThanks(List<(string Id, bool Liked)> received)
+        {
+            if (received == null || received.Count == 0)
+            {
+                return;
+            }
+
+            var hidden = new List<string>();
+            for (var i = 0; i < received.Count; i++)
+            {
+                var (id, liked) = received[i];
+                var text = PeopleUi.Thanks(id, liked, _session.State.Calendar.Week * 7 + i);
+                if (!_session.HasMetTeacher || !_section.ShowBubble(id, text, i * 0.7f))
+                {
+                    hidden.Add(Loc.F("give.thanks_toast", Loc.T("npc." + id), text));
+                }
+            }
+
+            if (hidden.Count > 0)
+            {
+                ShowToast(string.Join("\n", hidden));
+            }
+        }
+
+        private IEnumerator RunWeek(List<(string Id, bool Liked)> received)
         {
             _pendingSummary = null;
             _layers.CloseAll();
             _session.BeginWeek();
+            ShowThanks(received);
             while (_session.IsExecuting)
             {
                 // 단면도: 이번 칸의 방으로 걸어간다 (보통 속도면 걷는 모습을 조금 보여 준다)
