@@ -5575,6 +5575,190 @@ MonoBehaviour:
     m_Key: line.ep_teacher_diploma
     m_Metadata:
       m_Items: []
+  - m_Id: 1160409490145280
+    m_Key: title.music_room
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1160409553059840
+    m_Key: music.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1160409553059841
+    m_Key: music.progress
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1160409553059842
+    m_Key: music.locked
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1160409553059843
+    m_Key: music.empty
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1160409553059844
+    m_Key: music.play
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1160409553059845
+    m_Key: music.stop
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1160409553059846
+    m_Key: music.no_clip
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1160409553059847
+    m_Key: music.back
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1160409553059848
+    m_Key: hub.cd.shelf
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1160409553059849
+    m_Key: hub.cd.console
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1160409553059850
+    m_Key: hub.cd.list_title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1160409553059851
+    m_Key: hub.cd.hint
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1160409553059852
+    m_Key: hub.cd.empty
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1160409553059853
+    m_Key: hub.cd.play
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1160409553059854
+    m_Key: hub.cd.playing
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1160409553059855
+    m_Key: hub.cd.stop
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1160409553059856
+    m_Key: hub.cd.found_week
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1160409553059857
+    m_Key: hub.cd.unknown
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1160409553059858
+    m_Key: settle.cd_found
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1160409553059859
+    m_Key: enc.cd.take
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1160409553059860
+    m_Key: enc.cd.leave
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1160409553059861
+    m_Key: cd.CD_01.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1160409553059862
+    m_Key: cd.CD_01.owner
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1160409553059863
+    m_Key: enc.CD_01.prompt
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1160409553059864
+    m_Key: cd.CD_02.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1160409553059865
+    m_Key: cd.CD_02.owner
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1160409553059866
+    m_Key: enc.CD_02.prompt
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1160409553059867
+    m_Key: cd.CD_03.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1160409553059868
+    m_Key: cd.CD_03.owner
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1160409553059869
+    m_Key: enc.CD_03.prompt
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1160409553059870
+    m_Key: cd.CD_04.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1160409553059871
+    m_Key: cd.CD_04.owner
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1160409553059872
+    m_Key: enc.CD_04.prompt
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1160409553059873
+    m_Key: cd.CD_05.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1160409553059874
+    m_Key: cd.CD_05.owner
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1160409553059875
+    m_Key: enc.CD_05.prompt
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1160409553059876
+    m_Key: cd.CD_06.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1160409553059877
+    m_Key: cd.CD_06.owner
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1160409553059878
+    m_Key: enc.CD_06.prompt
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1160409553059879
+    m_Key: cd.CD_07.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1160409553059880
+    m_Key: cd.CD_07.owner
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1160409553059881
+    m_Key: enc.CD_07.prompt
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1160409553059882
+    m_Key: cd.CD_08.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1160409553059883
+    m_Key: cd.CD_08.owner
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1160409553059884
+    m_Key: enc.CD_08.prompt
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

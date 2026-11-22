@@ -236,6 +236,34 @@ MonoBehaviour:
         DialogueNode: 
         SceneEventId: 
         PlayEventInField: 0
+        Collectible: 0
+      - Id: CD_07
+        Floor: 1
+        RoomId: ROOM_POLICE_OFFICE_2
+        X: 4
+        FlagsAll: []
+        FlagsNone:
+        - CD_07
+        PromptKey: enc.CD_07.prompt
+        Choices:
+        - Id: TAKE
+          TextKey: enc.cd.take
+          SetFlags:
+          - CD_07
+          AddClues: []
+          StressDelta: -1
+          Removes: 1
+        - Id: LEAVE
+          TextKey: enc.cd.leave
+          SetFlags: []
+          AddClues: []
+          StressDelta: 0
+          Removes: 0
+        SpriteKey: prop_cd
+        DialogueNode: 
+        SceneEventId: 
+        PlayEventInField: 0
+        Collectible: 1
       HostileChanceMultiplier: 1
       HostileSpots: []
     NightVariant:
@@ -292,6 +320,34 @@ MonoBehaviour:
         DialogueNode: 
         SceneEventId: 
         PlayEventInField: 0
+        Collectible: 0
+      - Id: CD_07
+        Floor: 1
+        RoomId: ROOM_POLICE_OFFICE_2
+        X: 4
+        FlagsAll: []
+        FlagsNone:
+        - CD_07
+        PromptKey: enc.CD_07.prompt
+        Choices:
+        - Id: TAKE
+          TextKey: enc.cd.take
+          SetFlags:
+          - CD_07
+          AddClues: []
+          StressDelta: -1
+          Removes: 1
+        - Id: LEAVE
+          TextKey: enc.cd.leave
+          SetFlags: []
+          AddClues: []
+          StressDelta: 0
+          Removes: 0
+        SpriteKey: prop_cd
+        DialogueNode: 
+        SceneEventId: 
+        PlayEventInField: 0
+        Collectible: 1
       HostileChanceMultiplier: 1
       HostileSpots: []
     Tutorial: 0

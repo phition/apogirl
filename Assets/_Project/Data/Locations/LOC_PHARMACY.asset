@@ -291,6 +291,34 @@ MonoBehaviour:
         DialogueNode: 
         SceneEventId: 
         PlayEventInField: 0
+        Collectible: 0
+      - Id: CD_03
+        Floor: 1
+        RoomId: ROOM_PH_CLINIC_1
+        X: 4
+        FlagsAll: []
+        FlagsNone:
+        - CD_03
+        PromptKey: enc.CD_03.prompt
+        Choices:
+        - Id: TAKE
+          TextKey: enc.cd.take
+          SetFlags:
+          - CD_03
+          AddClues: []
+          StressDelta: -1
+          Removes: 1
+        - Id: LEAVE
+          TextKey: enc.cd.leave
+          SetFlags: []
+          AddClues: []
+          StressDelta: 0
+          Removes: 0
+        SpriteKey: prop_cd
+        DialogueNode: 
+        SceneEventId: 
+        PlayEventInField: 0
+        Collectible: 1
       HostileChanceMultiplier: 1
       HostileSpots: []
     NightVariant:
@@ -354,6 +382,7 @@ MonoBehaviour:
         DialogueNode: 
         SceneEventId: 
         PlayEventInField: 0
+        Collectible: 0
       - Id: BLOOD_FRIDGE
         Floor: 1
         RoomId: ROOM_PH_CLINIC_1
@@ -382,6 +411,34 @@ MonoBehaviour:
         DialogueNode: 
         SceneEventId: 
         PlayEventInField: 0
+        Collectible: 0
+      - Id: CD_03
+        Floor: 1
+        RoomId: ROOM_PH_CLINIC_1
+        X: 4
+        FlagsAll: []
+        FlagsNone:
+        - CD_03
+        PromptKey: enc.CD_03.prompt
+        Choices:
+        - Id: TAKE
+          TextKey: enc.cd.take
+          SetFlags:
+          - CD_03
+          AddClues: []
+          StressDelta: -1
+          Removes: 1
+        - Id: LEAVE
+          TextKey: enc.cd.leave
+          SetFlags: []
+          AddClues: []
+          StressDelta: 0
+          Removes: 0
+        SpriteKey: prop_cd
+        DialogueNode: 
+        SceneEventId: 
+        PlayEventInField: 0
+        Collectible: 1
       HostileChanceMultiplier: 1
       HostileSpots: []
     Tutorial: 0

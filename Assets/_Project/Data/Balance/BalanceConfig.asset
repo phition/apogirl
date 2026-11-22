@@ -392,6 +392,7 @@ MonoBehaviour:
     HeadlessLikedItemDayChance: 0.3
     HeadlessLikedItemNightChance: 0.15
     HeadlessRooftopChance: 0.25
+    HeadlessCdChance: 0.3
     LikedItems:
     - NpcId: NPC_TEACHER
       Items:

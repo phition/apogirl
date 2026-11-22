@@ -843,6 +843,7 @@ MonoBehaviour:
         DialogueNode: ENC_DOHYEON
         SceneEventId: EVT_DH_02_ARRIVAL
         PlayEventInField: 0
+        Collectible: 0
       - Id: SCHOOL_NOTICE
         Floor: 0
         RoomId: ROOM_1F_ROOM_OFFICE_0
@@ -873,6 +874,34 @@ MonoBehaviour:
         DialogueNode: 
         SceneEventId: 
         PlayEventInField: 0
+        Collectible: 0
+      - Id: CD_01
+        Floor: 2
+        RoomId: ROOM_3F_ROOM_MUSIC_7
+        X: 4
+        FlagsAll: []
+        FlagsNone:
+        - CD_01
+        PromptKey: enc.CD_01.prompt
+        Choices:
+        - Id: TAKE
+          TextKey: enc.cd.take
+          SetFlags:
+          - CD_01
+          AddClues: []
+          StressDelta: -1
+          Removes: 1
+        - Id: LEAVE
+          TextKey: enc.cd.leave
+          SetFlags: []
+          AddClues: []
+          StressDelta: 0
+          Removes: 0
+        SpriteKey: prop_cd
+        DialogueNode: 
+        SceneEventId: 
+        PlayEventInField: 0
+        Collectible: 1
       HostileChanceMultiplier: 0
       HostileSpots: []
     NightVariant:
@@ -987,6 +1016,7 @@ MonoBehaviour:
         DialogueNode: ENC_DOHYEON
         SceneEventId: EVT_DH_02_ARRIVAL
         PlayEventInField: 0
+        Collectible: 0
       - Id: SCHOOL_NOTICE
         Floor: 0
         RoomId: ROOM_1F_ROOM_OFFICE_0
@@ -1017,6 +1047,34 @@ MonoBehaviour:
         DialogueNode: 
         SceneEventId: 
         PlayEventInField: 0
+        Collectible: 0
+      - Id: CD_01
+        Floor: 2
+        RoomId: ROOM_3F_ROOM_MUSIC_7
+        X: 4
+        FlagsAll: []
+        FlagsNone:
+        - CD_01
+        PromptKey: enc.CD_01.prompt
+        Choices:
+        - Id: TAKE
+          TextKey: enc.cd.take
+          SetFlags:
+          - CD_01
+          AddClues: []
+          StressDelta: -1
+          Removes: 1
+        - Id: LEAVE
+          TextKey: enc.cd.leave
+          SetFlags: []
+          AddClues: []
+          StressDelta: 0
+          Removes: 0
+        SpriteKey: prop_cd
+        DialogueNode: 
+        SceneEventId: 
+        PlayEventInField: 0
+        Collectible: 1
       HostileChanceMultiplier: 1
       HostileSpots: []
     Tutorial: 0

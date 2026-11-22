@@ -215,6 +215,7 @@ MonoBehaviour:
         DialogueNode: 
         SceneEventId: 
         PlayEventInField: 0
+        Collectible: 0
       - Id: NURSE
         Floor: 1
         RoomId: ROOM_HOUSE_203
@@ -244,6 +245,34 @@ MonoBehaviour:
         DialogueNode: ENC_NURSE
         SceneEventId: EVT_A2_NURSE_JOIN
         PlayEventInField: 0
+        Collectible: 0
+      - Id: CD_04
+        Floor: 0
+        RoomId: ROOM_HOUSE_101
+        X: 4
+        FlagsAll: []
+        FlagsNone:
+        - CD_04
+        PromptKey: enc.CD_04.prompt
+        Choices:
+        - Id: TAKE
+          TextKey: enc.cd.take
+          SetFlags:
+          - CD_04
+          AddClues: []
+          StressDelta: -1
+          Removes: 1
+        - Id: LEAVE
+          TextKey: enc.cd.leave
+          SetFlags: []
+          AddClues: []
+          StressDelta: 0
+          Removes: 0
+        SpriteKey: prop_cd
+        DialogueNode: 
+        SceneEventId: 
+        PlayEventInField: 0
+        Collectible: 1
       HostileChanceMultiplier: 1
       HostileSpots: []
     NightVariant:
@@ -273,7 +302,34 @@ MonoBehaviour:
       - ROOM_HOUSE_102
       ForceableRooms:
       - ROOM_HOUSE_201
-      Encounters: []
+      Encounters:
+      - Id: CD_04
+        Floor: 0
+        RoomId: ROOM_HOUSE_101
+        X: 4
+        FlagsAll: []
+        FlagsNone:
+        - CD_04
+        PromptKey: enc.CD_04.prompt
+        Choices:
+        - Id: TAKE
+          TextKey: enc.cd.take
+          SetFlags:
+          - CD_04
+          AddClues: []
+          StressDelta: -1
+          Removes: 1
+        - Id: LEAVE
+          TextKey: enc.cd.leave
+          SetFlags: []
+          AddClues: []
+          StressDelta: 0
+          Removes: 0
+        SpriteKey: prop_cd
+        DialogueNode: 
+        SceneEventId: 
+        PlayEventInField: 0
+        Collectible: 1
       HostileChanceMultiplier: 1
       HostileSpots: []
     Tutorial: 0

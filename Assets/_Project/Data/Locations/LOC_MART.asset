@@ -338,6 +338,7 @@ MonoBehaviour:
         DialogueNode: 
         SceneEventId: 
         PlayEventInField: 0
+        Collectible: 0
       - Id: RINGLEADER
         Floor: 1
         RoomId: ROOM_MART_OFFICE_2
@@ -365,6 +366,34 @@ MonoBehaviour:
         DialogueNode: ENC_RINGLEADER
         SceneEventId: EVT_A3_RINGLEADER
         PlayEventInField: 1
+        Collectible: 0
+      - Id: CD_06
+        Floor: 0
+        RoomId: ROOM_MART_OFFICE_1
+        X: 4
+        FlagsAll: []
+        FlagsNone:
+        - CD_06
+        PromptKey: enc.CD_06.prompt
+        Choices:
+        - Id: TAKE
+          TextKey: enc.cd.take
+          SetFlags:
+          - CD_06
+          AddClues: []
+          StressDelta: -1
+          Removes: 1
+        - Id: LEAVE
+          TextKey: enc.cd.leave
+          SetFlags: []
+          AddClues: []
+          StressDelta: 0
+          Removes: 0
+        SpriteKey: prop_cd
+        DialogueNode: 
+        SceneEventId: 
+        PlayEventInField: 0
+        Collectible: 1
       HostileChanceMultiplier: 1
       HostileSpots: []
     NightVariant:
@@ -400,7 +429,34 @@ MonoBehaviour:
       LockedRooms: []
       ForceableRooms:
       - ROOM_MART_WAREHOUSE_1
-      Encounters: []
+      Encounters:
+      - Id: CD_06
+        Floor: 0
+        RoomId: ROOM_MART_OFFICE_1
+        X: 4
+        FlagsAll: []
+        FlagsNone:
+        - CD_06
+        PromptKey: enc.CD_06.prompt
+        Choices:
+        - Id: TAKE
+          TextKey: enc.cd.take
+          SetFlags:
+          - CD_06
+          AddClues: []
+          StressDelta: -1
+          Removes: 1
+        - Id: LEAVE
+          TextKey: enc.cd.leave
+          SetFlags: []
+          AddClues: []
+          StressDelta: 0
+          Removes: 0
+        SpriteKey: prop_cd
+        DialogueNode: 
+        SceneEventId: 
+        PlayEventInField: 0
+        Collectible: 1
       HostileChanceMultiplier: 1
       HostileSpots: []
     Tutorial: 0
