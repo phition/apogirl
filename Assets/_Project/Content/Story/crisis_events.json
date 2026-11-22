@@ -5,6 +5,7 @@
       "Kind": "Story",
       "Priority": 85,
       "Once": false,
+      "CooldownWeeks": 1,
       "Condition": {
         "FlagsAll": [
           "LEAVE_WARN_NPC_NURSE"
@@ -140,6 +141,7 @@
       "Kind": "Story",
       "Priority": 85,
       "Once": false,
+      "CooldownWeeks": 1,
       "Condition": {
         "FlagsAll": [
           "LEAVE_WARN_NPC_DOHYEON"
@@ -275,6 +277,7 @@
       "Kind": "Story",
       "Priority": 85,
       "Once": false,
+      "CooldownWeeks": 1,
       "Condition": {
         "FlagsAll": [
           "LEAVE_WARN_NPC_BYSTANDER"
@@ -410,6 +413,7 @@
       "Kind": "Story",
       "Priority": 85,
       "Once": false,
+      "CooldownWeeks": 1,
       "Condition": {
         "FlagsAll": [
           "LEAVE_WARN_NPC_RINGLEADER"
@@ -545,6 +549,7 @@
       "Kind": "Story",
       "Priority": 85,
       "Once": false,
+      "CooldownWeeks": 1,
       "Condition": {
         "FlagsAll": [
           "LEAVE_WARN_NPC_SURVIVOR_A"
