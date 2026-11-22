@@ -97,6 +97,9 @@ namespace ApoGirl.Core.Definitions
 
         /// <summary>좌석 선택 전 헬기 탑승 후보 수 (BoardingRules.Candidates).</summary>
         BoardingCount,
+
+        /// <summary>호감이 Key(정수) 이상인 합류 동료 수 (선생님 제외, 기획 C.2 ⑤ 함께 엔딩).</summary>
+        CloseCompanions,
     }
 
     public enum CompareOp

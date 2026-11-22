@@ -575,6 +575,12 @@
             "Key": "Humanity",
             "Op": "GreaterOrEqual",
             "Value": 60
+          },
+          {
+            "Kind": "CloseCompanions",
+            "Key": "60",
+            "Op": "GreaterOrEqual",
+            "Value": 2
           }
         ]
       },

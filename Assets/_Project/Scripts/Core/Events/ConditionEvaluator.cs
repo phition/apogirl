@@ -177,6 +177,15 @@ namespace ApoGirl.Core.Events
                     }
 
                     return joined;
+                case ValueKind.CloseCompanions:
+                    var min = int.TryParse(key, out var parsed) ? parsed : 0;
+                    var close = 0;
+                    foreach (var npc in state.Npcs.Values)
+                    {
+                        if (npc.Status == NpcStatus.Joined && npc.Affinity >= min) close++;
+                    }
+
+                    return close;
                 case ValueKind.StatSpread: return StatExtreme(state, true) - StatExtreme(state, false);
                 case ValueKind.StatMin: return StatExtreme(state, false);
                 case ValueKind.BreakdownWeeks: return state.Player.BreakdownWeeks;
@@ -243,6 +252,8 @@ namespace ApoGirl.Core.Events
                 case ValueKind.Traps:
                 case ValueKind.BoardingCount:
                     return true;
+                case ValueKind.CloseCompanions:
+                    return int.TryParse(key, out _);
                 case ValueKind.Weather:
                     return Enum.TryParse<WeatherType>(key, out _);
                 case ValueKind.Expeditions:
