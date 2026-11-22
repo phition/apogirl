@@ -41,6 +41,16 @@
   - 같이 할 사람은 인물 서랍에서 고른다 (`GameState.ClubPartner`, 세이브 v10). 고르지 않으면 호감이 가장 높은 사람이 한다.
   - 규칙 `ClubRules`: 호감 +4, 좋아하는 활동이면 +7 (`BalanceConfig.ClubLikes`). 좋아하는 활동을 3번 하면 `CLUB_SCENE_{NPC}` → 개인 장면.
   - 장면: 활동 4편 `EVT_CLUB_*`(같이 한 사람 `CLUB_WITH_{NPC}`로 분기)·개인 6편 `EVT_CLUB_BOND_*` (`Content/Story/club_events.json`, `Events/Club.yarn`).
+- **방송반 송출** (확장 5)
+  - 밤 행동 3종 `ACT_BROADCAST_{SONG,INFO,LETTER}`: `DJ_CONTACT` 뒤, 여유 전력 2, 주 1회(동아리와 함께 `ActionDef.WeeklyGroup`). 곡은 CD가 있어야 한다.
+  - 규칙 `BroadcastRules`(`BalanceConfig` 방송 절): 응답 30% → `BROADCAST_REPLY` → 응답 장면 `EVT_BROADCAST_REPLY_*`. 방송한 주(`BROADCAST_ON_AIR`)에는 사거리 파 휴전 전 습격 ×1.2.
+  - 장면: 첫 방송·프로그램 3편·응답 4편 (`Content/Story/broadcast_events.json`, `Events/Broadcast.yarn`).
+- **전력 = 유지력** (사용자 결정 2026-11-22)
+  - 전력(`ResourceType.Power`)은 발전 용량이고 쓰면 줄지 않는다. 자전거 발전기 복구 = 용량 3.
+  - 여유 전력 = 용량 − 켜진 전기 기기 (`PowerRules`). 기기 표는 `BalanceConfig.Appliances`: 지금은 냉장고 1(식량 부패 문턱 +30). 전자 편의기기는 여기에 한 줄씩 더한다.
+  - 행동 조건은 `ActionDef.MinFreePower`(방송 2·무전 1)다.
+  - 배터리(`ResourceType.Battery`)를 모아 `ACT_SURV_UPGRADE_POWER`로 용량 +1: 5개, 공학 숙련마다 −1, 최소 2, 상한 6.
+  - 발전기 고장(`GENERATOR_BROKEN`)은 `ACT_SURV_REPAIR_GENERATOR`로 고친다. 세이브 v11.
 - **탐험의 깊이** (기획 B): 2막 이후 지역 5곳의 깊은 곳 층
   - 층 번호와 연결: 겉 층 뒤 번호(`BuildingLayoutDef.DeepFloors`·`IsDeep`)이고, 연결은 깊은 문 `DeepDoor`(양쪽 한 쌍)·일방 출구 `OneWayExit`·바깥 철문 `OneWayBack`, 도착 자리는 `TargetX`다.
   - 배치: `LocationBuilder.Deep`/`DeepDoor`/`OneWay`로 놓고, Build Locations 때 `DeepRules.Issues`가 점검한다. 전리품 표는 `Content/Base/deep_loot.json`이다.
