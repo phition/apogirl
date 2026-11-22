@@ -83,5 +83,8 @@
         }
       ]
     }
+  ],
+  "Npcs": [
+    { "Id": "NPC_CAT", "DefaultRole": "", "StartAffinity": 0, "StartTrust": 0 }
   ]
 }
