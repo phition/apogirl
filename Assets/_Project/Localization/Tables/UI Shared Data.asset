@@ -5915,6 +5915,42 @@ MonoBehaviour:
     m_Key: people.club_likes.STUDY
     m_Metadata:
       m_Items: []
+  - m_Id: 1205895400013824
+    m_Key: result.broadcast_reply
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1205895450345472
+    m_Key: result.broadcast_risk
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1205895450345473
+    m_Key: faction.FAC_MART.log.radio
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1205895450345474
+    m_Key: faction.FAC_UBC.log.first
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1205895450345475
+    m_Key: faction.FAC_UBC.log.song
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1205895450345476
+    m_Key: faction.FAC_UBC.log.info
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1205895450345477
+    m_Key: faction.FAC_UBC.log.letter
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1210402246770688
+    m_Key: hub.power
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1210402246770689
+    m_Key: res.Battery
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

@@ -204,7 +204,7 @@ MonoBehaviour:
         Stats: []
         Vitals: []
         Resources:
-        - Resource: 4
+        - Resource: 9
           Amount: 1
         Hidden: []
         SleepDebt: 0

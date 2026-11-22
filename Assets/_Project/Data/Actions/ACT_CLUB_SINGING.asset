@@ -164,3 +164,6 @@ MonoBehaviour:
     LockActionId: 
     AwayFromBase: 0
     ClubActivity: SINGING
+    BroadcastProgram: 
+    MinFreePower: 0
+    UpgradesPower: 0

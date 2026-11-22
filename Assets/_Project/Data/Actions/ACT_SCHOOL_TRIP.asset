@@ -160,3 +160,6 @@ MonoBehaviour:
     LockActionId: ACT_TRIP_NIGHT
     AwayFromBase: 0
     ClubActivity: 
+    BroadcastProgram: 
+    MinFreePower: 0
+    UpgradesPower: 0

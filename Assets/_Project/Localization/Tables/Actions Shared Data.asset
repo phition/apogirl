@@ -619,6 +619,46 @@ MonoBehaviour:
     m_Key: ACT_CLUB_STUDY.short
     m_Metadata:
       m_Items: []
+  - m_Id: 1205893722292224
+    m_Key: ACT_BROADCAST_SONG.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1205893806178304
+    m_Key: ACT_BROADCAST_SONG.short
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1205893806178305
+    m_Key: ACT_BROADCAST_INFO.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1205893806178306
+    m_Key: ACT_BROADCAST_INFO.short
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1205893806178307
+    m_Key: ACT_BROADCAST_LETTER.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1205893806178308
+    m_Key: ACT_BROADCAST_LETTER.short
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1210400518717440
+    m_Key: ACT_SURV_REPAIR_GENERATOR.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1210400577437696
+    m_Key: ACT_SURV_REPAIR_GENERATOR.short
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1210400577437697
+    m_Key: ACT_SURV_UPGRADE_POWER.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1210400577437698
+    m_Key: ACT_SURV_UPGRADE_POWER.short
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

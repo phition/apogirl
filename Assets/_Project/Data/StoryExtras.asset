@@ -7018,6 +7018,8 @@ MonoBehaviour:
       Actions:
       - ACT_SCOUT_RADIO
       - ACT_SURV_RESTORE_POWER
+      - ACT_SURV_REPAIR_GENERATOR
+      - ACT_SURV_UPGRADE_POWER
     Basic: 1
   - Id: MEDIC
     Modifiers:

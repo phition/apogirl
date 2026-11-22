@@ -23,7 +23,7 @@ MonoBehaviour:
     Grade: 0
     MaxDurability: 0
     ResourceYield:
-    - Resource: 4
+    - Resource: 9
       Amount: 1
     Slot: 0
     GridWidth: 0

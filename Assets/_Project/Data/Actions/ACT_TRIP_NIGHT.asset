@@ -159,3 +159,6 @@ MonoBehaviour:
     LockActionId: 
     AwayFromBase: 1
     ClubActivity: 
+    BroadcastProgram: 
+    MinFreePower: 0
+    UpgradesPower: 0

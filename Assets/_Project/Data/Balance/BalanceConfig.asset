@@ -34,8 +34,6 @@ MonoBehaviour:
       Amount: 20
     - Resource: 2
       Amount: 2
-    - Resource: 4
-      Amount: 5
     StatMax: 999
     VitalMax: 100
     HiddenMax: 100
@@ -131,7 +129,6 @@ MonoBehaviour:
     ViolationStress: 8
     DailyFood: 2
     DailyWater: 2
-    WeeklyPower: 3
     SatietyDailyDrain: 25
     HydrationDailyDrain: 30
     MealSatiety: 45
@@ -359,10 +356,10 @@ MonoBehaviour:
       Weight: 0.05
       FallbackMin: 1
       FallbackMax: 3
-    - Resource: 4
+    - Resource: 9
       Weight: 0.05
-      FallbackMin: 2
-      FallbackMax: 4
+      FallbackMin: 1
+      FallbackMax: 2
     OutingLackWeight: 3
     OutingLikedChance: 0.1
     OutingStress: 8
@@ -409,6 +406,19 @@ MonoBehaviour:
       Activity: SINGING
     - NpcId: NPC_WANDERER
       Activity: BOARDGAME
+    PowerUpgradeBatteries: 5
+    PowerUpgradeBatteriesPerLevel: 1
+    PowerUpgradeMinBatteries: 2
+    PowerUpgradeAmount: 1
+    PowerMaxCapacity: 6
+    Appliances:
+    - Id: FRIDGE
+      Power: 1
+      Flag: SEARCHED_HOMEEC
+      FoodSpoilageBonus: 30
+    BroadcastReplyChance: 0.3
+    BroadcastRaidMultiplier: 1.2
+    BroadcastRiskFaction: FAC_SAGEORI
     CatFoodPerWeek: 1
     CatComfortStressMin: 60
     CatComfortStress: 4

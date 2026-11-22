@@ -81,7 +81,7 @@ MonoBehaviour:
       Vitals: []
       Resources:
       - Resource: 4
-        Amount: 6
+        Amount: 3
       Hidden: []
       SleepDebt: 0
       Conscience: 0
@@ -172,3 +172,6 @@ MonoBehaviour:
     LockActionId: 
     AwayFromBase: 0
     ClubActivity: 
+    BroadcastProgram: 
+    MinFreePower: 0
+    UpgradesPower: 0

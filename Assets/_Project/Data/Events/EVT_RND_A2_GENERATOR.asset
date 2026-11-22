@@ -29,7 +29,8 @@ MonoBehaviour:
       FlagsAll:
       - POWER_RESTORED
       FlagsAny: []
-      FlagsNone: []
+      FlagsNone:
+      - GENERATOR_BROKEN
       CluesAll: []
       Checks: []
       AnyChecks: []
@@ -47,7 +48,8 @@ MonoBehaviour:
       Hidden: []
       SleepDebt: 0
       Conscience: 0
-      SetFlags: []
+      SetFlags:
+      - GENERATOR_BROKEN
       ClearFlags: []
       AddClues: []
       EndingTags: []
@@ -73,7 +75,7 @@ MonoBehaviour:
       Factions: []
     ThenEventId: 
     Choices:
-    - Id: FIX
+    - Id: INSPECT
       TextKey: 
       Condition:
         WeekMin: 0
@@ -106,9 +108,7 @@ MonoBehaviour:
         - Stat: 4
           Amount: 1
         Vitals: []
-        Resources:
-        - Resource: 5
-          Amount: -1
+        Resources: []
         Hidden: []
         SleepDebt: 0
         Conscience: 0
@@ -168,7 +168,7 @@ MonoBehaviour:
         IntrusionResponse: 
         Factions: []
       NextEventId: 
-    - Id: WAIT
+    - Id: CANDLE
       TextKey: 
       Condition:
         WeekMin: 0
@@ -198,10 +198,10 @@ MonoBehaviour:
         ProficiencyWeight: 0.05
       Effect:
         Stats: []
-        Vitals: []
-        Resources:
-        - Resource: 4
-          Amount: -3
+        Vitals:
+        - Vital: 2
+          Amount: -2
+        Resources: []
         Hidden: []
         SleepDebt: 0
         Conscience: 0

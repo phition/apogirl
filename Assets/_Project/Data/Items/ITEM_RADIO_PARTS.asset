@@ -25,7 +25,7 @@ MonoBehaviour:
     ResourceYield:
     - Resource: 5
       Amount: 1
-    - Resource: 4
+    - Resource: 9
       Amount: 1
     Slot: 0
     GridWidth: 0

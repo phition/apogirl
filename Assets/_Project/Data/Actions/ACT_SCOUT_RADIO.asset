@@ -17,9 +17,7 @@ MonoBehaviour:
     Id: ACT_SCOUT_RADIO
     Category: 1
     SlotTag: 2
-    ResourceCosts:
-    - Resource: 4
-      Amount: 1
+    ResourceCosts: []
     FatigueCost: 4
     StressCost: 1
     HasCheck: 0
@@ -164,3 +162,6 @@ MonoBehaviour:
     LockActionId: 
     AwayFromBase: 0
     ClubActivity: 
+    BroadcastProgram: 
+    MinFreePower: 1
+    UpgradesPower: 0
