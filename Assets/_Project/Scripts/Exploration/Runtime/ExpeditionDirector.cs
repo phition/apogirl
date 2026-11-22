@@ -2033,6 +2033,16 @@ namespace ApoGirl.Exploration.Runtime
         private GameObject _maskAbove;
         private GameObject _maskBelow;
 
+        /// <summary>후처리·빛 기둥이 켜져 있는가 (디버그 F9로 끈다).</summary>
+        public bool LookOn => _look.On;
+
+        /// <summary>디버그: 후처리·빛 기둥 켜고 끄기 (전후 비교·캡처용).</summary>
+        public void ToggleLook()
+        {
+            _look.Toggle();
+            ApplyVolumes();
+        }
+
         /// <summary>빛 기둥(볼류메트릭): 손전등 원뿔과 낮 햇빛 줄기가 공기 중에 보인다.</summary>
         private void ApplyVolumes()
         {
@@ -2809,9 +2819,8 @@ namespace ApoGirl.Exploration.Runtime
             // 보이는 맛 비교 (기록에 영향 없음): 후처리·빛 기둥 켜고 끄기
             if (keyboard.f9Key.wasPressedThisFrame)
             {
-                _look.Toggle();
-                ApplyVolumes();
-                _hud?.ShowMessage(_look.On ? "exp.look_on" : "exp.look_off");
+                ToggleLook();
+                _hud?.ShowMessage(LookOn ? "exp.look_on" : "exp.look_off");
             }
         }
 
