@@ -224,7 +224,7 @@ namespace ApoGirl.Presentation.Screens
                 button.AddToClassList("small-button");
                 button.AddToClassList("companion-button");
                 StoryArt.SetIcon(button, StoryArt.Icon("npc." + npcId), 28f);
-                button.SetEnabled(_session.IsPlanning && roles.Count > 0);
+                button.SetEnabled(_session.IsPlanning && _session.Definitions.Extras.Roles.Count > 0);
                 _companions.Add(button);
             }
         }
