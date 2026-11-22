@@ -173,6 +173,34 @@
     0,
     0
    ]
+  },
+  {
+   "Key": "prop_stairs_up",
+   "Pivot": [
+    0.35,
+    0.0
+   ]
+  },
+  {
+   "Key": "prop_stairs_down",
+   "Pivot": [
+    0.594,
+    0.686
+   ]
+  },
+  {
+   "Key": "prop_stairs_collapsed",
+   "Pivot": [
+    0.355,
+    0.0
+   ]
+  },
+  {
+   "Key": "prop_stairs_collapsed_down",
+   "Pivot": [
+    0.594,
+    0.712
+   ]
   }
  ]
 }
