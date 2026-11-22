@@ -56,7 +56,9 @@
   - 층 번호와 연결: 겉 층 뒤 번호(`BuildingLayoutDef.DeepFloors`·`IsDeep`)이고, 연결은 깊은 문 `DeepDoor`(양쪽 한 쌍)·일방 출구 `OneWayExit`·바깥 철문 `OneWayBack`, 도착 자리는 `TargetX`다.
   - 배치: `LocationBuilder.Deep`/`DeepDoor`/`OneWay`로 놓고, Build Locations 때 `DeepRules.Issues`가 점검한다. 전리품 표는 `Content/Base/deep_loot.json`이다.
   - 탐험 화면: 늘 어둡고 소리가 울린다. 일방 출구는 두 번 눌러야 나가고, 유랑자 특기가 있으면 출구 쪽을 알려 준다.
-  - 헤드리스는 `BalanceConfig` 깊은 곳 절의 `HeadlessDeepChance`를 쓴다. CD_04·05·06·08은 깊은 곳에 있다. 그림은 아직 코드 그림이다.
+  - 헤드리스는 `BalanceConfig` 깊은 곳 절의 `HeadlessDeepChance`를 쓴다. CD_04·05·06·08은 깊은 곳에 있다.
+  - 그림: PixelLab P1(깊은 문·막힌 문 2·비상구 안팎·지하 벽 공통+지역 5 `BuildingView.DeepWallKey`·바닥 띠)을 넣었다. P2(천장·장식·침수·CD)는 아직 코드 그림이다 ([Docs/PIXELLAB_DEEP.md](Docs/PIXELLAB_DEEP.md)).
+  - 계단은 정면 그림이다: 올라가는 계단은 위로, 내려가는 계단은 아래로 어두워지고, 계단참 높이(약 3칸)에 맞췄다. 무너진 계단은 `prop_stairs_collapsed`.
 - **계절 재해** (확장 6)
   - 기간: 장마 `MONSOON`(15~19주, 비 75%)·폭설 `SNOWSTORM`(42~46주, 한파 80%). 표는 `BalanceConfig.Disasters`, 날씨 굴림은 `DisasterRules.RollWeather`다.
   - 깊은 곳이 있는 지역의 지도가 바뀐다. 실행 중에만 쓰는 사본이다(`DisasterRules.Apply`, `ConnectorDef`·`ExitDef.BlockedBy`).
