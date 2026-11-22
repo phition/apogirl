@@ -31,6 +31,11 @@
 - **위기 이탈** (기획 C.2 ③): `CrisisRules` — 위기 주(결산 때 식량·식수 바닥 또는 습격 돌파)에 호감 0 미만 동료 한 명 예고 `LEAVE_WARN_{NPC}`(결산 한 줄) → 다음 주 `EVT_CRISIS_LEAVE_*`(`Content/Story/crisis_events.json`, `Events/Crisis.yarn`: 나눠 주기·설득 판정·보내기, 떠나면 `Left` + `CRISIS_LEFT_{NPC}`). 습격 돌파 때 호감 60+ 동료가 대신 다침(`RaidResult.CoveredNpcId`). 수치 `BalanceConfig` 위기 이탈 절.
 - **CD 수집** (기획 A): 지역 8곳에 CD 한 장씩. 줍는 조우 `EncounterDef.Collectible`, `LocationBuilder.WithCd`. 낮·밤 모두에 있고, 2막 이후 4장은 깊은 곳(B)이 생기면 옮긴다. 헤드리스는 `BalanceConfig.HeadlessCdChance`(따로 굴린 난수). 깃발 `CD_01~08`, 처음 주운 주차 `GameState.CdWeeks`, 고른 곡 `CdTrack`(세이브 v9), 규칙 `CdRules`. 방송반 방에 진열장 칸(`hub_section.json` `CdShelf`)이 있고, 방을 누르면 CD 플레이어가 뜬다(`CdPlayer`, 곡 표 `Resources/Art/cd_map.json`, 음원 `Resources/Audio/Music/`, 없으면 조용히 넘어감). 탐험을 떠나면 멈추고 돌아오면 이어진다. 타이틀 "음악실" `MusicRoomView`(들은 곡 `persistentDataPath/MusicRoom.json`). 8장을 모으면 `EVT_CD_SHELF_FULL`(`Events/Cd.yarn`).
 - **엔딩·후일담 갈래** (기획 C.2 ⑤): 동료 후일담 가까움(호감 80+, 우선 25)·서먹함(<20, 5)·떠남(`CRISIS_LEFT_*`, 60), 유랑자·졸업장 줄 (`Content/Story/epilogues.json`). 함께 엔딩에 `CloseCompanions`(Key = 기준 호감 "60") ≥ 2. 좌석 선택 `EVT_A4_SEAT_CHOICE` 대사가 호감·개인 장면(`seen`)으로 갈린다.
+- **고양이 '급식'** (확장 2)
+  - 합류 사다리: `EVT_CAT_1~3`(`Content/Story/cat_events.json`·`Events/Cat.yarn`, 9·11·13주~ 밤)으로 `NPC_CAT`이 합류하고 `CAT_HOME`이 켜진다. 2막 `EVT_RND_A2_CAT`은 두 번째 기회다.
+  - 효과: `CatRules`(`BalanceConfig` 고양이 절) — 주마다 식량, 지친 주에 무릎(스트레스), 습격 피해 배율.
+  - 사람 수·엔딩 조건·위기 이탈·대신 다침·침입 부상·역할에서 빠진다 (`CatRules.IsCat`). 13장에 따라 다치거나 죽지 않는다.
+  - 단면도에서 돌아다니고(`HubSectionView.CatRoom`, 임시 그림 `hub_cat`), 후일담은 `EP_CAT_*`다.
 - **탐험의 깊이** (기획 B): 2막 이후 지역 5곳의 깊은 곳 층
   - 층 번호와 연결: 겉 층 뒤 번호(`BuildingLayoutDef.DeepFloors`·`IsDeep`)이고, 연결은 깊은 문 `DeepDoor`(양쪽 한 쌍)·일방 출구 `OneWayExit`·바깥 철문 `OneWayBack`, 도착 자리는 `TargetX`다.
   - 배치: `LocationBuilder.Deep`/`DeepDoor`/`OneWay`로 놓고, Build Locations 때 `DeepRules.Issues`가 점검한다. 전리품 표는 `Content/Base/deep_loot.json`이다.
