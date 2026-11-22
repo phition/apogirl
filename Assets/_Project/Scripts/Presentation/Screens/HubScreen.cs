@@ -977,7 +977,6 @@ namespace ApoGirl.Presentation.Screens
                 false,
                 (Loc.F("menu.font_size", Loc.T("font." + FontClasses[_fontIndex])), CycleFontSize),
                 (Loc.T(_session.UseRealtimeExpeditions ? "menu.explore_manual" : "menu.explore_auto"), ToggleAutoExplore),
-                (Loc.F("menu.pad", Loc.T("menu.pad." + ControlPrefs.Pad)), CyclePadMode),
                 (Loc.T("menu.to_title"), () => GameApp.GoTo(GameApp.TitleScene)),
                 (Loc.T("common.close"), _card.Hide));
         }
@@ -987,13 +986,6 @@ namespace ApoGirl.Presentation.Screens
         {
             ControlPrefs.AutoExplore = _session.UseRealtimeExpeditions;
             _session.UseRealtimeExpeditions = !ControlPrefs.AutoExplore;
-            ShowMenuCard();
-        }
-
-        /// <summary>가상 패드: 자동(휴대폰에서만) → 항상 → 끄기.</summary>
-        private void CyclePadMode()
-        {
-            ControlPrefs.Pad = (PadMode)(((int)ControlPrefs.Pad + 1) % 3);
             ShowMenuCard();
         }
 

@@ -449,13 +449,6 @@ namespace ApoGirl.Exploration.Runtime
             document.panelSettings = _panelSettings;
             document.sortingOrder = 10;
             document.visualTreeAsset = _hudLayout;
-            if (ControlPrefs.PadVisible)
-            {
-                // 휴대폰: 가상 패드 + 패드용 안내 문구 ("키.pad")
-                Loc.Variant = "pad";
-                _pad = new VirtualPad(document.rootVisualElement, VirtualPad.LoadConfig());
-            }
-
             _hud = new ExpeditionHud(document.rootVisualElement, this);
             _fieldDialogue = new FieldDialogue(document.rootVisualElement);
             UpdateZombieViews();
@@ -502,7 +495,7 @@ namespace ApoGirl.Exploration.Runtime
             }
 
             // 키보드·마우스·가상 패드를 한 번에 읽는다 (패드의 눌림은 읽을 때 지워져, 대화 중 누른 것이 뒤에 새지 않는다)
-            _input.Read(Keyboard.current, Mouse.current, MouseFree, _pad);
+            _input.Read(Keyboard.current, Mouse.current, MouseFree);
 
             if (OpenEncounter != null)
             {
@@ -1297,10 +1290,6 @@ namespace ApoGirl.Exploration.Runtime
         private bool MouseFree(Mouse mouse) => mouse != null && (_hud == null || !_hud.PointerOverPanel(mouse.position.ReadValue()));
 
         private readonly ExplorationInput _input = new ExplorationInput();
-        private VirtualPad _pad;
-
-        /// <summary>가상 패드 (휴대폰이거나 메뉴에서 켰을 때만).</summary>
-        public VirtualPad Pad => _pad;
 
         /// <summary>
         /// 손전등 겨누기 (도): 바라보는 쪽에서 마우스 높이를 따라 위(+)·아래(−), 최대 AimMaxAngle. 마우스가 등 뒤에 있으면 높이만 본다.
@@ -3187,11 +3176,6 @@ namespace ApoGirl.Exploration.Runtime
 
         private void OnDestroy()
         {
-            if (_pad != null)
-            {
-                Loc.Variant = null;
-            }
-
             _look.Dispose();
             Presentation.Audio.Sound.StopAllLoops();
         }

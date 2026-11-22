@@ -58,7 +58,7 @@ namespace ApoGirl.Presentation.Screens
             }
 
             var path = Path.Combine(Application.streamingAssetsPath, _config.File);
-            if (Application.platform != RuntimePlatform.Android && !File.Exists(path))
+            if (!File.Exists(path))
             {
                 Debug.LogWarning("오프닝 영상 없음: " + path);
                 yield break;

@@ -89,10 +89,6 @@ namespace ApoGirl.Exploration.Runtime
 
             root.Q<Label>("backpack-title").text = Loc.T("exp.backpack");
             root.Q<Label>("controls-label").text = Loc.T("exp.controls");
-            if (_director.Pad != null)
-            {
-                root.Q<Label>("controls-label").style.display = DisplayStyle.None;   // 휴대폰: 단추와 겹치니 조작 안내 줄은 숨긴다 (튜토리얼·안내 문구는 패드용)
-            }
             root.Q<Button>("loot-take-all").text = Loc.T("exp.take_all");
             root.Q<Button>("loot-take-all").clicked += () => _director.TakeAll();
             root.Q<Button>("loot-close").text = Loc.T("common.close");

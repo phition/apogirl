@@ -17,30 +17,8 @@ namespace ApoGirl.Presentation.Text
 
         private static readonly Dictionary<string, string> Cache = new Dictionary<string, string>();
 
-        /// <summary>
-        /// 문구 갈래 (예: "pad" = 가상 패드로 조작 중). 정해 두면 UI 문자열은 "키.갈래"가 있을 때 그것을 먼저 쓴다.
-        /// </summary>
-        public static string Variant { get; set; }
-
-        private static readonly HashSet<string> MissingVariants = new HashSet<string>();
-
         public static string T(string key)
         {
-            if (!string.IsNullOrEmpty(Variant) && !string.IsNullOrEmpty(key))
-            {
-                var variantKey = key + "." + Variant;
-                if (!MissingVariants.Contains(variantKey))
-                {
-                    var value = Get(UiTable, variantKey, null);
-                    if (value != null)
-                    {
-                        return value;
-                    }
-
-                    MissingVariants.Add(variantKey);   // 매 프레임 다시 찾지 않게
-                }
-            }
-
             return Get(UiTable, key, key);
         }
 
