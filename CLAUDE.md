@@ -36,6 +36,11 @@
   - 효과: `CatRules`(`BalanceConfig` 고양이 절) — 주마다 식량, 지친 주에 무릎(스트레스), 습격 피해 배율.
   - 사람 수·엔딩 조건·위기 이탈·대신 다침·침입 부상·역할에서 빠진다 (`CatRules.IsCat`). 13장에 따라 다치거나 죽지 않는다.
   - 단면도에서 돌아다니고(`HubSectionView.CatRoom`, 임시 그림 `hub_cat`), 후일담은 `EP_CAT_*`다.
+- **방과후 동아리** (확장 7)
+  - 밤 행동 4종 `ACT_CLUB_*`: 14주~, 주 1회 (`PlanEditResult.WeeklyLimit`).
+  - 같이 할 사람은 인물 서랍에서 고른다 (`GameState.ClubPartner`, 세이브 v10). 고르지 않으면 호감이 가장 높은 사람이 한다.
+  - 규칙 `ClubRules`: 호감 +4, 좋아하는 활동이면 +7 (`BalanceConfig.ClubLikes`). 좋아하는 활동을 3번 하면 `CLUB_SCENE_{NPC}` → 개인 장면.
+  - 장면: 활동 4편 `EVT_CLUB_*`(같이 한 사람 `CLUB_WITH_{NPC}`로 분기)·개인 6편 `EVT_CLUB_BOND_*` (`Content/Story/club_events.json`, `Events/Club.yarn`).
 - **탐험의 깊이** (기획 B): 2막 이후 지역 5곳의 깊은 곳 층
   - 층 번호와 연결: 겉 층 뒤 번호(`BuildingLayoutDef.DeepFloors`·`IsDeep`)이고, 연결은 깊은 문 `DeepDoor`(양쪽 한 쌍)·일방 출구 `OneWayExit`·바깥 철문 `OneWayBack`, 도착 자리는 `TargetX`다.
   - 배치: `LocationBuilder.Deep`/`DeepDoor`/`OneWay`로 놓고, Build Locations 때 `DeepRules.Issues`가 점검한다. 전리품 표는 `Content/Base/deep_loot.json`이다.
