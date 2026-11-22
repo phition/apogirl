@@ -1789,7 +1789,10 @@ namespace ApoGirl.Exploration.Runtime
             switch (connector.Kind)
             {
                 case ConnectorKind.DeepDoor:
-                    key = "prop_deep_door";
+                    // 장마·폭설로 막힌 깊은 문은 물에 잠기거나 눈에 묻힌 그림 (없으면 보통 문)
+                    key = connector.Collapsed && connector.BlockedBy == DisasterRules.Monsoon && ExplorationArt.Get("prop_deep_door_flooded") != null ? "prop_deep_door_flooded"
+                        : connector.Collapsed && connector.BlockedBy == DisasterRules.Snowstorm && ExplorationArt.Get("prop_deep_door_snow") != null ? "prop_deep_door_snow"
+                        : "prop_deep_door";
                     color = new Color(0.45f, 0.28f, 0.2f);
                     break;
                 case ConnectorKind.OneWayExit:

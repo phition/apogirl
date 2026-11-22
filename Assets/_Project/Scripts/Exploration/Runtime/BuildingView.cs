@@ -330,8 +330,17 @@ namespace ApoGirl.Exploration.Runtime
             {
                 var y = FloorY(floor);
                 Rect(_root, "DeepRock", new Vector2(-20f, y - 2f), new Vector2(length + 40f, h + 4f), new Color(0.025f, 0.025f, 0.03f), -10);
-                ExplorationArt.Tiled(_root, "DeepWall" + floor, "wall_deep", new Vector2(0f, y + 0.15f), new Vector2(length, h - 0.3f), -6, DeepWallColor);
-                Rect(_root, "DeepSlab", new Vector2(0f, y - 0.15f), new Vector2(length, 0.3f), new Color(0.07f, 0.07f, 0.075f), -3);
+                ExplorationArt.Tiled(_root, "DeepWall" + floor, DeepWallKey(), new Vector2(0f, y + 0.15f), new Vector2(length, h - 0.3f), -6, DeepWallColor);
+                var floorArt = ExplorationArt.Get("wall_floor_deep") != null;
+                if (floorArt)
+                {
+                    ExplorationArt.Tiled(_root, "DeepFloor", "wall_floor_deep", new Vector2(0f, y - 0.3f), new Vector2(length, 0.45f), -3, Color.clear);
+                }
+                else
+                {
+                    Rect(_root, "DeepSlab", new Vector2(0f, y - 0.15f), new Vector2(length, 0.3f), new Color(0.07f, 0.07f, 0.075f), -3);
+                }
+
                 Rect(_root, "DeepCeiling", new Vector2(0f, y + h - 0.15f), new Vector2(length, 0.3f), new Color(0.07f, 0.07f, 0.075f), -3);
 
                 // 천장 배관 두 줄과 케이블 트레이
@@ -345,9 +354,20 @@ namespace ApoGirl.Exploration.Runtime
                     Rect(_root, "DeepLamp", new Vector2(x + 1.2f, y + h - 1.4f), new Vector2(0.3f, 0.12f), new Color(0.45f, 0.62f, 0.5f, 0.8f), -3);
                 }
 
-                // 벽 아래 물자국
-                Rect(_root, "DeepStain", new Vector2(0f, y + 0.15f), new Vector2(length, 0.45f), new Color(0.09f, 0.1f, 0.1f, 0.85f), -5);
+                // 벽 아래 물자국 (벽 그림이 없을 때만 — 그림에는 이미 그려져 있다)
+                if (ExplorationArt.Get(DeepWallKey()) == null)
+                {
+                    Rect(_root, "DeepStain", new Vector2(0f, y + 0.15f), new Vector2(length, 0.45f), new Color(0.09f, 0.1f, 0.1f, 0.85f), -5);
+                }
             }
+        }
+
+        /// <summary>깊은 곳 벽 그림: 지역 것(wall_deep_residential 등)이 있으면 그것, 없으면 공통 wall_deep.</summary>
+        private string DeepWallKey()
+        {
+            var id = _locationId.StartsWith("LOC_", System.StringComparison.Ordinal) ? _locationId.Substring(4) : _locationId;
+            var regional = "wall_deep_" + id.ToLowerInvariant();
+            return ExplorationArt.Get(regional) != null ? regional : "wall_deep";
         }
 
         private void BuildCorridors()
