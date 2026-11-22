@@ -58,7 +58,7 @@
   - 탐험 화면: 늘 어둡고 소리가 울린다. 일방 출구는 두 번 눌러야 나가고, 유랑자 특기가 있으면 출구 쪽을 알려 준다.
   - 헤드리스는 `BalanceConfig` 깊은 곳 절의 `HeadlessDeepChance`를 쓴다. CD_04·05·06·08은 깊은 곳에 있다.
   - 그림: PixelLab P1(깊은 문·막힌 문 2·비상구 안팎·지하 벽 공통+지역 5 `BuildingView.DeepWallKey`·바닥 띠)을 넣었다. P2(천장·장식·침수·CD)는 아직 코드 그림이다 ([Docs/PIXELLAB_DEEP.md](Docs/PIXELLAB_DEEP.md)).
-  - 계단은 정면 그림이다: 올라가는 계단은 위로, 내려가는 계단은 아래로 어두워지고, 계단참 높이(약 3칸)에 맞췄다. 무너진 계단은 `prop_stairs_collapsed`.
+  - 계단 그림(사용자 스케치): 정면에서 오르다 꺾인다 — 오르는 계단 `prop_stairs_up`은 오른쪽 위, 내리는 계단 `prop_stairs_down`은 왼쪽 아래로 꺾여 어둠 속으로. 한 장을 가운데 난간 선에서 나눈 두 조각이라, 1.4칸 떨어진 두 계단이 맞붙어 한 장으로 보이고 하나만 있어도 된다. 자리는 `sprite_meta.json` 기준점(오르는 계단 왼쪽 끝 = X−0.7, 내리는 계단 오른쪽 끝 = X+0.7), 계단실 폭은 그림을 감싼다(`ExpeditionDirector.StairsSpan`). 무너진 날개는 `prop_stairs_collapsed`(위)·`_collapsed_down`(아래). 탐험 카메라는 바닥선 아래를 거의 안 보여 주니 바닥 밑으로 꺼지는 그림은 쓰지 않는다. 도구 `code_temp/apogirl/tools/gen_stairs_fork.py`·`install_stairs_fork.py`.
 - **계절 재해** (확장 6)
   - 기간: 장마 `MONSOON`(15~19주, 비 75%)·폭설 `SNOWSTORM`(42~46주, 한파 80%). 표는 `BalanceConfig.Disasters`, 날씨 굴림은 `DisasterRules.RollWeather`다.
   - 깊은 곳이 있는 지역의 지도가 바뀐다. 실행 중에만 쓰는 사본이다(`DisasterRules.Apply`, `ConnectorDef`·`ExitDef.BlockedBy`).

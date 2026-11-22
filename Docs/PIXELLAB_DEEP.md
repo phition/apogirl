@@ -114,7 +114,7 @@ flat orthographic side view, muted realistic colors, thin dark outline, slightly
 
 - 넣은 것: 깊은 문·막힌 문 2(침수·눈)·비상구 안(가로 손잡이)·밖(민짜 철문), 지하 벽 공통 + 지역 5, 지하 바닥 띠.
 - 막힌 문은 `ExpeditionDirector.CreateDeepConnector`가 `BlockedBy`(장마·폭설)에 따라 고른다. 지역 벽은 `BuildingView.DeepWallKey`(`wall_deep_{지역}` → `wall_deep`).
-- 함께 바꾼 것: **계단 정면 그림** — `prop_stairs_up`(올라가는 계단, 위로 갈수록 어둡게)·`prop_stairs_down`(내려가는 계단, 아래로 갈수록 어둡게)·`prop_stairs_collapsed`(건물 더미로 막힌 계단). 계단참 구멍(폭 약 2.2칸·높이 약 3칸)을 채우는 크기로 만들었다.
+- 함께 바꾼 것: **계단 그림** — 사용자 스케치대로 정면에서 오르다 꺾이는 한 장(오른쪽 위 = 오르는 계단, 왼쪽 아래 = 내리는 계단)을 가운데 난간 선에서 나눠 `prop_stairs_up`·`prop_stairs_down`으로, 날개가 무너진 판에서 `prop_stairs_collapsed`(위)·`prop_stairs_collapsed_down`(아래). 정면 그림·옆모습 사선(바닥 밑으로 꺼짐)은 시도했다가 바꿨다: 2D 탐험 카메라가 바닥선 아래를 보여 주지 않아 내리는 계단이 어색했다. 도구 `gen_stairs_fork.py`·`install_stairs_fork.py`.
 - 도구: `code_temp/apogirl/tools/gen_deep.py`(생성), `install_deep.py 키=후보[:flip]`(투명 여백 자르기 + 계단 어둡게), `sheet.py`·`tilesheet.py`(후보 한눈에 보기).
 
 ## 7. 만들지 않는 것
