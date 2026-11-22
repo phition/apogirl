@@ -233,7 +233,7 @@ namespace ApoGirl.Core.Rules
                     {
                         var perResource = range.Resource == ResourceType.Food ? difficulty.FoodYield
                             : range.Resource == ResourceType.Water ? difficulty.WaterYield
-                            : range.Resource == ResourceType.Medicine ? difficulty.MedicineYield
+                            : range.Resource == ResourceType.Medicine ? difficulty.MedicineYield * balance.OutingMedicineShare
                             : 1f;
                         var scaled = random.Range(range.Min, Math.Max(range.Min, range.Max)) * share * Math.Max(0f, perResource);
                         var amount = (int)Math.Floor(scaled) + (random.NextDouble() < scaled - Math.Floor(scaled) ? 1 : 0);
