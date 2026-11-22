@@ -5999,6 +5999,14 @@ MonoBehaviour:
     m_Key: exp.exit_blocked.SNOWSTORM
     m_Metadata:
       m_Items: []
+  - m_Id: 1220085502197760
+    m_Key: exp.look_on
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1220085569306624
+    m_Key: exp.look_off
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

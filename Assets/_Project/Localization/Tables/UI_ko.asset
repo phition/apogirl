@@ -6002,6 +6002,14 @@ MonoBehaviour:
     m_Localized: "\uBB38 \uBC16\uC774 \uB208\uC73C\uB85C \uAF49 \uB9C9\uD614\uB2E4. \uC9C0\uB81B\uB300\uB85C\uB3C4 \uC548 \uB41C\uB2E4."
     m_Metadata:
       m_Items: []
+  - m_Id: 1220085502197760
+    m_Localized: "(\uB514\uBC84\uADF8) \uD6C4\uCC98\uB9AC\xB7\uBE5B \uAE30\uB465 \uCF2C"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1220085569306624
+    m_Localized: "(\uB514\uBC84\uADF8) \uD6C4\uCC98\uB9AC\xB7\uBE5B \uAE30\uB465 \uB054"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []
