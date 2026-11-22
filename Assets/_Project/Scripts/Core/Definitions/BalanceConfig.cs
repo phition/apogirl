@@ -380,6 +380,25 @@ namespace ApoGirl.Core.Definitions
             new CompanionSpecialDef { NpcId = "NPC_WANDERER", Kind = SpecialKind.DeepExitKnown, Value = 1, Visitor = true },
         };
 
+        // ── 위기 때 남느냐 떠나느냐 (기획 C.2 ③) ──
+
+        /// <summary>위기 주(결산 때 식량·식수가 바닥, 또는 그 주 습격에 뚫림)에 호감이 이 값 미만인 동료가 떠날 후보 (C.5: 0 미만).</summary>
+        public int CrisisLeaveBelowAffinity = 0;
+
+        /// <summary>한 주에 예고하는 동료 수 (호감이 낮은 사람부터).</summary>
+        public int CrisisLeavePerWeek = 1;
+
+        /// <summary>예고 깃발 접두어 (+NPC ID). 다음 주 이벤트 EVT_CRISIS_LEAVE_{키}가 이 깃발로 열린다.</summary>
+        public string CrisisLeaveFlagPrefix = "LEAVE_WARN_";
+
+        /// <summary>습격에 뚫린 밤, 호감이 이 값 이상인 동료가 주인공 앞을 막아설 수 있다.</summary>
+        public int RaidCoverMinAffinity = 60;
+        public float RaidCoverChance = 0.5f;
+
+        /// <summary>막아섰을 때 주인공이 받는 체력 피해 배율 (0 = 전부 대신 맞음).</summary>
+        public float RaidCoverHpScale = 0f;
+        public int RaidCoverInjuryWeeks = 2;
+
         /// <summary>함께한 시간 (역할 재기획 4절): 주인공이 방 스케줄을 하면 그 방 동료 호감 +1 (적성 역할이면 + 보너스), 한 사람당 주 상한.</summary>
         public int TogetherAffinity = 1;
         public int TogetherAptitudeBonus = 1;

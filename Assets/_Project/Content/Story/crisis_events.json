@@ -1,0 +1,679 @@
+{
+  "Events": [
+    {
+      "Id": "EVT_CRISIS_LEAVE_NURSE",
+      "Kind": "Story",
+      "Priority": 85,
+      "Once": false,
+      "Condition": {
+        "FlagsAll": [
+          "LEAVE_WARN_NPC_NURSE"
+        ],
+        "NpcStatuses": [
+          {
+            "NpcId": "NPC_NURSE",
+            "Status": "Joined"
+          }
+        ]
+      },
+      "OnShow": {
+        "ClearFlags": [
+          "LEAVE_WARN_NPC_NURSE"
+        ]
+      },
+      "Choices": [
+        {
+          "Id": "SHARE",
+          "Costs": [
+            {
+              "Resource": "Food",
+              "Amount": 4
+            },
+            {
+              "Resource": "Water",
+              "Amount": 3
+            }
+          ],
+          "Effect": {
+            "Npcs": [
+              {
+                "NpcId": "NPC_NURSE",
+                "Affinity": 6
+              }
+            ],
+            "Hidden": [
+              {
+                "Hidden": "Humanity",
+                "Amount": 1
+              }
+            ]
+          }
+        },
+        {
+          "Id": "PERSUADE",
+          "HasCheck": true,
+          "Check": {
+            "BaseRate": 0.35,
+            "StatWeights": [
+              {
+                "Stat": "Empathy",
+                "Weight": 0.01
+              },
+              {
+                "Stat": "Leadership",
+                "Weight": 0.005
+              }
+            ]
+          },
+          "Effect": {
+            "Npcs": [
+              {
+                "NpcId": "NPC_NURSE",
+                "Affinity": 4
+              }
+            ]
+          },
+          "OnFailure": {
+            "Npcs": [
+              {
+                "NpcId": "NPC_NURSE",
+                "SetStatus": "Left"
+              }
+            ],
+            "SetFlags": [
+              "CRISIS_LEFT_NPC_NURSE"
+            ],
+            "Vitals": [
+              {
+                "Vital": "Stress",
+                "Amount": 6
+              }
+            ],
+            "Resources": [
+              {
+                "Resource": "Food",
+                "Amount": -2
+              }
+            ]
+          }
+        },
+        {
+          "Id": "LET_GO",
+          "Effect": {
+            "Npcs": [
+              {
+                "NpcId": "NPC_NURSE",
+                "SetStatus": "Left"
+              }
+            ],
+            "SetFlags": [
+              "CRISIS_LEFT_NPC_NURSE"
+            ],
+            "Vitals": [
+              {
+                "Vital": "Stress",
+                "Amount": 6
+              }
+            ],
+            "Resources": [
+              {
+                "Resource": "Food",
+                "Amount": -2
+              },
+              {
+                "Resource": "Water",
+                "Amount": -2
+              }
+            ],
+            "Hidden": [
+              {
+                "Hidden": "SelfAwareness",
+                "Amount": 1
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "Id": "EVT_CRISIS_LEAVE_DOHYEON",
+      "Kind": "Story",
+      "Priority": 85,
+      "Once": false,
+      "Condition": {
+        "FlagsAll": [
+          "LEAVE_WARN_NPC_DOHYEON"
+        ],
+        "NpcStatuses": [
+          {
+            "NpcId": "NPC_DOHYEON",
+            "Status": "Joined"
+          }
+        ]
+      },
+      "OnShow": {
+        "ClearFlags": [
+          "LEAVE_WARN_NPC_DOHYEON"
+        ]
+      },
+      "Choices": [
+        {
+          "Id": "SHARE",
+          "Costs": [
+            {
+              "Resource": "Food",
+              "Amount": 4
+            },
+            {
+              "Resource": "Water",
+              "Amount": 3
+            }
+          ],
+          "Effect": {
+            "Npcs": [
+              {
+                "NpcId": "NPC_DOHYEON",
+                "Affinity": 6
+              }
+            ],
+            "Hidden": [
+              {
+                "Hidden": "Humanity",
+                "Amount": 1
+              }
+            ]
+          }
+        },
+        {
+          "Id": "PERSUADE",
+          "HasCheck": true,
+          "Check": {
+            "BaseRate": 0.35,
+            "StatWeights": [
+              {
+                "Stat": "Empathy",
+                "Weight": 0.01
+              },
+              {
+                "Stat": "Leadership",
+                "Weight": 0.005
+              }
+            ]
+          },
+          "Effect": {
+            "Npcs": [
+              {
+                "NpcId": "NPC_DOHYEON",
+                "Affinity": 4
+              }
+            ]
+          },
+          "OnFailure": {
+            "Npcs": [
+              {
+                "NpcId": "NPC_DOHYEON",
+                "SetStatus": "Left"
+              }
+            ],
+            "SetFlags": [
+              "CRISIS_LEFT_NPC_DOHYEON"
+            ],
+            "Vitals": [
+              {
+                "Vital": "Stress",
+                "Amount": 6
+              }
+            ],
+            "Resources": [
+              {
+                "Resource": "Food",
+                "Amount": -2
+              }
+            ]
+          }
+        },
+        {
+          "Id": "LET_GO",
+          "Effect": {
+            "Npcs": [
+              {
+                "NpcId": "NPC_DOHYEON",
+                "SetStatus": "Left"
+              }
+            ],
+            "SetFlags": [
+              "CRISIS_LEFT_NPC_DOHYEON"
+            ],
+            "Vitals": [
+              {
+                "Vital": "Stress",
+                "Amount": 6
+              }
+            ],
+            "Resources": [
+              {
+                "Resource": "Food",
+                "Amount": -2
+              },
+              {
+                "Resource": "Water",
+                "Amount": -2
+              }
+            ],
+            "Hidden": [
+              {
+                "Hidden": "SelfAwareness",
+                "Amount": 1
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "Id": "EVT_CRISIS_LEAVE_BYSTANDER",
+      "Kind": "Story",
+      "Priority": 85,
+      "Once": false,
+      "Condition": {
+        "FlagsAll": [
+          "LEAVE_WARN_NPC_BYSTANDER"
+        ],
+        "NpcStatuses": [
+          {
+            "NpcId": "NPC_BYSTANDER",
+            "Status": "Joined"
+          }
+        ]
+      },
+      "OnShow": {
+        "ClearFlags": [
+          "LEAVE_WARN_NPC_BYSTANDER"
+        ]
+      },
+      "Choices": [
+        {
+          "Id": "SHARE",
+          "Costs": [
+            {
+              "Resource": "Food",
+              "Amount": 4
+            },
+            {
+              "Resource": "Water",
+              "Amount": 3
+            }
+          ],
+          "Effect": {
+            "Npcs": [
+              {
+                "NpcId": "NPC_BYSTANDER",
+                "Affinity": 6
+              }
+            ],
+            "Hidden": [
+              {
+                "Hidden": "Humanity",
+                "Amount": 1
+              }
+            ]
+          }
+        },
+        {
+          "Id": "PERSUADE",
+          "HasCheck": true,
+          "Check": {
+            "BaseRate": 0.35,
+            "StatWeights": [
+              {
+                "Stat": "Empathy",
+                "Weight": 0.01
+              },
+              {
+                "Stat": "Leadership",
+                "Weight": 0.005
+              }
+            ]
+          },
+          "Effect": {
+            "Npcs": [
+              {
+                "NpcId": "NPC_BYSTANDER",
+                "Affinity": 4
+              }
+            ]
+          },
+          "OnFailure": {
+            "Npcs": [
+              {
+                "NpcId": "NPC_BYSTANDER",
+                "SetStatus": "Left"
+              }
+            ],
+            "SetFlags": [
+              "CRISIS_LEFT_NPC_BYSTANDER"
+            ],
+            "Vitals": [
+              {
+                "Vital": "Stress",
+                "Amount": 6
+              }
+            ],
+            "Resources": [
+              {
+                "Resource": "Food",
+                "Amount": -2
+              }
+            ]
+          }
+        },
+        {
+          "Id": "LET_GO",
+          "Effect": {
+            "Npcs": [
+              {
+                "NpcId": "NPC_BYSTANDER",
+                "SetStatus": "Left"
+              }
+            ],
+            "SetFlags": [
+              "CRISIS_LEFT_NPC_BYSTANDER"
+            ],
+            "Vitals": [
+              {
+                "Vital": "Stress",
+                "Amount": 6
+              }
+            ],
+            "Resources": [
+              {
+                "Resource": "Food",
+                "Amount": -2
+              },
+              {
+                "Resource": "Water",
+                "Amount": -2
+              }
+            ],
+            "Hidden": [
+              {
+                "Hidden": "SelfAwareness",
+                "Amount": 1
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "Id": "EVT_CRISIS_LEAVE_RINGLEADER",
+      "Kind": "Story",
+      "Priority": 85,
+      "Once": false,
+      "Condition": {
+        "FlagsAll": [
+          "LEAVE_WARN_NPC_RINGLEADER"
+        ],
+        "NpcStatuses": [
+          {
+            "NpcId": "NPC_RINGLEADER",
+            "Status": "Joined"
+          }
+        ]
+      },
+      "OnShow": {
+        "ClearFlags": [
+          "LEAVE_WARN_NPC_RINGLEADER"
+        ]
+      },
+      "Choices": [
+        {
+          "Id": "SHARE",
+          "Costs": [
+            {
+              "Resource": "Food",
+              "Amount": 4
+            },
+            {
+              "Resource": "Water",
+              "Amount": 3
+            }
+          ],
+          "Effect": {
+            "Npcs": [
+              {
+                "NpcId": "NPC_RINGLEADER",
+                "Affinity": 6
+              }
+            ],
+            "Hidden": [
+              {
+                "Hidden": "Humanity",
+                "Amount": 1
+              }
+            ]
+          }
+        },
+        {
+          "Id": "PERSUADE",
+          "HasCheck": true,
+          "Check": {
+            "BaseRate": 0.35,
+            "StatWeights": [
+              {
+                "Stat": "Empathy",
+                "Weight": 0.01
+              },
+              {
+                "Stat": "Leadership",
+                "Weight": 0.005
+              }
+            ]
+          },
+          "Effect": {
+            "Npcs": [
+              {
+                "NpcId": "NPC_RINGLEADER",
+                "Affinity": 4
+              }
+            ]
+          },
+          "OnFailure": {
+            "Npcs": [
+              {
+                "NpcId": "NPC_RINGLEADER",
+                "SetStatus": "Left"
+              }
+            ],
+            "SetFlags": [
+              "CRISIS_LEFT_NPC_RINGLEADER"
+            ],
+            "Vitals": [
+              {
+                "Vital": "Stress",
+                "Amount": 6
+              }
+            ],
+            "Resources": [
+              {
+                "Resource": "Food",
+                "Amount": -2
+              }
+            ]
+          }
+        },
+        {
+          "Id": "LET_GO",
+          "Effect": {
+            "Npcs": [
+              {
+                "NpcId": "NPC_RINGLEADER",
+                "SetStatus": "Left"
+              }
+            ],
+            "SetFlags": [
+              "CRISIS_LEFT_NPC_RINGLEADER"
+            ],
+            "Vitals": [
+              {
+                "Vital": "Stress",
+                "Amount": 6
+              }
+            ],
+            "Resources": [
+              {
+                "Resource": "Food",
+                "Amount": -2
+              },
+              {
+                "Resource": "Water",
+                "Amount": -2
+              }
+            ],
+            "Hidden": [
+              {
+                "Hidden": "SelfAwareness",
+                "Amount": 1
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "Id": "EVT_CRISIS_LEAVE_SENIOR",
+      "Kind": "Story",
+      "Priority": 85,
+      "Once": false,
+      "Condition": {
+        "FlagsAll": [
+          "LEAVE_WARN_NPC_SURVIVOR_A"
+        ],
+        "NpcStatuses": [
+          {
+            "NpcId": "NPC_SURVIVOR_A",
+            "Status": "Joined"
+          }
+        ]
+      },
+      "OnShow": {
+        "ClearFlags": [
+          "LEAVE_WARN_NPC_SURVIVOR_A"
+        ]
+      },
+      "Choices": [
+        {
+          "Id": "SHARE",
+          "Costs": [
+            {
+              "Resource": "Food",
+              "Amount": 4
+            },
+            {
+              "Resource": "Water",
+              "Amount": 3
+            }
+          ],
+          "Effect": {
+            "Npcs": [
+              {
+                "NpcId": "NPC_SURVIVOR_A",
+                "Affinity": 6
+              }
+            ],
+            "Hidden": [
+              {
+                "Hidden": "Humanity",
+                "Amount": 1
+              }
+            ]
+          }
+        },
+        {
+          "Id": "PERSUADE",
+          "HasCheck": true,
+          "Check": {
+            "BaseRate": 0.35,
+            "StatWeights": [
+              {
+                "Stat": "Empathy",
+                "Weight": 0.01
+              },
+              {
+                "Stat": "Leadership",
+                "Weight": 0.005
+              }
+            ]
+          },
+          "Effect": {
+            "Npcs": [
+              {
+                "NpcId": "NPC_SURVIVOR_A",
+                "Affinity": 4
+              }
+            ]
+          },
+          "OnFailure": {
+            "Npcs": [
+              {
+                "NpcId": "NPC_SURVIVOR_A",
+                "SetStatus": "Left"
+              }
+            ],
+            "SetFlags": [
+              "CRISIS_LEFT_NPC_SURVIVOR_A"
+            ],
+            "Vitals": [
+              {
+                "Vital": "Stress",
+                "Amount": 6
+              }
+            ],
+            "Resources": [
+              {
+                "Resource": "Food",
+                "Amount": -2
+              }
+            ]
+          }
+        },
+        {
+          "Id": "LET_GO",
+          "Effect": {
+            "Npcs": [
+              {
+                "NpcId": "NPC_SURVIVOR_A",
+                "SetStatus": "Left"
+              }
+            ],
+            "SetFlags": [
+              "CRISIS_LEFT_NPC_SURVIVOR_A"
+            ],
+            "Vitals": [
+              {
+                "Vital": "Stress",
+                "Amount": 6
+              }
+            ],
+            "Resources": [
+              {
+                "Resource": "Food",
+                "Amount": -2
+              },
+              {
+                "Resource": "Water",
+                "Amount": -2
+              }
+            ],
+            "Hidden": [
+              {
+                "Hidden": "SelfAwareness",
+                "Amount": 1
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

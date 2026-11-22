@@ -821,6 +821,10 @@ namespace ApoGirl.Presentation.Screens
             if (outcome.Raid != null)
             {
                 lines.Add(Loc.F(outcome.Raid.Repelled ? "result.raid_repelled" : "result.raid_breached", outcome.Raid.Strength, outcome.Raid.Power));
+                if (!string.IsNullOrEmpty(outcome.Raid.CoveredNpcId))
+                {
+                    lines.Add(Loc.F("result.raid_covered", Loc.T("npc." + outcome.Raid.CoveredNpcId)));
+                }
             }
 
             if (outcome.Intrusion != null)

@@ -179,6 +179,10 @@ namespace ApoGirl.Presentation.Screens
                 if (slot.Raid != null)
                 {
                     lines.Add(when + " " + Loc.T(slot.Raid.Repelled ? "settle.raid_held" : "settle.raid_lost"));
+                    if (!string.IsNullOrEmpty(slot.Raid.CoveredNpcId))
+                    {
+                        lines.Add(Loc.F("settle.raid_covered", Loc.T("npc." + slot.Raid.CoveredNpcId)));
+                    }
                 }
                 else if (slot.Expedition != null && slot.ExpeditionRequest != null)
                 {
@@ -199,6 +203,12 @@ namespace ApoGirl.Presentation.Screens
                 var items = returns.Where(r => !string.IsNullOrEmpty(r.ItemId)).Select(r => Loc.Item(r.ItemId));
                 var haul = string.Join(", ", new[] { PeopleUi.Haul(total) }.Concat(items).Where(t => t.Length > 0));
                 lines.Add(Loc.F("settle.outing_haul", returns.Select(r => r.NpcId).Distinct().Count(), haul.Length > 0 ? haul : Loc.T("settle.outing_nothing")));
+            }
+
+            // 위기 이탈 예고 (기획 C.2 ③): 이유가 보이게
+            foreach (var id in summary.LeaveWarned)
+            {
+                lines.Add(Loc.F("settle.leave_warn", Loc.T("npc." + id)));
             }
 
             return lines;

@@ -134,6 +134,9 @@ namespace ApoGirl.Core.Rules
 
         /// <summary>거점을 비운 밤의 습격 (수학여행 중).</summary>
         public bool Away;
+
+        /// <summary>뚫렸을 때 주인공 앞을 막아서다 다친 동료 (기획 C.2 ③, 없으면 빈 문자열).</summary>
+        public string CoveredNpcId = "";
     }
 
     /// <summary>밤 습격 (문서 5.5): 방어도 vs 위협도 vs 전투력.</summary>
@@ -206,7 +209,18 @@ namespace ApoGirl.Core.Rules
                 var scale = SpecialRules.RaidDamageScale(state, balance); // 도현 특기: 피해 −20%
                 if (!away)
                 {
-                    EffectApplier.ChangeVital(state, VitalType.Hp, -SpecialRules.ScaleDamage(balance.RaidBreachHp, scale), balance, delta);
+                    // 관계가 높은 동료가 대신 다치기도 한다 (기획 C.2 ③)
+                    result.CoveredNpcId = CrisisRules.RollCover(state, balance, random);
+                    var hp = SpecialRules.ScaleDamage(balance.RaidBreachHp, scale);
+                    if (!string.IsNullOrEmpty(result.CoveredNpcId))
+                    {
+                        hp = (int)System.Math.Round(hp * balance.RaidCoverHpScale);
+                    }
+
+                    if (hp > 0)
+                    {
+                        EffectApplier.ChangeVital(state, VitalType.Hp, -hp, balance, delta);
+                    }
                 }
 
                 EffectApplier.ChangeResource(state, ResourceType.Food, -SpecialRules.ScaleDamage(balance.RaidBreachFood, scale), delta);

@@ -83,6 +83,9 @@ namespace ApoGirl.Core.Simulation
 
         /// <summary>이번 정산에서 물자가 다시 채워진 지역 (매달 첫 주).</summary>
         public readonly List<string> Restocked = new List<string>();
+
+        /// <summary>이번 위기 주에 떠날 기색을 보인 동료 (기획 C.2 ③, 다음 주 첫 칸에 붙잡을 기회).</summary>
+        public readonly List<string> LeaveWarned = new List<string>();
     }
 
     /// <summary>
@@ -575,6 +578,7 @@ namespace ApoGirl.Core.Simulation
                 EffectApplier.ChangeVital(_state, VitalType.Stress, -relief, Balance, summary.Delta);
             }
             FactionRules.ApplyWeekly(_state, _db, Balance, summary.Delta);
+            summary.LeaveWarned.AddRange(CrisisRules.WarnWeekly(_state, Balance, _outcomes.Any(o => o.Raid != null && !o.Raid.Repelled)));
             if (calendar.Week >= Balance.RaidStartWeek - 1)
             {
                 EffectApplier.ChangeThreat(_state, Balance.ThreatWeekly, Balance, summary.Delta);
