@@ -1,6 +1,6 @@
 # 탐험의 깊이(B) 픽셀 아트 프롬프트 — PixelLab (2026-11-22)
 
-깊은 곳(지하 층)은 지금 **코드 그림**(색 사각형)이다. 이 문서는 그 자리를 채울 PixelLab 프롬프트다.
+깊은 곳(지하 층)을 채울 PixelLab 프롬프트다. **P1 12장은 만들어 넣었다 (2026-11-22)** — P2는 아직 코드 그림.
 탐험 화면은 픽셀 아트라 힉스필드가 아니라 PixelLab으로 만든다 (힉스필드 8차 문서 6절).
 
 - 만드는 도구: `code_temp/apogirl/tools/pixellab.py`의 `image_pro` (generate-image-v2), 옥상 때 쓴 `gen_roof.py`와 같은 방식 → 새 스크립트 `gen_deep.py`.
@@ -109,6 +109,13 @@ flat orthographic side view, muted realistic colors, thin dark outline, slightly
 2. 후보를 캡처로 비교해 고른다 (밤·손전등 + 낮, 깊은 곳 침수 층 포함).
 3. **P2 (천장·비상등 2 + 장식 10 + 침수·CD 2 = 14장)**와 배치 코드.
 4. CLAUDE.md "탐험의 깊이" 줄의 "그림은 아직 코드 그림이다"를 고친다.
+
+## 6.1 P1 결과 (2026-11-22)
+
+- 넣은 것: 깊은 문·막힌 문 2(침수·눈)·비상구 안(가로 손잡이)·밖(민짜 철문), 지하 벽 공통 + 지역 5, 지하 바닥 띠.
+- 막힌 문은 `ExpeditionDirector.CreateDeepConnector`가 `BlockedBy`(장마·폭설)에 따라 고른다. 지역 벽은 `BuildingView.DeepWallKey`(`wall_deep_{지역}` → `wall_deep`).
+- 함께 바꾼 것: **계단 정면 그림** — `prop_stairs_up`(올라가는 계단, 위로 갈수록 어둡게)·`prop_stairs_down`(내려가는 계단, 아래로 갈수록 어둡게)·`prop_stairs_collapsed`(건물 더미로 막힌 계단). 계단참 구멍(폭 약 2.2칸·높이 약 3칸)을 채우는 크기로 만들었다.
+- 도구: `code_temp/apogirl/tools/gen_deep.py`(생성), `install_deep.py 키=후보[:flip]`(투명 여백 자르기 + 계단 어둡게), `sheet.py`·`tilesheet.py`(후보 한눈에 보기).
 
 ## 7. 만들지 않는 것
 
