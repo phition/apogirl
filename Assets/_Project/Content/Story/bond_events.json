@@ -39,7 +39,7 @@
             "Npcs": [
               {
                 "NpcId": "NPC_NURSE",
-                "Affinity": 3
+                "Affinity": 4
               }
             ],
             "Stats": [
@@ -56,7 +56,7 @@
             "Npcs": [
               {
                 "NpcId": "NPC_NURSE",
-                "Affinity": 4
+                "Affinity": 5
               }
             ],
             "Hidden": [
@@ -111,7 +111,7 @@
             "Npcs": [
               {
                 "NpcId": "NPC_NURSE",
-                "Affinity": 4
+                "Affinity": 5
               }
             ],
             "Vitals": [
@@ -128,7 +128,7 @@
             "Npcs": [
               {
                 "NpcId": "NPC_NURSE",
-                "Affinity": 3
+                "Affinity": 4
               }
             ],
             "Stats": [
@@ -184,7 +184,7 @@
             "Npcs": [
               {
                 "NpcId": "NPC_NURSE",
-                "Affinity": 4
+                "Affinity": 5
               }
             ],
             "Hidden": [
@@ -201,7 +201,7 @@
             "Npcs": [
               {
                 "NpcId": "NPC_NURSE",
-                "Affinity": 4
+                "Affinity": 5
               }
             ],
             "Hidden": [
@@ -253,7 +253,7 @@
             "Npcs": [
               {
                 "NpcId": "NPC_DOHYEON",
-                "Affinity": 3
+                "Affinity": 4
               }
             ],
             "Stats": [
@@ -270,7 +270,7 @@
             "Npcs": [
               {
                 "NpcId": "NPC_DOHYEON",
-                "Affinity": 4
+                "Affinity": 5
               }
             ],
             "Vitals": [
@@ -325,7 +325,7 @@
             "Npcs": [
               {
                 "NpcId": "NPC_DOHYEON",
-                "Affinity": 4
+                "Affinity": 5
               }
             ],
             "Hidden": [
@@ -342,7 +342,7 @@
             "Npcs": [
               {
                 "NpcId": "NPC_DOHYEON",
-                "Affinity": 3
+                "Affinity": 4
               }
             ],
             "Stats": [
@@ -398,7 +398,7 @@
             "Npcs": [
               {
                 "NpcId": "NPC_DOHYEON",
-                "Affinity": 4
+                "Affinity": 5
               }
             ],
             "Vitals": [
@@ -415,7 +415,7 @@
             "Npcs": [
               {
                 "NpcId": "NPC_DOHYEON",
-                "Affinity": 4
+                "Affinity": 5
               }
             ],
             "Hidden": [
@@ -467,7 +467,7 @@
             "Npcs": [
               {
                 "NpcId": "NPC_BYSTANDER",
-                "Affinity": 4
+                "Affinity": 5
               }
             ],
             "Stats": [
@@ -484,7 +484,7 @@
             "Npcs": [
               {
                 "NpcId": "NPC_BYSTANDER",
-                "Affinity": 3
+                "Affinity": 4
               }
             ],
             "Hidden": [
@@ -539,7 +539,7 @@
             "Npcs": [
               {
                 "NpcId": "NPC_BYSTANDER",
-                "Affinity": 4
+                "Affinity": 5
               }
             ],
             "Vitals": [
@@ -556,7 +556,7 @@
             "Npcs": [
               {
                 "NpcId": "NPC_BYSTANDER",
-                "Affinity": 3
+                "Affinity": 4
               }
             ],
             "Stats": [
@@ -612,7 +612,7 @@
             "Npcs": [
               {
                 "NpcId": "NPC_BYSTANDER",
-                "Affinity": 4
+                "Affinity": 5
               }
             ],
             "Hidden": [
@@ -629,7 +629,7 @@
             "Npcs": [
               {
                 "NpcId": "NPC_BYSTANDER",
-                "Affinity": 4
+                "Affinity": 5
               }
             ],
             "Hidden": [
@@ -681,7 +681,7 @@
             "Npcs": [
               {
                 "NpcId": "NPC_RINGLEADER",
-                "Affinity": 3
+                "Affinity": 4
               }
             ],
             "Hidden": [
@@ -698,7 +698,7 @@
             "Npcs": [
               {
                 "NpcId": "NPC_RINGLEADER",
-                "Affinity": 4
+                "Affinity": 5
               }
             ],
             "Stats": [
@@ -753,7 +753,7 @@
             "Npcs": [
               {
                 "NpcId": "NPC_RINGLEADER",
-                "Affinity": 4
+                "Affinity": 5
               }
             ],
             "Stats": [
@@ -770,7 +770,7 @@
             "Npcs": [
               {
                 "NpcId": "NPC_RINGLEADER",
-                "Affinity": 3
+                "Affinity": 4
               }
             ],
             "Hidden": [
@@ -826,7 +826,7 @@
             "Npcs": [
               {
                 "NpcId": "NPC_RINGLEADER",
-                "Affinity": 4
+                "Affinity": 5
               }
             ],
             "Hidden": [
@@ -843,7 +843,7 @@
             "Npcs": [
               {
                 "NpcId": "NPC_RINGLEADER",
-                "Affinity": 4
+                "Affinity": 5
               }
             ],
             "Hidden": [
@@ -895,7 +895,7 @@
             "Npcs": [
               {
                 "NpcId": "NPC_SURVIVOR_A",
-                "Affinity": 4
+                "Affinity": 5
               }
             ],
             "Vitals": [
@@ -912,7 +912,7 @@
             "Npcs": [
               {
                 "NpcId": "NPC_SURVIVOR_A",
-                "Affinity": 3
+                "Affinity": 4
               }
             ],
             "Stats": [
@@ -967,7 +967,7 @@
             "Npcs": [
               {
                 "NpcId": "NPC_SURVIVOR_A",
-                "Affinity": 3
+                "Affinity": 4
               }
             ],
             "Stats": [
@@ -984,7 +984,7 @@
             "Npcs": [
               {
                 "NpcId": "NPC_SURVIVOR_A",
-                "Affinity": 4
+                "Affinity": 5
               }
             ],
             "Stats": [
@@ -1040,7 +1040,7 @@
             "Npcs": [
               {
                 "NpcId": "NPC_SURVIVOR_A",
-                "Affinity": 4
+                "Affinity": 5
               }
             ],
             "Vitals": [
@@ -1057,7 +1057,7 @@
             "Npcs": [
               {
                 "NpcId": "NPC_SURVIVOR_A",
-                "Affinity": 4
+                "Affinity": 5
               }
             ],
             "Hidden": [
