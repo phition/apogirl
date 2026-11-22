@@ -1,0 +1,1074 @@
+{
+  "Events": [
+    {
+      "Id": "EVT_BOND_NURSE_1",
+      "Kind": "Night",
+      "Priority": 30,
+      "Condition": {
+        "Phase": "Night",
+        "Days": [
+          1
+        ],
+        "FlagsNone": [
+          "BOND_NURSE_1"
+        ],
+        "NpcStatuses": [
+          {
+            "NpcId": "NPC_NURSE",
+            "Status": "Joined"
+          }
+        ],
+        "Checks": [
+          {
+            "Kind": "NpcAffinity",
+            "Key": "NPC_NURSE",
+            "Op": "GreaterOrEqual",
+            "Value": 20
+          }
+        ]
+      },
+      "OnShow": {
+        "SetFlags": [
+          "BOND_NURSE_1"
+        ]
+      },
+      "Choices": [
+        {
+          "Id": "LEARN",
+          "Effect": {
+            "Npcs": [
+              {
+                "NpcId": "NPC_NURSE",
+                "Affinity": 3
+              }
+            ],
+            "Stats": [
+              {
+                "Stat": "Intellect",
+                "Amount": 1
+              }
+            ]
+          }
+        },
+        {
+          "Id": "ASK_HER",
+          "Effect": {
+            "Npcs": [
+              {
+                "NpcId": "NPC_NURSE",
+                "Affinity": 4
+              }
+            ],
+            "Hidden": [
+              {
+                "Hidden": "Humanity",
+                "Amount": 1
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "Id": "EVT_BOND_NURSE_2",
+      "Kind": "Night",
+      "Priority": 30,
+      "Condition": {
+        "Phase": "Night",
+        "Days": [
+          1
+        ],
+        "FlagsNone": [
+          "BOND_NURSE_2"
+        ],
+        "NpcStatuses": [
+          {
+            "NpcId": "NPC_NURSE",
+            "Status": "Joined"
+          }
+        ],
+        "Checks": [
+          {
+            "Kind": "NpcAffinity",
+            "Key": "NPC_NURSE",
+            "Op": "GreaterOrEqual",
+            "Value": 50
+          }
+        ],
+        "FlagsAll": [
+          "BOND_NURSE_1"
+        ]
+      },
+      "OnShow": {
+        "SetFlags": [
+          "BOND_NURSE_2"
+        ]
+      },
+      "Choices": [
+        {
+          "Id": "ROLL_TOGETHER",
+          "Effect": {
+            "Npcs": [
+              {
+                "NpcId": "NPC_NURSE",
+                "Affinity": 4
+              }
+            ],
+            "Vitals": [
+              {
+                "Vital": "Stress",
+                "Amount": -3
+              }
+            ]
+          }
+        },
+        {
+          "Id": "SHARE_LOAD",
+          "Effect": {
+            "Npcs": [
+              {
+                "NpcId": "NPC_NURSE",
+                "Affinity": 3
+              }
+            ],
+            "Stats": [
+              {
+                "Stat": "Empathy",
+                "Amount": 1
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "Id": "EVT_BOND_NURSE_3",
+      "Kind": "Night",
+      "Priority": 30,
+      "Condition": {
+        "Phase": "Night",
+        "Days": [
+          1
+        ],
+        "FlagsNone": [
+          "BOND_NURSE_3"
+        ],
+        "NpcStatuses": [
+          {
+            "NpcId": "NPC_NURSE",
+            "Status": "Joined"
+          }
+        ],
+        "Checks": [
+          {
+            "Kind": "NpcAffinity",
+            "Key": "NPC_NURSE",
+            "Op": "GreaterOrEqual",
+            "Value": 80
+          }
+        ],
+        "FlagsAll": [
+          "BOND_NURSE_2"
+        ]
+      },
+      "OnShow": {
+        "SetFlags": [
+          "BOND_NURSE_3",
+          "SPECIAL_NPC_NURSE"
+        ]
+      },
+      "Choices": [
+        {
+          "Id": "KEEP_LIGHT",
+          "Effect": {
+            "Npcs": [
+              {
+                "NpcId": "NPC_NURSE",
+                "Affinity": 4
+              }
+            ],
+            "Hidden": [
+              {
+                "Hidden": "Hope",
+                "Amount": 1
+              }
+            ]
+          }
+        },
+        {
+          "Id": "ASK_DAUGHTER",
+          "Effect": {
+            "Npcs": [
+              {
+                "NpcId": "NPC_NURSE",
+                "Affinity": 4
+              }
+            ],
+            "Hidden": [
+              {
+                "Hidden": "Humanity",
+                "Amount": 1
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "Id": "EVT_BOND_DOHYEON_1",
+      "Kind": "Night",
+      "Priority": 30,
+      "Condition": {
+        "Phase": "Night",
+        "Days": [
+          2
+        ],
+        "FlagsNone": [
+          "BOND_DOHYEON_1"
+        ],
+        "NpcStatuses": [
+          {
+            "NpcId": "NPC_DOHYEON",
+            "Status": "Joined"
+          }
+        ],
+        "Checks": [
+          {
+            "Kind": "NpcAffinity",
+            "Key": "NPC_DOHYEON",
+            "Op": "GreaterOrEqual",
+            "Value": 20
+          }
+        ]
+      },
+      "OnShow": {
+        "SetFlags": [
+          "BOND_DOHYEON_1"
+        ]
+      },
+      "Choices": [
+        {
+          "Id": "LEARN_MARKS",
+          "Effect": {
+            "Npcs": [
+              {
+                "NpcId": "NPC_DOHYEON",
+                "Affinity": 3
+              }
+            ],
+            "Stats": [
+              {
+                "Stat": "Intellect",
+                "Amount": 1
+              }
+            ]
+          }
+        },
+        {
+          "Id": "PRAISE",
+          "Effect": {
+            "Npcs": [
+              {
+                "NpcId": "NPC_DOHYEON",
+                "Affinity": 4
+              }
+            ],
+            "Vitals": [
+              {
+                "Vital": "Stress",
+                "Amount": -2
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "Id": "EVT_BOND_DOHYEON_2",
+      "Kind": "Night",
+      "Priority": 30,
+      "Condition": {
+        "Phase": "Night",
+        "Days": [
+          2
+        ],
+        "FlagsNone": [
+          "BOND_DOHYEON_2"
+        ],
+        "NpcStatuses": [
+          {
+            "NpcId": "NPC_DOHYEON",
+            "Status": "Joined"
+          }
+        ],
+        "Checks": [
+          {
+            "Kind": "NpcAffinity",
+            "Key": "NPC_DOHYEON",
+            "Op": "GreaterOrEqual",
+            "Value": 50
+          }
+        ],
+        "FlagsAll": [
+          "BOND_DOHYEON_1"
+        ]
+      },
+      "OnShow": {
+        "SetFlags": [
+          "BOND_DOHYEON_2"
+        ]
+      },
+      "Choices": [
+        {
+          "Id": "HOLD_KNOT",
+          "Effect": {
+            "Npcs": [
+              {
+                "NpcId": "NPC_DOHYEON",
+                "Affinity": 4
+              }
+            ],
+            "Hidden": [
+              {
+                "Hidden": "Hope",
+                "Amount": 1
+              }
+            ]
+          }
+        },
+        {
+          "Id": "TIE_ONE_MORE",
+          "Effect": {
+            "Npcs": [
+              {
+                "NpcId": "NPC_DOHYEON",
+                "Affinity": 3
+              }
+            ],
+            "Stats": [
+              {
+                "Stat": "Empathy",
+                "Amount": 1
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "Id": "EVT_BOND_DOHYEON_3",
+      "Kind": "Night",
+      "Priority": 30,
+      "Condition": {
+        "Phase": "Night",
+        "Days": [
+          2
+        ],
+        "FlagsNone": [
+          "BOND_DOHYEON_3"
+        ],
+        "NpcStatuses": [
+          {
+            "NpcId": "NPC_DOHYEON",
+            "Status": "Joined"
+          }
+        ],
+        "Checks": [
+          {
+            "Kind": "NpcAffinity",
+            "Key": "NPC_DOHYEON",
+            "Op": "GreaterOrEqual",
+            "Value": 80
+          }
+        ],
+        "FlagsAll": [
+          "BOND_DOHYEON_2"
+        ]
+      },
+      "OnShow": {
+        "SetFlags": [
+          "BOND_DOHYEON_3",
+          "SPECIAL_NPC_DOHYEON"
+        ]
+      },
+      "Choices": [
+        {
+          "Id": "TRUST_WATCH",
+          "Effect": {
+            "Npcs": [
+              {
+                "NpcId": "NPC_DOHYEON",
+                "Affinity": 4
+              }
+            ],
+            "Vitals": [
+              {
+                "Vital": "Fatigue",
+                "Amount": -5
+              }
+            ]
+          }
+        },
+        {
+          "Id": "SIT_TOGETHER",
+          "Effect": {
+            "Npcs": [
+              {
+                "NpcId": "NPC_DOHYEON",
+                "Affinity": 4
+              }
+            ],
+            "Hidden": [
+              {
+                "Hidden": "Hope",
+                "Amount": 1
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "Id": "EVT_BOND_BYSTANDER_1",
+      "Kind": "Night",
+      "Priority": 30,
+      "Condition": {
+        "Phase": "Night",
+        "Days": [
+          3
+        ],
+        "FlagsNone": [
+          "BOND_BYSTANDER_1"
+        ],
+        "NpcStatuses": [
+          {
+            "NpcId": "NPC_BYSTANDER",
+            "Status": "Joined"
+          }
+        ],
+        "Checks": [
+          {
+            "Kind": "NpcAffinity",
+            "Key": "NPC_BYSTANDER",
+            "Op": "GreaterOrEqual",
+            "Value": 20
+          }
+        ]
+      },
+      "OnShow": {
+        "SetFlags": [
+          "BOND_BYSTANDER_1"
+        ]
+      },
+      "Choices": [
+        {
+          "Id": "ASK_SEE",
+          "Effect": {
+            "Npcs": [
+              {
+                "NpcId": "NPC_BYSTANDER",
+                "Affinity": 4
+              }
+            ],
+            "Stats": [
+              {
+                "Stat": "Empathy",
+                "Amount": 1
+              }
+            ]
+          }
+        },
+        {
+          "Id": "PRETEND",
+          "Effect": {
+            "Npcs": [
+              {
+                "NpcId": "NPC_BYSTANDER",
+                "Affinity": 3
+              }
+            ],
+            "Hidden": [
+              {
+                "Hidden": "SelfAwareness",
+                "Amount": 1
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "Id": "EVT_BOND_BYSTANDER_2",
+      "Kind": "Night",
+      "Priority": 30,
+      "Condition": {
+        "Phase": "Night",
+        "Days": [
+          3
+        ],
+        "FlagsNone": [
+          "BOND_BYSTANDER_2"
+        ],
+        "NpcStatuses": [
+          {
+            "NpcId": "NPC_BYSTANDER",
+            "Status": "Joined"
+          }
+        ],
+        "Checks": [
+          {
+            "Kind": "NpcAffinity",
+            "Key": "NPC_BYSTANDER",
+            "Op": "GreaterOrEqual",
+            "Value": 50
+          }
+        ],
+        "FlagsAll": [
+          "BOND_BYSTANDER_1"
+        ]
+      },
+      "OnShow": {
+        "SetFlags": [
+          "BOND_BYSTANDER_2"
+        ]
+      },
+      "Choices": [
+        {
+          "Id": "SIT_STILL",
+          "Effect": {
+            "Npcs": [
+              {
+                "NpcId": "NPC_BYSTANDER",
+                "Affinity": 4
+              }
+            ],
+            "Vitals": [
+              {
+                "Vital": "Stress",
+                "Amount": -3
+              }
+            ]
+          }
+        },
+        {
+          "Id": "DRAW_BACK",
+          "Effect": {
+            "Npcs": [
+              {
+                "NpcId": "NPC_BYSTANDER",
+                "Affinity": 3
+              }
+            ],
+            "Stats": [
+              {
+                "Stat": "Craft",
+                "Amount": 1
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "Id": "EVT_BOND_BYSTANDER_3",
+      "Kind": "Night",
+      "Priority": 30,
+      "Condition": {
+        "Phase": "Night",
+        "Days": [
+          3
+        ],
+        "FlagsNone": [
+          "BOND_BYSTANDER_3"
+        ],
+        "NpcStatuses": [
+          {
+            "NpcId": "NPC_BYSTANDER",
+            "Status": "Joined"
+          }
+        ],
+        "Checks": [
+          {
+            "Kind": "NpcAffinity",
+            "Key": "NPC_BYSTANDER",
+            "Op": "GreaterOrEqual",
+            "Value": 80
+          }
+        ],
+        "FlagsAll": [
+          "BOND_BYSTANDER_2"
+        ]
+      },
+      "OnShow": {
+        "SetFlags": [
+          "BOND_BYSTANDER_3",
+          "SPECIAL_NPC_BYSTANDER"
+        ]
+      },
+      "Choices": [
+        {
+          "Id": "HANG_IT",
+          "Effect": {
+            "Npcs": [
+              {
+                "NpcId": "NPC_BYSTANDER",
+                "Affinity": 4
+              }
+            ],
+            "Hidden": [
+              {
+                "Hidden": "TraumaRecovery",
+                "Amount": 1
+              }
+            ]
+          }
+        },
+        {
+          "Id": "SAY_THANKS",
+          "Effect": {
+            "Npcs": [
+              {
+                "NpcId": "NPC_BYSTANDER",
+                "Affinity": 4
+              }
+            ],
+            "Hidden": [
+              {
+                "Hidden": "Isolation",
+                "Amount": -1
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "Id": "EVT_BOND_RINGLEADER_1",
+      "Kind": "Night",
+      "Priority": 30,
+      "Condition": {
+        "Phase": "Night",
+        "Days": [
+          4
+        ],
+        "FlagsNone": [
+          "BOND_RINGLEADER_1"
+        ],
+        "NpcStatuses": [
+          {
+            "NpcId": "NPC_RINGLEADER",
+            "Status": "Joined"
+          }
+        ],
+        "Checks": [
+          {
+            "Kind": "NpcAffinity",
+            "Key": "NPC_RINGLEADER",
+            "Op": "GreaterOrEqual",
+            "Value": 20
+          }
+        ]
+      },
+      "OnShow": {
+        "SetFlags": [
+          "BOND_RINGLEADER_1"
+        ]
+      },
+      "Choices": [
+        {
+          "Id": "LEAVE_HER",
+          "Effect": {
+            "Npcs": [
+              {
+                "NpcId": "NPC_RINGLEADER",
+                "Affinity": 3
+              }
+            ],
+            "Hidden": [
+              {
+                "Hidden": "SelfAwareness",
+                "Amount": 1
+              }
+            ]
+          }
+        },
+        {
+          "Id": "HAND_TOWEL",
+          "Effect": {
+            "Npcs": [
+              {
+                "NpcId": "NPC_RINGLEADER",
+                "Affinity": 4
+              }
+            ],
+            "Stats": [
+              {
+                "Stat": "Empathy",
+                "Amount": 1
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "Id": "EVT_BOND_RINGLEADER_2",
+      "Kind": "Night",
+      "Priority": 30,
+      "Condition": {
+        "Phase": "Night",
+        "Days": [
+          4
+        ],
+        "FlagsNone": [
+          "BOND_RINGLEADER_2"
+        ],
+        "NpcStatuses": [
+          {
+            "NpcId": "NPC_RINGLEADER",
+            "Status": "Joined"
+          }
+        ],
+        "Checks": [
+          {
+            "Kind": "NpcAffinity",
+            "Key": "NPC_RINGLEADER",
+            "Op": "GreaterOrEqual",
+            "Value": 50
+          }
+        ],
+        "FlagsAll": [
+          "BOND_RINGLEADER_1"
+        ]
+      },
+      "OnShow": {
+        "SetFlags": [
+          "BOND_RINGLEADER_2"
+        ]
+      },
+      "Choices": [
+        {
+          "Id": "FOLLOW",
+          "Effect": {
+            "Npcs": [
+              {
+                "NpcId": "NPC_RINGLEADER",
+                "Affinity": 4
+              }
+            ],
+            "Stats": [
+              {
+                "Stat": "Agility",
+                "Amount": 1
+              }
+            ]
+          }
+        },
+        {
+          "Id": "ASK_WHY",
+          "Effect": {
+            "Npcs": [
+              {
+                "NpcId": "NPC_RINGLEADER",
+                "Affinity": 3
+              }
+            ],
+            "Hidden": [
+              {
+                "Hidden": "SelfAwareness",
+                "Amount": 1
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "Id": "EVT_BOND_RINGLEADER_3",
+      "Kind": "Night",
+      "Priority": 30,
+      "Condition": {
+        "Phase": "Night",
+        "Days": [
+          4
+        ],
+        "FlagsNone": [
+          "BOND_RINGLEADER_3"
+        ],
+        "NpcStatuses": [
+          {
+            "NpcId": "NPC_RINGLEADER",
+            "Status": "Joined"
+          }
+        ],
+        "Checks": [
+          {
+            "Kind": "NpcAffinity",
+            "Key": "NPC_RINGLEADER",
+            "Op": "GreaterOrEqual",
+            "Value": 80
+          }
+        ],
+        "FlagsAll": [
+          "BOND_RINGLEADER_2"
+        ]
+      },
+      "OnShow": {
+        "SetFlags": [
+          "BOND_RINGLEADER_3",
+          "SPECIAL_NPC_RINGLEADER"
+        ]
+      },
+      "Choices": [
+        {
+          "Id": "TAKE_CLIP",
+          "Effect": {
+            "Npcs": [
+              {
+                "NpcId": "NPC_RINGLEADER",
+                "Affinity": 4
+              }
+            ],
+            "Hidden": [
+              {
+                "Hidden": "TraumaRecovery",
+                "Amount": 1
+              }
+            ]
+          }
+        },
+        {
+          "Id": "NOT_YET",
+          "Effect": {
+            "Npcs": [
+              {
+                "NpcId": "NPC_RINGLEADER",
+                "Affinity": 4
+              }
+            ],
+            "Hidden": [
+              {
+                "Hidden": "SelfAwareness",
+                "Amount": 1
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "Id": "EVT_BOND_SENIOR_1",
+      "Kind": "Night",
+      "Priority": 30,
+      "Condition": {
+        "Phase": "Night",
+        "Days": [
+          5
+        ],
+        "FlagsNone": [
+          "BOND_SENIOR_1"
+        ],
+        "NpcStatuses": [
+          {
+            "NpcId": "NPC_SURVIVOR_A",
+            "Status": "Joined"
+          }
+        ],
+        "Checks": [
+          {
+            "Kind": "NpcAffinity",
+            "Key": "NPC_SURVIVOR_A",
+            "Op": "GreaterOrEqual",
+            "Value": 20
+          }
+        ]
+      },
+      "OnShow": {
+        "SetFlags": [
+          "BOND_SENIOR_1"
+        ]
+      },
+      "Choices": [
+        {
+          "Id": "HOLD_LIGHT",
+          "Effect": {
+            "Npcs": [
+              {
+                "NpcId": "NPC_SURVIVOR_A",
+                "Affinity": 4
+              }
+            ],
+            "Vitals": [
+              {
+                "Vital": "Stress",
+                "Amount": -2
+              }
+            ]
+          }
+        },
+        {
+          "Id": "FIND_STRINGS",
+          "Effect": {
+            "Npcs": [
+              {
+                "NpcId": "NPC_SURVIVOR_A",
+                "Affinity": 3
+              }
+            ],
+            "Stats": [
+              {
+                "Stat": "Craft",
+                "Amount": 1
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "Id": "EVT_BOND_SENIOR_2",
+      "Kind": "Night",
+      "Priority": 30,
+      "Condition": {
+        "Phase": "Night",
+        "Days": [
+          5
+        ],
+        "FlagsNone": [
+          "BOND_SENIOR_2"
+        ],
+        "NpcStatuses": [
+          {
+            "NpcId": "NPC_SURVIVOR_A",
+            "Status": "Joined"
+          }
+        ],
+        "Checks": [
+          {
+            "Kind": "NpcAffinity",
+            "Key": "NPC_SURVIVOR_A",
+            "Op": "GreaterOrEqual",
+            "Value": 50
+          }
+        ],
+        "FlagsAll": [
+          "BOND_SENIOR_1"
+        ]
+      },
+      "OnShow": {
+        "SetFlags": [
+          "BOND_SENIOR_2"
+        ]
+      },
+      "Choices": [
+        {
+          "Id": "COPY_STANCE",
+          "Effect": {
+            "Npcs": [
+              {
+                "NpcId": "NPC_SURVIVOR_A",
+                "Affinity": 3
+              }
+            ],
+            "Stats": [
+              {
+                "Stat": "Strength",
+                "Amount": 1
+              }
+            ]
+          }
+        },
+        {
+          "Id": "BRACE_TOGETHER",
+          "Effect": {
+            "Npcs": [
+              {
+                "NpcId": "NPC_SURVIVOR_A",
+                "Affinity": 4
+              }
+            ],
+            "Stats": [
+              {
+                "Stat": "Willpower",
+                "Amount": 1
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "Id": "EVT_BOND_SENIOR_3",
+      "Kind": "Night",
+      "Priority": 30,
+      "Condition": {
+        "Phase": "Night",
+        "Days": [
+          5
+        ],
+        "FlagsNone": [
+          "BOND_SENIOR_3"
+        ],
+        "NpcStatuses": [
+          {
+            "NpcId": "NPC_SURVIVOR_A",
+            "Status": "Joined"
+          }
+        ],
+        "Checks": [
+          {
+            "Kind": "NpcAffinity",
+            "Key": "NPC_SURVIVOR_A",
+            "Op": "GreaterOrEqual",
+            "Value": 80
+          }
+        ],
+        "FlagsAll": [
+          "BOND_SENIOR_2"
+        ]
+      },
+      "OnShow": {
+        "SetFlags": [
+          "BOND_SENIOR_3",
+          "SPECIAL_NPC_SURVIVOR_A"
+        ]
+      },
+      "Choices": [
+        {
+          "Id": "LISTEN",
+          "Effect": {
+            "Npcs": [
+              {
+                "NpcId": "NPC_SURVIVOR_A",
+                "Affinity": 4
+              }
+            ],
+            "Vitals": [
+              {
+                "Vital": "Stress",
+                "Amount": -4
+              }
+            ]
+          }
+        },
+        {
+          "Id": "CALL_OTHERS",
+          "Effect": {
+            "Npcs": [
+              {
+                "NpcId": "NPC_SURVIVOR_A",
+                "Affinity": 4
+              }
+            ],
+            "Hidden": [
+              {
+                "Hidden": "Isolation",
+                "Amount": -1
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}
