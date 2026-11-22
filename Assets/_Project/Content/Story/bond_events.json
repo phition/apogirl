@@ -1187,6 +1187,149 @@
           }
         }
       ]
+    },
+    {
+      "Id": "EVT_BOND_TEACHER_1",
+      "Kind": "Night",
+      "Priority": 30,
+      "Condition": {
+        "Phase": "Night",
+        "Days": [
+          6
+        ],
+        "FlagsNone": [
+          "BOND_TEACHER_1",
+          "TEACHER_ISOLATED"
+        ],
+        "NpcStatuses": [
+          {
+            "NpcId": "NPC_TEACHER",
+            "Status": "Joined"
+          }
+        ],
+        "Checks": [
+          {
+            "Kind": "TeacherAffinity",
+            "Op": "GreaterOrEqual",
+            "Value": 50
+          }
+        ]
+      },
+      "OnShow": {
+        "SetFlags": [
+          "BOND_TEACHER_1"
+        ]
+      },
+      "Choices": [
+        {
+          "Id": "READ_NOTES",
+          "Effect": {
+            "Npcs": [
+              {
+                "NpcId": "NPC_TEACHER",
+                "Affinity": 5
+              }
+            ],
+            "Stats": [
+              {
+                "Stat": "Intellect",
+                "Amount": 1
+              }
+            ]
+          }
+        },
+        {
+          "Id": "ASK_TEACHER",
+          "Effect": {
+            "Npcs": [
+              {
+                "NpcId": "NPC_TEACHER",
+                "Affinity": 5
+              }
+            ],
+            "Hidden": [
+              {
+                "Hidden": "SelfAwareness",
+                "Amount": 1
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "Id": "EVT_BOND_TEACHER_2",
+      "Kind": "Night",
+      "Priority": 30,
+      "Condition": {
+        "Phase": "Night",
+        "Days": [
+          6
+        ],
+        "FlagsNone": [
+          "BOND_TEACHER_2",
+          "TEACHER_ISOLATED"
+        ],
+        "NpcStatuses": [
+          {
+            "NpcId": "NPC_TEACHER",
+            "Status": "Joined"
+          }
+        ],
+        "Checks": [
+          {
+            "Kind": "TeacherAffinity",
+            "Op": "GreaterOrEqual",
+            "Value": 80
+          }
+        ],
+        "WeekMin": 40,
+        "FlagsAll": [
+          "BOND_TEACHER_1"
+        ]
+      },
+      "OnShow": {
+        "SetFlags": [
+          "BOND_TEACHER_2",
+          "TEACHER_DIPLOMAS"
+        ]
+      },
+      "Choices": [
+        {
+          "Id": "BRING_LIGHT",
+          "Effect": {
+            "Npcs": [
+              {
+                "NpcId": "NPC_TEACHER",
+                "Affinity": 6
+              }
+            ],
+            "Hidden": [
+              {
+                "Hidden": "Hope",
+                "Amount": 1
+              }
+            ]
+          }
+        },
+        {
+          "Id": "CLOSE_DOOR",
+          "Effect": {
+            "Npcs": [
+              {
+                "NpcId": "NPC_TEACHER",
+                "Affinity": 6
+              }
+            ],
+            "Hidden": [
+              {
+                "Hidden": "Humanity",
+                "Amount": 1
+              }
+            ]
+          }
+        }
+      ]
     }
   ]
 }
