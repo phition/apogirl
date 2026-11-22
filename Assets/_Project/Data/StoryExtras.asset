@@ -6454,29 +6454,25 @@ MonoBehaviour:
     - Kind: 10
       Key: 
       Value: 6
-  - Id: COOK
-    Modifiers:
-    - Kind: 3
-      Key: 
-      Value: 1
-  - Id: MEDIC
-    Modifiers:
-    - Kind: 11
-      Key: 
-      Value: 1
-    - Kind: 12
-      Key: 
-      Value: 1
-  - Id: TUTOR
-    Modifiers:
-    - Kind: 0
-      Key: 
-      Value: 0.08
-  - Id: MOOD
-    Modifiers:
-    - Kind: 4
-      Key: 
-      Value: 0.1
+    Rooms:
+    - Id: ENTRANCE
+      Always: 1
+      Facility: 
+      Flag: 
+      Actions:
+      - ACT_SURV_BARRICADE
+      - ACT_SURV_REINFORCE
+      - ACT_NIGHT_WATCH
+      - ACT_INTRUSION
+      - ACT_SURV_TRAP
+      - ACT_SURV_ALARM
+    - Id: STAFFROOM
+      Always: 0
+      Facility: STAFFROOM
+      Flag: 
+      Actions:
+      - ACT_SURV_COVERS
+    Basic: 1
   - Id: SCOUT
     Modifiers:
     - Kind: 5
@@ -6485,11 +6481,117 @@ MonoBehaviour:
     - Kind: 6
       Key: 
       Value: 0.1
-  - Id: MECHANIC
+    Rooms:
+    - Id: ROOFTOP
+      Always: 0
+      Facility: ROOFTOP
+      Flag: 
+      Actions:
+      - ACT_DAILY_ROOFTOP
+      - ACT_SURV_RAIN_BARREL
+      - ACT_SURV_GARDEN
+    - Id: BROADCAST
+      Always: 0
+      Facility: BROADCAST
+      Flag: 
+      Actions:
+      - ACT_SCOUT_RADIO
+      - ACT_SURV_RESTORE_POWER
+    Basic: 1
+  - Id: MEDIC
     Modifiers:
-    - Kind: 1
-      Key: Engineering
+    - Kind: 11
+      Key: 
+      Value: 1
+    - Kind: 12
+      Key: 
+      Value: 1
+    Rooms:
+    - Id: INFIRMARY
+      Always: 0
+      Facility: INFIRMARY
+      Flag: 
+      Actions:
+      - ACT_EDU_MEDICINE
+      - ACT_TREAT_WOUND
+      - ACT_TREAT_INFECTION
+      - ACT_CARE_TEACHER
+    Basic: 0
+  - Id: HOUSE
+    Modifiers:
+    - Kind: 3
+      Key: 
+      Value: 1
+    Rooms:
+    - Id: HOMEEC
+      Always: 0
+      Facility: 
+      Flag: SEARCHED_HOMEEC
+      Actions:
+      - ACT_EDU_COOKING
+    - Id: CAFETERIA
+      Always: 0
+      Facility: CAFETERIA
+      Flag: 
+      Actions: []
+    - Id: STORAGE
+      Always: 1
+      Facility: STORAGE
+      Flag: 
+      Actions:
+      - ACT_SURV_MAKE_CRUTCH
+      - ACT_SURV_MAKE_PROSTHETIC
+      - ACT_NIGHT_WORK
+    Basic: 0
+  - Id: STUDY
+    Modifiers:
+    - Kind: 0
+      Key: 
       Value: 0.08
+    Rooms:
+    - Id: CLASSROOM
+      Always: 0
+      Facility: CLASSROOM
+      Flag: 
+      Actions:
+      - ACT_EDU_HUMANITIES
+      - ACT_EDU_SURVIVAL
+      - ACT_NIGHT_STUDY
+      - ACT_DAILY_TUTOR_DOHYEON
+    - Id: LIBRARY
+      Always: 0
+      Facility: LIBRARY
+      Flag: 
+      Actions:
+      - ACT_EDU_MIND
+    - Id: SCIENCE
+      Always: 0
+      Facility: SCIENCE
+      Flag: 
+      Actions:
+      - ACT_EDU_SCIENCE
+      - ACT_EDU_ENGINEERING
+      - ACT_SURV_PURIFY_WATER
+    Basic: 0
+  - Id: COMFORT
+    Modifiers:
+    - Kind: 4
+      Key: 
+      Value: 0.1
+    Rooms:
+    - Id: MUSIC
+      Always: 0
+      Facility: 
+      Flag: SEARCHED_MUSIC
+      Actions:
+      - ACT_EDU_MUSIC
+    - Id: GYM
+      Always: 0
+      Facility: GYM
+      Flag: 
+      Actions:
+      - ACT_EDU_SELFDEFENSE
+    Basic: 0
   _startBonuses:
   - Id: STRONG
     Effect:

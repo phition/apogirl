@@ -255,6 +255,28 @@ MonoBehaviour:
     CompanionWeeklyStressRecovery: 6
     CompanionStressRoleThreshold: 70
     CompanionStressedRoleMultiplier: 0.5
+    RoleCapacity: 2
+    RoleExtraRoomBonus: 0.25
+    RoleAptitudeMultiplier: 1.25
+    RoleAptitudes:
+    - NpcId: NPC_NURSE
+      Roles:
+      - MEDIC
+    - NpcId: NPC_DOHYEON
+      Roles:
+      - SCOUT
+    - NpcId: NPC_BYSTANDER
+      Roles:
+      - COMFORT
+      - STUDY
+    - NpcId: NPC_RINGLEADER
+      Roles:
+      - HOUSE
+      - SCOUT
+    - NpcId: NPC_SURVIVOR_A
+      Roles:
+      - GUARD
+      - COMFORT
     GiveFoodSatiety: 45
     GiveFoodStress: -3
     GiveWaterHydration: 55

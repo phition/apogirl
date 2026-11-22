@@ -118,7 +118,7 @@ MonoBehaviour:
           Affinity: 0
           Trust: 2
           SetStatus: 2
-          SetRole: scout
+          SetRole: SCOUT
         Items: []
         Defense: 0
         Threat: 0

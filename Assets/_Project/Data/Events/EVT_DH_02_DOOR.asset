@@ -121,7 +121,7 @@ MonoBehaviour:
           Affinity: 8
           Trust: 0
           SetStatus: 2
-          SetRole: student
+          SetRole: 
         Items: []
         Defense: 3
         Threat: 0

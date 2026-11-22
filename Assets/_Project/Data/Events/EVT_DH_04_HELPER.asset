@@ -124,7 +124,7 @@ MonoBehaviour:
           Affinity: 0
           Trust: 3
           SetStatus: 0
-          SetRole: lookout
+          SetRole: GUARD
         Items: []
         Defense: 4
         Threat: 0

@@ -5119,6 +5119,70 @@ MonoBehaviour:
     m_Key: role.MECHANIC.desc
     m_Metadata:
       m_Items: []
+  - m_Id: 1109519496396800
+    m_Key: role.HOUSE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1109519655780352
+    m_Key: role.STUDY
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1109519655780353
+    m_Key: role.COMFORT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1109519655780354
+    m_Key: role.HOUSE.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1109519655780355
+    m_Key: role.STUDY.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1109519655780356
+    m_Key: role.COMFORT.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1109519655780357
+    m_Key: people.role_overflow
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1109519655780358
+    m_Key: people.role_no_room
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1109519655780359
+    m_Key: people.aptitude.NPC_NURSE.MEDIC
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1109519655780360
+    m_Key: people.aptitude.NPC_DOHYEON.SCOUT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1109519655780361
+    m_Key: people.aptitude.NPC_BYSTANDER.COMFORT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1109519655780362
+    m_Key: people.aptitude.NPC_BYSTANDER.STUDY
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1109519655780363
+    m_Key: people.aptitude.NPC_RINGLEADER.HOUSE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1109519655780364
+    m_Key: people.aptitude.NPC_RINGLEADER.SCOUT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1109519655780365
+    m_Key: people.aptitude.NPC_SURVIVOR_A.GUARD
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1109519655780366
+    m_Key: people.aptitude.NPC_SURVIVOR_A.COMFORT
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
