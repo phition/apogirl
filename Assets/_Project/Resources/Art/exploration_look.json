@@ -11,7 +11,7 @@
     "HighlightsTint": "#D2A870",
     "SplitBalance": 15,
     "BloomThreshold": 0.95,
-    "BloomIntensity": 0.35,
+    "BloomIntensity": 0.25,
     "BloomScatter": 0.55,
     "BloomTint": "#FFE9C4",
     "VignetteIntensity": 0.18,
@@ -36,7 +36,7 @@
     "VignetteIntensity": 0.2,
     "VignetteSmoothness": 0.5,
     "VignetteColor": "#05070C",
-    "FlashlightVolume": 0.08,
+    "FlashlightVolume": 0.18,
     "SunbeamVolume": 0.0
   }
 }
