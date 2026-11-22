@@ -12,7 +12,7 @@ namespace ApoGirl.EditorTools
     /// <summary>
     /// 테스트용 단독 실행 파일. 메뉴 ApoGirl/Build/Windows Test Build, ApoGirl/Build/Android Test APK.
     /// 출력: 프로젝트 폴더의 Builds/Windows/LastSemester_날짜시각/, Builds/Android/LastSemester_날짜시각/ (git에서 제외).
-    /// 안드로이드는 터치 조작이 아직 없어 탐험을 자동(헤드리스)으로 진행한다 (GameApp).
+    /// 안드로이드는 탐험을 가상 패드로 직접 한다 (VirtualPad). 메뉴 "탐험: 자동"이면 헤드리스.
     /// </summary>
     public static class BuildMenu
     {
@@ -142,7 +142,9 @@ namespace ApoGirl.EditorTools
                 "  안드로이드 8.0(API 26) 이상, 64비트 기기. 화면은 가로로 고정된다.",
                 "",
                 "[주의]",
-                "  터치 조작이 아직 없어 탐험은 자동(헤드리스 확률 모델)으로 진행된다. 결과 카드만 나온다.",
+                "  탐험은 가상 패드로 한다: 왼쪽 화면을 눌러 끌면 걷기(끝까지 달리기·위 살피기·아래 듣기),",
+                "  오른쪽 단추 공격·손(수색은 길게)·숨기(길게)·웅크리기·손전등·배낭·퀵슬롯, 오른쪽 빈 곳을 위아래로 끌면 손전등 겨누기.",
+                "  허브 메뉴에서 '탐험: 자동'으로 바꾸면 예전처럼 자동(헤드리스)으로 진행되고 결과 카드만 나온다.",
                 "  디버그 패널(F1)·계획 보드(Tab) 같은 키보드 단축키는 쓸 수 없다. 허브는 눌러서 쓴다.",
                 "",
                 "[저장 위치]",
