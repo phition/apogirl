@@ -296,9 +296,33 @@ MonoBehaviour:
     OutingDailyCap: 2
     OutingExcludedNpcs:
     - NPC_CAT
-    OutingYieldShare: 0.2
+    OutingYieldShare: 0.3
     OutingScoutAptitudeBonus: 0.3
-    OutingMedicineShare: 0
+    OutingHaul:
+    - Resource: 0
+      Weight: 0.3
+      FallbackMin: 6
+      FallbackMax: 12
+    - Resource: 1
+      Weight: 0.3
+      FallbackMin: 4
+      FallbackMax: 10
+    - Resource: 5
+      Weight: 0.2
+      FallbackMin: 1
+      FallbackMax: 3
+    - Resource: 2
+      Weight: 0.05
+      FallbackMin: 1
+      FallbackMax: 3
+    - Resource: 3
+      Weight: 0.05
+      FallbackMin: 1
+      FallbackMax: 3
+    - Resource: 4
+      Weight: 0.05
+      FallbackMin: 2
+      FallbackMax: 4
     OutingLackWeight: 3
     OutingLikedChance: 0.1
     OutingStress: 8
