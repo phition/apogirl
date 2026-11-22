@@ -154,7 +154,7 @@ namespace ApoGirl.Core.Rules
             return true;
         }
 
-        /// <summary>하루 정산 (SurvivalRules.ApplyDaily): 포만·수분이 줄고, 공용 식사를 주인공이 먹은 비율만큼 채운다. 단계별 스트레스.</summary>
+        /// <summary>하루 정산 (UpkeepRules.ApplyDaily): 포만·수분이 줄고, 공용 식사를 주인공이 먹은 비율만큼 채운다. 단계별 스트레스.</summary>
         public static void ApplyDaily(GameState state, BalanceConfig balance, double foodShare, double waterShare)
         {
             foreach (var id in Recipients(state, balance))
@@ -162,8 +162,8 @@ namespace ApoGirl.Core.Rules
                 var body = Body(state, id);
                 body.Satiety = Nourish(body.Satiety, balance.CompanionSatietyDailyDrain, balance.CompanionMealSatiety, foodShare, balance);
                 body.Hydration = Nourish(body.Hydration, balance.CompanionHydrationDailyDrain, balance.CompanionDrinkHydration, waterShare, balance);
-                var stress = (SurvivalRules.Band(balance.SatietyBands, body.Satiety)?.Stress ?? 0)
-                             + (SurvivalRules.Band(balance.HydrationBands, body.Hydration)?.Stress ?? 0);
+                var stress = (UpkeepRules.Band(balance.SatietyBands, body.Satiety)?.Stress ?? 0)
+                             + (UpkeepRules.Band(balance.HydrationBands, body.Hydration)?.Stress ?? 0);
                 if (id != TeacherId && state.Npcs[id].InjuredWeeks > 0)
                 {
                     stress += balance.CompanionInjuredDailyStress;
