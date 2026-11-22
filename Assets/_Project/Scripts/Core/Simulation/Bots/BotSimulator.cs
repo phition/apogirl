@@ -101,6 +101,9 @@ namespace ApoGirl.Core.Simulation.Bots
         public bool TeacherCured;
         public string FinalChoice = "";
 
+        /// <summary>기획 A: 끝났을 때 가진 CD 수.</summary>
+        public int Cds;
+
         /// <summary>M7-2 진단: 판이 끝났을 때 조건을 만족한 (배드 제외) 엔딩.</summary>
         public readonly List<string> EligibleEndings = new List<string>();
 
@@ -303,6 +306,7 @@ namespace ApoGirl.Core.Simulation.Bots
             result.CureAttempted = flags.Contains("CURE_ATTEMPTED");
             result.TeacherCured = flags.Contains(InfectionRules.FlagTeacherCured);
             result.FinalChoice = string.Join("+", FinalChoiceFlags.Where(flags.Contains));
+            result.Cds = CdRules.Count(state);
 
             var context = EventContext.FromCalendar(state);
             foreach (var candidate in db.Extras.Endings.Where(e => e.Category != Definitions.EndingCategory.Bad))

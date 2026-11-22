@@ -339,6 +339,19 @@ namespace ApoGirl.Core.Simulation.Bots
 
             sb.AppendLine();
 
+            // CD 수집 (기획 A): 판 끝에 가진 CD 수, 8장을 다 모은 판
+            sb.AppendLine("## CD 수집 (기획 A)");
+            sb.AppendLine();
+            sb.AppendLine("| 전략 | 평균 CD | 1장 이상 | 8장 모두 |");
+            sb.AppendLine("|---|---|---|---|");
+            foreach (var g in runs.GroupBy(r => r.StrategyId))
+            {
+                var list = g.ToList();
+                sb.AppendLine($"| {g.Key} | {F((float)list.Average(r => r.Cds))} | {P(list.Count(r => r.Cds > 0), list.Count)} | {P(list.Count(r => r.Cds >= 8), list.Count)} |");
+            }
+
+            sb.AppendLine();
+
             // 막 끝 자원 (13·26·39·52주)
             sb.AppendLine("## 막 끝 자원 평균 (식량 / 물 / 약, 살아 있는 판)");
             sb.AppendLine();
