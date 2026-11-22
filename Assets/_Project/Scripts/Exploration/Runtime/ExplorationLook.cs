@@ -73,6 +73,7 @@ namespace ApoGirl.Exploration.Runtime
 
         public void Setup(Camera camera, Transform parent, bool day)
         {
+            _config = null;   // 탐험마다 설정을 다시 읽는다 (조정하며 바로 보기)
             On = Settings.Enabled;
             _profile = (day ? Settings.Day : Settings.Night) ?? new Profile();
             camera.allowHDR = true;
