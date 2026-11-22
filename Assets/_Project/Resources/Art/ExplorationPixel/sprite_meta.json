@@ -201,6 +201,20 @@
     0.677,
     0.043
    ]
+  },
+  {
+   "Key": "deep_ceiling",
+   "Pivot": [
+    0.0,
+    0.0
+   ]
+  },
+  {
+   "Key": "deep_flood_water",
+   "Pivot": [
+    0.0,
+    0.0
+   ]
   }
  ]
 }
