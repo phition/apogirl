@@ -172,7 +172,7 @@ MonoBehaviour:
         Traps: 0
         IntrusionResponse: 
         Factions: []
-      NextEventId: 
+      NextEventId: EVT_BOND_WANDERER_2
     - Id: THEFT
       TextKey: 
       Condition:

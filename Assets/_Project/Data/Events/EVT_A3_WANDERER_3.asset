@@ -169,7 +169,7 @@ MonoBehaviour:
         Traps: 0
         IntrusionResponse: 
         Factions: []
-      NextEventId: 
+      NextEventId: EVT_BOND_WANDERER_3
     - Id: ASK_STAY
       TextKey: 
       Condition:
@@ -264,6 +264,6 @@ MonoBehaviour:
         Traps: 0
         IntrusionResponse: 
         Factions: []
-      NextEventId: 
+      NextEventId: EVT_BOND_WANDERER_3
     ReviewAct: 0
     ReviewFromWeek: 1

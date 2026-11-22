@@ -169,7 +169,7 @@ MonoBehaviour:
         Traps: 0
         IntrusionResponse: 
         Factions: []
-      NextEventId: 
+      NextEventId: EVT_BOND_WANDERER_1
     - Id: REFUSE
       TextKey: 
       Condition:
@@ -359,6 +359,6 @@ MonoBehaviour:
         Traps: 0
         IntrusionResponse: 
         Factions: []
-      NextEventId: 
+      NextEventId: EVT_BOND_WANDERER_1
     ReviewAct: 0
     ReviewFromWeek: 1
