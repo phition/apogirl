@@ -183,6 +183,70 @@ MonoBehaviour:
     m_Key: ITEM_TAP_WATER.name
     m_Metadata:
       m_Items: []
+  - m_Id: 1051260748054528
+    m_Key: ITEM_PAPERBACK.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1051260810969088
+    m_Key: ITEM_PEN.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1051260810969089
+    m_Key: ITEM_COFFEE_MIX.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1051260810969090
+    m_Key: ITEM_HAND_CREAM.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1051260810969091
+    m_Key: ITEM_COMIC.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1051260810969092
+    m_Key: ITEM_SPORTS_DRINK.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1051260810969093
+    m_Key: ITEM_KEYRING.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1051260810969094
+    m_Key: ITEM_STICKERS.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1051260810969095
+    m_Key: ITEM_HAIR_TIE.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1051260810969096
+    m_Key: ITEM_LIP_BALM.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1051260810969097
+    m_Key: ITEM_GUITAR_SCORE.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1051260810969098
+    m_Key: ITEM_GUITAR_STRINGS.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1051260810969099
+    m_Key: ITEM_OLD_MAP.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1051260810969100
+    m_Key: ITEM_CANDY.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1051260810969101
+    m_Key: ITEM_TUNA_CAN.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1051260810969102
+    m_Key: ITEM_CAT_TREAT.name
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

@@ -4475,6 +4475,578 @@ MonoBehaviour:
     m_Key: line.ep_seat_sageori_child
     m_Metadata:
       m_Items: []
+  - m_Id: 1063416914788352
+    m_Key: hud.people
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1063416986091520
+    m_Key: hud.people_title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1063416986091521
+    m_Key: people.none
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1063416986091522
+    m_Key: people.hint
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1063416986091523
+    m_Key: people.teacher_role
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1063416986091524
+    m_Key: people.injured
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1063416986091525
+    m_Key: people.stressed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1063416986091526
+    m_Key: bond.generic.0
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1063416986091527
+    m_Key: bond.generic.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1063416986091528
+    m_Key: bond.generic.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1063416986091529
+    m_Key: bond.generic.3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1063416986091530
+    m_Key: bond.generic.4
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1063416986091531
+    m_Key: bond.NPC_TEACHER.0
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1063416986091532
+    m_Key: bond.NPC_TEACHER.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1063416986091533
+    m_Key: bond.NPC_TEACHER.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1063416986091534
+    m_Key: bond.NPC_TEACHER.3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1063416986091535
+    m_Key: bond.NPC_TEACHER.4
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1063416986091536
+    m_Key: bond.NPC_NURSE.0
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1063416986091537
+    m_Key: bond.NPC_NURSE.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1063416986091538
+    m_Key: bond.NPC_NURSE.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1063416986091539
+    m_Key: bond.NPC_NURSE.3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1063416986091540
+    m_Key: bond.NPC_NURSE.4
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1063416986091541
+    m_Key: bond.NPC_DOHYEON.0
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1063416986091542
+    m_Key: bond.NPC_DOHYEON.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1063416986091543
+    m_Key: bond.NPC_DOHYEON.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1063416986091544
+    m_Key: bond.NPC_DOHYEON.3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1063416986091545
+    m_Key: bond.NPC_DOHYEON.4
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1063416986091546
+    m_Key: bond.NPC_BYSTANDER.0
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1063416986091547
+    m_Key: bond.NPC_BYSTANDER.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1063416986091548
+    m_Key: bond.NPC_BYSTANDER.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1063416986091549
+    m_Key: bond.NPC_BYSTANDER.3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1063416986091550
+    m_Key: bond.NPC_BYSTANDER.4
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1063416986091551
+    m_Key: bond.NPC_RINGLEADER.0
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1063416986091552
+    m_Key: bond.NPC_RINGLEADER.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1063416986091553
+    m_Key: bond.NPC_RINGLEADER.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1063416986091554
+    m_Key: bond.NPC_RINGLEADER.3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1063416986091555
+    m_Key: bond.NPC_RINGLEADER.4
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1063416986091556
+    m_Key: bond.NPC_SURVIVOR_A.0
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1063416986091557
+    m_Key: bond.NPC_SURVIVOR_A.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1063416986091558
+    m_Key: bond.NPC_SURVIVOR_A.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1063416986091559
+    m_Key: bond.NPC_SURVIVOR_A.3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1063416986091560
+    m_Key: bond.NPC_SURVIVOR_A.4
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1063416986091561
+    m_Key: bond.NPC_WANDERER.0
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1063416986091562
+    m_Key: bond.NPC_WANDERER.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1063416986091563
+    m_Key: bond.NPC_WANDERER.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1063416986091564
+    m_Key: bond.NPC_WANDERER.3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1063416986091565
+    m_Key: bond.NPC_WANDERER.4
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1063416986091566
+    m_Key: bond.NPC_CAT.0
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1063416986091567
+    m_Key: bond.NPC_CAT.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1063416986091568
+    m_Key: bond.NPC_CAT.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1063416986091569
+    m_Key: bond.NPC_CAT.3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1063416986091570
+    m_Key: bond.NPC_CAT.4
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1063416986091571
+    m_Key: give.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1063416986091572
+    m_Key: give.hint
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1063416986091573
+    m_Key: give.stock
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1063416986091574
+    m_Key: give.cancel
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1063416986091575
+    m_Key: give.skip
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1063416986091576
+    m_Key: give.confirm
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1063416986091577
+    m_Key: give.no_gifts
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1063416986091578
+    m_Key: give.have
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1063416986091579
+    m_Key: give.condition
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1063416986091580
+    m_Key: give.kind.Food
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1063416986091581
+    m_Key: give.kind.Water
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1063416986091582
+    m_Key: give.kind.Medicine
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1063416986091583
+    m_Key: give.kind.Gift
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1063416986091584
+    m_Key: give.kind.Food.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1063416986091585
+    m_Key: give.kind.Water.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1063416986091586
+    m_Key: give.kind.Medicine.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1063416986091587
+    m_Key: give.kind.Gift.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1063416986091588
+    m_Key: give.blocked.absent
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1063416986091589
+    m_Key: give.blocked.used
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1063416986091590
+    m_Key: give.blocked.no_food
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1063416986091591
+    m_Key: give.blocked.no_water
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1063416986091592
+    m_Key: give.blocked.no_medicine
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1063416986091593
+    m_Key: give.blocked.no_item
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1063416986091594
+    m_Key: give.blocked.planning
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1063416986091595
+    m_Key: give.thanks_toast
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1063416986091596
+    m_Key: give.thanks.generic.0
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1063416986091597
+    m_Key: give.thanks.generic.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1063416986091598
+    m_Key: give.thanks.generic.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1063416986091599
+    m_Key: give.thanks.NPC_TEACHER.0
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1063416986091600
+    m_Key: give.thanks.NPC_TEACHER.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1063416986091601
+    m_Key: give.thanks.NPC_TEACHER.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1063416986091602
+    m_Key: give.thanks.NPC_TEACHER.liked
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1063416986091603
+    m_Key: give.thanks.NPC_NURSE.0
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1063416986091604
+    m_Key: give.thanks.NPC_NURSE.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1063416986091605
+    m_Key: give.thanks.NPC_NURSE.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1063416986091606
+    m_Key: give.thanks.NPC_NURSE.liked
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1063416986091607
+    m_Key: give.thanks.NPC_DOHYEON.0
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1063416986091608
+    m_Key: give.thanks.NPC_DOHYEON.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1063416986091609
+    m_Key: give.thanks.NPC_DOHYEON.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1063416986091610
+    m_Key: give.thanks.NPC_DOHYEON.liked
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1063416986091611
+    m_Key: give.thanks.NPC_BYSTANDER.0
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1063416986091612
+    m_Key: give.thanks.NPC_BYSTANDER.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1063416986091613
+    m_Key: give.thanks.NPC_BYSTANDER.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1063416986091614
+    m_Key: give.thanks.NPC_BYSTANDER.liked
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1063416986091615
+    m_Key: give.thanks.NPC_RINGLEADER.0
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1063416986091616
+    m_Key: give.thanks.NPC_RINGLEADER.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1063416986091617
+    m_Key: give.thanks.NPC_RINGLEADER.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1063416986091618
+    m_Key: give.thanks.NPC_RINGLEADER.liked
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1063416986091619
+    m_Key: give.thanks.NPC_SURVIVOR_A.0
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1063416986091620
+    m_Key: give.thanks.NPC_SURVIVOR_A.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1063416986091621
+    m_Key: give.thanks.NPC_SURVIVOR_A.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1063416986091622
+    m_Key: give.thanks.NPC_SURVIVOR_A.liked
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1063416986091623
+    m_Key: give.thanks.NPC_WANDERER.0
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1063416986091624
+    m_Key: give.thanks.NPC_WANDERER.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1063416986091625
+    m_Key: give.thanks.NPC_WANDERER.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1063416986091626
+    m_Key: give.thanks.NPC_WANDERER.liked
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1063416986091627
+    m_Key: give.thanks.NPC_CAT.0
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1063416986091628
+    m_Key: give.thanks.NPC_CAT.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1063416986091629
+    m_Key: give.thanks.NPC_CAT.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1063416986091630
+    m_Key: give.thanks.NPC_CAT.liked
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1063416986091631
+    m_Key: hubline.generic.0
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1063416986091632
+    m_Key: hubline.generic.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1063416986091633
+    m_Key: hubline.generic.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1063416986091634
+    m_Key: hubline.NPC_NURSE.0
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1063416986091635
+    m_Key: hubline.NPC_NURSE.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1063416986091636
+    m_Key: hubline.NPC_NURSE.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1063416986091637
+    m_Key: hubline.NPC_DOHYEON.0
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1063416986091638
+    m_Key: hubline.NPC_DOHYEON.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1063416986091639
+    m_Key: hubline.NPC_DOHYEON.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1063416986091640
+    m_Key: hubline.NPC_BYSTANDER.0
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1063416986091641
+    m_Key: hubline.NPC_BYSTANDER.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1063416986091642
+    m_Key: hubline.NPC_BYSTANDER.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1063416986091643
+    m_Key: hubline.NPC_RINGLEADER.0
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1063416986091644
+    m_Key: hubline.NPC_RINGLEADER.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1063416986091645
+    m_Key: hubline.NPC_RINGLEADER.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1063416986091646
+    m_Key: hubline.NPC_SURVIVOR_A.0
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1063416986091647
+    m_Key: hubline.NPC_SURVIVOR_A.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1063416986091648
+    m_Key: hubline.NPC_SURVIVOR_A.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1063416986091649
+    m_Key: hubline.NPC_WANDERER.0
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1063416986091650
+    m_Key: hubline.NPC_WANDERER.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1063416986091651
+    m_Key: hubline.NPC_WANDERER.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1063416986091652
+    m_Key: hubline.NPC_CAT.0
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1063416986091653
+    m_Key: hubline.NPC_CAT.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1063416986091654
+    m_Key: hubline.NPC_CAT.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1063416986091655
+    m_Key: teacher.idle_close.0
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1063416986091656
+    m_Key: teacher.idle_close.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1063416986091657
+    m_Key: teacher.idle_close.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1063416986091658
+    m_Key: teacher.idle_close.3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1063416986091659
+    m_Key: result.affinity_up
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1063416986091660
+    m_Key: result.affinity_down
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1063416986091661
+    m_Key: npc.NPC_CAT
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

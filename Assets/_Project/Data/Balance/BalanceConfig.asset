@@ -214,6 +214,14 @@ MonoBehaviour:
       Key: DEHYDRATED
       Hp: -10
       Stress: 5
+    BondTierMins: 00000000140000003200000050000000i
+    BondRoleMultipliers:
+    - 0.5
+    - 1
+    - 1
+    - 1.25
+    - 1.5
+    CompanionAffinityGainScale: 2
     CompanionSatietyDailyDrain: 25
     CompanionHydrationDailyDrain: 30
     CompanionMealSatiety: 45
