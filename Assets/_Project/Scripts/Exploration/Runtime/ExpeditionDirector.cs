@@ -57,6 +57,9 @@ namespace ApoGirl.Exploration.Runtime
         [Tooltip("단독 실행 시 시간대")]
         [SerializeField] private ExpeditionTime _debugTimeOfDay = ExpeditionTime.Day;
 
+        /// <summary>탐험 씬을 바로 실행할 때 손에 들 도구 (예: ITEM_TOOL_FLASHLIGHT, 비우면 맨손).</summary>
+        [SerializeField] private string _debugTool = "";
+
         private readonly List<ExplorationArea> _corridors = new List<ExplorationArea>();
         private readonly List<ExplorationArea> _rooms = new List<ExplorationArea>();
         private readonly List<ExplorationTarget> _targets = new List<ExplorationTarget>();
@@ -1537,6 +1540,7 @@ namespace ApoGirl.Exploration.Runtime
                 Hp = player.Vitals.Hp,
                 Week = session.State.Calendar.Week,
             };
+            request.Loadout.Tool = _debugTool ?? "";
             request.LootedContainers.UnionWith(session.State.Exploration.LootedContainers);
             session.DebugExpedition.ApplyForcedHostile(request);
             return request;
@@ -2035,6 +2039,13 @@ namespace ApoGirl.Exploration.Runtime
 
         /// <summary>후처리·빛 기둥이 켜져 있는가 (디버그 F9로 끈다).</summary>
         public bool LookOn => _look.On;
+
+        /// <summary>디버그: 지금 공간 안 x 자리로 옮긴다 (캡처용).</summary>
+        public void DebugMoveTo(float x)
+        {
+            _log.DebugUsed = true;
+            MoveTo(CurrentArea, x);
+        }
 
         /// <summary>디버그: 후처리·빛 기둥 켜고 끄기 (전후 비교·캡처용).</summary>
         public void ToggleLook()
