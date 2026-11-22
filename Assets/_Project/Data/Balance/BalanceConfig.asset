@@ -278,6 +278,33 @@ MonoBehaviour:
       Roles:
       - GUARD
       - COMFORT
+    SpecialFlagPrefix: SPECIAL_
+    SpecialMinAffinity: 80
+    CompanionSpecials:
+    - NpcId: NPC_NURSE
+      Kind: 0
+      Value: 1
+      Target: 
+    - NpcId: NPC_DOHYEON
+      Kind: 1
+      Value: 0.2
+      Target: 
+    - NpcId: NPC_BYSTANDER
+      Kind: 2
+      Value: 3
+      Target: 
+    - NpcId: NPC_RINGLEADER
+      Kind: 3
+      Value: 2
+      Target: FAC_SAGEORI
+    - NpcId: NPC_SURVIVOR_A
+      Kind: 4
+      Value: 10
+      Target: 
+    - NpcId: NPC_WANDERER
+      Kind: 5
+      Value: 1
+      Target: 
     TogetherAffinity: 1
     TogetherAptitudeBonus: 1
     TogetherWeeklyCap: 2

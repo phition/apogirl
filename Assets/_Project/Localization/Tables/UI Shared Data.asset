@@ -5439,6 +5439,62 @@ MonoBehaviour:
     m_Key: plan.outing_note
     m_Metadata:
       m_Items: []
+  - m_Id: 1134246046744576
+    m_Key: people.special_on
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1134246109659136
+    m_Key: people.special_off
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1134246109659137
+    m_Key: special.NPC_NURSE.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1134246109659138
+    m_Key: special.NPC_NURSE.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1134246109659139
+    m_Key: special.NPC_DOHYEON.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1134246109659140
+    m_Key: special.NPC_DOHYEON.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1134246109659141
+    m_Key: special.NPC_BYSTANDER.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1134246109659142
+    m_Key: special.NPC_BYSTANDER.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1134246109659143
+    m_Key: special.NPC_RINGLEADER.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1134246109659144
+    m_Key: special.NPC_RINGLEADER.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1134246109659145
+    m_Key: special.NPC_SURVIVOR_A.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1134246109659146
+    m_Key: special.NPC_SURVIVOR_A.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1134246109659147
+    m_Key: special.NPC_WANDERER.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1134246109659148
+    m_Key: special.NPC_WANDERER.desc
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
