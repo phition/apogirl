@@ -289,7 +289,7 @@
 
 ②의 특기 예시 (마지막 개인 장면 뒤, 역할과 무관하게 늘 켜짐):
 
-> **2026-11-22 구현:** 개인 장면 15편(유랑자 제외 다섯 명 × 3) — `Content/Story/bond_events.json`, `Resources/Dialogue/Events/Bond.yarn`, 이벤트 `EVT_BOND_{NURSE|DOHYEON|BYSTANDER|RINGLEADER|SENIOR}_{1~3}`. 밤 이벤트·우선순위 30·사람마다 요일 하나(1~5), 앞 장면 깃발 `BOND_{X}_{n}`, 세 번째 장면 OnShow가 `SPECIAL_{NPC}`. 선택지 호감 +8~10. 최하린 3편(머리핀)은 받든 안 받든 같은 대접. 유랑자는 합류하는 길이 없어 보류.
+> **2026-11-22 구현:** 개인 장면 15편(유랑자 제외 다섯 명 × 3) — `Content/Story/bond_events.json`, `Resources/Dialogue/Events/Bond.yarn`, 이벤트 `EVT_BOND_{NURSE|DOHYEON|BYSTANDER|RINGLEADER|SENIOR}_{1~3}`. 밤 이벤트·우선순위 30·사람마다 요일 하나(1~5), 앞 장면 깃발 `BOND_{X}_{n}`, 세 번째 장면 OnShow가 `SPECIAL_{NPC}`. 선택지 호감 +8~10. 최하린 3편(머리핀)은 받든 안 받든 같은 대접. 유랑자는 합류하지 않아 **방문 사다리**로 만들었다: 3막 방문 1·2·3 선택지에서 `EVT_BOND_WANDERER_1~3`로 바로 이어지고(방문 1 거절이면 없음), 세 번째 장면에서 특기. 특기 표 `Visitor`는 합류·호감 검사를 건너뛴다.
 
 | 동료 | 특기 |
 |---|---|
