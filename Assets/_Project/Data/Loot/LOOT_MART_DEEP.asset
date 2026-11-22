@@ -1,0 +1,45 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c4918c53a1a01a44a50fc643af2cbac, type: 3}
+  m_Name: LOOT_MART_DEEP
+  m_EditorClassIdentifier: ApoGirl.Data::ApoGirl.Data.LootTableAsset
+  _id: LOOT_MART_DEEP
+  _definition:
+    Id: LOOT_MART_DEEP
+    MinRolls: 2
+    MaxRolls: 3
+    EmptyChance: 0.05
+    Entries:
+    - ItemId: ITEM_CANNED_FOOD
+      Weight: 6
+      MinCount: 1
+      MaxCount: 1
+    - ItemId: ITEM_WATER_BOTTLE
+      Weight: 5
+      MinCount: 1
+      MaxCount: 1
+    - ItemId: ITEM_INSTANT_NOODLE
+      Weight: 3
+      MinCount: 1
+      MaxCount: 1
+    - ItemId: ITEM_VITAMIN
+      Weight: 2
+      MinCount: 1
+      MaxCount: 1
+    - ItemId: ITEM_TUNA_CAN
+      Weight: 1
+      MinCount: 1
+      MaxCount: 1
+    - ItemId: ITEM_GAS_CANISTER
+      Weight: 1
+      MinCount: 1
+      MaxCount: 1

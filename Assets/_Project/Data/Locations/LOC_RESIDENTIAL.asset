@@ -21,16 +21,57 @@ MonoBehaviour:
       CorridorLength: 72
       RooftopFloor: -1
       RooftopFlag: 
+      DeepFloors: 2
+      DeepCorridorLength: 44
+      DeepNameKey: deep.LOC_RESIDENTIAL
       Connectors:
       - Kind: 0
         Floor: 0
         X: 4
         TargetFloor: 1
+        TargetX: -1
         Collapsed: 0
       - Kind: 0
         Floor: 1
         X: 2.6
         TargetFloor: 0
+        TargetX: -1
+        Collapsed: 0
+      - Kind: 0
+        Floor: 2
+        X: 40
+        TargetFloor: 3
+        TargetX: -1
+        Collapsed: 0
+      - Kind: 0
+        Floor: 3
+        X: 38.6
+        TargetFloor: 2
+        TargetX: -1
+        Collapsed: 0
+      - Kind: 2
+        Floor: 0
+        X: 36
+        TargetFloor: 2
+        TargetX: 3
+        Collapsed: 0
+      - Kind: 2
+        Floor: 2
+        X: 3
+        TargetFloor: 0
+        TargetX: 36
+        Collapsed: 0
+      - Kind: 3
+        Floor: 3
+        X: 4
+        TargetFloor: 1
+        TargetX: 48
+        Collapsed: 0
+      - Kind: 4
+        Floor: 1
+        X: 48
+        TargetFloor: 3
+        TargetX: 4
         Collapsed: 0
       Doors:
       - RoomId: ROOM_HOUSE_101
@@ -128,6 +169,38 @@ MonoBehaviour:
         LootTableId: LOOT_HOUSE_KITCHEN
         SpriteKey: 
         Guaranteed: 0
+      - Id: C_RES_DEEP_TRUNK
+        Kind: 4
+        Floor: 2
+        X: 14
+        SearchSeconds: 2.5
+        LootTableId: LOOT_RESIDENTIAL_DEEP
+        SpriteKey: 
+        Guaranteed: 0
+      - Id: C_RES_DEEP_LOCKER
+        Kind: 0
+        Floor: 2
+        X: 26
+        SearchSeconds: 3
+        LootTableId: LOOT_RESIDENTIAL_DEEP
+        SpriteKey: 
+        Guaranteed: 0
+      - Id: C_RES_DEEP_STORAGE
+        Kind: 2
+        Floor: 3
+        X: 22
+        SearchSeconds: 3.5
+        LootTableId: LOOT_RESIDENTIAL_DEEP
+        SpriteKey: 
+        Guaranteed: 0
+      - Id: C_RES_DEEP_BOX
+        Kind: 4
+        Floor: 3
+        X: 32
+        SearchSeconds: 2.5
+        LootTableId: LOOT_HOUSE_KITCHEN
+        SpriteKey: 
+        Guaranteed: 0
       Exits:
       - Kind: 0
         Floor: 0
@@ -174,6 +247,20 @@ MonoBehaviour:
         Floor: 0
         RoomId: 
         X: 58
+        Count: 1
+        Spread: 0
+        Dormant: 0
+      - EnemyId: ENEMY_WANDERER
+        Floor: 2
+        RoomId: 
+        X: 20
+        Count: 2
+        Spread: 1.5
+        Dormant: 1
+      - EnemyId: ENEMY_LISTENER
+        Floor: 3
+        RoomId: 
+        X: 28
         Count: 1
         Spread: 0
         Dormant: 0
@@ -247,9 +334,9 @@ MonoBehaviour:
         PlayEventInField: 0
         Collectible: 0
       - Id: CD_04
-        Floor: 0
-        RoomId: ROOM_HOUSE_101
-        X: 4
+        Floor: 3
+        RoomId: 
+        X: 12
         FlagsAll: []
         FlagsNone:
         - CD_04
@@ -298,15 +385,29 @@ MonoBehaviour:
         Count: 1
         Spread: 0
         Dormant: 0
+      - EnemyId: ENEMY_WANDERER
+        Floor: 2
+        RoomId: 
+        X: 20
+        Count: 2
+        Spread: 6
+        Dormant: 0
+      - EnemyId: ENEMY_WANDERER
+        Floor: 3
+        RoomId: 
+        X: 26
+        Count: 2
+        Spread: 6
+        Dormant: 0
       LockedRooms:
       - ROOM_HOUSE_102
       ForceableRooms:
       - ROOM_HOUSE_201
       Encounters:
       - Id: CD_04
-        Floor: 0
-        RoomId: ROOM_HOUSE_101
-        X: 4
+        Floor: 3
+        RoomId: 
+        X: 12
         FlagsAll: []
         FlagsNone:
         - CD_04

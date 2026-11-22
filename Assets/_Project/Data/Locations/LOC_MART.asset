@@ -21,16 +21,69 @@ MonoBehaviour:
       CorridorLength: 110
       RooftopFloor: -1
       RooftopFlag: 
+      DeepFloors: 2
+      DeepCorridorLength: 50
+      DeepNameKey: deep.LOC_MART
       Connectors:
       - Kind: 0
         Floor: 0
         X: 104
         TargetFloor: 1
+        TargetX: -1
         Collapsed: 0
       - Kind: 0
         Floor: 1
         X: 102.6
         TargetFloor: 0
+        TargetX: -1
+        Collapsed: 0
+      - Kind: 0
+        Floor: 2
+        X: 26
+        TargetFloor: 3
+        TargetX: -1
+        Collapsed: 0
+      - Kind: 0
+        Floor: 3
+        X: 24.6
+        TargetFloor: 2
+        TargetX: -1
+        Collapsed: 0
+      - Kind: 2
+        Floor: 0
+        X: 82
+        TargetFloor: 2
+        TargetX: 4
+        Collapsed: 0
+      - Kind: 2
+        Floor: 2
+        X: 4
+        TargetFloor: 0
+        TargetX: 82
+        Collapsed: 0
+      - Kind: 2
+        Floor: 1
+        X: 45
+        TargetFloor: 3
+        TargetX: 46
+        Collapsed: 0
+      - Kind: 2
+        Floor: 3
+        X: 46
+        TargetFloor: 1
+        TargetX: 45
+        Collapsed: 0
+      - Kind: 3
+        Floor: 3
+        X: 4
+        TargetFloor: 1
+        TargetX: 75
+        Collapsed: 0
+      - Kind: 4
+        Floor: 1
+        X: 75
+        TargetFloor: 3
+        TargetX: 4
         Collapsed: 0
       Doors:
       - RoomId: ROOM_MART_OFFICE_1
@@ -258,6 +311,38 @@ MonoBehaviour:
         LootTableId: LOOT_STORE_COUNTER
         SpriteKey: 
         Guaranteed: 0
+      - Id: C_MART_DEEP_FREEZER_A
+        Kind: 3
+        Floor: 2
+        X: 14
+        SearchSeconds: 4
+        LootTableId: LOOT_MART_DEEP
+        SpriteKey: 
+        Guaranteed: 0
+      - Id: C_MART_DEEP_PALLET_A
+        Kind: 4
+        Floor: 2
+        X: 36
+        SearchSeconds: 2.5
+        LootTableId: LOOT_MART_DEEP
+        SpriteKey: 
+        Guaranteed: 0
+      - Id: C_MART_DEEP_PALLET_B
+        Kind: 4
+        Floor: 3
+        X: 16
+        SearchSeconds: 2.5
+        LootTableId: LOOT_MART_DEEP
+        SpriteKey: 
+        Guaranteed: 0
+      - Id: C_MART_DEEP_FREEZER_B
+        Kind: 3
+        Floor: 3
+        X: 32
+        SearchSeconds: 4
+        LootTableId: LOOT_MART_WAREHOUSE
+        SpriteKey: 
+        Guaranteed: 0
       Exits:
       - Kind: 0
         Floor: 0
@@ -307,6 +392,20 @@ MonoBehaviour:
         Count: 1
         Spread: 0
         Dormant: 0
+      - EnemyId: ENEMY_WANDERER
+        Floor: 2
+        RoomId: 
+        X: 20
+        Count: 3
+        Spread: 2
+        Dormant: 1
+      - EnemyId: ENEMY_WANDERER
+        Floor: 3
+        RoomId: 
+        X: 28
+        Count: 2
+        Spread: 1.5
+        Dormant: 1
       LockedRooms:
       - ROOM_MART_WAREHOUSE_1
       ForceableRooms: []
@@ -368,9 +467,9 @@ MonoBehaviour:
         PlayEventInField: 1
         Collectible: 0
       - Id: CD_06
-        Floor: 0
-        RoomId: ROOM_MART_OFFICE_1
-        X: 4
+        Floor: 3
+        RoomId: 
+        X: 38
         FlagsAll: []
         FlagsNone:
         - CD_06
@@ -426,14 +525,28 @@ MonoBehaviour:
         Count: 2
         Spread: 4
         Dormant: 0
+      - EnemyId: ENEMY_WANDERER
+        Floor: 2
+        RoomId: 
+        X: 22
+        Count: 2
+        Spread: 8
+        Dormant: 0
+      - EnemyId: ENEMY_LISTENER
+        Floor: 3
+        RoomId: 
+        X: 26
+        Count: 1
+        Spread: 0
+        Dormant: 0
       LockedRooms: []
       ForceableRooms:
       - ROOM_MART_WAREHOUSE_1
       Encounters:
       - Id: CD_06
-        Floor: 0
-        RoomId: ROOM_MART_OFFICE_1
-        X: 4
+        Floor: 3
+        RoomId: 
+        X: 38
         FlagsAll: []
         FlagsNone:
         - CD_06

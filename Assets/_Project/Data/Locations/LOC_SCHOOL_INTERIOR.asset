@@ -21,66 +21,81 @@ MonoBehaviour:
       CorridorLength: 124
       RooftopFloor: 3
       RooftopFlag: REACHED_ROOFTOP
+      DeepFloors: 0
+      DeepCorridorLength: 40
+      DeepNameKey: 
       Connectors:
       - Kind: 0
         Floor: 0
         X: 3
         TargetFloor: 1
+        TargetX: -1
         Collapsed: 0
       - Kind: 0
         Floor: 1
         X: 1.6
         TargetFloor: 0
+        TargetX: -1
         Collapsed: 0
       - Kind: 0
         Floor: 1
         X: 3
         TargetFloor: 2
+        TargetX: -1
         Collapsed: 0
       - Kind: 0
         Floor: 2
         X: 1.6
         TargetFloor: 1
+        TargetX: -1
         Collapsed: 0
       - Kind: 0
         Floor: 2
         X: 3
         TargetFloor: 3
+        TargetX: -1
         Collapsed: 0
       - Kind: 0
         Floor: 3
         X: 1.6
         TargetFloor: 2
+        TargetX: -1
         Collapsed: 0
       - Kind: 0
         Floor: 0
         X: 121
         TargetFloor: 1
+        TargetX: -1
         Collapsed: 0
       - Kind: 0
         Floor: 1
         X: 119.6
         TargetFloor: 0
+        TargetX: -1
         Collapsed: 0
       - Kind: 0
         Floor: 1
         X: 121
         TargetFloor: 2
+        TargetX: -1
         Collapsed: 1
       - Kind: 0
         Floor: 2
         X: 119.6
         TargetFloor: 1
+        TargetX: -1
         Collapsed: 1
       - Kind: 0
         Floor: 2
         X: 121
         TargetFloor: 3
+        TargetX: -1
         Collapsed: 0
       - Kind: 0
         Floor: 3
         X: 119.6
         TargetFloor: 2
+        TargetX: -1
         Collapsed: 0
       Doors:
       - RoomId: ROOM_1F_ROOM_OFFICE_0

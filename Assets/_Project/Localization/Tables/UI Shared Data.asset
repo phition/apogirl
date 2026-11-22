@@ -5759,6 +5759,82 @@ MonoBehaviour:
     m_Key: enc.CD_08.prompt
     m_Metadata:
       m_Items: []
+  - m_Id: 1166621279535104
+    m_Key: exp.prompt_deep_door
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1166621346643968
+    m_Key: exp.prompt_deep_door_back
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1166621346643969
+    m_Key: exp.prompt_oneway_exit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1166621346643970
+    m_Key: exp.prompt_oneway_back
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1166621346643971
+    m_Key: exp.prompt_deep_down
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1166621346643972
+    m_Key: exp.prompt_deep_up
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1166621346643973
+    m_Key: exp.oneway_back
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1166621346643974
+    m_Key: exp.oneway_confirm
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1166621346643975
+    m_Key: exp.oneway_shut
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1166621346643976
+    m_Key: exp.deep_enter
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1166621346643977
+    m_Key: exp.deep_exit_hint
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1166621346643978
+    m_Key: exp.side_west
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1166621346643979
+    m_Key: exp.side_east
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1166621346643980
+    m_Key: exp.deep_floor
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1166621346643981
+    m_Key: deep.LOC_RESIDENTIAL
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1166621346643982
+    m_Key: deep.LOC_SUBWAY
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1166621346643983
+    m_Key: deep.LOC_MART
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1166621346643984
+    m_Key: deep.LOC_POLICE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1166621346643985
+    m_Key: deep.LOC_WATERWORKS
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

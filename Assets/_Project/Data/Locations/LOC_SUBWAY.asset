@@ -21,16 +21,57 @@ MonoBehaviour:
       CorridorLength: 96
       RooftopFloor: -1
       RooftopFlag: 
+      DeepFloors: 2
+      DeepCorridorLength: 48
+      DeepNameKey: deep.LOC_SUBWAY
       Connectors:
       - Kind: 0
         Floor: 0
         X: 48
         TargetFloor: 1
+        TargetX: -1
         Collapsed: 0
       - Kind: 0
         Floor: 1
         X: 46.6
         TargetFloor: 0
+        TargetX: -1
+        Collapsed: 0
+      - Kind: 0
+        Floor: 2
+        X: 44
+        TargetFloor: 3
+        TargetX: -1
+        Collapsed: 0
+      - Kind: 0
+        Floor: 3
+        X: 42.6
+        TargetFloor: 2
+        TargetX: -1
+        Collapsed: 0
+      - Kind: 2
+        Floor: 0
+        X: 40
+        TargetFloor: 2
+        TargetX: 3
+        Collapsed: 0
+      - Kind: 2
+        Floor: 2
+        X: 3
+        TargetFloor: 0
+        TargetX: 40
+        Collapsed: 0
+      - Kind: 3
+        Floor: 3
+        X: 5
+        TargetFloor: 1
+        TargetX: 56
+        Collapsed: 0
+      - Kind: 4
+        Floor: 1
+        X: 56
+        TargetFloor: 3
+        TargetX: 5
         Collapsed: 0
       Doors:
       - RoomId: ROOM_SUBWAY_OFFICE_1
@@ -201,6 +242,38 @@ MonoBehaviour:
         LootTableId: LOOT_SUBWAY_OFFICE
         SpriteKey: 
         Guaranteed: 0
+      - Id: C_SUB_DEEP_CABINET
+        Kind: 2
+        Floor: 2
+        X: 16
+        SearchSeconds: 3.5
+        LootTableId: LOOT_SUBWAY_DEEP
+        SpriteKey: 
+        Guaranteed: 0
+      - Id: C_SUB_DEEP_LOCKER
+        Kind: 0
+        Floor: 2
+        X: 30
+        SearchSeconds: 3
+        LootTableId: LOOT_SUBWAY_DEEP
+        SpriteKey: 
+        Guaranteed: 0
+      - Id: C_SUB_DEEP_DESK
+        Kind: 1
+        Floor: 3
+        X: 20
+        SearchSeconds: 2
+        LootTableId: LOOT_SUBWAY_DEEP
+        SpriteKey: 
+        Guaranteed: 0
+      - Id: C_SUB_DEEP_BOX
+        Kind: 4
+        Floor: 3
+        X: 34
+        SearchSeconds: 2.5
+        LootTableId: LOOT_SUBWAY_OFFICE
+        SpriteKey: 
+        Guaranteed: 0
       Exits:
       - Kind: 0
         Floor: 1
@@ -247,6 +320,20 @@ MonoBehaviour:
         Floor: 1
         RoomId: 
         X: 26
+        Count: 1
+        Spread: 0
+        Dormant: 0
+      - EnemyId: ENEMY_WANDERER
+        Floor: 2
+        RoomId: 
+        X: 24
+        Count: 3
+        Spread: 2
+        Dormant: 1
+      - EnemyId: ENEMY_LISTENER
+        Floor: 3
+        RoomId: 
+        X: 30
         Count: 1
         Spread: 0
         Dormant: 0
@@ -322,9 +409,9 @@ MonoBehaviour:
         PlayEventInField: 0
         Collectible: 0
       - Id: CD_05
-        Floor: 0
-        RoomId: ROOM_SUBWAY_OFFICE_2
-        X: 4
+        Floor: 3
+        RoomId: 
+        X: 12
         FlagsAll: []
         FlagsNone:
         - CD_05
@@ -380,6 +467,20 @@ MonoBehaviour:
         Count: 3
         Spread: 8
         Dormant: 0
+      - EnemyId: ENEMY_WANDERER
+        Floor: 2
+        RoomId: 
+        X: 22
+        Count: 2
+        Spread: 8
+        Dormant: 0
+      - EnemyId: ENEMY_LISTENER
+        Floor: 3
+        RoomId: 
+        X: 28
+        Count: 1
+        Spread: 0
+        Dormant: 0
       LockedRooms: []
       ForceableRooms:
       - ROOM_SUBWAY_OFFICE_1
@@ -413,9 +514,9 @@ MonoBehaviour:
         PlayEventInField: 0
         Collectible: 0
       - Id: CD_05
-        Floor: 0
-        RoomId: ROOM_SUBWAY_OFFICE_2
-        X: 4
+        Floor: 3
+        RoomId: 
+        X: 12
         FlagsAll: []
         FlagsNone:
         - CD_05

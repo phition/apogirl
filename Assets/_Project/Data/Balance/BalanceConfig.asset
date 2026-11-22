@@ -393,6 +393,13 @@ MonoBehaviour:
     HeadlessLikedItemNightChance: 0.15
     HeadlessRooftopChance: 0.25
     HeadlessCdChance: 0.3
+    HeadlessDeepChance: 0.35
+    HeadlessDeepSpecialBonus: 0.15
+    HeadlessDeepItemChance: 0.6
+    HeadlessDeepStress: 2
+    DeepNoiseMultiplier: 1.2
+    DeepAmbient: 0.22
+    OneWayConfirmSeconds: 3
     LikedItems:
     - NpcId: NPC_TEACHER
       Items:

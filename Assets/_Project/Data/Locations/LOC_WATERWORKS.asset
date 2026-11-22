@@ -21,46 +21,117 @@ MonoBehaviour:
       CorridorLength: 100
       RooftopFloor: -1
       RooftopFlag: 
+      DeepFloors: 3
+      DeepCorridorLength: 50
+      DeepNameKey: deep.LOC_WATERWORKS
       Connectors:
       - Kind: 0
         Floor: 0
         X: 6
         TargetFloor: 1
+        TargetX: -1
         Collapsed: 0
       - Kind: 0
         Floor: 1
         X: 4.6
         TargetFloor: 0
+        TargetX: -1
         Collapsed: 0
       - Kind: 0
         Floor: 1
         X: 6
         TargetFloor: 2
+        TargetX: -1
         Collapsed: 1
       - Kind: 0
         Floor: 2
         X: 4.6
         TargetFloor: 1
+        TargetX: -1
         Collapsed: 1
       - Kind: 0
         Floor: 0
         X: 96
         TargetFloor: 1
+        TargetX: -1
         Collapsed: 0
       - Kind: 0
         Floor: 1
         X: 94.6
         TargetFloor: 0
+        TargetX: -1
         Collapsed: 0
       - Kind: 0
         Floor: 1
         X: 96
         TargetFloor: 2
+        TargetX: -1
         Collapsed: 0
       - Kind: 0
         Floor: 2
         X: 94.6
         TargetFloor: 1
+        TargetX: -1
+        Collapsed: 0
+      - Kind: 0
+        Floor: 3
+        X: 24
+        TargetFloor: 4
+        TargetX: -1
+        Collapsed: 0
+      - Kind: 0
+        Floor: 4
+        X: 22.6
+        TargetFloor: 3
+        TargetX: -1
+        Collapsed: 0
+      - Kind: 0
+        Floor: 4
+        X: 24
+        TargetFloor: 5
+        TargetX: -1
+        Collapsed: 0
+      - Kind: 0
+        Floor: 5
+        X: 22.6
+        TargetFloor: 4
+        TargetX: -1
+        Collapsed: 0
+      - Kind: 2
+        Floor: 0
+        X: 70
+        TargetFloor: 3
+        TargetX: 4
+        Collapsed: 0
+      - Kind: 2
+        Floor: 3
+        X: 4
+        TargetFloor: 0
+        TargetX: 70
+        Collapsed: 0
+      - Kind: 2
+        Floor: 1
+        X: 38
+        TargetFloor: 4
+        TargetX: 46
+        Collapsed: 0
+      - Kind: 2
+        Floor: 4
+        X: 46
+        TargetFloor: 1
+        TargetX: 38
+        Collapsed: 0
+      - Kind: 3
+        Floor: 5
+        X: 6
+        TargetFloor: 2
+        TargetX: 46
+        Collapsed: 0
+      - Kind: 4
+        Floor: 2
+        X: 46
+        TargetFloor: 5
+        TargetX: 6
         Collapsed: 0
       Doors:
       - RoomId: ROOM_WATER_ARCHIVE_1
@@ -244,6 +315,38 @@ MonoBehaviour:
         LootTableId: LOOT_SUBWAY_OFFICE
         SpriteKey: 
         Guaranteed: 0
+      - Id: C_WATER_DEEP_VALVE
+        Kind: 4
+        Floor: 3
+        X: 14
+        SearchSeconds: 2.5
+        LootTableId: LOOT_SUBWAY_OFFICE
+        SpriteKey: 
+        Guaranteed: 0
+      - Id: C_WATER_DEEP_CHEM_A
+        Kind: 2
+        Floor: 4
+        X: 32
+        SearchSeconds: 3.5
+        LootTableId: LOOT_WATER_DEEP
+        SpriteKey: 
+        Guaranteed: 0
+      - Id: C_WATER_DEEP_CHEM_B
+        Kind: 2
+        Floor: 5
+        X: 16
+        SearchSeconds: 3.5
+        LootTableId: LOOT_WATER_DEEP
+        SpriteKey: 
+        Guaranteed: 0
+      - Id: C_WATER_DEEP_CRATE
+        Kind: 4
+        Floor: 5
+        X: 38
+        SearchSeconds: 2.5
+        LootTableId: LOOT_WATER_DEEP
+        SpriteKey: 
+        Guaranteed: 0
       Exits:
       - Kind: 0
         Floor: 1
@@ -293,6 +396,20 @@ MonoBehaviour:
         Count: 1
         Spread: 0
         Dormant: 0
+      - EnemyId: ENEMY_WANDERER
+        Floor: 3
+        RoomId: 
+        X: 30
+        Count: 2
+        Spread: 1.5
+        Dormant: 1
+      - EnemyId: ENEMY_WANDERER
+        Floor: 5
+        RoomId: 
+        X: 42
+        Count: 3
+        Spread: 2
+        Dormant: 1
       LockedRooms:
       - ROOM_WATER_ARCHIVE_1
       ForceableRooms: []
@@ -327,9 +444,9 @@ MonoBehaviour:
         PlayEventInField: 0
         Collectible: 0
       - Id: CD_08
-        Floor: 2
-        RoomId: ROOM_WATER_LAB_2
-        X: 4
+        Floor: 5
+        RoomId: 
+        X: 30
         FlagsAll: []
         FlagsNone:
         - CD_08
@@ -391,6 +508,27 @@ MonoBehaviour:
         X: 40
         Count: 3
         Spread: 10
+        Dormant: 0
+      - EnemyId: ENEMY_WANDERER
+        Floor: 3
+        RoomId: 
+        X: 30
+        Count: 2
+        Spread: 8
+        Dormant: 0
+      - EnemyId: ENEMY_LISTENER
+        Floor: 4
+        RoomId: 
+        X: 20
+        Count: 1
+        Spread: 0
+        Dormant: 0
+      - EnemyId: ENEMY_WANDERER
+        Floor: 5
+        RoomId: 
+        X: 38
+        Count: 2
+        Spread: 6
         Dormant: 0
       LockedRooms: []
       ForceableRooms:
@@ -455,9 +593,9 @@ MonoBehaviour:
         PlayEventInField: 0
         Collectible: 0
       - Id: CD_08
-        Floor: 2
-        RoomId: ROOM_WATER_LAB_2
-        X: 4
+        Floor: 5
+        RoomId: 
+        X: 30
         FlagsAll: []
         FlagsNone:
         - CD_08

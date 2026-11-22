@@ -21,16 +21,21 @@ MonoBehaviour:
       CorridorLength: 60
       RooftopFloor: -1
       RooftopFlag: 
+      DeepFloors: 0
+      DeepCorridorLength: 40
+      DeepNameKey: 
       Connectors:
       - Kind: 0
         Floor: 0
         X: 5
         TargetFloor: 1
+        TargetX: -1
         Collapsed: 0
       - Kind: 0
         Floor: 1
         X: 3.6
         TargetFloor: 0
+        TargetX: -1
         Collapsed: 0
       Doors:
       - RoomId: ROOM_PH_DISPENSARY_1
