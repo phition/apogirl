@@ -363,6 +363,19 @@ namespace ApoGirl.Core.Definitions
             new RoleAptitudeDef { NpcId = "NPC_SURVIVOR_A", Roles = new[] { "GUARD", "COMFORT" } },
         };
 
+        /// <summary>함께한 시간 (역할 재기획 4절): 주인공이 방 스케줄을 하면 그 방 동료 호감 +1 (적성 역할이면 + 보너스), 한 사람당 주 상한.</summary>
+        public int TogetherAffinity = 1;
+        public int TogetherAptitudeBonus = 1;
+        public int TogetherWeeklyCap = 2;
+        public int TogetherAptitudeWeeklyCap = 3;
+
+        /// <summary>윤 선생님: 선생님이 가르치는 수업에서만 (아프면 TeacherCareActionId에서만), 주 상한.</summary>
+        public int TeacherTogetherAffinity = 1;
+        public int TeacherTogetherWeeklyCap = 1;
+        public string TeacherCareActionId = "ACT_CARE_TEACHER";
+        public string[] TeacherIllFlags = { "TEACHER_REINFECTED", "TEACHER_BEDRIDDEN", "TEACHER_ISOLATED" };
+        public string[] TeacherAbsentFlags = { "TEACHER_LEFT_BEHIND" };
+
         /// <summary>배분: 음식(식량 1)·마실 것(식수 1)·의약품(의약품 1)·기호품(창고 물건 1). 한 사람에게 종류별 주 1회.</summary>
         public int GiveFoodSatiety = 45;
         public int GiveFoodStress = -3;

@@ -405,6 +405,17 @@ namespace ApoGirl.Presentation.Screens
         private string CompanionLine(string npcId)
         {
             var index = (_session.State.Calendar.Week + _lineOffset) % 3;
+
+            // 적성 방이 아직 없으면 가끔 바람을 말한다 (방 이름은 말하지 않는다)
+            if (index == 0 && ApoGirl.Core.Rules.TogetherRules.WishesForAptitudeRoom(_session.State, _session.Definitions, npcId))
+            {
+                var wish = Loc.Lookup(Loc.UiTable, "hubline.wish." + npcId);
+                if (!string.IsNullOrEmpty(wish))
+                {
+                    return wish;
+                }
+            }
+
             var text = Loc.Lookup(Loc.UiTable, "hubline." + npcId + "." + index);
             return string.IsNullOrEmpty(text) ? Loc.T("hubline.generic." + index) : text;
         }
@@ -466,6 +477,22 @@ namespace ApoGirl.Presentation.Screens
             }
         }
 
+        /// <summary>함께한 시간: 곁에 있던 사람 머리 위 말풍선 (단면도에 안 보이면 생략, 결과 한 줄에 이름이 남는다).</summary>
+        private void ShowTogether(SlotOutcome outcome)
+        {
+            if (outcome.Together == null || !_session.HasMetTeacher)
+            {
+                return;
+            }
+
+            var seed = outcome.Week * 31 + outcome.Day * 3 + (int)outcome.Phase;
+            for (var i = 0; i < outcome.Together.Count; i++)
+            {
+                var entry = outcome.Together[i];
+                _section.ShowBubble(entry.Id, PeopleUi.Together(entry.Id, entry.Aptitude, seed + i * 7), 0.2f + i * 0.6f);
+            }
+        }
+
         private IEnumerator RunWeek(List<(string Id, bool Liked)> received)
         {
             _pendingSummary = null;
@@ -489,6 +516,7 @@ namespace ApoGirl.Presentation.Screens
                 }
 
                 var outcome = _session.Step();
+                ShowTogether(outcome);
                 if (outcome.AwaitingExpedition)
                 {
                     // 출정 준비 (목적지·예보·로드아웃) → 실시간 탐험: 허브 UI를 숨기고 탐험 씬을 추가 로드 → 결과를 세션에 반영
@@ -1001,6 +1029,11 @@ namespace ApoGirl.Presentation.Screens
 
             var deltas = UiText.DeltaLines(outcome.Delta);
             var detail = UiText.Result(outcome.Result) + (deltas.Count > 0 ? "  " + string.Join("  ", deltas.Take(3)) : "");
+            var together = PeopleUi.TogetherLine(outcome.Together);
+            if (together.Length > 0)
+            {
+                detail += "  · " + together;
+            }
             var line = new Label(Loc.F("hud.ticker", outcome.Day, UiText.Phase(outcome.Phase), Loc.Action(outcome.ActionId, "short"), detail));
             line.AddToClassList("ticker-line");
             line.EnableInClassList("great", outcome.Result == Core.Rules.CheckResult.GreatSuccess);

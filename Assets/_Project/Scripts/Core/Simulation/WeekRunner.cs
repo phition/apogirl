@@ -19,6 +19,9 @@ namespace ApoGirl.Core.Simulation
         public int Day;
         public DayPhase Phase;
         public string ActionId = "";
+
+        /// <summary>이 칸에 곁에 있던 사람 (함께한 시간). 비어 있으면 혼자.</summary>
+        public List<TogetherEntry> Together = new List<TogetherEntry>();
         public CheckResult Result;
         public bool ForcedRestViolated;
         public bool ConsecutiveExpedition;
@@ -238,6 +241,9 @@ namespace ApoGirl.Core.Simulation
             }
 
             outcome.Result = ActionResolver.Resolve(_state, action, _db, _random, delta);
+
+            // 함께한 시간: 이 방에 서 있던 동료·가르친 선생님의 호감 (역할 재기획 4절)
+            outcome.Together = TogetherRules.Apply(_state, _db, action, delta);
             return FinishSlot(action, violation, outcome);
         }
 

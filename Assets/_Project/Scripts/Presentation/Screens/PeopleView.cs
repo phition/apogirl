@@ -72,6 +72,36 @@ namespace ApoGirl.Presentation.Screens
             return bar;
         }
 
+        /// <summary>함께한 시간 말풍선: 적성 역할이면 가끔 전용 문구(together.{ID}.apt.n), 아니면 그 사람 문구 셋 중 하나, 없으면 공용.</summary>
+        public static string Together(string id, bool aptitude, int seed)
+        {
+            seed = Math.Abs(seed);
+            if (aptitude && seed % 2 == 0)
+            {
+                var special = Loc.Lookup(Loc.UiTable, "together." + id + ".apt." + seed / 2 % 2);
+                if (!string.IsNullOrEmpty(special))
+                {
+                    return special;
+                }
+            }
+
+            var own = Loc.Lookup(Loc.UiTable, "together." + id + "." + seed % 3);
+            return string.IsNullOrEmpty(own) ? Loc.T("together.generic." + seed % 3) : own;
+        }
+
+        /// <summary>결과 한 줄 꼬리: "윤 선생님, 도현과 함께 했다" (조사는 마지막 이름에 맞춘다).</summary>
+        public static string TogetherLine(IReadOnlyList<TogetherEntry> together)
+        {
+            if (together == null || together.Count == 0)
+            {
+                return "";
+            }
+
+            var names = together.Select(t => Name(t.Id)).ToList();
+            names[names.Count - 1] = ApoGirl.Core.Text.KoreanJosa.Attach(names[names.Count - 1], "과/와");
+            return Loc.F("together.with", string.Join(", ", names));
+        }
+
         /// <summary>고마워하는 말 한 줄: 좋아하는 물건이면 전용 문구, 아니면 그 사람 문구 셋 중 하나.</summary>
         public static string Thanks(string id, bool liked, int seed)
         {
@@ -224,6 +254,21 @@ namespace ApoGirl.Presentation.Screens
                 else if (RoleRules.HasAptitude(balance, id, role.Id))
                 {
                     yield return Loc.T("people.aptitude." + id + "." + role.Id);
+                }
+            }
+
+            // 적성: 맡길 수 있는 적성 역할이 있으면 그 느낌 문구(힌트), 적성 방이 하나도 없으면 방 이름 없이 바람만
+            var openAptitude = TogetherRules.OpenAptitudeRole(state, db, id);
+            if (openAptitude != null && (role == null || !RoleRules.HasAptitude(balance, id, role.Id)))
+            {
+                yield return Loc.T("people.aptitude." + id + "." + openAptitude);
+            }
+            else if (TogetherRules.WishesForAptitudeRoom(state, db, id))
+            {
+                var wish = Loc.Lookup(Loc.UiTable, "people.wish." + id);
+                if (!string.IsNullOrEmpty(wish))
+                {
+                    yield return wish;
                 }
             }
 
