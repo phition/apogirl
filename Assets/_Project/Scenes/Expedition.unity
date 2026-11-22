@@ -153,6 +153,7 @@ MonoBehaviour:
   _hudLayout: {fileID: 9197481963319205126, guid: 7ca71cd7690bed8479d15f4649646ea6, type: 3}
   _debugLocationId: LOC_SCHOOL_INTERIOR
   _debugTimeOfDay: 0
+  _debugTool: 
 --- !u!4 &434080926
 Transform:
   m_ObjectHideFlags: 0
