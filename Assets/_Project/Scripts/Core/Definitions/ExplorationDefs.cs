@@ -140,6 +140,11 @@ namespace ApoGirl.Core.Definitions
 
         /// <summary>무너져서 쓸 수 없는 계단 (보이기만 하고 지나갈 수 없다. 다른 쪽 계단으로 돌아가야 한다).</summary>
         public bool Collapsed;
+
+        /// <summary>계절 재해로 막힌 연결 (실행 중에만, DisasterRules.Apply가 Collapsed와 함께 채운다): 재해 ID.</summary>
+        [NonSerialized] public string BlockedBy = "";
+
+        public ConnectorDef Copy() => (ConnectorDef)MemberwiseClone();
     }
 
     [Serializable]
@@ -168,6 +173,11 @@ namespace ApoGirl.Core.Definitions
         public int Floor;
         public float X;
         public bool StartsLocked;
+
+        /// <summary>계절 재해로 막힌 출구 (눈에 파묻힘: 쇠지렛대로도 못 연다). 재해 ID, 실행 중에만.</summary>
+        [NonSerialized] public string BlockedBy = "";
+
+        public ExitDef Copy() => (ExitDef)MemberwiseClone();
     }
 
     /// <summary>복도 쪽 벽의 창문 (방 왼쪽 끝 기준 X, 폭). 안팎에서 서로의 실루엣이 보인다.</summary>
@@ -273,6 +283,15 @@ namespace ApoGirl.Core.Definitions
         public List<ExitDef> Exits = new List<ExitDef>();
 
         public RoomTemplateDef FindTemplate(string id) => RoomTemplates.Find(t => t.Id == id);
+
+        /// <summary>연결·출구 목록만 새로 만든 사본 (계절 재해가 바꾼다). 나머지는 원본과 함께 쓴다.</summary>
+        public BuildingLayoutDef CopyLinks()
+        {
+            var copy = (BuildingLayoutDef)MemberwiseClone();
+            copy.Connectors = Connectors.ConvertAll(c => c.Copy());
+            copy.Exits = Exits.ConvertAll(e => e.Copy());
+            return copy;
+        }
     }
 
     /// <summary>적 종류. Survivor = 자원을 찾아 나온 적대적 생존자 (낮 탐험, 붙잡히면 성향에 따라 쫓겨남·강탈·구타).</summary>
@@ -374,5 +393,6 @@ namespace ApoGirl.Core.Definitions
 
         /// <summary>매달 첫 주에 뒤진 상자의 일부가 다시 채워진다 (교실동은 false: 무한 파밍 방지).</summary>
         public bool Restocks = true;
+        public LocationDef Copy() => (LocationDef)MemberwiseClone();
     }
 }

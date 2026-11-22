@@ -658,7 +658,7 @@ namespace ApoGirl.Core.Simulation
                 calendar.Phase = DayPhase.Day;
                 calendar.WeekComplete = false;
                 _state.Plan = PlanPreparer.CreateWeekPlan(_state, Balance);
-                _state.Base.Weather = WeatherRules.Roll(calendar.Week, Balance, _random);
+                _state.Base.Weather = DisasterRules.RollWeather(calendar.Week, Balance, _random);   // 계절 재해 기간이면 재해 날씨가 잦다
             }
 
             summary.StatusAfter = _state.Status;

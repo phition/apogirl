@@ -5,6 +5,7 @@ using System.Linq;
 using ApoGirl.Core.Definitions;
 using ApoGirl.Core.Expedition;
 using ApoGirl.Core.Random;
+using ApoGirl.Core.Rules;
 using ApoGirl.Core.State;
 using ApoGirl.Data;
 using ApoGirl.Exploration.Model;
@@ -139,6 +140,11 @@ namespace ApoGirl.Exploration.Runtime
         private string _playerFrameKey = "";
         private SpriteRenderer _bagRenderer;
         private float _noiseMultiplier = 1f;
+
+        /// <summary>계절 재해 (확장 6): 지금 일어난 재해와 물에 잠긴 층 (없으면 null·−1).</summary>
+        private DisasterDef _disaster;
+        private int _floodedFloor = -1;
+        private bool _floodNoticed;
         private float _tutorialMoved;
         private float _tutorialCrouched;
         private bool _tutorialSearched;
@@ -392,7 +398,9 @@ namespace ApoGirl.Exploration.Runtime
             Request = GameApp.ActiveExpedition ?? CreateDebugRequest(session);
             _standalone = GameApp.ActiveExpedition == null;
 
-            Location = _db.GetLocation(Request.LocationId);
+            _disaster = DisasterRules.Active(Request.Week, Request.WeatherId, _balance);
+            Location = DisasterRules.Apply(_db.GetLocation(Request.LocationId), _disaster);   // 재해가 바꾼 지도 (사본)
+            _floodedFloor = DisasterRules.FloodedFloor(Location.Layout, _disaster);
             var day = Request.TimeOfDay == ExpeditionTime.Day;
             if (_db.TryGetExpeditionModel(Request.LocationId, out var model))
             {
@@ -415,6 +423,7 @@ namespace ApoGirl.Exploration.Runtime
             CarryCapacity = ExplorationRules.CarryCapacity(Request.Stats, _balance);
 
             BuildWorld();
+            BuildFlood();
             Hp = _startHp = Math.Max(1, Request.Hp);
             BuildThreats(day ? Location.DayVariant : Location.NightVariant);
             SetupCamera();
@@ -434,7 +443,29 @@ namespace ApoGirl.Exploration.Runtime
             {
                 _hud.ShowText(Loc.T("exp.restocked." + Location.Id), 4500);
             }
+            else if (_disaster != null && Location.Layout.DeepFloors > 0)
+            {
+                _hud.ShowText(Loc.T("exp.disaster." + _disaster.Id), 4500);   // 장마·폭설로 지도가 바뀌었다
+            }
         }
+
+        /// <summary>장마: 물에 잠긴 층의 복도·방 바닥에 물을 깐다.</summary>
+        private void BuildFlood()
+        {
+            if (_floodedFloor < 0)
+            {
+                return;
+            }
+
+            foreach (var area in _areasById.Where(a => a.Floor == _floodedFloor))
+            {
+                var parent = area.Root != null ? area.Root.transform : _world;
+                var origin = area.Root != null ? Vector2.zero : area.Origin;
+                BuildingView.Rect(parent, "FloodWater", origin, new Vector2(area.Width, 0.75f), new Color(0.2f, 0.32f, 0.42f, 0.55f), 6);
+            }
+        }
+
+        private bool InFlood => _floodedFloor >= 0 && CurrentArea != null && CurrentArea.Floor == _floodedFloor;
 
         private void Update()
         {
@@ -514,7 +545,7 @@ namespace ApoGirl.Exploration.Runtime
             {
                 case TargetKind.Connector when target.Connector.Collapsed:
                     Sfx("sfx_door_locked");
-                    _hud?.ShowMessage("exp.stairs_collapsed");
+                    _hud?.ShowMessage(string.IsNullOrEmpty(target.Connector.BlockedBy) ? "exp.stairs_collapsed" : "exp.blocked." + target.Connector.BlockedBy);
                     break;
                 case TargetKind.Connector when target.Connector.Kind == ConnectorKind.OneWayBack:
                     Sfx("sfx_door_locked");
@@ -622,7 +653,12 @@ namespace ApoGirl.Exploration.Runtime
                     EmitNoise(CurrentArea, X, _balance.DoorNoise);
                     break;
                 case TargetKind.Exit:
-                    if (target.Locked && _toolKind == ToolKind.Crowbar)
+                    if (target.Locked && !string.IsNullOrEmpty(target.Exit?.BlockedBy))
+                    {
+                        Sfx("sfx_door_locked");
+                        _hud?.ShowMessage("exp.exit_blocked." + target.Exit.BlockedBy);   // 눈에 파묻혀 쇠지렛대로도 안 된다
+                    }
+                    else if (target.Locked && _toolKind == ToolKind.Crowbar)
                     {
                         target.Locked = false;
                         var exitRenderer = target.View != null ? target.View.GetComponent<SpriteRenderer>() : null;
@@ -1267,7 +1303,8 @@ namespace ApoGirl.Exploration.Runtime
                 _ranThisFrame = running;
                 CloseContainer();
                 var speed = ExplorationRules.MoveSpeed(running, _crouching, IsOverweight, _balance)
-                            * _moveMultiplier * (running ? 1f + Request.Modifier("RunSpeed") : 1f);
+                            * _moveMultiplier * (running ? 1f + Request.Modifier("RunSpeed") : 1f)
+                            * (InFlood ? _balance.FloodMoveMultiplier : 1f);   // 장마: 물을 헤치고 걷는다
                 _tutorialMoved += Mathf.Abs(move) * speed * dt;
                 if (_crouching)
                 {
@@ -1406,6 +1443,11 @@ namespace ApoGirl.Exploration.Runtime
         {
             CurrentArea = area;
             X = Mathf.Clamp(x, EdgeMargin, area.Width - EdgeMargin);
+            if (InFlood && !_floodNoticed)
+            {
+                _floodNoticed = true;
+                _hud?.ShowMessage("exp.flooded");   // 물이 무릎까지 차 있다
+            }
 
             // 옥상에 처음 올라섰다: 귀환하면 거점 옥상이 열린다 (EVT_A1_ROOFTOP_EARLY)
             var roofFlag = Location?.Layout?.RooftopFlag;
@@ -2805,6 +2847,11 @@ namespace ApoGirl.Exploration.Runtime
             }
 
             radius *= _noiseMultiplier;
+            if (_floodedFloor >= 0 && area.Floor == _floodedFloor)
+            {
+                radius *= _balance.FloodNoiseMultiplier;   // 물 첨벙이는 소리
+            }
+
             if (area.IsDeep)
             {
                 radius *= _balance.DeepNoiseMultiplier;   // 깊은 곳은 소리가 울린다

@@ -50,6 +50,20 @@ namespace ApoGirl.Core.Definitions
         }
     }
 
+    /// <summary>
+    /// 계절 재해 (확장 6): 정해진 주 사이에 그 날씨가 되면 재해다. 그 주에는 날씨가 ForceChance 확률로 이 날씨로 바뀐다.
+    /// 재해는 깊은 곳이 있는 지역의 지도를 바꾼다 (DisasterRules.Apply).
+    /// </summary>
+    [Serializable]
+    public sealed class DisasterDef
+    {
+        public string Id = "";
+        public int FromWeek;
+        public int ToWeek;
+        public WeatherType Weather;
+        public float ForceChance;
+    }
+
     [Serializable]
     public sealed class BalanceConfig
     {
@@ -772,6 +786,20 @@ namespace ApoGirl.Core.Definitions
             new WeatherOdds(Season.Autumn, 6, 3, 0, 1),
             new WeatherOdds(Season.Winter, 4, 1, 0, 5),
         };
+
+        // ── 계절 재해 (확장 6, DisasterRules): 장마(침수)·폭설(진입로 막힘) ──
+        public DisasterDef[] Disasters =
+        {
+            new DisasterDef { Id = "MONSOON", FromWeek = 15, ToWeek = 19, Weather = WeatherType.Rain, ForceChance = 0.75f },
+            new DisasterDef { Id = "SNOWSTORM", FromWeek = 42, ToWeek = 46, Weather = WeatherType.Cold, ForceChance = 0.8f },
+        };
+
+        /// <summary>장마: 깊은 곳 맨 아래층이 물에 잠긴다. 걸음 배율·소음 배율 (물을 헤치고 걷는다).</summary>
+        public float FloodMoveMultiplier = 0.7f;
+        public float FloodNoiseMultiplier = 1.5f;
+
+        /// <summary>장마 때 헤드리스에서 깊은 곳에 들어갈 확률 배율 (물이 차서 덜 내려간다).</summary>
+        public float MonsoonHeadlessDeepMultiplier = 0.6f;
 
         public float RainNoiseBonus = -0.25f;
         public float RainRaidMultiplier = 0.6f;

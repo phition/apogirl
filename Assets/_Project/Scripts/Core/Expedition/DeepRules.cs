@@ -110,7 +110,7 @@ namespace ApoGirl.Core.Expedition
                 var floor = queue.Dequeue();
                 foreach (var c in layout.Connectors)
                 {
-                    var passable = c.Kind == ConnectorKind.DeepDoor || c.Kind == ConnectorKind.OneWayExit || (c.IsStairs && !c.Collapsed);
+                    var passable = !c.Collapsed && (c.Kind == ConnectorKind.DeepDoor || c.Kind == ConnectorKind.OneWayExit || c.IsStairs);   // 막힌 깊은 문(계절 재해)도 못 지난다
                     if (c.Floor == floor && passable && seen.Add(c.TargetFloor))
                     {
                         queue.Enqueue(c.TargetFloor);

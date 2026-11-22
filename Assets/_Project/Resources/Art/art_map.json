@@ -1231,6 +1231,14 @@
       "Image": "icon_status_confined"
     },
     {
+      "Key": "disaster.MONSOON",
+      "Image": "icon_weather_storm"
+    },
+    {
+      "Key": "disaster.SNOWSTORM",
+      "Image": "icon_weather_snow"
+    },
+    {
       "Key": "weather.snow",
       "Image": "icon_weather_snow"
     },

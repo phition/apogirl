@@ -131,6 +131,11 @@ namespace ApoGirl.Core.Expedition
             var balance = _db.Balance;
             var random = new SeededRandom(SeededRandom.CreateState(request.Seed ^ 0xDEE9));
             var chance = balance.HeadlessDeepChance + (request.KnowsDeepExits ? balance.HeadlessDeepSpecialBonus : 0f);
+            var disaster = Rules.DisasterRules.Active(request.Week, request.WeatherId, balance);
+            if (disaster != null && disaster.Id == Rules.DisasterRules.Monsoon)
+            {
+                chance *= balance.MonsoonHeadlessDeepMultiplier;   // 장마: 아래층이 물에 잠겨 덜 내려간다
+            }
             if (random.NextDouble() >= chance)
             {
                 return false;

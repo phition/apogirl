@@ -117,9 +117,21 @@ namespace ApoGirl.Presentation.Screens
 
             // M6: 날씨, 구조 카운트다운 (라디오 공지 이후)
             var weather = state.Base.Weather;
-            _weather.text = Loc.F("hub.weather", Loc.T("weather." + weather));
-            StoryArt.SetIcon(_weather, StoryArt.Icon("weather." + weather));
-            _weather.tooltip = weather == WeatherType.Clear ? "" : Loc.T("weather." + weather + ".desc");
+            var disaster = DisasterRules.Active(state, _session.Definitions.Balance);
+            if (disaster != null)
+            {
+                // 계절 재해 (확장 6): 장마·폭설
+                _weather.text = Loc.F("hub.weather", Loc.T("disaster." + disaster.Id));
+                StoryArt.SetIcon(_weather, StoryArt.Icon("disaster." + disaster.Id));
+                _weather.tooltip = Loc.T("weather." + weather + ".desc") + "
+" + Loc.T("disaster." + disaster.Id + ".desc");
+            }
+            else
+            {
+                _weather.text = Loc.F("hub.weather", Loc.T("weather." + weather));
+                StoryArt.SetIcon(_weather, StoryArt.Icon("weather." + weather));
+                _weather.tooltip = weather == WeatherType.Clear ? "" : Loc.T("weather." + weather + ".desc");
+            }
             var announced = state.Flags.Contains("RESCUE_ANNOUNCED");
             _rescue.EnableInClassList("hidden", !announced);
             _rescue.text = Loc.F("hub.rescue", Math.Max(0, CalendarState.TotalWeeks - calendar.Week));
