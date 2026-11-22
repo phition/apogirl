@@ -6472,6 +6472,24 @@ MonoBehaviour:
     - Kind: 0
       Key: 
       Value: 0.08
+  - Id: MOOD
+    Modifiers:
+    - Kind: 4
+      Key: 
+      Value: 0.1
+  - Id: SCOUT
+    Modifiers:
+    - Kind: 5
+      Key: 
+      Value: -0.1
+    - Kind: 6
+      Key: 
+      Value: 0.1
+  - Id: MECHANIC
+    Modifiers:
+    - Kind: 1
+      Key: Engineering
+      Value: 0.08
   _startBonuses:
   - Id: STRONG
     Effect:

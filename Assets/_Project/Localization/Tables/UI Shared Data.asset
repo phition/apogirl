@@ -5095,6 +5095,30 @@ MonoBehaviour:
     m_Key: diary.teacher.close_tail.2
     m_Metadata:
       m_Items: []
+  - m_Id: 1091013577031680
+    m_Key: role.MOOD
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1091013732220928
+    m_Key: role.SCOUT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1091013732220929
+    m_Key: role.MECHANIC
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1091013732220930
+    m_Key: role.MOOD.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1091013732220931
+    m_Key: role.SCOUT.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1091013732220932
+    m_Key: role.MECHANIC.desc
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
