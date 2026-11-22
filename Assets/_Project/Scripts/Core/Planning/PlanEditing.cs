@@ -44,6 +44,11 @@ namespace ApoGirl.Core.Planning
         /// <summary>해금 조건 (ActionDef.Unlock). 행동 조건(ActionCategories)은 계획 시점에는 검사하지 않는다.</summary>
         public static bool IsUnlocked(GameState state, IDefinitionDatabase db, ActionDef action)
         {
+            if (!PowerRules.Allows(state, db.Balance, action))
+            {
+                return false;   // 여유 전력·배터리 (전력 = 유지력)
+            }
+
             if (action.Unlock == null)
             {
                 return true;

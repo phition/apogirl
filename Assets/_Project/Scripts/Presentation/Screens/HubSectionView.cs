@@ -1132,7 +1132,7 @@ namespace ApoGirl.Presentation.Screens
             var night = _executing && _phase == DayPhase.Night;
             _sky.EnableInClassList("night", night);
             _host.parent?.EnableInClassList("night", night);
-            var blackout = _session.State != null && _session.State.Base.IsBlackout();
+            var blackout = _session.State != null && ApoGirl.Core.Rules.PowerRules.IsBlackout(_session.State);
             if (_session.State != null)
             {
                 _skyView.Apply(night, _session.State.Base.Weather, Core.Rules.CalendarRules.GetSeason(_session.State.Calendar.Week));

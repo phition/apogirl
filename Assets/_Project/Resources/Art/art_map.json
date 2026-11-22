@@ -719,6 +719,14 @@
       "Image": "icon_craft_bike_generator"
     },
     {
+      "Key": "act.ACT_SURV_REPAIR_GENERATOR",
+      "Image": "icon_craft_bike_generator"
+    },
+    {
+      "Key": "act.ACT_SURV_UPGRADE_POWER",
+      "Image": "icon_craft_bike_generator"
+    },
+    {
       "Key": "act.ACT_EDU_COOKING",
       "Image": "icon_craft_cooking_station"
     },
@@ -756,6 +764,10 @@
     },
     {
       "Key": "res.Power",
+      "Image": "icon_res_power"
+    },
+    {
+      "Key": "res.Battery",
       "Image": "icon_res_power"
     },
     {

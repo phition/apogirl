@@ -153,14 +153,14 @@ namespace ApoGirl.Tests.EditMode
             state.Calendar.Phase = DayPhase.Night;
             Assert.IsEmpty(OutingRules.Return(state, empty, new StateDelta()).Single().Resources, "비중 합 0이면 빈손");
 
-            var power = Db(b => { b.OutingInjuryChance = 0f; b.OutingHaul = new[] { new OutingHaulDef { Resource = ResourceType.Power, Weight = 1f, FallbackMin = 2, FallbackMax = 4 } }; });
+            var power = Db(b => { b.OutingInjuryChance = 0f; b.OutingHaul = new[] { new OutingHaulDef { Resource = ResourceType.Battery, Weight = 1f, FallbackMin = 2, FallbackMax = 4 } }; });
             var other = State(power);
             var hurt = Join(other, B);
             OutingRules.Schedule(other, power);
             other.Calendar.Day = hurt.OutingDays[0];
             other.Calendar.Phase = DayPhase.Night;
             var got = OutingRules.Return(other, power, new StateDelta()).Single().Resources.Single();
-            Assert.AreEqual(ResourceType.Power, got.Resource);
+            Assert.AreEqual(ResourceType.Battery, got.Resource);
             Assert.GreaterOrEqual(got.Amount, 1, "어느 지역에도 없는 자원은 대체 범위, 최소 1");
         }
 

@@ -30,7 +30,7 @@ namespace ApoGirl.Presentation.Screens
     {
         private static readonly ResourceType[] Shown =
         {
-            ResourceType.Food, ResourceType.Water, ResourceType.RawWater, ResourceType.Medicine, ResourceType.Materials, ResourceType.Power, ResourceType.Fuel,
+            ResourceType.Food, ResourceType.Water, ResourceType.RawWater, ResourceType.Medicine, ResourceType.Materials, ResourceType.Power, ResourceType.Battery, ResourceType.Fuel,
         };
 
         /// <summary>1~3주차엔 식량·물만 (문서 5.3 점진적 노출). UI_RESOURCES 이후 전부.</summary>
@@ -102,7 +102,9 @@ namespace ApoGirl.Presentation.Screens
 
             foreach (var pair in _resources)
             {
-                pair.Value.text = UiText.Resource(pair.Key) + " " + state.Base.GetResource(pair.Key);
+                pair.Value.text = pair.Key == ResourceType.Power
+                    ? Loc.F("hub.power", PowerRules.Free(state, _session.Definitions.Balance), PowerRules.Capacity(state))   // 여유/용량 (전력 = 유지력)
+                    : UiText.Resource(pair.Key) + " " + state.Base.GetResource(pair.Key);
                 pair.Value.EnableInClassList("hidden", !Visible(state, pair.Key));
             }
 
@@ -111,7 +113,7 @@ namespace ApoGirl.Presentation.Screens
             _defense.text = Loc.F("hub.defense", state.Base.Defense, state.Base.Threat);
             _defense.EnableInClassList("danger", state.Base.Threat > state.Base.Defense + 15);
 
-            _blackout.EnableInClassList("hidden", !state.Base.IsBlackout());
+            _blackout.EnableInClassList("hidden", !ApoGirl.Core.Rules.PowerRules.IsBlackout(state));
 
             // M6: 날씨, 구조 카운트다운 (라디오 공지 이후)
             var weather = state.Base.Weather;

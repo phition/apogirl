@@ -1694,35 +1694,32 @@
         "WeekMin": 15,
         "FlagsAll": [
           "POWER_RESTORED"
+        ],
+        "FlagsNone": [
+          "GENERATOR_BROKEN"
+        ]
+      },
+      "OnShow": {
+        "SetFlags": [
+          "GENERATOR_BROKEN"
         ]
       },
       "Choices": [
         {
-          "Id": "FIX",
+          "Id": "INSPECT",
           "Effect": {
             "Stats": [
               {
                 "Stat": "Craft",
                 "Amount": 1
               }
-            ],
-            "Resources": [
-              {
-                "Resource": "Materials",
-                "Amount": -1
-              }
             ]
           }
         },
         {
-          "Id": "WAIT",
+          "Id": "CANDLE",
           "Effect": {
-            "Resources": [
-              {
-                "Resource": "Power",
-                "Amount": -3
-              }
-            ]
+            "Vitals": [ { "Vital": "Stress", "Amount": -2 } ]
           }
         }
       ]

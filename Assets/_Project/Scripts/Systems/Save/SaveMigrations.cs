@@ -19,6 +19,7 @@ namespace ApoGirl.Systems.Save
                 yield return new V7ToV8();
                 yield return new V8ToV9();
                 yield return new V9ToV10();
+                yield return new V10ToV11();
             }
         }
 
@@ -178,6 +179,29 @@ namespace ApoGirl.Systems.Save
 
             public void Migrate(JObject root)
             {
+            }
+        }
+
+        /// <summary>v11: 전력 = 유지력. 쌓여 있던 전력은 발전 용량으로 바뀐다 (복구했으면 3, 아니면 0).</summary>
+        private sealed class V10ToV11 : ISaveMigration
+        {
+            public int FromVersion => 10;
+
+            public void Migrate(JObject root)
+            {
+                if (!(root["Base"] is JObject baseState))
+                {
+                    return;
+                }
+
+                if (!(baseState["Resources"] is JObject resources))
+                {
+                    resources = new JObject();
+                    baseState["Resources"] = resources;
+                }
+
+                var restored = baseState["PowerRestored"]?.Value<bool>() ?? false;
+                resources["Power"] = restored ? 3 : 0;
             }
         }
     }

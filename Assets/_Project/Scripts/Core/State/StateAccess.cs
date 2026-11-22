@@ -98,11 +98,5 @@ namespace ApoGirl.Core.State
         {
             baseState.Resources[type] = value;
         }
-
-        /// <summary>정전 상태: 전력 복구 전이거나 전력이 0 (문서 5.4).</summary>
-        public static bool IsBlackout(this BaseState baseState)
-        {
-            return !baseState.PowerRestored || baseState.GetResource(ResourceType.Power) <= 0;
-        }
     }
 }

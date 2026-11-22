@@ -133,16 +133,11 @@ namespace ApoGirl.Core.Rules
             return DifficultyRules.DailyShare(balance.DailyFood, multiplier, day);
         }
 
-        /// <summary>주간 정산: 청결 저하, 전력(복구 이후만), 겨울 난방 연료, 식량 부패.</summary>
+        /// <summary>주간 정산: 청결 저하, 겨울 난방 연료, 식량 부패 (전력은 유지력이라 줄지 않는다).</summary>
         public static void ApplyWeekly(GameState state, BalanceConfig balance, StateDelta delta)
         {
             EffectApplier.ChangeVital(state, VitalType.Cleanliness, -balance.CleanlinessWeeklyDecay, balance, delta);
             GiveRules.ApplyWeekly(state, balance);
-
-            if (state.Base.PowerRestored)
-            {
-                EffectApplier.ChangeResource(state, ResourceType.Power, -balance.WeeklyPower, delta);
-            }
 
             // M7-2: 겨울 난방
             if (CalendarRules.GetSeason(state.Calendar.Week) == Season.Winter && balance.WinterWeeklyFuel > 0)
@@ -172,16 +167,16 @@ namespace ApoGirl.Core.Rules
             }
 
             // M7-2: 보관량을 넘는 식량은 상한다
-            var spoiled = SpoiledFood(state.Base.GetResource(ResourceType.Food), balance);
+            var spoiled = SpoiledFood(state.Base.GetResource(ResourceType.Food), balance, PowerRules.FoodSpoilageBonus(state, balance));   // 냉장고가 켜져 있으면 덜 상한다
             if (spoiled > 0)
             {
                 EffectApplier.ChangeResource(state, ResourceType.Food, -spoiled, delta);
             }
         }
 
-        public static int SpoiledFood(int food, BalanceConfig balance)
+        public static int SpoiledFood(int food, BalanceConfig balance, int thresholdBonus = 0)
         {
-            var excess = food - balance.FoodSpoilageThreshold;
+            var excess = food - balance.FoodSpoilageThreshold - thresholdBonus;
             return excess <= 0 || balance.FoodSpoilageRate <= 0f ? 0 : (int)Math.Ceiling(excess * balance.FoodSpoilageRate - 1e-6);
         }
 

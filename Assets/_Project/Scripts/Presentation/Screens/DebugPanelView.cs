@@ -27,7 +27,7 @@ namespace ApoGirl.Presentation.Screens
 
             Add("debug.resources", () =>
             {
-                foreach (var type in new[] { ResourceType.Food, ResourceType.Water, ResourceType.Medicine, ResourceType.Materials, ResourceType.Power })
+                foreach (var type in new[] { ResourceType.Food, ResourceType.Water, ResourceType.Medicine, ResourceType.Materials, ResourceType.Battery })
                 {
                     _session.DebugChangeResource(type, 10);
                 }

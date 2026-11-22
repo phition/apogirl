@@ -44,6 +44,8 @@ namespace ApoGirl.Tests.EditMode
             var info = db.GetAction("ACT_BROADCAST_INFO");
             var song = db.GetAction("ACT_BROADCAST_SONG");
             state.Flags.Add("POWER_RESTORED");
+            state.Base.PowerRestored = true;
+            state.Base.Resources[ResourceType.Power] = 3;   // 자전거 발전기
             state.Base.Facilities["BROADCAST"] = 1;
             Assert.IsFalse(PlanEditing.IsUnlocked(state, db, info), "DJ와 이어지기 전");
 
@@ -53,6 +55,10 @@ namespace ApoGirl.Tests.EditMode
 
             state.Flags.Add("CD_03");
             Assert.IsTrue(PlanEditing.IsUnlocked(state, db, song));
+
+            state.Base.Resources[ResourceType.Power] = 2;
+            state.Flags.Add("SEARCHED_HOMEEC");   // 냉장고가 1을 쓰면 여유 1
+            Assert.IsFalse(PlanEditing.IsUnlocked(state, db, info), "여유 전력 2가 있어야 방송");
         }
 
         [Test]
@@ -92,6 +98,8 @@ namespace ApoGirl.Tests.EditMode
             var db = ContentDb();
             var state = NewState(db);
             state.Flags.Add("POWER_RESTORED");
+            state.Base.PowerRestored = true;
+            state.Base.Resources[ResourceType.Power] = 3;   // 자전거 발전기
             state.Flags.Add("DJ_CONTACT");
             state.Base.Facilities["BROADCAST"] = 1;
             state.Npcs["NPC_DOHYEON"] = new NpcState { Status = NpcStatus.Joined, Affinity = 30 };

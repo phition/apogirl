@@ -25,6 +25,9 @@ namespace ApoGirl.Core.Simulation
                 }
             }
 
+            // 전력 = 유지력: 여유 전력이 모자라거나(고장·정전) 용량을 올릴 배터리가 없으면 할 수 없다
+            affordable &= PowerRules.Allows(state, balance, action);
+
             if (affordable)
             {
                 foreach (var cost in action.ResourceCosts)
@@ -49,6 +52,11 @@ namespace ApoGirl.Core.Simulation
             else
             {
                 result = CheckResult.Success;
+            }
+
+            if (affordable && action.UpgradesPower && result != CheckResult.Failure)
+            {
+                PowerRules.Upgrade(state, balance, delta);
             }
 
             var routineBonus = UpdateRoutine(player, action, balance);

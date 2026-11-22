@@ -45,6 +45,9 @@ namespace ApoGirl.Core.State
 
         /// <summary>빗물·받아 둔 물. 그대로는 마실 수 없고 정수해야 식수(Water)가 된다.</summary>
         RawWater,
+
+        /// <summary>배터리 (전력 = 유지력): 모아서 발전 용량을 올린다 (PowerRules.Upgrade).</summary>
+        Battery,
     }
 
     /// <summary>하루 안의 시간대. 1일 = 낮 슬롯 1 + 밤 슬롯 1 (문서 4.1).</summary>

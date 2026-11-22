@@ -97,7 +97,6 @@ namespace ApoGirl.Core.Definitions
             new ResourceAmount(ResourceType.Food, 14),
             new ResourceAmount(ResourceType.Water, 20),
             new ResourceAmount(ResourceType.Medicine, 2),
-            new ResourceAmount(ResourceType.Power, 5),
         };
 
         // ── 범위 ──
@@ -234,7 +233,6 @@ namespace ApoGirl.Core.Definitions
         // ── 소모 (2인 기준, 문서 9.1 / 5.4) ──
         public int DailyFood = 2;
         public int DailyWater = 2;
-        public int WeeklyPower = 3;
         // ── 포만·수분 (사용자 요청: 0이 가운데, +면 배부름, −면 허기짐) ──
 
         /// <summary>매일 밤 빠지는 포만·수분.</summary>
@@ -432,7 +430,7 @@ namespace ApoGirl.Core.Definitions
             new OutingHaulDef { Resource = ResourceType.Materials, Weight = 0.20f, FallbackMin = 1, FallbackMax = 3 },
             new OutingHaulDef { Resource = ResourceType.Medicine, Weight = 0.05f, FallbackMin = 1, FallbackMax = 3 },
             new OutingHaulDef { Resource = ResourceType.Fuel, Weight = 0.05f, FallbackMin = 1, FallbackMax = 3 },
-            new OutingHaulDef { Resource = ResourceType.Power, Weight = 0.05f, FallbackMin = 2, FallbackMax = 4 },
+            new OutingHaulDef { Resource = ResourceType.Battery, Weight = 0.05f, FallbackMin = 1, FallbackMax = 2 },
         };
         public float OutingLackWeight = 3f;
         public float OutingLikedChance = 0.1f;
@@ -503,6 +501,29 @@ namespace ApoGirl.Core.Definitions
             new ClubLikeDef { NpcId = "NPC_BYSTANDER", Activity = "SINGING" },
             new ClubLikeDef { NpcId = "NPC_SURVIVOR_A", Activity = "SINGING" },
             new ClubLikeDef { NpcId = "NPC_WANDERER", Activity = "BOARDGAME" },
+        };
+
+        // ── 전력 = 유지력 (2026-11-22) ──
+
+        /// <summary>용량 +1에 드는 배터리 (공학 숙련 0).</summary>
+        public int PowerUpgradeBatteries = 5;
+
+        /// <summary>공학 숙련 한 단계마다 줄어드는 배터리.</summary>
+        public int PowerUpgradeBatteriesPerLevel = 1;
+
+        /// <summary>아무리 숙련이 높아도 이만큼은 든다.</summary>
+        public int PowerUpgradeMinBatteries = 2;
+
+        /// <summary>한 번에 오르는 용량.</summary>
+        public int PowerUpgradeAmount = 1;
+
+        /// <summary>발전 용량 상한.</summary>
+        public int PowerMaxCapacity = 6;
+
+        /// <summary>전기 기기. 용량이 모자라면 이 순서대로 켜진다. 전자 편의기기는 여기에 더한다.</summary>
+        public ApplianceDef[] Appliances =
+        {
+            new ApplianceDef { Id = "FRIDGE", Power = 1, Flag = "SEARCHED_HOMEEC", FoodSpoilageBonus = 30 },
         };
 
         // ── 방송반 송출 (확장 5) ──

@@ -332,6 +332,8 @@
       "Actions": [
         "ACT_SCOUT_RADIO",
         "ACT_SURV_RESTORE_POWER",
+        "ACT_SURV_REPAIR_GENERATOR",
+        "ACT_SURV_UPGRADE_POWER",
         "ACT_BROADCAST_SONG",
         "ACT_BROADCAST_INFO",
         "ACT_BROADCAST_LETTER"

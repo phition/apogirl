@@ -111,6 +111,8 @@
       "Pick": "First",
       "Actions": [
         "ACT_SURV_RESTORE_POWER",
+        "ACT_SURV_REPAIR_GENERATOR",
+        "ACT_SURV_UPGRADE_POWER",
         "ACT_SURV_MAKE_CRUTCH",
         "ACT_SURV_RAIN_BARREL",
         "ACT_SURV_GARDEN",

@@ -12,7 +12,7 @@
     { "Id": "ITEM_VITAMIN", "Weight": 0.1, "Noise": 0.05, "Value": 2, "ResourceYield": [ { "Resource": "Medicine", "Amount": 1 } ] },
     { "Id": "ITEM_SCRAP", "Width": 2, "Height": 2, "Weight": 1.5, "Noise": 0.3, "Value": 1, "ResourceYield": [ { "Resource": "Materials", "Amount": 2 } ] },
     { "Id": "ITEM_DUCT_TAPE", "Weight": 0.3, "Noise": 0.03, "Value": 2, "ResourceYield": [ { "Resource": "Materials", "Amount": 2 } ] },
-    { "Id": "ITEM_BATTERY", "Weight": 0.2, "Noise": 0.04, "Value": 2, "ResourceYield": [ { "Resource": "Power", "Amount": 1 } ] },
+    { "Id": "ITEM_BATTERY", "Weight": 0.2, "Noise": 0.04, "Value": 2, "ResourceYield": [ { "Resource": "Battery", "Amount": 1 } ] },
     { "Id": "ITEM_LIGHTER", "Weight": 0.05, "Noise": 0.02, "Value": 2, "ResourceYield": [ { "Resource": "Fuel", "Amount": 1 } ] },
     { "Id": "ITEM_TEXTBOOK", "Width": 2, "Weight": 0.8, "Noise": 0.16, "Value": 2, "ResourceYield": [ { "Resource": "Intel", "Amount": 1 } ] },
 
@@ -29,7 +29,7 @@
     { "Id": "ITEM_ELECTRONICS", "Weight": 0.3, "Noise": 0.06, "Value": 3, "ResourceYield": [ { "Resource": "Materials", "Amount": 2 } ] },
     { "Id": "ITEM_CABLE", "Weight": 0.4, "Noise": 0.08, "Value": 1, "ResourceYield": [ { "Resource": "Materials", "Amount": 1 } ] },
     { "Id": "ITEM_FUEL_CAN", "Height": 2, "Weight": 1.5, "Noise": 0.3, "Value": 4, "ResourceYield": [ { "Resource": "Fuel", "Amount": 3 } ] },
-    { "Id": "ITEM_RADIO_PARTS", "Weight": 0.3, "Noise": 0.05, "Value": 3, "ResourceYield": [ { "Resource": "Materials", "Amount": 1 }, { "Resource": "Power", "Amount": 1 } ] },
+    { "Id": "ITEM_RADIO_PARTS", "Weight": 0.3, "Noise": 0.05, "Value": 3, "ResourceYield": [ { "Resource": "Materials", "Amount": 1 }, { "Resource": "Battery", "Amount": 1 } ] },
     { "Id": "ITEM_TAP_WATER", "Height": 2, "Weight": 1.0, "Noise": 0.2, "Value": 1, "ResourceYield": [ { "Resource": "RawWater", "Amount": 4 } ] },
 
     { "Id": "ITEM_BAG_SCHOOL", "Width": 2, "Height": 2, "Weight": 0.6, "Value": 3, "Slot": "Backpack", "GridWidth": 5, "GridHeight": 4 },

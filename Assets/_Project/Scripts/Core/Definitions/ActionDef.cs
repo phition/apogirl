@@ -139,6 +139,12 @@ namespace ApoGirl.Core.Definitions
 
         public bool IsBroadcast => !string.IsNullOrEmpty(BroadcastProgram);
 
+        /// <summary>쓰려면 여유 전력(용량 − 켜진 기기)이 이만큼 있어야 한다 (PowerRules.Free). 전력을 쓰지는 않는다.</summary>
+        public int MinFreePower;
+
+        /// <summary>배터리를 써서 발전 용량을 올리는 행동 (PowerRules.Upgrade, 비용은 공학 숙련에 따라).</summary>
+        public bool UpgradesPower;
+
         /// <summary>한 주 계획에 하나만 놓이는 묶음 (동아리·방송). 비어 있으면 제한 없음.</summary>
         public string WeeklyGroup => IsClub ? "CLUB" : IsBroadcast ? "BROADCAST" : "";
     }

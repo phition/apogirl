@@ -98,12 +98,7 @@
       "SlotTag": "NightOnly",
       "FatigueCost": 4,
       "StressCost": 1,
-      "ResourceCosts": [
-        {
-          "Resource": "Power",
-          "Amount": 1
-        }
-      ],
+      "MinFreePower": 1,
       "HasProficiency": true,
       "Proficiency": "Engineering",
       "ProficiencyXp": 1,
@@ -179,7 +174,9 @@
           "Facility": "BROADCAST",
           "Actions": [
             "ACT_SCOUT_RADIO",
-            "ACT_SURV_RESTORE_POWER"
+            "ACT_SURV_RESTORE_POWER",
+            "ACT_SURV_REPAIR_GENERATOR",
+            "ACT_SURV_UPGRADE_POWER"
           ]
         }
       ],

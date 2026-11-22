@@ -54,7 +54,7 @@ namespace ApoGirl.Tests.EditMode
             RunSlots(14);
             Assert.AreEqual(0, _state.Base.GetResource(ResourceType.Food)); // 14 − 2×7
             Assert.AreEqual(6, _state.Base.GetResource(ResourceType.Water)); // 20 − 2×7
-            Assert.AreEqual(5, _state.Base.GetResource(ResourceType.Power), "전력 복구 전에는 소모 없음");
+            Assert.AreEqual(0, _state.Base.GetResource(ResourceType.Power), "전력은 발전 용량: 복구 전에는 0");
         }
 
         [Test]
@@ -69,12 +69,13 @@ namespace ApoGirl.Tests.EditMode
         }
 
         [Test]
-        public void WeeklyPower_ConsumedOnlyAfterRestore()
+        public void PowerCapacity_IsNotConsumedWeekly()
         {
             _state.Base.PowerRestored = true;
+            _state.Base.Resources[ResourceType.Power] = 3;
             RunSlots(14);
             _runner.FinishWeek();
-            Assert.AreEqual(2, _state.Base.GetResource(ResourceType.Power));
+            Assert.AreEqual(3, _state.Base.GetResource(ResourceType.Power), "전력 = 유지력: 주마다 줄지 않는다");
         }
 
         [Test]

@@ -1721,7 +1721,7 @@
           "Effect": {
             "Resources": [
               {
-                "Resource": "Power",
+                "Resource": "Battery",
                 "Amount": 1
               }
             ]
