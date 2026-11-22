@@ -43,7 +43,8 @@ namespace ApoGirl.Core.Rules
             return npc.Body ?? (npc.Body = new BodyState());
         }
 
-        private static Dictionary<string, int> Log(GameState state, string id)
+        /// <summary>그 사람의 기록 (배분 kind:/item:, 관계 C.5 키). 세이브에 남는다.</summary>
+        public static Dictionary<string, int> Log(GameState state, string id)
         {
             if (id == TeacherId)
             {
@@ -146,6 +147,8 @@ namespace ApoGirl.Core.Rules
             }
 
             log["kind:" + kind] = state.Calendar.Week;
+            log[BondDecayRules.CareKey] = state.Calendar.Week;
+            affinity = BondDecayRules.ReconcileBonus(state, id, affinity); // C.5: 서먹해진 뒤 처음 챙기면 배로
             if (affinity != 0)
             {
                 EffectApplier.ChangeNpc(state, new NpcChange { NpcId = id, Affinity = affinity }, balance, delta);

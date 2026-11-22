@@ -313,6 +313,18 @@ namespace ApoGirl.Core.Definitions
         public int TeacherFormalNoteBelow = 30;
         public int TeacherCloseNoteAffinity = 80;
 
+        // C.5 호감이 떨어지는 경우 (BondDecayRules). 떨어진 뒤 처음 배분하면 호감이 배로 오른다.
+        public int NeglectWeeks = 6;
+        public int NeglectAffinity = 2;
+        public int NeglectFloor = 50;
+        public string GuardRoleId = "GUARD";
+        public int InjuredGuardAffinity = 3;
+        public int NurseUntreatedAffinity = 6;
+        public int SeniorEmptyRuns = 2;
+        public int SeniorEmptyAffinity = 3;
+        public int NoLessonWeeks = 3;
+        public int NoLessonAffinity = 3;
+
         /// <summary>C.4 ①: 이벤트 효과로 오르는 동료 호감 배율 (선생님·떨어질 때·배분은 제외).</summary>
         public float CompanionAffinityGainScale = 2f;
 

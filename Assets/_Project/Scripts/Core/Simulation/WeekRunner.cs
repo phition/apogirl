@@ -550,6 +550,7 @@ namespace ApoGirl.Core.Simulation
             var calendar = _state.Calendar;
             var summary = new WeekSummary { Week = calendar.Week, DiaryKey = "" };
             UpkeepRules.ApplyWeekly(_state, Balance, summary.Delta);
+            BondDecayRules.ApplyWeekly(_state, _db, summary.Delta); // 기획 C.5
             FactionRules.ApplyWeekly(_state, _db, Balance, summary.Delta);
             if (calendar.Week >= Balance.RaidStartWeek - 1)
             {
@@ -692,6 +693,8 @@ namespace ApoGirl.Core.Simulation
             {
                 _state.Storage.Add(item);
             }
+
+            BondDecayRules.OnExpedition(_state, result, Balance, delta); // 기획 C.5: 선배는 빈손 귀환이 이어지면 실망
 
             foreach (var flag in result.Flags)
             {
