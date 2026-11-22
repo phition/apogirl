@@ -1010,3 +1010,6 @@ Button.selected { border-color: var(--accent); background-color: var(--accent-so
 .lab-changed { margin-top: 6px; padding: 4px 6px; font-size: 14px; color: var(--text-dim); white-space: normal; }
 .lab-changed.lab-changed-on { color: #ffe08a; background-color: rgba(231, 176, 74, 0.12); }
 .lab-help { font-size: 12px; color: var(--text-dim); margin-top: 2px; }
+.lab-save { background-color: #3d5a34; }
+.lab-status { font-size: 13px; color: #9fe08f; margin-top: 2px; white-space: normal; }
+.lab-status.lab-status-warn { color: #f0a070; }

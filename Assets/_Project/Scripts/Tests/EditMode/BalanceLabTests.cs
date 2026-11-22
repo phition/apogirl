@@ -3,6 +3,7 @@ using System.Linq;
 using ApoGirl.Core.Balance;
 using ApoGirl.Core.State;
 using ApoGirl.Systems.Content;
+using ApoGirl.Core.Definitions;
 using NUnit.Framework;
 
 namespace ApoGirl.Tests.EditMode
@@ -86,6 +87,60 @@ namespace ApoGirl.Tests.EditMode
             var layout = BalanceLabJson.ParseLayout(File.ReadAllText("Assets/_Project/Resources/Balance/balance_lab_layout.json"));
             var missing = layout.Tabs.SelectMany(t => t.Rows).Where(r => BalanceFields.Find(r.Field) == null).Select(r => r.Field).ToList();
             Assert.That(missing, Is.Empty);
+        }
+
+        [Test]
+        public void Overrides_CollectOnlyDifferences_AndApplyRoundTrips()
+        {
+            var live = new BalanceConfig { DailyFood = 7, RaidBaseChance = 0.05f };
+            live.Difficulties.First(d => d.Id == "STANDARD").FoodYield = 1.5f;
+            var overrides = BalanceOverridesJson.Collect(live);
+            Assert.That(overrides.Fields.Keys, Is.EquivalentTo(new[] { "DailyFood", "RaidBaseChance" }));
+            Assert.That(overrides.Difficulties["STANDARD"].Keys, Is.EquivalentTo(new[] { "FoodYield" }));
+
+            var text = BalanceOverridesJson.Write(overrides);
+            var fresh = new BalanceConfig();
+            var warnings = BalanceOverridesJson.Apply(fresh, BalanceOverridesJson.Parse(text));
+            Assert.That(warnings, Is.Empty);
+            Assert.That(fresh.DailyFood, Is.EqualTo(7));
+            Assert.That(fresh.RaidBaseChance, Is.EqualTo(0.05f));
+            Assert.That(fresh.Difficulties.First(d => d.Id == "STANDARD").FoodYield, Is.EqualTo(1.5f));
+
+            var stale = BalanceOverridesJson.Parse("{ \"Fields\": { \"NoSuchField\": 3 } }");
+            Assert.That(BalanceOverridesJson.Apply(new BalanceConfig(), stale), Has.Count.EqualTo(1));
+
+            BalanceOverridesJson.ResetEditable(live);
+            Assert.That(BalanceOverridesJson.Collect(live).Count, Is.Zero);
+        }
+
+        [Test]
+        public void Patcher_ChangesOnlyThatModelsNumbers_KeepingLineShape()
+        {
+            var text = File.ReadAllText(ContentJson.ContentFolder + "/Base/items_loot.json");
+            var content = ContentJson.Parse(text);
+            var store = content.ExpeditionModels.First(m => m.Id == "LOC_STORE");
+            store.Day.Resources.First(r => r.Resource == ResourceType.Food).Max = 99;
+            store.Day.Resources.Add(new ResourceRange(ResourceType.Battery, 1, 2));
+            store.Night.BaseDownChance = 0.2f;
+            store.Day.EncounterChance = 0.75f; // 원본에 없는 칸 → 덧붙인다
+
+            var patched = ExpeditionModelPatcher.Patch(text, store, out var found);
+            Assert.That(found, Is.True);
+
+            var again = ContentJson.Parse(patched).ExpeditionModels.First(m => m.Id == "LOC_STORE");
+            Assert.That(again.Day.Resources.First(r => r.Resource == ResourceType.Food).Max, Is.EqualTo(99));
+            Assert.That(again.Day.Resources.Any(r => r.Resource == ResourceType.Battery), Is.True);
+            Assert.That(again.Night.BaseDownChance, Is.EqualTo(0.2f));
+            Assert.That(again.Day.EncounterChance, Is.EqualTo(0.75f));
+
+            // 줄 수가 같고, LOC_STORE의 낮·밤 두 줄 말고는 글자가 같다
+            var before = text.Split((char)10);
+            var after = patched.Split((char)10);
+            Assert.That(after.Length, Is.EqualTo(before.Length));
+            Assert.That(Enumerable.Range(0, before.Length).Count(i => before[i] != after[i]), Is.EqualTo(2));
+
+            var unchanged = ExpeditionModelPatcher.Patch(text, content.ExpeditionModels.First(m => m.Id == "LOC_PHARMACY"), out _);
+            Assert.That(unchanged, Is.EqualTo(text), "값이 같으면 한 글자도 바꾸지 않는다");
         }
     }
 }

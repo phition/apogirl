@@ -6471,6 +6471,54 @@ MonoBehaviour:
     m_Key: lab.difficulty_current
     m_Metadata:
       m_Items: []
+  - m_Id: 1303120335618048
+    m_Key: lab.save
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1303120411115520
+    m_Key: lab.save_tip
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1303120411115521
+    m_Key: lab.save_editor_only
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1303120411115522
+    m_Key: lab.reset_defaults
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1303120411115523
+    m_Key: lab.reset_tip
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1303120411115524
+    m_Key: lab.reset_confirm
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1303120411115525
+    m_Key: lab.reset_done
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1303120411115526
+    m_Key: lab.export
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1303120411115527
+    m_Key: lab.export_tip
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1303120411115528
+    m_Key: lab.saved
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1303120411115529
+    m_Key: lab.exported
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1303120411115530
+    m_Key: lab.store_error
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

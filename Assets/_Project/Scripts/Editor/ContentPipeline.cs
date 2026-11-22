@@ -57,7 +57,20 @@ namespace ApoGirl.EditorTools
                 return;
             }
 
-            balance.EditorSetConfig(new BalanceConfig());
+            // 코드 기본값 위에 밸런스 표의 덮어쓰기 파일을 얹는다 (Docs/BALANCE_LAB_PROPOSAL.md 7.1)
+            var config = new BalanceConfig();
+            var overrides = BalanceOverridesJson.Load();
+            foreach (var warning in BalanceOverridesJson.Apply(config, overrides))
+            {
+                Debug.LogWarning("[Balance] 덮어쓰기 파일: " + warning);
+            }
+
+            if (overrides.Count > 0)
+            {
+                Debug.Log($"[Balance] 덮어쓰기 {overrides.Count}개 적용 ({BalanceOverridesJson.DefaultPath})");
+            }
+
+            balance.EditorSetConfig(config);
             EditorUtility.SetDirty(balance);
             AssetDatabase.SaveAssets();
             WriteBalanceSections();
@@ -72,7 +85,7 @@ namespace ApoGirl.EditorTools
             }
 
             var json = BalanceLabJson.WriteSections(BalanceLabJson.ExtractSections(File.ReadAllText(BalanceLabJson.BalanceSourcePath)));
-            if (File.Exists(BalanceLabJson.SectionsPath) && File.ReadAllText(BalanceLabJson.SectionsPath) == json)
+            if (File.Exists(BalanceLabJson.SectionsPath) && File.ReadAllText(BalanceLabJson.SectionsPath).Replace("\r\n", "\n") == json)
             {
                 return;
             }

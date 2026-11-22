@@ -27,6 +27,8 @@ namespace ApoGirl.Presentation.Screens
         private readonly TextField _search;
         private readonly ScrollView _body;
         private readonly Label _changed;
+        private readonly Label _status;
+        private bool _resetArmed;
         private readonly List<Action> _refreshers = new List<Action>();
         private readonly Action _onClosed;
         private BalanceLabTab _tab;
@@ -55,6 +57,18 @@ namespace ApoGirl.Presentation.Screens
             _search.AddToClassList("lab-search");
             _search.RegisterValueChangedCallback(_ => Build());
             header.Add(_search);
+            var save = SmallButton(Loc.T("lab.save"), Save);
+            save.SetEnabled(BalanceLabStore.CanSave);
+            save.tooltip = Loc.T(BalanceLabStore.CanSave ? "lab.save_tip" : "lab.save_editor_only");
+            save.AddToClassList("lab-save");
+            header.Add(save);
+            var reset = SmallButton(Loc.T("lab.reset_defaults"), ResetDefaults);
+            reset.SetEnabled(BalanceLabStore.ResetToDefaults != null);
+            reset.tooltip = Loc.T("lab.reset_tip");
+            header.Add(reset);
+            var export = SmallButton(Loc.T("lab.export"), Export);
+            export.tooltip = Loc.T("lab.export_tip");
+            header.Add(export);
             header.Add(SmallButton(Loc.T("lab.revert_all"), () =>
             {
                 _model.RevertAll();
@@ -85,6 +99,9 @@ namespace ApoGirl.Presentation.Screens
             _changed = new Label();
             _changed.AddToClassList("lab-changed");
             window.Add(_changed);
+            _status = new Label();
+            _status.AddToClassList("lab-status");
+            window.Add(_status);
             var help = new Label(Loc.T("lab.help"));
             help.AddToClassList("lab-help");
             window.Add(help);
@@ -97,6 +114,44 @@ namespace ApoGirl.Presentation.Screens
         }
 
         public bool IsOpen => !_overlay.ClassListContains("hidden");
+
+        // ── 저장 (L3) ──
+
+        private void Save()
+        {
+            var result = BalanceLabStore.Save?.Invoke(_session.Definitions) ?? default;
+            Report(result, Loc.F("lab.saved", result.Fields, result.Models));
+        }
+
+        // 두 번 눌러야 한다: 덮어쓰기 파일이 비고 수치가 코드 기본값으로 돌아간다
+        private void ResetDefaults()
+        {
+            if (!_resetArmed)
+            {
+                _resetArmed = true;
+                _status.text = Loc.T("lab.reset_confirm");
+                _status.EnableInClassList("lab-status-warn", true);
+                return;
+            }
+
+            _resetArmed = false;
+            var result = BalanceLabStore.ResetToDefaults?.Invoke(_session.Definitions) ?? default;
+            Report(result, Loc.T("lab.reset_done"));
+        }
+
+        private void Export()
+        {
+            var result = BalanceLabStore.Export(_session.Definitions);
+            Report(result, Loc.F("lab.exported", result.Fields, result.Models, result.Path));
+        }
+
+        private void Report(BalanceLabStore.Result result, string success)
+        {
+            _resetArmed = false;
+            _status.text = string.IsNullOrEmpty(result.Error) ? success : Loc.F("lab.store_error", result.Error);
+            _status.EnableInClassList("lab-status-warn", !string.IsNullOrEmpty(result.Error));
+            Changed();
+        }
 
         public void Toggle()
         {

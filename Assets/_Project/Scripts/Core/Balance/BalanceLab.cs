@@ -43,7 +43,7 @@ namespace ApoGirl.Core.Balance
         public Type ValueType { get; }
 
         /// <summary>표를 처음 연 때의 값.</summary>
-        public object Baseline { get; }
+        public object Baseline { get; private set; }
 
         public object Value => _get();
 
@@ -124,6 +124,9 @@ namespace ApoGirl.Core.Balance
         }
 
         public void Revert() => _set(Baseline);
+
+        /// <summary>지금 값을 새 원래 값으로 (저장한 뒤).</summary>
+        public void Rebase() => Baseline = _get();
 
         public double EffectiveStep
         {
@@ -270,6 +273,23 @@ namespace ApoGirl.Core.Balance
                 cell.Revert();
             }
         }
+
+        /// <summary>저장한 뒤: 지금 값이 새 원래 값이 된다.</summary>
+        public void RebaseAll()
+        {
+            foreach (var cell in _cells.Values)
+            {
+                cell.Rebase();
+            }
+        }
+
+        /// <summary>바뀐 칸이 있는 탐험 모델 지역.</summary>
+        public IEnumerable<string> ChangedModelIds => Changed
+            .Where(c => c.Key.StartsWith("Model/", StringComparison.Ordinal))
+            .Select(c => c.Key.Split('/')[1])
+            .Distinct();
+
+        public bool TryGetModel(string id, out ExpeditionModelDef model) => _db.TryGetExpeditionModel(id, out model);
 
         /// <summary>BalanceConfig 필드 하나의 칸 (고칠 수 없는 종류면 null).</summary>
         public BalanceCell Field(string name)

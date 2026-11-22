@@ -10,7 +10,12 @@
   - 코드: `Core/Balance/BalanceLab.cs`(칸 모델), `Systems/Content/BalanceLabJson.cs`, `Presentation/Screens/BalanceLabView.cs`.
   - 데이터: `Resources/Balance/balance_lab_layout.json`, 절 이름 `Resources/Balance/balance_sections.json`(Sync Balance Asset이 만든다).
   - 정의 DB는 이제 밸런스·탐험 모델·전리품 표를 사본으로 넘긴다(`DefinitionDatabaseAsset.Build`). 실행 중 고친 값이 에셋에 남지 않는다.
-- 아직: 탐험 중 여는 키, 상자 전리품 표 펼치기, 일괄 배율 단추·도움 지표(L2 나머지), L3~L6.
+- L3 완료 (에디터에서만): 머리글 단추 "저장"·"기본값으로"(두 번 눌러 확인)·"내보내기".
+  - 수치 → `Assets/_Project/Balance/balance_overrides.json` (코드 기본값과 다른 것만, 필드는 선언 순서). Sync Balance Asset은 `new BalanceConfig()` 위에 이 파일을 얹어 에셋을 만들고, 없어진 필드는 경고만 한다. 코드: `Systems/Content/BalanceOverridesJson.cs`.
+  - 탐험 모델 → 그 모델이 든 `Content/**/*.json`의 낮·밤 줄만 글자 단위로 고친다(`ExpeditionModelPatcher`, 값이 같으면 한 글자도 안 바꿈) → Import Events.
+  - 저장 갈고리는 `Presentation/Screens/BalanceLabStore.cs`, 에디터 쪽 구현 `Editor/BalanceLabEditorStore.cs`. 빌드에서는 저장 단추가 꺼지고, 내보내기는 `persistentDataPath/BalanceLab/`에 쓴다.
+  - 주의: EditMode 테스트의 `new BalanceConfig()`·`ShippedDb`는 덮어쓰기를 안 읽고, 봇 메뉴·게임은 에셋(덮어쓰기 포함)을 쓴다.
+- 아직: 탐험 중 여는 키, 상자 전리품 표 펼치기, 일괄 배율 단추·도움 지표(L2 나머지), L4~L6.
 
 ---
 
