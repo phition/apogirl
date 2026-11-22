@@ -6207,6 +6207,14 @@ MonoBehaviour:
     m_Key: tut.extract.pad
     m_Metadata:
       m_Items: []
+  - m_Id: 1269359548055552
+    m_Key: opening.skip_hint
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1269359631941632
+    m_Key: opening.skip
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
