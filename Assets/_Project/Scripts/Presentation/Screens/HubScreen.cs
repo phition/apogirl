@@ -1069,6 +1069,19 @@ namespace ApoGirl.Presentation.Screens
                 detail += "  · " + club;
             }
 
+            if (outcome.Broadcast != null)
+            {
+                if (outcome.Broadcast.Replied)
+                {
+                    detail += "  · " + Loc.T("result.broadcast_reply");
+                }
+
+                if (outcome.Broadcast.Risky)
+                {
+                    detail += "  · " + Loc.T("result.broadcast_risk");
+                }
+            }
+
             var outings = PeopleUi.OutingLines(outcome.OutingDepartures, outcome.OutingReturns);
             if (outings.Count > 0)
             {

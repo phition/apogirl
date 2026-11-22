@@ -1,0 +1,292 @@
+{
+  "Events": [
+    {
+      "Id": "EVT_BROADCAST_FIRST",
+      "Kind": "Night",
+      "Priority": 50,
+      "Condition": {
+        "Phase": "Night",
+        "ActionIds": [
+          "ACT_BROADCAST_SONG",
+          "ACT_BROADCAST_INFO",
+          "ACT_BROADCAST_LETTER"
+        ]
+      },
+      "OnShow": {
+        "Hidden": [
+          {
+            "Hidden": "Hope",
+            "Amount": 1
+          }
+        ]
+      },
+      "Choices": [
+        {
+          "Id": "NAME_SCHOOL",
+          "Effect": {
+            "Factions": [
+              {
+                "FactionId": "FAC_UBC",
+                "Standing": 3,
+                "Reveal": true,
+                "LogKey": "faction.FAC_UBC.log.first"
+              }
+            ],
+            "Stats": [
+              {
+                "Stat": "Leadership",
+                "Amount": 1
+              }
+            ]
+          }
+        },
+        {
+          "Id": "VOICE_ONLY",
+          "Effect": {
+            "Vitals": [
+              {
+                "Vital": "Stress",
+                "Amount": -3
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "Id": "EVT_BROADCAST_SONG",
+      "Kind": "Night",
+      "Priority": 40,
+      "Once": false,
+      "CooldownWeeks": 1,
+      "Condition": {
+        "Phase": "Night",
+        "ActionIds": [
+          "ACT_BROADCAST_SONG"
+        ]
+      }
+    },
+    {
+      "Id": "EVT_BROADCAST_INFO",
+      "Kind": "Night",
+      "Priority": 40,
+      "Once": false,
+      "CooldownWeeks": 1,
+      "Condition": {
+        "Phase": "Night",
+        "ActionIds": [
+          "ACT_BROADCAST_INFO"
+        ]
+      }
+    },
+    {
+      "Id": "EVT_BROADCAST_LETTER",
+      "Kind": "Night",
+      "Priority": 40,
+      "Once": false,
+      "CooldownWeeks": 1,
+      "Condition": {
+        "Phase": "Night",
+        "ActionIds": [
+          "ACT_BROADCAST_LETTER"
+        ]
+      }
+    },
+    {
+      "Id": "EVT_BROADCAST_REPLY_FAMILY",
+      "Kind": "Night",
+      "Priority": 47,
+      "Condition": {
+        "Phase": "Night",
+        "ActionIds": [
+          "ACT_BROADCAST_SONG",
+          "ACT_BROADCAST_INFO",
+          "ACT_BROADCAST_LETTER"
+        ],
+        "FlagsAll": [
+          "BROADCAST_REPLY"
+        ]
+      },
+      "OnShow": {
+        "ClearFlags": [
+          "BROADCAST_REPLY"
+        ],
+        "SetFlags": [
+          "BC_FAMILY"
+        ]
+      },
+      "Choices": [
+        {
+          "Id": "TEACH_WATER",
+          "Effect": {
+            "Hidden": [
+              {
+                "Hidden": "Humanity",
+                "Amount": 1
+              },
+              {
+                "Hidden": "Hope",
+                "Amount": 1
+              }
+            ]
+          }
+        },
+        {
+          "Id": "FLASH_BACK",
+          "Effect": {
+            "Vitals": [
+              {
+                "Vital": "Stress",
+                "Amount": -4
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "Id": "EVT_BROADCAST_REPLY_KID",
+      "Kind": "Night",
+      "Priority": 47,
+      "Condition": {
+        "Phase": "Night",
+        "ActionIds": [
+          "ACT_BROADCAST_SONG",
+          "ACT_BROADCAST_INFO",
+          "ACT_BROADCAST_LETTER"
+        ],
+        "WeekMin": 32,
+        "FlagsAll": [
+          "BROADCAST_REPLY",
+          "BC_FAMILY"
+        ]
+      },
+      "OnShow": {
+        "ClearFlags": [
+          "BROADCAST_REPLY"
+        ]
+      },
+      "Choices": [
+        {
+          "Id": "PROMISE_SONG",
+          "Effect": {
+            "Hidden": [
+              {
+                "Hidden": "Hope",
+                "Amount": 1
+              }
+            ],
+            "Stats": [
+              {
+                "Stat": "Empathy",
+                "Amount": 1
+              }
+            ]
+          }
+        },
+        {
+          "Id": "ASK_NAME",
+          "Effect": {
+            "Vitals": [
+              {
+                "Vital": "Stress",
+                "Amount": -3
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "Id": "EVT_BROADCAST_REPLY_MART",
+      "Kind": "Night",
+      "Priority": 46,
+      "Condition": {
+        "Phase": "Night",
+        "ActionIds": [
+          "ACT_BROADCAST_SONG",
+          "ACT_BROADCAST_INFO",
+          "ACT_BROADCAST_LETTER"
+        ],
+        "FlagsAll": [
+          "BROADCAST_REPLY"
+        ],
+        "FlagsNone": [
+          "MART_LEFT"
+        ]
+      },
+      "OnShow": {
+        "ClearFlags": [
+          "BROADCAST_REPLY"
+        ],
+        "Factions": [
+          {
+            "FactionId": "FAC_MART",
+            "Standing": 3,
+            "Reveal": true,
+            "LogKey": "faction.FAC_MART.log.radio"
+          }
+        ]
+      },
+      "Choices": [
+        {
+          "Id": "TALK_TRADE",
+          "Effect": {
+            "Factions": [
+              {
+                "FactionId": "FAC_MART",
+                "Standing": 4
+              }
+            ]
+          }
+        },
+        {
+          "Id": "KEEP_DISTANCE",
+          "Effect": {
+            "Stats": [
+              {
+                "Stat": "Willpower",
+                "Amount": 1
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "Id": "EVT_BROADCAST_REPLY_GIFT",
+      "Kind": "Night",
+      "Priority": 44,
+      "Once": false,
+      "CooldownWeeks": 3,
+      "Condition": {
+        "Phase": "Night",
+        "ActionIds": [
+          "ACT_BROADCAST_SONG",
+          "ACT_BROADCAST_INFO",
+          "ACT_BROADCAST_LETTER"
+        ],
+        "FlagsAll": [
+          "BROADCAST_REPLY"
+        ]
+      },
+      "OnShow": {
+        "ClearFlags": [
+          "BROADCAST_REPLY"
+        ],
+        "Resources": [
+          {
+            "Resource": "Food",
+            "Amount": 3
+          }
+        ],
+        "Hidden": [
+          {
+            "Hidden": "Humanity",
+            "Amount": 1
+          }
+        ]
+      }
+    }
+  ]
+}

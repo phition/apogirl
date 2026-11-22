@@ -1027,6 +1027,18 @@
       "Image": "icon_act_talk"
     },
     {
+      "Key": "act.ACT_BROADCAST_SONG",
+      "Image": "icon_craft_radio_antenna"
+    },
+    {
+      "Key": "act.ACT_BROADCAST_INFO",
+      "Image": "icon_craft_radio_antenna"
+    },
+    {
+      "Key": "act.ACT_BROADCAST_LETTER",
+      "Image": "icon_craft_radio_antenna"
+    },
+    {
       "Key": "act.ACT_CLUB_BOARDGAME",
       "Image": "icon_act_talk"
     },

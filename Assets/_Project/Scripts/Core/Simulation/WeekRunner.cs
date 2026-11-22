@@ -26,6 +26,9 @@ namespace ApoGirl.Core.Simulation
         /// <summary>동아리를 같이 한 사람 (확장 7, 동아리가 아니거나 같이 할 사람이 없으면 null).</summary>
         public ClubOutcome Club;
 
+        /// <summary>방송을 내보낸 칸 (확장 5, 방송이 아니면 null).</summary>
+        public BroadcastOutcome Broadcast;
+
         /// <summary>동료 탐험: 이 낮 칸에 나간 동료, 이 밤 칸에 돌아온 동료와 구해 온 것.</summary>
         public List<string> OutingDepartures = new List<string>();
         public List<OutingReturn> OutingReturns = new List<OutingReturn>();
@@ -170,6 +173,7 @@ namespace ApoGirl.Core.Simulation
         public void PrepareWeek()
         {
             PlanPreparer.ApplyForcedRest(_state, _db);
+            BroadcastRules.StartWeek(_state);   // 지난주 방송의 위험은 끝난다
             OutingRules.Schedule(_state, _db);   // 동료 탐험 일정 (역할 재기획 5절)
         }
 
@@ -267,6 +271,7 @@ namespace ApoGirl.Core.Simulation
             // 함께한 시간: 이 방에 서 있던 동료·가르친 선생님의 호감 (역할 재기획 4절)
             outcome.Together = TogetherRules.Apply(_state, _db, action, delta);
             outcome.Club = ClubRules.Apply(_state, _db, action, delta);   // 확장 7: 장면보다 먼저 (같이 한 사람 깃발)
+            outcome.Broadcast = BroadcastRules.Apply(_state, _db, action, outcome.Result, _random);   // 확장 5: 습격 판정보다 먼저
             return FinishSlot(action, violation, outcome);
         }
 

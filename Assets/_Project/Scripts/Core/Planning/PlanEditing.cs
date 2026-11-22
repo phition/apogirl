@@ -67,6 +67,21 @@ namespace ApoGirl.Core.Planning
                    || (action.SlotTag == SlotTag.NightOnly && phase == DayPhase.Night);
         }
 
+        /// <summary>계획에 이미 놓인 같은 묶음(동아리·방송) 행동 수 (그 칸은 빼고 센다).</summary>
+        public static int InPlan(GameState state, IDefinitionDatabase db, string weeklyGroup, int exceptSlot)
+        {
+            var count = 0;
+            for (var i = 0; i < state.Plan.Slots.Count; i++)
+            {
+                if (i != exceptSlot && db.TryGetAction(state.Plan.Slots[i].ActionId ?? "", out var other) && other.WeeklyGroup == weeklyGroup)
+                {
+                    count++;
+                }
+            }
+
+            return count;
+        }
+
         public static PlanEditResult SetSlot(GameState state, IDefinitionDatabase db, int slotIndex, string actionId)
         {
             var check = CheckSlot(state, slotIndex);
@@ -90,7 +105,7 @@ namespace ApoGirl.Core.Planning
                 return PlanEditResult.NotUnlocked;
             }
 
-            if (action.IsClub && ClubRules.InPlan(state, db, slotIndex) > 0)
+            if (action.WeeklyGroup.Length > 0 && InPlan(state, db, action.WeeklyGroup, slotIndex) > 0)
             {
                 return PlanEditResult.WeeklyLimit;
             }

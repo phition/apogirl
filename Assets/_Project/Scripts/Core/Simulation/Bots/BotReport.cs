@@ -365,6 +365,19 @@ namespace ApoGirl.Core.Simulation.Bots
 
             sb.AppendLine();
 
+            // 방송반 송출 (확장 5): 판마다 방송 횟수, 응답 장면 수
+            sb.AppendLine("## 방송 (확장 5)");
+            sb.AppendLine();
+            sb.AppendLine("| 전략 | 평균 방송 횟수 | 응답 장면 평균 | 방송한 판 |");
+            sb.AppendLine("|---|---|---|---|");
+            foreach (var g in runs.GroupBy(r => r.StrategyId))
+            {
+                var list = g.ToList();
+                sb.AppendLine($"| {g.Key} | {F((float)list.Average(r => r.Broadcasts))} | {F((float)list.Average(r => r.BroadcastReplies))} | {P(list.Count(r => r.Broadcasts > 0), list.Count)} |");
+            }
+
+            sb.AppendLine();
+
             // 고양이 (확장 2): 끝났을 때 눌러앉아 있던 판, 동료 없이 끝난 판 가운데 고양이가 있던 판
             sb.AppendLine("## 고양이 (확장 2)");
             sb.AppendLine();

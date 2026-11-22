@@ -99,6 +99,14 @@
         "ACT_CLUB_STUDY"
       ]
     },
+    "BROADCAST": {
+      "Pick": "Random",
+      "Actions": [
+        "ACT_BROADCAST_SONG",
+        "ACT_BROADCAST_INFO",
+        "ACT_BROADCAST_LETTER"
+      ]
+    },
     "BUILD": {
       "Pick": "First",
       "Actions": [
@@ -441,7 +449,7 @@
         "EXP_NIGHT",
         "CLUB|ACT_REST_NIGHT",
         "ACT_NIGHT_DIARY|ACT_REST_NIGHT",
-        "ACT_REST_NIGHT"
+        "BROADCAST|ACT_REST_NIGHT"
       ],
       "Rules": [
         {
@@ -511,7 +519,7 @@
         "ACT_NIGHT_STUDY|ACT_REST_NIGHT",
         "ACT_REST_NIGHT",
         "EXP_NIGHT|ACT_NIGHT_STUDY|ACT_REST_NIGHT",
-        "ACT_REST_NIGHT",
+        "BROADCAST|ACT_REST_NIGHT",
         "ACT_NIGHT_DIARY|ACT_REST_NIGHT",
         "ACT_REST_NIGHT"
       ],

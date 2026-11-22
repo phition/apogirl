@@ -63,19 +63,8 @@ namespace ApoGirl.Core.Rules
             state.Npcs.TryGetValue(npcId ?? "", out var npc) && npc.ClubCounts.TryGetValue(activity ?? "", out var count) ? count : 0;
 
         /// <summary>계획에 이미 놓인 동아리 수 (그 칸은 빼고 센다).</summary>
-        public static int InPlan(GameState state, IDefinitionDatabase db, int exceptSlot)
-        {
-            var count = 0;
-            for (var i = 0; i < state.Plan.Slots.Count; i++)
-            {
-                if (i != exceptSlot && db.TryGetAction(state.Plan.Slots[i].ActionId ?? "", out var other) && other.IsClub)
-                {
-                    count++;
-                }
-            }
-
-            return count;
-        }
+        public static int InPlan(GameState state, IDefinitionDatabase db, int exceptSlot) =>
+            Planning.PlanEditing.InPlan(state, db, "CLUB", exceptSlot);
 
         /// <summary>동아리 행동을 실행한 칸: 같이 한 사람의 호감, 활동 횟수, 개인 장면 깃발.</summary>
         public static ClubOutcome Apply(GameState state, IDefinitionDatabase db, ActionDef action, StateDelta delta)

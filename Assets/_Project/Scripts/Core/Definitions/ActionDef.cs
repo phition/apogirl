@@ -133,5 +133,13 @@ namespace ApoGirl.Core.Definitions
         public string ClubActivity = "";
 
         public bool IsClub => !string.IsNullOrEmpty(ClubActivity);
+
+        /// <summary>방송반 송출 (확장 5): SONG·INFO·LETTER. 비어 있으면 방송이 아니다. 한 주에 하나만.</summary>
+        public string BroadcastProgram = "";
+
+        public bool IsBroadcast => !string.IsNullOrEmpty(BroadcastProgram);
+
+        /// <summary>한 주 계획에 하나만 놓이는 묶음 (동아리·방송). 비어 있으면 제한 없음.</summary>
+        public string WeeklyGroup => IsClub ? "CLUB" : IsBroadcast ? "BROADCAST" : "";
     }
 }

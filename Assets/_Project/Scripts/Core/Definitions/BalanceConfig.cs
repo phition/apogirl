@@ -505,6 +505,17 @@ namespace ApoGirl.Core.Definitions
             new ClubLikeDef { NpcId = "NPC_WANDERER", Activity = "BOARDGAME" },
         };
 
+        // ── 방송반 송출 (확장 5) ──
+
+        /// <summary>방송 한 번에 누군가 응답할 확률 (응답 장면 EVT_BROADCAST_REPLY_*).</summary>
+        public float BroadcastReplyChance = 0.3f;
+
+        /// <summary>방송한 주의 밤 습격 확률 배율 (위치가 알려진다).</summary>
+        public float BroadcastRaidMultiplier = 1.2f;
+
+        /// <summary>방송을 듣고 찾아올 수 있는 세력. 이 세력과 휴전(중립 이상)이거나 사라졌으면 위험이 없다.</summary>
+        public string BroadcastRiskFaction = "FAC_SAGEORI";
+
         // ── 고양이 '급식' (확장 2) ──
 
         /// <summary>눌러앉은 고양이가 주마다 먹는 식량 (모자라면 먹지 않는다: 알아서 쥐를 잡는다).</summary>

@@ -111,6 +111,10 @@ namespace ApoGirl.Core.Simulation.Bots
         public int ClubSessions;
         public int ClubScenes;
 
+        /// <summary>방송반 송출 (확장 5): 방송 횟수, 본 응답 장면 수.</summary>
+        public int Broadcasts;
+        public int BroadcastReplies;
+
         /// <summary>M7-2 진단: 판이 끝났을 때 조건을 만족한 (배드 제외) 엔딩.</summary>
         public readonly List<string> EligibleEndings = new List<string>();
 
@@ -317,6 +321,8 @@ namespace ApoGirl.Core.Simulation.Bots
             result.Cds = CdRules.Count(state);
             result.ClubSessions = state.Npcs.Values.Sum(n => n.ClubCounts.Values.Sum());
             result.ClubScenes = state.Flags.Count(f => f.StartsWith("CLUB_BOND_", StringComparison.Ordinal));
+            result.Broadcasts = state.Exploration.ActionCounts.Where(a => a.Key.StartsWith("ACT_BROADCAST_", StringComparison.Ordinal)).Sum(a => a.Value);
+            result.BroadcastReplies = state.Events.Records.Where(e => e.Key.StartsWith(BroadcastRules.ReplyEventPrefix, StringComparison.Ordinal)).Sum(e => e.Value.Count);
 
             var context = EventContext.FromCalendar(state);
             foreach (var candidate in db.Extras.Endings.Where(e => e.Category != Definitions.EndingCategory.Bad))
