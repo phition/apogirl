@@ -114,7 +114,11 @@ namespace ApoGirl.Tests.EditMode
         [Test]
         public void DepartAndReturn_AwayDuringDay_BringsSupplies()
         {
-            var db = Db(b => b.OutingInjuryChance = 0f);
+            var db = Db(b =>
+            {
+                b.OutingInjuryChance = 0f;
+                b.OutingHaul = new[] { new OutingHaulDef { Resource = ResourceType.Food, Weight = 1f } };
+            });
             var state = State(db);
             var npc = Join(state, A);
             OutingRules.Schedule(state, db);
@@ -132,9 +136,32 @@ namespace ApoGirl.Tests.EditMode
             Assert.IsFalse(npc.Away);
             Assert.AreEqual(OutingWound.None, back.Wound);
             var gained = back.Resources.Sum(r => r.Amount);
-            Assert.Greater(gained, 0, "낮 산출 6~10·4~8의 OutingYieldShare만큼");
-            Assert.LessOrEqual(gained, (int)System.Math.Ceiling((10 + 8) * db.Balance.OutingYieldShare) + 1);
+            Assert.AreEqual(1, back.Resources.Count, "한 번에 한 종류");
+            Assert.Greater(gained, 0, "식량 낮 산출 6~10의 OutingYieldShare만큼, 최소 1");
+            Assert.LessOrEqual(gained, (int)System.Math.Ceiling(10 * db.Balance.OutingYieldShare) + 1);
             Assert.AreEqual(food + back.Resources.Where(r => r.Resource == ResourceType.Food).Sum(r => r.Amount), state.Base.GetResource(ResourceType.Food));
+        }
+
+        [Test]
+        public void Haul_EmptyRemainder_FallbackForResourceNoPlaceGives()
+        {
+            var empty = Db(b => { b.OutingInjuryChance = 0f; b.OutingHaul = new OutingHaulDef[0]; });
+            var state = State(empty);
+            var npc = Join(state, A);
+            OutingRules.Schedule(state, empty);
+            state.Calendar.Day = npc.OutingDays[0];
+            state.Calendar.Phase = DayPhase.Night;
+            Assert.IsEmpty(OutingRules.Return(state, empty, new StateDelta()).Single().Resources, "비중 합 0이면 빈손");
+
+            var power = Db(b => { b.OutingInjuryChance = 0f; b.OutingHaul = new[] { new OutingHaulDef { Resource = ResourceType.Power, Weight = 1f, FallbackMin = 2, FallbackMax = 4 } }; });
+            var other = State(power);
+            var hurt = Join(other, B);
+            OutingRules.Schedule(other, power);
+            other.Calendar.Day = hurt.OutingDays[0];
+            other.Calendar.Phase = DayPhase.Night;
+            var got = OutingRules.Return(other, power, new StateDelta()).Single().Resources.Single();
+            Assert.AreEqual(ResourceType.Power, got.Resource);
+            Assert.GreaterOrEqual(got.Amount, 1, "어느 지역에도 없는 자원은 대체 범위, 최소 1");
         }
 
         [Test]

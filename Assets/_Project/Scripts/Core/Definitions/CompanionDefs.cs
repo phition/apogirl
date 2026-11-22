@@ -1,4 +1,5 @@
 using System;
+using ApoGirl.Core.State;
 
 namespace ApoGirl.Core.Definitions
 {
@@ -25,6 +26,19 @@ namespace ApoGirl.Core.Definitions
     {
         public string NpcId = "";
         public string[] Roles = Array.Empty<string>();
+    }
+
+    /// <summary>
+    /// 동료 탐험 수확 한 종류 (역할 재기획 P5): 외출 한 번에 이 표에서 한 종류를 Weight 확률로 뽑는다 (합이 1보다 작으면 나머지는 빈손).
+    /// 양은 그 지역 주인공 낮 산출 × OutingYieldShare. 지역에 없는 자원이면 가 본 지역 평균, 그것도 없으면 Fallback 범위(주인공 기준) × 비율.
+    /// </summary>
+    [Serializable]
+    public sealed class OutingHaulDef
+    {
+        public ResourceType Resource;
+        public float Weight;
+        public int FallbackMin;
+        public int FallbackMax;
     }
 
     /// <summary>윤 선생님 호감 구간 (기획 C.1): 선생님 수업의 성공률·숙련 경험치·대성공 보정.</summary>

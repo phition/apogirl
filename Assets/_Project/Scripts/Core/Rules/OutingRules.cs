@@ -224,25 +224,20 @@ namespace ApoGirl.Core.Rules
                 var back = new OutingReturn { NpcId = id, LocationId = locationId };
                 npc.Away = false;
 
-                // 물자: 그 지역 헤드리스 산출의 일부 (정찰 적성이면 더), 난이도 배율, 소수 부분은 확률로
-                if (db.TryGetExpeditionModel(locationId, out var model))
+                // 물자: 한 종류를 비중대로 뽑고 (나머지는 빈손), 양은 주인공 낮 산출의 일부 (정찰 적성이면 더) × 난이도, 뽑혔으면 최소 1
+                var haul = PickHaul(balance, random);
+                if (haul != null)
                 {
                     var share = balance.OutingYieldShare * (RoleRules.HasAptitude(balance, id, balance.ScoutRoleId) ? 1f + balance.OutingScoutAptitudeBonus : 1f)
                                 * difficulty.Yield;
-                    foreach (var range in model.Day.Resources)
-                    {
-                        var perResource = range.Resource == ResourceType.Food ? difficulty.FoodYield
-                            : range.Resource == ResourceType.Water ? difficulty.WaterYield
-                            : range.Resource == ResourceType.Medicine ? difficulty.MedicineYield * balance.OutingMedicineShare
-                            : 1f;
-                        var scaled = random.Range(range.Min, Math.Max(range.Min, range.Max)) * share * Math.Max(0f, perResource);
-                        var amount = (int)Math.Floor(scaled) + (random.NextDouble() < scaled - Math.Floor(scaled) ? 1 : 0);
-                        if (amount > 0)
-                        {
-                            EffectApplier.ChangeResource(state, range.Resource, amount, delta);
-                            back.Resources.Add(new ResourceAmount(range.Resource, amount));
-                        }
-                    }
+                    var perResource = haul.Resource == ResourceType.Food ? difficulty.FoodYield
+                        : haul.Resource == ResourceType.Water ? difficulty.WaterYield
+                        : haul.Resource == ResourceType.Medicine ? difficulty.MedicineYield
+                        : 1f;
+                    var scaled = BaseYield(state, db, locationId, haul, random) * share * Math.Max(0f, perResource);
+                    var amount = Math.Max(1, (int)Math.Floor(scaled) + (random.NextDouble() < scaled - Math.Floor(scaled) ? 1 : 0));
+                    EffectApplier.ChangeResource(state, haul.Resource, amount, delta);
+                    back.Resources.Add(new ResourceAmount(haul.Resource, amount));
                 }
 
                 // 기호품: 자기 것이나 다른 사람 것을 하나
@@ -283,6 +278,45 @@ namespace ApoGirl.Core.Rules
             }
 
             return result;
+        }
+
+        /// <summary>수확 종류 하나 (비중 합이 1보다 작으면 나머지 확률로 null = 빈손).</summary>
+        private static OutingHaulDef PickHaul(BalanceConfig balance, SeededRandom random)
+        {
+            var roll = random.NextDouble();
+            foreach (var haul in balance.OutingHaul ?? Array.Empty<OutingHaulDef>())
+            {
+                roll -= Math.Max(0f, haul.Weight);
+                if (roll < 0)
+                {
+                    return haul;
+                }
+            }
+
+            return null;
+        }
+
+        /// <summary>주인공이 그 지역 낮에 얻을 양 (범위에서 하나). 지역에 없으면 가 본 지역들 평균, 그것도 없으면 대체 범위.</summary>
+        private static float BaseYield(GameState state, IDefinitionDatabase db, string locationId, OutingHaulDef haul, SeededRandom random)
+        {
+            if (db.TryGetExpeditionModel(locationId, out var model))
+            {
+                var range = model.Day.Resources.FirstOrDefault(r => r.Resource == haul.Resource && r.Max > 0);
+                if (range != null)
+                {
+                    return random.Range(range.Min, Math.Max(range.Min, range.Max));
+                }
+            }
+
+            var means = VisitedLocations(state, db)
+                .Select(id => db.TryGetExpeditionModel(id, out var m) ? m.Day.Resources.FirstOrDefault(r => r.Resource == haul.Resource && r.Max > 0) : null)
+                .Where(r => r != null).Select(r => (r.Min + r.Max) * 0.5f).ToList();
+            if (means.Count > 0)
+            {
+                return means.Average();
+            }
+
+            return random.Range(haul.FallbackMin, Math.Max(haul.FallbackMin, haul.FallbackMax));
         }
 
         /// <summary>주간 결산 끝: 일정과 붙잡기를 지우고, 지난주 이전에 입은 가벼운 상처는 낫는다.</summary>

@@ -385,12 +385,20 @@ namespace ApoGirl.Core.Definitions
         /// <summary>외출하지 않는 인물 (고양이 등).</summary>
         public string[] OutingExcludedNpcs = { "NPC_CAT" };
 
-        /// <summary>물자: 그 지역 헤드리스 낮 산출 × 비율 (정찰 적성이면 + 보너스). 가장 모자란 자원을 주는 곳에 가중치.</summary>
-        public float OutingYieldShare = 0.2f;   // P5: 0.4 → 0.2 (봇 배드 26% → 42%)
+        /// <summary>물자: 외출 한 번에 한 종류, 양은 그 지역 주인공 낮 산출 × 비율 (정찰 적성이면 + 보너스). 갈 곳은 가장 모자란 자원을 주는 곳에 가중치.</summary>
+        public float OutingYieldShare = 0.3f;   // 2026-11-22: 주인공의 30%
         public float OutingScoutAptitudeBonus = 0.3f;
 
-        /// <summary>의약품은 동료가 잘 찾지 못한다 (약국 수색은 주인공 몫): 의약품 몫에만 더 곱한다. 감염 사망이 의약품에 크게 걸려 있다 (P5).</summary>
-        public float OutingMedicineShare = 0f;   // P5: 의약품 몫이 감염 사망을 크게 줄여 0
+        /// <summary>수확 종류 비중 (2026-11-22): 식량·물 각 30%, 자재 20%, 의약·연료·전력 각 5%, 나머지 5%는 빈손.</summary>
+        public OutingHaulDef[] OutingHaul =
+        {
+            new OutingHaulDef { Resource = ResourceType.Food, Weight = 0.30f, FallbackMin = 6, FallbackMax = 12 },
+            new OutingHaulDef { Resource = ResourceType.Water, Weight = 0.30f, FallbackMin = 4, FallbackMax = 10 },
+            new OutingHaulDef { Resource = ResourceType.Materials, Weight = 0.20f, FallbackMin = 1, FallbackMax = 3 },
+            new OutingHaulDef { Resource = ResourceType.Medicine, Weight = 0.05f, FallbackMin = 1, FallbackMax = 3 },
+            new OutingHaulDef { Resource = ResourceType.Fuel, Weight = 0.05f, FallbackMin = 1, FallbackMax = 3 },
+            new OutingHaulDef { Resource = ResourceType.Power, Weight = 0.05f, FallbackMin = 2, FallbackMax = 4 },
+        };
         public float OutingLackWeight = 3f;
         public float OutingLikedChance = 0.1f;
 
