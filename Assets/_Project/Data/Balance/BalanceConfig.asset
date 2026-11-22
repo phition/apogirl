@@ -240,6 +240,7 @@ MonoBehaviour:
     NeglectAffinity: 2
     NeglectFloor: 50
     GuardRoleId: GUARD
+    ScoutRoleId: SCOUT
     InjuredGuardAffinity: 3
     NurseUntreatedAffinity: 6
     SeniorEmptyRuns: 2
@@ -290,6 +291,25 @@ MonoBehaviour:
     - TEACHER_ISOLATED
     TeacherAbsentFlags:
     - TEACHER_LEFT_BEHIND
+    OutingExtraChance: 0.4
+    OutingScoutCount: 2
+    OutingDailyCap: 2
+    OutingExcludedNpcs:
+    - NPC_CAT
+    OutingYieldShare: 0.4
+    OutingScoutAptitudeBonus: 0.3
+    OutingLackWeight: 3
+    OutingLikedChance: 0.1
+    OutingStress: 8
+    OutingSatietyDrain: 20
+    OutingHydrationDrain: 25
+    OutingInjuryChance: 0.25
+    OutingScoutInjuryChance: 0.15
+    OutingSevereShare: 0.2
+    OutingSevereWeeks: 2
+    OutingMinorStress: 5
+    OutingSevereStress: 15
+    OutingHeldBackStress: 3
     GiveFoodSatiety: 45
     GiveFoodStress: -3
     GiveWaterHydration: 55

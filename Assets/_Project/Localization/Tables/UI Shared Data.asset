@@ -5355,6 +5355,54 @@ MonoBehaviour:
     m_Key: together.NPC_CAT.2
     m_Metadata:
       m_Items: []
+  - m_Id: 1122894502707200
+    m_Key: together.absent
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1122894590787584
+    m_Key: outing.left
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1122894590787585
+    m_Key: outing.back
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1122894590787586
+    m_Key: outing.back_empty
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1122894590787587
+    m_Key: outing.wound_minor
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1122894590787588
+    m_Key: outing.wound_severe
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1122894590787589
+    m_Key: outing.bubble_haul
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1122894590787590
+    m_Key: outing.bubble_empty
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1122894590787591
+    m_Key: outing.bubble_item_self
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1122894590787592
+    m_Key: outing.bubble_item_for
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1122894590787593
+    m_Key: settle.outing_haul
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1122894590787594
+    m_Key: settle.outing_nothing
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
