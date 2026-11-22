@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using ApoGirl.Core.Definitions;
 using ApoGirl.Core.Expedition;
+using ApoGirl.Core.Rules;
 
 namespace ApoGirl.Core.Simulation.Bots
 {
