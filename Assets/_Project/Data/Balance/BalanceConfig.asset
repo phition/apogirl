@@ -236,6 +236,16 @@ MonoBehaviour:
       GreatSuccessBonus: 0.05
     TeacherFormalNoteBelow: 30
     TeacherCloseNoteAffinity: 80
+    NeglectWeeks: 6
+    NeglectAffinity: 2
+    NeglectFloor: 50
+    GuardRoleId: GUARD
+    InjuredGuardAffinity: 3
+    NurseUntreatedAffinity: 6
+    SeniorEmptyRuns: 2
+    SeniorEmptyAffinity: 3
+    NoLessonWeeks: 3
+    NoLessonAffinity: 3
     CompanionAffinityGainScale: 2
     CompanionSatietyDailyDrain: 25
     CompanionHydrationDailyDrain: 30
