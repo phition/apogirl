@@ -17,6 +17,7 @@ namespace ApoGirl.Systems.Save
                 yield return new V5ToV6();
                 yield return new V6ToV7();
                 yield return new V7ToV8();
+                yield return new V8ToV9();
             }
         }
 
@@ -156,6 +157,16 @@ namespace ApoGirl.Systems.Save
                     var role = npc.Value<string>("Role") ?? "";
                     npc["Role"] = role.Length == 0 ? "" : Map.TryGetValue(role, out var mapped) ? mapped : "";
                 }
+            }
+        }
+
+        /// <summary>v9: CD 수집 (기획 A). 주운 주차(CdWeeks)·고른 곡(CdTrack) 추가. 새 필드는 기본값으로 채워진다.</summary>
+        private sealed class V8ToV9 : ISaveMigration
+        {
+            public int FromVersion => 8;
+
+            public void Migrate(JObject root)
+            {
             }
         }
     }

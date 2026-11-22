@@ -79,6 +79,7 @@ namespace ApoGirl.Core.Expedition
             ApplyHostile(request, result);
             ApplyLikedItem(request, result);
             ApplyRooftop(request, result);
+            ApplyCollectibles(request, result);
             return result;
         }
 
@@ -114,6 +115,24 @@ namespace ApoGirl.Core.Expedition
         }
 
         /// <summary>옥상(4층)까지 올라가 본 판: 확률로 옥상 플래그를 남긴다. 따로 뽑은 난수로 (다른 결과를 흔들지 않는다).</summary>
+        /// <summary>줍는 조우(CD, 기획 A.3): 무사히 돌아온 탐험에서 확률로 첫 선택지(챙긴다). 따로 뽑은 난수로.</summary>
+        private void ApplyCollectibles(ExpeditionRequest request, ExpeditionResult result)
+        {
+            if (result.Status != ExtractStatus.Extracted || !_db.TryGetLocation(request.LocationId, out var location))
+            {
+                return;
+            }
+
+            var random = new SeededRandom(SeededRandom.CreateState(request.Seed ^ 0x0C0D15));
+            foreach (var encounter in EncounterRules.Active(location, request.TimeOfDay, request.Flags).Where(e => e.Collectible && e.Choices.Count > 0).ToList())
+            {
+                if (random.NextDouble() < _db.Balance.HeadlessCdChance)
+                {
+                    EncounterRules.Apply(result, encounter, encounter.Choices[0]);
+                }
+            }
+        }
+
         private void ApplyRooftop(ExpeditionRequest request, ExpeditionResult result)
         {
             if (result.Status != ExtractStatus.Extracted || !_db.TryGetLocation(request.LocationId, out var location)
@@ -215,7 +234,7 @@ namespace ApoGirl.Core.Expedition
 
             foreach (var encounter in EncounterRules.Active(location, request.TimeOfDay, request.Flags).ToList())
             {
-                if (encounter.Choices.Count == 0 || random.NextDouble() >= timeYield.EncounterChance)
+                if (encounter.Collectible || encounter.Choices.Count == 0 || random.NextDouble() >= timeYield.EncounterChance)
                 {
                     continue;
                 }

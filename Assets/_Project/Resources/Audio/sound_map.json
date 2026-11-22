@@ -3,7 +3,8 @@
     { "Category": "Ui", "Volume": 0.35 },
     { "Category": "Sfx", "Volume": 0.5 },
     { "Category": "Voice", "Volume": 0.9 },
-    { "Category": "Ambience", "Volume": 0.25 }
+    { "Category": "Ambience", "Volume": 0.25 },
+    { "Category": "Music", "Volume": 0.4 }
   ],
   "Events": [
     { "Event": "EVT_A1_RAID_WARNING", "Clip": "Sfx/ui_raid_alarm" },

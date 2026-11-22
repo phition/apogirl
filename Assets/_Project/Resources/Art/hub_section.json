@@ -314,6 +314,9 @@
       "Wall": "wall_broadcast",
       "FloorTex": "wall_floor_broadcast",
       "Facility": "BROADCAST",
+      "CdShelf": true,
+      "CdShelfX": 80,
+      "CdShelfY": 52,
       "Props": [
         {
           "Key": "prop_console",

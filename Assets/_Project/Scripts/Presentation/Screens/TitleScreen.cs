@@ -65,6 +65,7 @@ namespace ApoGirl.Presentation.Screens
             Add(Loc.T("title.continue"), () => LoadAndEnter(SaveService.AutoSlot)).SetEnabled(canContinue);
             Add(Loc.T("title.load"), ShowLoad);
             Add(Loc.T("title.gallery"), ShowGallery);
+            Add(Loc.T("title.music_room"), ShowMusicRoom);
             Add(Loc.T("title.quit"), Quit);
         }
 
@@ -174,6 +175,13 @@ namespace ApoGirl.Presentation.Screens
             _buttons.AddToClassList("hidden");
             var root = GetComponent<UIDocument>().rootVisualElement;
             new GalleryView(root, _session.Definitions, _session.Gallery, () => _buttons.RemoveFromClassList("hidden"));
+        }
+
+        private void ShowMusicRoom()
+        {
+            _buttons.AddToClassList("hidden");
+            var root = GetComponent<UIDocument>().rootVisualElement;
+            new MusicRoomView(root, () => _buttons.RemoveFromClassList("hidden"));
         }
 
         private void LoadAndEnter(string slot)

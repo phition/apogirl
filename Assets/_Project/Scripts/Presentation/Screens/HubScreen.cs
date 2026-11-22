@@ -98,6 +98,7 @@ namespace ApoGirl.Presentation.Screens
             _miniVitals = new MiniVitalsView(_root, _session, () => _layers.ToggleRecord());
             _standing = new StandingView(_root.Q("standing"), () => _session.State, () => _session.Definitions.Balance);
             _ticker = _root.Q("ticker");
+            CdPlayer.Resume(_session.State); // 고른 CD가 있으면 허브에 들어올 때 이어서 (기획 A)
             _standingArea = _root.Q("standing-area");
             _sectionFrame = _root.Q("section-frame");
             _section = new HubSectionView(_root.Q("section"), _session)
@@ -205,6 +206,7 @@ namespace ApoGirl.Presentation.Screens
 
             _session.StateChanged -= Refresh;
             _session.WeekEnded -= OnWeekEnded;
+            CdPlayer.Pause(); // 허브를 떠나면 (타이틀·엔딩) CD도 멈춘다
         }
 
         private void Update()
@@ -548,9 +550,11 @@ namespace ApoGirl.Presentation.Screens
                         ExpeditionResult expeditionResult = null;
                         _root.style.display = DisplayStyle.None;
                         SetPanelRendererEnabled(false);
+                        CdPlayer.Pause(); // 탐험을 떠나면 멈추고, 돌아오면 같은 곡이 이어진다 (기획 A)
                         yield return GameApp.RunExpedition(outcome.ExpeditionRequest, result => expeditionResult = result);
                         _root.style.display = DisplayStyle.Flex;
                         SetPanelRendererEnabled(true);
+                        CdPlayer.Resume(_session.State);
                         outcome = _session.CompleteExpedition(expeditionResult);
                     }
                 }

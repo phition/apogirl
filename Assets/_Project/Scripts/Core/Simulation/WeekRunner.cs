@@ -86,6 +86,9 @@ namespace ApoGirl.Core.Simulation
 
         /// <summary>이번 위기 주에 떠날 기색을 보인 동료 (기획 C.2 ③, 다음 주 첫 칸에 붙잡을 기회).</summary>
         public readonly List<string> LeaveWarned = new List<string>();
+
+        /// <summary>이번 주 처음 주운 CD (기획 A).</summary>
+        public readonly List<string> CdFound = new List<string>();
     }
 
     /// <summary>
@@ -107,6 +110,7 @@ namespace ApoGirl.Core.Simulation
         private readonly IRandomService _random;
         private readonly IExpeditionRunner _expeditionRunner;
         private readonly List<SlotOutcome> _outcomes = new List<SlotOutcome>();
+        private readonly List<string> _cdFound = new List<string>();
         private PendingExpedition _pending;
         private readonly IEventChooser _eventChooser;
         private PendingEventState _pendingEvent;
@@ -578,6 +582,7 @@ namespace ApoGirl.Core.Simulation
                 EffectApplier.ChangeVital(_state, VitalType.Stress, -relief, Balance, summary.Delta);
             }
             FactionRules.ApplyWeekly(_state, _db, Balance, summary.Delta);
+            summary.CdFound.AddRange(_cdFound);
             summary.LeaveWarned.AddRange(CrisisRules.WarnWeekly(_state, Balance, _outcomes.Any(o => o.Raid != null && !o.Raid.Repelled)));
             if (calendar.Week >= Balance.RaidStartWeek - 1)
             {
@@ -607,6 +612,7 @@ namespace ApoGirl.Core.Simulation
             }
 
             _outcomes.Clear();
+            _cdFound.Clear();
             summary.DiaryKey = diary?.TextKey ?? $"DIARY_W{calendar.Week:00}";
             if (!string.IsNullOrEmpty(summary.DiaryKey))
             {
@@ -724,13 +730,17 @@ namespace ApoGirl.Core.Simulation
 
             BondDecayRules.OnExpedition(_state, result, Balance, delta); // 기획 C.5: 선배는 빈손 귀환이 이어지면 실망
 
+            var newFlags = new List<string>();
             foreach (var flag in result.Flags)
             {
                 if (_state.Flags.Add(flag))
                 {
                     delta.FlagsSet.Add(flag);
+                    newFlags.Add(flag);
                 }
             }
+
+            _cdFound.AddRange(CdRules.Record(_state, newFlags)); // 기획 A: 처음 주운 주차
 
             foreach (var clue in result.Clues)
             {

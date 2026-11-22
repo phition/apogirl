@@ -235,6 +235,12 @@ namespace ApoGirl.Core.Definitions
         /// 조건이 맞으면 같은 컷에서 이벤트 대사·선택지가 이어지고, 고른 것은 탐험 결과에 담겨 귀환 때 적용된다.
         /// </summary>
         public bool PlayEventInField;
+
+        /// <summary>
+        /// 줍는 물건 (기획 A: CD). 헤드리스에서는 조우 확률 대신 BalanceConfig.HeadlessCdChance로, 첫 선택지(챙긴다)를 고른다.
+        /// 따로 뽑은 난수를 써서 다른 조우·자원 결과를 흔들지 않는다.
+        /// </summary>
+        public bool Collectible;
     }
 
     [Serializable]

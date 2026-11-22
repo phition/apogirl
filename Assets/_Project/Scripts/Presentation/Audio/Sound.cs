@@ -12,6 +12,9 @@ namespace ApoGirl.Presentation.Audio
         Sfx,
         Voice,
         Ambience,
+
+        /// <summary>방송반 CD 플레이어 (기획 A).</summary>
+        Music,
     }
 
     /// <summary>

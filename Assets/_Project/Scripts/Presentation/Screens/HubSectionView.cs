@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using ApoGirl.Core.Definitions;
 using ApoGirl.Core.State;
+using ApoGirl.Core.Rules;
 using ApoGirl.Presentation.Art;
+using ApoGirl.Presentation.Audio;
 using ApoGirl.Presentation.Text;
 using ApoGirl.Systems.Session;
 using UnityEngine;
@@ -54,6 +56,11 @@ namespace ApoGirl.Presentation.Screens
 
             /// <summary>지어 놓으면 단면도에 실제로 놓이는 구조물 (옥상 빗물받이·텃밭·안테나 등, 조건은 Flag/MinDefense).</summary>
             public BuiltPropDef[] BuiltProps = Array.Empty<BuiltPropDef>();
+
+            /// <summary>CD 진열장 (기획 A): 벽에 칸이 보이고, 방을 누르면 CD 플레이어가 뜬다. X·Y는 방 안 그림 픽셀 (Y는 바닥에서 위로).</summary>
+            public bool CdShelf;
+            public float CdShelfX = 90;
+            public float CdShelfY = 30;
         }
 
         [Serializable]
@@ -195,6 +202,7 @@ namespace ApoGirl.Presentation.Screens
         private Actor _player;
         private Actor _teacher;
         private string _builtSignature;
+        private string _cdRoomId = "";
         private DayPhase _phase = DayPhase.Day;
         private bool _executing;
 
@@ -216,6 +224,7 @@ namespace ApoGirl.Presentation.Screens
             _roomPanel.AddToClassList("hidden");
             _host.schedule.Execute(Tick).Every(33);
             _host.RegisterCallback<ClickEvent>(_ => HideRoomPanel());
+            _roomPanel.RegisterCallback<ClickEvent>(evt => evt.StopPropagation()); // 패널 안(CD 플레이어 등)을 눌러도 닫히지 않게
         }
 
         /// <summary>방에서 행동을 골랐을 때 (허브가 계획 보드를 그 행동으로 연다).</summary>
@@ -385,6 +394,8 @@ namespace ApoGirl.Presentation.Screens
                 }
             }
 
+            parts.Add("cd" + CdRules.Count(state));
+
             return string.Join(",", parts);
         }
 
@@ -520,6 +531,11 @@ namespace ApoGirl.Presentation.Screens
                     }
                 }
 
+                if (def.CdShelf && open)
+                {
+                    AddCdShelf(state, element, def, propFloor);
+                }
+
                 if (def.Id == shelter)
                 {
                     foreach (var prop in _config.ShelterProps)
@@ -652,6 +668,83 @@ namespace ApoGirl.Presentation.Screens
         private static bool BuiltShown(GameState state, HubSectionConfig.BuiltPropDef built) =>
             (string.IsNullOrEmpty(built.Flag) || state.Flags.Contains(built.Flag)) && state.Base.Defense >= built.MinDefense;
 
+        /// <summary>CD 진열장 칸 (기획 A): 처음부터 빈 칸이 다 보이고, 주운 CD는 그 색으로 꽂힌다.</summary>
+        private void AddCdShelf(GameState state, VisualElement room, HubSectionConfig.RoomDef def, float floorY)
+        {
+            const float slotW = 5f, slotH = 8f;
+            var slots = CdPlayer.Slots;
+            var shelf = Place(room, "hub-cd-shelf", def.CdShelfX, floorY - def.CdShelfY - slotH - 2f, slots * slotW + 2f, slotH + 2f);
+            shelf.pickingMode = PickingMode.Ignore;
+            for (var i = 0; i < slots; i++)
+            {
+                var entry = i < CdPlayer.All.Count ? CdPlayer.All[i] : null;
+                var slot = Place(shelf, "hub-cd-slot", 1f + i * slotW, 1f, slotW - 1f, slotH);
+                slot.pickingMode = PickingMode.Ignore;
+                var owned = entry != null && CdRules.Has(state, entry.Id);
+                slot.EnableInClassList("owned", owned);
+                if (owned && ColorUtility.TryParseHtmlString(entry.Color, out var color))
+                {
+                    slot.style.backgroundColor = color;
+                }
+            }
+        }
+
+        /// <summary>방송반 패널의 CD 플레이어: 가진 CD를 누르면 틀고, 다시 누르거나 끄기로 멈춘다.</summary>
+        private void AddCdPlayer(GameState state)
+        {
+            var count = CdRules.Count(state);
+            var head = new Label(Loc.T("hub.cd.list_title") + "  ·  " + Loc.F("hub.cd.shelf", count, CdPlayer.Slots));
+            head.AddToClassList("hub-room-panel-note");
+            head.AddToClassList("hub-cd-head");
+            _roomPanel.Add(head);
+            if (count == 0)
+            {
+                var empty = new Label(Loc.T("hub.cd.empty"));
+                empty.AddToClassList("hub-room-panel-note");
+                _roomPanel.Add(empty);
+                return;
+            }
+
+            foreach (var entry in CdPlayer.All)
+            {
+                if (!CdRules.Has(state, entry.Id))
+                {
+                    continue;
+                }
+
+                var id = entry.Id;
+                var playing = CdPlayer.IsPlaying(state, id);
+                var label = Loc.T("cd." + id + ".title") + (playing ? "  ♪ " + Loc.T("hub.cd.playing") : "");
+                if (!CdPlayer.HasClip(id))
+                {
+                    label += "  (" + Loc.T("music.no_clip") + ")";
+                }
+
+                var button = new Button(() =>
+                {
+                    if (CdPlayer.IsPlaying(_session.State, id)) CdPlayer.Stop(_session.State);
+                    else CdPlayer.Play(_session.State, id);
+                    ShowRoomPanel(_cdRoomId);
+                }) { text = label };
+                button.AddToClassList("hub-room-action");
+                button.AddToClassList("hub-cd-track");
+                button.EnableInClassList("playing", playing);
+                var weekText = state.CdWeeks.TryGetValue(id, out var week) ? "  ·  " + Loc.F("hub.cd.found_week", week) : "";
+                button.tooltip = Loc.T("cd." + id + ".owner") + weekText;
+                if (ColorUtility.TryParseHtmlString(entry.Color, out var color))
+                {
+                    button.style.borderLeftColor = color;
+                }
+
+                _roomPanel.Add(button);
+            }
+
+            var hint = new Label(Loc.T("hub.cd.hint"));
+            hint.AddToClassList("hub-room-panel-note");
+            hint.AddToClassList("hub-cd-hint");
+            _roomPanel.Add(hint);
+        }
+
         private void AddProp(VisualElement room, HubSectionConfig.PropDef prop, float floorY)
         {
             var texture = Tex(prop.Key);
@@ -763,11 +856,17 @@ namespace ApoGirl.Presentation.Screens
                     _roomPanel.Add(button);
                 }
 
-                if (!any)
+                if (!any && !room.Def.CdShelf)
                 {
                     var none = new Label(Loc.T("hub.room_none"));
                     none.AddToClassList("hub-room-panel-note");
                     _roomPanel.Add(none);
+                }
+
+                if (room.Def.CdShelf)
+                {
+                    _cdRoomId = roomId;
+                    AddCdPlayer(state);
                 }
             }
 

@@ -9,7 +9,7 @@ namespace ApoGirl.Core.State
     public sealed class GameState
     {
         /// <summary>현재 세이브 포맷 버전. 마이그레이션 시 증가시킨다.</summary>
-        public const int CurrentSaveVersion = 8;
+        public const int CurrentSaveVersion = 9;
 
         public int SaveVersion { get; set; } = CurrentSaveVersion;
         public GameStatus Status { get; set; } = GameStatus.Playing;
@@ -56,6 +56,12 @@ namespace ApoGirl.Core.State
 
         /// <summary>세력 ID → 평판·접촉 기록. v6에서 추가.</summary>
         public Dictionary<string, FactionState> Factions { get; set; } = new Dictionary<string, FactionState>();
+
+        /// <summary>CD ID(CD_01~08) → 처음 주운 주차 (기획 A.3). v9에서 추가.</summary>
+        public Dictionary<string, int> CdWeeks { get; set; } = new Dictionary<string, int>();
+
+        /// <summary>방송반 콘솔에서 고른 CD ID (허브 배경음). 비면 기본 허브 소리. v9에서 추가.</summary>
+        public string CdTrack { get; set; } = "";
     }
 
     /// <summary>외부 세력과의 관계.</summary>

@@ -1,0 +1,66 @@
+{
+  "Events": [
+    {
+      "Id": "EVT_CD_SHELF_FULL",
+      "Kind": "Night",
+      "Priority": 35,
+      "Condition": {
+        "Phase": "Night",
+        "FlagsAll": [
+          "CD_01",
+          "CD_02",
+          "CD_03",
+          "CD_04",
+          "CD_05",
+          "CD_06",
+          "CD_07",
+          "CD_08"
+        ],
+        "FlagsNone": [
+          "CD_SHELF_FULL"
+        ]
+      },
+      "OnShow": {
+        "SetFlags": [
+          "CD_SHELF_FULL"
+        ]
+      },
+      "Choices": [
+        {
+          "Id": "LISTEN_ALONE",
+          "Effect": {
+            "Vitals": [
+              {
+                "Vital": "Stress",
+                "Amount": -6
+              }
+            ],
+            "Hidden": [
+              {
+                "Hidden": "Hope",
+                "Amount": 1
+              }
+            ]
+          }
+        },
+        {
+          "Id": "CALL_EVERYONE",
+          "Effect": {
+            "Vitals": [
+              {
+                "Vital": "Stress",
+                "Amount": -4
+              }
+            ],
+            "Hidden": [
+              {
+                "Hidden": "Isolation",
+                "Amount": -1
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

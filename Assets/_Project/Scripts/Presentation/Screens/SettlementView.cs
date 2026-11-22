@@ -205,6 +205,12 @@ namespace ApoGirl.Presentation.Screens
                 lines.Add(Loc.F("settle.outing_haul", returns.Select(r => r.NpcId).Distinct().Count(), haul.Length > 0 ? haul : Loc.T("settle.outing_nothing")));
             }
 
+            // CD (기획 A): 처음 주운 CD
+            foreach (var id in summary.CdFound)
+            {
+                lines.Add(Loc.F("settle.cd_found", Loc.T("cd." + id + ".title")));
+            }
+
             // 위기 이탈 예고 (기획 C.2 ③): 이유가 보이게
             foreach (var id in summary.LeaveWarned)
             {

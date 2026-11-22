@@ -1805,7 +1805,8 @@ namespace ApoGirl.Exploration.Runtime
         private void CreateEncounter(ExplorationArea area, EncounterDef encounter)
         {
             var key = ExplorationArt.Encounter(encounter.Id)
-                ?? (!string.IsNullOrEmpty(encounter.SpriteKey) ? encounter.SpriteKey
+                ?? (encounter.Collectible && ExplorationArt.Get(encounter.SpriteKey) == null ? "prop_paper"   // CD 그림이 아직 없으면 종이 자리
+                : !string.IsNullOrEmpty(encounter.SpriteKey) ? encounter.SpriteKey
                 : encounter.Id.Contains("NOTE") || encounter.Id.Contains("NOTICE") ? "prop_paper" : "person_student_crouch");
             var view = Prop(area, "Encounter_" + encounter.Id, key, encounter.X, new Vector2(0.6f, 1.5f), new Color(0.55f, 0.62f, 0.75f), 9);
             ExplorationArt.Animate(view, key, 6f);   // 숨 쉬는 사람 등 (프레임이 있을 때만)

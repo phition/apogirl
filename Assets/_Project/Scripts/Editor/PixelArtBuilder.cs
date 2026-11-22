@@ -335,6 +335,17 @@ namespace ApoGirl.EditorTools
             paper.Apply();
             Save("prop_paper", paper, 0.5f, 0f);
 
+            // CD 케이스 (기획 A): 투명한 케이스 안의 은빛 원판과 손글씨 스티커
+            var cd = New(10, 10);
+            Fill(cd, 0, 0, 9, 9, C(70, 76, 92));
+            Fill(cd, 1, 1, 8, 8, C(178, 186, 198));
+            Fill(cd, 3, 3, 6, 6, C(214, 220, 232));
+            Fill(cd, 4, 4, 5, 5, C(90, 96, 110));
+            HLine(cd, 1, 4, 8, C(232, 190, 92));
+            OutlinePass(cd);
+            cd.Apply();
+            Save("prop_cd", cd, 0.5f, 0f);
+
             // 창 너머 실루엣: 머리·어깨 (런타임에 어두운 색을 곱한다)
             var sil = New(14, 18);
             Fill(sil, 1, 0, 12, 7, Color.white);

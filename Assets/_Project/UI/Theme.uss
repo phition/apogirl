@@ -757,6 +757,15 @@ Button.selected { border-color: var(--accent); background-color: var(--accent-so
 .dock-plan.with-icon { padding-left: 38px; }
 .dock-speed .small-button.with-icon { padding-left: 26px; }
 .hub-room-action.with-icon { padding-left: 36px; }
+
+/* CD 진열장·플레이어 (기획 A) */
+.hub-cd-shelf { background-color: rgb(58, 44, 34); border-width: 1px; border-color: rgb(30, 22, 16); }
+.hub-cd-slot { background-color: rgba(0, 0, 0, 0.45); }
+.hub-cd-slot.owned { border-width: 1px; border-color: rgba(255, 255, 255, 0.5); }
+.hub-cd-head { -unity-font-style: bold; margin-top: 6px; }
+.hub-cd-track { border-left-width: 6px; }
+.hub-cd-track.playing { background-color: rgb(52, 70, 62); }
+.hub-cd-hint { font-size: 13px; opacity: 0.7; }
 .hub-room-built.standalone { position: relative; left: 0; right: 0; bottom: 0; justify-content: flex-start; margin-bottom: 6px; }
 
 /* ── 3겹 세력 화면 (FactionView) ── */

@@ -1,0 +1,13 @@
+{
+  "Slots": 8,
+  "Cds": [
+    { "Id": "CD_01", "Location": "LOC_SCHOOL_INTERIOR", "Track": "Music/cd_01_spring_campus", "Color": "#E8B4BC" },
+    { "Id": "CD_02", "Location": "LOC_STORE", "Track": "Music/cd_02_2am_playlist", "Color": "#7FA7C9" },
+    { "Id": "CD_03", "Location": "LOC_PHARMACY", "Track": "Music/cd_03_moms_shop", "Color": "#F2C48D" },
+    { "Id": "CD_04", "Location": "LOC_RESIDENTIAL", "Track": "Music/cd_04_rooftop_demo", "Color": "#B0565A" },
+    { "Id": "CD_05", "Location": "LOC_SUBWAY", "Track": "Music/cd_05_monday", "Color": "#8C7BC4" },
+    { "Id": "CD_06", "Location": "LOC_MART", "Track": "Music/cd_06_store_vol3", "Color": "#F0DA6A" },
+    { "Id": "CD_07", "Location": "LOC_POLICE", "Track": "Music/cd_07_after_shift", "Color": "#4E6E8E" },
+    { "Id": "CD_08", "Location": "LOC_WATERWORKS", "Track": "Music/cd_08_cheer_up_dad", "Color": "#9CCB9A" }
+  ]
+}

@@ -21,14 +21,14 @@ namespace ApoGirl.EditorTools
             var assets = new List<LocationAsset>
             {
                 Save("LOC_TUTORIAL", Tutorial()),
-                Save("LOC_SCHOOL_INTERIOR", School()),
-                Save("LOC_STORE", Store()),
-                Save("LOC_PHARMACY", Pharmacy()),
-                Save("LOC_RESIDENTIAL", Residential()),
-                Save("LOC_SUBWAY", Subway()),
-                Save("LOC_MART", Mart()),
-                Save("LOC_POLICE", Police()),
-                Save("LOC_WATERWORKS", Waterworks()),
+                Save("LOC_SCHOOL_INTERIOR", WithCd(School(), "CD_01", 2, "ROOM_3F_ROOM_MUSIC_7")),
+                Save("LOC_STORE", WithCd(Store(), "CD_02", 0, "ROOM_STORE_OFFICE_1")),
+                Save("LOC_PHARMACY", WithCd(Pharmacy(), "CD_03", 1, "ROOM_PH_CLINIC_1")),
+                Save("LOC_RESIDENTIAL", WithCd(Residential(), "CD_04", 0, "ROOM_HOUSE_101")),
+                Save("LOC_SUBWAY", WithCd(Subway(), "CD_05", 0, "ROOM_SUBWAY_OFFICE_2")),
+                Save("LOC_MART", WithCd(Mart(), "CD_06", 0, "ROOM_MART_OFFICE_1")),
+                Save("LOC_POLICE", WithCd(Police(), "CD_07", 1, "ROOM_POLICE_OFFICE_2")),
+                Save("LOC_WATERWORKS", WithCd(Waterworks(), "CD_08", 2, "ROOM_WATER_LAB_2")),
             };
 
             var database = AssetDatabase.LoadAssetAtPath<DefinitionDatabaseAsset>(ContentPipeline.DatabasePath);
@@ -56,6 +56,29 @@ namespace ApoGirl.EditorTools
         }
 
         // ── 공통 도우미 ──
+
+        /// <summary>
+        /// CD 한 장 (기획 A.2): 지역마다 늘 같은 자리, 낮·밤 모두. 챙기면 깃발 {id}.
+        /// 2막 이후 4장(주택가·지하철·마트·정수장)은 깊은 곳(기획 B)이 생기면 그리로 옮긴다. 그때까지는 보통 방.
+        /// </summary>
+        private static LocationDef WithCd(LocationDef location, string id, int floor, string roomId, float x = 4f)
+        {
+            EncounterDef Cd() => new EncounterDef
+            {
+                Id = id, Floor = floor, RoomId = roomId, X = x, SpriteKey = "prop_cd", Collectible = true,
+                FlagsNone = { id },
+                PromptKey = "enc." + id + ".prompt",
+                Choices =
+                {
+                    new EncounterChoiceDef { Id = "TAKE", TextKey = "enc.cd.take", SetFlags = { id }, StressDelta = -1 },
+                    new EncounterChoiceDef { Id = "LEAVE", TextKey = "enc.cd.leave", Removes = false },
+                },
+            };
+
+            location.DayVariant?.Encounters.Add(Cd());
+            location.NightVariant?.Encounters.Add(Cd());
+            return location;
+        }
 
         /// <summary>방마다 다른 그림의 상자 (SpriteKey).</summary>
         private static ContainerDef CS(string id, ContainerKind kind, float x, string sprite, string loot = "")
