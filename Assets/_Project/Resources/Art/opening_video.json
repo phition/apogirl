@@ -1,0 +1,9 @@
+{
+ "File": "Video/prologue_commute.mp4",
+ "FadeIn": 0.6,
+ "FadeOut": 1.2,
+ "HoldBlack": 0.4,
+ "Reveal": 1.0,
+ "HintDelay": 2.5,
+ "PrepareTimeout": 6.0
+}

@@ -1334,6 +1334,8 @@
     "enc.RESEARCH_MEMO.leave": "그대로 둔다",
     "title.bonus_pick": "엔딩을 본 적이 있어요. 시작 보너스를 하나 고르세요.",
     "title.bonus_none": "보너스 없이 시작",
+    "opening.skip_hint": "아무 키나 누르면 건너뜁니다",
+    "opening.skip": "건너뛰기 ▶",
     "bonus.STRONG.name": "단련된 몸",
     "bonus.STRONG.desc": "체력·근력·민첩 +5",
     "bonus.SCHOLAR.name": "먼저 읽은 책",

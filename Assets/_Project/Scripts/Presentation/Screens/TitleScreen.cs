@@ -83,8 +83,14 @@ namespace ApoGirl.Presentation.Screens
 
             _buttons.AddToClassList("hidden");
             var root = GetComponent<UIDocument>().rootVisualElement;
+
+            // 오프닝 등굣길 영상 → 검은 화면 아래에서 프롤로그 시작 → 막을 걷어 첫 줄이 드러난다 (2회차는 건너뛰기 단추)
+            var opening = new OpeningVideo(root, _session.IsNewGamePlus);
+            yield return opening.Play();
+
             var flow = new PrologueFlow(root, _session, project);
             _advance = flow.Advance;
+            StartCoroutine(opening.Reveal());
             yield return flow.Run(destroyCancellationToken);
             _advance = null;
             GameApp.GoTo(GameApp.HubScene);
