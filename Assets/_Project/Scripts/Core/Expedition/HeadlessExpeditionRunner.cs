@@ -78,6 +78,7 @@ namespace ApoGirl.Core.Expedition
             ApplyDepletion(request, model, result);
             ApplyHostile(request, result);
             ApplyLikedItem(request, result);
+            ApplyRooftop(request, result);
             return result;
         }
 
@@ -110,6 +111,22 @@ namespace ApoGirl.Core.Expedition
             }
 
             result.Loot.Add(new ItemStack { ItemId = candidates[random.Range(0, candidates.Count - 1)], Count = 1 });
+        }
+
+        /// <summary>옥상(4층)까지 올라가 본 판: 확률로 옥상 플래그를 남긴다. 따로 뽑은 난수로 (다른 결과를 흔들지 않는다).</summary>
+        private void ApplyRooftop(ExpeditionRequest request, ExpeditionResult result)
+        {
+            if (result.Status != ExtractStatus.Extracted || !_db.TryGetLocation(request.LocationId, out var location)
+                || location.Layout == null || string.IsNullOrEmpty(location.Layout.RooftopFlag) || request.Flags.Contains(location.Layout.RooftopFlag))
+            {
+                return;
+            }
+
+            var random = new SeededRandom(SeededRandom.CreateState(request.Seed ^ 0x2F00F7));
+            if (random.NextDouble() < _db.Balance.HeadlessRooftopChance)
+            {
+                result.Flags.Add(location.Layout.RooftopFlag);
+            }
         }
 
         private static IEnumerable<string> LootTableIds(LocationDef location)

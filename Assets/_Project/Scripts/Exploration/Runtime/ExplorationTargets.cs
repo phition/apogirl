@@ -34,6 +34,9 @@ namespace ApoGirl.Exploration.Runtime
 
         /// <summary>건물 밖 길 (진입로·탈출로): 복도도 방도 아니다. 조명은 바깥 밝기, 좀비는 문으로 따라 나올 수 있다.</summary>
         public bool IsOutdoor;
+
+        /// <summary>옥상 (건물 맨 위층 복도 자리): 방·좀비가 없고, 벽 대신 철조망 너머로 마을이 보인다. 조명은 바깥 밝기.</summary>
+        public bool IsRoof;
         public int Floor;
         public Vector2 Origin;
         public float Width;

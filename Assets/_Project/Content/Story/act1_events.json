@@ -70,6 +70,10 @@
     { "Id": "EVT_A1_ROOFTOP", "Kind": "Story", "Priority": 45, "Condition": { "WeekMin": 4, "Phase": "Day", "Checks": [ { "Kind": "Facility", "Key": "ROOFTOP", "Op": "Equal", "Value": 0 } ] },
       "OnShow": { "Facilities": [ { "FacilityId": "ROOFTOP", "Level": 1 } ], "Hidden": [ { "Hidden": "Hope", "Amount": 1 } ] } },
 
+    { "Id": "EVT_A1_ROOFTOP_EARLY", "Kind": "Story", "Priority": 72,
+      "Condition": { "ActionIds": [ "ACT_EXP_DAY_SCHOOL", "ACT_EXP_NIGHT_SCHOOL" ], "FlagsAll": [ "REACHED_ROOFTOP" ], "Checks": [ { "Kind": "Facility", "Key": "ROOFTOP", "Op": "Equal", "Value": 0 } ] },
+      "OnShow": { "Facilities": [ { "FacilityId": "ROOFTOP", "Level": 1 } ], "Hidden": [ { "Hidden": "Hope", "Amount": 1 } ] } },
+
     { "Id": "EVT_A1_POWER_PLAN", "Kind": "Story", "Priority": 60,
       "Condition": { "WeekMin": 5, "Phase": "Day", "FlagsNone": [ "POWER_PLAN" ], "Checks": [ { "Kind": "Facility", "Key": "CLASSROOM", "Op": "GreaterOrEqual", "Value": 1 } ] },
       "OnShow": { "SetFlags": [ "POWER_PLAN" ], "Facilities": [ { "FacilityId": "BROADCAST", "Level": 1 } ] } },

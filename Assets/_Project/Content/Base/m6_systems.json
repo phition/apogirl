@@ -233,16 +233,6 @@
           "Id": "CAFETERIA",
           "Facility": "CAFETERIA",
           "Actions": []
-        },
-        {
-          "Id": "STORAGE",
-          "Always": true,
-          "Facility": "STORAGE",
-          "Actions": [
-            "ACT_SURV_MAKE_CRUTCH",
-            "ACT_SURV_MAKE_PROSTHETIC",
-            "ACT_NIGHT_WORK"
-          ]
         }
       ],
       "Modifiers": [

@@ -366,10 +366,10 @@ namespace ApoGirl.Exploration.Runtime
                 if (PeekTarget != null)
                 {
                     var other = PeekArea;
-                    return Loc.F("exp.peeking_into", other.IsRoom || other.IsOutdoor ? other.Label : Loc.F("exp.corridor", other.Floor + 1));
+                    return Loc.F("exp.peeking_into", other.IsRoom || other.IsOutdoor || other.IsRoof ? other.Label : Loc.F("exp.corridor", other.Floor + 1));
                 }
 
-                if (InRoom || CurrentArea.IsOutdoor)
+                if (InRoom || CurrentArea.IsOutdoor || CurrentArea.IsRoof)
                 {
                     return CurrentArea.Label;
                 }
@@ -1369,6 +1369,13 @@ namespace ApoGirl.Exploration.Runtime
         {
             CurrentArea = area;
             X = Mathf.Clamp(x, EdgeMargin, area.Width - EdgeMargin);
+
+            // 옥상에 처음 올라섰다: 귀환하면 거점 옥상이 열린다 (EVT_A1_ROOFTOP_EARLY)
+            var roofFlag = Location?.Layout?.RooftopFlag;
+            if (area.IsRoof && !string.IsNullOrEmpty(roofFlag) && !_runFlags.Contains(roofFlag))
+            {
+                _runFlags.Add(roofFlag);
+            }
             CloseContainer();
             Hidden = false;
             Nearest = null;
@@ -1465,6 +1472,8 @@ namespace ApoGirl.Exploration.Runtime
                     Origin = new Vector2(0f, _building.FloorY(floor)),
                     Width = layout.CorridorLength,
                     Built = true,
+                    IsRoof = layout.IsRooftop(floor),
+                    Label = layout.IsRooftop(floor) ? Loc.T("exp.rooftop") : "",
                 });
             }
 
@@ -2080,7 +2089,7 @@ namespace ApoGirl.Exploration.Runtime
             {
                 var shown = _shownArea ?? CurrentArea;
                 var corridorView = !shown.IsRoom && !shown.IsOutdoor;
-                _maskAbove.SetActive(corridorView);
+                _maskAbove.SetActive(corridorView && !shown.IsRoof);   // 옥상 위는 하늘이라 가리지 않는다
                 _maskBelow.SetActive(corridorView && shown.Floor > 0);
                 if (corridorView)
                 {

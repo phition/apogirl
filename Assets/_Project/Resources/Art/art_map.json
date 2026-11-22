@@ -131,6 +131,10 @@
       "Image": "Backgrounds/bg_rooftop"
     },
     {
+      "Event": "EVT_A1_ROOFTOP_EARLY",
+      "Image": "Backgrounds/bg_rooftop"
+    },
+    {
       "Event": "EVT_A1_POWER_ON",
       "Image": "Events/evt_power"
     },

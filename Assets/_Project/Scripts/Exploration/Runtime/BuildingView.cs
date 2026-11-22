@@ -313,11 +313,18 @@ namespace ApoGirl.Exploration.Runtime
             var length = _layout.CorridorLength;
             // 건물 아래는 그리지 않는다 (땅속 단면처럼 보이면 아랫길이 있는 것으로 읽힌다): 어두운 바닥 한 장
             Rect(_root, "Ground", new Vector2(-30f, -20f), new Vector2(length + 60f, 20f), new Color(0.03f, 0.03f, 0.04f), -10);
-            ExplorationArt.Tiled(_root, "Shell", "wall_brick", new Vector2(-0.6f, 0f), new Vector2(length + 1.2f, _layout.Floors * h + 0.4f), -9, new Color(0.16f, 0.17f, 0.18f));
+            var shellFloors = _layout.RooftopFloor >= 0 ? _layout.RooftopFloor : _layout.Floors;
+            ExplorationArt.Tiled(_root, "Shell", "wall_brick", new Vector2(-0.6f, 0f), new Vector2(length + 1.2f, shellFloors * h + 0.4f), -9, new Color(0.16f, 0.17f, 0.18f));
 
             for (var floor = 0; floor < _layout.Floors; floor++)
             {
                 var y = FloorY(floor);
+                if (_layout.IsRooftop(floor))
+                {
+                    BuildRooftop(y);
+                    continue;
+                }
+
                 ExplorationArt.Tiled(_root, "Corridor" + floor, _corridorWall, new Vector2(0f, y + 0.15f), new Vector2(length, h - 0.3f), -6, CorridorColor);
                 for (var x = 3f; x < length - 1f; x += 7f)
                 {
@@ -351,6 +358,11 @@ namespace ApoGirl.Exploration.Runtime
 
             for (var floor = 0; floor <= _layout.Floors; floor++)
             {
+                if (floor > 0 && _layout.IsRooftop(floor - 1))
+                {
+                    continue;   // 옥상 위는 하늘
+                }
+
                 Rect(_root, "Slab", new Vector2(0f, FloorY(floor) - 0.15f), new Vector2(length, 0.3f), new Color(0.09f, 0.09f, 0.1f), -3);
             }
 
@@ -360,6 +372,11 @@ namespace ApoGirl.Exploration.Runtime
             {
                 for (var floor = 0; floor < _layout.Floors; floor++)
                 {
+                    if (_layout.IsRooftop(floor))
+                    {
+                        continue;   // 옥상 소품은 BuildRooftop이 자리를 정해 둔다
+                    }
+
                     var blockedFloor = new List<(float, float)>();
                     var blockedWall = new List<(float, float)>();
                     foreach (var door in _layout.Doors)
@@ -413,6 +430,37 @@ namespace ApoGirl.Exploration.Runtime
                 }
             }
         }
+
+        /// <summary>옥상 소품 자리 (복도 X, 그림 키): 계단·출구·상자 자리를 피했다.</summary>
+        private static readonly (float X, string Key)[] RooftopProps =
+        {
+            (12f, "decor_acunits"), (22f, "decor_vent"), (31f, "decor_tank"), (52f, "hub_roof_antenna"),
+            (63f, "decor_pipes"), (74f, "decor_acunits"), (85f, "decor_tank"), (105f, "decor_vent"),
+        };
+
+        /// <summary>
+        /// 옥상 한 층: 하늘 → 철조망 너머 마을(roof_town) → 철조망(roof_fence) → 바닥 콘크리트. 천장 등·흩어 놓는 장식은 없다.
+        /// 그림이 없으면 색 사각형으로 대신한다.
+        /// </summary>
+        private void BuildRooftop(float y)
+        {
+            var h = _layout.FloorHeight;
+            var length = _layout.CorridorLength;
+            Rect(_root, "RoofSky", new Vector2(-30f, y), new Vector2(length + 60f, h + 30f), RoofSkyColor, -10);
+            ExplorationArt.Tiled(_root, "RoofTown", "roof_town", new Vector2(-8f, y), new Vector2(length + 16f, h), -8, new Color(0.42f, 0.46f, 0.5f));
+            ExplorationArt.Tiled(_root, "RoofFence", "roof_fence", new Vector2(-0.6f, y), new Vector2(length + 1.2f, h), -6, new Color(0.5f, 0.52f, 0.54f, 0.5f));
+            Rect(_root, "RoofFloor", new Vector2(-0.6f, y - 0.15f), new Vector2(length + 1.2f, 0.3f), new Color(0.36f, 0.36f, 0.35f), -3);
+            foreach (var (x, key) in RooftopProps)
+            {
+                if (x < length - 1f)
+                {
+                    ExplorationArt.Place(_root, "RoofProp_" + key, key, new Vector2(x, y + 0.15f), -4, Vector2.zero, Color.clear);
+                }
+            }
+        }
+
+        /// <summary>옥상 하늘 색 (조명이 낮·밤 밝기를 입힌다).</summary>
+        public static readonly Color RoofSkyColor = new Color(0.55f, 0.68f, 0.8f);
 
         /// <summary>
         /// 장식을 흩어 놓는다 (같은 지역·방이면 늘 같은 자리). 바닥 장식은 벽에 붙여 소품 뒤(-2)에, 벽 장식은 눈높이쯤(-4)에.

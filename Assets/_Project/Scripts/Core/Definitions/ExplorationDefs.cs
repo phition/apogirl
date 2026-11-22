@@ -222,6 +222,15 @@ namespace ApoGirl.Core.Definitions
         public int Floors = 4;
         public float FloorHeight = 4f;
         public float CorridorLength = 80f;
+
+        /// <summary>옥상인 층 (-1 = 없음). 옥상은 방·좀비가 없고 벽 대신 철조망 너머로 마을이 보인다.</summary>
+        public int RooftopFloor = -1;
+
+        /// <summary>옥상에 처음 올라서면 남기는 플래그 (귀환 뒤 거점 옥상 해금 이벤트의 조건).</summary>
+        public string RooftopFlag = "";
+
+        public bool IsRooftop(int floor) => RooftopFloor >= 0 && floor == RooftopFloor;
+
         public List<ConnectorDef> Connectors = new List<ConnectorDef>();
         public List<DoorDef> Doors = new List<DoorDef>();
         public List<RoomTemplateDef> RoomTemplates = new List<RoomTemplateDef>();

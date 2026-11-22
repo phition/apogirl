@@ -132,7 +132,7 @@ namespace ApoGirl.EditorTools
 
         private static LocationDef School()
         {
-            var layout = new BuildingLayoutDef { Floors = 4, FloorHeight = 4f, CorridorLength = 124f };
+            var layout = new BuildingLayoutDef { Floors = 4, FloorHeight = 4f, CorridorLength = 124f, RooftopFloor = 3, RooftopFlag = "REACHED_ROOFTOP" };
             layout.RoomTemplates.Add(new RoomTemplateDef
             {
                 Id = "ROOM_CLASSROOM", Width = 14f, DefaultLootTableId = "LOOT_SCHOOL_GENERAL",
@@ -215,12 +215,12 @@ namespace ApoGirl.EditorTools
             layout.Doors[layout.Doors.Count - 1].SearchFlag = "SEARCHED_1F_END";
             R("ROOM_RESTROOM", 0, 102f, 0);
 
-            // 2층 끝: 컴퓨터실·과학실, 3층 끝: 음악실, 4층 끝: 방송실
+            // 2층 끝: 컴퓨터실·과학실, 3층 끝: 방송실·음악실. 4층은 옥상이라 방이 없다
             var specials = new Dictionary<(int Floor, int Number), string>
             {
-                { (1, 6), "ROOM_COMPUTER" }, { (1, 7), "ROOM_SCIENCE" }, { (2, 7), "ROOM_MUSIC" }, { (3, 7), "ROOM_BROADCAST" },
+                { (1, 6), "ROOM_COMPUTER" }, { (1, 7), "ROOM_SCIENCE" }, { (2, 6), "ROOM_BROADCAST" }, { (2, 7), "ROOM_MUSIC" },
             };
-            for (var f = 1; f < layout.Floors; f++)
+            for (var f = 1; f < layout.RooftopFloor; f++)
             {
                 for (var i = 0; i < 7; i++) R(specials.TryGetValue((f, i + 1), out var special) ? special : "ROOM_CLASSROOM", f, 6f + 14f * i, i + 1);
                 R("ROOM_RESTROOM", f, 104f, 0);
@@ -239,8 +239,17 @@ namespace ApoGirl.EditorTools
 
             for (var f = 0; f < layout.Floors; f++)
             {
-                layout.Containers.Add(C($"C_{f + 1}F_HALL_LOCKER_A", ContainerKind.Locker, f, 114.5f, "LOOT_SCHOOL_LOCKER"));
-                layout.Containers.Add(C($"C_{f + 1}F_HALL_LOCKER_B", ContainerKind.Locker, f, f == 0 ? 53.5f : 117.5f, "LOOT_SCHOOL_LOCKER"));
+                var lockerA = C($"C_{f + 1}F_HALL_LOCKER_A", ContainerKind.Locker, f, 114.5f, "LOOT_SCHOOL_LOCKER");
+                var lockerB = C($"C_{f + 1}F_HALL_LOCKER_B", ContainerKind.Locker, f, f == 0 ? 53.5f : 117.5f, "LOOT_SCHOOL_LOCKER");
+                if (f == layout.RooftopFloor)
+                {
+                    // 옥상: 복도 사물함 대신 비바람에 녹슨 창고함 (상자 번호가 밀리지 않게 자리만 그대로 둔다)
+                    lockerA.X = 96f;
+                    lockerA.SpriteKey = "prop_roof_locker";
+                    lockerB.SpriteKey = "prop_roof_locker";
+                }
+                layout.Containers.Add(lockerA);
+                layout.Containers.Add(lockerB);
             }
 
             // 층마다 분실물 상자 하나: 책가방이 반드시 하나 들어 있다 (교실동에서 기본 가방 4개, 달마다 복구).
@@ -249,6 +258,10 @@ namespace ApoGirl.EditorTools
             {
                 var lostAndFound = C($"C_{f + 1}F_LOST_FOUND", ContainerKind.Box, f, 112.7f, "LOOT_SCHOOL_BAG");
                 lostAndFound.Guaranteed = true;
+                if (f == layout.RooftopFloor)
+                {
+                    lostAndFound.X = 40f;   // 옥상: 누가 놓고 간 가방 상자
+                }
                 layout.Containers.Add(lostAndFound);
             }
 
@@ -290,15 +303,12 @@ namespace ApoGirl.EditorTools
                     Crowd("ENEMY_WANDERER", 1, "", 55f, 6, 3f),
                     Crowd("ENEMY_WANDERER", 0, "ROOM_1F_ROOM_OFFICE_0", 10f, 3, 3f),
                     Crowd("ENEMY_WANDERER", 2, "", 82f, 4, 2f),
-                    Crowd("ENEMY_WANDERER", 3, "", 30f, 5, 2.5f),
                     Crowd("ENEMY_WANDERER", 1, "ROOM_2F_ROOM_CLASSROOM_4", 8f, 3, 2f),
                     Crowd("ENEMY_WANDERER", 2, "ROOM_3F_ROOM_CLASSROOM_2", 7f, 2, 1.5f),
-                    Crowd("ENEMY_WANDERER", 3, "ROOM_4F_ROOM_CLASSROOM_6", 8f, 3, 2f),
-                    Crowd("ENEMY_LISTENER", 3, "ROOM_4F_ROOM_RESTROOM_0", 5f, 2, 1f),
                     Walk("ENEMY_WANDERER", 0, "", 95f, 1, 0f),
                     Walk("ENEMY_LISTENER", 2, "", 30f, 1, 0f),
-                    Walk("ENEMY_WANDERER", 3, "", 78f, 1, 0f),
                 },
+                // 4층(옥상)에는 좀비가 없다
                 Encounters = { Dohyeon(), Notice() },
 
                 // 교실동에는 적대적 생존자가 나오지 않는다
@@ -315,12 +325,9 @@ namespace ApoGirl.EditorTools
                     Walk("ENEMY_LISTENER", 1, "", 96f, 1, 0f),
                     Walk("ENEMY_WANDERER", 2, "", 45f, 2, 8f),
                     Walk("ENEMY_LISTENER", 2, "", 84f, 2, 7f),
-                    Walk("ENEMY_WANDERER", 3, "", 36f, 3, 8f),
-                    Walk("ENEMY_WANDERER", 3, "", 87f, 2, 7f),
                     Walk("ENEMY_WANDERER", 0, "ROOM_1F_ROOM_OFFICE_0", 9f, 2, 4f),
                     Walk("ENEMY_WANDERER", 1, "ROOM_2F_ROOM_CLASSROOM_2", 7f, 1, 0f),
                     Walk("ENEMY_LISTENER", 2, "ROOM_3F_ROOM_CLASSROOM_5", 3f, 1, 0f),
-                    Walk("ENEMY_WANDERER", 3, "ROOM_4F_ROOM_CLASSROOM_3", 7f, 2, 3f),
                 },
                 Encounters = { Dohyeon(), Notice() },
             };

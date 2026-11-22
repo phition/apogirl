@@ -387,6 +387,9 @@ namespace ApoGirl.Core.Definitions
         public float HeadlessLikedItemDayChance = 0.3f;
         public float HeadlessLikedItemNightChance = 0.15f;
 
+        /// <summary>헤드리스(자동) 탐험에서 옥상이 있는 지역(학교)의 옥상까지 올라가 보는 확률 (옥상 플래그 → 거점 옥상 해금).</summary>
+        public float HeadlessRooftopChance = 0.25f;
+
         /// <summary>좋아하는 물건 (기획 D.4). 기호품 칸에는 이 표에 있는 물건만 고를 수 있다.</summary>
         public LikedItemsDef[] LikedItems =
         {
