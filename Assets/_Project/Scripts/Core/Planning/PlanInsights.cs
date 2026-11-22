@@ -53,8 +53,9 @@ namespace ApoGirl.Core.Planning
 
             foreach (var cost in action.ResourceCosts)
             {
-                preview.Costs.Add(new ResourceAmount(cost.Resource, cost.Amount));
-                if (state.Base.GetResource(cost.Resource) < cost.Amount)
+                var amount = Rules.SpecialRules.Cost(state, balance, cost);
+                preview.Costs.Add(new ResourceAmount(cost.Resource, amount));
+                if (state.Base.GetResource(cost.Resource) < amount)
                 {
                     preview.Affordable = false;
                 }

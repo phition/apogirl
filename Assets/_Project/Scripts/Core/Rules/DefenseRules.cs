@@ -39,7 +39,7 @@ namespace ApoGirl.Core.Rules
         {
             // 거점을 비웠으면 주인공 전투력이 빠지고 방어도도 일부만 (지키는 사람이 없다)
             return balance.RaidBasePower + (away ? 0 : DerivedStats.CombatPower(state, balance))
-                   + (int)Math.Round(state.Base.Defense * balance.RaidDefenseWeight * (away ? balance.AwayDefenseFactor : 1f))
+                   + (int)Math.Round((state.Base.Defense + SpecialRules.DefenseBonus(state, balance)) * balance.RaidDefenseWeight * (away ? balance.AwayDefenseFactor : 1f))
                    + guard
                    + ExtraPower(state, balance, consumeTrap)
                    + random.Range(0, Math.Max(0, balance.RaidPowerVariance));
@@ -134,7 +134,7 @@ namespace ApoGirl.Core.Rules
                     break;
 
                 case Hide:
-                    var chance = balance.IntrusionHideBaseChance + state.Base.Defense * balance.IntrusionHidePerDefense
+                    var chance = balance.IntrusionHideBaseChance + (state.Base.Defense + SpecialRules.DefenseBonus(state, balance)) * balance.IntrusionHidePerDefense
                                  + (state.Flags.Contains(DefenseRules.FlagAlarm) ? balance.IntrusionHideAlarmBonus : 0f);
                     result.Held = random.NextDouble() < chance;
                     if (result.Held)

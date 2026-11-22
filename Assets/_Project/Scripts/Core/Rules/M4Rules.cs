@@ -152,7 +152,7 @@ namespace ApoGirl.Core.Rules
                 return 0f;
             }
 
-            var chance = balance.RaidBaseChance + (state.Base.Threat - state.Base.Defense) * balance.RaidChancePerPoint;
+            var chance = balance.RaidBaseChance + (state.Base.Threat - state.Base.Defense - SpecialRules.DefenseBonus(state, balance)) * balance.RaidChancePerPoint;
             chance = Math.Min(Math.Max(chance, 0f), balance.RaidMaxChance) * DifficultyRules.Get(state, balance).HumanThreat
                      * FactionRules.RaidChanceMultiplier(state, db);
             return state.Base.Weather == WeatherType.Rain ? chance * balance.RainRaidMultiplier : chance;
@@ -203,13 +203,14 @@ namespace ApoGirl.Core.Rules
             {
                 state.Flags.Add(FlagBreached);
                 EffectApplier.ChangeVital(state, VitalType.Stress, balance.RaidBreachStress, balance, delta);
+                var scale = SpecialRules.RaidDamageScale(state, balance); // 도현 특기: 피해 −20%
                 if (!away)
                 {
-                    EffectApplier.ChangeVital(state, VitalType.Hp, -balance.RaidBreachHp, balance, delta);
+                    EffectApplier.ChangeVital(state, VitalType.Hp, -SpecialRules.ScaleDamage(balance.RaidBreachHp, scale), balance, delta);
                 }
 
-                EffectApplier.ChangeResource(state, ResourceType.Food, -balance.RaidBreachFood, delta);
-                EffectApplier.ChangeDefense(state, -balance.RaidBreachDefenseLoss, balance, delta);
+                EffectApplier.ChangeResource(state, ResourceType.Food, -SpecialRules.ScaleDamage(balance.RaidBreachFood, scale), delta);
+                EffectApplier.ChangeDefense(state, -SpecialRules.ScaleDamage(balance.RaidBreachDefenseLoss, scale), balance, delta);
             }
 
             EffectApplier.ChangeThreat(state, -balance.RaidThreatRelief, balance, delta);

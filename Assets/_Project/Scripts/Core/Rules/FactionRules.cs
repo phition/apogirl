@@ -222,6 +222,9 @@ namespace ApoGirl.Core.Rules
                         var amount = resource.Amount;
                         if (amount < 0)
                         {
+                            // 최하린 특기: 예전 동네 사정을 알아 바치는 몫이 준다
+                            amount = Math.Min(0, amount + (int)Math.Round(SpecialRules.Value(state, balance, SpecialKind.TributeCut, def.Id)));
+
                             amount = -Math.Min(-amount, state.Base.GetResource(resource.Resource));
                         }
 

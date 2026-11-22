@@ -364,6 +364,22 @@ namespace ApoGirl.Core.Definitions
             new RoleAptitudeDef { NpcId = "NPC_SURVIVOR_A", Roles = new[] { "GUARD", "COMFORT" } },
         };
 
+        /// <summary>
+        /// 동료 특기 (기획 C.2 ②): 마지막 개인 장면(호감 80)을 보면 깃발 SpecialFlagPrefix+NPC가 켜진다.
+        /// 합류해 있고 호감이 SpecialMinAffinity 이상일 때만 효과 (떨어지면 잠시 꺼짐).
+        /// </summary>
+        public string SpecialFlagPrefix = "SPECIAL_";
+        public int SpecialMinAffinity = 80;
+        public CompanionSpecialDef[] CompanionSpecials =
+        {
+            new CompanionSpecialDef { NpcId = "NPC_NURSE", Kind = SpecialKind.MedicineCostDown, Value = 1 },
+            new CompanionSpecialDef { NpcId = "NPC_DOHYEON", Kind = SpecialKind.RaidDamageCut, Value = 0.2f },
+            new CompanionSpecialDef { NpcId = "NPC_BYSTANDER", Kind = SpecialKind.WeeklyStressRelief, Value = 3 },
+            new CompanionSpecialDef { NpcId = "NPC_RINGLEADER", Kind = SpecialKind.TributeCut, Value = 2, Target = "FAC_SAGEORI" },
+            new CompanionSpecialDef { NpcId = "NPC_SURVIVOR_A", Kind = SpecialKind.DefenseBonus, Value = 10 },
+            new CompanionSpecialDef { NpcId = "NPC_WANDERER", Kind = SpecialKind.DeepExitKnown, Value = 1 },
+        };
+
         /// <summary>함께한 시간 (역할 재기획 4절): 주인공이 방 스케줄을 하면 그 방 동료 호감 +1 (적성 역할이면 + 보너스), 한 사람당 주 상한.</summary>
         public int TogetherAffinity = 1;
         public int TogetherAptitudeBonus = 1;

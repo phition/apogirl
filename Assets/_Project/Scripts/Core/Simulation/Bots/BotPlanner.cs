@@ -6,6 +6,7 @@ using ApoGirl.Core.Events;
 using ApoGirl.Core.Expedition;
 using ApoGirl.Core.Planning;
 using ApoGirl.Core.Random;
+using ApoGirl.Core.Rules;
 using ApoGirl.Core.State;
 
 namespace ApoGirl.Core.Simulation.Bots
@@ -120,13 +121,13 @@ namespace ApoGirl.Core.Simulation.Bots
         private static bool Usable(GameState state, IDefinitionDatabase db, string actionId, int slotIndex)
         {
             return db.TryGetAction(actionId, out var action) && PlanEditing.IsUnlocked(state, db, action) && PlanEditing.IsAllowedIn(action, slotIndex)
-                   && !Exhausted(state, db, action) && Affordable(state, action);
+                   && !Exhausted(state, db, action) && Affordable(state, db, action);
         }
 
         /// <summary>지금 가진 자원으로 비용을 낼 수 있는가 (빗물 없이 정수, 약 없이 치료를 두지 않는다).</summary>
-        private static bool Affordable(GameState state, ActionDef action)
+        private static bool Affordable(GameState state, IDefinitionDatabase db, ActionDef action)
         {
-            return action.ResourceCosts.All(cost => state.Base.GetResource(cost.Resource) >= cost.Amount);
+            return action.ResourceCosts.All(cost => state.Base.GetResource(cost.Resource) >= SpecialRules.Cost(state, db.Balance, cost));
         }
 
         /// <summary>상자가 고갈되는 지역(교실동)에 남은 상자가 1회분의 절반보다 적으면 가지 않는다 (빈 상자를 본 플레이어처럼).</summary>

@@ -568,6 +568,12 @@ namespace ApoGirl.Core.Simulation
             var summary = new WeekSummary { Week = calendar.Week, DiaryKey = "" };
             UpkeepRules.ApplyWeekly(_state, Balance, summary.Delta);
             BondDecayRules.ApplyWeekly(_state, _db, summary.Delta); // 기획 C.5
+            var relief = (int)System.Math.Round(SpecialRules.Value(_state, Balance, SpecialKind.WeeklyStressRelief));
+            if (relief > 0)
+            {
+                // 송예지 특기: 말없이 옆에 있어 준다
+                EffectApplier.ChangeVital(_state, VitalType.Stress, -relief, Balance, summary.Delta);
+            }
             FactionRules.ApplyWeekly(_state, _db, Balance, summary.Delta);
             if (calendar.Week >= Balance.RaidStartWeek - 1)
             {

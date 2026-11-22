@@ -18,7 +18,7 @@ namespace ApoGirl.Core.Simulation
             var affordable = true;
             foreach (var cost in action.ResourceCosts)
             {
-                if (state.Base.GetResource(cost.Resource) < cost.Amount)
+                if (state.Base.GetResource(cost.Resource) < SpecialRules.Cost(state, balance, cost))
                 {
                     affordable = false;
                     break;
@@ -29,7 +29,7 @@ namespace ApoGirl.Core.Simulation
             {
                 foreach (var cost in action.ResourceCosts)
                 {
-                    EffectApplier.ChangeResource(state, cost.Resource, -cost.Amount, delta);
+                    EffectApplier.ChangeResource(state, cost.Resource, -SpecialRules.Cost(state, balance, cost), delta);
                 }
             }
 

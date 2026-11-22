@@ -41,6 +41,40 @@ namespace ApoGirl.Core.Definitions
         public int FallbackMax;
     }
 
+    /// <summary>동료 특기의 종류 (기획 C.2 ②).</summary>
+    public enum SpecialKind
+    {
+        /// <summary>의약품 2개 이상 드는 행동은 Value만큼 덜 (최소 1). 박 선생님.</summary>
+        MedicineCostDown,
+
+        /// <summary>밤 습격에 뚫렸을 때 피해 비율 감소 (0.2 = −20%). 도현.</summary>
+        RaidDamageCut,
+
+        /// <summary>주간 결산 때 주인공 스트레스 −Value. 송예지.</summary>
+        WeeklyStressRelief,
+
+        /// <summary>Target 세력에 주마다 바치는 자원 −Value (휴전 중 공물). 최하린.</summary>
+        TributeCut,
+
+        /// <summary>습격·침입 계산의 방어도 +Value. 선배.</summary>
+        DefenseBonus,
+
+        /// <summary>깊은 곳(탐험 깊이 B)의 일방 출구 위치를 안다. 유랑자. B가 생기면 효과가 붙는다.</summary>
+        DeepExitKnown,
+    }
+
+    /// <summary>동료 특기 한 줄 (기획 C.2 ②). 이름·설명 문구는 special.{NpcId}.name / .desc.</summary>
+    [Serializable]
+    public sealed class CompanionSpecialDef
+    {
+        public string NpcId = "";
+        public SpecialKind Kind;
+        public float Value;
+
+        /// <summary>대상 (TributeCut이면 세력 ID).</summary>
+        public string Target = "";
+    }
+
     /// <summary>윤 선생님 호감 구간 (기획 C.1): 선생님 수업의 성공률·숙련 경험치·대성공 보정.</summary>
     [Serializable]
     public sealed class TeacherBondBand

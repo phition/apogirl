@@ -366,6 +366,14 @@ namespace ApoGirl.Presentation.Screens
                 yield return Loc.T("people.minor_wound");
             }
 
+            // 특기 (기획 C.2 ②): 켜져 있으면 무엇을 해 주는지, 마음이 멀어져 꺼졌으면 그 사실만
+            if (SpecialRules.IsUnlocked(state, balance, id))
+            {
+                yield return SpecialRules.IsActive(state, balance, id)
+                    ? Loc.F("people.special_on", Loc.T("special." + id + ".name"), Loc.T("special." + id + ".desc"))
+                    : Loc.F("people.special_off", Loc.T("special." + id + ".name"));
+            }
+
             // 역할 재기획: 적성은 느낌 문구로만, 정원을 넘었거나 방이 아직 없으면 그 사실만
             var db = _session.Definitions;
             var role = RoleRules.Find(db, npc.Role);
