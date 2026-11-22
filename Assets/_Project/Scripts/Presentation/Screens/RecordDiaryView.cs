@@ -183,6 +183,40 @@ namespace ApoGirl.Presentation.Screens
         /// </summary>
         private string TeacherNote(GameState state)
         {
+            // 기획 C.1: 호감이 낮으면 생활기록부처럼 딱딱하게, 아주 높으면 다정한 맺음말을 붙인다
+            var balance = _session.Definitions.Balance;
+            var affinity = state.Teacher.Affinity;
+            if (affinity < balance.TeacherFormalNoteBelow)
+            {
+                var stat = NoteStat(state);
+                return Loc.Lookup(Loc.UiTable, "diary.teacher.formal." + stat) ?? Loc.T("diary.teacher.formal.default");
+            }
+
+            var note = WarmNote(state);
+            if (affinity >= balance.TeacherCloseNoteAffinity)
+            {
+                var tail = Loc.Lookup(Loc.UiTable, "diary.teacher.close_tail." + state.Calendar.Week % 3);
+                if (!string.IsNullOrEmpty(tail)) note += " " + tail;
+            }
+
+            return note;
+        }
+
+        /// <summary>한마디에 쓸 능력치: 이번 주에 크게 오른 것, 없으면 가장 높은 것.</summary>
+        private StatType NoteStat(GameState state)
+        {
+            var delta = _session.LastWeekSummary?.Delta;
+            if (delta != null && delta.Stats.Count > 0)
+            {
+                var grew = delta.Stats.OrderByDescending(p => p.Value).First();
+                if (grew.Value >= _config.DeltaMark) return grew.Key;
+            }
+
+            return Enum.GetValues(typeof(StatType)).Cast<StatType>().OrderByDescending(s => state.Player.GetStat(s)).First();
+        }
+
+        private string WarmNote(GameState state)
+        {
             var delta = _session.LastWeekSummary?.Delta;
             if (delta != null && delta.Stats.Count > 0)
             {

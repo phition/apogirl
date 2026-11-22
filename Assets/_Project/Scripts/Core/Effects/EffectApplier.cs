@@ -244,7 +244,8 @@ namespace ApoGirl.Core.Effects
             if (change.NpcId == TeacherNpcId)
             {
                 var before = state.Teacher.Affinity;
-                state.Teacher.Affinity = Clamp(before + change.Affinity, balance.NpcAffinityMin, balance.NpcAffinityMax);
+                // 기획 C.1·C.3: 선생님은 호감 하나만. 콘텐츠에 적힌 신뢰도 호감으로 합친다
+                state.Teacher.Affinity = Clamp(before + change.Affinity + change.Trust, balance.NpcAffinityMin, balance.NpcAffinityMax);
                 delta.AddNpcAffinity(change.NpcId, state.Teacher.Affinity - before);
                 return;
             }

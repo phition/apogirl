@@ -1,5 +1,17 @@
 {
   "UI": {
+    "diary.teacher.formal.default": "성실히 생활함.",
+    "diary.teacher.formal.Stamina": "체력이 좋고 꾸준함.",
+    "diary.teacher.formal.Strength": "힘이 좋아 궂은일을 맡음.",
+    "diary.teacher.formal.Agility": "몸이 날래고 판단이 빠름.",
+    "diary.teacher.formal.Intellect": "학습 태도가 성실함.",
+    "diary.teacher.formal.Craft": "손재주가 좋아 수리에 능함.",
+    "diary.teacher.formal.Willpower": "어려움 속에서도 끈기가 있음.",
+    "diary.teacher.formal.Empathy": "주변을 잘 살핌.",
+    "diary.teacher.formal.Leadership": "앞장서는 태도가 보임.",
+    "diary.teacher.close_tail.0": "요즘 많이 컸다. 선생님이 다 보고 있어.",
+    "diary.teacher.close_tail.1": "네가 우리 반이라서 다행이다.",
+    "diary.teacher.close_tail.2": "졸업식 날, 이 말을 꼭 직접 해 주고 싶다.",
     "hud.people": "사람들",
     "hud.people_title": "사람들",
     "people.none": "아직 곁에 아무도 없다.",

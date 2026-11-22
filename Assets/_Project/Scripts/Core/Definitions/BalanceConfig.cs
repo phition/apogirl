@@ -301,6 +301,18 @@ namespace ApoGirl.Core.Definitions
         /// <summary>C.2 ① 역할 효율: 관계 단계별로 역할 효과에 곱한다 (서먹 ×0.5, 가까움 ×1.25, 믿음 ×1.5).</summary>
         public float[] BondRoleMultipliers = { 0.5f, 1f, 1f, 1.25f, 1.5f };
 
+        /// <summary>C.1 윤 선생님 호감 구간: 선생님이 가르치는 교육 행동에만 (높은 구간 하나만 적용, 병세 단계만큼 약해짐).</summary>
+        public TeacherBondBand[] TeacherBondBands =
+        {
+            new TeacherBondBand { MinAffinity = 30, CheckBonus = 0.05f, XpMultiplier = 1.1f },
+            new TeacherBondBand { MinAffinity = 60, CheckBonus = 0.10f, XpMultiplier = 1.2f },
+            new TeacherBondBand { MinAffinity = 80, CheckBonus = 0.15f, XpMultiplier = 1.3f, GreatSuccessBonus = 0.05f },
+        };
+
+        /// <summary>생활기록부 선생님의 한마디: 이 호감 미만이면 딱딱한 말투, TeacherCloseNoteAffinity 이상이면 다정한 맺음말.</summary>
+        public int TeacherFormalNoteBelow = 30;
+        public int TeacherCloseNoteAffinity = 80;
+
         /// <summary>C.4 ①: 이벤트 효과로 오르는 동료 호감 배율 (선생님·떨어질 때·배분은 제외).</summary>
         public float CompanionAffinityGainScale = 2f;
 

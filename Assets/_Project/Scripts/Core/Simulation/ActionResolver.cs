@@ -43,7 +43,8 @@ namespace ApoGirl.Core.Simulation
             }
             else if (action.HasCheck)
             {
-                result = CheckResolver.Roll(CheckChance(state, action, db), random, balance, TraitRules.Sum(state, db, TraitModifierKind.GreatSuccessBonus));
+                result = CheckResolver.Roll(CheckChance(state, action, db), random, balance,
+                    TraitRules.Sum(state, db, TraitModifierKind.GreatSuccessBonus) + MentorBondRules.GreatSuccessBonus(state, action, balance));
             }
             else
             {
@@ -63,6 +64,7 @@ namespace ApoGirl.Core.Simulation
                 if (action.HasProficiency && result != CheckResult.Failure)
                 {
                     var xp = action.ProficiencyXp + (result == CheckResult.GreatSuccess ? balance.GreatSuccessBonusXp : 0);
+                    xp = MentorBondRules.ScaleXp(state, action, xp, balance); // 기획 C.1: 선생님 호감 구간
                     AddProficiencyXp(state, action.Proficiency, xp, balance, delta);
                 }
             }
@@ -97,6 +99,7 @@ namespace ApoGirl.Core.Simulation
             var chance = CheckResolver.ComputeChance(state, action.Check, balance);
             var key = action.Check.UsesProficiency ? action.Check.Proficiency.ToString() : "";
             chance += TraitRules.Sum(state, db, TraitModifierKind.CheckBonus, key);
+            chance += MentorBondRules.CheckBonus(state, action, balance); // 기획 C.1: 선생님 호감 구간
             return Math.Min(Math.Max(chance, balance.CheckMinChance), balance.CheckMaxChance);
         }
 
