@@ -5835,6 +5835,30 @@ MonoBehaviour:
     m_Key: deep.LOC_WATERWORKS
     m_Metadata:
       m_Items: []
+  - m_Id: 1172559659024384
+    m_Key: settle.raid_cat
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1172559717744640
+    m_Key: settle.cat_comfort
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1172559717744641
+    m_Key: result.raid_cat
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1172559717744642
+    m_Key: people.cat_note
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1172559717744643
+    m_Key: line.ep_cat_home
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1172559717744644
+    m_Key: line.ep_cat_lone
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

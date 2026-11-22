@@ -2988,6 +2988,62 @@ MonoBehaviour:
     Priority: 20
     TextKey: line.ep_seat_sageori_child
     Group: SEAT_EMPTY
+  - Id: EP_CAT_HOME
+    Kind: 8
+    Condition:
+      WeekMin: 0
+      WeekMax: 0
+      Days: 
+      Phase: 0
+      Seasons: 
+      Month: 0
+      DayOfMonth: 0
+      ActionCategories: 
+      ActionIds: []
+      FlagsAll: []
+      FlagsAny: []
+      FlagsNone:
+      - SEAT_STAY_SENIOR
+      CluesAll: []
+      Checks: []
+      AnyChecks: []
+      NpcStatuses:
+      - NpcId: NPC_CAT
+        Status: 2
+      IsBirthday: 0
+    Priority: 10
+    TextKey: line.ep_cat_home
+    Group: NPC_CAT
+  - Id: EP_CAT_LONE
+    Kind: 8
+    Condition:
+      WeekMin: 0
+      WeekMax: 0
+      Days: 
+      Phase: 0
+      Seasons: 
+      Month: 0
+      DayOfMonth: 0
+      ActionCategories: 
+      ActionIds: []
+      FlagsAll: []
+      FlagsAny: []
+      FlagsNone:
+      - SEAT_STAY_SENIOR
+      CluesAll: []
+      Checks:
+      - Kind: 21
+        Key: 
+        Op: 2
+        Value: 0
+      AnyChecks: []
+      NpcStatuses:
+      - NpcId: NPC_CAT
+        Status: 2
+      IsBirthday: 0
+    Priority: 50
+    TextKey: line.ep_cat_lone
+    Group: NPC_CAT
   - Id: EP_JUN
     Kind: 8
     Condition:

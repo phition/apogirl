@@ -393,6 +393,10 @@ MonoBehaviour:
     HeadlessLikedItemNightChance: 0.15
     HeadlessRooftopChance: 0.25
     HeadlessCdChance: 0.3
+    CatFoodPerWeek: 1
+    CatComfortStressMin: 60
+    CatComfortStress: 4
+    CatRaidDamageScale: 0.85
     HeadlessDeepChance: 0.35
     HeadlessDeepSpecialBonus: 0.15
     HeadlessDeepItemChance: 0.6
