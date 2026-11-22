@@ -2129,6 +2129,7 @@ namespace ApoGirl.Exploration.Runtime
             _selfLight.pointLightOuterRadius = _balance.NightViewDistance;
             _selfLight.intensity = 0.55f;
             _selfLight.color = new Color(0.8f, 0.85f, 1f);
+            _selfLight.shadowsEnabled = false;   // 그림자는 손전등만
 
             CollectFog(_world, null);
             _lighting = new ExplorationLighting(_world, _balance, _building.FloorHeight, day ? ExplorationLighting.Phase.Day : ExplorationLighting.Phase.Night);

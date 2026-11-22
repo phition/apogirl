@@ -63,7 +63,7 @@
   - 폭설: 깊은 문이 둘인 곳은 1층 깊은 문 쌍이 막힌다. 1층 보조 탈출구는 눈에 파묻힌다(쇠지렛대로도 못 연다).
   - 헤드리스는 장마 깊은 곳 ×0.6이다.
   - 허브 날씨 칸에 장마·폭설이 뜨고(`disaster.*` 아이콘 `icon_weather_storm`·`icon_weather_snow`), 출정 준비 화면에 안내가 붙는다.
-- **탐험 후처리** (보이는 맛 1단계): `ExplorationLook` — 탐험 카메라에만 후처리(톤매핑·대비·채도·스플릿 토닝·블룸·비네트, 낮·밤 따로)와 빛 기둥(손전등·햇빛 줄기 볼류메트릭). 값은 `Resources/Art/exploration_look.json`(탐험마다 다시 읽음), 디버그 F9로 켜고 끈다. 다음 단계 후보: 그림자 캐스터·도트에 맞춘 빛 셰이더·노멀맵 자동 굽기.
+- **탐험 후처리** (보이는 맛 1단계): `ExplorationLook` — 탐험 카메라에만 후처리(톤매핑·대비·채도·스플릿 토닝·블룸·비네트, 낮·밤 따로)와 빛 기둥(손전등·햇빛 줄기 볼류메트릭). 값은 `Resources/Art/exploration_look.json`(탐험마다 다시 읽음), 디버그 F9로 켜고 끈다. 2단계 그림자: 손전등 빛(세 겹)만 그림자를 만들고(다른 빛은 `shadowsEnabled = false`), 좀비·사람·상자·바닥에 선 큰 장식(벽에 걸린 건 뺌)이 스프라이트 외곽선 그림자를 드리운다(`ExplorationLook.AddCaster`, 설정 `Shadows`: 세기 0.5·부드러움 0.3·최소 높이 0.8). 다음 단계 후보: 도트에 맞춘 빛 셰이더·노멀맵 자동 굽기.
 - 학교 교실동 4층 = 옥상(`BuildingLayoutDef.RooftopFloor`·`RooftopFlag`): 방·좀비 없음, 벽 대신 철조망 너머 마을(`roof_fence`·`roof_town`, PixelLab, 도구 `code_temp/apogirl/tools/gen_roof.py`·`install_roof.py`), 방송실은 3층. 옥상에 오르면 `REACHED_ROOFTOP` → 귀환 뒤 `EVT_A1_ROOFTOP_EARLY`로 거점 옥상 해금(4주차 전에도), 헤드리스는 `BalanceConfig.HeadlessRooftopChance`.
 - 구조 헬기 정원 8(`BalanceConfig.RescueSeats`, `BoardingRules`): 선생님 완치 + 전원 합류로 9명이면 52주 5일째 밤 `EVT_A4_SEAT_CHOICE`에서 한 명을 남기고 짝이 함께 남는다. 완치 엔딩은 `EndingDef.Variants`로 컷·그림이 바뀐다 ([Docs/M7_PLAN.md](Docs/M7_PLAN.md) "구조 헬기 좌석 선택").
 - 1주차: 1~6일은 창고에 갇혀 버티고(`ACT_STORAGE_WAIT`, `Confined`) 7일 낮에 한 번 탈출, 모두 잠김 (`TutorialWeekRules`, `BalanceConfig.TutorialDay`). 갇힌 날마다 밤 끝에 `EVT_A1_STORAGE_D1~D6`, 여섯째 날에서 `ThenEventId`로 선생님이 문을 연다(`EVT_A1_OPENING`, 2회차는 `EVT_NG_STORAGE_7DAYS` 회상을 거쳐).

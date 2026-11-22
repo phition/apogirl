@@ -46,7 +46,7 @@ namespace ApoGirl.Exploration.Runtime
         public sealed class ShadowConfig
         {
             public bool Enabled = true;
-            public float Intensity = 0.75f;
+            public float Intensity = 0.5f;
             public float Softness = 0.3f;
 
             /// <summary>이보다 낮은 그림(유닛)은 그림자를 만들지 않는다 (종이·작은 소품).</summary>

@@ -307,6 +307,7 @@ namespace ApoGirl.Exploration.Runtime
             light.lightType = Light2D.LightType.Sprite;
             light.lightCookieSprite = cookie;
             light.intensity = 0f;
+            light.shadowsEnabled = false;   // 그림자는 손전등만 (Light2D는 기본으로 켜져 있다)
             return light;
         }
 
