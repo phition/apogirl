@@ -180,7 +180,9 @@ namespace ApoGirl.Core.Simulation
 
             if (calendar.Phase == DayPhase.Night)
             {
-                UpkeepRules.ApplyDaily(_state, Balance, delta, (int)TraitRules.Sum(_state, _db, TraitModifierKind.FoodSaving));
+                // 식량 절약은 짝수 날(주 3번)에만: 그 차례 번호로 소수점을 나눠 쌓는다 (요리 ×0.5 → 하루건너 1)
+                var savingStep = (calendar.Week - 1) * (CalendarState.DaysPerWeek / 2) + calendar.Day / 2;
+                UpkeepRules.ApplyDaily(_state, Balance, delta, TraitRules.Spread(TraitRules.Sum(_state, _db, TraitModifierKind.FoodSaving), savingStep));
             }
 
             outcome.HpBefore = player.Vitals.Hp;
@@ -281,7 +283,7 @@ namespace ApoGirl.Core.Simulation
 
             if (calendar.Phase == DayPhase.Night && !action.IsExpedition && !action.Confined && player.Vitals.Hp > 0)
             {
-                var companionGuard = (int)Math.Round(TraitRules.Sum(_state, _db, TraitModifierKind.RaidGuard));
+                var companionGuard = TraitRules.RoundInt(TraitRules.Sum(_state, _db, TraitModifierKind.RaidGuard));
                 outcome.Raid = RaidRules.RollNight(_state, action, Balance, _random, delta, companionGuard, _db);
             }
 

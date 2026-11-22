@@ -499,6 +499,18 @@
     {
       "Role": "TUTOR",
       "Room": "CLASSROOM"
+    },
+    {
+      "Role": "MOOD",
+      "Room": "MUSIC"
+    },
+    {
+      "Role": "SCOUT",
+      "Room": "ROOFTOP"
+    },
+    {
+      "Role": "MECHANIC",
+      "Room": "STORAGE"
     }
   ],
   "NpcSprites": [

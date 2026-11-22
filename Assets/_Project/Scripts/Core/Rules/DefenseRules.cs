@@ -114,7 +114,7 @@ namespace ApoGirl.Core.Rules
                            + random.Range(0, Math.Max(0, balance.IntrusionStrengthVariance)),
             };
 
-            var guard = (int)Math.Round(TraitRules.Sum(state, db, TraitModifierKind.RaidGuard));
+            var guard = TraitRules.RoundInt(TraitRules.Sum(state, db, TraitModifierKind.RaidGuard));
             state.Exploration.Intrusions++;
             switch (result.Response)
             {

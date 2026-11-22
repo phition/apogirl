@@ -13,6 +13,24 @@ namespace ApoGirl.Core.Rules
     /// </summary>
     public static class TraitRules
     {
+        /// <summary>
+        /// 정수로 쓰는 보정(식량 절약·감염 감소)의 소수점을 시간에 나눠 쌓는다: step번째 몫 = ⌊v·step⌋ − ⌊v·(step−1)⌋.
+        /// 0.5면 0,1,0,1…, 1.25면 1,1,1,2…, 1.5면 1,2,1,2… (평균이 정확히 v). 음수는 0.
+        /// </summary>
+        public static int Spread(float value, int step)
+        {
+            if (value <= 0f)
+            {
+                return 0;
+            }
+
+            step = Math.Max(1, step);
+            return (int)Math.Floor(value * (double)step + 1e-6) - (int)Math.Floor(value * (double)(step - 1) + 1e-6);
+        }
+
+        /// <summary>한 번에 정하는 정수 보정 (습격 방어): .5는 올린다 (은행가 반올림으로 7.5가 8, 6.5가 6이 되지 않게).</summary>
+        public static int RoundInt(float value) => (int)Math.Round(value, MidpointRounding.AwayFromZero);
+
         public static float Sum(GameState state, IDefinitionDatabase db, TraitModifierKind kind, string key = "")
         {
             var total = 0f;

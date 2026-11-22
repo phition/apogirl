@@ -169,6 +169,38 @@
           "Value": 0.08
         }
       ]
+    },
+    {
+      "Id": "MOOD",
+      "Modifiers": [
+        {
+          "Kind": "RestRecovery",
+          "Value": 0.1
+        }
+      ]
+    },
+    {
+      "Id": "SCOUT",
+      "Modifiers": [
+        {
+          "Kind": "ExpeditionStress",
+          "Value": -0.1
+        },
+        {
+          "Kind": "SearchSpeed",
+          "Value": 0.1
+        }
+      ]
+    },
+    {
+      "Id": "MECHANIC",
+      "Modifiers": [
+        {
+          "Kind": "CheckBonus",
+          "Key": "Engineering",
+          "Value": 0.08
+        }
+      ]
     }
   ],
   "Lines": [
