@@ -5183,6 +5183,10 @@ MonoBehaviour:
     m_Key: people.aptitude.NPC_SURVIVOR_A.COMFORT
     m_Metadata:
       m_Items: []
+  - m_Id: 1116635040858112
+    m_Key: exp.rooftop
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

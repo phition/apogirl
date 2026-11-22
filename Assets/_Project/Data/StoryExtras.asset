@@ -6534,14 +6534,6 @@ MonoBehaviour:
       Facility: CAFETERIA
       Flag: 
       Actions: []
-    - Id: STORAGE
-      Always: 1
-      Facility: STORAGE
-      Flag: 
-      Actions:
-      - ACT_SURV_MAKE_CRUTCH
-      - ACT_SURV_MAKE_PROSTHETIC
-      - ACT_NIGHT_WORK
     Basic: 0
   - Id: STUDY
     Modifiers:

@@ -19,6 +19,8 @@ MonoBehaviour:
       Floors: 1
       FloorHeight: 4
       CorridorLength: 46
+      RooftopFloor: -1
+      RooftopFlag: 
       Connectors: []
       Doors:
       - RoomId: ROOM_PE_STORAGE_1

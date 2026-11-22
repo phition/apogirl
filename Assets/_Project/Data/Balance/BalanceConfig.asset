@@ -293,6 +293,7 @@ MonoBehaviour:
     HubCompanionLineEvery: 4
     HeadlessLikedItemDayChance: 0.3
     HeadlessLikedItemNightChance: 0.15
+    HeadlessRooftopChance: 0.25
     LikedItems:
     - NpcId: NPC_TEACHER
       Items:

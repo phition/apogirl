@@ -19,6 +19,8 @@ MonoBehaviour:
       Floors: 2
       FloorHeight: 4
       CorridorLength: 72
+      RooftopFloor: -1
+      RooftopFlag: 
       Connectors:
       - Kind: 0
         Floor: 0

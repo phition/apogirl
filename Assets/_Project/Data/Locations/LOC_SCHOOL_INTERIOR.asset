@@ -19,6 +19,8 @@ MonoBehaviour:
       Floors: 4
       FloorHeight: 4
       CorridorLength: 124
+      RooftopFloor: 3
+      RooftopFlag: REACHED_ROOFTOP
       Connectors:
       - Kind: 0
         Floor: 0
@@ -221,13 +223,13 @@ MonoBehaviour:
         Number: 5
         LootTableId: 
         SearchFlag: 
-      - RoomId: ROOM_3F_ROOM_CLASSROOM_6
-        TemplateId: ROOM_CLASSROOM
+      - RoomId: ROOM_3F_ROOM_BROADCAST_6
+        TemplateId: ROOM_BROADCAST
         Floor: 2
         X: 76
         Number: 6
         LootTableId: 
-        SearchFlag: 
+        SearchFlag: SEARCHED_BROADCAST
       - RoomId: ROOM_3F_ROOM_MUSIC_7
         TemplateId: ROOM_MUSIC
         Floor: 2
@@ -238,62 +240,6 @@ MonoBehaviour:
       - RoomId: ROOM_3F_ROOM_RESTROOM_0
         TemplateId: ROOM_RESTROOM
         Floor: 2
-        X: 104
-        Number: 0
-        LootTableId: 
-        SearchFlag: 
-      - RoomId: ROOM_4F_ROOM_CLASSROOM_1
-        TemplateId: ROOM_CLASSROOM
-        Floor: 3
-        X: 6
-        Number: 1
-        LootTableId: 
-        SearchFlag: 
-      - RoomId: ROOM_4F_ROOM_CLASSROOM_2
-        TemplateId: ROOM_CLASSROOM
-        Floor: 3
-        X: 20
-        Number: 2
-        LootTableId: 
-        SearchFlag: 
-      - RoomId: ROOM_4F_ROOM_CLASSROOM_3
-        TemplateId: ROOM_CLASSROOM
-        Floor: 3
-        X: 34
-        Number: 3
-        LootTableId: 
-        SearchFlag: 
-      - RoomId: ROOM_4F_ROOM_CLASSROOM_4
-        TemplateId: ROOM_CLASSROOM
-        Floor: 3
-        X: 48
-        Number: 4
-        LootTableId: 
-        SearchFlag: 
-      - RoomId: ROOM_4F_ROOM_CLASSROOM_5
-        TemplateId: ROOM_CLASSROOM
-        Floor: 3
-        X: 62
-        Number: 5
-        LootTableId: 
-        SearchFlag: 
-      - RoomId: ROOM_4F_ROOM_CLASSROOM_6
-        TemplateId: ROOM_CLASSROOM
-        Floor: 3
-        X: 76
-        Number: 6
-        LootTableId: 
-        SearchFlag: 
-      - RoomId: ROOM_4F_ROOM_BROADCAST_7
-        TemplateId: ROOM_BROADCAST
-        Floor: 3
-        X: 90
-        Number: 7
-        LootTableId: 
-        SearchFlag: SEARCHED_BROADCAST
-      - RoomId: ROOM_4F_ROOM_RESTROOM_0
-        TemplateId: ROOM_RESTROOM
-        Floor: 3
         X: 104
         Number: 0
         LootTableId: 
@@ -749,10 +695,10 @@ MonoBehaviour:
       - Id: C_4F_HALL_LOCKER_A
         Kind: 0
         Floor: 3
-        X: 114.5
+        X: 96
         SearchSeconds: 3
         LootTableId: LOOT_SCHOOL_LOCKER
-        SpriteKey: 
+        SpriteKey: prop_roof_locker
         Guaranteed: 0
       - Id: C_4F_HALL_LOCKER_B
         Kind: 0
@@ -760,7 +706,7 @@ MonoBehaviour:
         X: 117.5
         SearchSeconds: 3
         LootTableId: LOOT_SCHOOL_LOCKER
-        SpriteKey: 
+        SpriteKey: prop_roof_locker
         Guaranteed: 0
       - Id: C_1F_LOST_FOUND
         Kind: 4
@@ -789,7 +735,7 @@ MonoBehaviour:
       - Id: C_4F_LOST_FOUND
         Kind: 4
         Floor: 3
-        X: 112.7
+        X: 40
         SearchSeconds: 2.5
         LootTableId: LOOT_SCHOOL_BAG
         SpriteKey: 
@@ -830,13 +776,6 @@ MonoBehaviour:
         Spread: 2
         Dormant: 1
       - EnemyId: ENEMY_WANDERER
-        Floor: 3
-        RoomId: 
-        X: 30
-        Count: 5
-        Spread: 2.5
-        Dormant: 1
-      - EnemyId: ENEMY_WANDERER
         Floor: 1
         RoomId: ROOM_2F_ROOM_CLASSROOM_4
         X: 8
@@ -851,20 +790,6 @@ MonoBehaviour:
         Spread: 1.5
         Dormant: 1
       - EnemyId: ENEMY_WANDERER
-        Floor: 3
-        RoomId: ROOM_4F_ROOM_CLASSROOM_6
-        X: 8
-        Count: 3
-        Spread: 2
-        Dormant: 1
-      - EnemyId: ENEMY_LISTENER
-        Floor: 3
-        RoomId: ROOM_4F_ROOM_RESTROOM_0
-        X: 5
-        Count: 2
-        Spread: 1
-        Dormant: 1
-      - EnemyId: ENEMY_WANDERER
         Floor: 0
         RoomId: 
         X: 95
@@ -875,13 +800,6 @@ MonoBehaviour:
         Floor: 2
         RoomId: 
         X: 30
-        Count: 1
-        Spread: 0
-        Dormant: 0
-      - EnemyId: ENEMY_WANDERER
-        Floor: 3
-        RoomId: 
-        X: 78
         Count: 1
         Spread: 0
         Dormant: 0
@@ -1009,20 +927,6 @@ MonoBehaviour:
         Spread: 7
         Dormant: 0
       - EnemyId: ENEMY_WANDERER
-        Floor: 3
-        RoomId: 
-        X: 36
-        Count: 3
-        Spread: 8
-        Dormant: 0
-      - EnemyId: ENEMY_WANDERER
-        Floor: 3
-        RoomId: 
-        X: 87
-        Count: 2
-        Spread: 7
-        Dormant: 0
-      - EnemyId: ENEMY_WANDERER
         Floor: 0
         RoomId: ROOM_1F_ROOM_OFFICE_0
         X: 9
@@ -1042,13 +946,6 @@ MonoBehaviour:
         X: 3
         Count: 1
         Spread: 0
-        Dormant: 0
-      - EnemyId: ENEMY_WANDERER
-        Floor: 3
-        RoomId: ROOM_4F_ROOM_CLASSROOM_3
-        X: 7
-        Count: 2
-        Spread: 3
         Dormant: 0
       LockedRooms: []
       ForceableRooms: []

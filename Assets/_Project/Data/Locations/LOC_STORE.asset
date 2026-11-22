@@ -19,6 +19,8 @@ MonoBehaviour:
       Floors: 1
       FloorHeight: 4
       CorridorLength: 40
+      RooftopFloor: -1
+      RooftopFlag: 
       Connectors: []
       Doors:
       - RoomId: ROOM_STORE_STOCK_1
