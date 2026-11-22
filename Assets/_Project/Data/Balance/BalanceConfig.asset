@@ -296,8 +296,9 @@ MonoBehaviour:
     OutingDailyCap: 2
     OutingExcludedNpcs:
     - NPC_CAT
-    OutingYieldShare: 0.4
+    OutingYieldShare: 0.2
     OutingScoutAptitudeBonus: 0.3
+    OutingMedicineShare: 0
     OutingLackWeight: 3
     OutingLikedChance: 0.1
     OutingStress: 8
