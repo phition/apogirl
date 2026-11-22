@@ -56,6 +56,13 @@
   - 배치: `LocationBuilder.Deep`/`DeepDoor`/`OneWay`로 놓고, Build Locations 때 `DeepRules.Issues`가 점검한다. 전리품 표는 `Content/Base/deep_loot.json`이다.
   - 탐험 화면: 늘 어둡고 소리가 울린다. 일방 출구는 두 번 눌러야 나가고, 유랑자 특기가 있으면 출구 쪽을 알려 준다.
   - 헤드리스는 `BalanceConfig` 깊은 곳 절의 `HeadlessDeepChance`를 쓴다. CD_04·05·06·08은 깊은 곳에 있다. 그림은 아직 코드 그림이다.
+- **계절 재해** (확장 6)
+  - 기간: 장마 `MONSOON`(15~19주, 비 75%)·폭설 `SNOWSTORM`(42~46주, 한파 80%). 표는 `BalanceConfig.Disasters`, 날씨 굴림은 `DisasterRules.RollWeather`다.
+  - 깊은 곳이 있는 지역의 지도가 바뀐다. 실행 중에만 쓰는 사본이다(`DisasterRules.Apply`, `ConnectorDef`·`ExitDef.BlockedBy`).
+  - 장마: 깊은 곳 맨 아래층이 침수된다(걸음 ×0.7·소음 ×1.5, `FloodMoveMultiplier`·`FloodNoiseMultiplier`). 그 층 일방 출구가 막히고, 잠긴 보조 탈출구가 열린다.
+  - 폭설: 깊은 문이 둘인 곳은 1층 깊은 문 쌍이 막힌다. 1층 보조 탈출구는 눈에 파묻힌다(쇠지렛대로도 못 연다).
+  - 헤드리스는 장마 깊은 곳 ×0.6이다.
+  - 허브 날씨 칸에 장마·폭설이 뜨고(`disaster.*` 아이콘 `icon_weather_storm`·`icon_weather_snow`), 출정 준비 화면에 안내가 붙는다.
 - 학교 교실동 4층 = 옥상(`BuildingLayoutDef.RooftopFloor`·`RooftopFlag`): 방·좀비 없음, 벽 대신 철조망 너머 마을(`roof_fence`·`roof_town`, PixelLab, 도구 `code_temp/apogirl/tools/gen_roof.py`·`install_roof.py`), 방송실은 3층. 옥상에 오르면 `REACHED_ROOFTOP` → 귀환 뒤 `EVT_A1_ROOFTOP_EARLY`로 거점 옥상 해금(4주차 전에도), 헤드리스는 `BalanceConfig.HeadlessRooftopChance`.
 - 구조 헬기 정원 8(`BalanceConfig.RescueSeats`, `BoardingRules`): 선생님 완치 + 전원 합류로 9명이면 52주 5일째 밤 `EVT_A4_SEAT_CHOICE`에서 한 명을 남기고 짝이 함께 남는다. 완치 엔딩은 `EndingDef.Variants`로 컷·그림이 바뀐다 ([Docs/M7_PLAN.md](Docs/M7_PLAN.md) "구조 헬기 좌석 선택").
 - 1주차: 1~6일은 창고에 갇혀 버티고(`ACT_STORAGE_WAIT`, `Confined`) 7일 낮에 한 번 탈출, 모두 잠김 (`TutorialWeekRules`, `BalanceConfig.TutorialDay`). 갇힌 날마다 밤 끝에 `EVT_A1_STORAGE_D1~D6`, 여섯째 날에서 `ThenEventId`로 선생님이 문을 연다(`EVT_A1_OPENING`, 2회차는 `EVT_NG_STORAGE_7DAYS` 회상을 거쳐).
