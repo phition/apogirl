@@ -35,6 +35,12 @@ namespace ApoGirl.Presentation.Screens
         private readonly ProgressBar _progress;
         private readonly VisualElement _table;
         private readonly Label _status;
+        private readonly Func<string, string> _fieldName;
+        private readonly Button _draftButton;
+        private readonly VisualElement _draftBox;
+        private readonly TextField _draft;
+        private readonly Button _append;
+        private BalanceLabJson.BotRunRecord _record;
 
         private BotBatchProgress _running;
         private Task<Outcome> _task;
@@ -51,9 +57,11 @@ namespace ApoGirl.Presentation.Screens
             public BalanceLabJson.BotRunRecord Previous;
         }
 
-        public BalanceLabBotPanel(VisualElement parent, IDefinitionDatabase db)
+        /// <param name="fieldName">BalanceConfig 필드 이름 → 표의 한국어 이름 (없으면 빈 문자열).</param>
+        public BalanceLabBotPanel(VisualElement parent, IDefinitionDatabase db, Func<string, string> fieldName = null)
         {
             _db = db;
+            _fieldName = fieldName ?? (_ => "");
             _root = new VisualElement();
             _root.AddToClassList("lab-bot");
             parent.Add(_root);
@@ -92,6 +100,10 @@ namespace ApoGirl.Presentation.Screens
             });
             _open.SetEnabled(false);
             bar.Add(_open);
+            _draftButton = Small(Loc.T("lab.log.draft"), OpenDraft);
+            _draftButton.tooltip = Loc.T("lab.log.draft_tip");
+            _draftButton.SetEnabled(false);
+            bar.Add(_draftButton);
 
             _progress = new ProgressBar();
             _progress.AddToClassList("lab-bot-progress");
@@ -102,12 +114,30 @@ namespace ApoGirl.Presentation.Screens
             _table.AddToClassList("lab-bot-table");
             _root.Add(_table);
 
+            // L5: 기록 초안 편집 칸 (기록에 붙이기를 누르면 뜬다)
+            _draftBox = new VisualElement();
+            _draftBox.AddToClassList("lab-log");
+            _draftBox.AddToClassList("hidden");
+            _root.Add(_draftBox);
+            _draft = new TextField { multiline = true };
+            _draft.AddToClassList("lab-log-text");
+            _draftBox.Add(_draft);
+            var draftBar = new VisualElement();
+            draftBar.AddToClassList("lab-bot-bar");
+            _draftBox.Add(draftBar);
+            _append = Small("", AppendDraft);
+            _append.AddToClassList("lab-save");
+            draftBar.Add(_append);
+            draftBar.Add(Small(Loc.T("lab.log.close"), () => _draftBox.AddToClassList("hidden")));
+
             _status = new Label();
             _status.AddToClassList("lab-status");
             _root.Add(_status);
 
             Setup();
-            ShowRecord(LoadLast(), null);
+            _record = LoadLast();
+            _draftButton.SetEnabled(_record != null);
+            ShowRecord(_record, null);
         }
 
         private void Setup()
@@ -202,7 +232,10 @@ namespace ApoGirl.Presentation.Screens
                 return;
             }
 
-            var changed = BalanceOverridesJson.Collect(snapshot.Balance).Count + BalanceLabModel.For(_db).ChangedModelIds.Count();
+            var changes = Changes(snapshot);
+            var changed = changes.Count;
+            var settings = $"{strategies.Count}전략 × {runs}판, {(_difficulty.index >= 0 ? _difficulty.value : config.Difficulty)} 난이도, 시드 {config.BaseSeed}~{config.BaseSeed + runs - 1}, " +
+                           $"코드 `{BalanceLabStore.CodeVersion?.Invoke() ?? "빌드"}`" + (changed > 0 ? $" + 밸런스 표 수정 {changed}개." : ".");
             var header = $"{DateTime.Now:yyyy-MM-dd HH:mm} · 난이도 {config.Difficulty} · 전략 {strategies.Count}종 × {runs}판 · 시드 {config.BaseSeed}~{config.BaseSeed + runs - 1} · 밸런스 표 (기본값과 다른 값 {changed}개)";
             var folder = BalanceLabStore.BotFolder;
             var work = BalanceLabStore.Work;
@@ -210,7 +243,7 @@ namespace ApoGirl.Presentation.Screens
 
             _running = new BotBatchProgress();
             var progress = _running;
-            _task = Task.Run(() => Execute(snapshot, config, strategies, runs, progress, parallelism, header, folder, work));
+            _task = Task.Run(() => Execute(snapshot, config, strategies, runs, progress, parallelism, header, folder, work, changes, settings));
             _run.text = Loc.T("lab.bot.cancel");
             _progress.RemoveFromClassList("hidden");
             _progress.value = 0;
@@ -220,7 +253,7 @@ namespace ApoGirl.Presentation.Screens
 
         // 뒤 스레드: 유니티 API를 쓰지 않는다
         private static Outcome Execute(IDefinitionDatabase db, BotConfigDef config, List<BotStrategyDef> strategies, int runs, BotBatchProgress progress,
-            int parallelism, string header, string folder, string work)
+            int parallelism, string header, string folder, string work, List<string> changes, string settings)
         {
             var outcome = new Outcome();
             try
@@ -251,7 +284,11 @@ namespace ApoGirl.Presentation.Screens
                     Runs = runs,
                     Strategies = strategies.Select(s => s.Id).ToList(),
                     Rows = BotBatch.EndingTable(outcome.Results),
+                    Changes = changes,
+                    Settings = settings,
+                    Reference = BotLogWriter.DeathCauses(outcome.Results),
                 };
+                outcome.Record.Direction = BotLogWriter.Direction(outcome.Record, outcome.Previous);
                 Directory.CreateDirectory(work);
                 File.WriteAllText(lastPath, BalanceLabJson.WriteBotRun(outcome.Record));
             }
@@ -300,6 +337,8 @@ namespace ApoGirl.Presentation.Screens
 
             _summaryPath = outcome.SummaryPath;
             _open.SetEnabled(true);
+            _record = outcome.Record;
+            _draftButton.SetEnabled(true);
             ShowRecord(outcome.Record, outcome.Previous);
             _status.text = Loc.F("lab.bot.done", outcome.Results.Count, outcome.Seconds.ToString("0.0"), outcome.SummaryPath);
             UnityEngine.Debug.Log($"[BalanceLab] 봇 {outcome.Results.Count}판 완료 ({outcome.Seconds:0.0}초) → {Path.GetFullPath(outcome.SummaryPath)}");
@@ -315,6 +354,110 @@ namespace ApoGirl.Presentation.Screens
             catch (IOException)
             {
                 return null;
+            }
+        }
+
+        // ── 기록 (L5): 기록 문서 새 절 초안 → 고쳐서 붙이기 ──
+
+        /// <summary>돌린 순간의 "바뀐 것": 밸런스 수치·난이도는 코드 기본값 대비, 탐험 모델은 표를 연(저장한) 뒤 바뀐 칸.</summary>
+        private List<string> Changes(IDefinitionDatabase snapshot)
+        {
+            var lines = new List<string>();
+            var defaults = new BalanceConfig();
+            var overrides = BalanceOverridesJson.Collect(snapshot.Balance);
+            foreach (var pair in overrides.Fields)
+            {
+                var field = BalanceFields.Find(pair.Key);
+                var name = _fieldName(pair.Key);
+                lines.Add($"{pair.Key} {V(field?.GetValue(defaults))} → {V(field?.GetValue(snapshot.Balance))}" +
+                          (string.IsNullOrEmpty(name) ? "" : $" ({name})"));
+            }
+
+            foreach (var difficulty in overrides.Difficulties)
+            {
+                var basis = defaults.Difficulties?.FirstOrDefault(d => d.Id == difficulty.Key);
+                foreach (var pair in difficulty.Value)
+                {
+                    var field = typeof(DifficultyDef).GetField(pair.Key);
+                    lines.Add($"난이도 {difficulty.Key}.{pair.Key} {V(basis != null ? field?.GetValue(basis) : null)} → {pair.Value}");
+                }
+            }
+
+            foreach (var cell in BalanceLabModel.For(_db).Changed.Where(c => c.Key.StartsWith("Model/", StringComparison.Ordinal)))
+            {
+                lines.Add($"탐험 모델 {cell.Key.Substring("Model/".Length)} {cell.BaselineText} → {cell.Text}");
+            }
+
+            return lines;
+        }
+
+        private static string V(object value)
+        {
+            switch (value)
+            {
+                case null: return "-";
+                case float f: return f.ToString("0.####", System.Globalization.CultureInfo.InvariantCulture);
+                case double v: return v.ToString("0.####", System.Globalization.CultureInfo.InvariantCulture);
+                case bool b: return b ? "true" : "false";
+                default: return value.ToString();
+            }
+        }
+
+        private void OpenDraft()
+        {
+            if (_record == null)
+            {
+                return;
+            }
+
+            string doc = null;
+            if (!string.IsNullOrEmpty(BalanceLabStore.BotLogPath) && File.Exists(BalanceLabStore.BotLogPath))
+            {
+                doc = File.ReadAllText(BalanceLabStore.BotLogPath);
+            }
+
+            var number = BotLogWriter.NextNumber(doc ?? "");
+            _draft.value = BotLogWriter.Draft(number, DateTime.Now.ToString("yyyy-MM-dd"), _record);
+            _append.text = doc != null ? Loc.F("lab.log.append", number) : Loc.T("lab.log.save_draft");
+            _draftBox.RemoveFromClassList("hidden");
+            _status.text = Loc.T("lab.log.hint");
+        }
+
+        // 에디터: 점검 뒤 기록 문서 맨 아래에 붙인다 (커밋은 하지 않는다). 빌드: 초안 파일로 남긴다.
+        private void AppendDraft()
+        {
+            var section = _draft.value ?? "";
+            try
+            {
+                var path = BalanceLabStore.BotLogPath;
+                if (string.IsNullOrEmpty(path) || !File.Exists(path))
+                {
+                    Directory.CreateDirectory(BalanceLabStore.Work);
+                    var draftPath = Path.Combine(BalanceLabStore.Work, $"botlog_draft_{DateTime.Now:yyyyMMdd_HHmmss}.md");
+                    File.WriteAllText(draftPath, section.Replace("\r\n", "\n"));
+                    _status.text = Loc.F("lab.log.draft_saved", draftPath);
+                    _draftBox.AddToClassList("hidden");
+                    return;
+                }
+
+                var doc = File.ReadAllText(path);
+                var problem = BotLogWriter.Check(doc, section);
+                if (problem != null)
+                {
+                    _status.text = Loc.F("lab.log.check", problem);
+                    _status.EnableInClassList("lab-status-warn", true);
+                    return;
+                }
+
+                File.WriteAllText(path, BotLogWriter.Append(doc, section));
+                _status.EnableInClassList("lab-status-warn", false);
+                _status.text = Loc.F("lab.log.appended", BotLogWriter.NextNumber(doc), path);
+                _draftBox.AddToClassList("hidden");
+                UnityEngine.Debug.Log($"[BalanceLab] 봇 기록 #{BotLogWriter.NextNumber(doc)} → {path}");
+            }
+            catch (Exception exception) when (exception is IOException || exception is UnauthorizedAccessException)
+            {
+                _status.text = Loc.F("lab.bot.error", exception.Message);
             }
         }
 

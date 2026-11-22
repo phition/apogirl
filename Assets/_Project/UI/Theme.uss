@@ -1029,3 +1029,6 @@ Button.selected { border-color: var(--accent); background-color: var(--accent-so
 .lab-bot-num { width: 110px; -unity-text-align: middle-right; }
 .lab-bot-in { color: #9fe08f; -unity-font-style: bold; }
 .lab-bot-out { color: #f07a6a; -unity-font-style: bold; }
+.lab-log { margin-top: 4px; }
+.lab-log-text { height: 260px; }
+.lab-log-text > .unity-text-field__input, .lab-log-text .unity-base-text-field__input { font-size: 13px; white-space: normal; -unity-text-align: upper-left; background-color: #0f1118; }

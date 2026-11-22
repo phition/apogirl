@@ -102,7 +102,9 @@ namespace ApoGirl.Presentation.Screens
             _status = new Label();
             _status.AddToClassList("lab-status");
             window.Add(_status);
-            new BalanceLabBotPanel(window, session.Definitions); // L4: 봇 띠 (스스로 붙고 스스로 돈다)
+            // L4·L5: 봇 띠 (스스로 붙고 스스로 돈다). 기록 초안의 "바뀐 것"에 표의 한국어 이름을 붙인다.
+            new BalanceLabBotPanel(window, session.Definitions, field =>
+                _layout.Tabs.SelectMany(t => t.Rows).FirstOrDefault(r => r.Field == field && !string.IsNullOrEmpty(r.Name))?.Name ?? "");
             var help = new Label(Loc.T("lab.help"));
             help.AddToClassList("lab-help");
             window.Add(help);

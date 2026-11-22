@@ -6595,6 +6595,42 @@ MonoBehaviour:
     m_Key: lab.bot.total
     m_Metadata:
       m_Items: []
+  - m_Id: 1306936154013696
+    m_Key: lab.log.draft
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1306936288231424
+    m_Key: lab.log.draft_tip
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1306936288231425
+    m_Key: lab.log.append
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1306936288231426
+    m_Key: lab.log.save_draft
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1306936288231427
+    m_Key: lab.log.close
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1306936288231428
+    m_Key: lab.log.hint
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1306936288231429
+    m_Key: lab.log.check
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1306936288231430
+    m_Key: lab.log.appended
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1306936288231431
+    m_Key: lab.log.draft_saved
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

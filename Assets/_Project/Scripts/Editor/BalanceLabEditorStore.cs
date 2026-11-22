@@ -26,6 +26,28 @@ namespace ApoGirl.EditorTools
             BalanceLabStore.LoadBotConfig = () => BotConfigJson.Load(BotConfigJson.DefaultPath);
             BalanceLabStore.BotOutputFolder = BotSimulationMenu.OutputFolder;
             BalanceLabStore.WorkFolder = "Temp/BalanceLab";
+            BalanceLabStore.BotLogPath = BotLogWriter.DefaultPath;
+            BalanceLabStore.CodeVersion = GitShortHead;
+        }
+
+        /// <summary>프로젝트 폴더의 git HEAD 짧은 해시 (git이 없으면 "?").</summary>
+        private static string GitShortHead()
+        {
+            try
+            {
+                var info = new System.Diagnostics.ProcessStartInfo("git", "rev-parse --short HEAD")
+                {
+                    RedirectStandardOutput = true, UseShellExecute = false, CreateNoWindow = true,
+                };
+                using var process = System.Diagnostics.Process.Start(info);
+                var text = process?.StandardOutput.ReadToEnd().Trim();
+                process?.WaitForExit(3000);
+                return string.IsNullOrEmpty(text) ? "?" : text;
+            }
+            catch (Exception exception) when (exception is System.ComponentModel.Win32Exception || exception is InvalidOperationException)
+            {
+                return "?";
+            }
         }
 
         public static BalanceLabStore.Result Save(IDefinitionDatabase db)

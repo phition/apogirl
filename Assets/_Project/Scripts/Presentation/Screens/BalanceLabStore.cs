@@ -50,6 +50,14 @@ namespace ApoGirl.Presentation.Screens
         /// <summary>에디터: Temp/BalanceLab (지난번 결과 last_run.json). 비어 있으면 persistentDataPath/BalanceLab.</summary>
         public static string WorkFolder;
 
+        // ── 기록 (L5) ──
+
+        /// <summary>에디터: Docs/BOT_ENDING_LOG.md. 비어 있으면(빌드) 초안을 persistentDataPath/BalanceLab/에 파일로 남긴다.</summary>
+        public static string BotLogPath;
+
+        /// <summary>에디터: git 짧은 커밋 해시. 비어 있으면 "빌드".</summary>
+        public static Func<string> CodeVersion;
+
         /// <summary>봇 설정. 없으면 null.</summary>
         public static BotConfigDef BotConfig()
         {

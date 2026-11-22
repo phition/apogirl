@@ -153,6 +153,58 @@ namespace ApoGirl.Tests.EditMode
             Assert.That(ApoGirl.Core.Simulation.Bots.BotBatch.Run(snapshot, config, strategies, 2, cancelled), Is.Null);
         }
 
+        /// <summary>L5: 기록 초안이 문서 형식(번호·바뀐 것·설정·표·방향성)을 따르고, 붙이면 예전 기록은 그대로 맨 아래에만 붙는다.</summary>
+        [Test]
+        public void BotLog_DraftFollowsDocFormat_AndAppendsAtEnd()
+        {
+            var doc = File.ReadAllText("Docs/BOT_ENDING_LOG.md");
+            var next = BotLogWriter.NextNumber(doc);
+            Assert.That(doc, Does.Contain("## #" + (next - 1) + " ·"));
+            Assert.That(BotLogWriter.NextNumber(""), Is.EqualTo(1));
+
+            BalanceLabJson.BotRunRecord Record(float bad, float day) => new BalanceLabJson.BotRunRecord
+            {
+                Stamp = "2026-11-23 01:00",
+                Strategies = { "DAY_ONLY", "CARE" },
+                Rows =
+                {
+                    new ApoGirl.Core.Simulation.Bots.BotEndingRow { Name = "기본 (일반·균형)", Min = 0.15f, Max = 0.25f, Total = 1 - bad, ByStrategy = { ["DAY_ONLY"] = 1 - day, ["CARE"] = 0.5f } },
+                    new ApoGirl.Core.Simulation.Bots.BotEndingRow { Name = "배드", Min = 0.45f, Max = 0.55f, Total = bad, ByStrategy = { ["DAY_ONLY"] = day, ["CARE"] = 0.5f } },
+                },
+                Changes = { "DailyFood 2 → 3 (하루 식량)" },
+                Settings = "2전략 × 2판, 표준 난이도, 시드 1000~1001, 코드 `abc1234` + 밸런스 표 수정 1개.",
+                Reference = "사망 원인은 END_CAUSE_STARVATION 2.",
+            };
+
+            var before = Record(0.25f, 0f);
+            var now = Record(0.5f, 0.5f);
+            now.Direction = BotLogWriter.Direction(now, before);
+            Assert.That(now.Direction, Does.StartWith("배드 25% → 50%"));
+            Assert.That(now.Direction, Does.Contain("DAY_ONLY"));
+            Assert.That(now.Direction, Does.Not.Contain("CARE"), "움직이지 않은 전략은 빼고 적는다");
+
+            var draft = BotLogWriter.Draft(next, "2026-11-23", now);
+            var lines = draft.Split((char)10);
+            Assert.That(lines[0], Is.EqualTo($"## #{next} · 2026-11-23 · {BotLogWriter.TitlePlaceholder}"));
+            Assert.That(draft, Does.Contain("- DailyFood 2 → 3 (하루 식량)"));
+            Assert.That(draft, Does.Contain("**봇 설정:** 2전략 × 2판"));
+            Assert.That(draft, Does.Contain("| 묶음 | 전체 | DAY_ONLY | CARE |"));
+            Assert.That(draft, Does.Contain("| 배드 | 50% | 50% | 50% |"));
+            Assert.That(draft, Does.Contain("**참고 지표:** 사망 원인은"));
+            Assert.That(draft, Does.Contain("**방향성**"));
+            Assert.That(draft, Does.Not.Contain(((char)13).ToString()));
+
+            Assert.That(BotLogWriter.Check(doc, draft), Is.EqualTo("제목을 적어 주세요."));
+            var titled = draft.Replace(BotLogWriter.TitlePlaceholder, "하루 식량 3");
+            Assert.That(BotLogWriter.Check(doc, titled), Is.Null);
+            Assert.That(BotLogWriter.Check(doc, titled.Replace("## #" + next, "## #" + (next + 5))), Is.Not.Null, "번호가 어긋나면 막는다");
+
+            var appended = BotLogWriter.Append(doc, titled);
+            var norm = doc.Replace("\r\n", "\n").TrimEnd();
+            Assert.That(appended.StartsWith(norm + (char)10 + (char)10 + "## #" + next), Is.True, "예전 기록 뒤에 빈 줄 하나를 두고 붙는다");
+            Assert.That(BotLogWriter.NextNumber(appended), Is.EqualTo(next + 1));
+        }
+
         private static T Copy<T>(T source) where T : new()
         {
             var copy = new T();

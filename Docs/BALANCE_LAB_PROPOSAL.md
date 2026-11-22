@@ -20,7 +20,10 @@
   - 결과 표: 엔딩 묶음 × (목표·전체·전략), 전체 칸은 목표 안 초록·밖 붉은색, 칸마다 지난번 대비 ▲▼(%p). 지난번 = `Temp/BalanceLab/last_run.json`. 보고서는 메뉴와 같은 `Temp/BotSim/`, 머리글에 "밸런스 표 (기본값과 다른 값 N개)".
   - 코드: `Core/Simulation/Bots/BotBatch.cs`, `Core/Definitions/SnapshotDatabase.cs`, `Presentation/Screens/BalanceLabBotPanel.cs`. 설정은 누를 때마다 `bot_strategies.json`을 다시 읽는다.
   - 빌드: 봇 설정 파일이 빌드에 없어 지금은 "에디터에서만"이라고 뜬다 (`Resources/Balance/bot_strategies`가 생기면 돈다).
-- 아직: 탐험 중 여는 키, 상자 전리품 표 펼치기, 일괄 배율 단추·도움 지표(L2 나머지), 참고 지표 접어 보기, 빌드용 봇 설정, L5~L6.
+- L5 완료: 봇 띠 "기록 초안" → 마지막 봇 결과로 `BOT_ENDING_LOG.md` 새 절 초안(번호 = 문서 마지막 + 1, 바뀐 것 = 돌린 순간의 기본값 대비 수치·난이도 + 표를 연 뒤 바뀐 탐험 모델 칸, 봇 설정 줄(git 짧은 해시 포함), 묶음 표, 참고 지표 = 사망 원인, 방향성 첫 줄 = 지난 실행 대비 배드·크게 움직인 전략)을 편집 칸에 띄운다.
+  - "붙이기 → BOT_ENDING_LOG #N"은 제목 자리표시가 남았거나 번호가 문서와 어긋나면 막고, 맞으면 문서 맨 아래에 빈 줄 하나를 두고 붙인다(예전 기록은 그대로, 커밋 안 함). 빌드에서는 `persistentDataPath/BalanceLab/botlog_draft_*.md`로 남긴다.
+  - 초안 재료는 `last_run.json`에 함께 남아 창을 닫았다 열어도 같은 초안이 나온다. 코드: `Systems/Content/BotLogWriter.cs`.
+- 아직: 탐험 중 여는 키, 상자 전리품 표 펼치기, 일괄 배율 단추·도움 지표(L2 나머지), 참고 지표 접어 보기, 빌드용 봇 설정, L6(에디터 창).
 
 ---
 

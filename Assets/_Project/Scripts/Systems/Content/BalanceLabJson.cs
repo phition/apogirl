@@ -96,6 +96,12 @@ namespace ApoGirl.Systems.Content
             public int Runs;
             public List<string> Strategies = new List<string>();
             public List<ApoGirl.Core.Simulation.Bots.BotEndingRow> Rows = new List<ApoGirl.Core.Simulation.Bots.BotEndingRow>();
+
+            /// <summary>L5 기록 초안용: 돌린 순간의 바뀐 값·봇 설정 한 줄·참고 지표·방향성 자동 초안.</summary>
+            public List<string> Changes = new List<string>();
+            public string Settings = "";
+            public string Reference = "";
+            public string Direction = "";
         }
 
         public static string WriteBotRun(BotRunRecord record)
