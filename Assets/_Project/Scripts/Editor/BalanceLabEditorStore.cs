@@ -23,6 +23,9 @@ namespace ApoGirl.EditorTools
         {
             BalanceLabStore.Save = Save;
             BalanceLabStore.ResetToDefaults = ResetToDefaults;
+            BalanceLabStore.LoadBotConfig = () => BotConfigJson.Load(BotConfigJson.DefaultPath);
+            BalanceLabStore.BotOutputFolder = BotSimulationMenu.OutputFolder;
+            BalanceLabStore.WorkFolder = "Temp/BalanceLab";
         }
 
         public static BalanceLabStore.Result Save(IDefinitionDatabase db)

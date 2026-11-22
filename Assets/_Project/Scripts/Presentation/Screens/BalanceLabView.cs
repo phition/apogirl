@@ -102,6 +102,7 @@ namespace ApoGirl.Presentation.Screens
             _status = new Label();
             _status.AddToClassList("lab-status");
             window.Add(_status);
+            new BalanceLabBotPanel(window, session.Definitions); // L4: 봇 띠 (스스로 붙고 스스로 돈다)
             var help = new Label(Loc.T("lab.help"));
             help.AddToClassList("lab-help");
             window.Add(help);

@@ -3,6 +3,7 @@ using System.IO;
 using System.Linq;
 using ApoGirl.Core.Balance;
 using ApoGirl.Core.Definitions;
+using ApoGirl.Core.Simulation.Bots;
 using ApoGirl.Systems.Content;
 using UnityEngine;
 
@@ -37,6 +38,33 @@ namespace ApoGirl.Presentation.Screens
         public static Func<IDefinitionDatabase, Result> ResetToDefaults;
 
         public static bool CanSave => Save != null;
+
+        // ── 봇 (L4) ──
+
+        /// <summary>에디터: bot_strategies.json을 읽는다. 비어 있으면 Resources/Balance/bot_strategies를 찾는다 (빌드에는 아직 없다).</summary>
+        public static Func<BotConfigDef> LoadBotConfig;
+
+        /// <summary>에디터: 메뉴 Run Bot Simulation과 같은 Temp/BotSim. 비어 있으면 persistentDataPath/BalanceLab/BotSim.</summary>
+        public static string BotOutputFolder;
+
+        /// <summary>에디터: Temp/BalanceLab (지난번 결과 last_run.json). 비어 있으면 persistentDataPath/BalanceLab.</summary>
+        public static string WorkFolder;
+
+        /// <summary>봇 설정. 없으면 null.</summary>
+        public static BotConfigDef BotConfig()
+        {
+            if (LoadBotConfig != null)
+            {
+                return LoadBotConfig();
+            }
+
+            var text = Resources.Load<TextAsset>("Balance/bot_strategies")?.text;
+            return string.IsNullOrEmpty(text) ? null : BotConfigJson.Parse(text, "Resources/Balance/bot_strategies");
+        }
+
+        public static string BotFolder => string.IsNullOrEmpty(BotOutputFolder) ? System.IO.Path.Combine(Application.persistentDataPath, "BalanceLab", "BotSim") : BotOutputFolder;
+
+        public static string Work => string.IsNullOrEmpty(WorkFolder) ? System.IO.Path.Combine(Application.persistentDataPath, "BalanceLab") : WorkFolder;
 
         /// <summary>지금 바뀐 값을 persistentDataPath/BalanceLab/에 쓴다 (빌드에서 고친 값을 에디터로 옮길 때).</summary>
         public static Result Export(IDefinitionDatabase db)

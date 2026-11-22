@@ -113,6 +113,53 @@ namespace ApoGirl.Tests.EditMode
             Assert.That(BalanceOverridesJson.Collect(live).Count, Is.Zero);
         }
 
+        /// <summary>L4: 사본 DB는 뒤에 고친 값을 안 보고, 묶음 실행(병렬)은 메뉴처럼 한 판씩 돌린 것과 같다.</summary>
+        [Test]
+        public void BotBatch_MatchesSequentialRuns_AndSnapshotIgnoresLaterEdits()
+        {
+            var live = M6Act4Tests.ShippedDb();
+            var config = BotConfigJson.Load(BotConfigJson.DefaultPath);
+            var strategies = config.Strategies.Take(2).ToList();
+            var modelId = BalanceLabModel.For(live).ModelIds.First();
+            live.TryGetExpeditionModel(modelId, out var model);
+            var snapshot = new SnapshotDatabase(live, Copy(live.Balance), new System.Collections.Generic.Dictionary<string, ExpeditionModelDef> { [modelId] = Copy(model) });
+
+            // 사본을 만든 뒤 표를 고친다 → 사본은 그대로
+            var food = live.Balance.DailyFood;
+            var down = model.Day.BaseDownChance;
+            live.Balance.DailyFood = food + 5;
+            model.Day.BaseDownChance = 0.99f;
+            Assert.That(snapshot.Balance.DailyFood, Is.EqualTo(food));
+            snapshot.TryGetExpeditionModel(modelId, out var copied);
+            Assert.That(copied.Day.BaseDownChance, Is.EqualTo(down));
+            live.Balance.DailyFood = food;
+            model.Day.BaseDownChance = down;
+
+            var progress = new ApoGirl.Core.Simulation.Bots.BotBatchProgress();
+            var batch = ApoGirl.Core.Simulation.Bots.BotBatch.Run(snapshot, config, strategies, 2, progress, parallelism: 4);
+            Assert.That(progress.Done, Is.EqualTo(4));
+            string Key(ApoGirl.Core.Simulation.Bots.BotRunResult r) => r.StrategyId + r.Seed + r.EndingId + r.EndWeek;
+            System.Collections.Generic.List<ApoGirl.Core.Simulation.Bots.BotRunResult> OneByOne(IDefinitionDatabase db) =>
+                strategies.SelectMany(s => Enumerable.Range(0, 2).Select(i => ApoGirl.Core.Simulation.Bots.BotSimulator.Run(db, config, s, config.BaseSeed + i))).ToList();
+            Assert.That(batch.Select(Key), Is.EqualTo(OneByOne(snapshot).Select(Key)), "병렬로 돌려도 한 판씩 돌린 것과 같다");
+            Assert.That(batch.Select(Key), Is.EqualTo(OneByOne(live).Select(Key)), "사본은 원래 DB와 같은 결과를 낸다");
+
+            var table = ApoGirl.Core.Simulation.Bots.BotBatch.EndingTable(batch);
+            Assert.That(table.Count, Is.EqualTo(ApoGirl.Core.Simulation.Bots.BotReport.EndingTargets.Length));
+            Assert.That(table.Sum(r => r.Total), Is.LessThanOrEqualTo(1.001f), "엔딩 묶음 비율의 합은 100%를 넘지 않는다");
+
+            var cancelled = new ApoGirl.Core.Simulation.Bots.BotBatchProgress();
+            cancelled.Cancel();
+            Assert.That(ApoGirl.Core.Simulation.Bots.BotBatch.Run(snapshot, config, strategies, 2, cancelled), Is.Null);
+        }
+
+        private static T Copy<T>(T source) where T : new()
+        {
+            var copy = new T();
+            UnityEngine.JsonUtility.FromJsonOverwrite(UnityEngine.JsonUtility.ToJson(source), copy);
+            return copy;
+        }
+
         [Test]
         public void Patcher_ChangesOnlyThatModelsNumbers_KeepingLineShape()
         {

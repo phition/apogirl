@@ -1013,3 +1013,19 @@ Button.selected { border-color: var(--accent); background-color: var(--accent-so
 .lab-save { background-color: #3d5a34; }
 .lab-status { font-size: 13px; color: #9fe08f; margin-top: 2px; white-space: normal; }
 .lab-status.lab-status-warn { color: #f0a070; }
+.lab-bot { margin-top: 6px; padding: 6px 8px; background-color: rgba(106, 106, 160, 0.12); border-top-width: 1px; border-color: #6a6aa0; }
+.lab-bot-bar { flex-direction: row; align-items: center; flex-wrap: wrap; }
+.lab-bot-title { font-size: 16px; -unity-font-style: bold; color: var(--accent); margin-right: 10px; }
+.lab-bot-strategies { flex-direction: row; flex-wrap: wrap; margin-right: 8px; }
+.lab-bot-toggle { margin-right: 8px; }
+.lab-bot-toggle > Label { min-width: 0; font-size: 13px; }
+.lab-bot-int { width: 130px; margin-right: 4px; }
+.lab-bot-int > Label { min-width: 0; margin-right: 4px; }
+.lab-bot-difficulty { width: 170px; margin: 0 6px; }
+.lab-bot-difficulty > Label { min-width: 0; margin-right: 4px; }
+.lab-bot-progress { margin-top: 4px; }
+.lab-bot-table { margin-top: 4px; }
+.lab-bot-name { width: 160px; -unity-font-style: bold; }
+.lab-bot-num { width: 110px; -unity-text-align: middle-right; }
+.lab-bot-in { color: #9fe08f; -unity-font-style: bold; }
+.lab-bot-out { color: #f07a6a; -unity-font-style: bold; }

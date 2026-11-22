@@ -15,7 +15,12 @@
   - 탐험 모델 → 그 모델이 든 `Content/**/*.json`의 낮·밤 줄만 글자 단위로 고친다(`ExpeditionModelPatcher`, 값이 같으면 한 글자도 안 바꿈) → Import Events.
   - 저장 갈고리는 `Presentation/Screens/BalanceLabStore.cs`, 에디터 쪽 구현 `Editor/BalanceLabEditorStore.cs`. 빌드에서는 저장 단추가 꺼지고, 내보내기는 `persistentDataPath/BalanceLab/`에 쓴다.
   - 주의: EditMode 테스트의 `new BalanceConfig()`·`ShippedDb`는 덮어쓰기를 안 읽고, 봇 메뉴·게임은 에셋(덮어쓰기 포함)을 쓴다.
-- 아직: 탐험 중 여는 키, 상자 전리품 표 펼치기, 일괄 배율 단추·도움 지표(L2 나머지), L4~L6.
+- L4 완료: 표 아래 봇 띠 — 전략 체크·판 수(5/40/입력)·난이도·시드·"▶ 봇 돌리기"(돌 때는 "■ 취소")·진행 막대·"요약 열기".
+  - 누른 순간 밸런스·탐험 모델을 깊은 사본으로(`SnapshotDatabase`, 나머지 정의는 원래 DB를 읽음) → `BotBatch.Run`이 뒤 스레드에서 병렬(코어 수 − 2)로 돈다. 결과는 전략 → 판 순서라 메뉴 `Run Bot Simulation`과 같은 시드면 같은 숫자 (5전략 × 2판으로 확인, 0.5초).
+  - 결과 표: 엔딩 묶음 × (목표·전체·전략), 전체 칸은 목표 안 초록·밖 붉은색, 칸마다 지난번 대비 ▲▼(%p). 지난번 = `Temp/BalanceLab/last_run.json`. 보고서는 메뉴와 같은 `Temp/BotSim/`, 머리글에 "밸런스 표 (기본값과 다른 값 N개)".
+  - 코드: `Core/Simulation/Bots/BotBatch.cs`, `Core/Definitions/SnapshotDatabase.cs`, `Presentation/Screens/BalanceLabBotPanel.cs`. 설정은 누를 때마다 `bot_strategies.json`을 다시 읽는다.
+  - 빌드: 봇 설정 파일이 빌드에 없어 지금은 "에디터에서만"이라고 뜬다 (`Resources/Balance/bot_strategies`가 생기면 돈다).
+- 아직: 탐험 중 여는 키, 상자 전리품 표 펼치기, 일괄 배율 단추·도움 지표(L2 나머지), 참고 지표 접어 보기, 빌드용 봇 설정, L5~L6.
 
 ---
 

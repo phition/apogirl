@@ -87,5 +87,37 @@ namespace ApoGirl.Systems.Content
             result.Sections.RemoveAll(s => s.Fields.Count == 0);
             return result;
         }
+
+        /// <summary>봇 실행 한 번의 엔딩 표 (지난번 대비용, Temp/BalanceLab/last_run.json).</summary>
+        public sealed class BotRunRecord
+        {
+            public string Stamp = "";
+            public string Difficulty = "";
+            public int Runs;
+            public List<string> Strategies = new List<string>();
+            public List<ApoGirl.Core.Simulation.Bots.BotEndingRow> Rows = new List<ApoGirl.Core.Simulation.Bots.BotEndingRow>();
+        }
+
+        public static string WriteBotRun(BotRunRecord record)
+        {
+            return JsonConvert.SerializeObject(record, Formatting.Indented).Replace("\r\n", "\n") + "\n";
+        }
+
+        public static BotRunRecord ParseBotRun(string json)
+        {
+            if (string.IsNullOrWhiteSpace(json))
+            {
+                return null;
+            }
+
+            try
+            {
+                return JsonConvert.DeserializeObject<BotRunRecord>(json, ContentJson.Settings);
+            }
+            catch (JsonException)
+            {
+                return null; // 지난번 기록이 망가졌으면 비교 없이 간다
+            }
+        }
     }
 }

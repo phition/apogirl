@@ -6519,6 +6519,82 @@ MonoBehaviour:
     m_Key: lab.store_error
     m_Metadata:
       m_Items: []
+  - m_Id: 1305170469470208
+    m_Key: lab.bot.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1305170565939200
+    m_Key: lab.bot.runs
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1305170565939201
+    m_Key: lab.bot.difficulty
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1305170565939202
+    m_Key: lab.bot.seed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1305170565939203
+    m_Key: lab.bot.run
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1305170565939204
+    m_Key: lab.bot.cancel
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1305170565939205
+    m_Key: lab.bot.open
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1305170565939206
+    m_Key: lab.bot.running
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1305170565939207
+    m_Key: lab.bot.cancelling
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1305170565939208
+    m_Key: lab.bot.cancelled
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1305170565939209
+    m_Key: lab.bot.done
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1305170565939210
+    m_Key: lab.bot.error
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1305170565939211
+    m_Key: lab.bot.no_config
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1305170565939212
+    m_Key: lab.bot.no_strategy
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1305170565939213
+    m_Key: lab.bot.caption
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1305170565939214
+    m_Key: lab.bot.versus
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1305170565939215
+    m_Key: lab.bot.group
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1305170565939216
+    m_Key: lab.bot.target
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1305170565939217
+    m_Key: lab.bot.total
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
