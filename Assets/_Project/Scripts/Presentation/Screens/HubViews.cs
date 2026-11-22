@@ -123,8 +123,7 @@ namespace ApoGirl.Presentation.Screens
                 // 계절 재해 (확장 6): 장마·폭설
                 _weather.text = Loc.F("hub.weather", Loc.T("disaster." + disaster.Id));
                 StoryArt.SetIcon(_weather, StoryArt.Icon("disaster." + disaster.Id));
-                _weather.tooltip = Loc.T("weather." + weather + ".desc") + "
-" + Loc.T("disaster." + disaster.Id + ".desc");
+                _weather.tooltip = Loc.T("weather." + weather + ".desc") + "\n" + Loc.T("disaster." + disaster.Id + ".desc");
             }
             else
             {
