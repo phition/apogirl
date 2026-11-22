@@ -192,6 +192,19 @@
 - 탐험 화면의 층 이동, 시야·조명(`ExplorationLighting`), 미니맵, 문 그림(`exploration_art.json`)을 새 연결 두 가지에 맞춰 넓힌다.
 - 필요한 그림: 깊은 문, 일방 출구(안·밖), 깊은 곳 벽·바닥 타일 2~3벌, 비상등 빛. PixelLab 픽셀 아트로 만든다.
 
+> **구현됨 (2026-11-22)**
+> - 깊은 곳 층은 겉 층 뒤 번호다 (`BuildingLayoutDef.DeepFloors`·`IsDeep`·`DeepLevel`·`CorridorLengthOf`).
+> - 연결은 `ConnectorKind.DeepDoor`(양쪽 한 쌍)·`OneWayExit`(깊은 곳 안쪽)·`OneWayBack`(겉의 손잡이 없는 철문)이고, 도착 자리는 `ConnectorDef.TargetX`다.
+> - 배치 점검은 `DeepRules.Issues`다. Build Locations 때 오류로 찍는다.
+> - 지역 5곳에 깊은 곳을 두었다 (`LocationBuilder.Deep`/`DeepDoor`/`OneWay`): 주택가·지하철 지하 2, 마트·경찰서 지하 2에 깊은 문 둘, 정수장 지하 3. 전리품 표는 `Content/Base/deep_loot.json`이다.
+> - 탐험 화면
+>   - 깊은 곳은 늘 어둡고 먼지만 날린다 (`DeepAmbient`). 소리는 ×1.2로 울린다.
+>   - 일방 출구는 두 번 눌러야 나간다 (`OneWayConfirmSeconds`). 쫓아오는 좀비는 깊은 문으로만 따라온다.
+>   - 유랑자 특기(`DeepExitKnown`)가 있으면 들어설 때 출구 쪽을 알려 준다.
+>   - 체류 시간은 플레이 기록 `DeepSeconds`에 남는다.
+> - CD_04·05·06·08은 깊은 곳 복도에 있다. 헤드리스는 `HeadlessDeepChance`로 깊이 들어간 판만 줍는다 (봇 기록 #8).
+> - 그림(`prop_deep_door`·`prop_exit_pushbar`·`prop_exit_blank`·`wall_deep`)은 아직 코드 그림이고, PixelLab 그림은 나중에 넣는다. 미니맵과 바닥 타일 여러 벌은 아직 없다.
+
 ---
 
 ## 확장 아이디어 7가지
