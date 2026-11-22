@@ -145,6 +145,7 @@ namespace ApoGirl.Exploration.Runtime
         private DisasterDef _disaster;
         private int _floodedFloor = -1;
         private bool _floodNoticed;
+        private bool _disasterChanged;
         private float _tutorialMoved;
         private float _tutorialCrouched;
         private bool _tutorialSearched;
@@ -399,7 +400,9 @@ namespace ApoGirl.Exploration.Runtime
             _standalone = GameApp.ActiveExpedition == null;
 
             _disaster = DisasterRules.Active(Request.Week, Request.WeatherId, _balance);
-            Location = DisasterRules.Apply(_db.GetLocation(Request.LocationId), _disaster);   // 재해가 바꾼 지도 (사본)
+            var plain = _db.GetLocation(Request.LocationId);
+            Location = DisasterRules.Apply(plain, _disaster);   // 재해가 바꾼 지도 (사본)
+            _disasterChanged = !ReferenceEquals(Location, plain);
             _floodedFloor = DisasterRules.FloodedFloor(Location.Layout, _disaster);
             var day = Request.TimeOfDay == ExpeditionTime.Day;
             if (_db.TryGetExpeditionModel(Request.LocationId, out var model))
@@ -443,7 +446,7 @@ namespace ApoGirl.Exploration.Runtime
             {
                 _hud.ShowText(Loc.T("exp.restocked." + Location.Id), 4500);
             }
-            else if (_disaster != null && Location.Layout.DeepFloors > 0)
+            else if (_disasterChanged)
             {
                 _hud.ShowText(Loc.T("exp.disaster." + _disaster.Id), 4500);   // 장마·폭설로 지도가 바뀌었다
             }

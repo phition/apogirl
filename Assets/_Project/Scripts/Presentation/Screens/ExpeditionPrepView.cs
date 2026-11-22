@@ -87,9 +87,9 @@ namespace ApoGirl.Presentation.Screens
                 Add(_info, Loc.F("prep.weather", Loc.T("weather." + weather), Loc.T("weather." + weather + ".desc")), "exp-line");
             }
 
-            // 계절 재해 (확장 6): 깊은 곳이 있는 지역은 지도가 바뀐다
+            // 계절 재해 (확장 6): 지도가 바뀌는 지역이면 안내
             var disaster = DisasterRules.Active(state, db.Balance);
-            if (disaster != null && db.TryGetLocation(request.LocationId, out var hit) && hit.Layout != null && hit.Layout.DeepFloors > 0)
+            if (disaster != null && db.TryGetLocation(request.LocationId, out var hit) && !ReferenceEquals(DisasterRules.Apply(hit, disaster), hit))
             {
                 Add(_info, Loc.T("prep.disaster." + disaster.Id), "exp-line");
             }
