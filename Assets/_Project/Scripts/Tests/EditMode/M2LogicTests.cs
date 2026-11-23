@@ -240,6 +240,7 @@ namespace ApoGirl.Tests.EditMode
             _session.NewGame(3);
             _session.DebugChangeVital(VitalType.Hp, -99);
             _session.State.Base.SetResource(ResourceType.Water, 0);
+            _session.State.Player.Vitals.Hydration = -55; // 물이 없으니 곧 탈수 단계 (감소 수치와 무관하게)
             _session.BeginWeek();
             while (_session.IsExecuting)
             {

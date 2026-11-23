@@ -65,7 +65,7 @@ namespace ApoGirl.Tests.EditMode
             Assert.Greater(full.Player.Vitals.Hp, 50, "배부르면 체력이 조금 오른다 (버프는 그대로)");
             Assert.Less(full.Player.Vitals.Stress, 50);
 
-            var hungry = Make(balance, -20, 0);
+            var hungry = Make(balance, -29, 0); // 보통의 맨 아래: 하루 빠지면 허기
             UpkeepRules.ApplyEvening(hungry, balance, new StateDelta());
             Assert.AreEqual("HUNGRY", UpkeepRules.Band(balance.SatietyBands, hungry.Player.Vitals.Satiety).Key);
             Assert.Greater(hungry.Player.Vitals.Stress, 50, "허기지면 스트레스");

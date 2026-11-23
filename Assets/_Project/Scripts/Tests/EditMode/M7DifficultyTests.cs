@@ -18,7 +18,7 @@ namespace ApoGirl.Tests.EditMode
     public sealed class M7DifficultyTests
     {
         [Test]
-        public void Diet_NotDiscounted_FoodWaterConvert_5_4_3()
+        public void Diet_NotDiscounted_FoodWaterConvertByDifficulty()
         {
             var balance = new BalanceConfig();
             var state = NewGameFactory.Create(balance, 1);
@@ -33,11 +33,11 @@ namespace ApoGirl.Tests.EditMode
             Assert.AreEqual(100 - 2 * 7, state.Base.GetResource(ResourceType.Water), "이야기 중심도 식단 그대로 먹는다 (혼자, 챙겨 먹는다)");
             Assert.AreEqual(14, UpkeepRules.WeeklyNeed(state, balance, ResourceType.Food, DietLevel.Care));
 
-            // 통조림·생수 5 → 이야기 중심 5 · 표준 4 · 하드 3
-            int Convert(string id) => (int)System.Math.Round(5 * balance.Difficulties.First(x => x.Id == id).FoodYield);
-            Assert.AreEqual(5, Convert("STORY"));
-            Assert.AreEqual(4, Convert("STANDARD"));
-            Assert.AreEqual(3, Convert("HARD"));
+            // 통조림·생수 5 → 이야기 중심 7.5 · 표준 5 · 하드 4
+            float Convert(string id) => 5 * balance.Difficulties.First(x => x.Id == id).FoodYield;
+            Assert.AreEqual(7.5f, Convert("STORY"), 1e-4f);
+            Assert.AreEqual(5f, Convert("STANDARD"), 1e-4f);
+            Assert.AreEqual(4f, Convert("HARD"), 1e-4f);
         }
 
         [Test]
@@ -84,7 +84,7 @@ namespace ApoGirl.Tests.EditMode
             runner.ExecuteNextSlot();
             runner.ExecuteNextSlot();
             runner.ExecuteNextSlot();
-            Assert.That(state.Base.GetResource(ResourceType.Food), Is.EqualTo(12), "식량은 전체 배율 없이 변환만: 20 × 0.6 = 12 (통조림 5 → 3)");
+            Assert.That(state.Base.GetResource(ResourceType.Food), Is.EqualTo(16), "식량은 전체 배율 없이 변환만: 20 × 0.8 = 16 (통조림 5 → 4)");
         }
 
         private static GameSession Session(string directory, string difficulty, out InMemoryDefinitionDatabase db, EndingGallery gallery = null)

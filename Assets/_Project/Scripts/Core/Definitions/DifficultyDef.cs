@@ -27,7 +27,7 @@ namespace ApoGirl.Core.Definitions
 
         /// <summary>
         /// 자원별 수확 배율 (소수는 확률 반올림). 의약품은 Yield에 곱하고, 식량·물은 Yield 없이 이 값만 쓴다:
-        /// 구한 식량·물의 변환 (통조림·생수 5 기준 이야기 중심 1 = 5, 표준 0.8 = 4, 하드 0.6 = 3, 사용자 결정 2026-11-23).
+        /// 구한 식량·물의 변환 (통조림·생수 5 기준: 이야기 중심 1.5 = 7.5, 표준 1 = 5, 하드 0.8 = 4, 2026-11-23 밸런스 표).
         /// </summary>
         public float FoodYield = 1f;
         public float WaterYield = 1f;

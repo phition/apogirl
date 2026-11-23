@@ -103,7 +103,7 @@ namespace ApoGirl.Core.Definitions
         public float BiteDirtyBonus = 0.5f;
 
         /// <summary>청결: 시작값, 주마다 떨어지는 양. 청소·정수 같은 위생 활동으로 오른다.</summary>
-        public int StartingCleanliness = 70;
+        public int StartingCleanliness = 30;
         public int CleanlinessWeeklyDecay = 15;
 
         public List<ResourceAmount> InitialResources = new List<ResourceAmount>
@@ -255,20 +255,20 @@ namespace ApoGirl.Core.Definitions
         public int DietWellUnits = 3;
 
         /// <summary>식량 1·물 1이 채우는 포만·수분 (한 사람 몫). 아침마다 먹는다.</summary>
-        public int FoodSatietyPerUnit = 12;
+        public int FoodSatietyPerUnit = 14;
         public int WaterHydrationPerUnit = 15;
 
         /// <summary>매일 밤이 시작되기 전에 빠지는 포만·수분 (주인공·동료·선생님 모두).</summary>
-        public int SatietyDailyDrain = 15;
-        public int HydrationDailyDrain = 15;
+        public int SatietyDailyDrain = 8;
+        public int HydrationDailyDrain = 8;
 
         /// <summary>식량이나 물이 모자라 식단을 못 지킨 날, 주인공·동료마다 오르는 스트레스 (이 범위에서 무작위).</summary>
         public int DietShortStressMin = 2;
         public int DietShortStressMax = 5;
 
         /// <summary>주인공 탐험 한 번의 포만·수분 소모 (챙겨 먹으면 탐험을 다녀도 유지되게, 2026-11-23).</summary>
-        public int ExpeditionSatietyDrain = 10;
-        public int ExpeditionHydrationDrain = 12;
+        public int ExpeditionSatietyDrain = 5;
+        public int ExpeditionHydrationDrain = 6;
 
         /// <summary>허기(포만 0 아래) 1당 최대 체력, 갈증(수분 0 아래) 1당 탐험 최대 스태미너가 줄어드는 비율. 최대치의 하한.</summary>
         public float HungerMaxHpPenalty = 0.01f;
@@ -478,7 +478,7 @@ namespace ApoGirl.Core.Definitions
         public string[] TeacherAbsentFlags = { "TEACHER_LEFT_BEHIND" };
 
         /// <summary>동료 탐험 (역할 재기획 5절): 주 1번(확률로 2번), 정찰 역할은 늘 2번. 같은 날 낮에 많아야 OutingDailyCap명.</summary>
-        public float OutingExtraChance = 0.4f;
+        public float OutingExtraChance = 0.7f;
         public int OutingScoutCount = 2;
         public int OutingDailyCap = 2;
 
@@ -486,7 +486,7 @@ namespace ApoGirl.Core.Definitions
         public string[] OutingExcludedNpcs = { "NPC_CAT" };
 
         /// <summary>물자: 외출 한 번에 한 종류, 양은 그 지역 주인공 낮 산출 × 비율 (정찰 적성이면 + 보너스). 갈 곳은 가장 모자란 자원을 주는 곳에 가중치.</summary>
-        public float OutingYieldShare = 0.3f;   // 2026-11-22: 주인공의 30%
+        public float OutingYieldShare = 0.7f;   // 2026-11-23 밸런스 표: 주인공의 70% (예전 30%)
         public float OutingScoutAptitudeBonus = 0.3f;
 
         /// <summary>수확 종류 비중 (2026-11-22): 식량·물 각 30%, 자재 20%, 의약·연료·전력 각 5%, 나머지 5%는 빈손.</summary>
@@ -543,7 +543,7 @@ namespace ApoGirl.Core.Definitions
         public float HeadlessLikedItemNightChance = 0.15f;
 
         /// <summary>헤드리스(자동) 탐험에서 옥상이 있는 지역(학교)의 옥상까지 올라가 보는 확률 (옥상 플래그 → 거점 옥상 해금).</summary>
-        public float HeadlessRooftopChance = 0.25f;
+        public float HeadlessRooftopChance = 0.5f;
 
         /// <summary>헤드리스(자동) 탐험에서 그 지역의 CD(줍는 조우)를 찾아 챙기는 확률 (기획 A.3, 휴대폰에서도 모을 수 있게).</summary>
         public float HeadlessCdChance = 0.3f;
@@ -621,10 +621,10 @@ namespace ApoGirl.Core.Definitions
         // ── 탐험의 깊이 (기획 B) ──
 
         /// <summary>헤드리스(자동) 탐험에서 깊은 곳까지 들어가 보는 확률 (깊은 곳이 있는 지역, 무사히 돌아온 판).</summary>
-        public float HeadlessDeepChance = 0.35f;
+        public float HeadlessDeepChance = 0.65f;
 
         /// <summary>유랑자 특기(깊은 곳 출구를 안다)가 있으면 더하는 확률.</summary>
-        public float HeadlessDeepSpecialBonus = 0.15f;
+        public float HeadlessDeepSpecialBonus = 0.35f;
 
         /// <summary>헤드리스에서 깊은 곳에 들어갔을 때 깊은 곳 전리품 표에서 물건 하나를 줍는 확률.</summary>
         public float HeadlessDeepItemChance = 0.6f;
@@ -662,19 +662,19 @@ namespace ApoGirl.Core.Definitions
         {
             new DifficultyDef
             {
-                Id = "STORY", Harm = 0.6f, HumanThreat = 0.7f, Infection = 0.6f, Yield = 1f,
-                // 식량·물 변환: 통조림·생수 5 그대로 (사용자 결정 2026-11-23, 소비 할인 대신)
-                FoodYield = 1f, WaterYield = 1f, MedicineYield = 0.85f,
+                Id = "STORY", Harm = 0.6f, HumanThreat = 0.7f, Infection = 0.6f, Yield = 1.5f,
+                // 식량·물 변환 ×1.5 (통조림·생수 5 → 7.5), 수확·의약품도 넉넉하게 (2026-11-23 밸런스 표)
+                FoodYield = 1.5f, WaterYield = 1.5f, MedicineYield = 1.5f,
                 WeeklyUndo = true, Dispatch = true, DispatchYield = 0.7f,
             },
-            // 표준: 배드 목표 45~55%에 맞춰 의약품 ×0.75 (2026-11-20), 식량·물 변환 5 → 4 (2026-11-23)
-            new DifficultyDef { Id = "STANDARD", FoodYield = 0.8f, WaterYield = 0.8f, MedicineYield = 0.75f },
+            // 표준: 식량·물·의약품 ×1 (2026-11-23 밸런스 표)
+            new DifficultyDef { Id = "STANDARD", FoodYield = 1f, WaterYield = 1f, MedicineYield = 1f },
             // 하드: 가혹해진 세계에 맞춰 소모는 표준과 같게 (2026-11-20 결정, M7-d의 ×1.25에서 수정)
             new DifficultyDef
             {
                 Id = "HARD", Consumption = 1f, Harm = 1.4f, HumanThreat = 1.3f, Infection = 1.3f, Yield = 0.9f,
-                // 식량·물 변환 5 → 3 (2026-11-23), 의약품은 박하게 (2026-11-20)
-                FoodYield = 0.6f, WaterYield = 0.6f, MedicineYield = 0.7f,
+                // 식량·물·의약품 ×0.8 (통조림·생수 5 → 4, 2026-11-23 밸런스 표)
+                FoodYield = 0.8f, WaterYield = 0.8f, MedicineYield = 0.8f,
             },
         };
 
@@ -767,13 +767,13 @@ namespace ApoGirl.Core.Definitions
         public int RainBarrelWater = 10;
 
         /// <summary>비 오는 주에는 빗물통 없이도 양동이로 빗물(RawWater)을 조금 받는다.</summary>
-        public int RainCollectWater = 5;
+        public int RainCollectWater = 10;
 
         /// <summary>매주 학교 물탱크·화장실에서 받아 두는 생활용수 (RawWater, 정수해야 식수).</summary>
         public int WeeklyRawWater = 5;
 
         /// <summary>옥상 텃밭 (플래그 ROOF_GARDEN): 겨울을 뺀 매주 식량.</summary>
-        public int RoofGardenFood = 7;
+        public int RoofGardenFood = 10;
 
         // ── 거점 방어 작업 ──
 
@@ -796,15 +796,15 @@ namespace ApoGirl.Core.Definitions
         // ── M7-2 후반 압박 (M7-f, 문서 9.0 "자원 압박이 서서히 상승") ──
 
         /// <summary>겨울(40~52주) 식량 소모 배율. 무리 하루 소모를 소수점까지 누적해 나눠 쓴다 (2 × 1.3 → 주 18).</summary>
-        public float WinterFoodMultiplier = 1.3f;
+        public float WinterFoodMultiplier = 1.2f;
 
         /// <summary>겨울 주간 난방 연료. 모자라면 NoHeatStress.</summary>
         public int WinterWeeklyFuel = 2;
-        public int NoHeatStress = 6;
+        public int NoHeatStress = 4;
 
         /// <summary>주간 정산: 식량이 이 값을 넘으면 넘는 양의 FoodSpoilageRate만큼 상한다 (올림).</summary>
         public int FoodSpoilageThreshold = 60;
-        public float FoodSpoilageRate = 0.2f;
+        public float FoodSpoilageRate = 0.18f;
 
         // ── M6 주인공 감염 (문서 3.1.1): 쓰러지면 물릴 수 있다. 응급 처치 성공 시 감염이 휴면 ──
         public float BiteChanceOnDownDay = 0.25f;
