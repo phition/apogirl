@@ -14,6 +14,14 @@
 
 ---
 
+## 연결 결과 (2026-11-23)
+
+- `ArtInbox/sprites10/` 287장 중 275장을 연결했다 → `Resources/Art/ExplorationPixel/` 3921프레임. 도구 `code_temp/apogirl/tools/install_s10.py`(칸 나누기·크기 맞추기·점검) → `install_s10_copy.py`(덮을 옛 그림은 `code_temp/apogirl/backup_s10/`).
+  - 크기: 주인공은 여름 교복 대기 그림의 머리 폭·몸 높이에 맞추고, 다른 옷은 여름 교복과 같은 비율로. 좀비·생존자는 지금 게임 대기 높이에 동작별 비율로.
+  - PixelLab 땜질 프레임(대걸레 웅크리기 두 사람 등)은 새 그림으로 바뀌었다.
+- 코드 연결: 공격 20프레임(대걸레 맞는 순간 0.45), 무기별 타격 이펙트 `Combat.ImpactAt[].Fx`(방망이·파이프 `fx_hit_heavy_`, 대걸레 `fx_hit_thrust_`, 경찰봉·맨손 `fx_hit_`), 좀비·생존자 맞음 12프레임, 쓰러짐 `down_`을 1초 보여 준 뒤 치움, 새 동작 — 다침 `hurt_`(0.4초), 지쳐 멈춤 `exhausted_`, 수색 `search_`, 숨기 `hide_`(Space 누르는 동안 진행, 숨은 뒤 마지막 프레임), 잠듦 `doze_`.
+- 보류: 계단 `stairs_up`·`stairs_down` 12장(그림에 계단·난간이 함께 있어 게임 계단과 겹친다), 문 열기 `open_`(문 여는 순간이 아직 없다). `npc_mart_adults_idle`은 두 사람이 원래 그림이다.
+
 ## 0. 한눈에 보기
 
 ### 0.1 요약표

@@ -129,6 +129,10 @@ namespace ApoGirl.Exploration.Runtime
         /// <summary>맞거나 밀린 좀비의 반응 동작 길이 (초).</summary>
         private const float ReactAnimSeconds = 0.6f;
 
+        /// <summary>다친 순간 움찔하는 동작 길이(초), 쓰러지는 좀비를 보여 주는 시간(초).</summary>
+        private const float HurtAnimSeconds = 0.4f;
+        private const float DownAnimSeconds = 1f;
+
         /// <summary>픽셀 아트 동작 빠르기 (초당 프레임). 코드 그림은 예전 빠르기를 쓴다.</summary>
         private const float PixelIdleFps = 7f;
         private const float PixelWalkFps = 18f;
@@ -140,6 +144,10 @@ namespace ApoGirl.Exploration.Runtime
 
         /// <summary>주인공 그림 접두어 (옷·무기에 따라, 예: player_padding_bat_)와 지금 프레임 키, 등에 멘 가방 그림.</summary>
         private string _lookPrefix = "player_";
+
+        /// <summary>무기를 뺀 차림 그림 접두어 (수색·숨기·졸기·문 열기는 맨손 그림만 있다).</summary>
+        private string _lookBarePrefix = "player_";
+        private float _hurtAnim;
         private string _weaponToken = "none";
 
         /// <summary>휘두른 뒤 무기가 닿을 때까지 남은 시간 (음수 = 기다리는 타격 없음)과 그 방향.</summary>
@@ -325,7 +333,12 @@ namespace ApoGirl.Exploration.Runtime
         {
             if (unit.IsDown)
             {
-                return false; // 쓰러진 좀비는 치운다 (고어 지양, 문서 13-4)
+                // 쓰러진 좀비는 쓰러지는 동작(스러져 사라짐)만 보여 주고 치운다 (고어 지양, 문서 13-4)
+                var view = _zombieViews.Find(v => v.Unit == unit);
+                if (view == null || view.ReactPose != "down_" || Time.time - view.ReactStart >= DownAnimSeconds)
+                {
+                    return false;
+                }
             }
 
             if (FullVision || DebugOverlay)
@@ -1084,7 +1097,7 @@ namespace ApoGirl.Exploration.Runtime
 
             _weaponWear++;
             SpawnHitFx(hit);
-            React(hit, "hit_");
+            React(hit, hit.IsDown && HasDownFrames(hit) ? "down_" : "hit_");
             Sfx("sfx_hit");
             _hud?.ShowMessage(hit.IsDown ? "exp.zombie_down" : "exp.hit");
             if (_weaponDurability > 0 && _weaponWear >= _weaponDurability)
@@ -1257,6 +1270,7 @@ namespace ApoGirl.Exploration.Runtime
             var weapon = ExplorationArt.ItemToken(_weapon?.Id, "ITEM_WEAPON_", "none");
             _weaponToken = weapon;
             _lookPrefix = ExplorationArt.PlayerPrefix(armor, weapon);
+            _lookBarePrefix = ExplorationArt.PlayerPrefix(armor, "none");
         }
 
         /// <summary>등에 멘 가방 (배낭 아이템이 있고 그 그림이 있을 때): 주인공 몸 뒤에 한 겹 더 그린다.</summary>
@@ -1962,6 +1976,7 @@ namespace ApoGirl.Exploration.Runtime
                 _animTime += dt;
                 _attackAnim = Mathf.Max(0f, _attackAnim - dt);
                 _shoveAnim = Mathf.Max(0f, _shoveAnim - dt);
+                _hurtAnim = Mathf.Max(0f, _hurtAnim - dt);
             }
 
             // 장비 차림별 그림 (_lookPrefix). 픽셀 아트는 동작마다 프레임 수가 달라 세어서 돌린다 (없으면 코드 그림 4프레임).
@@ -1980,15 +1995,50 @@ namespace ApoGirl.Exploration.Runtime
                 }
             }
 
+            // 다친 순간 움찔 (그림이 없으면 넘어간다)
+            if (_hurtAnim > 0f && ProgressFrame(look + "hurt_", 1f - _hurtAnim / HurtAnimSeconds) is string hurt)
+            {
+                return hurt;
+            }
+
+            // 숨다가 잠듦 → 조는 동작 (맨손 그림)
+            if (Asleep && LoopFrame(_lookBarePrefix + "doze_", Time.time, PixelIdleFps) is string doze)
+            {
+                return doze;
+            }
+
             // 멈춰 웅크린 자세는 웅크려 걷기 첫 프레임 (낱장 crouch 그림은 가방 자리 표에 없어 가방이 사라진다)
             var crouchStill = ExplorationArt.HasPixel(look + "crouch_0") ? look + "crouch_0" : look + "crouch";
-            if (Hidden) return crouchStill;
+            if (Hidden)
+            {
+                // 숨은 자세 = 숨기 동작의 마지막 프레임
+                var hidePrefix = _lookBarePrefix + "hide_";
+                return ExplorationArt.HasPixel(hidePrefix + "0") ? hidePrefix + (ExplorationArt.FrameCount(hidePrefix, 1) - 1) : crouchStill;
+            }
+
+            // Space를 누르는 동안 몸을 숨기는 동작
+            if (HideProgress > 0f && ProgressFrame(_lookBarePrefix + "hide_", HideProgress) is string hiding)
+            {
+                return hiding;
+            }
+
+            if (_searching && LoopFrame(_lookBarePrefix + "search_", _animTime, PixelIdleFps) is string search)
+            {
+                return search;
+            }
+
             if (_crouching)
             {
                 return _animMoving ? LoopFrame(look + "crouch_", _animTime, PixelSneakFps) ?? crouchStill : crouchStill;
             }
 
-            if (!_animMoving) return LoopFrame(look + "idle_", Time.time, PixelIdleFps) ?? look + "idle";
+            if (!_animMoving)
+            {
+                // 지쳐 멈추면 숨을 몰아쉰다
+                var still = Exhausted ? LoopFrame(look + "exhausted_", Time.time, PixelIdleFps) : null;
+                return still ?? LoopFrame(look + "idle_", Time.time, PixelIdleFps) ?? look + "idle";
+            }
+
             var prefix = look + (_animRunning ? "run_" : "walk_");
             var pixel = LoopFrame(prefix, _animTime, _animRunning ? PixelRunFps : PixelWalkFps);
             if (pixel != null)
@@ -2702,6 +2752,7 @@ namespace ApoGirl.Exploration.Runtime
 
                 Sfx("sfx_z_grab", 0.7f);
                 Sfx("sfx_hurt");
+                _hurtAnim = HurtAnimSeconds;
                 if (Hp <= 0)
                 {
                     Sfx("sfx_down");
@@ -3441,7 +3492,14 @@ namespace ApoGirl.Exploration.Runtime
             go.transform.localPosition = view.Body.localPosition + new Vector3(side * 0.25f, combat.FxHeight, 0f);
             go.transform.localScale = Vector3.one * combat.FxScale;
             var fx = go.AddComponent<HitFx>();
-            fx.Play(side < 0f, combat.FxFramesPerSecond);
+            fx.Play(ExplorationArt.HitFxPrefix(_weaponToken), side < 0f, combat.FxFramesPerSecond);
+        }
+
+        /// <summary>그 좀비(생존자)에게 쓰러지는 그림이 있는가.</summary>
+        private bool HasDownFrames(ZombieUnit unit)
+        {
+            var view = _zombieViews.Find(v => v.Unit == unit);
+            return view != null && ExplorationArt.HasPixel((view.Survivor ? "survivor_" : "zombie_" + view.Kind + "_") + "down_0");
         }
 
         /// <summary>반응 동작 중이면 그 프레임 키 (끝났거나 그림이 없으면 null). 반응 중에는 주인공 쪽을 본다.</summary>
@@ -3452,7 +3510,7 @@ namespace ApoGirl.Exploration.Runtime
                 return null;
             }
 
-            var progress = (Time.time - view.ReactStart) / ReactAnimSeconds;
+            var progress = (Time.time - view.ReactStart) / (view.ReactPose == "down_" ? DownAnimSeconds : ReactAnimSeconds);
             var key = progress < 1f ? ProgressFrame(prefix + view.ReactPose, progress) : null;
             if (key == null)
             {

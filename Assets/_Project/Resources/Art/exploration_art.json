@@ -1229,12 +1229,13 @@
  ],
  "Combat": {
   "ImpactAt": [
-   { "Weapon": "bat", "At": 0.5 },
-   { "Weapon": "pipe", "At": 0.5 },
+   { "Weapon": "bat", "At": 0.5, "Fx": "fx_hit_heavy_" },
+   { "Weapon": "pipe", "At": 0.5, "Fx": "fx_hit_heavy_" },
    { "Weapon": "baton", "At": 0.5 },
-   { "Weapon": "mop", "At": 0.38 }
+   { "Weapon": "mop", "At": 0.45, "Fx": "fx_hit_thrust_" }
   ],
   "DefaultImpactAt": 0.5,
+  "DefaultFx": "fx_hit_",
   "FxFramesPerSecond": 24,
   "FxHeight": 1.1,
   "FxScale": 1

@@ -92,6 +92,9 @@ namespace ApoGirl.Exploration.Runtime
 
             /// <summary>공격 동작 진행도(0~1) 중 맞는 순간. 16프레임 휘두르기면 8번째 프레임 = 0.5.</summary>
             public float At = 0.5f;
+
+            /// <summary>이 무기의 타격 이펙트 그림 접두어 (fx_hit_heavy_ …). 비면 DefaultFx.</summary>
+            public string Fx = "";
         }
 
         /// <summary>
@@ -103,6 +106,7 @@ namespace ApoGirl.Exploration.Runtime
         {
             public ImpactEntry[] ImpactAt = Array.Empty<ImpactEntry>();
             public float DefaultImpactAt = 0.5f;
+            public string DefaultFx = "fx_hit_";
             public float FxFramesPerSecond = 24f;
             public float FxHeight = 1.1f;
             public float FxScale = 1f;
@@ -124,6 +128,22 @@ namespace ApoGirl.Exploration.Runtime
             }
 
             return Mathf.Clamp01(combat.DefaultImpactAt);
+        }
+
+        /// <summary>그 무기의 타격 이펙트 그림 접두어 (그림이 없으면 기본 fx_hit_).</summary>
+        public static string HitFxPrefix(string weaponToken)
+        {
+            var combat = Combat;
+            var fallback = string.IsNullOrEmpty(combat.DefaultFx) ? "fx_hit_" : combat.DefaultFx;
+            foreach (var entry in combat.ImpactAt)
+            {
+                if (entry.Weapon == weaponToken && !string.IsNullOrEmpty(entry.Fx) && HasPixel(entry.Fx + "0"))
+                {
+                    return entry.Fx;
+                }
+            }
+
+            return fallback;
         }
 
         [Serializable]

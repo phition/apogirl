@@ -3,13 +3,13 @@ using UnityEngine;
 namespace ApoGirl.Exploration.Runtime
 {
     /// <summary>
-    /// 타격 이펙트 한 번: 픽셀 그림 fx_hit_0..n이 있으면 그 프레임을 한 번 돌리고,
+    /// 타격 이펙트 한 번: 픽셀 그림 {접두어}0..n(기본 fx_hit_, 무기별은 exploration_art.json Combat)이 있으면 그 프레임을 한 번 돌리고,
     /// 없으면 코드 그림(흰 십자 번쩍임이 커지며 사라짐). 끝나면 스스로 지운다.
     /// 조명에 묻히지 않게 빛을 받지 않는 머티리얼(Resources/Art/exploration_fx_unlit)로 그린다.
     /// </summary>
     public sealed class HitFx : MonoBehaviour
     {
-        private const string Prefix = "fx_hit_";
+        private const string DefaultPrefix = "fx_hit_";
         private const float FallbackSeconds = 0.14f;
         private const int SortingOrder = 14;
 
@@ -22,16 +22,17 @@ namespace ApoGirl.Exploration.Runtime
         private float _fps;
         private float _time;
 
-        public void Play(bool flip, float framesPerSecond)
+        public void Play(string prefix, bool flip, float framesPerSecond)
         {
             _fps = Mathf.Max(1f, framesPerSecond);
-            var count = ExplorationArt.HasPixel(Prefix + "0") ? ExplorationArt.FrameCount(Prefix, 1) : 0;
+            var frames = string.IsNullOrEmpty(prefix) || !ExplorationArt.HasPixel(prefix + "0") ? DefaultPrefix : prefix;
+            var count = ExplorationArt.HasPixel(frames + "0") ? ExplorationArt.FrameCount(frames, 1) : 0;
             if (count > 0)
             {
                 _frames = new Sprite[count];
                 for (var i = 0; i < count; i++)
                 {
-                    _frames[i] = ExplorationArt.Get(Prefix + i);
+                    _frames[i] = ExplorationArt.Get(frames + i);
                 }
 
                 var renderer = Add("Frame", _frames[0], Color.white);
