@@ -75,6 +75,29 @@ namespace ApoGirl.Exploration.Runtime
             return count > 0 ? count : Mathf.Max(1, fallback);
         }
 
+        /// <summary>
+        /// 조명을 받는 기본 스프라이트 재질. URP는 2D 기본 재질(Sprite-Lit-Default)을 에디터에서만 돌려주고
+        /// 빌드에서는 null이라, 코드로 만든 스프라이트가 조명을 안 받는 Sprites/Default가 된다
+        /// (빌드에서 밤·어두운 방이 환하게 보이던 문제, 2026-11-23). 그래서 직접 넣는다.
+        /// </summary>
+        public static Material LitMaterial => _litMaterial != null ? _litMaterial : _litMaterial = Resources.Load<Material>("Art/exploration_sprite_lit");
+
+        private static Material _litMaterial;
+
+        /// <summary>재질이 없거나 조명을 안 받는 기본 재질이면 조명 받는 재질로 (에디터와 같게).</summary>
+        public static SpriteRenderer Lit(SpriteRenderer renderer)
+        {
+            if (renderer != null && LitMaterial != null && IsUnlitDefault(renderer.sharedMaterial))
+            {
+                renderer.sharedMaterial = LitMaterial;
+            }
+
+            return renderer;
+        }
+
+        /// <summary>엔진 내장 Sprites/Default (빌드에서 SpriteRenderer가 처음 받는 재질).</summary>
+        public static bool IsUnlitDefault(Material material) => material == null || material.shader == null || material.shader.name == "Sprites/Default";
+
         public static Sprite Get(string key)
         {
             if (string.IsNullOrEmpty(key))
@@ -145,7 +168,7 @@ namespace ApoGirl.Exploration.Runtime
             var go = new GameObject(name);
             go.transform.SetParent(parent, false);
             go.transform.localPosition = position;
-            var renderer = go.AddComponent<SpriteRenderer>();
+            var renderer = Lit(go.AddComponent<SpriteRenderer>());
             renderer.sprite = sprite;
             renderer.sortingOrder = order;
             return go;
@@ -163,7 +186,7 @@ namespace ApoGirl.Exploration.Runtime
             var go = new GameObject(name);
             go.transform.SetParent(parent, false);
             go.transform.localPosition = position;
-            var renderer = go.AddComponent<SpriteRenderer>();
+            var renderer = Lit(go.AddComponent<SpriteRenderer>());
             renderer.sprite = sprite;
             renderer.drawMode = SpriteDrawMode.Tiled;
             renderer.size = size;
@@ -186,7 +209,7 @@ namespace ApoGirl.Exploration.Runtime
                 var sliced = new GameObject(name);
                 sliced.transform.SetParent(parent, false);
                 sliced.transform.localPosition = position;
-                var slicedRenderer = sliced.AddComponent<SpriteRenderer>();
+                var slicedRenderer = Lit(sliced.AddComponent<SpriteRenderer>());
                 slicedRenderer.sprite = sprite;
                 slicedRenderer.drawMode = SpriteDrawMode.Tiled;
                 slicedRenderer.tileMode = SpriteTileMode.Continuous;
@@ -200,7 +223,7 @@ namespace ApoGirl.Exploration.Runtime
             go.transform.localPosition = position;
             var bounds = sprite.bounds.size;
             go.transform.localScale = new Vector3(size.x / Mathf.Max(0.01f, bounds.x), size.y / Mathf.Max(0.01f, bounds.y), 1f);
-            var renderer = go.AddComponent<SpriteRenderer>();
+            var renderer = Lit(go.AddComponent<SpriteRenderer>());
             renderer.sprite = sprite;
             renderer.sortingOrder = order;
             return go;

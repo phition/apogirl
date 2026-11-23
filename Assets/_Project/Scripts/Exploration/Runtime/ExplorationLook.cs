@@ -256,15 +256,17 @@ namespace ApoGirl.Exploration.Runtime
         /// <summary>도트 빛: 기본 조명 머티리얼을 쓰는 스프라이트를 도트 빛 머티리얼로 (다른 머티리얼은 그대로). 새로 생긴 그림을 위해 다시 불러도 된다.</summary>
         public void ApplyPixelLight(Transform root)
         {
-            if (_pixelMaterial == null || root == null)
+            if (root == null)
             {
                 return;
             }
 
             foreach (var renderer in root.GetComponentsInChildren<SpriteRenderer>(true))
             {
+                // 빌드에서 놓친 조명 안 받는 기본 재질도 에디터처럼 조명 재질로
+                ExplorationArt.Lit(renderer);
                 var material = renderer.sharedMaterial;
-                if (material != null && material.shader != null && material.shader.name == DefaultLitShader)
+                if (_pixelMaterial != null && material != null && material.shader != null && material.shader.name == DefaultLitShader)
                 {
                     renderer.sharedMaterial = _pixelMaterial;
                 }

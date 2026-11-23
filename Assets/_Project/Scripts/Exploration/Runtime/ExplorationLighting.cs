@@ -127,13 +127,14 @@ namespace ApoGirl.Exploration.Runtime
         {
             if (_dustMaterial == null)
             {
-                var shader = Shader.Find("Universal Render Pipeline/2D/Sprite-Lit-Default");
-                if (shader == null)
+                // 빌드에도 들어가는 조명 재질을 바탕으로 (Shader.Find는 빌드에 셰이더가 없으면 null)
+                var lit = ExplorationArt.LitMaterial;
+                if (lit == null)
                 {
                     return;
                 }
 
-                _dustMaterial = new Material(shader) { hideFlags = HideFlags.HideAndDontSave };
+                _dustMaterial = new Material(lit) { hideFlags = HideFlags.HideAndDontSave };
             }
 
             var go = new GameObject("Dust");

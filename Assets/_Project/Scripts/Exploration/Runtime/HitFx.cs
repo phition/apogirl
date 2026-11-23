@@ -96,7 +96,7 @@ namespace ApoGirl.Exploration.Runtime
         {
             var go = new GameObject(name);
             go.transform.SetParent(transform, false);
-            var renderer = go.AddComponent<SpriteRenderer>();
+            var renderer = ExplorationArt.Lit(go.AddComponent<SpriteRenderer>());
             renderer.sprite = sprite;
             renderer.color = color;
             renderer.sortingOrder = SortingOrder;

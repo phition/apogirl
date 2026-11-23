@@ -100,7 +100,7 @@ namespace ApoGirl.Exploration.Runtime
             go.transform.SetParent(parent, false);
             go.transform.localPosition = position;
             go.transform.localScale = new Vector3(size.x, size.y, 1f);
-            var renderer = go.AddComponent<SpriteRenderer>();
+            var renderer = ExplorationArt.Lit(go.AddComponent<SpriteRenderer>());
             renderer.sprite = Square;
             renderer.color = color;
             renderer.sortingOrder = order;

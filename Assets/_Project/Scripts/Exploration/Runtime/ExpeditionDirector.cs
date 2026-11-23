@@ -1550,7 +1550,7 @@ namespace ApoGirl.Exploration.Runtime
 
             var go = new GameObject("PlayerBag");
             go.transform.SetParent(_player, false);
-            _bagRenderer = go.AddComponent<SpriteRenderer>();
+            _bagRenderer = ExplorationArt.Lit(go.AddComponent<SpriteRenderer>());
             _bagRenderer.sprite = sprite;
             _bagRenderer.sortingOrder = 9;
         }

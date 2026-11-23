@@ -3,7 +3,7 @@
 〈마지막 학기 (가제)〉 — 마일스톤별 진행 기록, 남은 작업, 하면 좋을 작업, 하지 말아야 할 작업.
 
 - 기준: 마스터 프롬프트 12장 마일스톤(원본 `C:\Users\phiti\Desktop\MASTER_PROMPT.md`), 결정 기록 부록 C(D1~D26).
-- 작성: 2026-11-23. 커밋 630개(2026-11-18 ~ 2026-11-23), 마지막 커밋 `6c3e406d` (그 뒤 이번 커밋).
+- 작성: 2026-11-23. 커밋 631개(2026-11-18 ~ 2026-11-23), 마지막 커밋 `4d27e143` (그 뒤 이번 커밋).
 - EditMode 테스트: 405개 모두 통과 (2026-11-23, 사용자 밸런스 반영 뒤).
 - 자세한 내용은 각 계획 문서에 있다. 이 문서는 한눈에 보는 요약이다.
 - **새 세션은 이 문서부터 읽는다.** 작업이 하나 끝날 때마다 고친다.
@@ -296,4 +296,5 @@ M6·M7과 함께 기획 확장(동료·CD·깊은 곳·고양이·동아리·방
 - 2026-11-23 · 경찰서 낮 자재 범위가 밸런스 표에서 `Min 5 · Max 4`로 뒤집혀 있던 것을 2~5로 고침(원래 2~4, 밤 최대 5에 맞춤). 다른 지역 범위는 뒤집힌 곳 없음 · `b7624c40`
 - 2026-11-23 · 밸런스 표 Min·Max 짝이 뒤집히지 않게: 고친 쪽이 짝을 넘으면 짝을 같은 값으로 밀어 준다(탐험 모델 자원 범위·`StressMin`/`StressMax`·밸런스 필드 `…Min`/`…Max`, `BalanceLabModel.KeepOrdered`). 짝 칸도 함께 만들어 되돌리기·저장에 잡힌다. 테스트 `MinMaxPairs_NeverInvert_EditedSidePushesPartner` · `dfa12c57`
 - 2026-11-23 · 배낭 없이 나갈 때 주머니 격자 3×2 → 2×3(`BalanceConfig.PocketWidth`·`PocketHeight`): 튜토리얼 창고 탈출에서 1×3 야구방망이를 주울 수 없던 문제. 테스트 `Pocket_FitsTutorialBat` · `6c3e406d`
-- 2026-11-23 · 가방이 없으면 탐험 화면에서 "배낭" 대신 "주머니"(창 제목·자리 없음 알림·튜토리얼 안내 `exp.pocket`·`exp.pocket_full`·`tut.pocket`, `ExpeditionDirector.HasBag`·`BagKey`, 조작 안내 "Tab 주머니·배낭"). 테스트 빌드에서 탐험 후처리·2D 빛이 빠지던 문제: 볼륨·빛을 실행 중에 코드로 만들어 URP "안 쓰는 셰이더 빼기"가 Bloom 등 후처리 셰이더와 2D 빛 변형을 지웠다(Player.log) → 빌드 전에 `BuildMenu.KeepRuntimeRenderingShaders`가 후처리·2D 빼기를 끈다(메뉴 빌드와 File ▸ Build 모두, `KeepRenderingShadersPreprocess`). 새 빌드로 확인은 아직 · 이 커밋
+- 2026-11-23 · 가방이 없으면 탐험 화면에서 "배낭" 대신 "주머니"(창 제목·자리 없음 알림·튜토리얼 안내 `exp.pocket`·`exp.pocket_full`·`tut.pocket`, `ExpeditionDirector.HasBag`·`BagKey`, 조작 안내 "Tab 주머니·배낭"). 테스트 빌드에서 탐험 후처리·2D 빛이 빠지던 문제: 볼륨·빛을 실행 중에 코드로 만들어 URP "안 쓰는 셰이더 빼기"가 Bloom 등 후처리 셰이더와 2D 빛 변형을 지웠다(Player.log) → 빌드 전에 `BuildMenu.KeepRuntimeRenderingShaders`가 후처리·2D 빼기를 끈다(메뉴 빌드와 File ▸ Build 모두, `KeepRenderingShadersPreprocess`). 빌드에서 후처리 셰이더 오류는 사라짐 · `4d27e143`
+- 2026-11-23 · 테스트 빌드에서 밤·어두운 방이 환하게 보이던 문제: URP가 2D 기본 재질(Sprite-Lit-Default)을 에디터에서만 돌려주고 빌드에서는 null이라, 코드로 만든 스프라이트가 조명을 안 받는 Sprites/Default가 됐다(외부 빛 줄기만 보였다) → 조명 재질 `Resources/Art/exploration_sprite_lit.mat` + `ExplorationArt.Lit`(스프라이트 만들 때·`ExplorationLook.ApplyPixelLight`가 놓친 것까지), 먼지 재질도 이것을 바탕으로. 새 빌드로 확인은 아직 · 이 커밋
