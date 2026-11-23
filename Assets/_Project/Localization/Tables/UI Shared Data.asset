@@ -6591,6 +6591,86 @@ MonoBehaviour:
     m_Key: palette.loot_rare
     m_Metadata:
       m_Items: []
+  - m_Id: 1478059156062208
+    m_Key: storage.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1478059223171072
+    m_Key: storage.resources
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1478059223171073
+    m_Key: storage.equipment
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1478059223171074
+    m_Key: storage.consumable
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1478059223171075
+    m_Key: storage.liked
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1478059223171076
+    m_Key: storage.other
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1478059223171077
+    m_Key: storage.items
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1478059223171078
+    m_Key: storage.empty
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1478059223171079
+    m_Key: storage.equipped
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1478059223171080
+    m_Key: storage.durability
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1478059223171081
+    m_Key: exp.slot.Weapon
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1478059223171082
+    m_Key: exp.slot.Backpack
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1478059223171083
+    m_Key: exp.slot.Tool
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1478059223171084
+    m_Key: exp.slot_bare
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1478059223171085
+    m_Key: exp.slot_empty
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1478059223171086
+    m_Key: exp.slot_hint
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1478059223171087
+    m_Key: exp.equipped
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1478059223171088
+    m_Key: exp.bag_too_small
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1478059223171089
+    m_Key: exp.bag_cannot_remove
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1478059223171090
+    m_Key: exp.backpack_hint
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
