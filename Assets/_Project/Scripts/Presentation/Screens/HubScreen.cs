@@ -221,7 +221,7 @@ namespace ApoGirl.Presentation.Screens
                 return;
             }
 
-            if (keyboard.f1Key.wasPressedThisFrame)
+            if (keyboard.f1Key.wasPressedThisFrame && DebugAccess.Enabled)
             {
                 _debug.Toggle();
             }

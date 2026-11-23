@@ -1587,7 +1587,7 @@ namespace ApoGirl.Exploration.Runtime
         private void HandleInput(float dt)
         {
             var keyboard = Keyboard.current;
-            if (keyboard != null)
+            if (keyboard != null && DebugAccess.Enabled)   // 디버그 키는 에디터·개발 빌드에서만
             {
                 if (keyboard.f2Key.wasPressedThisFrame)
                 {
