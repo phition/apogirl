@@ -9,7 +9,9 @@ namespace ApoGirl.Exploration.Runtime
     /// 탐험 공간 조명 (M6-5). 그림만 바꾼다 — 시야는 ExpeditionDirector.IsDarkIn(밤·황혼, 또는 방 안), 수색 속도는 밤·황혼(IsDark)만 따른다.
     /// - 낮 복도: 화면 앞쪽 창으로 드는 햇빛 줄기. 시계가 흐르면 해가 움직여 줄기의 기울기·색·밝기가 천천히 바뀐다
     ///   (아침 = 한쪽으로 길게 기운 옅은 빛 → 한낮 = 곧고 밝은 빛 → 늦은 오후 = 반대로 기운 금빛 → 황혼 = 붉은빛).
-    ///   줄기는 가운데가 가장 밝고 가장자리·바닥 쪽으로 부드럽게 옅어지는 그림(쿠키)으로 그린다.
+    ///   줄기는 돌리지 않고 평행사변형 그림(쿠키)으로 그린다: 윗변은 천장에, 아랫변은 바닥에 평평하게 붙고 옆선만 기운다.
+    ///   기울기마다 쿠키를 0.5도 단위로 만들어 두고 바꿔 끼운다. 바닥에 닿는 자리에는 번진 빛이 따라 미끄러진다.
+    /// - 지금 보이는 공간(층·방)의 빛만 켠다. 가려 둔 위·아래층 빛(빛 기둥 포함)이 비쳐 보이지 않게.
     /// - 낮 방 안: 전기가 끊겨 어둡고, 복도 쪽 창 아래로 빛이 조금 샌다.
     /// - 밤: 옅은 달빛 줄기. 손전등은 뜨거운 가운데 → 넓은 가장자리로 번지는 세 겹 빛 (ExpeditionDirector가 방향을 준다).
     /// 밝기 값은 BalanceConfig 조명 절 (DayCorridorAmbient·DayRoomAmbient·Sunbeam*·RoomWindowLightIntensity).
@@ -31,6 +33,11 @@ namespace ApoGirl.Exploration.Runtime
         private const float MoonAngle = 16f;
         private const float DawnAngle = 38f;
 
+        /// <summary>줄기 쿠키를 만들어 두는 기울기 단위(도), 천장에서 내린 만큼, 바닥 높이.</summary>
+        private const float AngleStep = 0.5f;
+        private const float CeilingInset = 0.18f;
+        private const float FloorLine = 0.02f;
+
         private static readonly Color MorningBeam = new Color(1f, 0.87f, 0.74f);
         private static readonly Color NoonBeam = new Color(1f, 0.97f, 0.88f);
         private static readonly Color GoldenBeam = new Color(1f, 0.78f, 0.5f);
@@ -45,6 +52,15 @@ namespace ApoGirl.Exploration.Runtime
         private readonly List<Light2D> _beams = new List<Light2D>();
         private readonly List<Light2D> _pools = new List<Light2D>();
         private readonly List<Light2D> _leaks = new List<Light2D>();
+
+        /// <summary>빛마다 속한 공간 (보이는 공간의 빛만 켠다)과 줄기의 천장 쪽 가운데 X.</summary>
+        private readonly List<ExplorationArea> _beamAreas = new List<ExplorationArea>();
+        private readonly List<float> _beamX = new List<float>();
+        private readonly List<ExplorationArea> _leakAreas = new List<ExplorationArea>();
+        private readonly List<KeyValuePair<ExplorationArea, GameObject>> _dust = new List<KeyValuePair<ExplorationArea, GameObject>>();
+        private ExplorationArea _shown;
+        private bool _shownSet;
+        private float _time;
         private Phase _phase;
 
         // 지금 값 (목표 값으로 부드럽게 따라간다)
@@ -56,7 +72,8 @@ namespace ApoGirl.Exploration.Runtime
         private Color _color;
         private bool _snapped;
 
-        private static Sprite _beamCookie;
+        private static readonly Dictionary<int, Sprite> BeamCookies = new Dictionary<int, Sprite>();
+        private static float _beamCookieHeight;
         private static Sprite _poolCookie;
         private static Sprite _leakCookie;
 
@@ -82,15 +99,17 @@ namespace ApoGirl.Exploration.Runtime
             // 층마다 한두 곳에만 빛이 든다 (자리는 층마다 다르고 늘 같다)
             var random = new System.Random(7919 * (corridor.Floor + 1) + Mathf.RoundToInt(corridor.Width * 13f));
             var count = random.Next(Mathf.Max(0, _balance.SunbeamsPerFloorMin), Mathf.Max(_balance.SunbeamsPerFloorMin, _balance.SunbeamsPerFloorMax) + 1);
-            var top = _floorHeight - 0.18f;
+            var top = _floorHeight - CeilingInset;
             var span = Mathf.Max(1f, corridor.Width - 8f);
             for (var i = 0; i < count; i++)
             {
                 // 복도를 count 구간으로 나눠 구간마다 하나씩 (서로 붙지 않게)
                 var x = 4f + span * (i + 0.2f + (float)random.NextDouble() * 0.6f) / count;
-                var beam = SpriteLight("Sunbeam", BeamCookie(), new Vector3(corridor.Origin.x + x, corridor.Origin.y + top, 0f));
+                var beam = SpriteLight("Sunbeam", BeamCookie(0f), new Vector3(corridor.Origin.x + x, corridor.Origin.y + top, 0f));
                 _beams.Add(beam);
-                var pool = SpriteLight("SunPool", PoolCookie(), new Vector3(corridor.Origin.x + x, corridor.Origin.y + 0.1f, 0f));
+                _beamAreas.Add(corridor);
+                _beamX.Add(corridor.Origin.x + x);
+                var pool = SpriteLight("SunPool", PoolCookie(), new Vector3(corridor.Origin.x + x, corridor.Origin.y + FloorLine, 0f));
                 _pools.Add(pool);
             }
 
@@ -119,6 +138,7 @@ namespace ApoGirl.Exploration.Runtime
 
             var go = new GameObject("Dust");
             go.transform.SetParent(_world, false);
+            _dust.Add(new KeyValuePair<ExplorationArea, GameObject>(corridor, go));
             go.transform.localPosition = new Vector3(corridor.Origin.x + corridor.Width * 0.5f, corridor.Origin.y + _floorHeight * 0.5f, 0f);
             var particles = go.AddComponent<ParticleSystem>();
             particles.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
@@ -169,6 +189,7 @@ namespace ApoGirl.Exploration.Runtime
                 var leak = SpriteLight("WindowLeak", LeakCookie(), new Vector3(room.Origin.x + window.X + window.Width * 0.5f, room.Origin.y + top, 0f));
                 leak.transform.localScale = new Vector3(window.Width + 1.6f, top + 0.1f, 1f);
                 _leaks.Add(leak);
+                _leakAreas.Add(room);
             }
 
             _snapped = false;
@@ -180,12 +201,15 @@ namespace ApoGirl.Exploration.Runtime
         }
 
         /// <summary>
-        /// 매 프레임. dayProgress = 낮 탐험 시계 (0 = 아침, 1 = 해 질 녘). 해의 위치에 맞춰 줄기를 천천히 돌리고 색·밝기를 바꾼다.
-        /// 시간대가 바뀌면(황혼·새벽) 몇 초에 걸쳐 넘어간다.
+        /// 매 프레임. progress = 탐험 시계 (0 = 시작, 1 = 끝: 낮이면 아침 → 해 질 녘, 밤이면 달이 넘어간다), shown = 지금 보이는 공간.
+        /// 해(달)의 위치에 맞춰 줄기 기울기를 시계와 함께 천천히 바꾸고 색·밝기를 바꾼다. 시간대가 바뀌면(황혼·새벽) 몇 초에 걸쳐 넘어간다.
         /// </summary>
-        public void Tick(float dt, float dayProgress)
+        public void Tick(float dt, float progress, ExplorationArea shown)
         {
-            Target(dayProgress, out var angle, out var intensity, out var color);
+            Target(progress, out var angle, out var intensity, out var color);
+            var visibilityChanged = !_shownSet || shown != _shown;
+            _shown = shown;
+            _shownSet = true;
             if (!_snapped || dt >= 1000f)
             {
                 _angle = angle;
@@ -201,40 +225,84 @@ namespace ApoGirl.Exploration.Runtime
                 _color = Color.Lerp(_color, color, k);
             }
 
-            // 줄기: 천장의 한 점을 축으로 기운다. 길이는 바닥까지 (기울수록 길다)
-            var radians = _angle * Mathf.Deg2Rad;
-            var length = (_floorHeight - 0.2f) / Mathf.Max(0.5f, Mathf.Cos(radians));
-            var rotation = Quaternion.Euler(0f, 0f, _angle);
-            var scale = new Vector3(BeamWidth, length, 1f);
-            var beamIntensity = _balance.SunbeamIntensity * _intensity;
-            foreach (var beam in _beams)
+            if (dt < 1000f)
             {
-                beam.transform.localRotation = rotation;
+                _time += dt;
+            }
+
+            // 구름이 지나가듯 아주 느리게 밝기가 일렁인다 (±6%)
+            var drift = 1f + 0.06f * (Mathf.PerlinNoise(_time * 0.07f, 0.31f) * 2f - 1f);
+
+            // 줄기: 윗변은 천장, 아랫변은 바닥. 해가 기울면 바닥 쪽이 옆으로 밀린다 (reach)
+            var height = _floorHeight - CeilingInset - FloorLine;
+            var bucket = Mathf.Round(_angle / AngleStep) * AngleStep;
+            var reach = Mathf.Tan(bucket * Mathf.Deg2Rad) * height;
+            var cookie = BeamCookie(bucket);
+            var scale = new Vector3(BeamWidth + Mathf.Abs(reach), height, 1f);
+            var left = -BeamWidth * 0.5f + Mathf.Min(0f, reach);
+            var beamIntensity = _balance.SunbeamIntensity * _intensity * drift;
+            for (var i = 0; i < _beams.Count; i++)
+            {
+                var beam = _beams[i];
+                var on = _beamAreas[i] == shown;
+                if (beam.gameObject.activeSelf != on)
+                {
+                    beam.gameObject.SetActive(on);
+                    _pools[i].gameObject.SetActive(on);
+                }
+
+                if (!on)
+                {
+                    continue;
+                }
+
+                var position = beam.transform.localPosition;
+                beam.transform.localPosition = new Vector3(_beamX[i] + left, position.y, 0f);
+                beam.transform.localRotation = Quaternion.identity;
                 beam.transform.localScale = scale;
+                if (beam.lightCookieSprite != cookie)
+                {
+                    beam.lightCookieSprite = cookie;
+                }
+
                 beam.color = _color;
                 beam.intensity = beamIntensity;
                 beam.volumetricEnabled = BeamVolume > 0f;
-                beam.volumeIntensity = BeamVolume * _intensity;
-            }
+                beam.volumeIntensity = BeamVolume * _intensity * drift;
 
-            // 바닥에 닿는 곳: 줄기 끝을 따라 옆으로 움직이는 넓고 옅은 빛 (벽·바닥에 되비친 빛)
-            var reach = Mathf.Tan(radians) * (_floorHeight - 0.2f);
-            for (var i = 0; i < _pools.Count; i++)
-            {
+                // 바닥에 닿는 곳: 줄기 끝을 따라 옆으로 미끄러지는 넓고 옅은 빛 (바닥·벽 밑동에 되비친 빛). 기울수록 길게 눕는다.
                 var pool = _pools[i];
-                var anchor = _beams[i].transform.localPosition;
-                pool.transform.localPosition = new Vector3(anchor.x + reach, anchor.y - (_floorHeight - 0.2f) + 0.35f, 0f);
-                pool.transform.localScale = new Vector3(BeamWidth * 2.4f, 1.5f, 1f);
+                var floorY = position.y - height;
+                pool.transform.localPosition = new Vector3(_beamX[i] + reach, floorY + 0.3f, 0f);
+                pool.transform.localScale = new Vector3(BeamWidth * 2.2f + Mathf.Abs(reach) * 0.8f, 1.3f, 1f);
                 pool.color = _color;
-                pool.intensity = beamIntensity * 0.5f;
+                pool.intensity = beamIntensity * 0.45f;
             }
 
             var leakColor = _phase == Phase.Day || _phase == Phase.Dawn ? Color.Lerp(RoomLeak, _color, 0.35f) : _color;
-            var leakIntensity = _balance.RoomWindowLightIntensity * _intensity;
-            foreach (var leak in _leaks)
+            var leakIntensity = _balance.RoomWindowLightIntensity * _intensity * drift;
+            for (var i = 0; i < _leaks.Count; i++)
             {
+                var leak = _leaks[i];
+                var on = _leakAreas[i] == shown;
+                if (leak.gameObject.activeSelf != on)
+                {
+                    leak.gameObject.SetActive(on);
+                }
+
                 leak.color = leakColor;
                 leak.intensity = leakIntensity;
+            }
+
+            if (visibilityChanged)
+            {
+                foreach (var dust in _dust)
+                {
+                    if (dust.Value != null)
+                    {
+                        dust.Value.SetActive(dust.Key == shown);
+                    }
+                }
             }
         }
 
@@ -278,7 +346,8 @@ namespace ApoGirl.Exploration.Runtime
                     color = DuskBeam;
                     return;
                 case Phase.Night:
-                    angle = MoonAngle;
+                    // 달도 밤새 천천히 넘어간다
+                    angle = Mathf.Lerp(MoonAngle, -MoonAngle, Mathf.Clamp01(dayProgress));
                     intensity = 0.3f;
                     color = NightBeam;
                     return;
@@ -314,32 +383,47 @@ namespace ApoGirl.Exploration.Runtime
         // ── 빛 그림 (쿠키): 코드로 한 번 만든다 ──
 
         /// <summary>
-        /// 햇빛 줄기: 1x1 유닛, 축 = 위 가운데. 가로는 가운데가 밝고 가장자리로 부드럽게(종 모양), 세로는 창 쪽이 밝고 바닥으로 갈수록 옅어진다.
-        /// 양 끝은 짧게 사라져 기울었을 때 모서리가 위·아래층으로 번지지 않는다.
+        /// 햇빛 줄기 (기울기 angle도): 1x1 유닛 상자에 그린 평행사변형, 축 = 왼쪽 위. 윗변(천장)과 아랫변(바닥)은 평평하고 옆선만 기운다.
+        /// 가로는 가운데가 밝고 가장자리로 부드럽게(종 모양), 세로는 창(천장) 쪽이 조금 더 밝고 바닥까지 끊기지 않고 이어진다.
+        /// 상자 너비 = 줄기 너비 + 옆으로 밀린 만큼 (Tick이 같은 값으로 늘린다).
         /// </summary>
-        private static Sprite BeamCookie()
+        private Sprite BeamCookie(float angle)
         {
-            if (_beamCookie != null)
+            var height = _floorHeight - CeilingInset - FloorLine;
+            if (!Mathf.Approximately(_beamCookieHeight, height))
             {
-                return _beamCookie;
+                BeamCookies.Clear();   // 층 높이가 다른 건물이면 다시 만든다
+                _beamCookieHeight = height;
             }
 
-            const int w = 128;
-            const int h = 128;
+            var key = Mathf.RoundToInt(angle / AngleStep);
+            if (BeamCookies.TryGetValue(key, out var cached) && cached != null)
+            {
+                return cached;
+            }
+
+            var reach = Mathf.Tan(key * AngleStep * Mathf.Deg2Rad) * height;
+            var boxWidth = BeamWidth + Mathf.Abs(reach);
+            // 1x1 유닛 스프라이트 (정사각 텍스처, Tick이 상자 크기로 늘린다)
+            const int h = 160;
+            const int w = 160;
             var texture = NewTexture(w, h);
             var pixels = new Color[w * h];
+            var topCenter = BeamWidth * 0.5f - Mathf.Min(0f, reach);
             for (var y = 0; y < h; y++)
             {
-                var v = y / (float)(h - 1);            // 0 = 바닥 끝, 1 = 창
-                var along = Mathf.Lerp(0.72f, 1f, Mathf.Pow(v, 1.3f));
-                var ends = Mathf.SmoothStep(0f, 1f, v / 0.07f) * Mathf.SmoothStep(0f, 1f, (1f - v) / 0.05f);
-                var spread = Mathf.Lerp(1.25f, 0.8f, v); // 바닥 쪽으로 갈수록 조금 퍼진다
+                var v = y / (float)(h - 1);                 // 0 = 바닥, 1 = 천장
+                var center = topCenter + reach * (1f - v);
+                var along = Mathf.Lerp(0.9f, 1f, Mathf.Pow(v, 1.4f));
+                var ends = Mathf.SmoothStep(0f, 1f, (1f - v) / 0.04f) * Mathf.SmoothStep(0f, 1f, v / 0.015f);
+                var spread = Mathf.Lerp(1.15f, 0.9f, v);    // 바닥 쪽으로 갈수록 조금 퍼진다
                 for (var x = 0; x < w; x++)
                 {
-                    var u = (x / (float)(w - 1) - 0.5f) * 2f / spread;
+                    var px = (x + 0.5f) / w * boxWidth;
+                    var u = (px - center) / (BeamWidth * 0.5f) / spread;
                     var core = Mathf.Exp(-u * u * 3.6f);          // 밝은 속
-                    var halo = Mathf.Exp(-u * u * 1.6f) * 0.35f;  // 넓고 옅은 가장자리
-                    var edge = Mathf.SmoothStep(0f, 1f, (1f - Mathf.Abs(u)) / 0.25f);
+                    var halo = Mathf.Exp(-u * u * 1.4f) * 0.35f;  // 넓고 옅은 가장자리
+                    var edge = Mathf.SmoothStep(0f, 1f, (1.15f - Mathf.Abs(u)) / 0.35f);
                     var value = Mathf.Clamp01((core * 0.75f + halo) * along * ends * edge);
                     pixels[y * w + x] = new Color(value, value, value, value);
                 }
@@ -347,8 +431,9 @@ namespace ApoGirl.Exploration.Runtime
 
             texture.SetPixels(pixels);
             texture.Apply();
-            _beamCookie = Sprite.Create(texture, new Rect(0, 0, w, h), new Vector2(0.5f, 1f), h, 0, SpriteMeshType.FullRect, Vector4.zero, false);
-            return _beamCookie;
+            var sprite = Sprite.Create(texture, new Rect(0, 0, w, h), new Vector2(0f, 1f), h, 0, SpriteMeshType.FullRect, Vector4.zero, false);
+            BeamCookies[key] = sprite;
+            return sprite;
         }
 
         /// <summary>바닥에 번진 빛·방 창 아래 빛에 쓰는 둥근 빛: 1x1 유닛, 가운데가 밝고 바깥으로 부드럽게.</summary>

@@ -2792,7 +2792,7 @@ namespace ApoGirl.Exploration.Runtime
             {
                 var wanted = _lighting.AmbientFactor(_shownArea ?? CurrentArea);
                 _areaFactor = cut || dt >= 1000f ? wanted : Mathf.MoveTowards(_areaFactor, wanted, dt * 2.5f);
-                _lighting.Tick(dt, Clock != null && Request.TimeOfDay == ExpeditionTime.Day ? Clock.Normalized : 0f);
+                _lighting.Tick(dt, Clock != null ? Clock.Normalized : 0f, _shownArea ?? CurrentArea);
                 if (_light != null && !FullVision)
                 {
                     _light.intensity = AmbientLightIntensity;
