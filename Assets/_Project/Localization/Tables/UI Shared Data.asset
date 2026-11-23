@@ -6759,6 +6759,10 @@ MonoBehaviour:
     m_Key: exp.info.rare
     m_Metadata:
       m_Items: []
+  - m_Id: 1484859511160832
+    m_Key: exp.slot.Armor
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
