@@ -865,7 +865,7 @@ namespace ApoGirl.Exploration.Runtime
         {
             StaminaMax = ExplorationRules.StaminaMax(Request.Stats, _balance);
             var injured = !string.IsNullOrEmpty(_balance.InjuredFlag) && Request.Flags.Contains(_balance.InjuredFlag);
-            StaminaCap = ExplorationRules.StaminaCap(StaminaMax, Request.Fatigue, injured, _balance);
+            StaminaCap = ExplorationRules.StaminaCap(StaminaMax, Request.Fatigue, injured, _balance, Request.Hydration);
             Stamina = StaminaCap;
             _hideSeconds = ExplorationRules.HideSeconds(Request.Stats, _balance);
             _stressSearchFactor = ExplorationRules.StressSearchFactor(Request.Stress, _balance);

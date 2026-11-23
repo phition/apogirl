@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using ApoGirl.Core.Definitions;
 using ApoGirl.Core.Effects;
+using ApoGirl.Core.Random;
 using ApoGirl.Core.State;
 
 namespace ApoGirl.Core.Rules
@@ -164,14 +165,30 @@ namespace ApoGirl.Core.Rules
             return true;
         }
 
-        /// <summary>하루 정산 (UpkeepRules.ApplyDaily): 포만·수분이 줄고, 공용 식사를 주인공이 먹은 비율만큼 채운다. 단계별 스트레스.</summary>
-        public static void ApplyDaily(GameState state, BalanceConfig balance, double foodShare, double waterShare)
+        /// <summary>아침 식사 (UpkeepRules.ApplyMorning): 주인공과 같은 식단으로 같은 만큼 채운다. 식단을 못 지킨 날(random ≠ null)은 사람마다 스트레스.</summary>
+        public static void ApplyMeal(GameState state, BalanceConfig balance, List<string> recipients, int satiety, int hydration, IRandomService shortRandom)
+        {
+            foreach (var id in recipients)
+            {
+                var body = Body(state, id);
+                body.Satiety = ClampSigned(body.Satiety + satiety, balance);
+                body.Hydration = ClampSigned(body.Hydration + hydration, balance);
+                if (shortRandom != null && !CatRules.IsCat(id))
+                {
+                    var stress = shortRandom.Range(balance.DietShortStressMin, Math.Max(balance.DietShortStressMin, balance.DietShortStressMax));
+                    body.Stress = ClampStress(body.Stress + stress, balance);
+                }
+            }
+        }
+
+        /// <summary>밤이 시작되기 전 (UpkeepRules.ApplyEvening): 포만·수분이 하루치 빠지고, 단계별 스트레스.</summary>
+        public static void ApplyEvening(GameState state, BalanceConfig balance)
         {
             foreach (var id in Recipients(state, balance))
             {
                 var body = Body(state, id);
-                body.Satiety = Nourish(body.Satiety, balance.CompanionSatietyDailyDrain, balance.CompanionMealSatiety, foodShare, balance);
-                body.Hydration = Nourish(body.Hydration, balance.CompanionHydrationDailyDrain, balance.CompanionDrinkHydration, waterShare, balance);
+                body.Satiety = ClampSigned(body.Satiety - balance.SatietyDailyDrain, balance);
+                body.Hydration = ClampSigned(body.Hydration - balance.HydrationDailyDrain, balance);
                 var stress = (UpkeepRules.Band(balance.SatietyBands, body.Satiety)?.Stress ?? 0)
                              + (UpkeepRules.Band(balance.HydrationBands, body.Hydration)?.Stress ?? 0);
                 if (id != TeacherId && state.Npcs[id].InjuredWeeks > 0)
@@ -202,18 +219,6 @@ namespace ApoGirl.Core.Rules
         /// <summary>스트레스가 높아 역할 효과가 줄어드는가.</summary>
         public static bool IsStressed(NpcState npc, BalanceConfig balance) =>
             npc?.Body != null && npc.Body.Stress >= balance.CompanionStressRoleThreshold;
-
-        private static int Nourish(int value, int drain, int restore, double share, BalanceConfig balance)
-        {
-            value = ClampSigned(value - drain, balance);
-            if (value < 0 && share > 0)
-            {
-                var gain = (int)Math.Round(restore * Math.Min(1.0, share), MidpointRounding.AwayFromZero);
-                value = Math.Min(0, value + gain);
-            }
-
-            return value;
-        }
 
         private static int ClampSigned(int value, BalanceConfig balance) => Math.Max(-balance.VitalMax, Math.Min(balance.VitalMax, value));
 

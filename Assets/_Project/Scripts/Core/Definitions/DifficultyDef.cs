@@ -10,7 +10,7 @@ namespace ApoGirl.Core.Definitions
     {
         public string Id = "STANDARD";
 
-        /// <summary>하루 식량·물 소모 배율.</summary>
+        /// <summary>쓰지 않는다 (2026-11-23부터 식단 소비는 난이도로 할인하지 않는다). 옛 덮어쓰기 파일 호환으로만 남긴다.</summary>
         public float Consumption = 1f;
 
         /// <summary>탐험 피해·쓰러짐 배율 (헤드리스 쓰러짐 확률, 실시간 좀비 피해).</summary>
@@ -25,7 +25,10 @@ namespace ApoGirl.Core.Definitions
         /// <summary>탐험 자원 수확 배율 (모든 자원).</summary>
         public float Yield = 1f;
 
-        /// <summary>자원별 탐험 수확 배율 (Yield에 곱한다, 소수는 확률 반올림). 난이도의 생존 압박을 맞추는 손잡이.</summary>
+        /// <summary>
+        /// 자원별 수확 배율 (소수는 확률 반올림). 의약품은 Yield에 곱하고, 식량·물은 Yield 없이 이 값만 쓴다:
+        /// 구한 식량·물의 변환 (통조림·생수 5 기준 이야기 중심 1 = 5, 표준 0.8 = 4, 하드 0.6 = 3, 사용자 결정 2026-11-23).
+        /// </summary>
         public float FoodYield = 1f;
         public float WaterYield = 1f;
         public float MedicineYield = 1f;

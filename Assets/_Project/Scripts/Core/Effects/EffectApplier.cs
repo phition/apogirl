@@ -301,10 +301,34 @@ namespace ApoGirl.Core.Effects
             var before = vitals.GetVital(type);
             // 포만·수분은 0이 가운데 (−최대 ~ +최대)
             var min = type == VitalType.Satiety || type == VitalType.Hydration ? -balance.VitalMax : 0;
+            // 허기만큼 최대 체력이 줄어든다 (NourishRules)
             var after = Clamp(before + amount, min, balance.VitalMax);
+            if (type == VitalType.Hp && amount > 0)
+            {
+                // 회복은 줄어든 최대치까지만 (이미 넘어 있으면 그대로)
+                after = Math.Max(before, Math.Min(after, Rules.NourishRules.MaxHp(state, balance)));
+            }
+
             vitals.SetVital(type, after);
             delta.AddVital(type, after - before);
+            if (type == VitalType.Satiety && after < before)
+            {
+                ClampHpToMax(state, balance, delta);
+            }
+
             return after - before;
+        }
+
+        /// <summary>허기로 최대 체력이 줄었으면 지금 체력도 거기까지 내린다.</summary>
+        public static void ClampHpToMax(GameState state, BalanceConfig balance, StateDelta delta)
+        {
+            var vitals = state.Player.Vitals;
+            var max = Rules.NourishRules.MaxHp(state, balance);
+            if (vitals.Hp > max)
+            {
+                delta.AddVital(VitalType.Hp, max - vitals.Hp);
+                vitals.Hp = max;
+            }
         }
 
         /// <summary>자원은 0 미만으로 내려가지 않는다. 보관량 상한은 창고 레벨 도입 시 추가.</summary>

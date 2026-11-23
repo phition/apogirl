@@ -247,18 +247,33 @@ namespace ApoGirl.Core.Definitions
         public int ViolationFatigue = 10;
         public int ViolationStress = 8;
 
-        // ── 소모 (2인 기준, 문서 9.1 / 5.4) ──
-        public int DailyFood = 2;
-        public int DailyWater = 2;
-        // ── 포만·수분 (사용자 요청: 0이 가운데, +면 배부름, −면 허기짐) ──
+        // ── 식사 (사용자 결정 2026-11-23: 주간 식단, 한 사람당 소비) ──
 
-        /// <summary>매일 밤 빠지는 포만·수분.</summary>
-        public int SatietyDailyDrain = 25;
-        public int HydrationDailyDrain = 30;
+        /// <summary>식단별 한 사람 하루 소비 (식량·물 각각): 아껴 먹는다 / 챙겨 먹는다 / 잘 먹는다. 한 주 실행 직전 배분 화면에서 고른다.</summary>
+        public int DietSaveUnits = 1;
+        public int DietCareUnits = 2;
+        public int DietWellUnits = 3;
 
-        /// <summary>0 아래면 그날 몫을 먹고 마신다: 포만·수분이 이만큼 오르되 0까지만 (0 이상이면 먹지 않아 아낀다).</summary>
-        public int MealSatiety = 45;
-        public int DrinkHydration = 55;
+        /// <summary>식량 1·물 1이 채우는 포만·수분 (한 사람 몫). 아침마다 먹는다.</summary>
+        public int FoodSatietyPerUnit = 12;
+        public int WaterHydrationPerUnit = 15;
+
+        /// <summary>매일 밤이 시작되기 전에 빠지는 포만·수분 (주인공·동료·선생님 모두).</summary>
+        public int SatietyDailyDrain = 15;
+        public int HydrationDailyDrain = 15;
+
+        /// <summary>식량이나 물이 모자라 식단을 못 지킨 날, 주인공·동료마다 오르는 스트레스 (이 범위에서 무작위).</summary>
+        public int DietShortStressMin = 2;
+        public int DietShortStressMax = 5;
+
+        /// <summary>주인공 탐험 한 번의 포만·수분 소모 (챙겨 먹으면 탐험을 다녀도 유지되게, 2026-11-23).</summary>
+        public int ExpeditionSatietyDrain = 10;
+        public int ExpeditionHydrationDrain = 12;
+
+        /// <summary>허기(포만 0 아래) 1당 최대 체력, 갈증(수분 0 아래) 1당 탐험 최대 스태미너가 줄어드는 비율. 최대치의 하한.</summary>
+        public float HungerMaxHpPenalty = 0.01f;
+        public float ThirstStaminaPenalty = 0.01f;
+        public float NourishMaxFloor = 0.5f;
 
         /// <summary>이 값 이하면 굶주림·탈수로 쓰러진 것으로 친다 (사망 원인 판정).</summary>
         public int StarvationThreshold = -60;
@@ -345,12 +360,6 @@ namespace ApoGirl.Core.Definitions
         public float CompanionAffinityGainScale = 2f;
 
         // ── 동료 몸 상태·이번 주 배분 (기획 D절) ──
-
-        /// <summary>동료·선생님의 하루 포만·수분 감소. 기본 식사는 공용 식량에서 주인공이 먹은 비율만큼 채운다 (식량을 더 쓰지 않는다).</summary>
-        public int CompanionSatietyDailyDrain = 25;
-        public int CompanionHydrationDailyDrain = 30;
-        public int CompanionMealSatiety = 45;
-        public int CompanionDrinkHydration = 55;
 
         /// <summary>다친 동료의 하루 스트레스, 주마다 저절로 풀리는 스트레스.</summary>
         public int CompanionInjuredDailyStress = 1;
@@ -653,19 +662,19 @@ namespace ApoGirl.Core.Definitions
         {
             new DifficultyDef
             {
-                Id = "STORY", Consumption = 0.75f, Harm = 0.6f, HumanThreat = 0.7f, Infection = 0.6f, Yield = 1f,
-                // 수확은 표준보다 조금 넉넉하게 (봇 배드 약 10%, 2026-11-20)
-                FoodYield = 1.1f, WaterYield = 1.1f, MedicineYield = 0.85f,
+                Id = "STORY", Harm = 0.6f, HumanThreat = 0.7f, Infection = 0.6f, Yield = 1f,
+                // 식량·물 변환: 통조림·생수 5 그대로 (사용자 결정 2026-11-23, 소비 할인 대신)
+                FoodYield = 1f, WaterYield = 1f, MedicineYield = 0.85f,
                 WeeklyUndo = true, Dispatch = true, DispatchYield = 0.7f,
             },
-            // 표준: 배드 목표 45~55%에 맞춰 의약품 ×0.75 (2026-11-20)
-            new DifficultyDef { Id = "STANDARD", MedicineYield = 0.75f },
+            // 표준: 배드 목표 45~55%에 맞춰 의약품 ×0.75 (2026-11-20), 식량·물 변환 5 → 4 (2026-11-23)
+            new DifficultyDef { Id = "STANDARD", FoodYield = 0.8f, WaterYield = 0.8f, MedicineYield = 0.75f },
             // 하드: 가혹해진 세계에 맞춰 소모는 표준과 같게 (2026-11-20 결정, M7-d의 ×1.25에서 수정)
             new DifficultyDef
             {
                 Id = "HARD", Consumption = 1f, Harm = 1.4f, HumanThreat = 1.3f, Infection = 1.3f, Yield = 0.9f,
-                // 수확은 표준보다 조금 박하게 (봇 배드 약 84%, 2026-11-20)
-                FoodYield = 0.95f, WaterYield = 0.95f, MedicineYield = 0.7f,
+                // 식량·물 변환 5 → 3 (2026-11-23), 의약품은 박하게 (2026-11-20)
+                FoodYield = 0.6f, WaterYield = 0.6f, MedicineYield = 0.7f,
             },
         };
 
@@ -786,7 +795,7 @@ namespace ApoGirl.Core.Definitions
 
         // ── M7-2 후반 압박 (M7-f, 문서 9.0 "자원 압박이 서서히 상승") ──
 
-        /// <summary>겨울(40~52주) 식량 소모 배율. 하루 소모를 소수점까지 누적해 나눠 쓴다 (2 × 1.3 → 주 18).</summary>
+        /// <summary>겨울(40~52주) 식량 소모 배율. 무리 하루 소모를 소수점까지 누적해 나눠 쓴다 (2 × 1.3 → 주 18).</summary>
         public float WinterFoodMultiplier = 1.3f;
 
         /// <summary>겨울 주간 난방 연료. 모자라면 NoHeatStress.</summary>
@@ -847,6 +856,7 @@ namespace ApoGirl.Core.Definitions
 
         public float RainNoiseBonus = -0.25f;
         public float RainRaidMultiplier = 0.6f;
+        /// <summary>폭염 날 한 사람당 더 드는 물.</summary>
         public int HeatExtraWater = 1;
         public int ColdDailyStress = 2;
 

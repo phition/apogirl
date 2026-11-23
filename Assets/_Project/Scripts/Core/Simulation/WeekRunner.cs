@@ -56,6 +56,9 @@ namespace ApoGirl.Core.Simulation
         /// <summary>낮 침입으로 이 슬롯의 행동이 취소되었다 (침입 이벤트로 대응).</summary>
         public bool IntrusionTriggered;
 
+        /// <summary>아침 식사에서 식량·물이 모자라 식단을 못 지켰다 (그날 스트레스).</summary>
+        public bool DietShort;
+
         /// <summary>낮 침입 대응 결과 (없으면 null).</summary>
         public IntrusionResult Intrusion;
 
@@ -203,15 +206,22 @@ namespace ApoGirl.Core.Simulation
             var outcome = new SlotOutcome { Week = calendar.Week, Day = calendar.Day, Phase = calendar.Phase };
             var delta = outcome.Delta;
 
+            if (calendar.Phase == DayPhase.Day)
+            {
+                // 아침 식사 (동료가 외출하기 전에 다 같이). 식량 절약은 짝수 날(주 3번)에만: 그 차례 번호로 소수점을 나눠 쌓는다
+                var savingStep = (calendar.Week - 1) * (CalendarState.DaysPerWeek / 2) + calendar.Day / 2;
+                outcome.DietShort = UpkeepRules.ApplyMorning(
+                    _state, Balance, delta, _random, TraitRules.Spread(TraitRules.Sum(_state, _db, TraitModifierKind.FoodSaving), savingStep));
+            }
+
             // 동료 탐험: 낮 칸 시작에 나가고, 그날 밤 칸 시작에 돌아온다
             outcome.OutingDepartures = OutingRules.Depart(_state, _db);
             outcome.OutingReturns = OutingRules.Return(_state, _db, delta);
 
             if (calendar.Phase == DayPhase.Night)
             {
-                // 식량 절약은 짝수 날(주 3번)에만: 그 차례 번호로 소수점을 나눠 쌓는다 (요리 ×0.5 → 하루건너 1)
-                var savingStep = (calendar.Week - 1) * (CalendarState.DaysPerWeek / 2) + calendar.Day / 2;
-                UpkeepRules.ApplyDaily(_state, Balance, delta, TraitRules.Spread(TraitRules.Sum(_state, _db, TraitModifierKind.FoodSaving), savingStep));
+                // 밤이 시작되기 전: 포만·수분이 하루치 빠진다
+                UpkeepRules.ApplyEvening(_state, Balance, delta);
             }
 
             outcome.HpBefore = player.Vitals.Hp;
@@ -707,6 +717,9 @@ namespace ApoGirl.Core.Simulation
             }
 
             EffectApplier.ChangeVital(_state, VitalType.Fatigue, (int)Math.Round(result.FatigueDelta), Balance, delta);
+            // 탐험은 배고프고 목마르다 (동료 외출과 같이)
+            EffectApplier.ChangeVital(_state, VitalType.Satiety, -Balance.ExpeditionSatietyDrain, Balance, delta);
+            EffectApplier.ChangeVital(_state, VitalType.Hydration, -Balance.ExpeditionHydrationDrain, Balance, delta);
             // 폭행 트라우마: 낮 탐험마다 스트레스가 더 오른다
             var traumaStress = action.ExpeditionTime == ExpeditionTime.Day ? AssaultTraumaRules.DayExpeditionStress(_state, Balance) : 0;
             var stress = (int)Math.Round((result.StressDelta + traumaStress) * (1f + TraitRules.Sum(_state, _db, TraitModifierKind.ExpeditionStress)));
@@ -722,7 +735,9 @@ namespace ApoGirl.Core.Simulation
             var difficulty = DifficultyRules.Get(_state, Balance);
             foreach (var loot in result.ResourceLoot)
             {
-                var amount = DifficultyRules.Scale(loot.Amount, difficulty.Yield);
+                // 식량·물은 변환 배율(FoodYield·WaterYield)만, 나머지는 전체 수확 배율도
+                var foodOrWater = loot.Resource == ResourceType.Food || loot.Resource == ResourceType.Water;
+                var amount = foodOrWater ? loot.Amount : DifficultyRules.Scale(loot.Amount, difficulty.Yield);
                 var perResource = loot.Resource == ResourceType.Food ? difficulty.FoodYield
                     : loot.Resource == ResourceType.Water ? difficulty.WaterYield
                     : loot.Resource == ResourceType.Medicine ? difficulty.MedicineYield

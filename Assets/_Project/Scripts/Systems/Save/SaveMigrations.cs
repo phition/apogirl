@@ -20,6 +20,7 @@ namespace ApoGirl.Systems.Save
                 yield return new V8ToV9();
                 yield return new V9ToV10();
                 yield return new V10ToV11();
+                yield return new V11ToV12();
             }
         }
 
@@ -202,6 +203,16 @@ namespace ApoGirl.Systems.Save
 
                 var restored = baseState["PowerRestored"]?.Value<bool>() ?? false;
                 resources["Power"] = restored ? 3 : 0;
+            }
+        }
+
+        /// <summary>v12: 주간 식단 (FoodDiet·WaterDiet). 새 필드는 기본값(챙겨 먹는다)으로 채워진다.</summary>
+        private sealed class V11ToV12 : ISaveMigration
+        {
+            public int FromVersion => 11;
+
+            public void Migrate(JObject root)
+            {
             }
         }
     }

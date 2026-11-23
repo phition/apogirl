@@ -297,7 +297,7 @@ namespace ApoGirl.Presentation.Screens
                     return;
                 }
 
-                // 한 주 실행: ① 이번 주 배분하기 → ② 스케줄 실행 (배분할 사람이 없으면 바로 실행)
+                // 한 주 실행: ① 이번 주 식단·배분 → ② 스케줄 실행 (1주차 창고에 갇힌 주는 바로 실행)
                 _layers.CloseAll();
                 if (!_give.Show(received => StartCoroutine(RunWeek(received))))
                 {

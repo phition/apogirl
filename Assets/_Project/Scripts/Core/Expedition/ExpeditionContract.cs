@@ -50,6 +50,9 @@ namespace ApoGirl.Core.Expedition
         public int Fatigue;
         public int Stress;
 
+        /// <summary>수분 (0 아래면 갈증만큼 탐험 최대 스태미너가 준다).</summary>
+        public int Hydration;
+
         /// <summary>선생님 무전 지원 (무전기 수리 후).</summary>
         public bool RadioSupport;
 
@@ -199,6 +202,7 @@ namespace ApoGirl.Core.Expedition
                 SleepDebt = player.SleepDebt,
                 Hp = player.Vitals.Hp,
                 Fatigue = player.Vitals.Fatigue,
+                Hydration = player.Vitals.Hydration,
                 Stress = player.Vitals.Stress,
                 ConsecutiveRun = consecutiveRun,
                 WeatherId = state.Base.Weather.ToString(),

@@ -131,19 +131,22 @@
       ]
     },
     {
-      "Title": "소모 (2인 기준, 문서 9.1 / 5.4)",
+      "Title": "식사 (사용자 결정 2026-11-23: 주간 식단, 한 사람당 소비)",
       "Fields": [
-        "DailyFood",
-        "DailyWater"
-      ]
-    },
-    {
-      "Title": "포만·수분 (사용자 요청: 0이 가운데, +면 배부름, −면 허기짐)",
-      "Fields": [
+        "DietSaveUnits",
+        "DietCareUnits",
+        "DietWellUnits",
+        "FoodSatietyPerUnit",
+        "WaterHydrationPerUnit",
         "SatietyDailyDrain",
         "HydrationDailyDrain",
-        "MealSatiety",
-        "DrinkHydration",
+        "DietShortStressMin",
+        "DietShortStressMax",
+        "ExpeditionSatietyDrain",
+        "ExpeditionHydrationDrain",
+        "HungerMaxHpPenalty",
+        "ThirstStaminaPenalty",
+        "NourishMaxFloor",
         "StarvationThreshold",
         "FirstDishFlag",
         "CookingDishes",
@@ -179,10 +182,6 @@
     {
       "Title": "동료 몸 상태·이번 주 배분 (기획 D절)",
       "Fields": [
-        "CompanionSatietyDailyDrain",
-        "CompanionHydrationDailyDrain",
-        "CompanionMealSatiety",
-        "CompanionDrinkHydration",
         "CompanionInjuredDailyStress",
         "CompanionWeeklyStressRecovery",
         "CompanionStressRoleThreshold",

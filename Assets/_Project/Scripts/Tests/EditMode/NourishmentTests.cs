@@ -7,10 +7,15 @@ using NUnit.Framework;
 
 namespace ApoGirl.Tests.EditMode
 {
-    /// <summary>포만·수분: 0이 가운데. 배부르면 먹지 않아 아끼고 버프, 허기지면 디버프 (사용자 요청).</summary>
+    /// <summary>
+    /// 포만·수분 (사용자 결정 2026-11-23): 주간 식단(한 사람당 1·2·3개), 아침 식사, 밤이 되기 전 감소,
+    /// 못 지킨 날 스트레스, 허기·갈증만큼 최대 체력·스태미너 감소. 0이 가운데, 버프는 단계표 그대로.
+    /// </summary>
     public sealed class NourishmentTests
     {
-        private static GameState Make(BalanceConfig balance, int satiety, int food, int water = 50)
+        private const string Npc = "NPC_DOHYEON";
+
+        private static GameState Make(BalanceConfig balance, int satiety, int food, int water = 50, bool companion = false)
         {
             var state = NewGameFactory.Create(balance, 1);
             state.Calendar.Day = 1;
@@ -19,68 +24,93 @@ namespace ApoGirl.Tests.EditMode
             state.Player.Vitals.Stress = 50;
             state.Base.SetResource(ResourceType.Food, food);
             state.Base.SetResource(ResourceType.Water, water);
+            if (companion)
+            {
+                state.Npcs[Npc] = new NpcState { Status = NpcStatus.Joined };
+            }
+
             return state;
         }
 
         [Test]
-        public void Full_SkipsMeal_SavesFood_AndBuffs()
+        public void Morning_EatsDietPerPerson_AndFills()
         {
             var balance = new BalanceConfig();
-            var state = Make(balance, 60, 10);
-            UpkeepRules.ApplyDaily(state, balance, new StateDelta());
-            Assert.AreEqual(35, state.Player.Vitals.Satiety, "하루치만 빠진다");
-            Assert.AreEqual(10, state.Base.GetResource(ResourceType.Food), "배부르면 먹지 않아 식량을 아낀다");
-            Assert.AreEqual("FULL", UpkeepRules.Band(balance.SatietyBands, 35).Key);
-            Assert.Greater(state.Player.Vitals.Hp, 50, "배부르면 체력이 조금 오른다");
-            Assert.Less(state.Player.Vitals.Stress, 50);
+            var state = Make(balance, 0, 20, 20, companion: true);
+            Assert.AreEqual(2, UpkeepRules.Headcount(state, balance), "주인공 + 동료");
+
+            Assert.IsFalse(UpkeepRules.ApplyMorning(state, balance, new StateDelta(), new FixedRandom()));
+            Assert.AreEqual(20 - 2 * 2, state.Base.GetResource(ResourceType.Food), "챙겨 먹는다 = 한 사람 2개");
+            Assert.AreEqual(20 - 2 * 2, state.Base.GetResource(ResourceType.Water));
+            Assert.AreEqual(2 * balance.FoodSatietyPerUnit, state.Player.Vitals.Satiety);
+            Assert.AreEqual(2 * balance.WaterHydrationPerUnit, state.Player.Vitals.Hydration);
+            Assert.AreEqual(2 * balance.FoodSatietyPerUnit, state.Npcs[Npc].Body.Satiety, "동료도 같은 식사");
+
+            state.FoodDiet = DietLevel.Well;
+            state.WaterDiet = DietLevel.Save;
+            UpkeepRules.ApplyMorning(state, balance, new StateDelta(), new FixedRandom());
+            Assert.AreEqual(16 - 3 * 2, state.Base.GetResource(ResourceType.Food), "잘 먹는다 = 3개");
+            Assert.AreEqual(16 - 1 * 2, state.Base.GetResource(ResourceType.Water), "아껴 먹는다 = 1개");
         }
 
         [Test]
-        public void Normal_EatsToZero_AndHungry_RecoversWithFood()
+        public void Evening_Drains_AndBandsApply()
         {
             var balance = new BalanceConfig();
-            var state = Make(balance, 0, 10);
-            UpkeepRules.ApplyDaily(state, balance, new StateDelta());
-            Assert.AreEqual(0, state.Player.Vitals.Satiety, "보통이면 하루치를 먹어 0으로");
-            Assert.AreEqual(8, state.Base.GetResource(ResourceType.Food));
+            var full = Make(balance, 60, 0);
+            full.Player.Vitals.Hydration = 60;
+            UpkeepRules.ApplyEvening(full, balance, new StateDelta());
+            Assert.AreEqual(60 - balance.SatietyDailyDrain, full.Player.Vitals.Satiety);
+            Assert.AreEqual(60 - balance.HydrationDailyDrain, full.Player.Vitals.Hydration);
+            Assert.Greater(full.Player.Vitals.Hp, 50, "배부르면 체력이 조금 오른다 (버프는 그대로)");
+            Assert.Less(full.Player.Vitals.Stress, 50);
 
-            state = Make(balance, -60, 10);
-            UpkeepRules.ApplyDaily(state, balance, new StateDelta());
-            Assert.AreEqual(-60 - balance.SatietyDailyDrain + balance.MealSatiety, state.Player.Vitals.Satiety, "굶었어도 먹으면 매일 회복된다");
-        }
-
-        [Test]
-        public void Hungry_Debuffs_StarvingHurts()
-        {
-            var balance = new BalanceConfig();
-            var hungry = Make(balance, -10, 0);
-            UpkeepRules.ApplyDaily(hungry, balance, new StateDelta());
-            Assert.AreEqual(-35, hungry.Player.Vitals.Satiety);
-            Assert.AreEqual(50, hungry.Player.Vitals.Hp, "허기짐은 체력 피해 없음");
+            var hungry = Make(balance, -20, 0);
+            UpkeepRules.ApplyEvening(hungry, balance, new StateDelta());
+            Assert.AreEqual("HUNGRY", UpkeepRules.Band(balance.SatietyBands, hungry.Player.Vitals.Satiety).Key);
             Assert.Greater(hungry.Player.Vitals.Stress, 50, "허기지면 스트레스");
-
-            var starving = Make(balance, -50, 0);
-            UpkeepRules.ApplyDaily(starving, balance, new StateDelta());
-            Assert.AreEqual(50 - balance.StarvationHpLoss, starving.Player.Vitals.Hp, "굶주림은 체력 피해");
         }
 
         [Test]
-        public void GoodMealBuffer_OutlastsShortage()
+        public void Shortage_EatsWhatIsLeft_AndStressesEveryone()
         {
-            // 정식으로 +100 가까이 채워 두면 식량 없이도 며칠은 굶주림까지 가지 않는다
             var balance = new BalanceConfig();
-            var fed = Make(balance, 90, 0);
-            var plain = Make(balance, 0, 0);
-            for (var day = 1; day <= 5; day++)
-            {
-                fed.Calendar.Day = plain.Calendar.Day = day;
-                UpkeepRules.ApplyDaily(fed, balance, new StateDelta());
-                UpkeepRules.ApplyDaily(plain, balance, new StateDelta());
-            }
+            var state = Make(balance, 0, 2, 50, companion: true);
+            var npcStress = state.Npcs[Npc].Body?.Stress ?? 0;
+            Assert.IsTrue(UpkeepRules.ApplyMorning(state, balance, new StateDelta(), new FixedRandom()), "4개가 필요한데 2개");
+            Assert.AreEqual(0, state.Base.GetResource(ResourceType.Food));
+            Assert.AreEqual(balance.FoodSatietyPerUnit, state.Player.Vitals.Satiety, "있는 만큼 나눠 먹는다 (반)");
+            Assert.AreEqual(50 + balance.DietShortStressMin, state.Player.Vitals.Stress, "못 지킨 날 스트레스 (FixedRandom = 최소)");
+            Assert.AreEqual(npcStress + balance.DietShortStressMin, state.Npcs[Npc].Body.Stress, "동료도");
+        }
 
-            Assert.Greater(fed.Player.Vitals.Satiety, balance.StarvationThreshold);
-            Assert.LessOrEqual(plain.Player.Vitals.Satiety, balance.StarvationThreshold);
-            Assert.Greater(fed.Player.Vitals.Hp, plain.Player.Vitals.Hp);
+        [Test]
+        public void Hunger_CutsMaxHp_ThirstCutsStamina_WithFloor()
+        {
+            var balance = new BalanceConfig();
+            var state = Make(balance, 0, 0);
+            state.Player.Vitals.Hp = 90;
+            EffectApplier.ChangeVital(state, VitalType.Satiety, -30, balance, new StateDelta());
+            Assert.AreEqual(70, NourishRules.MaxHp(state, balance), "허기 30 → 최대 체력 −30%");
+            Assert.AreEqual(70, state.Player.Vitals.Hp, "지금 체력도 최대치까지 내려간다");
+            EffectApplier.ChangeVital(state, VitalType.Hp, 20, balance, new StateDelta());
+            Assert.AreEqual(70, state.Player.Vitals.Hp, "회복은 줄어든 최대치까지만");
+
+            EffectApplier.ChangeVital(state, VitalType.Satiety, -70, balance, new StateDelta());
+            Assert.AreEqual(50, NourishRules.MaxHp(state, balance), "하한 50%");
+
+            Assert.AreEqual(1f, NourishRules.StaminaFactor(10, balance), 1e-5f);
+            Assert.AreEqual(0.8f, NourishRules.StaminaFactor(-20, balance), 1e-5f, "갈증 20 → 스태미너 −20%");
+            Assert.AreEqual(0.5f, NourishRules.StaminaFactor(-90, balance), 1e-5f);
+        }
+
+        [Test]
+        public void StarvingStillHurts()
+        {
+            var balance = new BalanceConfig();
+            var state = Make(balance, -90, 0);
+            UpkeepRules.ApplyEvening(state, balance, new StateDelta());
+            Assert.AreEqual(50 - balance.StarvationHpLoss, state.Player.Vitals.Hp, "굶주림(−60 이하) 단계의 체력 피해는 남긴다 (굶어 죽을 수 있게)");
         }
 
         [Test]

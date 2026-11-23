@@ -16,19 +16,19 @@ namespace ApoGirl.Tests.EditMode
         {
             var db = M6Act4Tests.ShippedDb();
             var model = BalanceLabModel.For(db);
-            var cell = model.Field("DailyFood");
-            var original = db.Balance.DailyFood;
+            var cell = model.Field("DietCareUnits");
+            var original = db.Balance.DietCareUnits;
 
             Assert.That(cell.TrySet("5", out _), Is.True);
-            Assert.That(db.Balance.DailyFood, Is.EqualTo(5));
-            Assert.That(model.Changed.Select(c => c.Key), Is.EquivalentTo(new[] { "DailyFood" }));
+            Assert.That(db.Balance.DietCareUnits, Is.EqualTo(5));
+            Assert.That(model.Changed.Select(c => c.Key), Is.EquivalentTo(new[] { "DietCareUnits" }));
 
             Assert.That(cell.TrySet("abc", out var error), Is.False);
             Assert.That(error, Is.Not.Null);
-            Assert.That(db.Balance.DailyFood, Is.EqualTo(5));
+            Assert.That(db.Balance.DietCareUnits, Is.EqualTo(5));
 
             model.RevertAll();
-            Assert.That(db.Balance.DailyFood, Is.EqualTo(original));
+            Assert.That(db.Balance.DietCareUnits, Is.EqualTo(original));
             Assert.That(model.Changed, Is.Empty);
         }
 
@@ -43,10 +43,10 @@ namespace ApoGirl.Tests.EditMode
             chance.TrySet("3", out _);
             Assert.That(db.Balance.RaidBaseChance, Is.EqualTo(1f));
 
-            var food = model.Field("DailyFood");
+            var food = model.Field("DietCareUnits");
             food.TrySet("2", out _);
             food.Scale(1.1);
-            Assert.That(db.Balance.DailyFood, Is.EqualTo(3), "정수는 배율이 작아도 한 칸은 움직인다");
+            Assert.That(db.Balance.DietCareUnits, Is.EqualTo(3), "정수는 배율이 작아도 한 칸은 움직인다");
             model.RevertAll();
         }
 
@@ -92,17 +92,17 @@ namespace ApoGirl.Tests.EditMode
         [Test]
         public void Overrides_CollectOnlyDifferences_AndApplyRoundTrips()
         {
-            var live = new BalanceConfig { DailyFood = 7, RaidBaseChance = 0.05f };
+            var live = new BalanceConfig { DietCareUnits = 7, RaidBaseChance = 0.05f };
             live.Difficulties.First(d => d.Id == "STANDARD").FoodYield = 1.5f;
             var overrides = BalanceOverridesJson.Collect(live);
-            Assert.That(overrides.Fields.Keys, Is.EquivalentTo(new[] { "DailyFood", "RaidBaseChance" }));
+            Assert.That(overrides.Fields.Keys, Is.EquivalentTo(new[] { "DietCareUnits", "RaidBaseChance" }));
             Assert.That(overrides.Difficulties["STANDARD"].Keys, Is.EquivalentTo(new[] { "FoodYield" }));
 
             var text = BalanceOverridesJson.Write(overrides);
             var fresh = new BalanceConfig();
             var warnings = BalanceOverridesJson.Apply(fresh, BalanceOverridesJson.Parse(text));
             Assert.That(warnings, Is.Empty);
-            Assert.That(fresh.DailyFood, Is.EqualTo(7));
+            Assert.That(fresh.DietCareUnits, Is.EqualTo(7));
             Assert.That(fresh.RaidBaseChance, Is.EqualTo(0.05f));
             Assert.That(fresh.Difficulties.First(d => d.Id == "STANDARD").FoodYield, Is.EqualTo(1.5f));
 
@@ -125,14 +125,14 @@ namespace ApoGirl.Tests.EditMode
             var snapshot = new SnapshotDatabase(live, Copy(live.Balance), new System.Collections.Generic.Dictionary<string, ExpeditionModelDef> { [modelId] = Copy(model) });
 
             // 사본을 만든 뒤 표를 고친다 → 사본은 그대로
-            var food = live.Balance.DailyFood;
+            var food = live.Balance.DietCareUnits;
             var down = model.Day.BaseDownChance;
-            live.Balance.DailyFood = food + 5;
+            live.Balance.DietCareUnits = food + 5;
             model.Day.BaseDownChance = 0.99f;
-            Assert.That(snapshot.Balance.DailyFood, Is.EqualTo(food));
+            Assert.That(snapshot.Balance.DietCareUnits, Is.EqualTo(food));
             snapshot.TryGetExpeditionModel(modelId, out var copied);
             Assert.That(copied.Day.BaseDownChance, Is.EqualTo(down));
-            live.Balance.DailyFood = food;
+            live.Balance.DietCareUnits = food;
             model.Day.BaseDownChance = down;
 
             var progress = new ApoGirl.Core.Simulation.Bots.BotBatchProgress();
@@ -171,7 +171,7 @@ namespace ApoGirl.Tests.EditMode
                     new ApoGirl.Core.Simulation.Bots.BotEndingRow { Name = "기본 (일반·균형)", Min = 0.15f, Max = 0.25f, Total = 1 - bad, ByStrategy = { ["DAY_ONLY"] = 1 - day, ["CARE"] = 0.5f } },
                     new ApoGirl.Core.Simulation.Bots.BotEndingRow { Name = "배드", Min = 0.45f, Max = 0.55f, Total = bad, ByStrategy = { ["DAY_ONLY"] = day, ["CARE"] = 0.5f } },
                 },
-                Changes = { "DailyFood 2 → 3 (하루 식량)" },
+                Changes = { "DietCareUnits 2 → 3 (하루 식량)" },
                 Settings = "2전략 × 2판, 표준 난이도, 시드 1000~1001, 코드 `abc1234` + 밸런스 표 수정 1개.",
                 Reference = "사망 원인은 END_CAUSE_STARVATION 2.",
             };
@@ -186,7 +186,7 @@ namespace ApoGirl.Tests.EditMode
             var draft = BotLogWriter.Draft(next, "2026-11-23", now);
             var lines = draft.Split((char)10);
             Assert.That(lines[0], Is.EqualTo($"## #{next} · 2026-11-23 · {BotLogWriter.TitlePlaceholder}"));
-            Assert.That(draft, Does.Contain("- DailyFood 2 → 3 (하루 식량)"));
+            Assert.That(draft, Does.Contain("- DietCareUnits 2 → 3 (하루 식량)"));
             Assert.That(draft, Does.Contain("**봇 설정:** 2전략 × 2판"));
             Assert.That(draft, Does.Contain("| 묶음 | 전체 | DAY_ONLY | CARE |"));
             Assert.That(draft, Does.Contain("| 배드 | 50% | 50% | 50% |"));

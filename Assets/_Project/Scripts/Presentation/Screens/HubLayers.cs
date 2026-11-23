@@ -264,7 +264,18 @@ namespace ApoGirl.Presentation.Screens
             {
                 var value = player.Vitals.GetVital(pair.Key);
                 pair.Value.value = value;
-                pair.Value.title = UiText.Vital(pair.Key) + " " + (pair.Key == VitalType.Satiety || pair.Key == VitalType.Hydration ? UiText.Signed(value) : value.ToString());
+                var text = pair.Key == VitalType.Satiety || pair.Key == VitalType.Hydration ? UiText.Signed(value) : value.ToString();
+                if (pair.Key == VitalType.Hp)
+                {
+                    // 허기만큼 줄어든 최대 체력
+                    var max = NourishRules.MaxHp(state, balance);
+                    if (max < balance.VitalMax)
+                    {
+                        text += "/" + max;
+                    }
+                }
+
+                pair.Value.title = UiText.Vital(pair.Key) + " " + text;
             }
 
             _injury.text = Loc.T("status.injured");

@@ -246,7 +246,7 @@ namespace ApoGirl.Core.Balance
 
         public static readonly string[] ModelStats = { "BaseDownChance", "Fatigue", "StressMin", "StressMax", "EncounterChance" };
 
-        public static readonly string[] DifficultyFields = { "Consumption", "Harm", "HumanThreat", "Infection", "Yield", "FoodYield", "WaterYield", "MedicineYield" };
+        public static readonly string[] DifficultyFields = { "Harm", "HumanThreat", "Infection", "Yield", "FoodYield", "WaterYield", "MedicineYield" };
 
         private static readonly ConditionalWeakTable<IDefinitionDatabase, BalanceLabModel> Models = new ConditionalWeakTable<IDefinitionDatabase, BalanceLabModel>();
 

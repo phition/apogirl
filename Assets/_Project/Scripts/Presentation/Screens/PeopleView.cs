@@ -532,6 +532,7 @@ namespace ApoGirl.Presentation.Screens
         private readonly GameSession _session;
         private readonly VisualElement _sheet;
         private readonly Label _stock;
+        private readonly VisualElement _diet;
         private readonly ScrollView _list;
         private readonly VisualElement _buttons;
 
@@ -545,6 +546,7 @@ namespace ApoGirl.Presentation.Screens
             _session = session;
             _sheet = root.Q("give-sheet");
             _stock = root.Q<Label>("give-stock");
+            _diet = root.Q("give-diet");
             _list = root.Q<ScrollView>("give-list");
             _buttons = root.Q("give-buttons");
             root.Q<Label>("give-title").text = Loc.T("give.title");
@@ -553,10 +555,10 @@ namespace ApoGirl.Presentation.Screens
 
         public bool IsOpen => _sheet != null && !_sheet.ClassListContains("hidden");
 
-        /// <summary>배분할 사람이 있으면 화면을 열고 true. onRun(받은 사람들)은 확인(또는 배분 없이 실행) 뒤에 부른다.</summary>
+        /// <summary>식단·배분 화면을 열고 true (창고에 갇힌 주는 false). onRun(받은 사람들)은 확인(또는 배분 없이 실행) 뒤에 부른다.</summary>
         public bool Show(Action<List<(string Id, bool Liked)>> onRun, Action onCancel = null)
         {
-            if (_sheet == null || GiveRules.Recipients(_session.State, _session.Definitions.Balance).Count == 0)
+            if (_sheet == null || _session.IsConfinedWeek)
             {
                 return false;
             }
@@ -583,11 +585,20 @@ namespace ApoGirl.Presentation.Screens
             _stock.text = Loc.F("give.stock",
                 Remaining(ResourceType.Food, GiveKind.Food), Remaining(ResourceType.Water, GiveKind.Water), Remaining(ResourceType.Medicine, GiveKind.Medicine));
 
+            BuildDiet(state, balance);
             _list.Clear();
             var candidates = GiveRules.GiftCandidates(state, balance);
-            foreach (var id in GiveRules.Recipients(state, balance))
+            var recipients = GiveRules.Recipients(state, balance);
+            foreach (var id in recipients)
             {
                 _list.Add(Row(state, balance, id, candidates));
+            }
+
+            if (recipients.Count == 0)
+            {
+                var empty = new Label(Loc.T("give.no_people"));
+                empty.AddToClassList("give-empty");
+                _list.Add(empty);
             }
 
             _buttons.Clear();
@@ -595,6 +606,63 @@ namespace ApoGirl.Presentation.Screens
             AddButton(Loc.T("give.skip"), () => Confirm(false), "give-skip");
             var confirm = AddButton(Loc.F("give.confirm", _picked.Count), () => Confirm(true), "give-confirm");
             confirm.SetEnabled(_picked.Count > 0);
+        }
+
+        private static readonly DietLevel[] DietLevels = { DietLevel.Save, DietLevel.Care, DietLevel.Well };
+
+        /// <summary>이번 주 식단 (식량·물 따로): 한 사람 하루 1·2·3개, 모자라면 못 지킨 날마다 모두 스트레스.</summary>
+        private void BuildDiet(GameState state, BalanceConfig balance)
+        {
+            if (_diet == null)
+            {
+                return;
+            }
+
+            _diet.Clear();
+            var title = new Label(Loc.F("give.diet.title", UpkeepRules.Headcount(state, balance)));
+            title.AddToClassList("give-diet-title");
+            _diet.Add(title);
+            _diet.Add(DietRow(state, balance, ResourceType.Food, state.FoodDiet));
+            _diet.Add(DietRow(state, balance, ResourceType.Water, state.WaterDiet));
+            var note = new Label(Loc.F("give.diet.note", balance.FoodSatietyPerUnit, balance.WaterHydrationPerUnit, balance.SatietyDailyDrain,
+                balance.DietShortStressMin, balance.DietShortStressMax));
+            note.AddToClassList("give-diet-note");
+            _diet.Add(note);
+        }
+
+        private VisualElement DietRow(GameState state, BalanceConfig balance, ResourceType resource, DietLevel current)
+        {
+            var row = new VisualElement();
+            row.AddToClassList("give-diet-row");
+            var name = new Label(Loc.T("give.diet." + resource));
+            name.AddToClassList("give-diet-name");
+            StoryArt.SetIcon(name, StoryArt.Icon("res." + resource), 22f);
+            row.Add(name);
+            foreach (var level in DietLevels)
+            {
+                var chosen = level;
+                var button = new Button(() =>
+                {
+                    _session.SetDiet(resource, chosen);
+                    Build();
+                })
+                {
+                    text = Loc.F("give.diet.choice", Loc.T("diet." + level), UpkeepRules.DietUnits(level, balance)),
+                    tooltip = Loc.F("give.diet.tip." + resource, UpkeepRules.DietUnits(level, balance) * (resource == ResourceType.Food ? balance.FoodSatietyPerUnit : balance.WaterHydrationPerUnit)),
+                };
+                button.AddToClassList("give-choice");
+                button.EnableInClassList("selected", level == current);
+                row.Add(button);
+            }
+
+            var need = UpkeepRules.WeeklyNeed(state, balance, resource, current);
+            var have = state.Base.GetResource(resource);
+            var winter = resource == ResourceType.Food && CalendarRules.GetSeason(state.Calendar.Week) == Season.Winter && balance.WinterFoodMultiplier > 1f;
+            var info = new Label(Loc.F("give.diet.need", need, have) + (winter ? " " + Loc.F("give.diet.winter", balance.WinterFoodMultiplier.ToString("0.##")) : ""));
+            info.AddToClassList("give-diet-need");
+            info.EnableInClassList("short", have < need);
+            row.Add(info);
+            return row;
         }
 
         private VisualElement Row(GameState state, BalanceConfig balance, string id, List<string> candidates)

@@ -63,9 +63,10 @@ namespace ApoGirl.Tests.EditMode
             _state.Base.SetResource(ResourceType.Food, 0);
             RunSlots(2);
             Assert.AreEqual(-_db.Balance.SatietyDailyDrain, _state.Player.Vitals.Satiety);
-            RunSlots(4); // 3일째 밤: 포만 −75 (굶주림) → HP 감소
-            Assert.AreEqual(-3 * _db.Balance.SatietyDailyDrain, _state.Player.Vitals.Satiety);
-            Assert.AreEqual(100 - _db.Balance.StarvationHpLoss, _state.Player.Vitals.Hp);
+            RunSlots(6); // 4일째 밤: 포만 −60 (굶주림) → 최대 체력 하한 50%, 굶주림 피해
+            Assert.AreEqual(-4 * _db.Balance.SatietyDailyDrain, _state.Player.Vitals.Satiety);
+            var water = UpkeepRules.Band(_db.Balance.HydrationBands, _state.Player.Vitals.Hydration)?.Hp ?? 0; // 물은 있어 수분 버프
+            Assert.AreEqual(NourishRules.MaxHp(_state, _db.Balance) - _db.Balance.StarvationHpLoss + water, _state.Player.Vitals.Hp);
         }
 
         [Test]

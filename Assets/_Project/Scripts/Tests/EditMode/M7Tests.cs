@@ -96,12 +96,12 @@ namespace ApoGirl.Tests.EditMode
         [Test]
         public void WinterFood_SpreadsMultiplierOverWeek()
         {
-            var balance = new BalanceConfig { DailyFood = 2, WinterFoodMultiplier = 1.3f };
-            var spring = Enumerable.Range(1, 7).Sum(d => UpkeepRules.DailyFoodNeed(10, d, balance));
-            var winter = Enumerable.Range(1, 7).Sum(d => UpkeepRules.DailyFoodNeed(45, d, balance));
+            var balance = new BalanceConfig { WinterFoodMultiplier = 1.3f };
+            var spring = Enumerable.Range(1, 7).Sum(d => UpkeepRules.DailyFoodNeed(10, d, 2, balance));
+            var winter = Enumerable.Range(1, 7).Sum(d => UpkeepRules.DailyFoodNeed(45, d, 2, balance));
             Assert.AreEqual(14, spring);
             Assert.AreEqual(18, winter, "2 × 1.3 × 7 = 18.2 → 18");
-            Assert.IsTrue(Enumerable.Range(1, 7).All(d => UpkeepRules.DailyFoodNeed(45, d, balance) is 2 or 3), "하루 2~3으로 나눠 쓴다");
+            Assert.IsTrue(Enumerable.Range(1, 7).All(d => UpkeepRules.DailyFoodNeed(45, d, 2, balance) is 2 or 3), "하루 2~3으로 나눠 쓴다");
         }
 
         [Test]

@@ -229,7 +229,7 @@ namespace ApoGirl.Core.Rules
                 if (haul != null)
                 {
                     var share = balance.OutingYieldShare * (RoleRules.HasAptitude(balance, id, balance.ScoutRoleId) ? 1f + balance.OutingScoutAptitudeBonus : 1f)
-                                * difficulty.Yield;
+                                * (haul.Resource == ResourceType.Food || haul.Resource == ResourceType.Water ? 1f : difficulty.Yield);
                     var perResource = haul.Resource == ResourceType.Food ? difficulty.FoodYield
                         : haul.Resource == ResourceType.Water ? difficulty.WaterYield
                         : haul.Resource == ResourceType.Medicine ? difficulty.MedicineYield
@@ -386,7 +386,8 @@ namespace ApoGirl.Core.Rules
             return locations[locations.Count - 1];
         }
 
-        private static bool IsConfinedWeek(GameState state, IDefinitionDatabase db) =>
+        /// <summary>1주차 창고에 갇힌 주 (계획에 Confined 행동이 있다).</summary>
+        public static bool IsConfinedWeek(GameState state, IDefinitionDatabase db) =>
             state.Plan.Slots.Any(s => !string.IsNullOrEmpty(s.ActionId) && db.TryGetAction(s.ActionId, out var a) && a.Confined);
 
         /// <summary>(판 시드, 주차, 동료, 쓰임)마다 따로 뽑는 난수.</summary>

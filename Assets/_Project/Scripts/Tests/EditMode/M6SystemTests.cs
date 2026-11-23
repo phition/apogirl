@@ -166,32 +166,29 @@ namespace ApoGirl.Tests.EditMode
             var state = TestContent.NewGame(db);
             state.Base.Resources[ResourceType.Water] = 50;
             state.Base.Weather = WeatherType.Heat;
-            UpkeepRules.ApplyDaily(state, db.Balance, new StateDelta());
-            Assert.AreEqual(50 - db.Balance.DailyWater - db.Balance.HeatExtraWater, state.Base.GetResource(ResourceType.Water));
+            var people = UpkeepRules.Headcount(state, db.Balance);
+            UpkeepRules.ApplyMorning(state, db.Balance, new StateDelta(), new FixedRandom());
+            Assert.AreEqual(50 - (db.Balance.DietCareUnits + db.Balance.HeatExtraWater) * people, state.Base.GetResource(ResourceType.Water), "폭염은 한 사람당 물 더");
 
             state.Base.Weather = WeatherType.Cold;
+            state.Player.Vitals.Satiety = state.Player.Vitals.Hydration = 0;
             var stress = state.Player.Vitals.Stress;
-            UpkeepRules.ApplyDaily(state, db.Balance, new StateDelta());
+            UpkeepRules.ApplyEvening(state, db.Balance, new StateDelta());
             Assert.AreEqual(stress + db.Balance.ColdDailyStress, state.Player.Vitals.Stress);
         }
 
         [Test]
-        public void Starvation_HurtsOnlyWhenNotFed()
+        public void Starvation_RecoversSlowly_WhenFedAgain()
         {
             var db = TestContent.CreateDatabase();
             var state = TestContent.NewGame(db);
             state.Player.Vitals.Hp = 50;
-            state.Player.Vitals.Satiety = -100;
-            state.Player.Vitals.Hydration = -100;
+            state.Player.Vitals.Satiety = -50;
             state.Base.Resources[ResourceType.Food] = 50;
             state.Base.Resources[ResourceType.Water] = 50;
-            UpkeepRules.ApplyDaily(state, db.Balance, new StateDelta());
-            Assert.AreEqual(50, state.Player.Vitals.Hp, "먹고 마셨으면 배고픔이 높아도 체력 피해 없음");
-            Assert.Greater(state.Player.Vitals.Satiety, -100);
-
-            state.Base.Resources[ResourceType.Food] = 0;
-            UpkeepRules.ApplyDaily(state, db.Balance, new StateDelta());
-            Assert.AreEqual(50 - db.Balance.StarvationHpLoss, state.Player.Vitals.Hp, "굶은 날에만 굶주림 피해");
+            state.FoodDiet = DietLevel.Well;
+            UpkeepRules.ApplyMorning(state, db.Balance, new StateDelta(), new FixedRandom());
+            Assert.AreEqual(-50 + 3 * db.Balance.FoodSatietyPerUnit, state.Player.Vitals.Satiety, "굶었으면 잘 먹어도 하루에 조금씩만 돌아온다");
         }
 
         // ── 시설·동료 ──

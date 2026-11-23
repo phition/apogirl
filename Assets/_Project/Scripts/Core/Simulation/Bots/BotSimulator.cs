@@ -201,6 +201,7 @@ namespace ApoGirl.Core.Simulation.Bots
                 BotTrader.Trade(state, db);
                 BotRoles.Assign(state, db, config);
                 BotPlanner.Plan(state, db, config, strategy, botRandom);
+                ChooseDiet(state, db, strategy);
 
                 runner.PrepareWeek();
                 while (!runner.IsWeekComplete && !runner.IsGameOver)
@@ -220,6 +221,19 @@ namespace ApoGirl.Core.Simulation.Bots
 
             Finish(result, state, db);
             return result;
+        }
+
+        /// <summary>주간 식단 (배분 화면에서 사람이 고르는 것): 고정이거나 재고에 맞춰 고른다 (UpkeepRules.SuggestDiet).</summary>
+        private static void ChooseDiet(GameState state, IDefinitionDatabase db, BotStrategyDef strategy)
+        {
+            if (Enum.TryParse<DietLevel>(strategy.Diet ?? "", out var fixedLevel) && Enum.IsDefined(typeof(DietLevel), fixedLevel))
+            {
+                state.FoodDiet = state.WaterDiet = fixedLevel;
+                return;
+            }
+
+            state.FoodDiet = UpkeepRules.SuggestDiet(state, db.Balance, ResourceType.Food);
+            state.WaterDiet = UpkeepRules.SuggestDiet(state, db.Balance, ResourceType.Water);
         }
 
         private static void Record(BotRunResult result, SlotOutcome outcome)

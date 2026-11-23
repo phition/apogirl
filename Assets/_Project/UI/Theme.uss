@@ -548,10 +548,29 @@ Button.selected { border-color: var(--accent); background-color: var(--accent-so
 .prologue-field > .unity-base-popup-field__input,
 .prep-field > .unity-base-popup-field__input,
 .prep-quick > .unity-base-popup-field__input,
-.debug-dropdown > .unity-base-popup-field__input {
+.debug-dropdown > .unity-base-popup-field__input,
+.preset-field > .unity-base-text-field__input,
+.lab-window .unity-base-text-field__input {
     background-color: var(--panel-light);
     border-color: var(--line);
     color: var(--text);
+}
+
+/* 입력 칸 안의 글자와 커서·선택 색 (밸런스 표·프리셋 이름) */
+.preset-field > .unity-base-text-field__input > .unity-text-element,
+.lab-window .unity-base-text-field__input > .unity-text-element {
+    color: var(--text);
+}
+
+.preset-field > .unity-base-text-field__input,
+.lab-window .unity-base-text-field__input {
+    --unity-cursor-color: var(--text);
+    --unity-selection-color: rgba(231, 176, 74, 0.45);
+}
+
+.preset-field > Label,
+.lab-window .unity-base-field > Label {
+    color: var(--text-dim);
 }
 
 .prologue-field .unity-text-element,
@@ -986,6 +1005,14 @@ Button.selected { border-color: var(--accent); background-color: var(--accent-so
 .give-stock { font-size: 18px; color: var(--text); }
 .give-hint { font-size: 15px; color: var(--text-dim); white-space: normal; margin-bottom: 12px; }
 .give-list { flex-grow: 1; }
+.give-diet { padding: 10px 12px; margin-bottom: 10px; background-color: rgb(38, 36, 30); border-width: 1px; border-color: var(--accent-soft); border-radius: 8px; }
+.give-diet-title { font-size: 18px; -unity-font-style: bold; color: var(--accent); margin-bottom: 4px; }
+.give-diet-row { flex-direction: row; align-items: center; margin: 2px 0; }
+.give-diet-name { width: 90px; font-size: 16px; color: var(--text); }
+.give-diet-need { font-size: 15px; color: var(--text-dim); margin-left: 10px; }
+.give-diet-need.short { color: rgb(236, 140, 120); }
+.give-diet-note { font-size: 13px; color: var(--text-dim); white-space: normal; margin-top: 4px; }
+.give-empty { font-size: 15px; color: var(--text-dim); margin: 8px 4px; }
 .give-row { flex-direction: row; align-items: center; padding: 10px 12px; margin-bottom: 8px; background-color: rgb(34, 36, 41); border-width: 1px; border-color: var(--line); border-radius: 8px; }
 .give-info { width: 300px; flex-shrink: 0; }
 .give-condition { font-size: 13px; color: var(--text-dim); white-space: normal; margin-top: 2px; }
@@ -1039,7 +1066,7 @@ Button.selected { border-color: var(--accent); background-color: var(--accent-so
 .lab-night { background-color: rgba(28, 36, 68, 0.35); }
 .lab-current { background-color: rgba(231, 176, 74, 0.1); }
 .lab-edit { margin: 1px 2px; }
-.lab-edit > .unity-text-field__input, .lab-edit .unity-base-text-field__input { font-size: 14px; padding: 0 4px; -unity-text-align: middle-right; background-color: #0f1118; }
+.lab-edit > .unity-text-field__input, .lab-edit .unity-base-text-field__input { font-size: 14px; padding: 0 4px; -unity-text-align: middle-right; background-color: #2a2f40; color: #f1ede2; }
 .lab-dirty > .unity-text-field__input, .lab-dirty .unity-base-text-field__input { background-color: #5a4515; color: #ffe08a; -unity-font-style: bold; }
 .lab-changed { margin-top: 6px; padding: 4px 6px; font-size: 14px; color: var(--text-dim); white-space: normal; }
 .lab-changed.lab-changed-on { color: #ffe08a; background-color: rgba(231, 176, 74, 0.12); }

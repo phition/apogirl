@@ -4,6 +4,7 @@ using System.Linq;
 using ApoGirl.Core.Definitions;
 using ApoGirl.Core.Expedition;
 using ApoGirl.Core.Random;
+using ApoGirl.Core.Rules;
 using ApoGirl.Core.State;
 
 namespace ApoGirl.Exploration.Model
@@ -46,11 +47,11 @@ namespace ApoGirl.Exploration.Model
             return balance.StaminaBase + Math.Max(0, stamina) * balance.StaminaPerStat;
         }
 
-        /// <summary>이번 탐험에서 쓸 수 있는 최대치: 피로·부상만큼 일시적으로 깎인다.</summary>
-        public static float StaminaCap(float max, int fatigue, bool injured, BalanceConfig balance)
+        /// <summary>이번 탐험에서 쓸 수 있는 최대치: 피로·부상만큼 일시적으로 깎이고, 갈증(수분 0 아래)만큼 더 준다 (NourishRules).</summary>
+        public static float StaminaCap(float max, int fatigue, bool injured, BalanceConfig balance, int hydration = 0)
         {
             var ratio = 1f - Math.Max(0, fatigue) * balance.StaminaFatiguePenalty - (injured ? balance.StaminaInjuryPenalty : 0f);
-            return max * Math.Max(balance.StaminaMinCapRatio, Math.Min(1f, ratio));
+            return max * Math.Max(balance.StaminaMinCapRatio, Math.Min(1f, ratio)) * NourishRules.StaminaFactor(hydration, balance);
         }
 
         /// <summary>숨어 있는 1초 동안 잠들 확률 (수면 부채가 기준 미만이면 0).</summary>

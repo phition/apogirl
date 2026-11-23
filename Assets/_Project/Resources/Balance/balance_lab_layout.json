@@ -4,27 +4,48 @@
       "Id": "resources",
       "Title": "자원·소모",
       "Kind": "Fields",
-      "Hint": "하루·한 주에 드는 양과 거점에서 저절로 생기는 양. 소모는 2인 기준.",
+      "Hint": "하루·한 주에 드는 양과 거점에서 저절로 생기는 양. 식사는 한 사람당 (식단 × 사람 수).",
       "Rows": [
         {
-          "Field": "DailyFood",
-          "Group": "하루 소모",
-          "Name": "하루 식량",
-          "Unit": "개/일",
+          "Field": "DietSaveUnits",
+          "Group": "식단",
+          "Name": "아껴 먹는다",
+          "Unit": "개/인/일",
           "When": "Now"
         },
         {
-          "Field": "DailyWater",
-          "Group": "하루 소모",
-          "Name": "하루 식수",
-          "Unit": "개/일",
+          "Field": "DietCareUnits",
+          "Group": "식단",
+          "Name": "챙겨 먹는다",
+          "Unit": "개/인/일",
+          "When": "Now"
+        },
+        {
+          "Field": "DietWellUnits",
+          "Group": "식단",
+          "Name": "잘 먹는다",
+          "Unit": "개/인/일",
+          "When": "Now"
+        },
+        {
+          "Field": "DietShortStressMin",
+          "Group": "식단",
+          "Name": "못 지킨 날 스트레스 최소",
+          "Unit": "점",
+          "When": "Now"
+        },
+        {
+          "Field": "DietShortStressMax",
+          "Group": "식단",
+          "Name": "못 지킨 날 스트레스 최대",
+          "Unit": "점",
           "When": "Now"
         },
         {
           "Field": "HeatExtraWater",
           "Group": "하루 소모",
           "Name": "폭염 날 식수 추가",
-          "Unit": "개/일",
+          "Unit": "개/인/일",
           "When": "Now"
         },
         {
@@ -32,28 +53,66 @@
           "Group": "포만·수분",
           "Name": "포만 하루 감소",
           "Unit": "점",
-          "When": "Now"
+          "When": "Now",
+          "Note": "밤이 되기 전"
         },
         {
           "Field": "HydrationDailyDrain",
           "Group": "포만·수분",
           "Name": "수분 하루 감소",
           "Unit": "점",
+          "When": "Now",
+          "Note": "밤이 되기 전"
+        },
+        {
+          "Field": "FoodSatietyPerUnit",
+          "Group": "포만·수분",
+          "Name": "식량 1 포만",
+          "Unit": "점",
+          "When": "Now",
+          "Note": "한 사람 몫, 아침마다"
+        },
+        {
+          "Field": "WaterHydrationPerUnit",
+          "Group": "포만·수분",
+          "Name": "물 1 수분",
+          "Unit": "점",
+          "When": "Now",
+          "Note": "한 사람 몫, 아침마다"
+        },
+        {
+          "Field": "ExpeditionSatietyDrain",
+          "Group": "포만·수분",
+          "Name": "탐험 포만 소모",
+          "Unit": "점",
           "When": "Now"
         },
         {
-          "Field": "MealSatiety",
+          "Field": "ExpeditionHydrationDrain",
           "Group": "포만·수분",
-          "Name": "한 끼 포만 회복",
+          "Name": "탐험 수분 소모",
           "Unit": "점",
-          "When": "Now",
-          "Note": "0 아래일 때만 먹는다"
+          "When": "Now"
         },
         {
-          "Field": "DrinkHydration",
+          "Field": "HungerMaxHpPenalty",
           "Group": "포만·수분",
-          "Name": "한 번 마실 때 수분",
-          "Unit": "점",
+          "Name": "허기 1당 최대 체력 감소",
+          "Unit": "비율",
+          "When": "Now"
+        },
+        {
+          "Field": "ThirstStaminaPenalty",
+          "Group": "포만·수분",
+          "Name": "갈증 1당 최대 스태미너 감소",
+          "Unit": "비율",
+          "When": "Now"
+        },
+        {
+          "Field": "NourishMaxFloor",
+          "Group": "포만·수분",
+          "Name": "최대치 하한",
+          "Unit": "비율",
           "When": "Now"
         },
         {

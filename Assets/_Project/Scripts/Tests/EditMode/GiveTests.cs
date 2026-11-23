@@ -102,13 +102,14 @@ namespace ApoGirl.Tests.EditMode
         {
             var balance = new BalanceConfig();
             var state = Make(balance);
-            GiveRules.ApplyDaily(state, balance, 1.0, 1.0);
-            Assert.AreEqual(0, state.Npcs[Npc].Body.Satiety, "공용 식사를 다 먹으면 보통(0)으로");
-            Assert.AreEqual(0, state.Npcs[Npc].Body.Hydration);
+            GiveRules.ApplyMeal(state, balance, GiveRules.Recipients(state, balance), 16, 24, null);
+            GiveRules.ApplyEvening(state, balance);
+            Assert.AreEqual(16 - balance.SatietyDailyDrain, state.Npcs[Npc].Body.Satiety, "아침 식사 − 밤 전 감소");
+            Assert.AreEqual(24 - balance.HydrationDailyDrain, state.Npcs[Npc].Body.Hydration);
 
-            for (var i = 0; i < 4; i++)
+            for (var i = 0; i < 5; i++)
             {
-                GiveRules.ApplyDaily(state, balance, 0.0, 0.0);
+                GiveRules.ApplyEvening(state, balance);
             }
 
             Assert.Less(state.Npcs[Npc].Body.Satiety, 0);

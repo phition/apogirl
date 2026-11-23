@@ -339,6 +339,29 @@ namespace ApoGirl.Systems.Session
         public string GiveBlocker(string recipientId, GiveKind kind, string itemId = null) =>
             IsPlanning ? GiveRules.Blocker(State, _db.Balance, recipientId, kind, itemId) : "give.blocked.planning";
 
+        /// <summary>이번 주 식단 (식량·물 따로, 계획 단계에서만). 다음 주에도 남는다.</summary>
+        public void SetDiet(ResourceType resource, DietLevel level)
+        {
+            if (!IsPlanning)
+            {
+                return;
+            }
+
+            if (resource == ResourceType.Food)
+            {
+                State.FoodDiet = level;
+            }
+            else
+            {
+                State.WaterDiet = level;
+            }
+
+            StateChanged?.Invoke();
+        }
+
+        /// <summary>1주차 창고에 갇힌 주: 배분·식단 화면 없이 바로 실행한다 (식단은 챙겨 먹는다).</summary>
+        public bool IsConfinedWeek => OutingRules.IsConfinedWeek(State, _db);
+
         /// <summary>준다. liked = 그 사람이 좋아하는 물건이었는가.</summary>
         public bool Give(string recipientId, GiveKind kind, string itemId, out bool liked)
         {

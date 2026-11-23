@@ -57,6 +57,14 @@ namespace ApoGirl.Core.State
         Night,
     }
 
+    /// <summary>이번 주 식단 (식량·물 따로, 한 사람 하루 소비 = BalanceConfig.Diet*Units).</summary>
+    public enum DietLevel
+    {
+        Save = 1,
+        Care = 2,
+        Well = 3,
+    }
+
     /// <summary>생존 상태 수치 (문서 5.2). 모두 0~100.</summary>
     public enum VitalType
     {

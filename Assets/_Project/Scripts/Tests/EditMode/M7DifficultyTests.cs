@@ -18,25 +18,26 @@ namespace ApoGirl.Tests.EditMode
     public sealed class M7DifficultyTests
     {
         [Test]
-        public void Consumption_ScalesDailyFoodAndWater()
+        public void Diet_NotDiscounted_FoodWaterConvert_5_4_3()
         {
             var balance = new BalanceConfig();
-            int Week(float m) => Enumerable.Range(1, 7).Sum(d => UpkeepRules.DailyFoodNeed(10, d, balance, m));
-            Assert.AreEqual(14, Week(1f));
-            Assert.AreEqual(10, Week(0.75f), "이야기 중심 ×0.75 → 주 10");
-            Assert.AreEqual(17, Week(1.25f), "하드 ×1.25 → 주 17");
-            Assert.AreEqual(22, Enumerable.Range(1, 7).Sum(d => UpkeepRules.DailyFoodNeed(45, d, balance, 1.25f)), "겨울과 겹치면 2 × 1.3 × 1.25");
-
             var state = NewGameFactory.Create(balance, 1);
             state.Difficulty = DifficultyRules.Story;
             state.Base.SetResource(ResourceType.Water, 100);
             for (var d = 1; d <= 7; d++)
             {
                 state.Calendar.Day = d;
-                UpkeepRules.ApplyDaily(state, balance, new StateDelta());
+                UpkeepRules.ApplyMorning(state, balance, new StateDelta(), new FixedRandom());
             }
 
-            Assert.AreEqual(90, state.Base.GetResource(ResourceType.Water), "물도 ×0.75");
+            Assert.AreEqual(100 - 2 * 7, state.Base.GetResource(ResourceType.Water), "이야기 중심도 식단 그대로 먹는다 (혼자, 챙겨 먹는다)");
+            Assert.AreEqual(14, UpkeepRules.WeeklyNeed(state, balance, ResourceType.Food, DietLevel.Care));
+
+            // 통조림·생수 5 → 이야기 중심 5 · 표준 4 · 하드 3
+            int Convert(string id) => (int)System.Math.Round(5 * balance.Difficulties.First(x => x.Id == id).FoodYield);
+            Assert.AreEqual(5, Convert("STORY"));
+            Assert.AreEqual(4, Convert("STANDARD"));
+            Assert.AreEqual(3, Convert("HARD"));
         }
 
         [Test]
@@ -83,7 +84,7 @@ namespace ApoGirl.Tests.EditMode
             runner.ExecuteNextSlot();
             runner.ExecuteNextSlot();
             runner.ExecuteNextSlot();
-            Assert.That(state.Base.GetResource(ResourceType.Food), Is.InRange(16, 17), "20 × 0.9(전체) × 0.9(식량) = 16.2 → 확률 반올림");
+            Assert.That(state.Base.GetResource(ResourceType.Food), Is.EqualTo(12), "식량은 전체 배율 없이 변환만: 20 × 0.6 = 12 (통조림 5 → 3)");
         }
 
         private static GameSession Session(string directory, string difficulty, out InMemoryDefinitionDatabase db, EndingGallery gallery = null)

@@ -178,6 +178,8 @@ namespace ApoGirl.Tests.EditMode
                 while (state.Status == GameStatus.Playing)
                 {
                     if (state.Calendar.Week > 1) YearPlan(state, db);
+                    state.FoodDiet = UpkeepRules.SuggestDiet(state, db.Balance, ResourceType.Food);
+                    state.WaterDiet = UpkeepRules.SuggestDiet(state, db.Balance, ResourceType.Water);
                     runner.PrepareWeek();
                     while (!runner.IsWeekComplete && !runner.IsGameOver) runner.ExecuteNextSlot();
                     if (runner.IsGameOver) break;

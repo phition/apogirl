@@ -42,6 +42,9 @@ namespace ApoGirl.Tests.EditMode
         /// <summary>한 주 계획 (해금된 탐험 중 가장 좋은 곳을 고른다).</summary>
         private static void Plan(GameState state, IDefinitionDatabase db, Strategy strategy)
         {
+            // 식단은 사람처럼 재고에 맞춰 고른다
+            state.FoodDiet = UpkeepRules.SuggestDiet(state, db.Balance, ResourceType.Food);
+            state.WaterDiet = UpkeepRules.SuggestDiet(state, db.Balance, ResourceType.Water);
             string Pick(params string[] ids) => ids.FirstOrDefault(id => db.TryGetAction(id, out var a) && ApoGirl.Core.Planning.PlanEditing.IsUnlocked(state, db, a)) ?? "";
             var dayExpedition = Pick("ACT_EXP_DAY_STORE", "ACT_EXP_DAY_SCHOOL");
             var secondExpedition = Pick("ACT_EXP_DAY_RESIDENTIAL", "ACT_EXP_DAY_SUBWAY", "ACT_EXP_DAY_STORE", "ACT_EXP_DAY_SCHOOL");

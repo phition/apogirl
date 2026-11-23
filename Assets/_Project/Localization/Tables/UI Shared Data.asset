@@ -6763,6 +6763,58 @@ MonoBehaviour:
     m_Key: exp.slot.Armor
     m_Metadata:
       m_Items: []
+  - m_Id: 1572409852575744
+    m_Key: give.no_people
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1572409915490304
+    m_Key: give.diet.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1572409915490305
+    m_Key: give.diet.Food
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1572409915490306
+    m_Key: give.diet.Water
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1572409915490307
+    m_Key: give.diet.choice
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1572409915490308
+    m_Key: give.diet.need
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1572409915490309
+    m_Key: give.diet.tip.Food
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1572409915490310
+    m_Key: give.diet.tip.Water
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1572409915490311
+    m_Key: give.diet.note
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1572409915490312
+    m_Key: diet.Save
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1572409915490313
+    m_Key: diet.Care
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1572409915490314
+    m_Key: diet.Well
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1576148999094272
+    m_Key: give.diet.winter
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

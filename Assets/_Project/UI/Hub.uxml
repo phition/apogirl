@@ -148,6 +148,7 @@
                     <ui:Label name="give-title" class="give-title" />
                     <ui:Label name="give-stock" class="give-stock" />
                 </ui:VisualElement>
+                <ui:VisualElement name="give-diet" class="give-diet" />
                 <ui:Label name="give-hint" class="give-hint" />
                 <ui:ScrollView name="give-list" class="give-list" />
                 <ui:VisualElement name="give-buttons" class="give-buttons" />

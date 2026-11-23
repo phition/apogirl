@@ -9,7 +9,7 @@ namespace ApoGirl.Core.State
     public sealed class GameState
     {
         /// <summary>현재 세이브 포맷 버전. 마이그레이션 시 증가시킨다.</summary>
-        public const int CurrentSaveVersion = 11;
+        public const int CurrentSaveVersion = 12;
 
         public int SaveVersion { get; set; } = CurrentSaveVersion;
         public GameStatus Status { get; set; } = GameStatus.Playing;
@@ -65,6 +65,10 @@ namespace ApoGirl.Core.State
 
         /// <summary>동아리를 같이 할 사람 (확장 7, 인물 서랍에서 고른다). 비면 호감이 가장 높은 사람. v10에서 추가.</summary>
         public string ClubPartner { get; set; } = "";
+
+        /// <summary>이번 주 식단 (식량·물 따로, 배분 화면에서 고르고 다음 주에도 남는다). v12에서 추가.</summary>
+        public DietLevel FoodDiet { get; set; } = DietLevel.Care;
+        public DietLevel WaterDiet { get; set; } = DietLevel.Care;
     }
 
     /// <summary>외부 세력과의 관계.</summary>
