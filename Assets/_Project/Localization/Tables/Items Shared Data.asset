@@ -247,6 +247,238 @@ MonoBehaviour:
     m_Key: ITEM_CAT_TREAT.name
     m_Metadata:
       m_Items: []
+  - m_Id: 1471032707006464
+    m_Key: ITEM_PAPERBACK.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1471032778309632
+    m_Key: ITEM_PEN.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1471032782503936
+    m_Key: ITEM_COFFEE_MIX.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1471032782503937
+    m_Key: ITEM_HAND_CREAM.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1471032782503938
+    m_Key: ITEM_COMIC.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1471032782503939
+    m_Key: ITEM_SPORTS_DRINK.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1471032782503940
+    m_Key: ITEM_KEYRING.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1471032782503941
+    m_Key: ITEM_STICKERS.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1471032782503942
+    m_Key: ITEM_HAIR_TIE.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1471032782503943
+    m_Key: ITEM_LIP_BALM.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1471032782503944
+    m_Key: ITEM_GUITAR_SCORE.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1471032782503945
+    m_Key: ITEM_GUITAR_STRINGS.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1471032782503946
+    m_Key: ITEM_OLD_MAP.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1471032782503947
+    m_Key: ITEM_CANDY.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1471032782503948
+    m_Key: ITEM_TUNA_CAN.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1471032782503949
+    m_Key: ITEM_CAT_TREAT.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1471032782503950
+    m_Key: ITEM_ANTISEPTIC.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1471032782503951
+    m_Key: ITEM_GAUZE.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1471032782503952
+    m_Key: ITEM_ETHANOL.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1471032782503953
+    m_Key: ITEM_CHEMICALS.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1471032782503954
+    m_Key: ITEM_ALCOHOL_LAMP.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1471032782503955
+    m_Key: ITEM_INSTRUMENT_WIRE.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1471032782503956
+    m_Key: ITEM_STAND_PARTS.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1471032782503957
+    m_Key: ITEM_RICE.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1471032782503958
+    m_Key: ITEM_GAS_CANISTER.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1471032782503959
+    m_Key: ITEM_SEWING_KIT.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1471032782503960
+    m_Key: ITEM_ELECTRONICS.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1471032782503961
+    m_Key: ITEM_CABLE.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1471032782503962
+    m_Key: ITEM_FUEL_CAN.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1471032782503963
+    m_Key: ITEM_RADIO_PARTS.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1471032782503964
+    m_Key: ITEM_TAP_WATER.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1471032782503965
+    m_Key: ITEM_CANNED_FOOD.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1471032782503966
+    m_Key: ITEM_SNACK.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1471032782503967
+    m_Key: ITEM_WATER_BOTTLE.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1471032782503968
+    m_Key: ITEM_BANDAGE.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1471032782503969
+    m_Key: ITEM_PAINKILLER.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1471032782503970
+    m_Key: ITEM_SCRAP.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1471032782503971
+    m_Key: ITEM_BATTERY.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1471032782503972
+    m_Key: ITEM_TEXTBOOK.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1471032782503973
+    m_Key: ITEM_INSTANT_NOODLE.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1471032782503974
+    m_Key: ITEM_DRINK.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1471032782503975
+    m_Key: ITEM_MEDKIT.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1471032782503976
+    m_Key: ITEM_ANTIBIOTIC.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1471032782503977
+    m_Key: ITEM_VITAMIN.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1471032782503978
+    m_Key: ITEM_DUCT_TAPE.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1471032782503979
+    m_Key: ITEM_LIGHTER.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1471032782503980
+    m_Key: ITEM_BAG_SCHOOL.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1471032782503981
+    m_Key: ITEM_BAG_HIKING.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1471032782503982
+    m_Key: ITEM_BAG_TOTE.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1471032782503983
+    m_Key: ITEM_WEAPON_MOP.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1471032782503984
+    m_Key: ITEM_WEAPON_PIPE.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1471032782503985
+    m_Key: ITEM_WEAPON_BAT.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1471032782503986
+    m_Key: ITEM_TOOL_FLASHLIGHT.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1471032782503987
+    m_Key: ITEM_TOOL_CROWBAR.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1471032782503988
+    m_Key: ITEM_ARMOR_GUARD.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1471032782503989
+    m_Key: ITEM_ARMOR_PADDING.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1471032782503990
+    m_Key: ITEM_ARMOR_RIOT.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1471032782503991
+    m_Key: ITEM_WEAPON_BATON.desc
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

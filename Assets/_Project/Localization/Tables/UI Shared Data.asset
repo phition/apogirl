@@ -6671,6 +6671,94 @@ MonoBehaviour:
     m_Key: exp.backpack_hint
     m_Metadata:
       m_Items: []
+  - m_Id: 1483188869545984
+    m_Key: exp.info.cat.Weapon
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1483188936654848
+    m_Key: exp.info.cat.Backpack
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1483188936654849
+    m_Key: exp.info.cat.Tool
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1483188936654850
+    m_Key: exp.info.cat.Armor
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1483188936654851
+    m_Key: exp.info.cat.Consumable
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1483188936654852
+    m_Key: exp.info.cat.Liked
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1483188936654853
+    m_Key: exp.info.cat.Resource
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1483188936654854
+    m_Key: exp.info.cat.Other
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1483188936654855
+    m_Key: exp.info.use
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1483188936654856
+    m_Key: exp.info.equip
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1483188936654857
+    m_Key: exp.info.drop
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1483188936654858
+    m_Key: exp.info.hp
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1483188936654859
+    m_Key: exp.info.stress
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1483188936654860
+    m_Key: exp.info.power
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1483188936654861
+    m_Key: exp.info.durability
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1483188936654862
+    m_Key: exp.info.grid
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1483188936654863
+    m_Key: exp.info.reduction
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1483188936654864
+    m_Key: exp.info.armor_note
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1483188936654865
+    m_Key: exp.info.yield
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1483188936654866
+    m_Key: exp.info.liked
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1483188936654867
+    m_Key: exp.info.size
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1483188936654868
+    m_Key: exp.info.rare
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
