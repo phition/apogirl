@@ -1,0 +1,295 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>마지막 학기 대사집</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=IBM+Plex+Sans+KR:wght@400;500;600&display=swap">
+<style>
+/* 왼쪽 목차(막·파일·장면) + 오른쪽 대본 원고. 공책 종이에 연필(조건)·빨간 펜(선택지). 고친 장면은 노란 띠 */
+:root{
+  --bg:#eef1f4; --paper:#fbfcfd; --ink:#1d2733; --muted:#66717e; --rule:#d7dde4;
+  --pen:#b2384a; --pencil:#2f5d8a; --pencil-bg:#e3ecf5; --pen-bg:#f6e4e7; --mark:#ffe58a;
+  --dirty:#c98a00; --dirty-bg:#fff6d8; --ok:#2e7d4f; --err:#b3261e;
+  --f-text:"Gowun Batang","Noto Serif KR","Batang",serif;
+  --f-ui:"IBM Plex Sans KR","Malgun Gothic","Apple SD Gothic Neo",system-ui,sans-serif;
+  --f-code:"Cascadia Mono",Consolas,ui-monospace,monospace;
+}
+@media (prefers-color-scheme:dark){:root{
+  --bg:#12161b; --paper:#1a1f26; --ink:#e2e6eb; --muted:#929ca8; --rule:#2c343e;
+  --pen:#ec7d8b; --pencil:#86b0dc; --pencil-bg:#1f2d3d; --pen-bg:#3a2026; --mark:#6b5a12;
+  --dirty:#e7b43c; --dirty-bg:#2f2812; --ok:#6cc391; --err:#f08a80; color-scheme:dark}}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-ui);font-size:14px}
+.app{display:grid;grid-template-columns:290px minmax(0,1fr);height:100%}
+aside{border-right:1px solid var(--rule);display:flex;flex-direction:column;min-height:0}
+.brand{padding:20px 16px 12px}
+.brand h1{font-family:var(--f-text);font-size:22px;margin:0}
+.brand p{margin:4px 0 0;color:var(--muted);font-size:12px;font-variant-numeric:tabular-nums}
+.search{padding:0 16px 12px}
+input,textarea{font:inherit;color:var(--ink);background:var(--paper);border:1px solid var(--rule);border-radius:6px}
+input:focus,textarea:focus,button:focus-visible{outline:2px solid var(--pencil);outline-offset:1px}
+.search input{width:100%;padding:9px 11px}
+nav{overflow-y:auto;padding:0 8px 24px;flex:1;min-height:0}
+.grp{font-size:11px;letter-spacing:.08em;color:var(--muted);margin:14px 8px 4px;font-weight:600}
+.file{display:flex;justify-content:space-between;gap:8px;width:100%;text-align:left;border:0;background:none;color:var(--ink);font:inherit;padding:7px 8px;border-radius:5px;cursor:pointer}
+.file:hover{background:var(--paper)}
+.file[aria-current="true"]{background:var(--paper);font-weight:600;box-shadow:inset 3px 0 0 var(--pen)}
+.file .c{color:var(--muted);font-size:12px;font-variant-numeric:tabular-nums}
+.file .d{color:var(--dirty);font-weight:600}
+.scenes{margin:2px 0 6px 14px;border-left:1px solid var(--rule)}
+.scenes a{display:block;padding:3px 10px;font-size:12px;color:var(--muted);text-decoration:none;font-family:var(--f-code);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.scenes a:hover{color:var(--ink)}
+.scenes a.d{color:var(--dirty)}
+.right{display:flex;flex-direction:column;min-height:0}
+.bar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:10px 20px;border-bottom:1px solid var(--rule);background:var(--bg)}
+.bar .msg{flex:1;min-width:0;font-size:13px;color:var(--muted)}
+.bar .msg.ok{color:var(--ok)} .bar .msg.err{color:var(--err);white-space:pre-line}
+.btn{font:inherit;font-size:13px;border:1px solid var(--rule);background:var(--paper);color:var(--ink);border-radius:6px;padding:6px 12px;cursor:pointer}
+.btn:hover{border-color:var(--muted)}
+.btn.primary{background:var(--ink);color:var(--paper);border-color:var(--ink);font-weight:600}
+.btn.primary:disabled{opacity:.35;cursor:default}
+.btn.small{font-size:12px;padding:3px 9px}
+main{overflow-y:auto;min-height:0;padding:28px 20px 80px;flex:1}
+.sheet{max-width:780px;margin:0 auto}
+.filehead{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin-bottom:18px}
+.filehead h2{font-family:var(--f-text);font-size:28px;margin:0}
+.filehead span{color:var(--muted);font-size:13px}
+.node{background:var(--paper);border:1px solid var(--rule);border-radius:8px;padding:20px 24px 22px;margin-bottom:18px;scroll-margin-top:16px}
+.node.dirty{box-shadow:inset 4px 0 0 var(--dirty)}
+.node header{display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px;border-bottom:1px dashed var(--rule);padding-bottom:10px;margin-bottom:12px}
+.node h3{font-family:var(--f-code);font-size:14px;margin:0;font-weight:600}
+.tag{font-size:11px;color:var(--muted);border:1px solid var(--rule);border-radius:99px;padding:1px 8px}
+.badge{font-size:11px;font-weight:600;color:var(--dirty);background:var(--dirty-bg);border-radius:99px;padding:1px 8px}
+.node .tools{margin-left:auto;display:flex;gap:6px;align-items:center}
+.from{font-size:12px;color:var(--muted)}
+.ln{font-family:var(--f-text);font-size:16px;line-height:1.75;margin:2px 0;padding-left:calc(var(--d,0) * 22px);position:relative}
+.ln.ind::before{content:"";position:absolute;left:calc(var(--d) * 22px - 12px);top:0;bottom:0;border-left:1px solid var(--rule)}
+.say{display:grid;grid-template-columns:7.5em minmax(0,1fr);gap:12px}
+.who{font-family:var(--f-ui);font-weight:600;font-size:13px;text-align:right;padding-top:3px}
+.cond{font-family:var(--f-ui);font-size:12px;color:var(--pencil);margin:8px 0 2px}
+.cond code{background:var(--pencil-bg);padding:1px 6px;border-radius:4px;font-family:var(--f-code);font-size:12px}
+.end{height:6px}
+.choice{font-family:var(--f-ui);font-size:14px;font-weight:600;color:var(--pen);margin-top:10px}
+.choice::before{content:"▸ "}
+.choice small{font-weight:400;color:var(--muted);font-family:var(--f-code);font-size:11px;margin-left:6px}
+.cmd{font-family:var(--f-code);font-size:12px;color:var(--muted)}
+.cmd a{color:var(--pencil)}
+.cmt{font-family:var(--f-ui);font-size:12px;color:var(--muted);font-style:italic}
+.v{font-family:var(--f-ui);font-size:.82em;background:var(--pen-bg);color:var(--pen);border-radius:4px;padding:0 5px;font-weight:600;white-space:nowrap}
+mark{background:var(--mark);color:inherit;border-radius:2px}
+.empty{color:var(--muted);text-align:center;padding:60px 0}
+.legend{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:12px;color:var(--muted);margin:-6px 0 22px}
+.edit{display:grid;gap:10px}
+.edit .row{display:grid;grid-template-columns:5em minmax(0,1fr);gap:10px;align-items:center}
+.edit label{font-size:12px;color:var(--muted)}
+.edit input{padding:6px 9px;font-family:var(--f-code);font-size:13px}
+.edit textarea{width:100%;min-height:200px;padding:10px 12px;font-family:var(--f-code);font-size:13px;line-height:1.6;resize:vertical;tab-size:4;white-space:pre}
+.edit .hint{font-size:12px;color:var(--muted)}
+.edit .warn{font-size:12px;color:var(--err)}
+@media (max-width:760px){
+  .app{grid-template-columns:1fr;grid-template-rows:auto minmax(0,1fr)}
+  aside{border-right:0;border-bottom:1px solid var(--rule);max-height:38vh}
+  .node{padding:16px} .say{grid-template-columns:1fr;gap:0} .who{text-align:left;padding-top:0}
+}
+</style>
+</head>
+<body>
+<div class="app">
+  <aside>
+    <div class="brand"><h1>마지막 학기 대사집</h1><p id="stats">불러오는 중…</p></div>
+    <div class="search"><input id="q" type="search" placeholder="대사·화자·장면 ID 검색" aria-label="대사 검색"></div>
+    <nav id="toc" aria-label="파일 목차"></nav>
+  </aside>
+  <div class="right">
+    <div class="bar">
+      <span class="msg" id="msg">장면마다 "편집"으로 고치고, 다 고치면 "원본에 저장"을 누릅니다.</span>
+      <button class="btn" id="reload" type="button">다시 불러오기</button>
+      <button class="btn primary" id="save" type="button" disabled>원본에 저장</button>
+    </div>
+    <main id="main"><div class="sheet" id="sheet"><p class="empty">대본을 불러오는 중입니다.</p></div></main>
+  </div>
+</div>
+
+<script>
+const GROUP={Prologue:"프롤로그",Act1:"1막",Act2:"2막",Act3:"3막",Act4:"4막",Events:"이벤트"};
+const VAR={name:"주인공",friend:"친구",given:"부른 이름"};
+let FILES=[],cur=0,query="";
+let edits={};      // path → {index → {title,tags,body}}  아직 저장 안 한 수정
+let open=new Set();// 편집 칸이 열린 장면 "path#index"
+const $=s=>document.querySelector(s);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const store={get(k){try{return localStorage.getItem(k)}catch(e){return null}},set(k,v){try{localStorage.setItem(k,v)}catch(e){}},del(k){try{localStorage.removeItem(k)}catch(e){}}};
+
+// ---------- 수정 상태 ----------
+function eff(fi,i){const f=FILES[fi],e=edits[f.path]?.[i];return e||f.nodes[i]}
+function isDirty(fi,i){const e=edits[FILES[fi].path]?.[i],o=FILES[fi].nodes[i];return !!e&&(e.title!==o.title||e.tags!==o.tags||e.body!==o.body)}
+function dirtyCount(fi){return FILES[fi].nodes.reduce((a,_,i)=>a+(isDirty(fi,i)?1:0),0)}
+function totalDirty(){return FILES.reduce((a,_,fi)=>a+dirtyCount(fi),0)}
+function setEdit(fi,i,v){
+  const p=FILES[fi].path;(edits[p]??={})[i]=v;
+  if(!isDirty(fi,i))delete edits[p][i];
+  if(edits[p]&&!Object.keys(edits[p]).length)delete edits[p];
+  persist();updateBar();
+}
+// 저장 전 수정은 브라우저에 임시 보관 (파일 sha가 같을 때만 되살린다)
+function persist(){const d={};for(const p in edits){const f=FILES.find(x=>x.path===p);d[p]={sha:f.sha,e:edits[p]}}store.set("yb-drafts",JSON.stringify(d))}
+function restore(){
+  let d;try{d=JSON.parse(store.get("yb-drafts")||"{}")}catch(e){d={}}
+  let n=0;edits={};
+  for(const p in d){const fi=FILES.findIndex(x=>x.path===p);if(fi<0||FILES[fi].sha!==d[p].sha)continue;
+    for(const i in d[p].e){edits[p]??={};edits[p][+i]=d[p].e[i];if(isDirty(fi,+i))n++;else delete edits[p][+i]}}
+  persist();return n;
+}
+function msg(t,cls=""){const m=$("#msg");m.textContent=t;m.className="msg "+cls}
+function updateBar(){const n=totalDirty();$("#save").disabled=!n;$("#save").textContent=n?`원본에 저장 (장면 ${n}개)`:"원본에 저장";toc()}
+
+// ---------- 그리기 ----------
+function inline(raw){
+  let s=esc(raw);
+  s=s.replace(/\{josa\((\w+)\(\),\s*&quot;([^&]*)&quot;\)\}/g,(m,f,j)=>`<span class="v">${VAR[f]||f}</span><small>(${j})</small>`);
+  s=s.replace(/\{(\w+)\(\)\}/g,(m,f)=>`<span class="v">${VAR[f]||f}</span>`);
+  if(query){const re=new RegExp("("+query.replace(/[.*+?^${}()|[\]\\]/g,"\\$&")+")(?![^<]*>)","gi");s=s.replace(re,"<mark>$1</mark>")}
+  return s;
+}
+function renderBody(body){
+  const out=[];
+  for(const rawLine of body.split("\n")){
+    if(!rawLine.trim()){out.push('<div class="end"></div>');continue}
+    const sp=rawLine.replace(/\t/g,"    ").match(/^ */)[0].length,d=Math.floor(sp/4),t=rawLine.trim();
+    const cls=d?" ind":"",st=`style="--d:${d}"`;let m;
+    if(t.startsWith("//"))out.push(`<div class="ln cmt${cls}" ${st}>${esc(t.slice(2).trim())}</div>`);
+    else if(m=t.match(/^<<(if|elseif)\s+(.*)>>$/))out.push(`<div class="ln cond${cls}" ${st}>${m[1]==="if"?"만약":"아니면 만약"} <code>${inline(m[2])}</code></div>`);
+    else if(t==="<<else>>")out.push(`<div class="ln cond${cls}" ${st}>그 밖에는</div>`);
+    else if(t==="<<endif>>")continue;
+    else if(m=t.match(/^<<jump\s+(\S+)>>$/))out.push(`<div class="ln cmd${cls}" ${st}>→ <a href="#" data-go="${esc(m[1])}">${esc(m[1])}</a> 로 이어짐</div>`);
+    else if(t.startsWith("<<"))out.push(`<div class="ln cmd${cls}" ${st}>${inline(t)}</div>`);
+    else if(m=t.match(/^->\s*(.*?)(?:\s+#choice:(\S+))?(?:\s+(<<if .*>>))?$/))
+      out.push(`<div class="ln choice${cls}" ${st}>${inline(m[1])}${m[3]?` <small>${esc(m[3])}</small>`:""}${m[2]?`<small>${esc(m[2])}</small>`:""}</div>`);
+    else if(m=t.match(/^((?:\{[^}]+\}|[^:{}<>#\s][^:{}<>#]{0,13}?)):\s+(.*)$/))
+      out.push(`<div class="ln say${cls}" ${st}><div class="who">${inline(m[1])}</div><div>${inline(m[2])}</div></div>`);
+    else out.push(`<div class="ln nar${cls}" ${st}>${inline(t)}</div>`);
+  }
+  return out.join("");
+}
+function nodeHtml(fi,i,showFrom){
+  const f=FILES[fi],n=eff(fi,i),key=f.path+"#"+i,dirty=isDirty(fi,i);
+  const tags=n.tags?n.tags.split(/\s+/).map(g=>`<span class="tag">${esc(g)}</span>`).join(""):"";
+  const from=showFrom?`<span class="from">${GROUP[f.group]||f.group} · ${esc(f.name)}</span>`:"";
+  const tools=`<span class="tools">${dirty?'<span class="badge">고침</span>':""}${dirty?`<button class="btn small" data-revert="${fi},${i}" type="button">되돌리기</button>`:""}<button class="btn small" data-edit="${fi},${i}" type="button">${open.has(key)?"닫기":"편집"}</button></span>`;
+  let inner;
+  if(open.has(key)){
+    const o=f.nodes[i];
+    inner=`<div class="edit" data-form="${fi},${i}">
+      <div class="row"><label for="t-${fi}-${i}">장면 ID</label><input id="t-${fi}-${i}" data-k="title" value="${esc(n.title)}"></div>
+      ${n.title!==o.title?`<div class="warn">장면 ID를 바꾸면 이벤트 JSON·&lt;&lt;jump&gt;&gt;에서 옛 ID(${esc(o.title)})를 부르는 곳도 고쳐야 합니다.</div>`:""}
+      <div class="row"><label for="g-${fi}-${i}">태그</label><input id="g-${fi}-${i}" data-k="tags" value="${esc(n.tags)}"></div>
+      <textarea id="b-${fi}-${i}" data-k="body" spellcheck="false" aria-label="본문">${esc(n.body)}</textarea>
+      <div class="hint">yarn 원문 그대로입니다. 화자는 "이름: 대사", 선택지는 "-> 글 #choice:ID", 들여쓰기는 공백 4칸. Tab은 공백 4칸을 넣습니다.</div>
+    </div><div style="margin-top:14px">${renderBody(n.body)}</div>`;
+  } else inner=renderBody(n.body);
+  return `<article class="node${dirty?" dirty":""}" id="n-${esc(n.title)}"><header><h3>${inline(n.title)}</h3>${tags}${from}${tools}</header>${inner}</article>`;
+}
+const LEGEND=`<div class="legend"><span><span class="v">주인공</span> 플레이어 이름 자리</span><span style="color:var(--pencil)"><b>만약</b> 조건 분기</span><span style="color:var(--pen)"><b>▸</b> 선택지</span></div>`;
+function render(keepScroll){
+  const sc=$("#main").scrollTop;
+  if(query){
+    const q=query.toLowerCase(),hits=[];
+    FILES.forEach((f,fi)=>f.nodes.forEach((_,i)=>{const n=eff(fi,i);if((n.title+"\n"+n.tags+"\n"+n.body).toLowerCase().includes(q))hits.push([fi,i])}));
+    $("#sheet").innerHTML=`<div class="filehead"><h2>“${esc(query)}”</h2><span>장면 ${hits.length}개</span></div>`+
+      (hits.length?hits.slice(0,120).map(([fi,i])=>nodeHtml(fi,i,true)).join("")+(hits.length>120?`<p class="empty">앞의 120개만 보여 줍니다. 검색어를 더 좁혀 주세요.</p>`:""):`<p class="empty">찾는 대사가 없습니다.</p>`);
+  } else {
+    const f=FILES[cur];
+    $("#sheet").innerHTML=`<div class="filehead"><h2>${esc(f.name)}</h2><span>${GROUP[f.group]||f.group} · 장면 ${f.nodes.length}개 · ${esc(f.path)}</span></div>${LEGEND}`+f.nodes.map((_,i)=>nodeHtml(cur,i)).join("");
+  }
+  $("#main").scrollTop=keepScroll?sc:0;toc();
+}
+function show(i,anchor){cur=i;query="";$("#q").value="";store.set("yb-file",FILES[i].path);render();if(anchor)document.getElementById("n-"+anchor)?.scrollIntoView()}
+function toc(){
+  let h="",last="";
+  FILES.forEach((f,fi)=>{
+    if(f.group!==last){h+=`<div class="grp">${GROUP[f.group]||f.group}</div>`;last=f.group}
+    const on=!query&&fi===cur,dc=dirtyCount(fi);
+    h+=`<button class="file" data-i="${fi}" aria-current="${on}" type="button"><span>${esc(f.name)}${dc?` <span class="d">· ${dc}</span>`:""}</span><span class="c">${f.nodes.length}</span></button>`;
+    if(on)h+=`<div class="scenes">${f.nodes.map((_,i)=>{const n=eff(fi,i);return `<a href="#" class="${isDirty(fi,i)?"d":""}" data-a="${esc(n.title)}">${esc(n.title)}</a>`}).join("")}</div>`;
+  });
+  $("#toc").innerHTML=h;
+}
+// 편집 칸 아래 미리보기만 다시 그린다 (입력 중 커서를 잃지 않게)
+function refreshPreview(form){
+  const [fi,i]=form.dataset.form.split(",").map(Number);
+  form.nextElementSibling.innerHTML=renderBody(eff(fi,i).body);
+  const art=form.closest(".node"),d=isDirty(fi,i);art.classList.toggle("dirty",d);
+  const tools=art.querySelector(".tools"),has=!!tools.querySelector(".badge");
+  if(has!==d){tools.innerHTML=`${d?'<span class="badge">고침</span>':""}${d?`<button class="btn small" data-revert="${fi},${i}" type="button">되돌리기</button>`:""}<button class="btn small" data-edit="${fi},${i}" type="button">닫기</button>`}
+}
+
+// ---------- 이벤트 ----------
+document.addEventListener("click",e=>{
+  const b=e.target.closest(".file");if(b){show(+b.dataset.i);return}
+  const a=e.target.closest("[data-a]");if(a){e.preventDefault();document.getElementById("n-"+a.dataset.a)?.scrollIntoView();return}
+  const g=e.target.closest("[data-go]");if(g){e.preventDefault();for(let fi=0;fi<FILES.length;fi++)if(FILES[fi].nodes.some((_,i)=>eff(fi,i).title===g.dataset.go)){show(fi,g.dataset.go);return}msg(`장면 ${g.dataset.go}을(를) 찾지 못했습니다.`,"err");return}
+  const ed=e.target.closest("[data-edit]");if(ed){const [fi,i]=ed.dataset.edit.split(",").map(Number),k=FILES[fi].path+"#"+i;open.has(k)?open.delete(k):open.add(k);render(true);if(open.has(k))document.getElementById(`b-${fi}-${i}`)?.focus();return}
+  const rv=e.target.closest("[data-revert]");if(rv){const [fi,i]=rv.dataset.revert.split(",").map(Number);setEdit(fi,i,{...FILES[fi].nodes[i]});render(true);return}
+});
+document.addEventListener("input",e=>{
+  const form=e.target.closest("[data-form]");if(!form)return;
+  const [fi,i]=form.dataset.form.split(",").map(Number),v={...eff(fi,i)};
+  v[e.target.dataset.k]=e.target.dataset.k==="body"?e.target.value:e.target.value.trim();
+  setEdit(fi,i,v);
+  if(e.target.dataset.k==="body"){e.target.style.height="auto";e.target.style.height=Math.min(e.target.scrollHeight+4,window.innerHeight*.7)+"px"}
+  refreshPreview(form);
+});
+document.addEventListener("keydown",e=>{
+  if(e.key==="Tab"&&e.target.matches("textarea[data-k]")&&!e.shiftKey){e.preventDefault();const t=e.target,s=t.selectionStart;t.setRangeText("    ",s,t.selectionEnd,"end");t.dispatchEvent(new Event("input",{bubbles:true}))}
+  if((e.ctrlKey||e.metaKey)&&e.key==="s"){e.preventDefault();if(!$("#save").disabled)save()}
+});
+let tm;$("#q").addEventListener("input",e=>{clearTimeout(tm);tm=setTimeout(()=>{query=e.target.value.trim();render()},180)});
+$("#save").addEventListener("click",save);
+$("#reload").addEventListener("click",()=>load(true));
+window.addEventListener("beforeunload",e=>{if(totalDirty()){e.preventDefault();e.returnValue=""}});
+
+async function save(){
+  const files=[];
+  FILES.forEach((f,fi)=>{const ed=[];f.nodes.forEach((_,i)=>{if(isDirty(fi,i))ed.push({index:i,...edits[f.path][i]})});if(ed.length)files.push({path:f.path,sha:f.sha,edits:ed})});
+  if(!files.length)return;
+  $("#save").disabled=true;msg("저장하는 중…");
+  try{
+    const ac=new AbortController(),timer=setTimeout(()=>ac.abort(),15000);
+    const r=await fetch("/api/save",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({files}),signal:ac.signal});
+    clearTimeout(timer);
+    const res=await r.json();
+    if(res.files){
+      const saved=new Set(res.saved);
+      // 저장된 파일의 수정은 지우고, 실패한 파일의 수정은 남긴다
+      for(const p of saved)delete edits[p];
+      const keepOpen=new Set([...open].filter(k=>!saved.has(k.split("#")[0])));open=keepOpen;
+      const curPath=FILES[cur].path;FILES=res.files;cur=Math.max(0,FILES.findIndex(f=>f.path===curPath));
+      persist();
+    }
+    if(res.errors?.length)msg((res.saved?.length?`저장: ${res.saved.join(", ")}\n`:"")+"저장하지 못한 것:\n"+res.errors.join("\n"),"err");
+    else msg(`원본에 저장했습니다: ${res.saved.join(", ")} — Unity에서 ApoGirl/Content/Import Events를 돌려 주세요.`,"ok");
+  }catch(err){msg("서버 응답이 없습니다. yarn_book.py가 켜져 있는지 확인한 뒤 \"다시 불러오기\"로 실제로 저장됐는지 봐 주세요.","err")}
+  updateBar();render(true);stats();
+}
+function stats(){
+  const scenes=FILES.reduce((a,f)=>a+f.nodes.length,0),lines=FILES.reduce((a,f)=>a+f.nodes.reduce((b,n)=>b+n.body.split("\n").filter(l=>l.trim()&&!l.trim().startsWith("<<")).length,0),0);
+  $("#stats").textContent=`파일 ${FILES.length}개 · 장면 ${scenes}개 · 대사 ${lines.toLocaleString()}줄`;
+}
+async function load(again){
+  if(again&&totalDirty()&&!window.__confirmReload){window.__confirmReload=true;msg("저장 안 한 수정은 브라우저에 남아 있고, 파일이 바뀌지 않았으면 다시 불러와도 되살아납니다. 한 번 더 누르면 다시 불러옵니다.");return}
+  window.__confirmReload=false;
+  try{
+    const r=await fetch("/api/files");const d=await r.json();FILES=d.files;
+    const back=restore();stats();
+    const saved=store.get("yb-file"),i=FILES.findIndex(f=>f.path===saved);cur=i>=0?i:0;
+    open=new Set([...open].filter(k=>FILES.some(f=>f.path===k.split("#")[0])));
+    render();updateBar();
+    msg(back?`저장 안 한 수정 ${back}개를 되살렸습니다. 대본 폴더: ${d.root}`:`대본 폴더: ${d.root}`);
+  }catch(e){$("#sheet").innerHTML='<p class="empty">대본을 읽지 못했습니다. yarn_book.py를 실행한 뒤 http://127.0.0.1:8765 로 열어 주세요.</p>'}
+}
+load();
+</script>
+</body>
+</html>
