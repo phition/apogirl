@@ -794,7 +794,7 @@ namespace ApoGirl.Core.Simulation
             return CheckResult.Success;
         }
 
-        /// <summary>장비: 쓰러지면 착용 장비·퀵슬롯 전부 분실 (M4 결정), 아니면 쓴 소모품만 빠지고 무기가 닳는다.</summary>
+        /// <summary>장비: 쓰러지면 착용 장비 전부 분실 (M4 결정), 아니면 쓴 소모품만 빠지고 무기가 닳고, 탐험 중 바꾼 장비를 반영한다.</summary>
         private void ApplyEquipment(ExpeditionRequest request, ExpeditionResult result, StateDelta delta)
         {
             var loadout = request?.Loadout;
@@ -825,6 +825,30 @@ namespace ApoGirl.Core.Simulation
             }
 
             LoadoutRules.WearItem(_state, _db, loadout.MainWeapon, result.WeaponWear, delta);
+
+            // 탐험 중 장비 바꾸기: 버리고 온 내 장비는 빼고, 주워 찬 채 돌아온 것은 창고에 더한 뒤 찬 장비를 그대로 둔다
+            foreach (var id in result.LostOwned)
+            {
+                LoadoutRules.RemoveFromStorage(_state, id, 1, delta);
+            }
+
+            foreach (var id in result.EquippedLoot)
+            {
+                EffectApplier.AddItem(_state, id, 1, delta);
+            }
+
+            if (result.FinalLoadout != null)
+            {
+                if (result.EquippedLootWear > 0 && result.EquippedLoot.Contains(result.FinalLoadout.MainWeapon))
+                {
+                    LoadoutRules.WearItem(_state, _db, result.FinalLoadout.MainWeapon, result.EquippedLootWear, delta);
+                }
+
+                _state.Loadout.Backpack = result.FinalLoadout.Backpack;
+                _state.Loadout.MainWeapon = result.FinalLoadout.MainWeapon;
+                _state.Loadout.Tool = result.FinalLoadout.Tool;
+            }
+
             LoadoutRules.Sanitize(_state);
         }
 

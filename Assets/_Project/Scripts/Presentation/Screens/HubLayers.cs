@@ -16,6 +16,7 @@ namespace ApoGirl.Presentation.Screens
     internal sealed class HubLayers
     {
         private readonly VisualElement _left;
+        private readonly VisualElement _storage;
         private readonly VisualElement _right;
         private readonly VisualElement _people;
         private readonly VisualElement _board;
@@ -29,6 +30,7 @@ namespace ApoGirl.Presentation.Screens
         {
             _screen = root.Q("screen");
             _left = root.Q("drawer-left");
+            _storage = root.Q("drawer-storage");
             _right = root.Q("drawer-right");
             _people = root.Q("drawer-people");
             _board = root.Q("board");
@@ -123,8 +125,18 @@ namespace ApoGirl.Presentation.Screens
         private void Set(VisualElement element, bool open)
         {
             element?.EnableInClassList("closed", !open);
+            if (element == _left)
+            {
+                // 보관함은 생활기록부와 함께 열리고 닫힌다
+                _storage?.EnableInClassList("closed", !open);
+                Opened?.Invoke();
+            }
+
             Sync();
         }
+
+        /// <summary>서랍을 열고 닫았을 때 (보관함을 그 자리에서 다시 그린다).</summary>
+        public Action Opened { get; set; }
 
         private void Sync()
         {

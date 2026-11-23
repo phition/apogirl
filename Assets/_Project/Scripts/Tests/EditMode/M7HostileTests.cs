@@ -85,13 +85,12 @@ namespace ApoGirl.Tests.EditMode
         // ── 거점 반영·트라우마 ──
 
         [Test]
-        public void Beaten_LosesCarriedItemsAndWeapon_GainsTrauma_ThatRaisesDayStressAndHeals()
+        public void Beaten_LosesWeapon_GainsTrauma_ThatRaisesDayStressAndHeals()
         {
             var db = TestContent.CreateDatabase();
             var state = TestContent.NewGame(db);
             state.Storage.Add(new ItemStack { ItemId = "ITEM_CANNED_FOOD", Count = 2 });
             state.Storage.Add(new ItemStack { ItemId = "ITEM_SCRAP", Count = 1 });
-            state.Loadout.QuickSlots.Add("ITEM_CANNED_FOOD");
             state.Loadout.MainWeapon = "ITEM_SCRAP";
             var stub = new StubExpeditionRunner
             {
@@ -105,7 +104,7 @@ namespace ApoGirl.Tests.EditMode
 
             Assert.AreEqual(1, state.Player.AssaultTrauma);
             Assert.AreEqual(1, state.Exploration.HostileBeatings);
-            Assert.AreEqual(1, LoadoutRules.CountInStorage(state, "ITEM_CANNED_FOOD"), "들고 간 소모품 하나를 빼앗김");
+            Assert.AreEqual(2, LoadoutRules.CountInStorage(state, "ITEM_CANNED_FOOD"), "퀵슬롯이 없어 창고 소모품은 들고 가지 않는다");
             Assert.AreEqual(0, LoadoutRules.CountInStorage(state, "ITEM_SCRAP"), "구타는 무기까지");
 
             // 트라우마: 낮 탐험 스트레스 추가

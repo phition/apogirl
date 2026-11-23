@@ -49,6 +49,14 @@ namespace ApoGirl.Exploration.Runtime
         private ExplorationTarget _shownEncounter;
         private readonly List<Label> _sleepLabels = new List<Label>();
         private PlacedItem _selected;
+
+        // 하단 장비 칸 (무기·가방·도구): 배낭에서 고른 장비를 놓으면 장착, 우클릭하면 벗는다
+        private static readonly EquipSlot[] EquipSlots = { EquipSlot.Weapon, EquipSlot.Backpack, EquipSlot.Tool };
+        private readonly Dictionary<EquipSlot, VisualElement> _slotBoxes = new Dictionary<EquipSlot, VisualElement>();
+        private readonly Dictionary<EquipSlot, VisualElement> _slotIcons = new Dictionary<EquipSlot, VisualElement>();
+        private readonly Dictionary<EquipSlot, Label> _slotNames = new Dictionary<EquipSlot, Label>();
+        private readonly Dictionary<EquipSlot, string> _slotShown = new Dictionary<EquipSlot, string>();
+        private VisualElement _equipBar;
         private int _gridVersion = -1;
         private ExplorationTarget _shownContainer;
         private int _shownContentCount = -1;
@@ -82,12 +90,17 @@ namespace ApoGirl.Exploration.Runtime
             BuildStaminaBar(root);
             Presentation.Audio.Sound.AttachUiClicks(root);
             _equip = root.Q<Label>("equip-label");
+            _equip.AddToClassList("hidden"); // 장비는 아래 장비 칸이 보여 준다
+            BuildEquipBar(root);
             _tutorial = root.Q<Label>("tutorial-label");
             _encounterPanel = root.Q("encounter-panel");
             _encounterText = root.Q<Label>("encounter-text");
             _encounterChoices = root.Q("encounter-choices");
 
             root.Q<Label>("backpack-title").text = Loc.T("exp.backpack");
+            var bpHint = new Label(Loc.T("exp.backpack_hint")) { pickingMode = PickingMode.Ignore };
+            bpHint.AddToClassList("bp-hint");
+            _backpackPanel.Add(bpHint);
             root.Q<Label>("controls-label").text = Loc.T("exp.controls");
             root.Q<Button>("loot-take-all").text = Loc.T("exp.take_all");
             root.Q<Button>("loot-take-all").clicked += () => _director.TakeAll();
@@ -191,7 +204,7 @@ namespace ApoGirl.Exploration.Runtime
             if (_director.DebugOverlay) debug += " F3";
             _debug.text = debug.Trim();
 
-            _equip.text = EquipmentText();
+            RefreshEquipBar();
             var hint = _director.TutorialHintKey;
             _tutorial.EnableInClassList("hidden", hint == null);
             if (hint != null)
@@ -249,19 +262,85 @@ namespace ApoGirl.Exploration.Runtime
             _staminaFill.EnableInClassList("exhausted", _director.Exhausted);
         }
 
-        private string EquipmentText()
+        private void BuildEquipBar(VisualElement root)
         {
-            var weapon = _director.Weapon != null
-                ? Loc.F("exp.equip_weapon", Loc.Item(_director.Weapon.Id), _director.WeaponDurabilityLeft)
-                : Loc.T("exp.equip_bare");
-            var tool = _director.ToolKind == ToolKind.None ? "" : "  ·  " + Loc.T("tool." + _director.ToolKind);
-            var quick = "";
-            for (var i = 0; i < _director.QuickSlots.Count; i++)
+            _equipBar = new VisualElement { name = "equip-slots" };
+            _equipBar.AddToClassList("exp-equip-slots");
+            foreach (var slot in EquipSlots)
             {
-                quick += $"  [{i + 1}] " + Loc.Item(_director.QuickSlots[i]);
+                var kind = slot;
+                var box = new VisualElement();
+                box.AddToClassList("exp-equip-slot");
+                var head = new Label(Loc.T("exp.slot." + slot)) { pickingMode = PickingMode.Ignore };
+                head.AddToClassList("exp-equip-head");
+                var icon = new VisualElement { pickingMode = PickingMode.Ignore };
+                icon.AddToClassList("exp-equip-icon");
+                var name = new Label { pickingMode = PickingMode.Ignore };
+                name.AddToClassList("exp-equip-name");
+                box.Add(head);
+                box.Add(icon);
+                box.Add(name);
+                box.RegisterCallback<PointerDownEvent>(evt =>
+                {
+                    evt.StopPropagation();
+                    OnSlotClicked(kind, evt.button == 1);
+                });
+                _equipBar.Add(box);
+                _slotBoxes[slot] = box;
+                _slotIcons[slot] = icon;
+                _slotNames[slot] = name;
             }
 
-            return weapon + tool + quick;
+            var bottom = root.Q("exp-bottom");
+            bottom.Insert(1, _equipBar);
+        }
+
+        private void OnSlotClicked(EquipSlot slot, bool right)
+        {
+            if (right)
+            {
+                _director.Unequip(slot);
+            }
+            else if (_selected != null && _director.SlotOf(_selected.ItemId) == slot)
+            {
+                if (_director.Equip(_selected))
+                {
+                    _selected = null;
+                }
+            }
+            else
+            {
+                ShowMessage("exp.slot_hint");
+            }
+
+            _gridVersion = -1;
+            _slotShown.Clear();
+        }
+
+        private void RefreshEquipBar()
+        {
+            foreach (var slot in EquipSlots)
+            {
+                var item = slot == EquipSlot.Weapon ? _director.Weapon : slot == EquipSlot.Backpack ? _director.BackpackItem : _director.Tool;
+                var name = item == null ? Loc.T(slot == EquipSlot.Weapon ? "exp.slot_bare" : "exp.slot_empty") : Loc.Item(item.Id);
+                if (slot == EquipSlot.Weapon && item != null && item.MaxDurability > 0)
+                {
+                    name += " (" + _director.WeaponDurabilityLeft + ")";
+                }
+
+                var droppable = _selected != null && _director.SlotOf(_selected.ItemId) == slot;
+                _slotBoxes[slot].EnableInClassList("empty", item == null);
+                _slotBoxes[slot].EnableInClassList("droppable", droppable);
+                var key = (item?.Id ?? "") + "|" + name;
+                if (_slotShown.TryGetValue(slot, out var shown) && shown == key)
+                {
+                    continue;
+                }
+
+                _slotShown[slot] = key;
+                _slotNames[slot].text = name;
+                Presentation.Art.StoryArt.SetContain(_slotIcons[slot], item == null ? null : Presentation.Art.StoryArt.ItemIcon(item.Id));
+            }
         }
 
         private void RefreshEncounter()
@@ -447,7 +526,7 @@ namespace ApoGirl.Exploration.Runtime
         private void RefreshGrid()
         {
             var backpack = _director.Backpack;
-            var version = backpack.Items.Aggregate(backpack.Items.Count, (hash, i) => hash * 31 + i.X * 7 + i.Y * 13 + i.ItemId.GetHashCode());
+            var version = backpack.Items.Aggregate(backpack.Items.Count + backpack.Width * 1009 + backpack.Height * 9173, (hash, i) => hash * 31 + i.X * 7 + i.Y * 13 + i.ItemId.GetHashCode());
             if (version == _gridVersion)
             {
                 return;
@@ -455,6 +534,8 @@ namespace ApoGirl.Exploration.Runtime
 
             _gridVersion = version;
             _grid.Clear();
+            _grid.style.width = backpack.Width * CellSize;
+            _grid.style.height = backpack.Height * CellSize;
             for (var y = 0; y < backpack.Height; y++)
             {
                 for (var x = 0; x < backpack.Width; x++)
@@ -489,8 +570,25 @@ namespace ApoGirl.Exploration.Runtime
                     evt.StopPropagation();
                     if (evt.button == 1)
                     {
-                        _director.DropItem(item);
+                        if (evt.shiftKey)
+                        {
+                            _director.DropItem(item);
+                        }
+                        else if (_director.IsUsable(item))
+                        {
+                            _director.UseItem(item);
+                        }
+                        else if (_director.SlotOf(item.ItemId) != EquipSlot.None)
+                        {
+                            _director.Equip(item);
+                        }
+                        else
+                        {
+                            _director.DropItem(item);
+                        }
+
                         _selected = null;
+                        _slotShown.Clear();
                     }
                     else
                     {
@@ -628,7 +726,7 @@ namespace ApoGirl.Exploration.Runtime
             }
 
             var position = RuntimePanelUtils.ScreenToPanel(panel, new Vector2(screenPosition.x, Screen.height - screenPosition.y));
-            foreach (var element in new[] { _backpackPanel, _lootPanel, _encounterPanel })
+            foreach (var element in new[] { _backpackPanel, _lootPanel, _encounterPanel, _equipBar })
             {
                 if (element != null && element.resolvedStyle.display != DisplayStyle.None && element.resolvedStyle.visibility == Visibility.Visible
                     && element.worldBound.Contains(position))

@@ -14,13 +14,11 @@ namespace ApoGirl.Presentation.Screens
 {
     /// <summary>
     /// 3겹 출정 준비 (문서 6.3.4-1, Docs/UI_REDESIGN_PROPOSAL.md): 왼쪽은 지역 그림 위에 목적지·시간대·예보·손실 경고,
-    /// 오른쪽은 지금 차림의 주인공 입상과 장비 칸(배낭·주무기·도구·방어구, ◀ ▶로 바꾸기)과 퀵슬롯 4칸(누르면 다음 것).
+    /// 오른쪽은 지금 차림의 주인공 입상과 장비 칸(배낭·주무기·도구·방어구, ◀ ▶로 바꾸기). 소모품은 탐험 중 배낭에서 쓴다.
     /// 장비를 바꾸면 입상도 바로 바뀐다.
     /// </summary>
     internal sealed class ExpeditionPrepView
     {
-        private const int QuickSlotCount = 4;
-
         private readonly GameSession _session;
         private readonly VisualElement _sheet;
         private readonly VisualElement _art;
@@ -147,42 +145,6 @@ namespace ApoGirl.Presentation.Screens
             AddSlot("prep.tool", EquipSlot.Tool, loadout.Tool, id => loadout.Tool = id);
             AddSlot("prep.armor", EquipSlot.Armor, loadout.Armor, id => loadout.Armor = id);
 
-            Add(_loadout, Loc.T("prep.quick"), "exp-quick-label");
-            var row = new VisualElement();
-            row.AddToClassList("exp-quick-row");
-            var options = new List<string> { "" };
-            options.AddRange(Owned(EquipSlot.Consumable).Select(c => c.ItemId));
-            for (var i = 0; i < QuickSlotCount; i++)
-            {
-                var index = i;
-                var current = index < loadout.QuickSlots.Count ? loadout.QuickSlots[index] : "";
-                var tile = new Button(() =>
-                {
-                    // 누르면 다음 소모품으로 (끝이면 비움)
-                    var at = Math.Max(0, options.IndexOf(current));
-                    var chosen = options[(at + 1) % options.Count];
-                    while (loadout.QuickSlots.Count <= index)
-                    {
-                        loadout.QuickSlots.Add("");
-                    }
-
-                    loadout.QuickSlots[index] = chosen;
-                    loadout.QuickSlots.RemoveAll(string.IsNullOrEmpty);
-                    LoadoutRules.Sanitize(state);
-                    BuildLoadout();
-                }) { tooltip = NameOf(current) };
-                tile.AddToClassList("exp-quick");
-                var icon = new VisualElement { pickingMode = PickingMode.Ignore };
-                icon.AddToClassList("exp-icon");
-                StoryArt.SetContain(icon, StoryArt.ItemIcon(current));
-                tile.Add(icon);
-                var label = new Label(string.IsNullOrEmpty(current) ? Loc.T("prep.none") : NameOf(current)) { pickingMode = PickingMode.Ignore };
-                label.AddToClassList("exp-quick-name");
-                tile.Add(label);
-                row.Add(tile);
-            }
-
-            _loadout.Add(row);
             KoreanFont.ApplyDeep(_loadout);
 
             // 차림이 바뀌면 입상도 (각오한 얼굴로)
@@ -247,7 +209,6 @@ namespace ApoGirl.Presentation.Screens
                 .ToList();
         }
 
-        private string NameOf(string itemId) => string.IsNullOrEmpty(itemId) ? "" : Loc.Item(itemId);
 
         private string Label(string itemId)
         {

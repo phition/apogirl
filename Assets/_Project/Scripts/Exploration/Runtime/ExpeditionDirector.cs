@@ -91,12 +91,20 @@ namespace ApoGirl.Exploration.Runtime
         private ItemDef _weapon;
         private ItemDef _armor;
         private ItemDef _backpackItem;
+        private ItemDef _tool;
         private ToolKind _toolKind;
         private int _weaponDurability;
         private int _weaponWear;
         private float _attackTimer;
-        private readonly List<string> _quickSlots = new List<string>();
         private readonly List<string> _usedItems = new List<string>();
+
+        // 탐험 중 장비 바꾸기: 찬 것이 가지고 나간 장비(창고에 있는 것)인지, 가지고 나간 무기가 닳은 양, 버리고 온 내 장비
+        private bool _weaponOwned;
+        private bool _bagOwned;
+        private bool _toolOwned;
+        private int _ownedWeaponWear;
+        private bool _equipChanged;
+        private readonly List<string> _lostOwned = new List<string>();
         private readonly List<string> _runFlags = new List<string>();
 
         /// <summary>그 자리 대화 (동료가 될 인물): 탐험 HUD 위 대화 창과, 치른 이벤트.</summary>
@@ -292,8 +300,9 @@ namespace ApoGirl.Exploration.Runtime
         public ItemDef Weapon => _weapon;
         public ItemDef Armor => _armor;
         public ToolKind ToolKind => _toolKind;
+        public ItemDef Tool => _tool;
+        public ItemDef BackpackItem => _backpackItem;
         public int WeaponDurabilityLeft => _weapon == null ? 0 : Math.Max(0, _weaponDurability - _weaponWear);
-        public IReadOnlyList<string> QuickSlots => _quickSlots;
 
         /// <summary>조우 선택 중 (시간 정지).</summary>
         public ExplorationTarget OpenEncounter { get; private set; }
@@ -783,6 +792,11 @@ namespace ApoGirl.Exploration.Runtime
         {
             if (Backpack.Remove(placed))
             {
+                if (placed.Owned)
+                {
+                    _lostOwned.Add(placed.ItemId);
+                }
+
                 OpenContainer?.Contents.Add(new ItemStack { ItemId = placed.ItemId, Count = 1 });
                 EmitNoise(CurrentArea, X, _balance.DropNoise);
             }
@@ -1096,6 +1110,10 @@ namespace ApoGirl.Exploration.Runtime
             }
 
             _weaponWear++;
+            if (_weaponOwned)
+            {
+                _ownedWeaponWear = _weaponWear;
+            }
             SpawnHitFx(hit);
             React(hit, hit.IsDown && HasDownFrames(hit) ? "down_" : "hit_");
             Sfx("sfx_hit");
@@ -1110,22 +1128,28 @@ namespace ApoGirl.Exploration.Runtime
             return true;
         }
 
-        /// <summary>퀵슬롯 소모품 사용 (1~4). 탐험 중 HP 회복·스트레스 완화.</summary>
-        public bool UseQuickSlot(int index)
+        /// <summary>쓸 수 있는 소모품인가 (HP 회복·스트레스 완화).</summary>
+        public bool IsUsable(PlacedItem placed)
         {
-            if (index < 0 || index >= _quickSlots.Count || IsFinished)
+            var item = placed == null ? null : _db.GetItemOrNull(placed.ItemId);
+            return item != null && (item.UseHp > 0 || item.UseStress > 0);
+        }
+
+        /// <summary>배낭에서 소모품을 쓴다 (배낭 우클릭). 탐험 중 HP 회복·스트레스 완화.</summary>
+        public bool UseItem(PlacedItem placed)
+        {
+            if (placed == null || IsFinished || !IsUsable(placed) || !Backpack.Remove(placed))
             {
                 return false;
             }
 
-            var item = _db.GetItemOrNull(_quickSlots[index]);
-            if (item == null)
+            var item = _db.GetItem(placed.ItemId);
+            if (placed.Owned)
             {
-                return false;
+                // 창고에서 가지고 나온 것만 귀환 때 창고에서 뺀다 (주운 것은 배낭에서 사라지면 끝)
+                _usedItems.Add(item.Id);
             }
 
-            _usedItems.Add(item.Id);
-            _quickSlots.RemoveAt(index);
             if (item.UseHp > 0)
             {
                 Hp = Math.Min(Math.Max(_startHp, Hp), Hp + item.UseHp);
@@ -1137,6 +1161,178 @@ namespace ApoGirl.Exploration.Runtime
             }
 
             _hud?.ShowText(Loc.F("exp.used_item", Loc.Item(item.Id)));
+            return true;
+        }
+
+        /// <summary>그 아이템이 들어가는 장비 칸 (무기·가방·도구만, 아니면 None).</summary>
+        public EquipSlot SlotOf(string itemId)
+        {
+            var item = _db.GetItemOrNull(itemId);
+            if (item == null)
+            {
+                return EquipSlot.None;
+            }
+
+            if (item.Slot == EquipSlot.Weapon && item.WeaponPower > 0) return EquipSlot.Weapon;
+            if (item.Slot == EquipSlot.Backpack && item.GridWidth > 0) return EquipSlot.Backpack;
+            if (item.Slot == EquipSlot.Tool && item.Tool != ToolKind.None) return EquipSlot.Tool;
+            return EquipSlot.None;
+        }
+
+        /// <summary>배낭의 장비를 찬다. 차고 있던 것은 배낭으로 들어간다 (가방은 지금 배낭 내용물이 새 가방에 다 들어갈 때만).</summary>
+        public bool Equip(PlacedItem placed)
+        {
+            if (placed == null || IsFinished || !Backpack.Items.Contains(placed))
+            {
+                return false;
+            }
+
+            var slot = SlotOf(placed.ItemId);
+            var item = _db.GetItemOrNull(placed.ItemId);
+            switch (slot)
+            {
+                case EquipSlot.Weapon:
+                    if (!SwapInto(placed, _weapon, _weaponOwned, _weaponWear))
+                    {
+                        return false;
+                    }
+
+                    _weapon = item;
+                    _weaponOwned = placed.Owned;
+                    _weaponWear = placed.Wear;
+                    _weaponDurability = placed.Owned && Request.WeaponDurability > 0 ? Request.WeaponDurability : item.MaxDurability;
+                    _attackTimer = 0f;
+                    RefreshLook();
+                    break;
+                case EquipSlot.Tool:
+                    if (!SwapInto(placed, _tool, _toolOwned, 0))
+                    {
+                        return false;
+                    }
+
+                    SetTool(item, placed.Owned);
+                    break;
+                case EquipSlot.Backpack:
+                    if (!SwapBag(placed, item))
+                    {
+                        _hud?.ShowMessage("exp.bag_too_small");
+                        return false;
+                    }
+
+                    break;
+                default:
+                    return false;
+            }
+
+            _equipChanged = true;
+            Sfx("sfx_pickup", 0.8f);
+            _hud?.ShowText(Loc.F("exp.equipped", Loc.Item(item.Id)));
+            return true;
+        }
+
+        /// <summary>찬 무기·도구를 벗어 배낭에 넣는다. 가방은 벗을 수 없다.</summary>
+        public bool Unequip(EquipSlot slot)
+        {
+            if (IsFinished)
+            {
+                return false;
+            }
+
+            var current = slot == EquipSlot.Weapon ? _weapon : slot == EquipSlot.Tool ? _tool : null;
+            if (current == null)
+            {
+                if (slot == EquipSlot.Backpack && _backpackItem != null)
+                {
+                    _hud?.ShowMessage("exp.bag_cannot_remove");
+                }
+
+                return false;
+            }
+
+            var owned = slot == EquipSlot.Weapon ? _weaponOwned : _toolOwned;
+            var placed = Backpack.TryAutoPlace(current.Id, current.Width, current.Height, current.Weight);
+            if (placed == null)
+            {
+                _hud?.ShowMessage("exp.backpack_full");
+                return false;
+            }
+
+            placed.Owned = owned;
+            if (slot == EquipSlot.Weapon)
+            {
+                placed.Wear = _weaponWear;
+                _weapon = null;
+                _weaponOwned = false;
+                _weaponWear = 0;
+                _weaponDurability = 0;
+                RefreshLook();
+            }
+            else
+            {
+                SetTool(null, false);
+            }
+
+            _equipChanged = true;
+            Sfx("sfx_pickup", 0.6f);
+            return true;
+        }
+
+        /// <summary>배낭의 아이템을 꺼내고 빈자리에 차고 있던 것을 넣는다. 자리가 없으면 그대로 두고 false.</summary>
+        private bool SwapInto(PlacedItem placed, ItemDef current, bool currentOwned, int currentWear)
+        {
+            Backpack.Remove(placed);
+            if (current == null)
+            {
+                return true;
+            }
+
+            var back = Backpack.TryAutoPlace(current.Id, current.Width, current.Height, current.Weight);
+            if (back == null)
+            {
+                Backpack.Insert(placed);
+                _hud?.ShowMessage("exp.backpack_full");
+                return false;
+            }
+
+            back.Owned = currentOwned;
+            back.Wear = currentWear;
+            return true;
+        }
+
+        private void SetTool(ItemDef tool, bool owned)
+        {
+            _tool = tool;
+            _toolOwned = tool != null && owned;
+            _toolKind = tool?.Tool ?? ToolKind.None;
+            if (FlashlightOn && _toolKind != ToolKind.Flashlight)
+            {
+                ToggleFlashlight();
+            }
+        }
+
+        /// <summary>가방 바꾸기: 새 가방 격자에 지금 배낭 내용물과 벗은 가방이 다 들어가야 바꾼다.</summary>
+        private bool SwapBag(PlacedItem placed, ItemDef bag)
+        {
+            var grid = new BackpackGrid(bag.GridWidth, bag.GridHeight);
+            var moving = Backpack.Items.Where(i => i != placed).ToList();
+            if (_backpackItem != null)
+            {
+                moving.Add(new PlacedItem { ItemId = _backpackItem.Id, Width = _backpackItem.Width, Height = _backpackItem.Height, Weight = _backpackItem.Weight, Owned = _bagOwned });
+            }
+
+            foreach (var item in moving.OrderByDescending(i => i.Width * i.Height))
+            {
+                if (!grid.TryAutoPlace(item))
+                {
+                    return false;
+                }
+            }
+
+            Backpack = grid;
+            _backpackItem = bag;
+            _bagOwned = placed.Owned;
+            UpdateMultipliers();
+            RefreshBagSprite();
             return true;
         }
 
@@ -1251,16 +1447,44 @@ namespace ApoGirl.Exploration.Runtime
             _backpackItem = _db.GetItemOrNull(loadout.Backpack);
             _weapon = _db.GetItemOrNull(loadout.MainWeapon);
             _armor = _db.GetItemOrNull(loadout.Armor);
-            var tool = _db.GetItemOrNull(loadout.Tool);
-            _toolKind = tool?.Tool ?? ToolKind.None;
+            _tool = _db.GetItemOrNull(loadout.Tool);
+            _toolKind = _tool?.Tool ?? ToolKind.None;
             _weaponDurability = _weapon == null ? 0 : Request.WeaponDurability > 0 ? Request.WeaponDurability : _weapon.MaxDurability;
-            _quickSlots.Clear();
-            _quickSlots.AddRange(loadout.QuickSlots.Where(id => !string.IsNullOrEmpty(id)));
+            _weaponOwned = _weapon != null;
+            _bagOwned = _backpackItem != null;
+            _toolOwned = _tool != null;
 
+            UpdateMultipliers();
+            RefreshLook();
+        }
+
+        /// <summary>가방·방어구에 따른 걸음·소음 배율 (가방을 바꾸면 다시).</summary>
+        private void UpdateMultipliers()
+        {
             _moveMultiplier = (_backpackItem?.MoveSpeedMultiplier ?? 1f) * (_armor?.MoveSpeedMultiplier ?? 1f);
             _noiseMultiplier = (_backpackItem?.NoiseMultiplier ?? 1f) * (_armor?.NoiseMultiplier ?? 1f)
                                * Mathf.Max(0.2f, 1f + Request.Modifier("NoiseMultiplier"));
-            RefreshLook();
+        }
+
+        /// <summary>가방을 바꾸면 등에 멘 그림도 바꾼다 (처음 메는 가방이면 새로 붙인다).</summary>
+        private void RefreshBagSprite()
+        {
+            if (_bagRenderer == null)
+            {
+                if (_player != null)
+                {
+                    SetupBag();
+                }
+
+                return;
+            }
+
+            var key = ExplorationArt.BagKey(ExplorationArt.ItemToken(_backpackItem?.Id, "ITEM_BAG_", ""), GameApp.Session != null && GameApp.Session.HasGame ? GameApp.Session.State.Rng.Seed : 0);
+            var sprite = _backpackItem != null && _playerSprites ? ExplorationArt.Get(key) : null;
+            if (sprite != null)
+            {
+                _bagRenderer.sprite = sprite;
+            }
         }
 
         /// <summary>장비에 맞는 주인공 그림을 고른다 (옷 = 방어구, 없으면 계절 교복, 손 = 주무기). 무기가 부서지면 다시 부른다.</summary>
@@ -1362,11 +1586,6 @@ namespace ApoGirl.Exploration.Runtime
             }
 
             UpdateStrike(dt);
-
-            if (_input.QuickSlot >= 0)
-            {
-                UseQuickSlot(_input.QuickSlot);
-            }
 
             Nearest = FindNearest();
             if (Hidden)
@@ -1584,7 +1803,22 @@ namespace ApoGirl.Exploration.Runtime
                 : Hp - _startHp;
             Result = RunResultBuilder.Build(status, Backpack.Items, _db, _baseFatigue, _runStress, hpDelta, Clock.Elapsed);
             Result.UsedItems.AddRange(_usedItems);
-            Result.WeaponWear = _weaponWear;
+            Result.WeaponWear = _ownedWeaponWear;
+            Result.LostOwned.AddRange(_lostOwned);
+            if (_equipChanged)
+            {
+                Result.FinalLoadout = new LoadoutState
+                {
+                    Backpack = _backpackItem?.Id ?? "",
+                    MainWeapon = _weapon?.Id ?? "",
+                    Tool = _tool?.Id ?? "",
+                    Armor = Request.Loadout?.Armor ?? "",
+                };
+                if (_weapon != null && !_weaponOwned) Result.EquippedLoot.Add(_weapon.Id);
+                if (_backpackItem != null && !_bagOwned) Result.EquippedLoot.Add(_backpackItem.Id);
+                if (_tool != null && !_toolOwned) Result.EquippedLoot.Add(_tool.Id);
+                Result.EquippedLootWear = _weapon != null && !_weaponOwned ? _weaponWear : 0;
+            }
             Result.SearchedContainers.AddRange(_searchedKeys);
             HostileRules.Apply(Result, _hostileOutcome, _startHp, _balance);
             foreach (var flag in _runFlags)

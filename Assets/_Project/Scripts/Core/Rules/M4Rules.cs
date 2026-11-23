@@ -259,7 +259,7 @@ namespace ApoGirl.Core.Rules
             return count;
         }
 
-        /// <summary>창고에 없는 장비·소모품은 로드아웃에서 뺀다 (출정 직전 정리).</summary>
+        /// <summary>창고에 없는 장비는 로드아웃에서 뺀다 (출정 직전 정리).</summary>
         public static void Sanitize(GameState state)
         {
             var loadout = state.Loadout;
@@ -268,19 +268,8 @@ namespace ApoGirl.Core.Rules
             if (CountInStorage(state, loadout.Tool) <= 0) loadout.Tool = "";
             if (CountInStorage(state, loadout.Armor) <= 0) loadout.Armor = "";
 
-            var used = new Dictionary<string, int>();
-            for (var i = loadout.QuickSlots.Count - 1; i >= 0; i--)
-            {
-                var id = loadout.QuickSlots[i];
-                used.TryGetValue(id, out var n);
-                if (string.IsNullOrEmpty(id) || CountInStorage(state, id) <= n)
-                {
-                    loadout.QuickSlots.RemoveAt(i);
-                    continue;
-                }
-
-                used[id] = n + 1;
-            }
+            // 퀵슬롯은 없앴다 (소모품은 탐험 중 배낭에서 쓴다). 옛 세이브에 남은 값은 비운다.
+            loadout.QuickSlots.Clear();
         }
 
         /// <summary>창고에서 아이템 n개를 뺀다. 실제로 뺀 수를 돌려준다.</summary>

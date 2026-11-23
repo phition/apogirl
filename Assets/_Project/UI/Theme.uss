@@ -1066,3 +1066,30 @@ Button.selected { border-color: var(--accent); background-color: var(--accent-so
 .lab-log { margin-top: 4px; }
 .lab-log-text { height: 260px; }
 .lab-log-text > .unity-text-field__input, .lab-log-text .unity-base-text-field__input { font-size: 13px; white-space: normal; -unity-text-align: upper-left; background-color: #0f1118; }
+
+/* 보관함: 생활기록부 서랍(왼쪽 다이어리)과 함께 열린다 (StorageView) */
+.drawer-storage {
+    position: absolute; left: 568px; bottom: 108px;
+    width: 400px; max-height: 62%;
+    padding: 10px 12px;
+    background-color: rgb(30, 32, 36);
+    border-color: var(--line);
+    border-width: 1px;
+    border-radius: 8px;
+    transition-property: translate, opacity;
+    transition-duration: 0.22s;
+    transition-timing-function: ease-out-cubic;
+}
+.drawer-storage.closed { translate: -1000px 0; opacity: 0; }
+.storage-title { -unity-font-style: bold; font-size: 20px; color: var(--accent); margin-bottom: 4px; }
+.storage-list { flex-shrink: 1; }
+.storage-head { font-size: 14px; -unity-font-style: bold; color: var(--text-dim); margin: 8px 0 3px 0; border-bottom-width: 1px; border-color: var(--line); }
+.storage-chips { flex-direction: row; flex-wrap: wrap; }
+.storage-chip { font-size: 15px; -unity-font-style: bold; padding: 2px 8px 2px 4px; margin: 2px 4px 2px 0; border-radius: 4px; background-color: rgba(255, 255, 255, 0.07); min-height: 26px; -unity-text-align: middle-left; }
+.storage-chip.with-icon { padding-left: 28px; }
+.storage-chip.zero { opacity: 0.5; }
+.storage-row { flex-direction: row; align-items: center; min-height: 34px; padding: 1px 0; }
+.storage-icon { width: 30px; height: 30px; margin-right: 8px; flex-shrink: 0; }
+.storage-name { flex-grow: 1; font-size: 15px; }
+.storage-note { font-size: 13px; color: var(--text-dim); }
+.storage-note.equipped { color: var(--accent); -unity-font-style: bold; }

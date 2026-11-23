@@ -52,6 +52,7 @@ namespace ApoGirl.Presentation.Screens
         private SettlementView _settlement;
         private FactionView _faction;
         private RecordDiaryView _diary;
+        private StorageView _storage;
         private EventDialoguePlayer _dialoguePlayer;
         private VisualElement _teacherAvatar;
         private HubLayers _layers;
@@ -91,10 +92,11 @@ namespace ApoGirl.Presentation.Screens
             _topBar = new TopBarView(_root, _session);
             _status = new StatusPanelView(_root, _session) { FactionClicked = ShowFactionCard };
             _diary = new RecordDiaryView(_root, _session);
+            _storage = new StorageView(_root, _session);
             _palette = new PaletteView(_root, _session);
             _planner = new PlannerView(_root, _session, _palette.ActionFor, ShowToast);
             _planSide = new PlanSideView(_root, _session);
-            _layers = new HubLayers(_root) { CanPlan = () => _session.IsPlanning };
+            _layers = new HubLayers(_root) { CanPlan = () => _session.IsPlanning, Opened = () => _storage.Refresh() };
             _dock = new DockView(_root, _session, () => _layers.ToggleBoard());
             _miniVitals = new MiniVitalsView(_root, _session, () => _layers.ToggleRecord());
             _standing = new StandingView(_root.Q("standing"), () => _session.State, () => _session.Definitions.Balance);
@@ -332,6 +334,7 @@ namespace ApoGirl.Presentation.Screens
             _topBar.Refresh();
             _status.Refresh();
             _diary.Refresh();
+            _storage.Refresh();
             _palette.Refresh();
             var warned = _planSide.Refresh();
             _planner.Refresh(warned);

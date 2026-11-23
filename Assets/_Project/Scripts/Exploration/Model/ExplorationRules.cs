@@ -154,6 +154,12 @@ namespace ApoGirl.Exploration.Model
             var items = new Dictionary<string, int>();
             foreach (var placed in backpack)
             {
+                // 가지고 나간 장비를 벗어 배낭에 넣은 것은 이미 창고에 있다
+                if (placed.Owned)
+                {
+                    continue;
+                }
+
                 if (db.TryGetItem(placed.ItemId, out var item) && item.ResourceYield.Count > 0)
                 {
                     foreach (var amount in item.ResourceYield)

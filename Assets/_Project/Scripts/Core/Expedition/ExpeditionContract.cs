@@ -140,8 +140,20 @@ namespace ApoGirl.Core.Expedition
         /// <summary>탐험 중 쓴 소모품 (하나당 한 항목).</summary>
         public List<string> UsedItems = new List<string>();
 
-        /// <summary>주무기 내구도 소모량.</summary>
+        /// <summary>주무기 내구도 소모량 (가지고 나간 무기).</summary>
         public int WeaponWear;
+
+        /// <summary>탐험 중 장비를 바꿨으면 끝날 때 찬 장비 (null = 바꾸지 않음). 무기·가방·도구만 바뀐다.</summary>
+        public LoadoutState FinalLoadout;
+
+        /// <summary>탐험에서 주워 장착한 채 돌아온 아이템 (창고에 더한다).</summary>
+        public List<string> EquippedLoot = new List<string>();
+
+        /// <summary>주워 장착한 채 돌아온 무기의 내구도 소모.</summary>
+        public int EquippedLootWear;
+
+        /// <summary>가지고 나간 장비 중 탐험에서 버리고 온 것 (창고에서 뺀다).</summary>
+        public List<string> LostOwned = new List<string>();
 
         /// <summary>적대적 생존자에게 붙잡힌 결과 (없으면 None).</summary>
         public HostileOutcome Hostile;
@@ -249,7 +261,7 @@ namespace ApoGirl.Core.Expedition
                 MainWeapon = source.MainWeapon,
                 Tool = source.Tool,
                 Armor = source.Armor,
-                QuickSlots = new List<string>(source.QuickSlots),
+                QuickSlots = new List<string>(), // 퀵슬롯은 없앴다
             };
         }
     }

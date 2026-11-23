@@ -150,3 +150,24 @@
     -unity-text-outline-width: 1px;
     -unity-text-outline-color: #000000;
 }
+
+/* 하단 장비 칸 (무기·가방·도구): 배낭에서 고른 장비를 놓으면 장착, 우클릭하면 벗는다 */
+.exp-equip-slots { flex-direction: row; align-items: flex-end; margin: 0 12px; }
+.exp-equip-slot {
+    width: 108px;
+    height: 112px;
+    margin: 0 4px;
+    padding: 4px;
+    align-items: center;
+    background-color: rgba(10, 10, 12, 0.72);
+    border-width: 2px;
+    border-color: rgba(185, 163, 122, 0.45);
+    border-radius: 6px;
+}
+.exp-equip-slot:hover { border-color: rgba(231, 176, 74, 0.8); }
+.exp-equip-slot.empty .exp-equip-name { color: var(--text-dim); }
+.exp-equip-slot.droppable { border-color: #e7b04a; background-color: rgba(90, 70, 30, 0.8); }
+.exp-equip-head { font-size: 13px; color: var(--accent); -unity-font-style: bold; }
+.exp-equip-icon { width: 54px; height: 54px; margin: 2px 0; }
+.exp-equip-name { font-size: 13px; -unity-font-style: bold; -unity-text-align: middle-center; white-space: normal; color: #ffffff; }
+.bp-hint { font-size: 12px; color: var(--text-dim); margin-top: 6px; white-space: normal; max-width: 420px; }

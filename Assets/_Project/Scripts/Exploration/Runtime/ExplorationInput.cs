@@ -6,7 +6,7 @@ namespace ApoGirl.Exploration.Runtime
 {
     /// <summary>
     /// 탐험 입력 한 프레임: 키보드·마우스를 합친다. 탐험 화면은 키 대신 이것만 읽는다.
-    /// 키보드: A/D 이동 · Shift 달리기 · Ctrl 웅크리기 · Q/좌클릭 공격 · E/우클릭 상호작용 · Space 숨기 · W 살피기 · S 듣기 · F 손전등 · Tab 배낭 · 1~4 퀵슬롯.
+    /// 키보드: A/D 이동 · Shift 달리기 · Ctrl 웅크리기 · Q/좌클릭 공격 · E/우클릭 상호작용 · Space 숨기 · W 살피기 · S 듣기 · F 손전등 · Tab 배낭.
     /// </summary>
     public sealed class ExplorationInput
     {
@@ -23,7 +23,6 @@ namespace ApoGirl.Exploration.Runtime
         public bool Flashlight;
         public bool Backpack;
         public bool Advance;
-        public int QuickSlot = -1;
 
         /// <summary>손전등 겨누기 기준 자리 (화면 좌표). 없으면 정면.</summary>
         public Vector2? AimScreen;
@@ -49,11 +48,6 @@ namespace ApoGirl.Exploration.Runtime
             Flashlight = k != null && k.fKey.wasPressedThisFrame;
             Backpack = k != null && k.tabKey.wasPressedThisFrame;
             Advance = k != null && (k.spaceKey.wasPressedThisFrame || k.enterKey.wasPressedThisFrame);
-            QuickSlot = k == null ? -1
-                : k.digit1Key.wasPressedThisFrame ? 0
-                : k.digit2Key.wasPressedThisFrame ? 1
-                : k.digit3Key.wasPressedThisFrame ? 2
-                : k.digit4Key.wasPressedThisFrame ? 3 : -1;
             AimScreen = m != null ? m.position.ReadValue() : (Vector2?)null;
         }
     }
