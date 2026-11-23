@@ -483,6 +483,8 @@ namespace ApoGirl.Presentation.Screens
         private readonly Func<DayPhase, string> _selectedAction;
         private readonly Action<string> _notify;
         private readonly Button[] _cells = new Button[WeekPlan.SlotCount];
+        private readonly VisualElement[] _icons = new VisualElement[WeekPlan.SlotCount];
+        private readonly Label[] _labels = new Label[WeekPlan.SlotCount];
 
         /// <param name="selectedAction">그 시간대 칸에 놓을 행동 (없으면 "", 그 시간대에 열리지 않은 지역 탐험이면 null).</param>
         public PlannerView(VisualElement root, GameSession session, Func<DayPhase, string> selectedAction, Action<string> notify)
@@ -526,7 +528,16 @@ namespace ApoGirl.Presentation.Screens
                             OnClear(index);
                         }
                     });
+                    // 칸 안: 위에 행동 아이콘, 아래에 굵은 이름
+                    var icon = new VisualElement { pickingMode = PickingMode.Ignore };
+                    icon.AddToClassList("slot-icon");
+                    var label = new Label { pickingMode = PickingMode.Ignore };
+                    label.AddToClassList("slot-label");
+                    cell.Add(icon);
+                    cell.Add(label);
                     _cells[index] = cell;
+                    _icons[index] = icon;
+                    _labels[index] = label;
                     row.Add(cell);
                 }
 
@@ -556,7 +567,11 @@ namespace ApoGirl.Presentation.Screens
                     text += "\n" + Loc.T("planner.forced");
                 }
 
-                cell.text = text;
+                _labels[i].text = text;
+                var iconTexture = empty ? null : SlotIcon(slot);
+                StoryArt.SetContain(_icons[i], iconTexture);
+                _icons[i].style.display = iconTexture == null ? DisplayStyle.None : DisplayStyle.Flex;
+                cell.tooltip = empty ? string.Empty : Loc.Action(slot.ActionId);
                 cell.EnableInClassList("empty", empty);
                 cell.EnableInClassList("locked", slot.Locked);
                 cell.EnableInClassList("forced", slot.ForcedRest && !slot.Locked);
@@ -565,6 +580,24 @@ namespace ApoGirl.Presentation.Screens
                 cell.EnableInClassList("current", executing && i == current);
                 cell.SetEnabled(_session.IsPlanning);
             }
+        }
+
+        /// <summary>칸 아이콘: 강제 휴식 → 행동 아이콘 → 행동 분류 아이콘 (도크 칸과 같은 순서).</summary>
+        private UnityEngine.Texture2D SlotIcon(PlannedSlot slot)
+        {
+            if (slot.ForcedRest && !slot.Locked)
+            {
+                var forced = StoryArt.Icon("act.forced_rest");
+                if (forced != null) return forced;
+            }
+
+            var icon = StoryArt.Icon("act." + slot.ActionId);
+            if (icon == null && _session.Definitions.TryGetAction(slot.ActionId, out var action))
+            {
+                icon = StoryArt.Icon("cat." + action.Category);
+            }
+
+            return icon;
         }
 
         private void OnClick(int index)
