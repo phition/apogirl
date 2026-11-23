@@ -860,8 +860,8 @@ namespace ApoGirl.Systems.Session
 
             switch (speed)
             {
-                case ExecutionSpeed.Normal: return 0.5f;
-                case ExecutionSpeed.Fast: return 0.15f;
+                case ExecutionSpeed.Normal: return 1f;
+                case ExecutionSpeed.Fast: return 0.5f;
                 default: return 0f;
             }
         }
