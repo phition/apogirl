@@ -379,6 +379,8 @@
     "palette.expedition_day": "낮 탐험 · 그날 밤은 강제 휴식",
     "palette.expedition_night": "밤 탐험 · 다음 날 낮은 강제 휴식 · 수면 부채 +1",
     "palette.expedition_both": "낮 칸에 놓으면 낮 탐험, 밤 칸에 놓으면 밤 탐험",
+    "palette.loot": "얻을 수 있는 것",
+    "palette.loot_rare": "운이 좋으면 나온다",
     "palette.exp.LOC_SCHOOL_INTERIOR": "교실동 탐험",
     "palette.exp.LOC_STORE": "편의점 탐험",
     "palette.exp.LOC_PHARMACY": "약국·의원 탐험",

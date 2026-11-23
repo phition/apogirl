@@ -332,6 +332,19 @@ Button.selected { border-color: var(--accent); background-color: var(--accent-so
 .action-card.phase-both .action-name { color: #ffffff; }
 .action-card.phase-both .action-info { color: #e0e3ee; }
 .action-card.phase-both .action-gains { color: #9fe08f; }
+/* 지역 탐험 카드: 얻을 수 있는 물자 칩 (아이콘 + 이름, 드문 것은 흐리게) */
+.action-loot { flex-direction: row; flex-wrap: wrap; align-items: center; padding: 2px 0; }
+.action-loot-head { font-size: 14px; -unity-font-style: bold; margin-right: 6px; }
+.loot-chip { font-size: 14px; -unity-font-style: bold; padding: 1px 6px 1px 4px; margin: 1px 4px 1px 0; border-radius: 3px; min-height: 22px; -unity-text-align: middle-left; }
+.loot-chip.with-icon { padding-left: 25px; }
+.action-card.phase-day .action-loot-head { color: #3a3226; }
+.action-card.phase-day .loot-chip { background-color: rgba(21, 18, 12, 0.12); color: #15120c; }
+.action-card.phase-night .action-loot-head { color: #d2d7ea; }
+.action-card.phase-night .loot-chip { background-color: rgba(255, 255, 255, 0.12); color: #ffffff; }
+.action-card.phase-both .action-loot { background-color: rgba(14, 16, 24, 0.88); border-radius: 3px; padding: 2px 5px; margin: 1px 0; }
+.action-card.phase-both .action-loot-head { color: #e0e3ee; }
+.action-card.phase-both .loot-chip { background-color: rgba(255, 255, 255, 0.12); color: #ffffff; }
+.loot-chip.rare { opacity: 0.6; }
 .action-card:hover { border-color: rgba(231, 176, 74, 0.55); }
 .action-card.selected { border-color: #e7b04a; border-width: 3px; }
 .card-icon { position: absolute; left: 4px; top: 50%; -unity-background-scale-mode: scale-to-fit; }

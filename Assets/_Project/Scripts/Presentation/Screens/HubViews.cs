@@ -420,23 +420,16 @@ namespace ApoGirl.Presentation.Screens
 
             if (locationRun)
             {
-                // 지역 카드: 이름은 지역만, 낮·밤 표시 (아직 열리지 않은 쪽은 흐리게)
+                // 지역 카드: 이름은 지역만 (낮·밤은 카드 색으로), 그 아래 그 지역에서 얻을 수 있는 물자
                 var nameKey = "palette.exp." + action.LocationId;
                 var name = Loc.T(nameKey);
                 card.Add(Line(name == nameKey ? Loc.Action(action.Id) : name, "action-name"));
-                var phases = new VisualElement();
-                phases.AddToClassList("action-phases");
-                foreach (var (phase, found) in new[] { (DayPhase.Day, day), (DayPhase.Night, night) })
+                var loot = LootRow(action.LocationId, day != null, night != null);
+                if (loot != null)
                 {
-                    var chip = Line(UiText.Phase(phase), "phase-chip");
-                    chip.AddToClassList(phase == DayPhase.Day ? "phase-chip-day" : "phase-chip-night");
-                    chip.EnableInClassList("off", found == null);
-                    phases.Add(chip);
+                    card.Add(loot);
                 }
 
-                card.Add(phases);
-                var key = tag == SlotTag.Both ? "palette.expedition_both" : tag == SlotTag.DayOnly ? "palette.expedition_day" : "palette.expedition_night";
-                card.Add(Line(Loc.T(key), "action-info"));
                 return card;
             }
 
@@ -466,6 +459,48 @@ namespace ApoGirl.Presentation.Screens
             }
 
             return card;
+        }
+
+        /// <summary>
+        /// 지역에서 얻을 수 있는 물자 칩 (탐험 모델의 열린 시간대 자원, 많은 순).
+        /// 나오지 않을 때도 있는 것(최소 0)은 흐리게. 모델이 없으면 null.
+        /// </summary>
+        private VisualElement LootRow(string locationId, bool dayOpen, bool nightOpen)
+        {
+            if (!_session.Definitions.TryGetExpeditionModel(locationId, out var model))
+            {
+                return null;
+            }
+
+            var ranges = new List<ResourceRange>();
+            if (dayOpen) ranges.AddRange(model.Day.Resources);
+            if (nightOpen) ranges.AddRange(model.Night.Resources);
+            var resources = ranges.Where(r => r.Max > 0)
+                .GroupBy(r => r.Resource)
+                .Select(g => (Resource: g.Key, Max: g.Max(r => r.Max), Sure: g.Any(r => r.Min > 0)))
+                .OrderByDescending(r => r.Max)
+                .ToList();
+            if (resources.Count == 0)
+            {
+                return null;
+            }
+
+            var row = new VisualElement();
+            row.AddToClassList("action-loot");
+            row.Add(Line(Loc.T("palette.loot"), "action-loot-head"));
+            foreach (var (resource, _, sure) in resources)
+            {
+                // 괄호 설명은 칩에서 뺀다 (빗물(정수 필요) → 빗물)
+                var resourceName = UiText.Resource(resource);
+                var paren = resourceName.IndexOf('(');
+                var chip = Line(paren > 0 ? resourceName.Substring(0, paren) : resourceName, "loot-chip");
+                StoryArt.SetIcon(chip, StoryArt.Icon("res." + resource), 18f);
+                chip.EnableInClassList("rare", !sure);
+                chip.tooltip = sure ? "" : Loc.T("palette.loot_rare");
+                row.Add(chip);
+            }
+
+            return row;
         }
 
         private static Label Line(string text, string cssClass)
