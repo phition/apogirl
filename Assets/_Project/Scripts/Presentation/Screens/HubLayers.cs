@@ -181,7 +181,7 @@ namespace ApoGirl.Presentation.Screens
                 var cell = _cells[i];
                 var empty = string.IsNullOrEmpty(slot.ActionId);
                 cell.text = empty ? "·" : Loc.Action(slot.ActionId, "short");
-                StoryArt.SetIcon(cell, empty ? null : SlotIcon(slot), 22f);
+                StoryArt.SetIcon(cell, empty ? null : SlotIcon(slot), 28f);
                 cell.tooltip = empty ? Loc.T("planner.empty") : Loc.Action(slot.ActionId);
                 cell.EnableInClassList("empty", empty);
                 cell.EnableInClassList("locked", slot.Locked);

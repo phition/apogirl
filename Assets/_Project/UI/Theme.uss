@@ -101,7 +101,7 @@ Button.selected { border-color: var(--accent); background-color: var(--accent-so
 
 /* 1겹: 주인공 입상 + 생명 수치 요약 (왼쪽 아래) */
 .standing-area {
-    position: absolute; left: 18px; bottom: 96px;
+    position: absolute; left: 18px; bottom: 112px;
     flex-direction: row;
     align-items: flex-end;
 }
@@ -134,7 +134,7 @@ Button.selected { border-color: var(--accent); background-color: var(--accent-so
 
 /* 1겹: 선생님 한마디 (오른쪽 아래) */
 .teacher-box {
-    position: absolute; right: 18px; bottom: 96px;
+    position: absolute; right: 18px; bottom: 112px;
     width: 560px;
     min-height: 92px;
     padding: 12px 96px 12px 16px;
@@ -170,7 +170,7 @@ Button.selected { border-color: var(--accent); background-color: var(--accent-so
 /* 1겹: 맨 아래 14칸 도크 */
 .dock {
     position: absolute; left: 0; right: 0; bottom: 0;
-    height: 84px;
+    height: 100px;
     flex-direction: row;
     align-items: center;
     padding: 0 14px;
@@ -180,15 +180,16 @@ Button.selected { border-color: var(--accent); background-color: var(--accent-so
 }
 .dock-plan { width: 140px; height: 58px; -unity-font-style: bold; }
 .dock-plan.selected { background-color: var(--accent-soft); border-color: var(--accent); }
-.dock-slots { flex-direction: row; flex-grow: 1; height: 66px; margin: 0 10px; }
+.dock-slots { flex-direction: row; flex-grow: 1; height: 84px; margin: 0 10px; }
 .dock-day { flex-grow: 1; flex-basis: 0; margin: 0 3px; }
-.dock-day-label { font-size: 13px; color: var(--text-dim); -unity-text-align: middle-center; height: 16px; }
+.dock-day-label { font-size: 14px; color: var(--text-dim); -unity-text-align: middle-center; height: 16px; }
 .dock-cell {
     flex-grow: 1;
     flex-basis: 0;
     margin: 1px 0;
     padding: 0 4px;
-    font-size: 13px;
+    font-size: 16px;
+    -unity-font-style: bold;
     -unity-text-align: middle-center;
     white-space: nowrap;
     overflow: hidden;
@@ -197,9 +198,9 @@ Button.selected { border-color: var(--accent); background-color: var(--accent-so
     border-width: 0;
     color: var(--text);
 }
-.dock-cell.day { background-color: rgba(216, 207, 186, 0.92); color: var(--day-text); }
+.dock-cell.day { background-color: rgba(201, 188, 159, 0.95); color: #15120c; }
 .dock-cell.day.empty { color: var(--day-dim); }
-.dock-cell.night { background-color: rgba(28, 36, 68, 0.94); color: var(--night-text); }
+.dock-cell.night { background-color: rgba(28, 36, 68, 0.94); color: #ffffff; }
 .dock-cell.night.empty { color: var(--night-dim); }
 .dock-cell.empty { color: var(--text-dim); }
 .dock-cell.locked, .dock-cell.locked.empty { background-color: var(--locked); color: var(--text-dim); }
@@ -219,7 +220,7 @@ Button.selected { border-color: var(--accent); background-color: var(--accent-so
 
 /* 2겹: 서랍 (왼쪽 = 생활기록부, 오른쪽 = 거점·사람) */
 .drawer {
-    position: absolute; top: 60px; bottom: 92px;
+    position: absolute; top: 60px; bottom: 108px;
     width: 440px;
     padding: 10px 12px;
     /* 선형 색공간에서는 반투명이 생각보다 많이 비쳐서, 글이 많은 서랍·보드는 불투명으로 */
@@ -241,7 +242,7 @@ Button.selected { border-color: var(--accent); background-color: var(--accent-so
 
 /* 2겹: 계획 보드 (아래에서 올라온다) */
 .board {
-    position: absolute; left: 336px; right: 0; bottom: 84px;
+    position: absolute; left: 336px; right: 0; bottom: 100px;
     height: 600px;
     padding: 10px 14px;
     background-color: rgb(26, 28, 32);
@@ -831,7 +832,7 @@ Button.selected { border-color: var(--accent); background-color: var(--accent-so
 .hub-room-built { position: absolute; left: 4px; right: 4px; bottom: 2px; height: 74px; flex-direction: row; justify-content: flex-end; }
 .hub-room-built-item { width: 74px; height: 74px; margin-left: 2px; }
 .action-card.with-icon { padding-left: 56px; background-position-y: center; }
-.dock-cell.with-icon { padding-left: 28px; -unity-text-align: middle-left; }
+.dock-cell.with-icon { padding-left: 34px; -unity-text-align: middle-left; }
 .hud-button.with-icon { padding-left: 32px; }
 .dock-plan.with-icon { padding-left: 38px; }
 .dock-speed .small-button.with-icon { padding-left: 26px; }
