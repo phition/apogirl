@@ -1870,8 +1870,10 @@ namespace ApoGirl.Exploration.Runtime
 
             if (DawnReturn && status != ExtractStatus.Down)
             {
-                // 새벽까지 버틴 대가: 수면 부채 +1, 다음 강제 휴식 회복 감소 (허브가 처리)
+                // 새벽까지 버틴 대가: 수면 부채 +1, 다음 강제 휴식 회복 감소 (허브가 처리), 피로·스트레스
                 Result.SleepDebtDelta = 1;
+                Result.FatigueDelta += _balance.DawnFatigue;
+                Result.StressDelta += _balance.DawnStress;
             }
 
             WritePlayLog(status);

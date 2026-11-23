@@ -937,6 +937,10 @@ namespace ApoGirl.Core.Definitions
         public int StrandedFatigue = 10;
         public int StrandedStress = 10;
 
+        /// <summary>밤 탐험에서 새벽까지 버텼을 때 추가 피로·스트레스 (수면 부채 +1과 함께, 쓰러짐 제외).</summary>
+        public int DawnFatigue = 10;
+        public int DawnStress = 10;
+
         // ── 탐험 위협 (M2b-2, 문서 6.3.2·6.3.5) ──
         /// <summary>소음 반경 (유닛): 웅크려 걷기 / 걷기 / 달리기 / 문 / 계단 / 수색(0.5초마다) / 버리기 / 밀치기.</summary>
         public float CrouchNoise = 0.8f;

@@ -69,6 +69,8 @@ namespace ApoGirl.Core.Expedition
             if (request.TimeOfDay == ExpeditionTime.Night && random.NextDouble() < timeYield.DawnReturnChance)
             {
                 result.SleepDebtDelta = 1;
+                result.FatigueDelta += _db.Balance.DawnFatigue;
+                result.StressDelta += _db.Balance.DawnStress;
             }
 
             // M7: 조우도 확률로 (봇 판에서도 간호사·주동자·연구 자료 갈래가 열리게). 기존 굴림 뒤에 굴려 자원 결과는 그대로다.

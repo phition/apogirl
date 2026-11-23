@@ -545,7 +545,9 @@
         "BackpackWidth",
         "BackpackHeight",
         "StrandedFatigue",
-        "StrandedStress"
+        "StrandedStress",
+        "DawnFatigue",
+        "DawnStress"
       ]
     },
     {
