@@ -305,7 +305,51 @@ namespace ApoGirl.Core.Balance
                 return null;
             }
 
-            return Remember(new BalanceCell(name, field.FieldType, () => field.GetValue(_db.Balance), v => field.SetValue(_db.Balance, v)));
+            var partner = PartnerField(field, BalanceFields.Find);
+            cell = Remember(new BalanceCell(name, field.FieldType, () => field.GetValue(_db.Balance), v =>
+            {
+                field.SetValue(_db.Balance, v);
+                KeepOrdered(field, partner, _db.Balance);
+            }));
+            if (partner != null)
+            {
+                Field(partner.Name); // 밀려 바뀐 짝도 되돌리기·저장에 잡히게
+            }
+
+            return cell;
+        }
+
+        /// <summary>이름이 …Min·…Max로 짝을 이루는 같은 종류의 필드 (없으면 null).</summary>
+        private static FieldInfo PartnerField(FieldInfo field, Func<string, FieldInfo> find)
+        {
+            var name = field.Name;
+            var isMin = name.EndsWith("Min", StringComparison.Ordinal);
+            if (!isMin && !name.EndsWith("Max", StringComparison.Ordinal))
+            {
+                return null;
+            }
+
+            var other = find(name.Substring(0, name.Length - 3) + (isMin ? "Max" : "Min"));
+            return other != null && other.FieldType == field.FieldType ? other : null;
+        }
+
+        /// <summary>
+        /// 최소가 최대를 넘지 않게: 고친 쪽이 짝을 넘으면 짝을 같은 값으로 밀어 준다 (밸런스 표에서 Min 5 · Max 4처럼 뒤집히던 것, 2026-11-23).
+        /// </summary>
+        private static void KeepOrdered(FieldInfo field, FieldInfo partner, object target)
+        {
+            if (partner == null)
+            {
+                return;
+            }
+
+            var value = Convert.ToDouble(field.GetValue(target), CultureInfo.InvariantCulture);
+            var other = Convert.ToDouble(partner.GetValue(target), CultureInfo.InvariantCulture);
+            var isMin = field.Name.EndsWith("Min", StringComparison.Ordinal);
+            if (isMin ? value > other : value < other)
+            {
+                partner.SetValue(target, field.GetValue(target));
+            }
         }
 
         /// <summary>탐험 모델이 있는 지역 (행동 목록에 나오는 순서).</summary>
@@ -362,14 +406,25 @@ namespace ApoGirl.Core.Balance
                     v =>
                     {
                         var r = Range(true);
-                        if (max) r.Max = (int)v;
-                        else r.Min = (int)v;
+                        // 최소가 최대를 넘지 않게: 고친 쪽이 짝을 넘으면 짝을 밀어 준다
+                        if (max)
+                        {
+                            r.Max = (int)v;
+                            r.Min = Math.Min(r.Min, r.Max);
+                        }
+                        else
+                        {
+                            r.Min = (int)v;
+                            r.Max = Math.Max(r.Max, r.Min);
+                        }
                         if (!existed && r.Min == 0 && r.Max == 0)
                         {
                             Yield().Resources.Remove(r);
                         }
                     }) { Min = 0, When = BalanceWhen.Now };
-                return Remember(cell);
+                Remember(cell);
+                ModelCell(modelId, night, column.Substring(0, dot) + (max ? ".Min" : ".Max")); // 밀려 바뀐 짝도 되돌리기·저장에 잡히게
+                return cell;
             }
 
             var field = typeof(ExpeditionYield).GetField(column);
@@ -378,13 +433,24 @@ namespace ApoGirl.Core.Balance
                 return null;
             }
 
-            cell = new BalanceCell(key, field.FieldType, () => field.GetValue(Yield()), v => field.SetValue(Yield(), v))
+            var partner = PartnerField(field, typeof(ExpeditionYield).GetField);
+            cell = new BalanceCell(key, field.FieldType, () => field.GetValue(Yield()), v =>
+            {
+                field.SetValue(Yield(), v);
+                KeepOrdered(field, partner, Yield());
+            })
             {
                 Min = 0,
                 Max = field.FieldType == typeof(float) ? 1 : double.NaN,
                 When = BalanceWhen.Now,
             };
-            return Remember(cell);
+            Remember(cell);
+            if (partner != null)
+            {
+                ModelCell(modelId, night, partner.Name); // 밀려 바뀐 짝도 되돌리기·저장에 잡히게
+            }
+
+            return cell;
         }
 
         public IEnumerable<DifficultyDef> Difficulties => _db.Balance.Difficulties ?? new DifficultyDef[0];

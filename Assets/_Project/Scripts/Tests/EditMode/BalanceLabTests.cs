@@ -73,6 +73,37 @@ namespace ApoGirl.Tests.EditMode
         }
 
         [Test]
+        public void MinMaxPairs_NeverInvert_EditedSidePushesPartner()
+        {
+            var db = M6Act4Tests.ShippedDb();
+            var model = BalanceLabModel.For(db);
+            var id = model.ModelIds.First();
+            db.TryGetExpeditionModel(id, out var expedition);
+
+            // 자원 범위: Min을 Max 위로 올리면 Max도 따라 오르고, Max를 Min 아래로 내리면 Min도 따라 내려간다
+            model.ModelCell(id, false, "Materials.Max").TrySet("4", out _);
+            model.ModelCell(id, false, "Materials.Min").TrySet("6", out _);
+            var range = expedition.Day.Resources.First(r => r.Resource == ResourceType.Materials);
+            Assert.That((range.Min, range.Max), Is.EqualTo((6, 6)));
+            model.ModelCell(id, false, "Materials.Max").TrySet("2", out _);
+            Assert.That((range.Min, range.Max), Is.EqualTo((2, 2)));
+
+            // 탐험 모델 스트레스 짝
+            model.ModelCell(id, true, "StressMin").TrySet("99", out _);
+            Assert.That(expedition.Night.StressMax, Is.EqualTo(99));
+
+            // 밸런스 필드 짝 (…Min · …Max)
+            model.Field("DietShortStressMax").TrySet("1", out _);
+            Assert.That(db.Balance.DietShortStressMin, Is.EqualTo(1));
+
+            Assert.That(model.Changed.Select(c => c.Key), Does.Contain("Model/" + id + "/Night/StressMax").And.Contain("DietShortStressMin"), "밀려 바뀐 짝도 바뀐 칸");
+            var stressMax = model.ModelCell(id, true, "StressMax").Baseline;
+            model.RevertAll();
+            Assert.That(expedition.Night.StressMax, Is.EqualTo(stressMax), "되돌리면 짝도 원래 값");
+            Assert.That(db.Balance.DietShortStressMin, Is.EqualTo(2));
+        }
+
+        [Test]
         public void Sections_CoverEveryBalanceField()
         {
             var sections = BalanceLabJson.ExtractSections(File.ReadAllText(BalanceLabJson.BalanceSourcePath));
