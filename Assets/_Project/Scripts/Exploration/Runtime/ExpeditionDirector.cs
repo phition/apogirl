@@ -2338,6 +2338,18 @@ namespace ApoGirl.Exploration.Runtime
             }
 
             var count = ExplorationArt.FrameCount(prefix, 1);
+            // 차례 표보다 프레임이 많은 묶음(다시 그려 프레임을 늘린 것, 힉스필드 11차)은 그림 자체가 차례대로라 고르게
+            var highest = 0;
+            foreach (var frame in order)
+            {
+                highest = Mathf.Max(highest, frame);
+            }
+
+            if (count > highest + 1)
+            {
+                return ProgressFrame(prefix, progress);
+            }
+
             var index = order[Mathf.Clamp((int)(progress * order.Length), 0, order.Length - 1)];
             return prefix + Mathf.Clamp(index, 0, count - 1);
         }

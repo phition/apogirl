@@ -8,6 +8,14 @@
 - 쓰는 법·모델·공통 공식은 [HIGGSFIELD_ASSETS.md](HIGGSFIELD_ASSETS.md) 0장, 규격은 [HIGGSFIELD_ASSETS_10.md](HIGGSFIELD_ASSETS_10.md) 1장과 같다. 다만 이 문서의 프롬프트는 **붙여 넣기만 하면 되게** 공통 문구를 모두 풀어 적었다.
 - 작업 제출은 사용자가 한다. 나(Claude)는 문서만 쓴다.
 
+## 연결 결과 (2026-11-23)
+
+- 받은 시트 `ArtInbox/sprites11/player_summer_bat_attack_sheet.png` (2688 × 1520, 6 × 4칸, 투명 배경)를 그대로 24프레임으로 넣었다. 그림체·얼굴·방망이가 지금 8장과 잘 맞았다.
+- 도구 `code_temp/apogirl/tools/s11_install.py` (preview | install): 키프레임 짝 8쌍의 면적 비로 크기(×0.199), 몸통 위치 차이로 가로 위치를 한 번에 맞추고, 칸마다 몸 맨 아래를 지금 0번 프레임의 바닥 줄에 붙인다. 옛 8장과 `player_anchors.json`은 `code_temp/apogirl/backup_attack8/`.
+- 가방 자리 `player_anchors.json`: 옛 8장의 값을 키프레임 칸(1·4·7…22)에 두고 사이를 고르게 나눴다.
+- 프레임 차례: 무기별 차례 표(`Combat.ImpactAt[].Frames`)는 8장짜리 다른 옷에 그대로 쓰고, **표보다 프레임이 많은 묶음은 고르게 돈다**(`ExpeditionDirector.AttackFrame`). 24장이면 맞는 순간(0.5)이 13번째 칸(맞는 자세)이다.
+- 게임에서 휘둘러 보는 확인은 사용자가 한다.
+
 ---
 
 ## 1. 샘플로 고른 묶음: 야구방망이 공격 (여름 교복)

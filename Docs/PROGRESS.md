@@ -3,7 +3,7 @@
 〈마지막 학기 (가제)〉 — 마일스톤별 진행 기록, 남은 작업, 하면 좋을 작업, 하지 말아야 할 작업.
 
 - 기준: 마스터 프롬프트 12장 마일스톤(원본 `C:\Users\phiti\Desktop\MASTER_PROMPT.md`), 결정 기록 부록 C(D1~D26).
-- 작성: 2026-11-23. 커밋 632개(2026-11-18 ~ 2026-11-23), 마지막 커밋 `4d96622d` (그 뒤 이번 커밋).
+- 작성: 2026-11-23. 커밋 633개(2026-11-18 ~ 2026-11-23), 마지막 커밋 `3728a79a` (그 뒤 이번 커밋).
 - EditMode 테스트: 405개 모두 통과 (2026-11-23, 사용자 밸런스 반영 뒤).
 - 자세한 내용은 각 계획 문서에 있다. 이 문서는 한눈에 보는 요약이다.
 - **새 세션은 이 문서부터 읽는다.** 작업이 하나 끝날 때마다 고친다.
@@ -185,7 +185,7 @@ M6·M7과 함께 기획 확장(동료·CD·깊은 곳·고양이·동아리·방
    - 이벤트가 없어 보류한 컷: `evt_deep_door`·`evt_deep_oneway`·`evt_season_*`·`evt_cat_warn`, 그리고 `stand_item_*`.
    - CD 음원 8곡(8차 2.4절).
    - 고양이 임시 그림 `hub_cat`을 정식 그림으로 바꾼다.
-   - 탐험 주인공 프레임 늘리기(20~24프레임): 샘플 `player_summer_bat_attack` 24프레임 프롬프트 [HIGGSFIELD_ASSETS_11.md](HIGGSFIELD_ASSETS_11.md). 사용자가 받아 `ArtInbox/sprites11/`에 넣으면 연결해 보고, 괜찮으면 나머지 묶음 문서를 쓴다.
+   - 탐험 주인공 프레임 늘리기(20~24프레임): 샘플 `player_summer_bat_attack` 24프레임 프롬프트 [HIGGSFIELD_ASSETS_11.md](HIGGSFIELD_ASSETS_11.md). 샘플은 연결했다(여름 교복 방망이 공격 24프레임). 사용자가 게임에서 보고 괜찮으면 나머지 묶음 문서를 쓴다.
 3. **M7 최종 목표 맞추기** (D26: 마지막에 한 번에)
    - 식단·수확은 사용자가 밸런스 표로 맞췄다(#16, 배드 51%). 남은 것은 아래다.
    - 엔딩 기준을 다시 맞춘다. 특화가 모자라고(12%) 관계·서사가 조금 넘친다(14%).
@@ -299,4 +299,5 @@ M6·M7과 함께 기획 확장(동료·CD·깊은 곳·고양이·동아리·방
 - 2026-11-23 · 배낭 없이 나갈 때 주머니 격자 3×2 → 2×3(`BalanceConfig.PocketWidth`·`PocketHeight`): 튜토리얼 창고 탈출에서 1×3 야구방망이를 주울 수 없던 문제. 테스트 `Pocket_FitsTutorialBat` · `6c3e406d`
 - 2026-11-23 · 가방이 없으면 탐험 화면에서 "배낭" 대신 "주머니"(창 제목·자리 없음 알림·튜토리얼 안내 `exp.pocket`·`exp.pocket_full`·`tut.pocket`, `ExpeditionDirector.HasBag`·`BagKey`, 조작 안내 "Tab 주머니·배낭"). 테스트 빌드에서 탐험 후처리·2D 빛이 빠지던 문제: 볼륨·빛을 실행 중에 코드로 만들어 URP "안 쓰는 셰이더 빼기"가 Bloom 등 후처리 셰이더와 2D 빛 변형을 지웠다(Player.log) → 빌드 전에 `BuildMenu.KeepRuntimeRenderingShaders`가 후처리·2D 빼기를 끈다(메뉴 빌드와 File ▸ Build 모두, `KeepRenderingShadersPreprocess`). 빌드에서 후처리 셰이더 오류는 사라짐 · `4d27e143`
 - 2026-11-23 · 테스트 빌드에서 밤·어두운 방이 환하게 보이던 문제: URP가 2D 기본 재질(Sprite-Lit-Default)을 에디터에서만 돌려주고 빌드에서는 null이라, 코드로 만든 스프라이트가 조명을 안 받는 Sprites/Default가 됐다(외부 빛 줄기만 보였다) → 조명 재질 `Resources/Art/exploration_sprite_lit.mat` + `ExplorationArt.Lit`(스프라이트 만들 때·`ExplorationLook.ApplyPixelLight`가 놓친 것까지), 먼지 재질도 이것을 바탕으로. 새 빌드로 확인은 아직 · `4d96622d`
-- 2026-11-23 · 힉스필드 11차 샘플 문서: 지금 8프레임 야구방망이 공격(여름 교복)을 키프레임으로 두고 사이를 채워 24프레임 시트 한 장(6×4, 맞는 칸 13번 = `At` 0.5) — [HIGGSFIELD_ASSETS_11.md](HIGGSFIELD_ASSETS_11.md), 참고 이미지 `ArtInbox/sprites11/ref/`(지금 8장 이어 붙인 것·대기 0번, 4배) · 이 커밋
+- 2026-11-23 · 힉스필드 11차 샘플 문서: 지금 8프레임 야구방망이 공격(여름 교복)을 키프레임으로 두고 사이를 채워 24프레임 시트 한 장(6×4, 맞는 칸 13번 = `At` 0.5) — [HIGGSFIELD_ASSETS_11.md](HIGGSFIELD_ASSETS_11.md), 참고 이미지 `ArtInbox/sprites11/ref/`(지금 8장 이어 붙인 것·대기 0번, 4배) · `3728a79a`
+- 2026-11-23 · 힉스필드 11차 샘플 연결: 여름 교복 야구방망이 공격 8 → 24프레임(`code_temp/apogirl/tools/s11_install.py`, 옛 그림은 `backup_attack8/`), 가방 자리는 키프레임 사이를 고르게. 무기별 차례 표보다 프레임이 많은 묶음은 고르게 돈다(`ExpeditionDirector.AttackFrame`, 맞는 순간 0.5 = 13번째 칸). 게임에서 확인은 사용자 · 이 커밋

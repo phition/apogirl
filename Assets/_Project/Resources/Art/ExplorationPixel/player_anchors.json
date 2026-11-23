@@ -11013,48 +11013,160 @@
 },
 {
 "Key": "player_summer_bat_attack_1",
+"X": -0.083,
+"Y": 1.039,
+"Angle": -9.3,
+"Lift": 0.0
+},
+{
+"Key": "player_summer_bat_attack_2",
+"X": -0.087,
+"Y": 1.037,
+"Angle": -9.9,
+"Lift": 0.0
+},
+{
+"Key": "player_summer_bat_attack_3",
 "X": -0.091,
 "Y": 1.035,
 "Angle": -10.6,
 "Lift": 0.0
 },
 {
-"Key": "player_summer_bat_attack_2",
+"Key": "player_summer_bat_attack_4",
+"X": -0.108,
+"Y": 1.041,
+"Angle": -10.4,
+"Lift": 0.0
+},
+{
+"Key": "player_summer_bat_attack_5",
+"X": -0.124,
+"Y": 1.046,
+"Angle": -10.1,
+"Lift": 0.0
+},
+{
+"Key": "player_summer_bat_attack_6",
 "X": -0.141,
 "Y": 1.052,
 "Angle": -9.9,
 "Lift": 0.0
 },
 {
-"Key": "player_summer_bat_attack_3",
+"Key": "player_summer_bat_attack_7",
+"X": -0.163,
+"Y": 1.044,
+"Angle": -9.7,
+"Lift": 0.0
+},
+{
+"Key": "player_summer_bat_attack_8",
+"X": -0.186,
+"Y": 1.037,
+"Angle": -9.5,
+"Lift": 0.0
+},
+{
+"Key": "player_summer_bat_attack_9",
 "X": -0.208,
 "Y": 1.029,
 "Angle": -9.3,
 "Lift": 0.0
 },
 {
-"Key": "player_summer_bat_attack_4",
+"Key": "player_summer_bat_attack_10",
+"X": -0.228,
+"Y": 1.005,
+"Angle": -9.7,
+"Lift": 0.0
+},
+{
+"Key": "player_summer_bat_attack_11",
+"X": -0.249,
+"Y": 0.982,
+"Angle": -10.2,
+"Lift": 0.0
+},
+{
+"Key": "player_summer_bat_attack_12",
 "X": -0.269,
 "Y": 0.958,
 "Angle": -10.6,
 "Lift": 0.0
 },
 {
-"Key": "player_summer_bat_attack_5",
+"Key": "player_summer_bat_attack_13",
+"X": -0.289,
+"Y": 0.953,
+"Angle": -10.6,
+"Lift": 0.0
+},
+{
+"Key": "player_summer_bat_attack_14",
+"X": -0.31,
+"Y": 0.949,
+"Angle": -10.7,
+"Lift": 0.0
+},
+{
+"Key": "player_summer_bat_attack_15",
 "X": -0.33,
 "Y": 0.944,
 "Angle": -10.7,
 "Lift": 0.0
 },
 {
-"Key": "player_summer_bat_attack_6",
+"Key": "player_summer_bat_attack_16",
+"X": -0.345,
+"Y": 0.951,
+"Angle": -10.2,
+"Lift": 0.0
+},
+{
+"Key": "player_summer_bat_attack_17",
+"X": -0.359,
+"Y": 0.959,
+"Angle": -9.8,
+"Lift": 0.0
+},
+{
+"Key": "player_summer_bat_attack_18",
 "X": -0.374,
 "Y": 0.966,
 "Angle": -9.3,
 "Lift": 0.0
 },
 {
-"Key": "player_summer_bat_attack_7",
+"Key": "player_summer_bat_attack_19",
+"X": -0.378,
+"Y": 0.967,
+"Angle": -9.1,
+"Lift": 0.0
+},
+{
+"Key": "player_summer_bat_attack_20",
+"X": -0.382,
+"Y": 0.969,
+"Angle": -8.8,
+"Lift": 0.0
+},
+{
+"Key": "player_summer_bat_attack_21",
+"X": -0.386,
+"Y": 0.97,
+"Angle": -8.6,
+"Lift": 0.0
+},
+{
+"Key": "player_summer_bat_attack_22",
+"X": -0.386,
+"Y": 0.97,
+"Angle": -8.6,
+"Lift": 0.0
+},
+{
+"Key": "player_summer_bat_attack_23",
 "X": -0.386,
 "Y": 0.97,
 "Angle": -8.6,
