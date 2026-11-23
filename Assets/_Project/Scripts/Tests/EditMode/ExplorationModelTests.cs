@@ -58,6 +58,14 @@ namespace ApoGirl.Tests.EditMode
         }
 
         [Test]
+        public void Pocket_FitsTutorialBat()
+        {
+            var balance = new ApoGirl.Core.Definitions.BalanceConfig();
+            var pocket = new BackpackGrid(balance.PocketWidth, balance.PocketHeight);
+            Assert.IsNotNull(pocket.TryAutoPlace("ITEM_WEAPON_BAT", 1, 3, 1f), "배낭 없이도 튜토리얼 창고의 야구방망이(1×3)를 주울 수 있다");
+        }
+
+        [Test]
         public void Move_RespectsBoundsAndOverlap()
         {
             var grid = new BackpackGrid(4, 2);

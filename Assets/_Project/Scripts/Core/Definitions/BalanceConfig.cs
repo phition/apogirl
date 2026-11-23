@@ -191,9 +191,9 @@ namespace ApoGirl.Core.Definitions
         public int ThreatMax = 100;
         public int DefenseMax = 60;
 
-        /// <summary>배낭 없이 나갈 때의 주머니 격자.</summary>
-        public int PocketWidth = 3;
-        public int PocketHeight = 2;
+        /// <summary>배낭 없이 나갈 때의 주머니 격자. 세로 3칸이라 1×3 야구방망이가 들어간다(튜토리얼 창고 탈출, 2026-11-23).</summary>
+        public int PocketWidth = 2;
+        public int PocketHeight = 3;
 
         /// <summary>쓰러졌을 때 잃는 것: 배낭 내용과 착용 장비 (M4 결정).</summary>
         public bool DownLosesEquipment = true;
