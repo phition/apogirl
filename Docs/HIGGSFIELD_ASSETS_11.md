@@ -129,4 +129,4 @@ No gore, no blood, no visible wounds, no sexualized poses or revealing clothing,
    - 지금 그림과 얼굴·옷·방망이가 같아 보이는가
    - 끊김 없이 부드러운가, 프레임 사이에 튀는 칸은 없는가
    - 맞는 순간과 타격 이펙트가 맞는가
-4. 괜찮으면 다음 문서에서 **나머지 묶음**(공격: 옷 6벌 × 방망이·파이프·경찰봉, 그리고 16프레임인 대기·걷기·달리기·웅크리기)을 같은 방식으로 20~24프레임으로 늘리는 프롬프트를 쓴다.
+4. → 샘플이 잘 맞아 나머지 묶음 전부(227묶음)를 [HIGGSFIELD_ASSETS_11_ALL.md](HIGGSFIELD_ASSETS_11_ALL.md)에 썼다 (`Tools/make_higgsfield_doc11.py`로 생성).
