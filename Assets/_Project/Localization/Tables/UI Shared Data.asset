@@ -6583,6 +6583,14 @@ MonoBehaviour:
     m_Key: tc.grade_unknown
     m_Metadata:
       m_Items: []
+  - m_Id: 1473436307439616
+    m_Key: palette.loot
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1473436370354176
+    m_Key: palette.loot_rare
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
