@@ -6815,6 +6815,18 @@ MonoBehaviour:
     m_Key: give.diet.winter
     m_Metadata:
       m_Items: []
+  - m_Id: 1591389845733376
+    m_Key: exp.pocket
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1591389996728320
+    m_Key: exp.pocket_full
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1591389996728321
+    m_Key: tut.pocket
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

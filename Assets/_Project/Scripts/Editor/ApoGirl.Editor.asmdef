@@ -12,7 +12,9 @@
         "ApoGirl.Systems",
         "ApoGirl.Presentation",
         "YarnSpinner.Unity",
-        "YarnSpinner.Unity.Editor"
+        "YarnSpinner.Unity.Editor",
+        "Unity.RenderPipelines.Core.Runtime",
+        "Unity.RenderPipelines.Universal.Runtime"
     ],
     "includePlatforms": [
         "Editor"

@@ -29,6 +29,7 @@ namespace ApoGirl.Exploration.Runtime
         private readonly Label _prompt;
         private readonly ProgressBar _searchBar;
         private readonly VisualElement _backpackPanel;
+        private readonly Label _backpackTitle;
         private readonly VisualElement _grid;
         private readonly VisualElement _lootPanel;
         private readonly Label _lootTitle;
@@ -97,7 +98,8 @@ namespace ApoGirl.Exploration.Runtime
             _encounterText = root.Q<Label>("encounter-text");
             _encounterChoices = root.Q("encounter-choices");
 
-            root.Q<Label>("backpack-title").text = Loc.T("exp.backpack");
+            _backpackTitle = root.Q<Label>("backpack-title");
+            _backpackTitle.text = Loc.T(_director.BagKey("exp.backpack"));
             var bpHint = new Label(Loc.T("exp.backpack_hint")) { pickingMode = PickingMode.Ignore };
             bpHint.AddToClassList("bp-hint");
             _backpackPanel.Add(bpHint);
@@ -181,6 +183,7 @@ namespace ApoGirl.Exploration.Runtime
             _clockBar.EnableInClassList("late", clock.Phase == ClockPhase.Dusk || clock.Phase == ClockPhase.Dawn);
 
             _room.text = _director.LocationLabel;
+            _backpackTitle.text = Loc.T(_director.BagKey("exp.backpack")); // 가방을 바꿔 메면 주머니 ↔ 배낭
             _vitals.text = Loc.F("exp.vitals", _director.Hp);
             _vitals.EnableInClassList("danger", _director.Hp <= 30);
             RefreshStamina();

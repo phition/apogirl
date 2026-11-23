@@ -303,6 +303,12 @@ namespace ApoGirl.Exploration.Runtime
         public ToolKind ToolKind => _toolKind;
         public ItemDef Tool => _tool;
         public ItemDef BackpackItem => _backpackItem;
+
+        /// <summary>격자가 있는 가방을 메고 있다 (없으면 주머니).</summary>
+        public bool HasBag => _backpackItem != null && _backpackItem.GridWidth > 0;
+
+        /// <summary>가방이 없으면 "배낭" 문구 대신 "주머니" 문구 키.</summary>
+        public string BagKey(string backpackKey) => HasBag ? backpackKey : backpackKey.Replace("backpack", "pocket");
         public int WeaponDurabilityLeft => _weapon == null ? 0 : Math.Max(0, _weaponDurability - _weaponWear);
 
         /// <summary>배낭에 든 무기의 남은 내구도 (내 무기는 창고에 저장된 내구도에서, 주운 무기는 최대치에서 닳은 만큼 뺀다). 내구도가 없으면 0.</summary>
@@ -330,7 +336,7 @@ namespace ApoGirl.Exploration.Runtime
                 if (_tutorialMoved < 3f) return "tut.move";
                 if (_tutorialCrouched < 1f) return "tut.crouch";
                 if (!_tutorialSearched) return "tut.search";
-                if (!_tutorialOpenedBag) return "tut.backpack";
+                if (!_tutorialOpenedBag) return BagKey("tut.backpack");
                 if (!_tutorialHidden) return "tut.hide";
                 return "tut.extract";
             }
@@ -468,7 +474,7 @@ namespace ApoGirl.Exploration.Runtime
             Clock = new RunClock(day ? Location.DayRunSeconds : Location.NightRunSeconds, Request.TimeOfDay);
             SetupEquipment();
             SetupBody();
-            Backpack = _backpackItem != null && _backpackItem.GridWidth > 0
+            Backpack = HasBag
                 ? new BackpackGrid(_backpackItem.GridWidth, _backpackItem.GridHeight)
                 : new BackpackGrid(_balance.PocketWidth, _balance.PocketHeight);
             CarryCapacity = ExplorationRules.CarryCapacity(Request.Stats, _balance);
@@ -781,7 +787,7 @@ namespace ApoGirl.Exploration.Runtime
             var item = _db.GetItem(container.Contents[contentIndex].ItemId);
             if (Backpack.TryAutoPlace(item.Id, item.Width, item.Height, item.Weight) == null)
             {
-                _hud?.ShowMessage("exp.backpack_full");
+                _hud?.ShowMessage(BagKey("exp.backpack_full"));
                 return false;
             }
 
@@ -1279,7 +1285,7 @@ namespace ApoGirl.Exploration.Runtime
             var placed = Backpack.TryAutoPlace(current.Id, current.Width, current.Height, current.Weight);
             if (placed == null)
             {
-                _hud?.ShowMessage("exp.backpack_full");
+                _hud?.ShowMessage(BagKey("exp.backpack_full"));
                 return false;
             }
 
@@ -1323,7 +1329,7 @@ namespace ApoGirl.Exploration.Runtime
             if (back == null)
             {
                 Backpack.Insert(placed);
-                _hud?.ShowMessage("exp.backpack_full");
+                _hud?.ShowMessage(BagKey("exp.backpack_full"));
                 return false;
             }
 
