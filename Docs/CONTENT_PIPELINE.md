@@ -46,7 +46,7 @@ SO 에셋과 문자열 테이블은 생성물이라 직접 고치지 않는다.
 - **방·상자 (LocationBuilder)**: `ContainerDef.SpriteKey`(방별 소품 그림, 이름은 `container.{SpriteKey}`), `RoomTemplateDef.WallDecor`(뒷벽 장식), `DoorDef.SearchFlag`(그 방 상자를 뒤지면 세우는 플래그).
 - **효과 `PurifyWater`/`PurifyRate`**: 모아 둔 빗물(`RawWater`)을 최대 PurifyWater만큼 식수로 (비율만큼 남음).
 - **행동 `Confined`**: 갇혀 있는 동안의 행동 (밤 습격 없음, 이 행동을 조건으로 건 이벤트만).
-- **문자열 표**: `ko.json`은 표별(`UI`·`Actions`·`Items`)로 나뉜다. 행동 이름은 Actions, 아이템 이름은 Items, 나머지(방 이름·자원·숙련·상태·결과 문구)는 UI.
+- **문자열 표**: `ko.json`은 표별(`UI`·`Actions`·`Items`)로 나뉜다. 행동 이름은 Actions, 아이템 이름은 Items(`{ID}.name`, 탐험 배낭 미니창 설명 `{ID}.desc` — 새 아이템에 함께 적는다), 나머지(방 이름·자원·숙련·상태·결과 문구)는 UI.
 - **NPC**: `Npcs: [{ NpcId, Affinity, Trust, SetStatus, SetRole }]`. `NPC_TEACHER`는 윤 선생님 호감이다.
 
 ## 4. Yarn 규칙
