@@ -829,24 +829,39 @@ namespace ApoGirl.Core.Simulation
             // 탐험 중 장비 바꾸기: 버리고 온 내 장비는 빼고, 주워 찬 채 돌아온 것은 창고에 더한 뒤 찬 장비를 그대로 둔다
             foreach (var id in result.LostOwned)
             {
-                LoadoutRules.RemoveFromStorage(_state, id, 1, delta);
+                // 가지고 나간 주무기는 그 ID의 맨 앞 묶음이다 (그 묶음의 내구도를 썼다)
+                LoadoutRules.RemoveFromStorage(_state, id, 1, delta, fromFront: id == loadout.MainWeapon);
             }
 
             foreach (var id in result.EquippedLoot)
             {
+                if (result.FinalLoadout != null && id == result.FinalLoadout.MainWeapon)
+                {
+                    // 주워 찬 채 돌아온 무기: 남은 내구도와 함께 맨 앞에 넣는다 (찬 무기 = 그 ID의 맨 앞 묶음)
+                    var left = 0;
+                    if (result.EquippedLootWear > 0 && _db.TryGetItem(id, out var weapon) && weapon.MaxDurability > 0)
+                    {
+                        left = weapon.MaxDurability - result.EquippedLootWear;
+                        if (left <= 0)
+                        {
+                            continue;
+                        }
+                    }
+
+                    _state.Storage.Insert(0, new ItemStack { ItemId = id, Count = 1, Durability = left });
+                    delta.ItemsGained.Add(new ItemStack { ItemId = id, Count = 1 });
+                    continue;
+                }
+
                 EffectApplier.AddItem(_state, id, 1, delta);
             }
 
             if (result.FinalLoadout != null)
             {
-                if (result.EquippedLootWear > 0 && result.EquippedLoot.Contains(result.FinalLoadout.MainWeapon))
-                {
-                    LoadoutRules.WearItem(_state, _db, result.FinalLoadout.MainWeapon, result.EquippedLootWear, delta);
-                }
-
                 _state.Loadout.Backpack = result.FinalLoadout.Backpack;
                 _state.Loadout.MainWeapon = result.FinalLoadout.MainWeapon;
                 _state.Loadout.Tool = result.FinalLoadout.Tool;
+                _state.Loadout.Armor = result.FinalLoadout.Armor;
             }
 
             LoadoutRules.Sanitize(_state);

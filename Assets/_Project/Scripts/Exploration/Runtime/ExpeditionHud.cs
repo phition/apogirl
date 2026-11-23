@@ -50,8 +50,8 @@ namespace ApoGirl.Exploration.Runtime
         private readonly List<Label> _sleepLabels = new List<Label>();
         private PlacedItem _selected;
 
-        // 하단 장비 칸 (무기·가방·도구): 배낭에서 고른 장비를 놓으면 장착, 우클릭하면 벗는다
-        private static readonly EquipSlot[] EquipSlots = { EquipSlot.Weapon, EquipSlot.Backpack, EquipSlot.Tool };
+        // 하단 장비 칸 (무기·방어구·가방·도구): 배낭에서 고른 장비를 놓으면 장착, 우클릭하면 벗는다
+        private static readonly EquipSlot[] EquipSlots = { EquipSlot.Weapon, EquipSlot.Armor, EquipSlot.Backpack, EquipSlot.Tool };
         private readonly Dictionary<EquipSlot, VisualElement> _slotBoxes = new Dictionary<EquipSlot, VisualElement>();
         private readonly Dictionary<EquipSlot, VisualElement> _slotIcons = new Dictionary<EquipSlot, VisualElement>();
         private readonly Dictionary<EquipSlot, Label> _slotNames = new Dictionary<EquipSlot, Label>();
@@ -423,7 +423,7 @@ namespace ApoGirl.Exploration.Runtime
                 var weapon = Loc.F("exp.info.power", item.WeaponPower);
                 if (item.MaxDurability > 0)
                 {
-                    weapon += " · " + Loc.F("exp.info.durability", Math.Max(0, item.MaxDurability - placed.Wear), item.MaxDurability);
+                    weapon += " · " + Loc.F("exp.info.durability", _director.DurabilityLeft(placed), item.MaxDurability);
                 }
 
                 lines.Add(weapon);
@@ -436,7 +436,7 @@ namespace ApoGirl.Exploration.Runtime
 
             if (item.Slot == EquipSlot.Armor)
             {
-                lines.Add(Loc.F("exp.info.reduction", Mathf.RoundToInt(item.DamageReduction * 100f)) + " · " + Loc.T("exp.info.armor_note"));
+                lines.Add(Loc.F("exp.info.reduction", Mathf.RoundToInt(item.DamageReduction * 100f)));
             }
 
             if (item.ResourceYield.Count > 0)
@@ -554,11 +554,17 @@ namespace ApoGirl.Exploration.Runtime
         {
             foreach (var slot in EquipSlots)
             {
-                var item = slot == EquipSlot.Weapon ? _director.Weapon : slot == EquipSlot.Backpack ? _director.BackpackItem : _director.Tool;
+                var item = slot == EquipSlot.Weapon ? _director.Weapon
+                    : slot == EquipSlot.Armor ? _director.Armor
+                    : slot == EquipSlot.Backpack ? _director.BackpackItem : _director.Tool;
                 var name = item == null ? Loc.T(slot == EquipSlot.Weapon ? "exp.slot_bare" : "exp.slot_empty") : Loc.Item(item.Id);
                 if (slot == EquipSlot.Weapon && item != null && item.MaxDurability > 0)
                 {
                     name += " (" + _director.WeaponDurabilityLeft + ")";
+                }
+                else if (slot == EquipSlot.Armor && item != null && item.DamageReduction > 0f)
+                {
+                    name += " (−" + Mathf.RoundToInt(item.DamageReduction * 100f) + "%)";
                 }
 
                 var droppable = _selected != null && _director.SlotOf(_selected.ItemId) == slot;

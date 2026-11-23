@@ -168,6 +168,11 @@ namespace ApoGirl.Exploration.Model
                         resources[amount.Resource] = current + amount.Amount;
                     }
                 }
+                else if (item != null && item.MaxDurability > 0 && placed.Wear > 0)
+                {
+                    // 주워 쓰다 배낭에 넣은 무기: 남은 내구도를 그대로 창고에 (한 자루씩 따로)
+                    result.Loot.Add(new ItemStack { ItemId = placed.ItemId, Count = 1, Durability = Math.Max(1, item.MaxDurability - placed.Wear) });
+                }
                 else
                 {
                     items.TryGetValue(placed.ItemId, out var count);

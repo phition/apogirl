@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using ApoGirl.Core.Definitions;
 using ApoGirl.Core.Effects;
 using ApoGirl.Core.Events;
@@ -272,25 +273,46 @@ namespace ApoGirl.Core.Rules
             loadout.QuickSlots.Clear();
         }
 
-        /// <summary>창고에서 아이템 n개를 뺀다. 실제로 뺀 수를 돌려준다.</summary>
-        public static int RemoveFromStorage(GameState state, string itemId, int count, StateDelta delta)
+        /// <summary>창고에서 아이템 n개를 뺀다. 실제로 뺀 수를 돌려준다.
+        /// fromFront면 앞 묶음부터 (찬 무기는 그 ID의 맨 앞 묶음이다 — 내구도가 그 묶음에 있다).</summary>
+        public static int RemoveFromStorage(GameState state, string itemId, int count, StateDelta delta, bool fromFront = false)
         {
             var removed = 0;
-            for (var i = state.Storage.Count - 1; i >= 0 && removed < count; i--)
+            var order = new List<int>();
+            for (var i = 0; i < state.Storage.Count; i++)
             {
-                var stack = state.Storage[i];
-                if (stack.ItemId != itemId)
+                if (state.Storage[i].ItemId == itemId)
                 {
-                    continue;
+                    order.Add(i);
+                }
+            }
+
+            if (!fromFront)
+            {
+                order.Reverse();
+            }
+
+            var emptied = new List<int>();
+            foreach (var i in order)
+            {
+                if (removed >= count)
+                {
+                    break;
                 }
 
+                var stack = state.Storage[i];
                 var take = Math.Min(stack.Count, count - removed);
                 stack.Count -= take;
                 removed += take;
                 if (stack.Count <= 0)
                 {
-                    state.Storage.RemoveAt(i);
+                    emptied.Add(i);
                 }
+            }
+
+            foreach (var i in emptied.OrderByDescending(i => i))
+            {
+                state.Storage.RemoveAt(i);
             }
 
             if (removed > 0)

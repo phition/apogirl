@@ -143,7 +143,7 @@ namespace ApoGirl.Core.Expedition
         /// <summary>주무기 내구도 소모량 (가지고 나간 무기).</summary>
         public int WeaponWear;
 
-        /// <summary>탐험 중 장비를 바꿨으면 끝날 때 찬 장비 (null = 바꾸지 않음). 무기·가방·도구만 바뀐다.</summary>
+        /// <summary>탐험 중 장비를 바꿨으면 끝날 때 찬 장비 (null = 바꾸지 않음). 무기·가방·도구·방어구.</summary>
         public LoadoutState FinalLoadout;
 
         /// <summary>탐험에서 주워 장착한 채 돌아온 아이템 (창고에 더한다).</summary>
