@@ -1232,7 +1232,7 @@
    { "Weapon": "bat", "At": 0.5, "Fx": "fx_hit_heavy_", "Frames": [0, 0, 0, 0, 1, 1, 2, 2, 3, 4, 5, 6, 7, 7, 7, 7, 7, 7, 7, 7] },
    { "Weapon": "pipe", "At": 0.5, "Fx": "fx_hit_heavy_", "Frames": [0, 0, 0, 0, 1, 1, 2, 2, 3, 4, 5, 6, 7, 7, 7, 7, 7, 7, 7, 7] },
    { "Weapon": "baton", "At": 0.5, "Frames": [0, 0, 0, 0, 1, 1, 2, 2, 3, 4, 5, 6, 7, 7, 7, 7, 7, 7, 7, 7] },
-   { "Weapon": "mop", "At": 0.45, "Fx": "fx_hit_thrust_" }
+   { "Weapon": "mop", "At": 0.5, "Fx": "fx_hit_thrust_" }
   ],
   "DefaultImpactAt": 0.5,
   "DefaultFx": "fx_hit_",

@@ -19,6 +19,10 @@ OUT = os.path.join(ROOT, 'Docs', 'HIGGSFIELD_ASSETS_11_ALL.md')
 INBOX = os.environ.get('APOGIRL_INBOX', 'I:/workshop/apogirl/apogirl/ArtInbox/sprites11')
 REF = os.path.join(INBOX, 'ref')
 PROMPTS = os.path.join(INBOX, 'prompts')
+# 넣은 뒤에는 게임 폴더가 24프레임이라, 옛 프레임(키프레임 기준)은 넣기 도구의 백업에서 읽는다.
+OLD = os.environ.get('APOGIRL_S11_BACKUP', 'I:/workshop/code_temp/apogirl/backup_s11')
+if os.path.isdir(OLD):
+    PX = OLD
 
 CELLS = 24
 DONE = {'player_summer_bat_attack'}           # 샘플로 이미 넣음
@@ -222,6 +226,16 @@ def doc(bs):
     add('- 작업 제출은 사용자가 한다. 나(Claude)는 문서·참고 이미지·프롬프트 파일만 만든다.')
     add('- 빠진 것: 문 열기 `open`(쓰지 않음, 사용자 결정 2026-11-23), 이미 넣은 `player_summer_bat_attack`.')
     add(f'- 모두 **{len(bs)}묶음**. 묶음마다 시트 한 장이다.')
+    add('')
+    add('## 0. 연결 결과 (2026-11-24)')
+    add('')
+    add('- 받은 시트 227장(2688 × 1520, 6 × 4칸, 투명 배경)을 모두 24프레임으로 넣었다. 도구 `code_temp/apogirl/tools/s11_install_all.py` (preview | install), 옛 그림·가방 자리 표는 `code_temp/apogirl/backup_s11/`.')
+    add('- 칸 나누기: 대걸레 끝·발이 칸 경계를 넘은 시트가 있어, 시트 전체를 덩어리로 나눠 무게중심이 든 칸에 준다.')
+    add('- 크기는 키프레임 짝의 면적 비(묶음마다 ×0.17~0.20). 세로는 칸마다 몸 맨 아래를 옛 프레임 바닥 줄에.')
+    add('- 가로: 생성 그림은 칸마다 좌우로 4px 안팎 흔들려서, **도는 동작은 머리를 옛 자리에** 맞추고, 한 번 동작은 몸통을 옛 몸통 길에(방망이·파이프·경찰봉 공격은 샘플의 앞으로 내미는 곡선) 맞춘다.')
+    add('- 가방 자리 `player_anchors.json`은 옛 값을 새 칸 위치로 보간, X는 옮긴 만큼.')
+    add('- 게임: 도는 동작은 프레임 수에 맞춰 초당 프레임을 늘려 한 바퀴 시간이 예전과 같다(`ExpeditionDirector.LoopFrame` `designedFrames` 16·12). 공격은 모두 24장이라 고르게 돌고, 대걸레 맞는 순간 `At`은 0.45 → 0.5(13번 칸).')
+    add('- 기본 교복·보호대의 옛 지침 그림은 똑바로 서 있었는데, 새 그림은 다른 옷처럼 허리를 숙여 숨을 몰아쉰다.')
     add('')
     add('## 1. 동작별 정리')
     add('')

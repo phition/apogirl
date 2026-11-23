@@ -144,6 +144,10 @@ namespace ApoGirl.Exploration.Runtime
 
         /// <summary>픽셀 아트 동작 빠르기 (초당 프레임). 코드 그림은 예전 빠르기를 쓴다.</summary>
         private const float PixelIdleFps = 7f;
+
+        /// <summary>주인공 도는 동작의 초당 프레임이 맞춰진 프레임 수 (대기·걷기·달리기·웅크려 걷기 16장, 지침·수색·잠듦 12장).</summary>
+        private const int LoopDesignedLong = 16;
+        private const int LoopDesignedShort = 12;
         private const float PixelWalkFps = 18f;
         private const float PixelRunFps = 26f;
         private const float PixelSneakFps = 12f;
@@ -2279,7 +2283,7 @@ namespace ApoGirl.Exploration.Runtime
             }
 
             // 숨다가 잠듦 → 조는 동작 (맨손 그림)
-            if (Asleep && LoopFrame(_lookBarePrefix + "doze_", Time.time, PixelIdleFps) is string doze)
+            if (Asleep && LoopFrame(_lookBarePrefix + "doze_", Time.time, PixelIdleFps, 0, LoopDesignedShort) is string doze)
             {
                 return doze;
             }
@@ -2299,25 +2303,25 @@ namespace ApoGirl.Exploration.Runtime
                 return hiding;
             }
 
-            if (_searching && LoopFrame(_lookBarePrefix + "search_", _animTime, PixelIdleFps) is string search)
+            if (_searching && LoopFrame(_lookBarePrefix + "search_", _animTime, PixelIdleFps, 0, LoopDesignedShort) is string search)
             {
                 return search;
             }
 
             if (_crouching)
             {
-                return _animMoving ? LoopFrame(look + "crouch_", _animTime, PixelSneakFps) ?? crouchStill : crouchStill;
+                return _animMoving ? LoopFrame(look + "crouch_", _animTime, PixelSneakFps, 0, LoopDesignedLong) ?? crouchStill : crouchStill;
             }
 
             if (!_animMoving)
             {
                 // 지쳐 멈추면 숨을 몰아쉰다
-                var still = Exhausted ? LoopFrame(look + "exhausted_", Time.time, PixelIdleFps) : null;
-                return still ?? LoopFrame(look + "idle_", Time.time, PixelIdleFps) ?? look + "idle";
+                var still = Exhausted ? LoopFrame(look + "exhausted_", Time.time, PixelIdleFps, 0, LoopDesignedShort) : null;
+                return still ?? LoopFrame(look + "idle_", Time.time, PixelIdleFps, 0, LoopDesignedLong) ?? look + "idle";
             }
 
             var prefix = look + (_animRunning ? "run_" : "walk_");
-            var pixel = LoopFrame(prefix, _animTime, _animRunning ? PixelRunFps : PixelWalkFps);
+            var pixel = LoopFrame(prefix, _animTime, _animRunning ? PixelRunFps : PixelWalkFps, 0, LoopDesignedLong);
             if (pixel != null)
             {
                 return pixel;
@@ -2366,8 +2370,11 @@ namespace ApoGirl.Exploration.Runtime
             return prefix + Mathf.Clamp((int)(progress * count), 0, count - 1);
         }
 
-        /// <summary>픽셀 아트 프레임이 있으면 시간에 맞춰 도는 프레임 키, 없으면 null.</summary>
-        private static string LoopFrame(string prefix, float time, float framesPerSecond, int offset = 0)
+        /// <summary>
+        /// 픽셀 아트 프레임이 있으면 시간에 맞춰 도는 프레임 키, 없으면 null.
+        /// designedFrames &gt; 0이면 초당 프레임을 그 프레임 수 기준으로 보고, 프레임이 늘어난 묶음(힉스필드 11차 24프레임)도 한 바퀴 시간이 같게 돈다.
+        /// </summary>
+        private static string LoopFrame(string prefix, float time, float framesPerSecond, int offset = 0, int designedFrames = 0)
         {
             if (!ExplorationArt.HasPixel(prefix + "0"))
             {
@@ -2375,7 +2382,8 @@ namespace ApoGirl.Exploration.Runtime
             }
 
             var count = ExplorationArt.FrameCount(prefix, 1);
-            return prefix + ((int)(time * framesPerSecond) + offset) % count;
+            var fps = designedFrames > 0 ? framesPerSecond * count / designedFrames : framesPerSecond;
+            return prefix + ((int)(time * fps) + offset) % count;
         }
 
         /// <summary>스프라이트 소품 (피벗 = 바닥 가운데). 없으면 기존 사각형.</summary>
