@@ -101,6 +101,7 @@ namespace ApoGirl.Exploration.Runtime
             var bpHint = new Label(Loc.T("exp.backpack_hint")) { pickingMode = PickingMode.Ignore };
             bpHint.AddToClassList("bp-hint");
             _backpackPanel.Add(bpHint);
+            BuildItemInfo(root);
             root.Q<Label>("controls-label").text = Loc.T("exp.controls");
             root.Q<Button>("loot-take-all").text = Loc.T("exp.take_all");
             root.Q<Button>("loot-take-all").clicked += () => _director.TakeAll();
@@ -117,6 +118,10 @@ namespace ApoGirl.Exploration.Runtime
         public void ToggleBackpack()
         {
             _backpackPanel.ToggleInClassList("hidden");
+            if (_backpackPanel.ClassListContains("hidden"))
+            {
+                CloseInfo();
+            }
         }
 
         public void ShowMessage(string key)
@@ -216,7 +221,235 @@ namespace ApoGirl.Exploration.Runtime
             RefreshPrompt();
             RefreshLoot();
             RefreshGrid();
+            PositionInfo();
             RefreshSleepLabels();
+        }
+
+        // ── 배낭 물건 미니창: 좌클릭한 물건의 이름·[분류]·설명·효과, [사용]·[장착]·[버리기] ──
+        private const float InfoWidth = 290f;
+        private VisualElement _info;
+        private Label _infoName;
+        private Label _infoCategory;
+        private Label _infoDesc;
+        private Label _infoEffect;
+        private Label _infoSize;
+        private VisualElement _infoButtons;
+        private PlacedItem _infoItem;
+        private VisualElement _infoAnchor;
+
+        private void BuildItemInfo(VisualElement root)
+        {
+            _info = new VisualElement { name = "bp-info" };
+            _info.AddToClassList("bp-info");
+            _info.AddToClassList("hidden");
+            _info.style.position = Position.Absolute;
+            _info.style.width = InfoWidth;
+            _info.RegisterCallback<PointerDownEvent>(evt => evt.StopPropagation());
+
+            var head = new VisualElement();
+            head.AddToClassList("bp-info-head");
+            _infoName = new Label();
+            _infoName.AddToClassList("bp-info-name");
+            _infoCategory = new Label();
+            _infoCategory.AddToClassList("bp-info-cat");
+            var close = new Button(CloseInfo) { text = "✕" };
+            close.AddToClassList("bp-info-close");
+            head.Add(_infoName);
+            head.Add(_infoCategory);
+            head.Add(close);
+            _info.Add(head);
+
+            _infoDesc = new Label();
+            _infoDesc.AddToClassList("bp-info-desc");
+            _infoEffect = new Label();
+            _infoEffect.AddToClassList("bp-info-effect");
+            _infoSize = new Label();
+            _infoSize.AddToClassList("bp-info-size");
+            _infoButtons = new VisualElement();
+            _infoButtons.AddToClassList("bp-info-buttons");
+            _info.Add(_infoDesc);
+            _info.Add(_infoEffect);
+            _info.Add(_infoSize);
+            _info.Add(_infoButtons);
+            root.Add(_info);
+        }
+
+        private void ShowInfo(PlacedItem placed)
+        {
+            var item = _director.Definitions.GetItemOrNull(placed.ItemId);
+            _infoItem = placed;
+            _infoAnchor = null;
+            _infoName.text = Loc.Item(placed.ItemId);
+            var category = Loc.T("exp.info.cat." + CategoryOf(item));
+            if (item != null && item.Grade == ItemGrade.Rare)
+            {
+                category += " · " + Loc.T("exp.info.rare");
+            }
+
+            _infoCategory.text = "[" + category + "]";
+            var desc = Loc.Lookup(Loc.ItemTable, placed.ItemId + ".desc");
+            _infoDesc.text = desc ?? "";
+            _infoDesc.EnableInClassList("hidden", string.IsNullOrEmpty(desc));
+            var effect = EffectText(placed, item);
+            _infoEffect.text = effect;
+            _infoEffect.EnableInClassList("hidden", effect.Length == 0);
+            _infoEffect.EnableInClassList("consumable", _director.IsUsable(placed));
+            _infoSize.text = item == null ? "" : Loc.F("exp.info.size", item.Width, item.Height, item.Weight.ToString("0.0#"));
+
+            _infoButtons.Clear();
+            if (_director.IsUsable(placed))
+            {
+                AddInfoButton("exp.info.use", true, () => _director.UseItem(placed));
+            }
+
+            if (_director.SlotOf(placed.ItemId) != EquipSlot.None)
+            {
+                AddInfoButton("exp.info.equip", true, () => _director.Equip(placed));
+            }
+
+            AddInfoButton("exp.info.drop", false, () => _director.DropItem(placed));
+            KoreanFont.ApplyDeep(_info);
+            _info.RemoveFromClassList("hidden");
+            _info.style.visibility = Visibility.Hidden; // 자리를 잡을 때까지
+        }
+
+        private void AddInfoButton(string key, bool primary, Action action)
+        {
+            var button = new Button(() =>
+            {
+                action();
+                _selected = null;
+                _slotShown.Clear();
+                _gridVersion = -1;
+                CloseInfo();
+            }) { text = Loc.T(key) };
+            button.AddToClassList("bp-info-button");
+            button.EnableInClassList("primary", primary);
+            _infoButtons.Add(button);
+        }
+
+        private void CloseInfo()
+        {
+            _infoItem = null;
+            _infoAnchor = null;
+            _info?.AddToClassList("hidden");
+            if (_selected != null)
+            {
+                _selected = null;
+                _gridVersion = -1;
+            }
+        }
+
+        /// <summary>미니창을 고른 물건 옆에 붙인다 (오른쪽에 자리가 없으면 왼쪽). 물건이 배낭에서 사라지면 닫는다.</summary>
+        private void PositionInfo()
+        {
+            if (_infoItem == null)
+            {
+                return;
+            }
+
+            if (!_director.Backpack.Items.Contains(_infoItem) || _backpackPanel.ClassListContains("hidden"))
+            {
+                CloseInfo();
+                return;
+            }
+
+            if (_infoAnchor == null || _infoAnchor.panel == null || _infoAnchor.worldBound.width <= 0f)
+            {
+                return;
+            }
+
+            var bound = _infoAnchor.worldBound;
+            var rootWidth = _root.layout.width;
+            var rootHeight = _root.layout.height;
+            var right = _root.WorldToLocal(new Vector2(bound.xMax + 8f, bound.yMin));
+            var x = right.x;
+            if (x + InfoWidth > rootWidth - 8f)
+            {
+                x = _root.WorldToLocal(new Vector2(bound.xMin - 8f, bound.yMin)).x - InfoWidth;
+            }
+
+            var height = _info.layout.height > 0f ? _info.layout.height : 200f;
+            var y = Mathf.Clamp(right.y, 8f, Mathf.Max(8f, rootHeight - height - 8f));
+            _info.style.left = Mathf.Max(8f, x);
+            _info.style.top = y;
+            _info.style.visibility = Visibility.Visible;
+        }
+
+        private string CategoryOf(ItemDef item)
+        {
+            if (item == null)
+            {
+                return "Other";
+            }
+
+            if (_director.Definitions.Balance.LikedItems.Any(l => l.Items.Contains(item.Id)))
+            {
+                return "Liked";
+            }
+
+            switch (item.Slot)
+            {
+                case EquipSlot.Weapon: return "Weapon";
+                case EquipSlot.Backpack: return "Backpack";
+                case EquipSlot.Tool: return "Tool";
+                case EquipSlot.Armor: return "Armor";
+            }
+
+            if (item.UseHp > 0 || item.UseStress > 0)
+            {
+                return "Consumable";
+            }
+
+            return item.ResourceYield.Count > 0 ? "Resource" : "Other";
+        }
+
+        /// <summary>효과 줄: 소모품은 HP·스트레스, 장비는 타격·내구·칸·피해 감소, 자원은 귀환 때 바뀌는 양.</summary>
+        private string EffectText(PlacedItem placed, ItemDef item)
+        {
+            if (item == null)
+            {
+                return "";
+            }
+
+            var lines = new List<string>();
+            var use = new List<string>();
+            if (item.UseHp > 0) use.Add(Loc.F("exp.info.hp", item.UseHp));
+            if (item.UseStress > 0) use.Add(Loc.F("exp.info.stress", item.UseStress));
+            if (use.Count > 0) lines.Add(string.Join(" · ", use));
+
+            if (item.Slot == EquipSlot.Weapon && item.WeaponPower > 0)
+            {
+                var weapon = Loc.F("exp.info.power", item.WeaponPower);
+                if (item.MaxDurability > 0)
+                {
+                    weapon += " · " + Loc.F("exp.info.durability", Math.Max(0, item.MaxDurability - placed.Wear), item.MaxDurability);
+                }
+
+                lines.Add(weapon);
+            }
+
+            if (item.Slot == EquipSlot.Backpack && item.GridWidth > 0)
+            {
+                lines.Add(Loc.F("exp.info.grid", item.GridWidth, item.GridHeight));
+            }
+
+            if (item.Slot == EquipSlot.Armor)
+            {
+                lines.Add(Loc.F("exp.info.reduction", Mathf.RoundToInt(item.DamageReduction * 100f)) + " · " + Loc.T("exp.info.armor_note"));
+            }
+
+            if (item.ResourceYield.Count > 0)
+            {
+                lines.Add(Loc.F("exp.info.yield", string.Join(" · ", item.ResourceYield.Select(r => UiText.Resource(r.Resource) + " +" + r.Amount))));
+            }
+
+            if (CategoryOf(item) == "Liked")
+            {
+                lines.Add(Loc.T("exp.info.liked"));
+            }
+
+            return string.Join("\n", lines);
         }
 
         // ── 스태미너 게이지: 초록 = 지금, 오른쪽 붉은 칸 = 피로·부상으로 이번 탐험 동안 깎인 최대치 ──
@@ -564,6 +797,11 @@ namespace ApoGirl.Exploration.Runtime
                     element.AddToClassList("with-item-icon");
                 }
                 element.EnableInClassList("selected", placed == _selected);
+                if (placed == _infoItem)
+                {
+                    _infoAnchor = element;
+                }
+
                 Place(element, placed.X, placed.Y, placed.Width, placed.Height);
                 element.RegisterCallback<PointerDownEvent>(evt =>
                 {
@@ -587,12 +825,19 @@ namespace ApoGirl.Exploration.Runtime
                             _director.DropItem(item);
                         }
 
+                        CloseInfo();
                         _selected = null;
                         _slotShown.Clear();
                     }
+                    else if (_selected == item)
+                    {
+                        CloseInfo();
+                    }
                     else
                     {
-                        _selected = _selected == item ? null : item;
+                        // 좌클릭: 고르고 미니창을 띄운다 (고른 채 빈칸을 누르면 옮긴다)
+                        _selected = item;
+                        ShowInfo(item);
                     }
 
                     _gridVersion = -1;
@@ -686,6 +931,7 @@ namespace ApoGirl.Exploration.Runtime
         {
             if (_selected != null && _director.Backpack.TryMove(_selected, x, y))
             {
+                CloseInfo();
                 _selected = null;
             }
 
@@ -726,7 +972,7 @@ namespace ApoGirl.Exploration.Runtime
             }
 
             var position = RuntimePanelUtils.ScreenToPanel(panel, new Vector2(screenPosition.x, Screen.height - screenPosition.y));
-            foreach (var element in new[] { _backpackPanel, _lootPanel, _encounterPanel, _equipBar })
+            foreach (var element in new[] { _backpackPanel, _lootPanel, _encounterPanel, _equipBar, _info })
             {
                 if (element != null && element.resolvedStyle.display != DisplayStyle.None && element.resolvedStyle.visibility == Visibility.Visible
                     && element.worldBound.Contains(position))

@@ -171,3 +171,24 @@
 .exp-equip-icon { width: 54px; height: 54px; margin: 2px 0; }
 .exp-equip-name { font-size: 13px; -unity-font-style: bold; -unity-text-align: middle-center; white-space: normal; color: #ffffff; }
 .bp-hint { font-size: 12px; color: var(--text-dim); margin-top: 6px; white-space: normal; max-width: 420px; }
+
+/* 배낭 물건 미니창: 좌클릭한 물건의 설명·분류·효과와 사용/장착/버리기 (ExpeditionHud.ShowInfo) */
+.bp-info {
+    padding: 10px 12px;
+    background-color: rgba(18, 18, 22, 0.96);
+    border-width: 2px;
+    border-color: rgba(231, 176, 74, 0.75);
+    border-radius: 6px;
+}
+.bp-info-head { flex-direction: row; align-items: center; margin-bottom: 4px; }
+.bp-info-name { font-size: 17px; -unity-font-style: bold; color: #ffffff; flex-shrink: 1; }
+.bp-info-cat { font-size: 13px; -unity-font-style: bold; color: var(--accent); margin-left: 6px; flex-grow: 1; }
+.bp-info-close { width: 26px; height: 26px; padding: 0; margin: 0; font-size: 13px; background-color: rgba(255, 255, 255, 0.06); border-width: 0; }
+.bp-info-desc { font-size: 13px; color: #d8d2c4; white-space: normal; margin-bottom: 4px; }
+.bp-info-effect { font-size: 14px; -unity-font-style: bold; color: #cfe3c0; white-space: normal; margin-bottom: 2px; }
+.bp-info-effect.consumable { color: #8fe07a; }
+.bp-info-size { font-size: 12px; color: var(--text-dim); margin-bottom: 6px; }
+.bp-info-buttons { flex-direction: row; }
+.bp-info-button { flex-grow: 1; height: 32px; margin: 0 3px 0 0; font-size: 14px; -unity-font-style: bold; background-color: rgba(255, 255, 255, 0.08); border-color: rgba(185, 163, 122, 0.45); }
+.bp-info-button.primary { background-color: rgba(150, 110, 40, 0.85); color: #ffffff; border-color: #e7b04a; }
+.bp-info-button:hover { border-color: #e7b04a; }
