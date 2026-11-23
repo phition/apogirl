@@ -73,7 +73,7 @@ namespace ApoGirl.Tests.EditMode
         private const string Coat = "ITEM_T_COAT";
 
         /// <summary>내구도 있는 무기와 방어구 둘을 더한 정의 DB.</summary>
-        private static ApoGirl.Core.Definitions.IDefinitionDatabase GearDatabase()
+        private static ApoGirl.Core.Definitions.InMemoryDefinitionDatabase GearDatabase()
         {
             var items = TestContent.CreateItems().Concat(new[]
             {
