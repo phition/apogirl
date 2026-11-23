@@ -5,6 +5,7 @@
   `I:\workshop\apogirl\MASTER_PROMPT.md`는 원본을 복사한 사본이며, 원본이 바뀌면 다시 복사한다.
 - 작업 전 마스터 프롬프트를 읽는다. 부록 C(결정 기록, D1~)의 확정 사항은 다시 논의하지 않는다.
 - 코드 규칙: [Docs/CODING_CONVENTIONS.md](Docs/CODING_CONVENTIONS.md)
+- 진행 요약(마일스톤별 상태·남은 작업·하면 좋을 작업·하지 말아야 할 작업): [Docs/PROGRESS.md](Docs/PROGRESS.md). 큰 단계가 끝날 때마다 고친다.
 
 ## 작업 원칙
 1. 한 번에 한 마일스톤(마스터 프롬프트 12장)만 진행하고, 범위를 임의로 넓히지 않는다.
