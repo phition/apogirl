@@ -2,142 +2,58 @@
 "Frames": [
 {
 "Key": "player_guard_bat_attack_0",
-"X": -0.111,
-"Y": 1.188,
-"Angle": 4.6,
+"X": -0.097,
+"Y": 0.946,
+"Angle": -3.3,
 "Lift": 0.0
 },
 {
 "Key": "player_guard_bat_attack_1",
-"X": -0.118,
-"Y": 1.194,
-"Angle": 9.5,
+"X": -0.07,
+"Y": 0.932,
+"Angle": -3.1,
 "Lift": 0.0
 },
 {
 "Key": "player_guard_bat_attack_2",
-"X": -0.159,
-"Y": 1.201,
-"Angle": 13.4,
+"X": -0.077,
+"Y": 0.931,
+"Angle": -2.6,
 "Lift": 0.0
 },
 {
 "Key": "player_guard_bat_attack_3",
-"X": -0.164,
-"Y": 1.217,
-"Angle": 10.4,
+"X": -0.122,
+"Y": 0.965,
+"Angle": -6.5,
 "Lift": 0.0
 },
 {
 "Key": "player_guard_bat_attack_4",
-"X": -0.107,
-"Y": 1.233,
-"Angle": 6.4,
+"X": -0.166,
+"Y": 1.007,
+"Angle": -12.0,
 "Lift": 0.0
 },
 {
 "Key": "player_guard_bat_attack_5",
-"X": -0.099,
-"Y": 1.175,
-"Angle": 7.8,
+"X": -0.218,
+"Y": 1.017,
+"Angle": -14.3,
 "Lift": 0.0
 },
 {
 "Key": "player_guard_bat_attack_6",
-"X": -0.167,
-"Y": 1.063,
-"Angle": 6.1,
+"X": -0.269,
+"Y": 1.005,
+"Angle": -14.7,
 "Lift": 0.0
 },
 {
 "Key": "player_guard_bat_attack_7",
-"X": -0.208,
-"Y": 0.991,
-"Angle": 1.6,
-"Lift": 0.0
-},
-{
-"Key": "player_guard_bat_attack_8",
-"X": -0.204,
-"Y": 0.973,
-"Angle": -0.1,
-"Lift": 0.0
-},
-{
-"Key": "player_guard_bat_attack_9",
-"X": -0.219,
-"Y": 0.975,
-"Angle": -1.2,
-"Lift": 0.0
-},
-{
-"Key": "player_guard_bat_attack_10",
-"X": -0.25,
-"Y": 0.976,
-"Angle": -1.8,
-"Lift": 0.0
-},
-{
-"Key": "player_guard_bat_attack_11",
-"X": -0.247,
+"X": -0.287,
 "Y": 0.998,
-"Angle": -1.9,
-"Lift": 0.0
-},
-{
-"Key": "player_guard_bat_attack_12",
-"X": -0.223,
-"Y": 1.049,
-"Angle": -3.0,
-"Lift": 0.0
-},
-{
-"Key": "player_guard_bat_attack_13",
-"X": -0.247,
-"Y": 1.093,
-"Angle": -4.0,
-"Lift": 0.0
-},
-{
-"Key": "player_guard_bat_attack_14",
-"X": -0.303,
-"Y": 1.12,
-"Angle": -3.6,
-"Lift": 0.0
-},
-{
-"Key": "player_guard_bat_attack_15",
-"X": -0.279,
-"Y": 1.143,
-"Angle": -1.5,
-"Lift": 0.0
-},
-{
-"Key": "player_guard_bat_attack_16",
-"X": -0.202,
-"Y": 1.159,
-"Angle": 0.5,
-"Lift": 0.0
-},
-{
-"Key": "player_guard_bat_attack_17",
-"X": -0.191,
-"Y": 1.166,
-"Angle": 0.2,
-"Lift": 0.0
-},
-{
-"Key": "player_guard_bat_attack_18",
-"X": -0.219,
-"Y": 1.16,
-"Angle": -0.2,
-"Lift": 0.0
-},
-{
-"Key": "player_guard_bat_attack_19",
-"X": -0.229,
-"Y": 1.145,
-"Angle": 0.3,
+"Angle": -14.7,
 "Lift": 0.0
 },
 {
@@ -730,142 +646,58 @@
 },
 {
 "Key": "player_guard_baton_attack_0",
-"X": -0.094,
-"Y": 1.218,
-"Angle": 2.3,
+"X": -0.117,
+"Y": 0.975,
+"Angle": -5.9,
 "Lift": 0.0
 },
 {
 "Key": "player_guard_baton_attack_1",
-"X": -0.101,
-"Y": 1.22,
-"Angle": 1.3,
+"X": -0.131,
+"Y": 0.972,
+"Angle": -10.2,
 "Lift": 0.0
 },
 {
 "Key": "player_guard_baton_attack_2",
-"X": -0.078,
-"Y": 1.218,
-"Angle": 2.7,
+"X": -0.162,
+"Y": 0.967,
+"Angle": -12.5,
 "Lift": 0.0
 },
 {
 "Key": "player_guard_baton_attack_3",
-"X": -0.069,
-"Y": 1.253,
-"Angle": 3.3,
+"X": -0.187,
+"Y": 0.937,
+"Angle": -12.0,
 "Lift": 0.0
 },
 {
 "Key": "player_guard_baton_attack_4",
-"X": -0.08,
-"Y": 1.289,
-"Angle": 2.8,
+"X": -0.203,
+"Y": 0.919,
+"Angle": -12.7,
 "Lift": 0.0
 },
 {
 "Key": "player_guard_baton_attack_5",
-"X": -0.059,
-"Y": 1.23,
-"Angle": 5.3,
+"X": -0.201,
+"Y": 0.924,
+"Angle": -12.2,
 "Lift": 0.0
 },
 {
 "Key": "player_guard_baton_attack_6",
-"X": -0.046,
-"Y": 1.152,
-"Angle": 5.9,
+"X": -0.19,
+"Y": 0.923,
+"Angle": -10.6,
 "Lift": 0.0
 },
 {
 "Key": "player_guard_baton_attack_7",
-"X": -0.066,
-"Y": 1.121,
-"Angle": 2.8,
-"Lift": 0.0
-},
-{
-"Key": "player_guard_baton_attack_8",
-"X": -0.087,
-"Y": 1.097,
-"Angle": 0.2,
-"Lift": 0.0
-},
-{
-"Key": "player_guard_baton_attack_9",
-"X": -0.092,
-"Y": 1.085,
-"Angle": -0.9,
-"Lift": 0.0
-},
-{
-"Key": "player_guard_baton_attack_10",
-"X": -0.083,
-"Y": 1.085,
-"Angle": -0.6,
-"Lift": 0.0
-},
-{
-"Key": "player_guard_baton_attack_11",
-"X": -0.087,
-"Y": 1.093,
-"Angle": -1.0,
-"Lift": 0.0
-},
-{
-"Key": "player_guard_baton_attack_12",
-"X": -0.118,
-"Y": 1.113,
-"Angle": -3.4,
-"Lift": 0.0
-},
-{
-"Key": "player_guard_baton_attack_13",
-"X": -0.138,
-"Y": 1.123,
-"Angle": -4.6,
-"Lift": 0.0
-},
-{
-"Key": "player_guard_baton_attack_14",
-"X": -0.133,
-"Y": 1.121,
-"Angle": -3.9,
-"Lift": 0.0
-},
-{
-"Key": "player_guard_baton_attack_15",
-"X": -0.12,
-"Y": 1.131,
-"Angle": -2.3,
-"Lift": 0.0
-},
-{
-"Key": "player_guard_baton_attack_16",
-"X": -0.103,
-"Y": 1.152,
-"Angle": 1.1,
-"Lift": 0.0
-},
-{
-"Key": "player_guard_baton_attack_17",
-"X": -0.093,
-"Y": 1.161,
-"Angle": 3.6,
-"Lift": 0.0
-},
-{
-"Key": "player_guard_baton_attack_18",
-"X": -0.086,
-"Y": 1.161,
-"Angle": 3.3,
-"Lift": 0.0
-},
-{
-"Key": "player_guard_baton_attack_19",
-"X": -0.076,
-"Y": 1.163,
-"Angle": 2.0,
+"X": -0.186,
+"Y": 0.922,
+"Angle": -10.3,
 "Lift": 0.0
 },
 {
@@ -3194,142 +3026,58 @@
 },
 {
 "Key": "player_guard_pipe_attack_0",
-"X": -0.086,
-"Y": 1.215,
-"Angle": 4.4,
+"X": -0.08,
+"Y": 0.981,
+"Angle": -3.6,
 "Lift": 0.0
 },
 {
 "Key": "player_guard_pipe_attack_1",
-"X": -0.099,
-"Y": 1.194,
-"Angle": 7.0,
+"X": -0.116,
+"Y": 0.887,
+"Angle": -7.8,
 "Lift": 0.0
 },
 {
 "Key": "player_guard_pipe_attack_2",
-"X": -0.124,
-"Y": 1.159,
-"Angle": 11.3,
+"X": -0.196,
+"Y": 0.87,
+"Angle": -13.7,
 "Lift": 0.0
 },
 {
 "Key": "player_guard_pipe_attack_3",
-"X": -0.142,
-"Y": 1.141,
-"Angle": 15.1,
+"X": -0.278,
+"Y": 0.932,
+"Angle": -16.6,
 "Lift": 0.0
 },
 {
 "Key": "player_guard_pipe_attack_4",
-"X": -0.154,
-"Y": 1.112,
-"Angle": 18.3,
+"X": -0.351,
+"Y": 0.994,
+"Angle": -16.5,
 "Lift": 0.0
 },
 {
 "Key": "player_guard_pipe_attack_5",
-"X": -0.193,
-"Y": 1.033,
-"Angle": 20.4,
+"X": -0.398,
+"Y": 1.008,
+"Angle": -13.7,
 "Lift": 0.0
 },
 {
 "Key": "player_guard_pipe_attack_6",
-"X": -0.241,
-"Y": 0.928,
-"Angle": 20.2,
+"X": -0.402,
+"Y": 0.984,
+"Angle": -9.9,
 "Lift": 0.0
 },
 {
 "Key": "player_guard_pipe_attack_7",
-"X": -0.264,
-"Y": 0.867,
-"Angle": 17.0,
-"Lift": 0.0
-},
-{
-"Key": "player_guard_pipe_attack_8",
-"X": -0.275,
-"Y": 0.85,
-"Angle": 9.7,
-"Lift": 0.0
-},
-{
-"Key": "player_guard_pipe_attack_9",
-"X": -0.309,
-"Y": 0.838,
-"Angle": 2.7,
-"Lift": 0.0
-},
-{
-"Key": "player_guard_pipe_attack_10",
-"X": -0.333,
-"Y": 0.834,
-"Angle": -0.1,
-"Lift": 0.0
-},
-{
-"Key": "player_guard_pipe_attack_11",
-"X": -0.315,
-"Y": 0.848,
-"Angle": -2.8,
-"Lift": 0.0
-},
-{
-"Key": "player_guard_pipe_attack_12",
-"X": -0.281,
-"Y": 0.875,
-"Angle": -7.0,
-"Lift": 0.0
-},
-{
-"Key": "player_guard_pipe_attack_13",
-"X": -0.271,
-"Y": 0.882,
-"Angle": -10.5,
-"Lift": 0.0
-},
-{
-"Key": "player_guard_pipe_attack_14",
-"X": -0.272,
-"Y": 0.878,
-"Angle": -11.2,
-"Lift": 0.0
-},
-{
-"Key": "player_guard_pipe_attack_15",
-"X": -0.24,
-"Y": 0.939,
-"Angle": -7.0,
-"Lift": 0.0
-},
-{
-"Key": "player_guard_pipe_attack_16",
-"X": -0.191,
-"Y": 1.038,
-"Angle": -0.3,
-"Lift": 0.0
-},
-{
-"Key": "player_guard_pipe_attack_17",
-"X": -0.167,
-"Y": 1.077,
-"Angle": 4.0,
-"Lift": 0.0
-},
-{
-"Key": "player_guard_pipe_attack_18",
-"X": -0.154,
-"Y": 1.076,
-"Angle": 4.6,
-"Lift": 0.0
-},
-{
-"Key": "player_guard_pipe_attack_19",
-"X": -0.137,
-"Y": 1.077,
-"Angle": 4.3,
+"X": -0.397,
+"Y": 0.971,
+"Angle": -8.6,
 "Lift": 0.0
 },
 {
@@ -3922,142 +3670,58 @@
 },
 {
 "Key": "player_padding_bat_attack_0",
-"X": -0.104,
-"Y": 1.208,
-"Angle": 5.3,
+"X": -0.112,
+"Y": 0.976,
+"Angle": -11.5,
 "Lift": 0.0
 },
 {
 "Key": "player_padding_bat_attack_1",
-"X": -0.116,
-"Y": 1.2,
-"Angle": 8.7,
+"X": -0.118,
+"Y": 0.991,
+"Angle": -8.2,
 "Lift": 0.0
 },
 {
 "Key": "player_padding_bat_attack_2",
-"X": -0.146,
-"Y": 1.2,
-"Angle": 12.1,
+"X": -0.168,
+"Y": 0.958,
+"Angle": -4.9,
 "Lift": 0.0
 },
 {
 "Key": "player_padding_bat_attack_3",
-"X": -0.146,
-"Y": 1.23,
-"Angle": 10.3,
+"X": -0.215,
+"Y": 0.913,
+"Angle": -5.7,
 "Lift": 0.0
 },
 {
 "Key": "player_padding_bat_attack_4",
-"X": -0.099,
-"Y": 1.273,
-"Angle": 6.9,
+"X": -0.242,
+"Y": 0.912,
+"Angle": -10.6,
 "Lift": 0.0
 },
 {
 "Key": "player_padding_bat_attack_5",
-"X": -0.088,
-"Y": 1.23,
-"Angle": 7.3,
+"X": -0.264,
+"Y": 0.93,
+"Angle": -11.9,
 "Lift": 0.0
 },
 {
 "Key": "player_padding_bat_attack_6",
-"X": -0.155,
-"Y": 1.114,
-"Angle": 4.7,
+"X": -0.279,
+"Y": 0.936,
+"Angle": -8.5,
 "Lift": 0.0
 },
 {
 "Key": "player_padding_bat_attack_7",
-"X": -0.207,
-"Y": 1.036,
-"Angle": -0.2,
-"Lift": 0.0
-},
-{
-"Key": "player_padding_bat_attack_8",
-"X": -0.191,
-"Y": 1.017,
-"Angle": -1.4,
-"Lift": 0.0
-},
-{
-"Key": "player_padding_bat_attack_9",
-"X": -0.186,
-"Y": 1.011,
-"Angle": -1.6,
-"Lift": 0.0
-},
-{
-"Key": "player_padding_bat_attack_10",
-"X": -0.221,
-"Y": 1.006,
-"Angle": -2.6,
-"Lift": 0.0
-},
-{
-"Key": "player_padding_bat_attack_11",
-"X": -0.223,
-"Y": 1.023,
-"Angle": -3.6,
-"Lift": 0.0
-},
-{
-"Key": "player_padding_bat_attack_12",
-"X": -0.195,
-"Y": 1.068,
-"Angle": -4.7,
-"Lift": 0.0
-},
-{
-"Key": "player_padding_bat_attack_13",
-"X": -0.227,
-"Y": 1.114,
-"Angle": -6.2,
-"Lift": 0.0
-},
-{
-"Key": "player_padding_bat_attack_14",
-"X": -0.297,
-"Y": 1.136,
-"Angle": -6.5,
-"Lift": 0.0
-},
-{
-"Key": "player_padding_bat_attack_15",
-"X": -0.28,
-"Y": 1.157,
-"Angle": -4.0,
-"Lift": 0.0
-},
-{
-"Key": "player_padding_bat_attack_16",
-"X": -0.201,
-"Y": 1.178,
-"Angle": -1.5,
-"Lift": 0.0
-},
-{
-"Key": "player_padding_bat_attack_17",
-"X": -0.192,
-"Y": 1.171,
-"Angle": -1.6,
-"Lift": 0.0
-},
-{
-"Key": "player_padding_bat_attack_18",
-"X": -0.23,
-"Y": 1.15,
-"Angle": -1.6,
-"Lift": 0.0
-},
-{
-"Key": "player_padding_bat_attack_19",
-"X": -0.249,
-"Y": 1.14,
-"Angle": -0.6,
+"X": -0.285,
+"Y": 0.935,
+"Angle": -6.6,
 "Lift": 0.0
 },
 {
@@ -4650,142 +4314,58 @@
 },
 {
 "Key": "player_padding_baton_attack_0",
-"X": -0.11,
-"Y": 1.269,
-"Angle": 0.8,
+"X": -0.056,
+"Y": 1.066,
+"Angle": -5.1,
 "Lift": 0.0
 },
 {
 "Key": "player_padding_baton_attack_1",
-"X": -0.084,
-"Y": 1.257,
-"Angle": 0.4,
+"X": -0.085,
+"Y": 1.041,
+"Angle": -1.2,
 "Lift": 0.0
 },
 {
 "Key": "player_padding_baton_attack_2",
-"X": -0.052,
-"Y": 1.279,
-"Angle": 0.2,
-"Lift": 0.0
-},
-{
-"Key": "player_padding_baton_attack_3",
-"X": -0.058,
-"Y": 1.356,
-"Angle": -2.9,
-"Lift": 0.0
-},
-{
-"Key": "player_padding_baton_attack_4",
-"X": -0.064,
-"Y": 1.364,
-"Angle": -3.1,
-"Lift": 0.0
-},
-{
-"Key": "player_padding_baton_attack_5",
-"X": -0.033,
-"Y": 1.256,
-"Angle": 2.3,
-"Lift": 0.0
-},
-{
-"Key": "player_padding_baton_attack_6",
-"X": -0.019,
-"Y": 1.174,
-"Angle": 4.2,
-"Lift": 0.0
-},
-{
-"Key": "player_padding_baton_attack_7",
-"X": -0.027,
-"Y": 1.143,
-"Angle": 1.6,
-"Lift": 0.0
-},
-{
-"Key": "player_padding_baton_attack_8",
-"X": -0.025,
-"Y": 1.104,
-"Angle": 0.2,
-"Lift": 0.0
-},
-{
-"Key": "player_padding_baton_attack_9",
-"X": -0.025,
-"Y": 1.084,
-"Angle": -0.1,
-"Lift": 0.0
-},
-{
-"Key": "player_padding_baton_attack_10",
-"X": -0.024,
-"Y": 1.083,
-"Angle": -0.1,
-"Lift": 0.0
-},
-{
-"Key": "player_padding_baton_attack_11",
-"X": -0.035,
-"Y": 1.099,
-"Angle": -0.6,
-"Lift": 0.0
-},
-{
-"Key": "player_padding_baton_attack_12",
-"X": -0.07,
-"Y": 1.131,
+"X": -0.179,
+"Y": 1.036,
 "Angle": -2.5,
 "Lift": 0.0
 },
 {
-"Key": "player_padding_baton_attack_13",
-"X": -0.09,
-"Y": 1.15,
+"Key": "player_padding_baton_attack_3",
+"X": -0.253,
+"Y": 1.032,
+"Angle": -4.5,
+"Lift": 0.0
+},
+{
+"Key": "player_padding_baton_attack_4",
+"X": -0.285,
+"Y": 1.032,
 "Angle": -4.4,
 "Lift": 0.0
 },
 {
-"Key": "player_padding_baton_attack_14",
-"X": -0.086,
-"Y": 1.152,
-"Angle": -5.0,
+"Key": "player_padding_baton_attack_5",
+"X": -0.316,
+"Y": 1.056,
+"Angle": -3.0,
 "Lift": 0.0
 },
 {
-"Key": "player_padding_baton_attack_15",
-"X": -0.075,
-"Y": 1.147,
-"Angle": -2.9,
+"Key": "player_padding_baton_attack_6",
+"X": -0.346,
+"Y": 1.078,
+"Angle": -0.5,
 "Lift": 0.0
 },
 {
-"Key": "player_padding_baton_attack_16",
-"X": -0.061,
-"Y": 1.138,
-"Angle": 1.4,
-"Lift": 0.0
-},
-{
-"Key": "player_padding_baton_attack_17",
-"X": -0.045,
-"Y": 1.133,
-"Angle": 3.8,
-"Lift": 0.0
-},
-{
-"Key": "player_padding_baton_attack_18",
-"X": -0.033,
-"Y": 1.133,
-"Angle": 3.7,
-"Lift": 0.0
-},
-{
-"Key": "player_padding_baton_attack_19",
-"X": -0.033,
-"Y": 1.134,
-"Angle": 3.0,
+"Key": "player_padding_baton_attack_7",
+"X": -0.358,
+"Y": 1.082,
+"Angle": 0.4,
 "Lift": 0.0
 },
 {
@@ -7114,142 +6694,58 @@
 },
 {
 "Key": "player_padding_pipe_attack_0",
-"X": -0.108,
-"Y": 1.191,
-"Angle": 1.8,
+"X": -0.091,
+"Y": 1.109,
+"Angle": -13.1,
 "Lift": 0.0
 },
 {
 "Key": "player_padding_pipe_attack_1",
-"X": -0.101,
-"Y": 1.175,
-"Angle": 3.6,
+"X": -0.083,
+"Y": 1.07,
+"Angle": -11.5,
 "Lift": 0.0
 },
 {
 "Key": "player_padding_pipe_attack_2",
-"X": -0.103,
-"Y": 1.145,
-"Angle": 7.3,
+"X": -0.106,
+"Y": 1.032,
+"Angle": -7.2,
 "Lift": 0.0
 },
 {
 "Key": "player_padding_pipe_attack_3",
-"X": -0.131,
-"Y": 1.13,
-"Angle": 10.9,
-"Lift": 0.0
-},
-{
-"Key": "player_padding_pipe_attack_4",
-"X": -0.142,
-"Y": 1.118,
-"Angle": 13.8,
-"Lift": 0.0
-},
-{
-"Key": "player_padding_pipe_attack_5",
-"X": -0.154,
-"Y": 1.052,
-"Angle": 16.1,
-"Lift": 0.0
-},
-{
-"Key": "player_padding_pipe_attack_6",
-"X": -0.213,
-"Y": 0.943,
-"Angle": 17.2,
-"Lift": 0.0
-},
-{
-"Key": "player_padding_pipe_attack_7",
-"X": -0.274,
-"Y": 0.871,
-"Angle": 15.0,
-"Lift": 0.0
-},
-{
-"Key": "player_padding_pipe_attack_8",
-"X": -0.313,
-"Y": 0.857,
-"Angle": 7.9,
-"Lift": 0.0
-},
-{
-"Key": "player_padding_pipe_attack_9",
-"X": -0.362,
-"Y": 0.849,
-"Angle": 0.4,
-"Lift": 0.0
-},
-{
-"Key": "player_padding_pipe_attack_10",
-"X": -0.379,
-"Y": 0.84,
-"Angle": -2.9,
-"Lift": 0.0
-},
-{
-"Key": "player_padding_pipe_attack_11",
-"X": -0.345,
-"Y": 0.859,
-"Angle": -4.4,
-"Lift": 0.0
-},
-{
-"Key": "player_padding_pipe_attack_12",
-"X": -0.305,
-"Y": 0.881,
-"Angle": -6.9,
-"Lift": 0.0
-},
-{
-"Key": "player_padding_pipe_attack_13",
-"X": -0.283,
-"Y": 0.885,
-"Angle": -9.7,
-"Lift": 0.0
-},
-{
-"Key": "player_padding_pipe_attack_14",
-"X": -0.276,
-"Y": 0.882,
-"Angle": -10.6,
-"Lift": 0.0
-},
-{
-"Key": "player_padding_pipe_attack_15",
-"X": -0.254,
-"Y": 0.935,
+"X": -0.174,
+"Y": 1.026,
 "Angle": -8.1,
 "Lift": 0.0
 },
 {
-"Key": "player_padding_pipe_attack_16",
-"X": -0.222,
-"Y": 1.039,
-"Angle": -4.2,
+"Key": "player_padding_pipe_attack_4",
+"X": -0.227,
+"Y": 1.048,
+"Angle": -10.5,
 "Lift": 0.0
 },
 {
-"Key": "player_padding_pipe_attack_17",
-"X": -0.202,
-"Y": 1.086,
-"Angle": -1.0,
+"Key": "player_padding_pipe_attack_5",
+"X": -0.259,
+"Y": 1.055,
+"Angle": -8.9,
 "Lift": 0.0
 },
 {
-"Key": "player_padding_pipe_attack_18",
-"X": -0.194,
-"Y": 1.082,
-"Angle": 0.4,
+"Key": "player_padding_pipe_attack_6",
+"X": -0.291,
+"Y": 1.048,
+"Angle": -7.0,
 "Lift": 0.0
 },
 {
-"Key": "player_padding_pipe_attack_19",
-"X": -0.183,
-"Y": 1.083,
-"Angle": 0.4,
+"Key": "player_padding_pipe_attack_7",
+"X": -0.304,
+"Y": 1.046,
+"Angle": -6.6,
 "Lift": 0.0
 },
 {
@@ -7842,142 +7338,58 @@
 },
 {
 "Key": "player_riot_bat_attack_0",
-"X": -0.102,
-"Y": 1.19,
-"Angle": 3.4,
+"X": -0.088,
+"Y": 0.902,
+"Angle": -5.0,
 "Lift": 0.0
 },
 {
 "Key": "player_riot_bat_attack_1",
-"X": -0.12,
-"Y": 1.188,
-"Angle": 9.1,
+"X": -0.118,
+"Y": 0.897,
+"Angle": -5.6,
 "Lift": 0.0
 },
 {
 "Key": "player_riot_bat_attack_2",
-"X": -0.17,
-"Y": 1.194,
-"Angle": 12.4,
+"X": -0.153,
+"Y": 0.879,
+"Angle": -3.9,
 "Lift": 0.0
 },
 {
 "Key": "player_riot_bat_attack_3",
-"X": -0.175,
-"Y": 1.258,
-"Angle": 8.1,
+"X": -0.163,
+"Y": 0.876,
+"Angle": -0.1,
 "Lift": 0.0
 },
 {
 "Key": "player_riot_bat_attack_4",
-"X": -0.112,
-"Y": 1.316,
-"Angle": 4.6,
+"X": -0.187,
+"Y": 0.894,
+"Angle": 0.9,
 "Lift": 0.0
 },
 {
 "Key": "player_riot_bat_attack_5",
-"X": -0.105,
-"Y": 1.231,
-"Angle": 6.6,
-"Lift": 0.0
-},
-{
-"Key": "player_riot_bat_attack_6",
-"X": -0.184,
-"Y": 1.092,
-"Angle": 4.9,
-"Lift": 0.0
-},
-{
-"Key": "player_riot_bat_attack_7",
-"X": -0.23,
-"Y": 1.027,
-"Angle": 0.7,
-"Lift": 0.0
-},
-{
-"Key": "player_riot_bat_attack_8",
-"X": -0.216,
-"Y": 1.016,
-"Angle": -1.0,
-"Lift": 0.0
-},
-{
-"Key": "player_riot_bat_attack_9",
-"X": -0.222,
-"Y": 1.011,
-"Angle": -1.7,
-"Lift": 0.0
-},
-{
-"Key": "player_riot_bat_attack_10",
-"X": -0.256,
-"Y": 1.005,
-"Angle": -2.0,
-"Lift": 0.0
-},
-{
-"Key": "player_riot_bat_attack_11",
-"X": -0.26,
-"Y": 1.019,
-"Angle": -2.3,
-"Lift": 0.0
-},
-{
-"Key": "player_riot_bat_attack_12",
-"X": -0.238,
-"Y": 1.065,
-"Angle": -3.7,
-"Lift": 0.0
-},
-{
-"Key": "player_riot_bat_attack_13",
-"X": -0.259,
-"Y": 1.118,
-"Angle": -5.1,
-"Lift": 0.0
-},
-{
-"Key": "player_riot_bat_attack_14",
-"X": -0.323,
-"Y": 1.146,
-"Angle": -5.2,
-"Lift": 0.0
-},
-{
-"Key": "player_riot_bat_attack_15",
-"X": -0.315,
-"Y": 1.162,
-"Angle": -3.4,
-"Lift": 0.0
-},
-{
-"Key": "player_riot_bat_attack_16",
-"X": -0.244,
-"Y": 1.184,
+"X": -0.239,
+"Y": 0.893,
 "Angle": -1.6,
 "Lift": 0.0
 },
 {
-"Key": "player_riot_bat_attack_17",
-"X": -0.232,
-"Y": 1.19,
-"Angle": -1.0,
+"Key": "player_riot_bat_attack_6",
+"X": -0.278,
+"Y": 0.881,
+"Angle": -4.7,
 "Lift": 0.0
 },
 {
-"Key": "player_riot_bat_attack_18",
-"X": -0.255,
-"Y": 1.168,
-"Angle": -0.4,
-"Lift": 0.0
-},
-{
-"Key": "player_riot_bat_attack_19",
-"X": -0.26,
-"Y": 1.146,
-"Angle": 0.0,
+"Key": "player_riot_bat_attack_7",
+"X": -0.289,
+"Y": 0.878,
+"Angle": -6.1,
 "Lift": 0.0
 },
 {
@@ -8570,142 +7982,58 @@
 },
 {
 "Key": "player_riot_baton_attack_0",
-"X": -0.099,
-"Y": 1.194,
-"Angle": 0.2,
+"X": -0.079,
+"Y": 1.119,
+"Angle": -5.5,
 "Lift": 0.0
 },
 {
 "Key": "player_riot_baton_attack_1",
-"X": -0.082,
-"Y": 1.194,
-"Angle": 0.5,
-"Lift": 0.0
-},
-{
-"Key": "player_riot_baton_attack_2",
-"X": -0.054,
-"Y": 1.19,
-"Angle": 3.7,
-"Lift": 0.0
-},
-{
-"Key": "player_riot_baton_attack_3",
-"X": -0.049,
-"Y": 1.214,
-"Angle": 6.6,
-"Lift": 0.0
-},
-{
-"Key": "player_riot_baton_attack_4",
-"X": -0.058,
-"Y": 1.242,
-"Angle": 6.2,
-"Lift": 0.0
-},
-{
-"Key": "player_riot_baton_attack_5",
-"X": -0.041,
-"Y": 1.2,
-"Angle": 5.4,
-"Lift": 0.0
-},
-{
-"Key": "player_riot_baton_attack_6",
-"X": -0.032,
-"Y": 1.146,
-"Angle": 4.4,
-"Lift": 0.0
-},
-{
-"Key": "player_riot_baton_attack_7",
-"X": -0.046,
-"Y": 1.121,
-"Angle": 2.2,
-"Lift": 0.0
-},
-{
-"Key": "player_riot_baton_attack_8",
-"X": -0.066,
-"Y": 1.097,
-"Angle": 0.1,
-"Lift": 0.0
-},
-{
-"Key": "player_riot_baton_attack_9",
-"X": -0.074,
-"Y": 1.086,
-"Angle": -1.1,
-"Lift": 0.0
-},
-{
-"Key": "player_riot_baton_attack_10",
-"X": -0.061,
-"Y": 1.086,
-"Angle": -1.0,
-"Lift": 0.0
-},
-{
-"Key": "player_riot_baton_attack_11",
-"X": -0.064,
-"Y": 1.101,
-"Angle": -1.5,
-"Lift": 0.0
-},
-{
-"Key": "player_riot_baton_attack_12",
-"X": -0.096,
-"Y": 1.135,
-"Angle": -3.6,
-"Lift": 0.0
-},
-{
-"Key": "player_riot_baton_attack_13",
-"X": -0.112,
-"Y": 1.153,
-"Angle": -5.4,
-"Lift": 0.0
-},
-{
-"Key": "player_riot_baton_attack_14",
-"X": -0.109,
-"Y": 1.157,
-"Angle": -6.6,
-"Lift": 0.0
-},
-{
-"Key": "player_riot_baton_attack_15",
-"X": -0.102,
-"Y": 1.162,
+"X": -0.071,
+"Y": 1.077,
 "Angle": -5.2,
 "Lift": 0.0
 },
 {
-"Key": "player_riot_baton_attack_16",
-"X": -0.084,
-"Y": 1.163,
-"Angle": -0.5,
+"Key": "player_riot_baton_attack_2",
+"X": -0.078,
+"Y": 1.06,
+"Angle": -4.1,
 "Lift": 0.0
 },
 {
-"Key": "player_riot_baton_attack_17",
-"X": -0.065,
-"Y": 1.155,
-"Angle": 2.8,
+"Key": "player_riot_baton_attack_3",
+"X": -0.12,
+"Y": 1.018,
+"Angle": -4.4,
 "Lift": 0.0
 },
 {
-"Key": "player_riot_baton_attack_18",
-"X": -0.053,
-"Y": 1.14,
-"Angle": 3.4,
+"Key": "player_riot_baton_attack_4",
+"X": -0.155,
+"Y": 0.979,
+"Angle": -5.3,
 "Lift": 0.0
 },
 {
-"Key": "player_riot_baton_attack_19",
-"X": -0.045,
-"Y": 1.134,
-"Angle": 3.0,
+"Key": "player_riot_baton_attack_5",
+"X": -0.161,
+"Y": 0.976,
+"Angle": -6.2,
+"Lift": 0.0
+},
+{
+"Key": "player_riot_baton_attack_6",
+"X": -0.164,
+"Y": 0.985,
+"Angle": -6.9,
+"Lift": 0.0
+},
+{
+"Key": "player_riot_baton_attack_7",
+"X": -0.17,
+"Y": 0.991,
+"Angle": -6.6,
 "Lift": 0.0
 },
 {
@@ -11034,142 +10362,58 @@
 },
 {
 "Key": "player_riot_pipe_attack_0",
-"X": -0.108,
-"Y": 1.212,
-"Angle": 1.8,
+"X": -0.049,
+"Y": 1.047,
+"Angle": -6.5,
 "Lift": 0.0
 },
 {
 "Key": "player_riot_pipe_attack_1",
-"X": -0.114,
-"Y": 1.19,
-"Angle": 2.7,
+"X": -0.025,
+"Y": 0.994,
+"Angle": -7.0,
 "Lift": 0.0
 },
 {
 "Key": "player_riot_pipe_attack_2",
-"X": -0.1,
-"Y": 1.166,
-"Angle": 5.1,
+"X": -0.044,
+"Y": 0.964,
+"Angle": -6.1,
 "Lift": 0.0
 },
 {
 "Key": "player_riot_pipe_attack_3",
-"X": -0.084,
-"Y": 1.138,
-"Angle": 9.0,
-"Lift": 0.0
-},
-{
-"Key": "player_riot_pipe_attack_4",
-"X": -0.087,
-"Y": 1.084,
-"Angle": 13.1,
-"Lift": 0.0
-},
-{
-"Key": "player_riot_pipe_attack_5",
-"X": -0.099,
-"Y": 1.002,
-"Angle": 15.5,
-"Lift": 0.0
-},
-{
-"Key": "player_riot_pipe_attack_6",
-"X": -0.143,
-"Y": 0.907,
-"Angle": 16.4,
-"Lift": 0.0
-},
-{
-"Key": "player_riot_pipe_attack_7",
-"X": -0.209,
-"Y": 0.849,
-"Angle": 13.8,
-"Lift": 0.0
-},
-{
-"Key": "player_riot_pipe_attack_8",
-"X": -0.249,
-"Y": 0.829,
-"Angle": 6.5,
-"Lift": 0.0
-},
-{
-"Key": "player_riot_pipe_attack_9",
-"X": -0.284,
-"Y": 0.801,
-"Angle": -0.4,
-"Lift": 0.0
-},
-{
-"Key": "player_riot_pipe_attack_10",
-"X": -0.313,
-"Y": 0.785,
-"Angle": -3.0,
-"Lift": 0.0
-},
-{
-"Key": "player_riot_pipe_attack_11",
-"X": -0.304,
-"Y": 0.803,
-"Angle": -4.3,
-"Lift": 0.0
-},
-{
-"Key": "player_riot_pipe_attack_12",
-"X": -0.261,
-"Y": 0.848,
+"X": -0.112,
+"Y": 0.946,
 "Angle": -7.3,
 "Lift": 0.0
 },
 {
-"Key": "player_riot_pipe_attack_13",
-"X": -0.243,
-"Y": 0.884,
-"Angle": -11.0,
+"Key": "player_riot_pipe_attack_4",
+"X": -0.158,
+"Y": 0.92,
+"Angle": -5.9,
 "Lift": 0.0
 },
 {
-"Key": "player_riot_pipe_attack_14",
-"X": -0.25,
-"Y": 0.888,
-"Angle": -11.9,
+"Key": "player_riot_pipe_attack_5",
+"X": -0.174,
+"Y": 0.937,
+"Angle": -2.4,
 "Lift": 0.0
 },
 {
-"Key": "player_riot_pipe_attack_15",
-"X": -0.212,
-"Y": 0.939,
-"Angle": -9.2,
+"Key": "player_riot_pipe_attack_6",
+"X": -0.184,
+"Y": 0.969,
+"Angle": -1.6,
 "Lift": 0.0
 },
 {
-"Key": "player_riot_pipe_attack_16",
-"X": -0.156,
-"Y": 1.04,
-"Angle": -3.7,
-"Lift": 0.0
-},
-{
-"Key": "player_riot_pipe_attack_17",
-"X": -0.142,
-"Y": 1.075,
-"Angle": 1.5,
-"Lift": 0.0
-},
-{
-"Key": "player_riot_pipe_attack_18",
-"X": -0.148,
-"Y": 1.065,
-"Angle": 2.8,
-"Lift": 0.0
-},
-{
-"Key": "player_riot_pipe_attack_19",
-"X": -0.128,
-"Y": 1.072,
-"Angle": 2.6,
+"Key": "player_riot_pipe_attack_7",
+"X": -0.187,
+"Y": 0.976,
+"Angle": -1.9,
 "Lift": 0.0
 },
 {
@@ -11762,142 +11006,58 @@
 },
 {
 "Key": "player_summer_bat_attack_0",
-"X": -0.09,
-"Y": 1.16,
-"Angle": 5.5,
+"X": -0.079,
+"Y": 1.041,
+"Angle": -8.6,
 "Lift": 0.0
 },
 {
 "Key": "player_summer_bat_attack_1",
-"X": -0.109,
-"Y": 1.167,
-"Angle": 10.4,
+"X": -0.091,
+"Y": 1.035,
+"Angle": -10.6,
 "Lift": 0.0
 },
 {
 "Key": "player_summer_bat_attack_2",
-"X": -0.161,
-"Y": 1.183,
-"Angle": 15.1,
+"X": -0.141,
+"Y": 1.052,
+"Angle": -9.9,
 "Lift": 0.0
 },
 {
 "Key": "player_summer_bat_attack_3",
-"X": -0.165,
-"Y": 1.191,
-"Angle": 16.2,
+"X": -0.208,
+"Y": 1.029,
+"Angle": -9.3,
 "Lift": 0.0
 },
 {
 "Key": "player_summer_bat_attack_4",
-"X": -0.102,
-"Y": 1.196,
-"Angle": 15.3,
+"X": -0.269,
+"Y": 0.958,
+"Angle": -10.6,
 "Lift": 0.0
 },
 {
 "Key": "player_summer_bat_attack_5",
-"X": -0.096,
-"Y": 1.174,
-"Angle": 12.6,
+"X": -0.33,
+"Y": 0.944,
+"Angle": -10.7,
 "Lift": 0.0
 },
 {
 "Key": "player_summer_bat_attack_6",
-"X": -0.166,
-"Y": 1.084,
-"Angle": 6.8,
+"X": -0.374,
+"Y": 0.966,
+"Angle": -9.3,
 "Lift": 0.0
 },
 {
 "Key": "player_summer_bat_attack_7",
-"X": -0.21,
-"Y": 1.006,
-"Angle": 1.1,
-"Lift": 0.0
-},
-{
-"Key": "player_summer_bat_attack_8",
-"X": -0.208,
-"Y": 0.995,
-"Angle": -1.1,
-"Lift": 0.0
-},
-{
-"Key": "player_summer_bat_attack_9",
-"X": -0.221,
-"Y": 0.997,
-"Angle": -1.7,
-"Lift": 0.0
-},
-{
-"Key": "player_summer_bat_attack_10",
-"X": -0.257,
-"Y": 0.985,
-"Angle": -2.6,
-"Lift": 0.0
-},
-{
-"Key": "player_summer_bat_attack_11",
-"X": -0.262,
-"Y": 0.994,
-"Angle": -3.1,
-"Lift": 0.0
-},
-{
-"Key": "player_summer_bat_attack_12",
-"X": -0.24,
-"Y": 1.038,
-"Angle": -4.0,
-"Lift": 0.0
-},
-{
-"Key": "player_summer_bat_attack_13",
-"X": -0.26,
-"Y": 1.09,
-"Angle": -5.0,
-"Lift": 0.0
-},
-{
-"Key": "player_summer_bat_attack_14",
-"X": -0.31,
-"Y": 1.117,
-"Angle": -4.8,
-"Lift": 0.0
-},
-{
-"Key": "player_summer_bat_attack_15",
-"X": -0.298,
-"Y": 1.139,
-"Angle": -2.8,
-"Lift": 0.0
-},
-{
-"Key": "player_summer_bat_attack_16",
-"X": -0.231,
-"Y": 1.176,
-"Angle": -0.8,
-"Lift": 0.0
-},
-{
-"Key": "player_summer_bat_attack_17",
-"X": -0.208,
-"Y": 1.188,
-"Angle": -0.2,
-"Lift": 0.0
-},
-{
-"Key": "player_summer_bat_attack_18",
-"X": -0.23,
-"Y": 1.166,
-"Angle": 0.2,
-"Lift": 0.0
-},
-{
-"Key": "player_summer_bat_attack_19",
-"X": -0.248,
-"Y": 1.144,
-"Angle": 0.7,
+"X": -0.386,
+"Y": 0.97,
+"Angle": -8.6,
 "Lift": 0.0
 },
 {
@@ -12490,142 +11650,58 @@
 },
 {
 "Key": "player_summer_baton_attack_0",
-"X": -0.098,
-"Y": 1.219,
-"Angle": 2.0,
+"X": -0.077,
+"Y": 1.09,
+"Angle": -6.4,
 "Lift": 0.0
 },
 {
 "Key": "player_summer_baton_attack_1",
-"X": -0.099,
-"Y": 1.219,
-"Angle": 1.6,
+"X": -0.073,
+"Y": 1.081,
+"Angle": -1.0,
 "Lift": 0.0
 },
 {
 "Key": "player_summer_baton_attack_2",
-"X": -0.092,
-"Y": 1.226,
-"Angle": 2.0,
+"X": -0.088,
+"Y": 1.041,
+"Angle": -1.4,
 "Lift": 0.0
 },
 {
 "Key": "player_summer_baton_attack_3",
-"X": -0.084,
-"Y": 1.263,
-"Angle": 1.1,
+"X": -0.169,
+"Y": 1.005,
+"Angle": -7.8,
 "Lift": 0.0
 },
 {
 "Key": "player_summer_baton_attack_4",
-"X": -0.073,
-"Y": 1.279,
-"Angle": 0.5,
+"X": -0.255,
+"Y": 1.006,
+"Angle": -10.2,
 "Lift": 0.0
 },
 {
 "Key": "player_summer_baton_attack_5",
-"X": -0.054,
-"Y": 1.204,
-"Angle": 3.7,
+"X": -0.272,
+"Y": 1.023,
+"Angle": -7.7,
 "Lift": 0.0
 },
 {
 "Key": "player_summer_baton_attack_6",
-"X": -0.065,
-"Y": 1.125,
-"Angle": 5.0,
+"X": -0.244,
+"Y": 1.025,
+"Angle": -6.5,
 "Lift": 0.0
 },
 {
 "Key": "player_summer_baton_attack_7",
-"X": -0.088,
-"Y": 1.102,
-"Angle": 1.6,
-"Lift": 0.0
-},
-{
-"Key": "player_summer_baton_attack_8",
-"X": -0.094,
-"Y": 1.095,
-"Angle": -1.8,
-"Lift": 0.0
-},
-{
-"Key": "player_summer_baton_attack_9",
-"X": -0.097,
-"Y": 1.091,
-"Angle": -3.2,
-"Lift": 0.0
-},
-{
-"Key": "player_summer_baton_attack_10",
-"X": -0.095,
-"Y": 1.091,
-"Angle": -3.0,
-"Lift": 0.0
-},
-{
-"Key": "player_summer_baton_attack_11",
-"X": -0.106,
-"Y": 1.098,
-"Angle": -3.1,
-"Lift": 0.0
-},
-{
-"Key": "player_summer_baton_attack_12",
-"X": -0.131,
-"Y": 1.117,
-"Angle": -4.9,
-"Lift": 0.0
-},
-{
-"Key": "player_summer_baton_attack_13",
-"X": -0.143,
-"Y": 1.127,
-"Angle": -5.8,
-"Lift": 0.0
-},
-{
-"Key": "player_summer_baton_attack_14",
-"X": -0.143,
-"Y": 1.125,
-"Angle": -5.1,
-"Lift": 0.0
-},
-{
-"Key": "player_summer_baton_attack_15",
-"X": -0.13,
-"Y": 1.134,
-"Angle": -3.4,
-"Lift": 0.0
-},
-{
-"Key": "player_summer_baton_attack_16",
-"X": -0.102,
-"Y": 1.154,
-"Angle": 0.3,
-"Lift": 0.0
-},
-{
-"Key": "player_summer_baton_attack_17",
-"X": -0.088,
-"Y": 1.161,
-"Angle": 3.1,
-"Lift": 0.0
-},
-{
-"Key": "player_summer_baton_attack_18",
-"X": -0.093,
-"Y": 1.161,
-"Angle": 3.3,
-"Lift": 0.0
-},
-{
-"Key": "player_summer_baton_attack_19",
-"X": -0.099,
-"Y": 1.162,
-"Angle": 2.4,
+"X": -0.229,
+"Y": 1.019,
+"Angle": -6.7,
 "Lift": 0.0
 },
 {
@@ -14954,142 +14030,58 @@
 },
 {
 "Key": "player_summer_pipe_attack_0",
-"X": -0.094,
-"Y": 1.18,
-"Angle": 4.8,
+"X": -0.113,
+"Y": 0.876,
+"Angle": -3.3,
 "Lift": 0.0
 },
 {
 "Key": "player_summer_pipe_attack_1",
-"X": -0.111,
-"Y": 1.159,
-"Angle": 7.4,
+"X": -0.128,
+"Y": 0.85,
+"Angle": -5.4,
 "Lift": 0.0
 },
 {
 "Key": "player_summer_pipe_attack_2",
-"X": -0.148,
-"Y": 1.138,
-"Angle": 11.6,
+"X": -0.175,
+"Y": 0.861,
+"Angle": -8.3,
 "Lift": 0.0
 },
 {
 "Key": "player_summer_pipe_attack_3",
-"X": -0.166,
-"Y": 1.127,
-"Angle": 15.1,
+"X": -0.219,
+"Y": 0.874,
+"Angle": -8.4,
 "Lift": 0.0
 },
 {
 "Key": "player_summer_pipe_attack_4",
-"X": -0.168,
-"Y": 1.105,
-"Angle": 18.1,
+"X": -0.278,
+"Y": 0.874,
+"Angle": -8.4,
 "Lift": 0.0
 },
 {
 "Key": "player_summer_pipe_attack_5",
-"X": -0.217,
-"Y": 1.033,
-"Angle": 20.3,
+"X": -0.342,
+"Y": 0.868,
+"Angle": -7.0,
 "Lift": 0.0
 },
 {
 "Key": "player_summer_pipe_attack_6",
-"X": -0.285,
-"Y": 0.921,
-"Angle": 19.9,
+"X": -0.368,
+"Y": 0.853,
+"Angle": -5.0,
 "Lift": 0.0
 },
 {
 "Key": "player_summer_pipe_attack_7",
-"X": -0.305,
-"Y": 0.852,
-"Angle": 15.8,
-"Lift": 0.0
-},
-{
-"Key": "player_summer_pipe_attack_8",
-"X": -0.312,
-"Y": 0.837,
-"Angle": 7.8,
-"Lift": 0.0
-},
-{
-"Key": "player_summer_pipe_attack_9",
-"X": -0.354,
-"Y": 0.823,
-"Angle": 0.1,
-"Lift": 0.0
-},
-{
-"Key": "player_summer_pipe_attack_10",
-"X": -0.378,
-"Y": 0.812,
-"Angle": -2.7,
-"Lift": 0.0
-},
-{
-"Key": "player_summer_pipe_attack_11",
-"X": -0.347,
-"Y": 0.83,
-"Angle": -4.1,
-"Lift": 0.0
-},
-{
-"Key": "player_summer_pipe_attack_12",
-"X": -0.307,
-"Y": 0.869,
-"Angle": -7.3,
-"Lift": 0.0
-},
-{
-"Key": "player_summer_pipe_attack_13",
-"X": -0.302,
-"Y": 0.886,
-"Angle": -11.3,
-"Lift": 0.0
-},
-{
-"Key": "player_summer_pipe_attack_14",
-"X": -0.309,
-"Y": 0.878,
-"Angle": -12.7,
-"Lift": 0.0
-},
-{
-"Key": "player_summer_pipe_attack_15",
-"X": -0.27,
-"Y": 0.931,
-"Angle": -8.6,
-"Lift": 0.0
-},
-{
-"Key": "player_summer_pipe_attack_16",
-"X": -0.21,
-"Y": 1.042,
-"Angle": -2.2,
-"Lift": 0.0
-},
-{
-"Key": "player_summer_pipe_attack_17",
-"X": -0.19,
-"Y": 1.094,
-"Angle": 1.7,
-"Lift": 0.0
-},
-{
-"Key": "player_summer_pipe_attack_18",
-"X": -0.188,
-"Y": 1.085,
-"Angle": 2.8,
-"Lift": 0.0
-},
-{
-"Key": "player_summer_pipe_attack_19",
-"X": -0.173,
-"Y": 1.078,
-"Angle": 2.9,
+"X": -0.37,
+"Y": 0.845,
+"Angle": -4.7,
 "Lift": 0.0
 },
 {
@@ -15682,142 +14674,58 @@
 },
 {
 "Key": "player_uniform_bat_attack_0",
-"X": -0.091,
-"Y": 1.161,
-"Angle": 4.6,
+"X": -0.09,
+"Y": 0.886,
+"Angle": -1.7,
 "Lift": 0.0
 },
 {
 "Key": "player_uniform_bat_attack_1",
-"X": -0.113,
-"Y": 1.166,
-"Angle": 9.5,
+"X": -0.088,
+"Y": 0.886,
+"Angle": -4.0,
 "Lift": 0.0
 },
 {
 "Key": "player_uniform_bat_attack_2",
-"X": -0.169,
-"Y": 1.18,
-"Angle": 13.3,
+"X": -0.134,
+"Y": 0.89,
+"Angle": -5.5,
 "Lift": 0.0
 },
 {
 "Key": "player_uniform_bat_attack_3",
-"X": -0.181,
-"Y": 1.217,
-"Angle": 10.3,
+"X": -0.201,
+"Y": 0.87,
+"Angle": -5.5,
 "Lift": 0.0
 },
 {
 "Key": "player_uniform_bat_attack_4",
-"X": -0.122,
-"Y": 1.253,
-"Angle": 6.7,
+"X": -0.237,
+"Y": 0.84,
+"Angle": -7.0,
 "Lift": 0.0
 },
 {
 "Key": "player_uniform_bat_attack_5",
-"X": -0.103,
-"Y": 1.203,
-"Angle": 8.4,
+"X": -0.258,
+"Y": 0.837,
+"Angle": -8.2,
 "Lift": 0.0
 },
 {
 "Key": "player_uniform_bat_attack_6",
-"X": -0.167,
-"Y": 1.091,
-"Angle": 6.8,
+"X": -0.279,
+"Y": 0.849,
+"Angle": -7.7,
 "Lift": 0.0
 },
 {
 "Key": "player_uniform_bat_attack_7",
-"X": -0.216,
-"Y": 1.026,
-"Angle": 1.6,
-"Lift": 0.0
-},
-{
-"Key": "player_uniform_bat_attack_8",
-"X": -0.21,
-"Y": 1.015,
-"Angle": -0.4,
-"Lift": 0.0
-},
-{
-"Key": "player_uniform_bat_attack_9",
-"X": -0.221,
-"Y": 1.002,
-"Angle": -1.0,
-"Lift": 0.0
-},
-{
-"Key": "player_uniform_bat_attack_10",
-"X": -0.261,
-"Y": 0.984,
-"Angle": -1.9,
-"Lift": 0.0
-},
-{
-"Key": "player_uniform_bat_attack_11",
-"X": -0.265,
-"Y": 0.999,
-"Angle": -2.6,
-"Lift": 0.0
-},
-{
-"Key": "player_uniform_bat_attack_12",
-"X": -0.236,
-"Y": 1.051,
-"Angle": -3.7,
-"Lift": 0.0
-},
-{
-"Key": "player_uniform_bat_attack_13",
-"X": -0.256,
-"Y": 1.095,
-"Angle": -4.6,
-"Lift": 0.0
-},
-{
-"Key": "player_uniform_bat_attack_14",
-"X": -0.316,
-"Y": 1.115,
-"Angle": -4.1,
-"Lift": 0.0
-},
-{
-"Key": "player_uniform_bat_attack_15",
-"X": -0.303,
-"Y": 1.137,
-"Angle": -2.1,
-"Lift": 0.0
-},
-{
-"Key": "player_uniform_bat_attack_16",
-"X": -0.224,
-"Y": 1.174,
-"Angle": -0.1,
-"Lift": 0.0
-},
-{
-"Key": "player_uniform_bat_attack_17",
-"X": -0.205,
-"Y": 1.186,
-"Angle": 0.8,
-"Lift": 0.0
-},
-{
-"Key": "player_uniform_bat_attack_18",
-"X": -0.241,
-"Y": 1.171,
-"Angle": 1.1,
-"Lift": 0.0
-},
-{
-"Key": "player_uniform_bat_attack_19",
-"X": -0.255,
-"Y": 1.164,
-"Angle": 1.1,
+"X": -0.287,
+"Y": 0.854,
+"Angle": -7.3,
 "Lift": 0.0
 },
 {
@@ -16410,142 +15318,58 @@
 },
 {
 "Key": "player_uniform_baton_attack_0",
-"X": -0.106,
-"Y": 1.276,
-"Angle": 1.1,
+"X": -0.081,
+"Y": 1.045,
+"Angle": 2.9,
 "Lift": 0.0
 },
 {
 "Key": "player_uniform_baton_attack_1",
-"X": -0.107,
-"Y": 1.263,
-"Angle": 0.5,
+"X": -0.073,
+"Y": 1.046,
+"Angle": -3.1,
 "Lift": 0.0
 },
 {
 "Key": "player_uniform_baton_attack_2",
-"X": -0.085,
-"Y": 1.24,
-"Angle": 1.5,
+"X": -0.082,
+"Y": 1.064,
+"Angle": -7.0,
 "Lift": 0.0
 },
 {
 "Key": "player_uniform_baton_attack_3",
-"X": -0.073,
-"Y": 1.272,
-"Angle": 0.4,
+"X": -0.101,
+"Y": 1.089,
+"Angle": -6.3,
 "Lift": 0.0
 },
 {
 "Key": "player_uniform_baton_attack_4",
-"X": -0.067,
-"Y": 1.303,
-"Angle": -0.6,
+"X": -0.123,
+"Y": 1.107,
+"Angle": -7.6,
 "Lift": 0.0
 },
 {
 "Key": "player_uniform_baton_attack_5",
-"X": -0.044,
-"Y": 1.241,
-"Angle": 3.0,
+"X": -0.146,
+"Y": 1.113,
+"Angle": -9.5,
 "Lift": 0.0
 },
 {
 "Key": "player_uniform_baton_attack_6",
-"X": -0.042,
-"Y": 1.167,
-"Angle": 4.4,
+"X": -0.159,
+"Y": 1.113,
+"Angle": -9.6,
 "Lift": 0.0
 },
 {
 "Key": "player_uniform_baton_attack_7",
-"X": -0.062,
-"Y": 1.129,
-"Angle": 1.9,
-"Lift": 0.0
-},
-{
-"Key": "player_uniform_baton_attack_8",
-"X": -0.076,
-"Y": 1.097,
-"Angle": -0.0,
-"Lift": 0.0
-},
-{
-"Key": "player_uniform_baton_attack_9",
-"X": -0.084,
-"Y": 1.086,
-"Angle": -1.1,
-"Lift": 0.0
-},
-{
-"Key": "player_uniform_baton_attack_10",
-"X": -0.086,
-"Y": 1.086,
-"Angle": -1.2,
-"Lift": 0.0
-},
-{
-"Key": "player_uniform_baton_attack_11",
-"X": -0.092,
-"Y": 1.094,
-"Angle": -1.5,
-"Lift": 0.0
-},
-{
-"Key": "player_uniform_baton_attack_12",
-"X": -0.117,
-"Y": 1.114,
-"Angle": -3.6,
-"Lift": 0.0
-},
-{
-"Key": "player_uniform_baton_attack_13",
-"X": -0.134,
-"Y": 1.124,
-"Angle": -4.9,
-"Lift": 0.0
-},
-{
-"Key": "player_uniform_baton_attack_14",
-"X": -0.13,
-"Y": 1.122,
-"Angle": -4.1,
-"Lift": 0.0
-},
-{
-"Key": "player_uniform_baton_attack_15",
-"X": -0.112,
-"Y": 1.123,
-"Angle": -1.9,
-"Lift": 0.0
-},
-{
-"Key": "player_uniform_baton_attack_16",
-"X": -0.082,
-"Y": 1.13,
-"Angle": 1.6,
-"Lift": 0.0
-},
-{
-"Key": "player_uniform_baton_attack_17",
-"X": -0.067,
-"Y": 1.133,
-"Angle": 3.9,
-"Lift": 0.0
-},
-{
-"Key": "player_uniform_baton_attack_18",
-"X": -0.072,
-"Y": 1.132,
-"Angle": 4.0,
-"Lift": 0.0
-},
-{
-"Key": "player_uniform_baton_attack_19",
-"X": -0.077,
-"Y": 1.133,
-"Angle": 3.3,
+"X": -0.163,
+"Y": 1.113,
+"Angle": -9.6,
 "Lift": 0.0
 },
 {
@@ -18874,142 +17698,58 @@
 },
 {
 "Key": "player_uniform_pipe_attack_0",
-"X": -0.097,
-"Y": 1.188,
-"Angle": 3.6,
+"X": -0.111,
+"Y": 0.915,
+"Angle": -10.4,
 "Lift": 0.0
 },
 {
 "Key": "player_uniform_pipe_attack_1",
-"X": -0.109,
-"Y": 1.167,
-"Angle": 5.9,
+"X": -0.087,
+"Y": 0.904,
+"Angle": -6.6,
 "Lift": 0.0
 },
 {
 "Key": "player_uniform_pipe_attack_2",
-"X": -0.134,
-"Y": 1.131,
-"Angle": 10.4,
+"X": -0.116,
+"Y": 0.913,
+"Angle": -2.5,
 "Lift": 0.0
 },
 {
 "Key": "player_uniform_pipe_attack_3",
-"X": -0.145,
-"Y": 1.119,
-"Angle": 14.3,
+"X": -0.203,
+"Y": 0.932,
+"Angle": -6.4,
 "Lift": 0.0
 },
 {
 "Key": "player_uniform_pipe_attack_4",
-"X": -0.124,
-"Y": 1.095,
-"Angle": 16.8,
+"X": -0.254,
+"Y": 0.948,
+"Angle": -12.7,
 "Lift": 0.0
 },
 {
 "Key": "player_uniform_pipe_attack_5",
-"X": -0.116,
-"Y": 1.013,
-"Angle": 17.8,
+"X": -0.245,
+"Y": 0.969,
+"Angle": -12.6,
 "Lift": 0.0
 },
 {
 "Key": "player_uniform_pipe_attack_6",
-"X": -0.17,
-"Y": 0.91,
-"Angle": 18.2,
+"X": -0.221,
+"Y": 0.984,
+"Angle": -8.1,
 "Lift": 0.0
 },
 {
 "Key": "player_uniform_pipe_attack_7",
-"X": -0.238,
-"Y": 0.859,
-"Angle": 16.3,
-"Lift": 0.0
-},
-{
-"Key": "player_uniform_pipe_attack_8",
-"X": -0.268,
-"Y": 0.857,
-"Angle": 9.6,
-"Lift": 0.0
-},
-{
-"Key": "player_uniform_pipe_attack_9",
-"X": -0.306,
-"Y": 0.846,
-"Angle": 2.4,
-"Lift": 0.0
-},
-{
-"Key": "player_uniform_pipe_attack_10",
-"X": -0.329,
-"Y": 0.836,
-"Angle": -0.8,
-"Lift": 0.0
-},
-{
-"Key": "player_uniform_pipe_attack_11",
-"X": -0.305,
-"Y": 0.85,
-"Angle": -3.4,
-"Lift": 0.0
-},
-{
-"Key": "player_uniform_pipe_attack_12",
-"X": -0.278,
-"Y": 0.877,
-"Angle": -7.5,
-"Lift": 0.0
-},
-{
-"Key": "player_uniform_pipe_attack_13",
-"X": -0.275,
-"Y": 0.883,
-"Angle": -10.7,
-"Lift": 0.0
-},
-{
-"Key": "player_uniform_pipe_attack_14",
-"X": -0.282,
-"Y": 0.862,
-"Angle": -10.8,
-"Lift": 0.0
-},
-{
-"Key": "player_uniform_pipe_attack_15",
-"X": -0.256,
-"Y": 0.912,
-"Angle": -7.6,
-"Lift": 0.0
-},
-{
-"Key": "player_uniform_pipe_attack_16",
-"X": -0.199,
-"Y": 1.036,
-"Angle": -2.9,
-"Lift": 0.0
-},
-{
-"Key": "player_uniform_pipe_attack_17",
-"X": -0.167,
-"Y": 1.095,
-"Angle": 1.5,
-"Lift": 0.0
-},
-{
-"Key": "player_uniform_pipe_attack_18",
-"X": -0.166,
-"Y": 1.085,
-"Angle": 3.0,
-"Lift": 0.0
-},
-{
-"Key": "player_uniform_pipe_attack_19",
-"X": -0.153,
-"Y": 1.079,
-"Angle": 2.5,
+"X": -0.211,
+"Y": 0.988,
+"Angle": -5.8,
 "Lift": 0.0
 },
 {
@@ -19602,142 +18342,58 @@
 },
 {
 "Key": "player_winter_bat_attack_0",
-"X": -0.089,
-"Y": 1.187,
-"Angle": 5.5,
+"X": -0.106,
+"Y": 1.054,
+"Angle": -2.1,
 "Lift": 0.0
 },
 {
 "Key": "player_winter_bat_attack_1",
-"X": -0.121,
-"Y": 1.186,
-"Angle": 8.1,
+"X": -0.105,
+"Y": 1.043,
+"Angle": -3.3,
 "Lift": 0.0
 },
 {
 "Key": "player_winter_bat_attack_2",
-"X": -0.179,
-"Y": 1.186,
-"Angle": 10.9,
+"X": -0.141,
+"Y": 1.032,
+"Angle": -4.2,
 "Lift": 0.0
 },
 {
 "Key": "player_winter_bat_attack_3",
-"X": -0.172,
-"Y": 1.217,
-"Angle": 8.4,
+"X": -0.216,
+"Y": 1.024,
+"Angle": -3.8,
 "Lift": 0.0
 },
 {
 "Key": "player_winter_bat_attack_4",
-"X": -0.1,
-"Y": 1.254,
-"Angle": 4.6,
-"Lift": 0.0
-},
-{
-"Key": "player_winter_bat_attack_5",
-"X": -0.095,
-"Y": 1.203,
-"Angle": 5.9,
-"Lift": 0.0
-},
-{
-"Key": "player_winter_bat_attack_6",
-"X": -0.16,
-"Y": 1.085,
-"Angle": 4.8,
-"Lift": 0.0
-},
-{
-"Key": "player_winter_bat_attack_7",
-"X": -0.193,
-"Y": 1.006,
-"Angle": 0.8,
-"Lift": 0.0
-},
-{
-"Key": "player_winter_bat_attack_8",
-"X": -0.185,
-"Y": 0.994,
-"Angle": -0.6,
-"Lift": 0.0
-},
-{
-"Key": "player_winter_bat_attack_9",
-"X": -0.203,
-"Y": 0.996,
-"Angle": -1.4,
-"Lift": 0.0
-},
-{
-"Key": "player_winter_bat_attack_10",
-"X": -0.248,
-"Y": 0.985,
-"Angle": -2.4,
-"Lift": 0.0
-},
-{
-"Key": "player_winter_bat_attack_11",
-"X": -0.247,
-"Y": 1.0,
-"Angle": -3.1,
-"Lift": 0.0
-},
-{
-"Key": "player_winter_bat_attack_12",
-"X": -0.212,
-"Y": 1.052,
-"Angle": -4.1,
-"Lift": 0.0
-},
-{
-"Key": "player_winter_bat_attack_13",
-"X": -0.238,
-"Y": 1.092,
-"Angle": -5.6,
-"Lift": 0.0
-},
-{
-"Key": "player_winter_bat_attack_14",
-"X": -0.306,
-"Y": 1.107,
-"Angle": -6.2,
-"Lift": 0.0
-},
-{
-"Key": "player_winter_bat_attack_15",
-"X": -0.298,
-"Y": 1.139,
+"X": -0.292,
+"Y": 1.028,
 "Angle": -5.1,
 "Lift": 0.0
 },
 {
-"Key": "player_winter_bat_attack_16",
-"X": -0.228,
-"Y": 1.182,
-"Angle": -3.2,
+"Key": "player_winter_bat_attack_5",
+"X": -0.327,
+"Y": 1.021,
+"Angle": -7.2,
 "Lift": 0.0
 },
 {
-"Key": "player_winter_bat_attack_17",
-"X": -0.204,
-"Y": 1.199,
-"Angle": -1.8,
+"Key": "player_winter_bat_attack_6",
+"X": -0.319,
+"Y": 1.005,
+"Angle": -8.5,
 "Lift": 0.0
 },
 {
-"Key": "player_winter_bat_attack_18",
-"X": -0.221,
-"Y": 1.189,
-"Angle": -0.8,
-"Lift": 0.0
-},
-{
-"Key": "player_winter_bat_attack_19",
-"X": -0.234,
-"Y": 1.174,
-"Angle": -0.2,
+"Key": "player_winter_bat_attack_7",
+"X": -0.31,
+"Y": 1.0,
+"Angle": -9.0,
 "Lift": 0.0
 },
 {
@@ -20330,142 +18986,58 @@
 },
 {
 "Key": "player_winter_baton_attack_0",
-"X": -0.085,
-"Y": 1.211,
-"Angle": 2.5,
+"X": -0.082,
+"Y": 1.076,
+"Angle": 0.7,
 "Lift": 0.0
 },
 {
 "Key": "player_winter_baton_attack_1",
-"X": -0.073,
-"Y": 1.199,
-"Angle": 1.4,
+"X": -0.069,
+"Y": 1.089,
+"Angle": -2.2,
 "Lift": 0.0
 },
 {
 "Key": "player_winter_baton_attack_2",
-"X": -0.064,
-"Y": 1.23,
-"Angle": -0.2,
+"X": -0.106,
+"Y": 1.097,
+"Angle": -2.5,
 "Lift": 0.0
 },
 {
 "Key": "player_winter_baton_attack_3",
-"X": -0.066,
-"Y": 1.305,
-"Angle": -2.4,
-"Lift": 0.0
-},
-{
-"Key": "player_winter_baton_attack_4",
-"X": -0.058,
-"Y": 1.296,
-"Angle": -1.5,
-"Lift": 0.0
-},
-{
-"Key": "player_winter_baton_attack_5",
-"X": -0.04,
-"Y": 1.191,
-"Angle": 2.7,
-"Lift": 0.0
-},
-{
-"Key": "player_winter_baton_attack_6",
-"X": -0.046,
-"Y": 1.119,
-"Angle": 4.0,
-"Lift": 0.0
-},
-{
-"Key": "player_winter_baton_attack_7",
-"X": -0.077,
-"Y": 1.102,
-"Angle": 1.4,
-"Lift": 0.0
-},
-{
-"Key": "player_winter_baton_attack_8",
-"X": -0.098,
-"Y": 1.094,
-"Angle": -1.4,
-"Lift": 0.0
-},
-{
-"Key": "player_winter_baton_attack_9",
-"X": -0.103,
-"Y": 1.091,
-"Angle": -3.0,
-"Lift": 0.0
-},
-{
-"Key": "player_winter_baton_attack_10",
-"X": -0.103,
-"Y": 1.078,
-"Angle": -3.4,
-"Lift": 0.0
-},
-{
-"Key": "player_winter_baton_attack_11",
-"X": -0.101,
-"Y": 1.071,
-"Angle": -3.4,
-"Lift": 0.0
-},
-{
-"Key": "player_winter_baton_attack_12",
-"X": -0.102,
-"Y": 1.1,
-"Angle": -3.7,
-"Lift": 0.0
-},
-{
-"Key": "player_winter_baton_attack_13",
-"X": -0.108,
-"Y": 1.123,
-"Angle": -4.6,
-"Lift": 0.0
-},
-{
-"Key": "player_winter_baton_attack_14",
-"X": -0.124,
-"Y": 1.128,
-"Angle": -6.1,
-"Lift": 0.0
-},
-{
-"Key": "player_winter_baton_attack_15",
-"X": -0.133,
-"Y": 1.142,
-"Angle": -6.1,
-"Lift": 0.0
-},
-{
-"Key": "player_winter_baton_attack_16",
-"X": -0.11,
-"Y": 1.161,
-"Angle": -3.0,
-"Lift": 0.0
-},
-{
-"Key": "player_winter_baton_attack_17",
-"X": -0.076,
-"Y": 1.167,
+"X": -0.18,
+"Y": 1.063,
 "Angle": 0.2,
 "Lift": 0.0
 },
 {
-"Key": "player_winter_baton_attack_18",
-"X": -0.059,
-"Y": 1.164,
-"Angle": 1.4,
+"Key": "player_winter_baton_attack_4",
+"X": -0.232,
+"Y": 1.047,
+"Angle": 0.7,
 "Lift": 0.0
 },
 {
-"Key": "player_winter_baton_attack_19",
-"X": -0.052,
-"Y": 1.164,
-"Angle": 1.6,
+"Key": "player_winter_baton_attack_5",
+"X": -0.226,
+"Y": 1.049,
+"Angle": -0.3,
+"Lift": 0.0
+},
+{
+"Key": "player_winter_baton_attack_6",
+"X": -0.201,
+"Y": 1.036,
+"Angle": -0.5,
+"Lift": 0.0
+},
+{
+"Key": "player_winter_baton_attack_7",
+"X": -0.194,
+"Y": 1.029,
+"Angle": -0.5,
 "Lift": 0.0
 },
 {
@@ -22794,142 +21366,58 @@
 },
 {
 "Key": "player_winter_pipe_attack_0",
-"X": -0.087,
-"Y": 1.209,
-"Angle": 4.2,
+"X": -0.093,
+"Y": 1.074,
+"Angle": -11.5,
 "Lift": 0.0
 },
 {
 "Key": "player_winter_pipe_attack_1",
-"X": -0.092,
-"Y": 1.18,
-"Angle": 5.2,
+"X": -0.091,
+"Y": 1.019,
+"Angle": -10.8,
 "Lift": 0.0
 },
 {
 "Key": "player_winter_pipe_attack_2",
-"X": -0.091,
-"Y": 1.144,
-"Angle": 7.8,
+"X": -0.141,
+"Y": 0.957,
+"Angle": -5.5,
 "Lift": 0.0
 },
 {
 "Key": "player_winter_pipe_attack_3",
-"X": -0.092,
-"Y": 1.123,
-"Angle": 10.9,
+"X": -0.278,
+"Y": 0.964,
+"Angle": -4.6,
 "Lift": 0.0
 },
 {
 "Key": "player_winter_pipe_attack_4",
-"X": -0.089,
-"Y": 1.097,
-"Angle": 13.6,
+"X": -0.413,
+"Y": 1.018,
+"Angle": -6.3,
 "Lift": 0.0
 },
 {
 "Key": "player_winter_pipe_attack_5",
-"X": -0.106,
-"Y": 1.03,
-"Angle": 15.6,
+"X": -0.444,
+"Y": 1.046,
+"Angle": -4.1,
 "Lift": 0.0
 },
 {
 "Key": "player_winter_pipe_attack_6",
-"X": -0.165,
-"Y": 0.941,
-"Angle": 16.6,
+"X": -0.41,
+"Y": 1.038,
+"Angle": -1.3,
 "Lift": 0.0
 },
 {
 "Key": "player_winter_pipe_attack_7",
-"X": -0.21,
-"Y": 0.898,
-"Angle": 14.8,
-"Lift": 0.0
-},
-{
-"Key": "player_winter_pipe_attack_8",
-"X": -0.213,
-"Y": 0.89,
-"Angle": 8.8,
-"Lift": 0.0
-},
-{
-"Key": "player_winter_pipe_attack_9",
-"X": -0.238,
-"Y": 0.864,
-"Angle": 3.1,
-"Lift": 0.0
-},
-{
-"Key": "player_winter_pipe_attack_10",
-"X": -0.266,
-"Y": 0.839,
-"Angle": 0.9,
-"Lift": 0.0
-},
-{
-"Key": "player_winter_pipe_attack_11",
-"X": -0.242,
-"Y": 0.848,
+"X": -0.393,
+"Y": 1.028,
 "Angle": -0.3,
-"Lift": 0.0
-},
-{
-"Key": "player_winter_pipe_attack_12",
-"X": -0.211,
-"Y": 0.885,
-"Angle": -3.4,
-"Lift": 0.0
-},
-{
-"Key": "player_winter_pipe_attack_13",
-"X": -0.217,
-"Y": 0.9,
-"Angle": -8.1,
-"Lift": 0.0
-},
-{
-"Key": "player_winter_pipe_attack_14",
-"X": -0.222,
-"Y": 0.891,
-"Angle": -9.3,
-"Lift": 0.0
-},
-{
-"Key": "player_winter_pipe_attack_15",
-"X": -0.186,
-"Y": 0.939,
-"Angle": -5.3,
-"Lift": 0.0
-},
-{
-"Key": "player_winter_pipe_attack_16",
-"X": -0.141,
-"Y": 1.037,
-"Angle": -0.9,
-"Lift": 0.0
-},
-{
-"Key": "player_winter_pipe_attack_17",
-"X": -0.12,
-"Y": 1.081,
-"Angle": 1.1,
-"Lift": 0.0
-},
-{
-"Key": "player_winter_pipe_attack_18",
-"X": -0.107,
-"Y": 1.08,
-"Angle": 2.0,
-"Lift": 0.0
-},
-{
-"Key": "player_winter_pipe_attack_19",
-"X": -0.084,
-"Y": 1.079,
-"Angle": 2.7,
 "Lift": 0.0
 },
 {
