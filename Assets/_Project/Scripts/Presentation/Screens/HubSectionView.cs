@@ -1088,6 +1088,12 @@ namespace ApoGirl.Presentation.Screens
             actor = null;
         }
 
+        /// <summary>
+        /// 허브 전용 주인공 그림 폴더 (ExplorationPixel/Hub/): 단면도에는 에셋 10차 전의 대기·걷기 그림을 쓴다 (사용자 결정 2026-11-23).
+        /// 여기 없으면 탐험 그림으로 물러난다.
+        /// </summary>
+        private const string HubPlayer = "Hub/";
+
         /// <summary>주인공 그림 접두어: player_{옷}_{무기}_ (옷은 방어구, 없으면 계절 교복. 그림이 없으면 교복·맨손 쪽으로 물러난다).</summary>
         private string PlayerPrefix(string armorId, string weaponId, int week)
         {
@@ -1095,6 +1101,11 @@ namespace ApoGirl.Presentation.Screens
             var weapon = Token(weaponId, "ITEM_WEAPON_", "none");
             foreach (var prefix in new[] { $"player_{armor}_{weapon}_", $"player_uniform_{weapon}_", $"player_{armor}_none_", "player_uniform_none_" })
             {
+                if (Tex(HubPlayer + prefix + "idle_0") != null)
+                {
+                    return HubPlayer + prefix;
+                }
+
                 if (Tex(prefix + "idle_0") != null)
                 {
                     return prefix;
