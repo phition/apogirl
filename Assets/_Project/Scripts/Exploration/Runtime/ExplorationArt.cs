@@ -24,6 +24,20 @@ namespace ApoGirl.Exploration.Runtime
         private static readonly Dictionary<string, int> Frames = new Dictionary<string, int>();
 
         /// <summary>
+        /// 플레이를 시작할 때마다 캐시를 비운다. 이 프로젝트는 플레이 모드 진입 때 도메인을 다시 읽지 않아(Enter Play Mode Options)
+        /// 비우지 않으면 고친 그림·exploration_art.json·가방 자리표가 에디터를 다시 켤 때까지 옛 값으로 남는다.
+        /// </summary>
+        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
+        private static void ResetCaches()
+        {
+            Cache.Clear();
+            Frames.Clear();
+            PixelKeys.Clear();
+            _artMap = null;
+            _anchors = null;
+        }
+
+        /// <summary>
         /// 픽셀 아트에 있는 프레임 수 (prefix + 0, 1, 2 …가 이어지는 만큼). 픽셀 아트가 없으면 fallback (코드 그림 프레임 수).
         /// </summary>
         /// <summary>픽셀 아트(ExplorationPixel)에 그 키가 있는지. 픽셀 아트는 정수배가 아닌 크기로 늘리지 않는다.</summary>
