@@ -95,6 +95,12 @@ namespace ApoGirl.Exploration.Runtime
 
             /// <summary>이 무기의 타격 이펙트 그림 접두어 (fx_hit_heavy_ …). 비면 DefaultFx.</summary>
             public string Fx = "";
+
+            /// <summary>
+            /// 공격 프레임을 돌리는 차례 (비면 0..n 고르게). 들어 올리기를 줄이고 머리 위에서 잠깐 멈췄다가
+            /// 내려치기를 길게 보여 주려고 쓴다. At은 이 차례 안의 진행도다.
+            /// </summary>
+            public int[] Frames = Array.Empty<int>();
         }
 
         /// <summary>
@@ -128,6 +134,20 @@ namespace ApoGirl.Exploration.Runtime
             }
 
             return Mathf.Clamp01(combat.DefaultImpactAt);
+        }
+
+        /// <summary>그 무기의 공격 프레임 차례 (없으면 빈 배열 = 고르게).</summary>
+        public static int[] AttackFrames(string weaponToken)
+        {
+            foreach (var entry in Combat.ImpactAt)
+            {
+                if (entry.Weapon == weaponToken && entry.Frames != null)
+                {
+                    return entry.Frames;
+                }
+            }
+
+            return Array.Empty<int>();
         }
 
         /// <summary>그 무기의 타격 이펙트 그림 접두어 (그림이 없으면 기본 fx_hit_).</summary>

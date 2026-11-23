@@ -2252,7 +2252,7 @@ namespace ApoGirl.Exploration.Runtime
             var look = _lookPrefix;
             if (_attackAnim > 0f)
             {
-                return ProgressFrame(look + "attack_", 1f - _attackAnim / AttackAnimSeconds) ?? look + "attack";
+                return AttackFrame(look + "attack_", 1f - _attackAnim / AttackAnimSeconds) ?? look + "attack";
             }
 
             if (_shoveAnim > 0f)
@@ -2318,6 +2318,20 @@ namespace ApoGirl.Exploration.Runtime
             var count = ExplorationArt.FrameCount(prefix, 4);
             var frame = (int)(_animTime * (_animRunning ? 12f : 7f)) % count;
             return prefix + frame;
+        }
+
+        /// <summary>공격 프레임: 무기별 차례(exploration_art.json Combat.ImpactAt[].Frames)가 있으면 그 차례로, 없으면 고르게.</summary>
+        private string AttackFrame(string prefix, float progress)
+        {
+            var order = ExplorationArt.AttackFrames(_weaponToken);
+            if (order.Length == 0 || !ExplorationArt.HasPixel(prefix + "0"))
+            {
+                return ProgressFrame(prefix, progress);
+            }
+
+            var count = ExplorationArt.FrameCount(prefix, 1);
+            var index = order[Mathf.Clamp((int)(progress * order.Length), 0, order.Length - 1)];
+            return prefix + Mathf.Clamp(index, 0, count - 1);
         }
 
         /// <summary>픽셀 아트 프레임이 있으면 진행도(0~1)에 맞는 프레임 키, 없으면 null.</summary>
