@@ -356,6 +356,36 @@
               }
             ]
           }
+        },
+        {
+          "Id": "SPEAK",
+          "Condition": {
+            "FlagsAll": [
+              "MIND_FACE"
+            ]
+          },
+          "Effect": {
+            "SetFlags": [
+              "BULLY_SEPARATED",
+              "RINGLEADER_SPOKE"
+            ],
+            "Hidden": [
+              {
+                "Hidden": "TraumaRecovery",
+                "Amount": 4
+              },
+              {
+                "Hidden": "SelfAwareness",
+                "Amount": 6
+              }
+            ],
+            "Vitals": [
+              {
+                "Vital": "Stress",
+                "Amount": 4
+              }
+            ]
+          }
         }
       ]
     },

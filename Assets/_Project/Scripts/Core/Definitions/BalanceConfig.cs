@@ -414,6 +414,47 @@ namespace ApoGirl.Core.Definitions
         public float RaidCoverHpScale = 0f;
         public int RaidCoverInjuryWeeks = 2;
 
+        // ── 프롤로그의 메아리 (기획 PROPOSAL_PROLOGUE_ECHOES, 2026-11-23) ──
+
+        /// <summary>성격 F: 이 특성이 있으면 동료 스트레스가 오를 때 그 동료 호감(0~100)에 비례해 덜 오른다. 호감 100이면 −Max.</summary>
+        public string CompanionStressReliefTraitId = "PT_F";
+        public float CompanionStressReliefMax = 0.4f;
+
+        /// <summary>좋아하는 과목: 프롤로그 과목 → 교육 숙련. 그 숙련 교육을 하면 스트레스 −, 가장 큰 능력치 상승 +.</summary>
+        public List<FavoriteSubjectDef> FavoriteSubjects = new List<FavoriteSubjectDef>
+        {
+            new FavoriteSubjectDef { SubjectId = "KOREAN", Proficiency = ProficiencyType.Humanities },
+            new FavoriteSubjectDef { SubjectId = "MATH_SCI", Proficiency = ProficiencyType.Engineering },
+            new FavoriteSubjectDef { SubjectId = "PE", Proficiency = ProficiencyType.SelfDefense },
+            new FavoriteSubjectDef { SubjectId = "TECH_HOME", Proficiency = ProficiencyType.Cooking },
+            new FavoriteSubjectDef { SubjectId = "BIO", Proficiency = ProficiencyType.Medicine },
+            new FavoriteSubjectDef { SubjectId = "MIND", Proficiency = ProficiencyType.Mind },
+        };
+
+        public int FavoriteSubjectStressRelief = 1;
+        public int FavoriteSubjectGainBonus = 1;
+
+        /// <summary>"딱히 없어"(NONE): 이 숙련 단계에 처음 닿은 과목이 좋아하는 과목이 된다 (깃발 FAVORITE_FOUND).</summary>
+        public int FavoriteFoundLevel = 3;
+        public string FavoriteNoneId = "NONE";
+        public string FavoriteFoundFlag = "FAVORITE_FOUND";
+
+        /// <summary>희망 → 의지: 희망이 이 값 이상인 주는 결산 때 의지 +.</summary>
+        public int HopeWillpowerThreshold = 70;
+        public int HopeWillpowerWeekly = 1;
+
+        /// <summary>의지 → 희망: 희망이 깎일 때 의지 1당 이만큼 덜 깎인다 (상한 Max).</summary>
+        public float WillpowerHopeGuardPerPoint = 0.004f;
+        public float WillpowerHopeGuardMax = 0.4f;
+
+        /// <summary>희망이 이 값 이상이면: 위기 이탈 예고가 확률로 비켜 가고, 설득 판정(UsesHope)에 보너스.</summary>
+        public int CrisisHopeThreshold = 60;
+        public float CrisisHopeSkipChance = 0.35f;
+        public float CrisisHopePersuadeBonus = 0.2f;
+
+        /// <summary>희망 덕에 설득이 통했을 때 켜는 깃발 접두어 (+NPC ID). 허브 말풍선 "희망이 느껴져".</summary>
+        public string HopeHeldFlagPrefix = "HOPE_HELD_";
+
         /// <summary>함께한 시간 (역할 재기획 4절): 주인공이 방 스케줄을 하면 그 방 동료 호감 +1 (적성 역할이면 + 보너스), 한 사람당 주 상한.</summary>
         public int TogetherAffinity = 1;
         public int TogetherAptitudeBonus = 1;

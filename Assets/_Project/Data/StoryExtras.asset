@@ -57,7 +57,10 @@ MonoBehaviour:
       Key: 
       Value: 0.1
   - Id: PT_E
-    Modifiers: []
+    Modifiers:
+    - Kind: 5
+      Key: 
+      Value: -0.1
   - Id: PT_I
     Modifiers:
     - Kind: 4
@@ -442,6 +445,102 @@ MonoBehaviour:
       IsBirthday: 0
     Priority: 32
     TextKey: tc.cold
+    Group: 
+  - Id: TC_GRADE_TOP
+    Kind: 1
+    Condition:
+      WeekMin: 5
+      WeekMax: 6
+      Days: 
+      Phase: 0
+      Seasons: 
+      Month: 0
+      DayOfMonth: 0
+      ActionCategories: 
+      ActionIds: []
+      FlagsAll:
+      - GRADE_TOP
+      FlagsAny: []
+      FlagsNone: []
+      CluesAll: []
+      Checks: []
+      AnyChecks: []
+      NpcStatuses: []
+      IsBirthday: 0
+    Priority: 25
+    TextKey: tc.grade_top
+    Group: 
+  - Id: TC_GRADE_MIDDLE
+    Kind: 1
+    Condition:
+      WeekMin: 5
+      WeekMax: 6
+      Days: 
+      Phase: 0
+      Seasons: 
+      Month: 0
+      DayOfMonth: 0
+      ActionCategories: 
+      ActionIds: []
+      FlagsAll:
+      - GRADE_MIDDLE
+      FlagsAny: []
+      FlagsNone: []
+      CluesAll: []
+      Checks: []
+      AnyChecks: []
+      NpcStatuses: []
+      IsBirthday: 0
+    Priority: 25
+    TextKey: tc.grade_middle
+    Group: 
+  - Id: TC_GRADE_LOW
+    Kind: 1
+    Condition:
+      WeekMin: 5
+      WeekMax: 6
+      Days: 
+      Phase: 0
+      Seasons: 
+      Month: 0
+      DayOfMonth: 0
+      ActionCategories: 
+      ActionIds: []
+      FlagsAll:
+      - GRADE_LOW
+      FlagsAny: []
+      FlagsNone: []
+      CluesAll: []
+      Checks: []
+      AnyChecks: []
+      NpcStatuses: []
+      IsBirthday: 0
+    Priority: 25
+    TextKey: tc.grade_low
+    Group: 
+  - Id: TC_GRADE_UNKNOWN
+    Kind: 1
+    Condition:
+      WeekMin: 5
+      WeekMax: 6
+      Days: 
+      Phase: 0
+      Seasons: 
+      Month: 0
+      DayOfMonth: 0
+      ActionCategories: 
+      ActionIds: []
+      FlagsAll:
+      - GRADE_UNKNOWN
+      FlagsAny: []
+      FlagsNone: []
+      CluesAll: []
+      Checks: []
+      AnyChecks: []
+      NpcStatuses: []
+      IsBirthday: 0
+    Priority: 25
+    TextKey: tc.grade_unknown
     Group: 
   - Id: REVIEW_A1
     Kind: 7
@@ -1759,6 +1858,30 @@ MonoBehaviour:
       IsBirthday: 0
     Priority: 20
     TextKey: line.lf_promise
+    Group: 
+  - Id: LF_LATER
+    Kind: 3
+    Condition:
+      WeekMin: 0
+      WeekMax: 0
+      Days: 
+      Phase: 0
+      Seasons: 
+      Month: 0
+      DayOfMonth: 0
+      ActionCategories: 
+      ActionIds: []
+      FlagsAll:
+      - PROMISE_LATER
+      FlagsAny: []
+      FlagsNone: []
+      CluesAll: []
+      Checks: []
+      AnyChecks: []
+      NpcStatuses: []
+      IsBirthday: 0
+    Priority: 15
+    TextKey: line.lf_later
     Group: 
   - Id: LF_TOLD
     Kind: 3
@@ -3774,6 +3897,651 @@ MonoBehaviour:
     Priority: 0
     TextKey: line.ep_teacher_diploma
     Group: TEACHER_DIPLOMA
+  - Id: EP_MIND_LAUGH
+    Kind: 8
+    Condition:
+      WeekMin: 0
+      WeekMax: 0
+      Days: 
+      Phase: 0
+      Seasons: 
+      Month: 0
+      DayOfMonth: 0
+      ActionCategories: 
+      ActionIds: []
+      FlagsAll:
+      - MIND_LAUGH
+      FlagsAny: []
+      FlagsNone: []
+      CluesAll: []
+      Checks: []
+      AnyChecks: []
+      NpcStatuses: []
+      IsBirthday: 0
+    Priority: 10
+    TextKey: line.ep_mind_laugh
+    Group: MIND
+  - Id: EP_MIND_LAUGH_SMILE
+    Kind: 8
+    Condition:
+      WeekMin: 0
+      WeekMax: 0
+      Days: 
+      Phase: 0
+      Seasons: 
+      Month: 0
+      DayOfMonth: 0
+      ActionCategories: 
+      ActionIds: []
+      FlagsAll:
+      - MIND_LAUGH
+      - LAUGH_END_SMILE
+      FlagsAny: []
+      FlagsNone: []
+      CluesAll: []
+      Checks: []
+      AnyChecks: []
+      NpcStatuses: []
+      IsBirthday: 0
+    Priority: 30
+    TextKey: line.ep_mind_laugh_smile
+    Group: MIND
+  - Id: EP_MIND_LAUGH_LET
+    Kind: 8
+    Condition:
+      WeekMin: 0
+      WeekMax: 0
+      Days: 
+      Phase: 0
+      Seasons: 
+      Month: 0
+      DayOfMonth: 0
+      ActionCategories: 
+      ActionIds: []
+      FlagsAll:
+      - MIND_LAUGH
+      - LAUGH_END_LET
+      FlagsAny: []
+      FlagsNone: []
+      CluesAll: []
+      Checks: []
+      AnyChecks: []
+      NpcStatuses: []
+      IsBirthday: 0
+    Priority: 30
+    TextKey: line.ep_mind_laugh_let
+    Group: MIND
+  - Id: EP_MIND_LAUGH_HEAVY
+    Kind: 8
+    Condition:
+      WeekMin: 0
+      WeekMax: 0
+      Days: 
+      Phase: 0
+      Seasons: 
+      Month: 0
+      DayOfMonth: 0
+      ActionCategories: 
+      ActionIds: []
+      FlagsAll:
+      - MIND_LAUGH
+      FlagsAny: []
+      FlagsNone: []
+      CluesAll: []
+      Checks:
+      - Kind: 4
+        Key: TraumaRecovery
+        Op: 1
+        Value: 6
+      - Kind: 4
+        Key: Isolation
+        Op: 0
+        Value: 30
+      AnyChecks: []
+      NpcStatuses: []
+      IsBirthday: 0
+    Priority: 40
+    TextKey: line.ep_mind_laugh_heavy
+    Group: MIND
+  - Id: EP_MIND_HURRY
+    Kind: 8
+    Condition:
+      WeekMin: 0
+      WeekMax: 0
+      Days: 
+      Phase: 0
+      Seasons: 
+      Month: 0
+      DayOfMonth: 0
+      ActionCategories: 
+      ActionIds: []
+      FlagsAll:
+      - MIND_HURRY
+      FlagsAny: []
+      FlagsNone: []
+      CluesAll: []
+      Checks: []
+      AnyChecks: []
+      NpcStatuses: []
+      IsBirthday: 0
+    Priority: 10
+    TextKey: line.ep_mind_hurry
+    Group: MIND
+  - Id: EP_MIND_HURRY_FIRST
+    Kind: 8
+    Condition:
+      WeekMin: 0
+      WeekMax: 0
+      Days: 
+      Phase: 0
+      Seasons: 
+      Month: 0
+      DayOfMonth: 0
+      ActionCategories: 
+      ActionIds: []
+      FlagsAll:
+      - MIND_HURRY
+      - HURRY_END_FIRST
+      FlagsAny: []
+      FlagsNone: []
+      CluesAll: []
+      Checks: []
+      AnyChecks: []
+      NpcStatuses: []
+      IsBirthday: 0
+    Priority: 30
+    TextKey: line.ep_mind_hurry_first
+    Group: MIND
+  - Id: EP_MIND_HURRY_TOGETHER
+    Kind: 8
+    Condition:
+      WeekMin: 0
+      WeekMax: 0
+      Days: 
+      Phase: 0
+      Seasons: 
+      Month: 0
+      DayOfMonth: 0
+      ActionCategories: 
+      ActionIds: []
+      FlagsAll:
+      - MIND_HURRY
+      - HURRY_END_TOGETHER
+      FlagsAny: []
+      FlagsNone: []
+      CluesAll: []
+      Checks: []
+      AnyChecks: []
+      NpcStatuses: []
+      IsBirthday: 0
+    Priority: 30
+    TextKey: line.ep_mind_hurry_together
+    Group: MIND
+  - Id: EP_MIND_HURRY_HEAVY
+    Kind: 8
+    Condition:
+      WeekMin: 0
+      WeekMax: 0
+      Days: 
+      Phase: 0
+      Seasons: 
+      Month: 0
+      DayOfMonth: 0
+      ActionCategories: 
+      ActionIds: []
+      FlagsAll:
+      - MIND_HURRY
+      FlagsAny: []
+      FlagsNone: []
+      CluesAll: []
+      Checks:
+      - Kind: 4
+        Key: TraumaRecovery
+        Op: 1
+        Value: 6
+      - Kind: 4
+        Key: Isolation
+        Op: 0
+        Value: 30
+      AnyChecks: []
+      NpcStatuses: []
+      IsBirthday: 0
+    Priority: 40
+    TextKey: line.ep_mind_hurry_heavy
+    Group: MIND
+  - Id: EP_MIND_FACE
+    Kind: 8
+    Condition:
+      WeekMin: 0
+      WeekMax: 0
+      Days: 
+      Phase: 0
+      Seasons: 
+      Month: 0
+      DayOfMonth: 0
+      ActionCategories: 
+      ActionIds: []
+      FlagsAll:
+      - MIND_FACE
+      FlagsAny: []
+      FlagsNone: []
+      CluesAll: []
+      Checks: []
+      AnyChecks: []
+      NpcStatuses: []
+      IsBirthday: 0
+    Priority: 10
+    TextKey: line.ep_mind_face
+    Group: MIND
+  - Id: EP_MIND_FACE_PROUD
+    Kind: 8
+    Condition:
+      WeekMin: 0
+      WeekMax: 0
+      Days: 
+      Phase: 0
+      Seasons: 
+      Month: 0
+      DayOfMonth: 0
+      ActionCategories: 
+      ActionIds: []
+      FlagsAll:
+      - MIND_FACE
+      - FACE_END_PROUD
+      FlagsAny: []
+      FlagsNone: []
+      CluesAll: []
+      Checks: []
+      AnyChecks: []
+      NpcStatuses: []
+      IsBirthday: 0
+    Priority: 30
+    TextKey: line.ep_mind_face_proud
+    Group: MIND
+  - Id: EP_MIND_FACE_GENTLE
+    Kind: 8
+    Condition:
+      WeekMin: 0
+      WeekMax: 0
+      Days: 
+      Phase: 0
+      Seasons: 
+      Month: 0
+      DayOfMonth: 0
+      ActionCategories: 
+      ActionIds: []
+      FlagsAll:
+      - MIND_FACE
+      - FACE_END_GENTLE
+      FlagsAny: []
+      FlagsNone: []
+      CluesAll: []
+      Checks: []
+      AnyChecks: []
+      NpcStatuses: []
+      IsBirthday: 0
+    Priority: 30
+    TextKey: line.ep_mind_face_gentle
+    Group: MIND
+  - Id: EP_MIND_FACE_HEAVY
+    Kind: 8
+    Condition:
+      WeekMin: 0
+      WeekMax: 0
+      Days: 
+      Phase: 0
+      Seasons: 
+      Month: 0
+      DayOfMonth: 0
+      ActionCategories: 
+      ActionIds: []
+      FlagsAll:
+      - MIND_FACE
+      FlagsAny: []
+      FlagsNone: []
+      CluesAll: []
+      Checks:
+      - Kind: 4
+        Key: TraumaRecovery
+        Op: 1
+        Value: 6
+      - Kind: 4
+        Key: Isolation
+        Op: 0
+        Value: 30
+      AnyChecks: []
+      NpcStatuses: []
+      IsBirthday: 0
+    Priority: 40
+    TextKey: line.ep_mind_face_heavy
+    Group: MIND
+  - Id: EP_MIND_TELL
+    Kind: 8
+    Condition:
+      WeekMin: 0
+      WeekMax: 0
+      Days: 
+      Phase: 0
+      Seasons: 
+      Month: 0
+      DayOfMonth: 0
+      ActionCategories: 
+      ActionIds: []
+      FlagsAll:
+      - TOLD_FRIEND
+      FlagsAny: []
+      FlagsNone: []
+      CluesAll: []
+      Checks: []
+      AnyChecks: []
+      NpcStatuses: []
+      IsBirthday: 0
+    Priority: 10
+    TextKey: line.ep_mind_tell
+    Group: MIND
+  - Id: EP_MIND_TELL_GLAD
+    Kind: 8
+    Condition:
+      WeekMin: 0
+      WeekMax: 0
+      Days: 
+      Phase: 0
+      Seasons: 
+      Month: 0
+      DayOfMonth: 0
+      ActionCategories: 
+      ActionIds: []
+      FlagsAll:
+      - TOLD_FRIEND
+      - TELL_END_GLAD
+      FlagsAny: []
+      FlagsNone: []
+      CluesAll: []
+      Checks: []
+      AnyChecks: []
+      NpcStatuses: []
+      IsBirthday: 0
+    Priority: 30
+    TextKey: line.ep_mind_tell_glad
+    Group: MIND
+  - Id: EP_MIND_TELL_LITTLE
+    Kind: 8
+    Condition:
+      WeekMin: 0
+      WeekMax: 0
+      Days: 
+      Phase: 0
+      Seasons: 
+      Month: 0
+      DayOfMonth: 0
+      ActionCategories: 
+      ActionIds: []
+      FlagsAll:
+      - TOLD_FRIEND
+      - TELL_END_LITTLE
+      FlagsAny: []
+      FlagsNone: []
+      CluesAll: []
+      Checks: []
+      AnyChecks: []
+      NpcStatuses: []
+      IsBirthday: 0
+    Priority: 30
+    TextKey: line.ep_mind_tell_little
+    Group: MIND
+  - Id: EP_MIND_TELL_HEAVY
+    Kind: 8
+    Condition:
+      WeekMin: 0
+      WeekMax: 0
+      Days: 
+      Phase: 0
+      Seasons: 
+      Month: 0
+      DayOfMonth: 0
+      ActionCategories: 
+      ActionIds: []
+      FlagsAll:
+      - TOLD_FRIEND
+      FlagsAny: []
+      FlagsNone: []
+      CluesAll: []
+      Checks:
+      - Kind: 4
+        Key: TraumaRecovery
+        Op: 1
+        Value: 6
+      - Kind: 4
+        Key: Isolation
+        Op: 0
+        Value: 30
+      AnyChecks: []
+      NpcStatuses: []
+      IsBirthday: 0
+    Priority: 40
+    TextKey: line.ep_mind_tell_heavy
+    Group: MIND
+  - Id: EP_HOPE_HIGH
+    Kind: 8
+    Condition:
+      WeekMin: 0
+      WeekMax: 0
+      Days: 
+      Phase: 0
+      Seasons: 
+      Month: 0
+      DayOfMonth: 0
+      ActionCategories: 
+      ActionIds: []
+      FlagsAll: []
+      FlagsAny: []
+      FlagsNone: []
+      CluesAll: []
+      Checks:
+      - Kind: 4
+        Key: Hope
+        Op: 0
+        Value: 60
+      AnyChecks: []
+      NpcStatuses: []
+      IsBirthday: 0
+    Priority: 30
+    TextKey: line.ep_hope_high
+    Group: HOPE
+  - Id: EP_HOPE_MID
+    Kind: 8
+    Condition:
+      WeekMin: 0
+      WeekMax: 0
+      Days: 
+      Phase: 0
+      Seasons: 
+      Month: 0
+      DayOfMonth: 0
+      ActionCategories: 
+      ActionIds: []
+      FlagsAll: []
+      FlagsAny: []
+      FlagsNone: []
+      CluesAll: []
+      Checks:
+      - Kind: 4
+        Key: Hope
+        Op: 0
+        Value: 30
+      AnyChecks: []
+      NpcStatuses: []
+      IsBirthday: 0
+    Priority: 20
+    TextKey: line.ep_hope_mid
+    Group: HOPE
+  - Id: EP_HOPE_LOW
+    Kind: 8
+    Condition:
+      WeekMin: 0
+      WeekMax: 0
+      Days: 
+      Phase: 0
+      Seasons: 
+      Month: 0
+      DayOfMonth: 0
+      ActionCategories: 
+      ActionIds: []
+      FlagsAll: []
+      FlagsAny: []
+      FlagsNone: []
+      CluesAll: []
+      Checks: []
+      AnyChecks: []
+      NpcStatuses: []
+      IsBirthday: 0
+    Priority: 10
+    TextKey: line.ep_hope_low
+    Group: HOPE
+  - Id: M_MIND_NOT_OK
+    Kind: 6
+    Condition:
+      WeekMin: 0
+      WeekMax: 0
+      Days: 
+      Phase: 0
+      Seasons: 
+      Month: 0
+      DayOfMonth: 0
+      ActionCategories: 
+      ActionIds: []
+      FlagsAll:
+      - LAUGH_NOT_OK
+      FlagsAny: []
+      FlagsNone: []
+      CluesAll: []
+      Checks: []
+      AnyChecks: []
+      NpcStatuses: []
+      IsBirthday: 0
+    Priority: 0
+    TextKey: line.m_mind_not_ok
+    Group: 
+  - Id: M_MIND_UNMASKED
+    Kind: 6
+    Condition:
+      WeekMin: 0
+      WeekMax: 0
+      Days: 
+      Phase: 0
+      Seasons: 
+      Month: 0
+      DayOfMonth: 0
+      ActionCategories: 
+      ActionIds: []
+      FlagsAll:
+      - LAUGH_UNMASKED
+      FlagsAny: []
+      FlagsNone: []
+      CluesAll: []
+      Checks: []
+      AnyChecks: []
+      NpcStatuses: []
+      IsBirthday: 0
+    Priority: 0
+    TextKey: line.m_mind_unmasked
+    Group: 
+  - Id: M_MIND_LOOKED_BACK
+    Kind: 6
+    Condition:
+      WeekMin: 0
+      WeekMax: 0
+      Days: 
+      Phase: 0
+      Seasons: 
+      Month: 0
+      DayOfMonth: 0
+      ActionCategories: 
+      ActionIds: []
+      FlagsAll:
+      - HURRY_LOOKED_BACK
+      FlagsAny: []
+      FlagsNone: []
+      CluesAll: []
+      Checks: []
+      AnyChecks: []
+      NpcStatuses: []
+      IsBirthday: 0
+    Priority: 0
+    TextKey: line.m_mind_looked_back
+    Group: 
+  - Id: M_MIND_TURNED
+    Kind: 6
+    Condition:
+      WeekMin: 0
+      WeekMax: 0
+      Days: 
+      Phase: 0
+      Seasons: 
+      Month: 0
+      DayOfMonth: 0
+      ActionCategories: 
+      ActionIds: []
+      FlagsAll:
+      - HURRY_TURNED
+      FlagsAny: []
+      FlagsNone: []
+      CluesAll: []
+      Checks: []
+      AnyChecks: []
+      NpcStatuses: []
+      IsBirthday: 0
+    Priority: 0
+    TextKey: line.m_mind_turned
+    Group: 
+  - Id: M_MIND_SAID
+    Kind: 6
+    Condition:
+      WeekMin: 0
+      WeekMax: 0
+      Days: 
+      Phase: 0
+      Seasons: 
+      Month: 0
+      DayOfMonth: 0
+      ActionCategories: 
+      ActionIds: []
+      FlagsAll:
+      - FACE_SAID
+      FlagsAny: []
+      FlagsNone: []
+      CluesAll: []
+      Checks: []
+      AnyChecks: []
+      NpcStatuses: []
+      IsBirthday: 0
+    Priority: 0
+    TextKey: line.m_mind_said
+    Group: 
+  - Id: M_MIND_SPOKE
+    Kind: 6
+    Condition:
+      WeekMin: 0
+      WeekMax: 0
+      Days: 
+      Phase: 0
+      Seasons: 
+      Month: 0
+      DayOfMonth: 0
+      ActionCategories: 
+      ActionIds: []
+      FlagsAll:
+      - RINGLEADER_SPOKE
+      FlagsAny: []
+      FlagsNone: []
+      CluesAll: []
+      Checks: []
+      AnyChecks: []
+      NpcStatuses: []
+      IsBirthday: 0
+    Priority: 0
+    TextKey: line.m_mind_spoke
+    Group: 
   - Id: DIARY_DEFAULT
     Kind: 0
     Condition:
@@ -5016,7 +5784,8 @@ MonoBehaviour:
           Hidden: []
           SleepDebt: 0
           Conscience: 0
-          SetFlags: []
+          SetFlags:
+          - GRADE_TOP
           ClearFlags: []
           AddClues: []
           EndingTags: []
@@ -5056,7 +5825,8 @@ MonoBehaviour:
           Hidden: []
           SleepDebt: 0
           Conscience: 0
-          SetFlags: []
+          SetFlags:
+          - GRADE_MIDDLE
           ClearFlags: []
           AddClues: []
           EndingTags: []
@@ -5096,7 +5866,8 @@ MonoBehaviour:
           Hidden: []
           SleepDebt: 0
           Conscience: 0
-          SetFlags: []
+          SetFlags:
+          - GRADE_LOW
           ClearFlags: []
           AddClues: []
           EndingTags: []
@@ -5136,7 +5907,8 @@ MonoBehaviour:
           Hidden: []
           SleepDebt: 0
           Conscience: 0
-          SetFlags: []
+          SetFlags:
+          - GRADE_UNKNOWN
           ClearFlags: []
           AddClues: []
           EndingTags: []

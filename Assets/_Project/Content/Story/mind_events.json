@@ -1,0 +1,557 @@
+{
+  "Events": [
+    {
+      "Id": "EVT_MIND_LAUGH_1",
+      "Kind": "Night",
+      "Priority": 35,
+      "Condition": {
+        "WeekMin": 5,
+        "WeekMax": 13,
+        "Days": [
+          7
+        ],
+        "Phase": "Night",
+        "FlagsAll": [
+          "MIND_LAUGH"
+        ]
+      },
+      "Choices": [
+        {
+          "Id": "JOKE",
+          "Effect": {
+            "Vitals": [
+              {
+                "Vital": "Stress",
+                "Amount": -4
+              }
+            ],
+            "Npcs": [
+              {
+                "NpcId": "NPC_TEACHER",
+                "Affinity": 1
+              }
+            ]
+          }
+        },
+        {
+          "Id": "NOT_OK",
+          "Effect": {
+            "SetFlags": [
+              "LAUGH_NOT_OK"
+            ],
+            "Hidden": [
+              {
+                "Hidden": "SelfAwareness",
+                "Amount": 3
+              }
+            ],
+            "Vitals": [
+              {
+                "Vital": "Stress",
+                "Amount": 2
+              }
+            ],
+            "Npcs": [
+              {
+                "NpcId": "NPC_TEACHER",
+                "Trust": 2
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "Id": "EVT_MIND_LAUGH_2",
+      "Kind": "Night",
+      "Priority": 35,
+      "Condition": {
+        "WeekMin": 20,
+        "WeekMax": 38,
+        "Days": [
+          7
+        ],
+        "Phase": "Night",
+        "FlagsAll": [
+          "MIND_LAUGH"
+        ]
+      },
+      "Choices": [
+        {
+          "Id": "MASK",
+          "Effect": {
+            "Hidden": [
+              {
+                "Hidden": "Hope",
+                "Amount": 2
+              }
+            ],
+            "Vitals": [
+              {
+                "Vital": "Stress",
+                "Amount": -3
+              }
+            ]
+          }
+        },
+        {
+          "Id": "BARE",
+          "Effect": {
+            "SetFlags": [
+              "LAUGH_BARE"
+            ],
+            "Hidden": [
+              {
+                "Hidden": "SelfAwareness",
+                "Amount": 3
+              }
+            ],
+            "Vitals": [
+              {
+                "Vital": "Stress",
+                "Amount": 1
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "Id": "EVT_MIND_LAUGH_3",
+      "Kind": "Night",
+      "Priority": 35,
+      "Condition": {
+        "WeekMin": 44,
+        "WeekMax": 51,
+        "Days": [
+          7
+        ],
+        "Phase": "Night",
+        "FlagsAll": [
+          "MIND_LAUGH"
+        ]
+      },
+      "Choices": [
+        {
+          "Id": "KEEP_SMILE",
+          "Effect": {
+            "SetFlags": [
+              "LAUGH_END_SMILE"
+            ],
+            "Hidden": [
+              {
+                "Hidden": "Hope",
+                "Amount": 2
+              }
+            ],
+            "Vitals": [
+              {
+                "Vital": "Stress",
+                "Amount": -2
+              }
+            ]
+          }
+        },
+        {
+          "Id": "LET_IT_BE",
+          "Effect": {
+            "SetFlags": [
+              "LAUGH_END_LET"
+            ],
+            "Hidden": [
+              {
+                "Hidden": "SelfAwareness",
+                "Amount": 2
+              },
+              {
+                "Hidden": "TraumaRecovery",
+                "Amount": 2
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "Id": "EVT_MIND_HURRY_1",
+      "Kind": "Night",
+      "Priority": 35,
+      "Condition": {
+        "WeekMin": 6,
+        "WeekMax": 13,
+        "Days": [
+          7
+        ],
+        "Phase": "Night",
+        "FlagsAll": [
+          "MIND_HURRY"
+        ]
+      },
+      "Choices": [
+        {
+          "Id": "SHOW_WAY",
+          "Effect": {
+            "Stats": [
+              {
+                "Stat": "Agility",
+                "Amount": 1
+              }
+            ],
+            "Npcs": [
+              {
+                "NpcId": "NPC_TEACHER",
+                "Trust": 1
+              }
+            ]
+          }
+        },
+        {
+          "Id": "WALK_BESIDE",
+          "Effect": {
+            "SetFlags": [
+              "HURRY_SLOWED"
+            ],
+            "Hidden": [
+              {
+                "Hidden": "Isolation",
+                "Amount": -3
+              }
+            ],
+            "Npcs": [
+              {
+                "NpcId": "NPC_TEACHER",
+                "Affinity": 2
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "Id": "EVT_MIND_HURRY_2",
+      "Kind": "Story",
+      "Priority": 30,
+      "Condition": {
+        "WeekMin": 16,
+        "WeekMax": 38,
+        "FlagsAll": [
+          "MIND_HURRY"
+        ],
+        "ActionCategories": [
+          "Expedition"
+        ]
+      },
+      "Choices": [
+        {
+          "Id": "RUN_IN",
+          "Effect": {
+            "Stats": [
+              {
+                "Stat": "Agility",
+                "Amount": 1
+              }
+            ],
+            "Vitals": [
+              {
+                "Vital": "Stress",
+                "Amount": -2
+              }
+            ]
+          }
+        },
+        {
+          "Id": "LOOK_BACK",
+          "Effect": {
+            "SetFlags": [
+              "HURRY_LOOKED_BACK"
+            ],
+            "Hidden": [
+              {
+                "Hidden": "SelfAwareness",
+                "Amount": 2
+              },
+              {
+                "Hidden": "Isolation",
+                "Amount": -3
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "Id": "EVT_MIND_HURRY_3",
+      "Kind": "Night",
+      "Priority": 35,
+      "Condition": {
+        "WeekMin": 44,
+        "WeekMax": 51,
+        "Days": [
+          7
+        ],
+        "Phase": "Night",
+        "FlagsAll": [
+          "MIND_HURRY"
+        ]
+      },
+      "Choices": [
+        {
+          "Id": "GO_FIRST",
+          "Effect": {
+            "SetFlags": [
+              "HURRY_END_FIRST"
+            ],
+            "Stats": [
+              {
+                "Stat": "Agility",
+                "Amount": 1
+              }
+            ],
+            "Vitals": [
+              {
+                "Vital": "Stress",
+                "Amount": -2
+              }
+            ]
+          }
+        },
+        {
+          "Id": "GO_LAST",
+          "Effect": {
+            "SetFlags": [
+              "HURRY_END_TOGETHER"
+            ],
+            "Hidden": [
+              {
+                "Hidden": "Isolation",
+                "Amount": -3
+              },
+              {
+                "Hidden": "Hope",
+                "Amount": 1
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "Id": "EVT_MIND_FACE_1",
+      "Kind": "Night",
+      "Priority": 35,
+      "Condition": {
+        "WeekMin": 4,
+        "WeekMax": 13,
+        "Days": [
+          7
+        ],
+        "Phase": "Night",
+        "FlagsAll": [
+          "MIND_FACE"
+        ]
+      },
+      "Choices": [
+        {
+          "Id": "COUNT",
+          "Effect": {
+            "SetFlags": [
+              "FACE_COUNTED"
+            ],
+            "Stats": [
+              {
+                "Stat": "Intellect",
+                "Amount": 1
+              }
+            ],
+            "Hidden": [
+              {
+                "Hidden": "SelfAwareness",
+                "Amount": 1
+              }
+            ],
+            "Vitals": [
+              {
+                "Vital": "Stress",
+                "Amount": 2
+              }
+            ]
+          }
+        },
+        {
+          "Id": "REST_EYES",
+          "Effect": {
+            "Vitals": [
+              {
+                "Vital": "Stress",
+                "Amount": -4
+              }
+            ],
+            "Npcs": [
+              {
+                "NpcId": "NPC_TEACHER",
+                "Affinity": 1
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "Id": "EVT_MIND_FACE_2",
+      "Kind": "Night",
+      "Priority": 35,
+      "Condition": {
+        "WeekMin": 18,
+        "WeekMax": 38,
+        "Days": [
+          7
+        ],
+        "Phase": "Night",
+        "FlagsAll": [
+          "MIND_FACE"
+        ]
+      },
+      "Choices": [
+        {
+          "Id": "SAY",
+          "Effect": {
+            "SetFlags": [
+              "FACE_SAID"
+            ],
+            "Stats": [
+              {
+                "Stat": "Empathy",
+                "Amount": 1
+              }
+            ],
+            "Hidden": [
+              {
+                "Hidden": "Humanity",
+                "Amount": 2
+              }
+            ]
+          }
+        },
+        {
+          "Id": "STAY_NEAR",
+          "Effect": {
+            "Hidden": [
+              {
+                "Hidden": "Hope",
+                "Amount": 1
+              }
+            ],
+            "Vitals": [
+              {
+                "Vital": "Stress",
+                "Amount": -3
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "Id": "EVT_MIND_FACE_3",
+      "Kind": "Night",
+      "Priority": 35,
+      "Condition": {
+        "WeekMin": 44,
+        "WeekMax": 51,
+        "Days": [
+          7
+        ],
+        "Phase": "Night",
+        "FlagsAll": [
+          "MIND_FACE"
+        ]
+      },
+      "Choices": [
+        {
+          "Id": "PROUD",
+          "Effect": {
+            "SetFlags": [
+              "FACE_END_PROUD"
+            ],
+            "Hidden": [
+              {
+                "Hidden": "SelfAwareness",
+                "Amount": 2
+              },
+              {
+                "Hidden": "Hope",
+                "Amount": 1
+              }
+            ]
+          }
+        },
+        {
+          "Id": "GENTLE",
+          "Effect": {
+            "SetFlags": [
+              "FACE_END_GENTLE"
+            ],
+            "Hidden": [
+              {
+                "Hidden": "TraumaRecovery",
+                "Amount": 2
+              }
+            ],
+            "Vitals": [
+              {
+                "Vital": "Stress",
+                "Amount": -3
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "Id": "EVT_MIND_TELL_3",
+      "Kind": "Night",
+      "Priority": 35,
+      "Condition": {
+        "WeekMin": 44,
+        "WeekMax": 51,
+        "Days": [
+          7
+        ],
+        "Phase": "Night",
+        "FlagsAll": [
+          "TOLD_FRIEND"
+        ]
+      },
+      "Choices": [
+        {
+          "Id": "GLAD",
+          "Effect": {
+            "SetFlags": [
+              "TELL_END_GLAD"
+            ],
+            "Hidden": [
+              {
+                "Hidden": "Hope",
+                "Amount": 2
+              }
+            ]
+          }
+        },
+        {
+          "Id": "LITTLE",
+          "Effect": {
+            "SetFlags": [
+              "TELL_END_LITTLE"
+            ],
+            "Hidden": [
+              {
+                "Hidden": "SelfAwareness",
+                "Amount": 2
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

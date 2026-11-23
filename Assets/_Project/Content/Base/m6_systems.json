@@ -477,6 +477,58 @@
       }
     },
     {
+      "Id": "TC_GRADE_TOP",
+      "Kind": "TeacherComment",
+      "Priority": 25,
+      "TextKey": "tc.grade_top",
+      "Condition": {
+        "WeekMin": 5,
+        "WeekMax": 6,
+        "FlagsAll": [
+          "GRADE_TOP"
+        ]
+      }
+    },
+    {
+      "Id": "TC_GRADE_MIDDLE",
+      "Kind": "TeacherComment",
+      "Priority": 25,
+      "TextKey": "tc.grade_middle",
+      "Condition": {
+        "WeekMin": 5,
+        "WeekMax": 6,
+        "FlagsAll": [
+          "GRADE_MIDDLE"
+        ]
+      }
+    },
+    {
+      "Id": "TC_GRADE_LOW",
+      "Kind": "TeacherComment",
+      "Priority": 25,
+      "TextKey": "tc.grade_low",
+      "Condition": {
+        "WeekMin": 5,
+        "WeekMax": 6,
+        "FlagsAll": [
+          "GRADE_LOW"
+        ]
+      }
+    },
+    {
+      "Id": "TC_GRADE_UNKNOWN",
+      "Kind": "TeacherComment",
+      "Priority": 25,
+      "TextKey": "tc.grade_unknown",
+      "Condition": {
+        "WeekMin": 5,
+        "WeekMax": 6,
+        "FlagsAll": [
+          "GRADE_UNKNOWN"
+        ]
+      }
+    },
+    {
       "Id": "REVIEW_A1",
       "Kind": "ActReview",
       "Priority": 10,

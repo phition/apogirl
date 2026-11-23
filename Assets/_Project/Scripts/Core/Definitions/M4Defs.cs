@@ -172,6 +172,14 @@ namespace ApoGirl.Core.Definitions
         public string ProfileValue = "";
     }
 
+    /// <summary>좋아하는 과목 한 줄: 프롤로그 과목 ID → 교육 숙련 (프롤로그의 메아리 E).</summary>
+    [Serializable]
+    public sealed class FavoriteSubjectDef
+    {
+        public string SubjectId = "";
+        public ProficiencyType Proficiency;
+    }
+
     [Serializable]
     public sealed class PrologueDef
     {

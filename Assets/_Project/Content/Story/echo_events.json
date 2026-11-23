@@ -1,0 +1,19 @@
+{
+  "Events": [
+    {
+      "Id": "EVT_FAVORITE_FOUND",
+      "Kind": "Night",
+      "Priority": 30,
+      "Condition": {
+        "Phase": "Night",
+        "FlagsAll": [ "FAVORITE_FOUND" ],
+        "FlagsNone": [ "FAVORITE_FOUND_SEEN" ]
+      },
+      "OnShow": {
+        "SetFlags": [ "FAVORITE_FOUND_SEEN" ],
+        "Vitals": [ { "Vital": "Stress", "Amount": -3 } ],
+        "Hidden": [ { "Hidden": "SelfAwareness", "Amount": 2 } ]
+      }
+    }
+  ]
+}

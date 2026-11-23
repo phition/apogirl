@@ -37,6 +37,9 @@ namespace ApoGirl.Presentation.Dialogue
                 ["hidden"] = p => (float)Hidden(Str(p, 0)),
                 ["succeeded"] = _ => Succeeded(),
                 ["great_success"] = _ => GreatSuccess(),
+                ["trait"] = p => Trait(Str(p, 0)),
+                ["profile"] = p => Profile_(Str(p, 0)),
+                ["hope_held"] = _ => HopeHeld(),
             };
 
         private static GameState State => GameApp.Session?.State;
@@ -135,6 +138,35 @@ namespace ApoGirl.Presentation.Dialogue
 
         [YarnFunction("great_success")]
         public static bool GreatSuccess() => EventDialoguePlayer.LastChoiceResult?.Result == CheckResult.GreatSuccess;
+
+        /// <summary>주인공에게 이 특성이 있는지 (성격 PT_*, 동아리 TRAIT_*). 프롤로그의 메아리.</summary>
+        [YarnFunction("trait")]
+        public static bool Trait(string traitId) => State != null && State.Player.Traits.Contains(traitId ?? "");
+
+        /// <summary>프롤로그 프로필 칸: "grade"(TOP·MIDDLE·LOW·UNKNOWN), "subject"(KOREAN…NONE), "club"(TRACK…HOME), "blood", "personality".</summary>
+        [YarnFunction("profile")]
+        public static string Profile_(string field)
+        {
+            var profile = Profile;
+            if (profile == null)
+            {
+                return "";
+            }
+
+            switch ((field ?? "").ToLowerInvariant())
+            {
+                case "grade": return profile.GradeBandId ?? "";
+                case "subject": return profile.FavoriteSubjectId ?? "";
+                case "club": return profile.ClubId ?? "";
+                case "blood": return profile.BloodType.ToString();
+                case "personality": return profile.PersonalityType ?? "";
+                default: return "";
+            }
+        }
+
+        /// <summary>방금 고른 설득이 희망 덕에 통했는지 (위기 이탈, 프롤로그의 메아리 G).</summary>
+        [YarnFunction("hope_held")]
+        public static bool HopeHeld() => !string.IsNullOrEmpty(EventDialoguePlayer.LastChoiceResult?.HopeHeldNpcId);
 
         private static string Str(IConvertible[] parameters, int index)
         {

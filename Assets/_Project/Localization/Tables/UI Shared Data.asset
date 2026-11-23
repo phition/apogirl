@@ -6439,6 +6439,150 @@ MonoBehaviour:
     m_Key: lab.log.draft_saved
     m_Metadata:
       m_Items: []
+  - m_Id: 1445737610362880
+    m_Key: hope.bubble
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1445737664888832
+    m_Key: hope.bubble.NPC_NURSE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1445737664888833
+    m_Key: hope.bubble.NPC_DOHYEON
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1445737664888834
+    m_Key: hope.bubble.NPC_BYSTANDER
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1445737664888835
+    m_Key: hope.bubble.NPC_RINGLEADER
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1445737664888836
+    m_Key: hope.bubble.NPC_SURVIVOR_A
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1449096463532032
+    m_Key: line.ep_mind_laugh
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1449096463532033
+    m_Key: line.ep_mind_laugh_smile
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1449096463532034
+    m_Key: line.ep_mind_laugh_let
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1449096463532035
+    m_Key: line.ep_mind_laugh_heavy
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1449096463532036
+    m_Key: line.ep_mind_hurry
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1449096463532037
+    m_Key: line.ep_mind_hurry_first
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1449096463532038
+    m_Key: line.ep_mind_hurry_together
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1449096463532039
+    m_Key: line.ep_mind_hurry_heavy
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1449096463532040
+    m_Key: line.ep_mind_face
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1449096463532041
+    m_Key: line.ep_mind_face_proud
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1449096463532042
+    m_Key: line.ep_mind_face_gentle
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1449096463532043
+    m_Key: line.ep_mind_face_heavy
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1449096463532044
+    m_Key: line.ep_mind_tell
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1449096463532045
+    m_Key: line.ep_mind_tell_glad
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1449096463532046
+    m_Key: line.ep_mind_tell_little
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1449096463532047
+    m_Key: line.ep_mind_tell_heavy
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1449096463532048
+    m_Key: line.m_mind_not_ok
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1449096463532049
+    m_Key: line.m_mind_unmasked
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1449096463532050
+    m_Key: line.m_mind_looked_back
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1449096463532051
+    m_Key: line.m_mind_turned
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1449096463532052
+    m_Key: line.m_mind_said
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1449096463532053
+    m_Key: line.m_mind_spoke
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1449096463532054
+    m_Key: line.lf_later
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1449096463532055
+    m_Key: line.ep_hope_high
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1449096463532056
+    m_Key: line.ep_hope_mid
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1449096463532057
+    m_Key: line.ep_hope_low
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1449096463532058
+    m_Key: tc.grade_top
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1449096463532059
+    m_Key: tc.grade_middle
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1449096463532060
+    m_Key: tc.grade_low
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1449096463532061
+    m_Key: tc.grade_unknown
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

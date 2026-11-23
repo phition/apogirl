@@ -36,6 +36,7 @@ namespace ApoGirl.Core.Rules
                             && n.Value.Affinity < balance.CrisisLeaveBelowAffinity && !state.Flags.Contains(WarnFlag(balance, n.Key)))
                 .OrderBy(n => n.Value.Affinity)
                 .ThenBy(n => n.Key, StringComparer.Ordinal)
+                .Where(n => !EchoRules.HopeSparesLeave(state, balance, n.Key)) // 프롤로그의 메아리 G: 희망이 높으면 확률로 비켜 간다
                 .Take(balance.CrisisLeavePerWeek)
                 .Select(n => n.Key);
             foreach (var id in candidates)

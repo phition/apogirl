@@ -473,6 +473,41 @@
               }
             ]
           }
+        },
+        {
+          "Id": "UNMASK",
+          "Condition": {
+            "FlagsAll": [
+              "MIND_LAUGH"
+            ]
+          },
+          "Effect": {
+            "SetFlags": [
+              "LAUGH_UNMASKED"
+            ],
+            "Hidden": [
+              {
+                "Hidden": "TraumaRecovery",
+                "Amount": 3
+              },
+              {
+                "Hidden": "SelfAwareness",
+                "Amount": 3
+              }
+            ],
+            "Npcs": [
+              {
+                "NpcId": "NPC_TEACHER",
+                "Trust": 3
+              }
+            ],
+            "Vitals": [
+              {
+                "Vital": "Stress",
+                "Amount": 2
+              }
+            ]
+          }
         }
       ]
     },
@@ -1035,6 +1070,35 @@
               {
                 "NpcId": "NPC_BYSTANDER",
                 "Affinity": -3
+              }
+            ]
+          }
+        },
+        {
+          "Id": "TURN_BACK",
+          "Condition": {
+            "FlagsAll": [
+              "MIND_HURRY"
+            ]
+          },
+          "Effect": {
+            "SetFlags": [
+              "HURRY_TURNED"
+            ],
+            "Hidden": [
+              {
+                "Hidden": "TraumaRecovery",
+                "Amount": 3
+              },
+              {
+                "Hidden": "Isolation",
+                "Amount": -3
+              }
+            ],
+            "Npcs": [
+              {
+                "NpcId": "NPC_BYSTANDER",
+                "Affinity": 4
               }
             ]
           }

@@ -25,7 +25,7 @@ MonoBehaviour:
     WoundInfectionDirty: 10
     WoundCleanThreshold: 50
     BiteDirtyBonus: 0.5
-    StartingCleanliness: 70
+    StartingCleanliness: 30
     CleanlinessWeeklyDecay: 15
     InitialResources:
     - Resource: 0
@@ -316,6 +316,34 @@ MonoBehaviour:
     RaidCoverChance: 0.5
     RaidCoverHpScale: 0
     RaidCoverInjuryWeeks: 2
+    CompanionStressReliefTraitId: PT_F
+    CompanionStressReliefMax: 0.4
+    FavoriteSubjects:
+    - SubjectId: KOREAN
+      Proficiency: 5
+    - SubjectId: MATH_SCI
+      Proficiency: 2
+    - SubjectId: PE
+      Proficiency: 3
+    - SubjectId: TECH_HOME
+      Proficiency: 4
+    - SubjectId: BIO
+      Proficiency: 0
+    - SubjectId: MIND
+      Proficiency: 6
+    FavoriteSubjectStressRelief: 1
+    FavoriteSubjectGainBonus: 1
+    FavoriteFoundLevel: 3
+    FavoriteNoneId: NONE
+    FavoriteFoundFlag: FAVORITE_FOUND
+    HopeWillpowerThreshold: 70
+    HopeWillpowerWeekly: 1
+    WillpowerHopeGuardPerPoint: 0.004
+    WillpowerHopeGuardMax: 0.4
+    CrisisHopeThreshold: 60
+    CrisisHopeSkipChance: 0.35
+    CrisisHopePersuadeBonus: 0.2
+    HopeHeldFlagPrefix: HOPE_HELD_
     TogetherAffinity: 1
     TogetherAptitudeBonus: 1
     TogetherWeeklyCap: 2

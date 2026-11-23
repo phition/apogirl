@@ -184,7 +184,8 @@ namespace ApoGirl.Core.Rules
                     stress += balance.ColdDailyStress;
                 }
 
-                body.Stress = ClampStress(body.Stress + stress, balance);
+                // 성격 F (프롤로그의 메아리): 호감이 높은 동료일수록 덜 오른다
+                body.Stress = ClampStress(body.Stress + EchoRules.CompanionStressRise(state, balance, id, stress), balance);
             }
         }
 

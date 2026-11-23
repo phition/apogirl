@@ -785,6 +785,17 @@
       }
     },
     {
+      "Id": "LF_LATER",
+      "Kind": "EndingFriend",
+      "Priority": 15,
+      "TextKey": "line.lf_later",
+      "Condition": {
+        "FlagsAll": [
+          "PROMISE_LATER"
+        ]
+      }
+    },
+    {
       "Id": "LF_TOLD",
       "Kind": "EndingFriend",
       "Priority": 30,

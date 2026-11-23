@@ -142,6 +142,9 @@ namespace ApoGirl.Core.Events
         public string ChoiceId = "";
         public CheckResult Result = CheckResult.Success;
         public string NextEventId = "";
+
+        /// <summary>희망 보너스가 없었으면 실패했을 설득이 통했을 때, 그 선택 효과의 첫 동료 ID (프롤로그의 메아리 G).</summary>
+        public string HopeHeldNpcId = "";
     }
 
     /// <summary>이벤트 시작·선택 처리.</summary>
@@ -254,7 +257,17 @@ namespace ApoGirl.Core.Events
 
             if (choice.HasCheck)
             {
-                result.Result = CheckResolver.Roll(view.Chance, random, balance);
+                result.Result = CheckResolver.Roll(view.Chance, random, balance, out var roll);
+                var hopeBonus = EchoRules.PersuadeBonus(state, choice.Check, balance);
+                if (hopeBonus > 0f && result.Result != CheckResult.Failure && roll >= view.Chance - hopeBonus)
+                {
+                    var npcId = choice.Effect.Npcs.Count > 0 ? choice.Effect.Npcs[0].NpcId : "";
+                    result.HopeHeldNpcId = npcId ?? "";
+                    if (!string.IsNullOrEmpty(npcId) && state.Flags.Add(EchoRules.HopeHeldFlag(balance, npcId)))
+                    {
+                        delta.FlagsSet.Add(EchoRules.HopeHeldFlag(balance, npcId));
+                    }
+                }
             }
 
             var effect = result.Result == CheckResult.Failure ? choice.OnFailure : choice.Effect;

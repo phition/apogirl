@@ -9,7 +9,7 @@
     { "Id": "TRAIT_FIRST_AID", "Modifiers": [ { "Kind": "CheckBonus", "Key": "Medicine", "Value": 0.1 } ] },
     { "Id": "TRAIT_SHADOW", "Modifiers": [ { "Kind": "NoiseMultiplier", "Value": -0.2 }, { "Kind": "StealthBonus", "Value": 0.1 } ] },
 
-    { "Id": "PT_E", "Modifiers": [] },
+    { "Id": "PT_E", "Modifiers": [ { "Kind": "ExpeditionStress", "Value": -0.1 } ] },
     { "Id": "PT_I", "Modifiers": [ { "Kind": "RestRecovery", "Value": 0.1 } ] },
     { "Id": "PT_S", "Modifiers": [ { "Kind": "SearchSpeed", "Value": 0.1 } ] },
     { "Id": "PT_N", "Modifiers": [ { "Kind": "CheckBonus", "Key": "Humanities", "Value": 0.03 } ] },

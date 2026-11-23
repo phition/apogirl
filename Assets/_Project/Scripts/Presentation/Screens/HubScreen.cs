@@ -492,6 +492,35 @@ namespace ApoGirl.Presentation.Screens
             }
         }
 
+        /// <summary>희망 덕에 남기로 한 동료: "{이름}, 너랑 같이 있으면 희망이 느껴져." (동료별 문구 hope.bubble.{NPC}, 없으면 hope.bubble)</summary>
+        private void ShowHopeHeld(string npcId)
+        {
+            if (string.IsNullOrEmpty(npcId))
+            {
+                return;
+            }
+
+            var text = HopeBubble(npcId);
+            if (!_session.HasMetTeacher || !_section.ShowBubble(npcId, text, 0.4f, 3.6f))
+            {
+                ShowToast(Loc.F("give.thanks_toast", Loc.T("npc." + npcId), text));
+            }
+        }
+
+        /// <summary>말풍선 문구: {0} 부르는 이름, {1} 부르는 말(이름+아/야), {2} 성까지 붙인 이름.</summary>
+        public static string HopeBubble(string npcId)
+        {
+            var given = YarnFunctions.Given();
+            var key = "hope.bubble." + npcId;
+            var format = Loc.T(key);
+            if (format == key)
+            {
+                format = Loc.T("hope.bubble");
+            }
+
+            return string.Format(format, given, ApoGirl.Core.Text.KoreanJosa.Attach(given, "아/야"), YarnFunctions.Name());
+        }
+
         /// <summary>함께한 시간: 곁에 있던 사람 머리 위 말풍선 (단면도에 안 보이면 생략, 결과 한 줄에 이름이 남는다).</summary>
         private void ShowTogether(SlotOutcome outcome)
         {
@@ -703,6 +732,9 @@ namespace ApoGirl.Presentation.Screens
                 var first = choices.FirstOrDefault(c => c.Enabled);
                 Choose(first?.Id ?? "");
             }
+
+            // 프롤로그의 메아리 G: 희망 덕에 설득이 통했으면 그 동료 머리 위 말풍선 (안 보이면 알림 한 줄)
+            ShowHopeHeld(EventDialoguePlayer.LastChoiceResult?.HopeHeldNpcId);
 
             // M6: 막 평가 카드 (그 막의 능력치 그래프 + 선생님 한마디)
             if (ev.ReviewAct > 0 && !_session.IsEnded)

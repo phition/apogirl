@@ -29,6 +29,7 @@ MonoBehaviour:
       UsesProficiency: 1
       Proficiency: 7
       ProficiencyWeight: 0.05
+      UsesHope: 0
     StatGains: []
     HasProficiency: 1
     Proficiency: 1

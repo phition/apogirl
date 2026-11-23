@@ -124,7 +124,7 @@ namespace ApoGirl.Core.Rules
                     npc.StayStreak++;
                     if (npc.StayStreak >= 2)
                     {
-                        AddStress(npc, balance.OutingHeldBackStress, balance);
+                        AddStress(state, pair.Key, npc, balance.OutingHeldBackStress, balance);
                     }
                 }
                 else
@@ -193,7 +193,7 @@ namespace ApoGirl.Core.Rules
             {
                 pair.Value.Away = true;
                 var body = pair.Value.Body ?? (pair.Value.Body = new BodyState());
-                body.Stress = Clamp(body.Stress + balance.OutingStress, 0, balance.VitalMax);
+                body.Stress = Clamp(body.Stress + EchoRules.CompanionStressRise(state, balance, pair.Key, balance.OutingStress, 1), 0, balance.VitalMax);
                 body.Satiety = Clamp(body.Satiety - balance.OutingSatietyDrain, -balance.VitalMax, balance.VitalMax);
                 body.Hydration = Clamp(body.Hydration - balance.OutingHydrationDrain, -balance.VitalMax, balance.VitalMax);
                 result.Add(pair.Key);
@@ -263,14 +263,14 @@ namespace ApoGirl.Core.Rules
                     {
                         back.Wound = OutingWound.Severe;
                         npc.InjuredWeeks = Math.Max(npc.InjuredWeeks, balance.OutingSevereWeeks);
-                        AddStress(npc, balance.OutingSevereStress, balance);
+                        AddStress(state, id, npc, balance.OutingSevereStress, balance);
                     }
                     else
                     {
                         back.Wound = OutingWound.Minor;
                         npc.MinorWoundWeeks = 1;
                         npc.MinorWoundWeek = state.Calendar.Week;
-                        AddStress(npc, balance.OutingMinorStress, balance);
+                        AddStress(state, id, npc, balance.OutingMinorStress, balance);
                     }
                 }
 
@@ -405,10 +405,10 @@ namespace ApoGirl.Core.Rules
             }
         }
 
-        private static void AddStress(NpcState npc, int amount, BalanceConfig balance)
+        private static void AddStress(GameState state, string id, NpcState npc, int amount, BalanceConfig balance)
         {
             var body = npc.Body ?? (npc.Body = new BodyState());
-            body.Stress = Clamp(body.Stress + amount, 0, balance.VitalMax);
+            body.Stress = Clamp(body.Stress + EchoRules.CompanionStressRise(state, balance, id, amount, 2), 0, balance.VitalMax);
         }
 
         private static int Clamp(int value, int min, int max) => Math.Max(min, Math.Min(max, value));

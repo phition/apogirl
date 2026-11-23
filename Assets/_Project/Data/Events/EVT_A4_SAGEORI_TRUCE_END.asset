@@ -110,6 +110,7 @@ MonoBehaviour:
         UsesProficiency: 0
         Proficiency: 0
         ProficiencyWeight: 0.05
+        UsesHope: 0
       Effect:
         Stats:
         - Stat: 7
@@ -210,6 +211,7 @@ MonoBehaviour:
         UsesProficiency: 0
         Proficiency: 0
         ProficiencyWeight: 0.05
+        UsesHope: 0
       Effect:
         Stats: []
         Vitals: []
@@ -308,6 +310,7 @@ MonoBehaviour:
         UsesProficiency: 0
         Proficiency: 0
         ProficiencyWeight: 0.05
+        UsesHope: 0
       Effect:
         Stats:
         - Stat: 5

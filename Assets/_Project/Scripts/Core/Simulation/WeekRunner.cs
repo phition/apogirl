@@ -595,6 +595,7 @@ namespace ApoGirl.Core.Simulation
             }
             FactionRules.ApplyWeekly(_state, _db, Balance, summary.Delta);
             summary.CatComforted = CatRules.ApplyWeekly(_state, Balance, summary.Delta); // 확장 2
+            EchoRules.ApplyWeekly(_state, Balance, summary.Delta); // 프롤로그의 메아리 G: 희망이 높으면 의지가 자란다
             summary.CdFound.AddRange(_cdFound);
             summary.LeaveWarned.AddRange(CrisisRules.WarnWeekly(_state, Balance, _outcomes.Any(o => o.Raid != null && !o.Raid.Repelled)));
             if (calendar.Week >= Balance.RaidStartWeek - 1)

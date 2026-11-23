@@ -320,6 +320,11 @@ namespace ApoGirl.Core.Effects
         public static int ChangeHidden(GameState state, HiddenType type, int amount, BalanceConfig balance, StateDelta delta)
         {
             var hidden = state.Player.Hidden;
+            if (type == HiddenType.Hope)
+            {
+                amount = Rules.EchoRules.GuardHope(state, balance, amount); // 프롤로그의 메아리 G: 의지가 희망을 받친다
+            }
+
             var before = hidden.GetHidden(type);
             var after = Clamp(before + amount, 0, balance.HiddenMax);
             hidden.SetHidden(type, after);

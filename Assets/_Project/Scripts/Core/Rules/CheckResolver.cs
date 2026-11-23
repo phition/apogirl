@@ -38,6 +38,8 @@ namespace ApoGirl.Core.Rules
                 chance += player.ProficiencyLevel(check.Proficiency) * check.ProficiencyWeight;
             }
 
+            chance += EchoRules.PersuadeBonus(state, check, balance); // 프롤로그의 메아리 G
+
             chance -= stress * balance.StressCheckPenaltyPerPoint;
             chance -= fatigue * balance.FatigueCheckPenaltyPerPoint;
             chance -= StatRules.StageValue(balance.SleepDebtCheckPenalty, player.SleepDebt);
@@ -46,9 +48,13 @@ namespace ApoGirl.Core.Rules
         }
 
         /// <summary>굴림값이 확률×대성공비율 미만이면 대성공, 확률 미만이면 성공.</summary>
-        public static CheckResult Roll(float chance, IRandomService random, BalanceConfig balance, float greatBonus = 0f)
+        public static CheckResult Roll(float chance, IRandomService random, BalanceConfig balance, float greatBonus = 0f) =>
+            Roll(chance, random, balance, out _, greatBonus);
+
+        /// <summary>굴림값도 돌려준다 (희망 덕에 통했는지 가릴 때).</summary>
+        public static CheckResult Roll(float chance, IRandomService random, BalanceConfig balance, out double roll, float greatBonus = 0f)
         {
-            var roll = random.NextDouble();
+            roll = random.NextDouble();
             if (roll < chance * (balance.GreatSuccessRatio + greatBonus))
             {
                 return CheckResult.GreatSuccess;

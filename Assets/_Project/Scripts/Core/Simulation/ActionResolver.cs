@@ -37,7 +37,15 @@ namespace ApoGirl.Core.Simulation
             }
 
             EffectApplier.ChangeVital(state, VitalType.Fatigue, action.FatigueCost, balance, delta);
-            EffectApplier.ChangeVital(state, VitalType.Stress, StatRules.ScaleStress(action.StressCost, player.SleepDebt, balance), balance, delta);
+            // 좋아하는 과목 (프롤로그의 메아리 E): 스트레스가 덜 들고, 가장 큰 상승치 +
+            var favorite = EchoRules.IsFavorite(state, balance, action);
+            var stressCost = StatRules.ScaleStress(action.StressCost, player.SleepDebt, balance);
+            if (favorite && stressCost > 0)
+            {
+                stressCost = Math.Max(0, stressCost - balance.FavoriteSubjectStressRelief);
+            }
+
+            EffectApplier.ChangeVital(state, VitalType.Stress, stressCost, balance, delta);
 
             CheckResult result;
             if (!affordable)
@@ -63,10 +71,18 @@ namespace ApoGirl.Core.Simulation
             if (affordable)
             {
                 var multiplier = GainMultiplier(state, action, result, routineBonus, balance) * ExtraGainMultiplier(state, action, db);
-                foreach (var gain in action.StatGains)
+                var bonusIndex = favorite ? LargestGainIndex(action) : -1;
+                for (var i = 0; i < action.StatGains.Count; i++)
                 {
+                    var gain = action.StatGains[i];
                     var current = player.GetStat(gain.Stat);
-                    EffectApplier.ChangeStat(state, gain.Stat, StatRules.ScaleGain(current, gain.Amount, multiplier, balance), balance, delta);
+                    var amount = StatRules.ScaleGain(current, gain.Amount, multiplier, balance);
+                    if (i == bonusIndex && amount > 0)
+                    {
+                        amount += balance.FavoriteSubjectGainBonus;
+                    }
+
+                    EffectApplier.ChangeStat(state, gain.Stat, amount, balance, delta);
                 }
 
                 if (action.HasProficiency && result != CheckResult.Failure)
@@ -74,6 +90,10 @@ namespace ApoGirl.Core.Simulation
                     var xp = action.ProficiencyXp + (result == CheckResult.GreatSuccess ? balance.GreatSuccessBonusXp : 0);
                     xp = MentorBondRules.ScaleXp(state, action, xp, balance); // 기획 C.1: 선생님 호감 구간
                     AddProficiencyXp(state, action.Proficiency, xp, balance, delta);
+                    if (action.Category == ActionCategory.Education)
+                    {
+                        EchoRules.TryFindFavorite(state, balance, action.Proficiency, delta); // "딱히 없어" → 좋아하는 게 생겼다
+                    }
                 }
             }
 
@@ -98,6 +118,21 @@ namespace ApoGirl.Core.Simulation
             // 비용을 못 냈으면 아무 효과도 없다 (빗물 없이 정수해도 실패 보상을 받지 않게)
             EffectApplier.Apply(state, affordable ? EffectFor(action, result) : null, balance, delta, recovery);
             return result;
+        }
+
+        /// <summary>능력치 상승이 가장 큰 칸 (같으면 앞의 것). 없으면 −1.</summary>
+        private static int LargestGainIndex(ActionDef action)
+        {
+            var best = -1;
+            for (var i = 0; i < action.StatGains.Count; i++)
+            {
+                if (action.StatGains[i].Amount > 0 && (best < 0 || action.StatGains[i].Amount > action.StatGains[best].Amount))
+                {
+                    best = i;
+                }
+            }
+
+            return best;
         }
 
         /// <summary>판정 확률: 기본 공식 + 특성 보정 (M4).</summary>

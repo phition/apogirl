@@ -61,6 +61,9 @@ namespace ApoGirl.Core.Definitions
         public bool UsesProficiency;
         public ProficiencyType Proficiency;
         public float ProficiencyWeight = 0.05f;
+
+        /// <summary>희망이 BalanceConfig.CrisisHopeThreshold 이상이면 CrisisHopePersuadeBonus를 더한다 (위기 이탈 설득).</summary>
+        public bool UsesHope;
     }
 
     /// <summary>행동 정의 (문서 6: 카테고리 → 세부 행동 → 결과 데이터).</summary>

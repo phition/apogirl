@@ -26,10 +26,10 @@
         { "Id": "UNKNOWN", "ProfileField": "BloodType", "ProfileValue": "Unknown", "Effect": { "Stats": [ { "Stat": "Agility", "Amount": 2 } ], "SetFlags": [ "BLOOD_UNKNOWN" ] } }
       ] },
       { "Id": "GRADE", "Options": [
-        { "Id": "TOP", "ProfileField": "GradeBandId", "ProfileValue": "TOP", "Effect": { "Stats": [ { "Stat": "Intellect", "Amount": 10 }, { "Stat": "Stamina", "Amount": -2 }, { "Stat": "Willpower", "Amount": -1 } ] } },
-        { "Id": "MIDDLE", "ProfileField": "GradeBandId", "ProfileValue": "MIDDLE", "Effect": { "Stats": [ { "Stat": "Intellect", "Amount": 4 }, { "Stat": "Stamina", "Amount": 2 }, { "Stat": "Willpower", "Amount": 1 } ] } },
-        { "Id": "LOW", "ProfileField": "GradeBandId", "ProfileValue": "LOW", "Effect": { "Stats": [ { "Stat": "Intellect", "Amount": -2 }, { "Stat": "Stamina", "Amount": 5 }, { "Stat": "Willpower", "Amount": 4 } ] } },
-        { "Id": "UNKNOWN", "ProfileField": "GradeBandId", "ProfileValue": "UNKNOWN", "Effect": { "Stats": [ { "Stat": "Intellect", "Amount": 2 }, { "Stat": "Stamina", "Amount": 3 }, { "Stat": "Willpower", "Amount": 2 } ] } }
+        { "Id": "TOP", "ProfileField": "GradeBandId", "ProfileValue": "TOP", "Effect": { "SetFlags": [ "GRADE_TOP" ], "Stats": [ { "Stat": "Intellect", "Amount": 10 }, { "Stat": "Stamina", "Amount": -2 }, { "Stat": "Willpower", "Amount": -1 } ] } },
+        { "Id": "MIDDLE", "ProfileField": "GradeBandId", "ProfileValue": "MIDDLE", "Effect": { "SetFlags": [ "GRADE_MIDDLE" ], "Stats": [ { "Stat": "Intellect", "Amount": 4 }, { "Stat": "Stamina", "Amount": 2 }, { "Stat": "Willpower", "Amount": 1 } ] } },
+        { "Id": "LOW", "ProfileField": "GradeBandId", "ProfileValue": "LOW", "Effect": { "SetFlags": [ "GRADE_LOW" ], "Stats": [ { "Stat": "Intellect", "Amount": -2 }, { "Stat": "Stamina", "Amount": 5 }, { "Stat": "Willpower", "Amount": 4 } ] } },
+        { "Id": "UNKNOWN", "ProfileField": "GradeBandId", "ProfileValue": "UNKNOWN", "Effect": { "SetFlags": [ "GRADE_UNKNOWN" ], "Stats": [ { "Stat": "Intellect", "Amount": 2 }, { "Stat": "Stamina", "Amount": 3 }, { "Stat": "Willpower", "Amount": 2 } ] } }
       ] },
       { "Id": "SUBJECT", "Options": [
         { "Id": "KOREAN", "ProfileField": "FavoriteSubjectId", "ProfileValue": "KOREAN", "Effect": { "Stats": [ { "Stat": "Empathy", "Amount": 2 } ], "Proficiencies": [ { "Proficiency": "Humanities", "Level": 1 } ], "Npcs": [ { "NpcId": "NPC_TEACHER", "Affinity": 5 } ] } },

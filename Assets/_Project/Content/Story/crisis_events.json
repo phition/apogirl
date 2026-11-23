@@ -55,6 +55,7 @@
           "HasCheck": true,
           "Check": {
             "BaseRate": 0.35,
+            "UsesHope": true,
             "StatWeights": [
               {
                 "Stat": "Empathy",
@@ -191,6 +192,7 @@
           "HasCheck": true,
           "Check": {
             "BaseRate": 0.35,
+            "UsesHope": true,
             "StatWeights": [
               {
                 "Stat": "Empathy",
@@ -327,6 +329,7 @@
           "HasCheck": true,
           "Check": {
             "BaseRate": 0.35,
+            "UsesHope": true,
             "StatWeights": [
               {
                 "Stat": "Empathy",
@@ -463,6 +466,7 @@
           "HasCheck": true,
           "Check": {
             "BaseRate": 0.35,
+            "UsesHope": true,
             "StatWeights": [
               {
                 "Stat": "Empathy",
@@ -599,6 +603,7 @@
           "HasCheck": true,
           "Check": {
             "BaseRate": 0.35,
+            "UsesHope": true,
             "StatWeights": [
               {
                 "Stat": "Empathy",
