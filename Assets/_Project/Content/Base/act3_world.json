@@ -102,7 +102,7 @@
     {
       "Id": "LOC_POLICE",
       "Day": {
-        "Resources": [ { "Resource": "RawWater", "Min": 1, "Max": 3 }, { "Resource": "Materials", "Min": 5, "Max": 4 }, { "Resource": "Medicine", "Min": 0, "Max": 3 } ],
+        "Resources": [ { "Resource": "RawWater", "Min": 1, "Max": 3 }, { "Resource": "Materials", "Min": 2, "Max": 5 }, { "Resource": "Medicine", "Min": 0, "Max": 3 } ],
         "BaseDownChance": 0.09,
         "Fatigue": 15,
         "StressMin": 9,
