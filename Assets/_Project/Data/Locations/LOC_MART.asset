@@ -94,6 +94,7 @@ MonoBehaviour:
         Number: 1
         LootTableId: 
         SearchFlag: 
+        Seal: 0
       - RoomId: ROOM_MART_WAREHOUSE_1
         TemplateId: ROOM_MART_WAREHOUSE
         Floor: 1
@@ -101,6 +102,7 @@ MonoBehaviour:
         Number: 1
         LootTableId: 
         SearchFlag: 
+        Seal: 0
       - RoomId: ROOM_MART_WAREHOUSE_2
         TemplateId: ROOM_MART_WAREHOUSE
         Floor: 1
@@ -108,6 +110,7 @@ MonoBehaviour:
         Number: 2
         LootTableId: 
         SearchFlag: 
+        Seal: 0
       - RoomId: ROOM_MART_OFFICE_2
         TemplateId: ROOM_MART_OFFICE
         Floor: 1
@@ -115,6 +118,39 @@ MonoBehaviour:
         Number: 2
         LootTableId: 
         SearchFlag: 
+        Seal: 0
+      - RoomId: ROOM_DEEP_MART_1_V
+        TemplateId: ROOM_DEEP_MART_COLD
+        Floor: 2
+        X: 7
+        Number: 1
+        LootTableId: 
+        SearchFlag: 
+        Seal: 1
+      - RoomId: ROOM_DEEP_MART_1_B
+        TemplateId: ROOM_DEEP_MART_STOCK
+        Floor: 2
+        X: 39
+        Number: 1
+        LootTableId: 
+        SearchFlag: 
+        Seal: 2
+      - RoomId: ROOM_DEEP_MART_2_B
+        TemplateId: ROOM_DEEP_MART_STOCK
+        Floor: 3
+        X: 8
+        Number: 2
+        LootTableId: 
+        SearchFlag: 
+        Seal: 2
+      - RoomId: ROOM_DEEP_MART_2_V
+        TemplateId: ROOM_DEEP_MART_COLD
+        Floor: 3
+        X: 38
+        Number: 2
+        LootTableId: 
+        SearchFlag: 
+        Seal: 1
       RoomTemplates:
       - Id: ROOM_MART_WAREHOUSE
         Width: 20
@@ -206,6 +242,70 @@ MonoBehaviour:
           SpriteKey: 
           Guaranteed: 0
         DefaultLootTableId: LOOT_STORE_OFFICE
+        WallDecor: 
+      - Id: ROOM_DEEP_MART_COLD
+        Width: 13
+        DoorXs:
+        - 1.2
+        Windows: []
+        Containers:
+        - Id: FREEZER_A
+          Kind: 3
+          Floor: 0
+          X: 4.5
+          SearchSeconds: 4
+          LootTableId: 
+          SpriteKey: 
+          Guaranteed: 1
+        - Id: FREEZER_B
+          Kind: 3
+          Floor: 0
+          X: 8
+          SearchSeconds: 4
+          LootTableId: 
+          SpriteKey: 
+          Guaranteed: 1
+        - Id: PALLET
+          Kind: 4
+          Floor: 0
+          X: 11.5
+          SearchSeconds: 2.5
+          LootTableId: LOOT_MART_DEEP
+          SpriteKey: 
+          Guaranteed: 1
+        DefaultLootTableId: LOOT_MART_VAULT
+        WallDecor: 
+      - Id: ROOM_DEEP_MART_STOCK
+        Width: 13
+        DoorXs:
+        - 1.2
+        Windows: []
+        Containers:
+        - Id: PALLET_A
+          Kind: 4
+          Floor: 0
+          X: 4.5
+          SearchSeconds: 2.5
+          LootTableId: LOOT_MART_DEEP
+          SpriteKey: 
+          Guaranteed: 1
+        - Id: PALLET_B
+          Kind: 4
+          Floor: 0
+          X: 8
+          SearchSeconds: 2.5
+          LootTableId: 
+          SpriteKey: 
+          Guaranteed: 1
+        - Id: CAGE
+          Kind: 2
+          Floor: 0
+          X: 11.5
+          SearchSeconds: 3.5
+          LootTableId: LOOT_MART_DEEP
+          SpriteKey: 
+          Guaranteed: 1
+        DefaultLootTableId: LOOT_MART_VAULT
         WallDecor: 
       Containers:
       - Id: C_MART_SHELF_1
@@ -407,6 +507,20 @@ MonoBehaviour:
         Count: 2
         Spread: 1.5
         Dormant: 1
+      - EnemyId: ENEMY_WANDERER
+        Floor: 2
+        RoomId: ROOM_DEEP_MART_1_B
+        X: 9.5
+        Count: 2
+        Spread: 1
+        Dormant: 1
+      - EnemyId: ENEMY_WANDERER
+        Floor: 3
+        RoomId: ROOM_DEEP_MART_2_B
+        X: 9.5
+        Count: 2
+        Spread: 1
+        Dormant: 1
       LockedRooms:
       - ROOM_MART_WAREHOUSE_1
       ForceableRooms: []
@@ -469,8 +583,8 @@ MonoBehaviour:
         Collectible: 0
       - Id: CD_06
         Floor: 3
-        RoomId: 
-        X: 38
+        RoomId: ROOM_DEEP_MART_2_V
+        X: 6.25
         FlagsAll: []
         FlagsNone:
         - CD_06
@@ -540,14 +654,28 @@ MonoBehaviour:
         Count: 1
         Spread: 0
         Dormant: 0
+      - EnemyId: ENEMY_WANDERER
+        Floor: 2
+        RoomId: ROOM_DEEP_MART_1_B
+        X: 9.5
+        Count: 1
+        Spread: 0
+        Dormant: 0
+      - EnemyId: ENEMY_WANDERER
+        Floor: 3
+        RoomId: ROOM_DEEP_MART_2_B
+        X: 9.5
+        Count: 1
+        Spread: 0
+        Dormant: 0
       LockedRooms: []
       ForceableRooms:
       - ROOM_MART_WAREHOUSE_1
       Encounters:
       - Id: CD_06
         Floor: 3
-        RoomId: 
-        X: 38
+        RoomId: ROOM_DEEP_MART_2_V
+        X: 6.25
         FlagsAll: []
         FlagsNone:
         - CD_06

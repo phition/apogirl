@@ -6827,6 +6827,74 @@ MonoBehaviour:
     m_Key: tut.pocket
     m_Metadata:
       m_Items: []
+  - m_Id: 1825728261013504
+    m_Key: roomname.ROOM_DEEP_RES_VAULT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1825728319733760
+    m_Key: roomname.ROOM_DEEP_RES_STORE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1825728319733761
+    m_Key: roomname.ROOM_DEEP_SUB_VAULT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1825728319733762
+    m_Key: roomname.ROOM_DEEP_SUB_SHELTER
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1825728319733763
+    m_Key: roomname.ROOM_DEEP_MART_COLD
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1825728319733764
+    m_Key: roomname.ROOM_DEEP_MART_STOCK
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1825728319733765
+    m_Key: roomname.ROOM_DEEP_POLICE_EVIDENCE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1825728319733766
+    m_Key: roomname.ROOM_DEEP_POLICE_HOLD
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1825728319733767
+    m_Key: roomname.ROOM_DEEP_WATER_CHEM
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1825728319733768
+    m_Key: roomname.ROOM_DEEP_WATER_PUMP
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1825728319733769
+    m_Key: exp.heavy_door_hold
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1825728319733770
+    m_Key: exp.barred_door_hold
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1825728319733771
+    m_Key: exp.heavy_door_opened
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1825728319733772
+    m_Key: exp.barred_door_opened
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1825728319733773
+    m_Key: exp.prompt_door_heavy
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1825728319733774
+    m_Key: exp.prompt_door_heavy_crowbar
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1825728319733775
+    m_Key: exp.prompt_door_barred
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

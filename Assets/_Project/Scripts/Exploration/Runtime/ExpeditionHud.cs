@@ -708,6 +708,18 @@ namespace ApoGirl.Exploration.Runtime
                     _prompt.text = Loc.T(!target.Locked ? "exp.prompt_exit"
                         : _director.ToolKind == ToolKind.Crowbar ? "exp.prompt_exit_force" : "exp.prompt_exit_locked");
                     break;
+                case TargetKind.Door when target.Sealed:
+                    _prompt.text = Loc.F(target.Seal == DoorSeal.Heavy
+                                       ? _director.ToolKind == ToolKind.Crowbar ? "exp.prompt_door_heavy_crowbar" : "exp.prompt_door_heavy"
+                                       : "exp.prompt_door_barred", target.Room.Label)
+                                   + "  ·  " + Loc.T("exp.prompt_door_senses");
+                    if (target.SealProgress > 0f)
+                    {
+                        _searchBar.RemoveFromClassList("hidden");
+                        _searchBar.value = target.SealProgress / Mathf.Max(0.01f, _director.SealSeconds(target)) * 100f;
+                    }
+
+                    break;
                 case TargetKind.Door when target.RoomLocked:
                     _prompt.text = Loc.F("exp.prompt_door_shuttered", target.Room.Label) + "  ·  " + Loc.T("exp.prompt_door_senses");
                     break;

@@ -1,6 +1,36 @@
 {
  "Interior": [
   {
+   "Location": "LOC_RESIDENTIAL",
+   "Template": "ROOM_DEEP_",
+   "Key": "wall_deep_residential"
+  },
+  {
+   "Location": "LOC_SUBWAY",
+   "Template": "ROOM_DEEP_",
+   "Key": "wall_deep_subway"
+  },
+  {
+   "Location": "LOC_MART",
+   "Template": "ROOM_DEEP_",
+   "Key": "wall_deep_mart"
+  },
+  {
+   "Location": "LOC_POLICE",
+   "Template": "ROOM_DEEP_",
+   "Key": "wall_deep_police"
+  },
+  {
+   "Location": "LOC_WATERWORKS",
+   "Template": "ROOM_DEEP_",
+   "Key": "wall_deep_waterworks"
+  },
+  {
+   "Location": "",
+   "Template": "ROOM_DEEP_",
+   "Key": "wall_deep"
+  },
+  {
    "Location": "",
    "Template": "ROOM_NURSE",
    "Key": "wall_nurse"
@@ -151,6 +181,12 @@
   }
  ],
  "Doors": [
+  {
+   "Location": "",
+   "Template": "ROOM_DEEP_",
+   "Closed": "door_metal_closed",
+   "Open": "door_metal_open"
+  },
   {
    "Location": "LOC_SCHOOL",
    "Template": "",

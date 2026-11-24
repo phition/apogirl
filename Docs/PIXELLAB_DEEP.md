@@ -125,6 +125,17 @@ flat orthographic side view, muted realistic colors, thin dark outline, slightly
 - 도구: `code_temp/apogirl/tools/gen_deep_p2.py`(생성), `install_deep_p2.py`(고른 후보 자르기·설치·기준점).
 - 확인: 다섯 지역 깊은 층 캡처 — 빌라(천장 띠·비상등·차·CD), 지하철(수레), 마트(비닐 커튼), 경찰서(철망 보관함), 정수장 장마 침수 층(반투명 물이 정강이까지, 약품 통이 잠김). 디버그 탐험도 세션의 주·날씨를 받아 장마·폭설 지도가 보인다.
 
+## 6.3 P3 — 특별한 방 문 (2026-11-24, 아직 만들지 않음)
+
+깊은 층마다 큰 문 방·빗장 방이 하나씩 생겼다. 지금은 `door_metal_closed` 위에 코드 그림(큰 문 = 철판 띠·붉은 바퀴·노란 줄, 빗장 = 가로 쇠막대·걸쇠)을 얹는다. 아래 키로 넣으면 `ExpeditionDirector.AddSealViews`가 바로 그 그림을 쓰고, 열리면 `door_metal_open`으로 바뀐다.
+
+| 파일 (키) | 크기 | style | 프롬프트 (공통 문구 뒤) |
+|---|---|---|---|
+| `door_deep_heavy` | 40 × 78, 투명 | `door_metal_closed` | `A heavy steel vault-like door in a concrete basement wall, thick dark grey plate with a round red valve wheel in the middle, rivets along the edges, a yellow-and-black hazard stripe at the bottom, scratches and rust streaks, standing on the floor, transparent background` |
+| `door_deep_barred` | 40 × 78, 투명 | `door_metal_closed` | `A plain grey steel door barred from the outside: a thick rusty iron crossbar laid across two heavy brackets bolted to the frame, a loop of chain hanging from it, faint scratch marks on the door from the inside, standing on the floor, transparent background` |
+
+- 빗장 막대는 문 폭보다 조금 길게(양쪽 벽 걸쇠까지) 그려도 된다. 문 둘 다 겉 층 문(`door_metal_closed`)과 높이를 맞춘다.
+
 ## 7. 만들지 않는 것
 
 - 깊은 곳 이벤트 컷(`evt_deep_door`·`evt_deep_oneway`)은 힉스필드 8차로 이미 받았다 (장면이 생기면 연결).

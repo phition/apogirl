@@ -113,6 +113,91 @@ namespace ApoGirl.Tests.EditMode
             Assert.Greater(extracted, 0);
         }
 
+        /// <summary>지하 2(층 번호 3) 복도 6.8에 특별한 방 하나 (문 = 8).</summary>
+        private static void AddDeepRoom(BuildingLayoutDef layout, DoorSeal seal = DoorSeal.Heavy, int floor = 3, float spanX = 6.8f)
+        {
+            if (layout.FindTemplate("ROOM_DEEP_T") == null)
+            {
+                layout.RoomTemplates.Add(new RoomTemplateDef
+                {
+                    Id = "ROOM_DEEP_T", Width = 13f, DefaultLootTableId = TestContent.CreateLootTable().Id,
+                    Containers = { new ContainerDef { Id = "SAFE", X = 4.5f, Guaranteed = true } },
+                });
+            }
+
+            layout.Doors.Add(new DoorDef { RoomId = "ROOM_DEEP_" + layout.Doors.Count, TemplateId = "ROOM_DEEP_T", Floor = floor, X = spanX, Seal = seal });
+        }
+
+        [Test]
+        public void Issues_DeepRooms_SealOnlyDeep_NoOverlap()
+        {
+            var good = Layout();
+            AddDeepRoom(good);
+            AddDeepRoom(good, DoorSeal.Barred, floor: 2, spanX: 8f);
+            CollectionAssert.IsEmpty(DeepRules.Issues(good));
+
+            var onStairs = Layout();
+            AddDeepRoom(onStairs, spanX: 13.6f);   // 문 14.8: 지하 2 계단(14.6)과 겹친다
+            Assert.IsTrue(DeepRules.Issues(onStairs).Any(i => i.Contains("겹침")));
+
+            var outer = Layout();
+            AddDeepRoom(outer, floor: 0, spanX: 8f);
+            Assert.IsTrue(DeepRules.Issues(outer).Any(i => i.Contains("깊은 곳에만")), "큰 문·빗장은 깊은 곳에만");
+        }
+
+        private static InMemoryDefinitionDatabase RoomDb(float roomChance)
+        {
+            var location = TestContent.CreateLocation();
+            var layout = Layout();
+            AddDeepRoom(layout);
+            location.Layout = layout;
+            var roomId = layout.Doors[layout.Doors.Count - 1].RoomId;
+            location.DayVariant.Encounters.Add(new EncounterDef
+            {
+                Id = "CD_10", Floor = 3, RoomId = roomId, X = 6.25f, Collectible = true, FlagsNone = { "CD_10" },
+                Choices = { new EncounterChoiceDef { Id = "TAKE", SetFlags = { "CD_10" } } },
+            });
+            location.DayVariant.Encounters.Add(new EncounterDef
+            {
+                Id = "DEEP_CLUE", Floor = 3, RoomId = roomId, X = 9f, FlagsNone = { "DEEP_CLUE" },
+                Choices = { new EncounterChoiceDef { Id = "TAKE", SetFlags = { "DEEP_CLUE" } } },
+            });
+            return new InMemoryDefinitionDatabase(
+                new BalanceConfig
+                {
+                    HeadlessDeepChance = 1f, HeadlessCdChance = 1f, HeadlessDeepItemChance = 0f,
+                    HeadlessDeepRoomChance = roomChance, HeadlessDeepRoomEncounterChance = 1f, HeadlessDeepRoomItems = 2,
+                },
+                TestContent.CreateActions(), new[] { TestContent.CreateModel() },
+                TestContent.CreateItems(), new[] { TestContent.CreateLootTable() }, new[] { location });
+        }
+
+        [Test]
+        public void Headless_DeepRoomItemsAndEncounters_OnlyWhenRoomOpened()
+        {
+            var opened = RoomDb(1f);
+            var closed = RoomDb(0f);
+            var extracted = 0;
+            for (var seed = 1; seed <= 40; seed++)
+            {
+                var a = Run(opened, seed);
+                var b = Run(closed, seed);
+                Assert.AreEqual(b.Status, a.Status);
+                CollectionAssert.AreEqual(b.ResourceLoot.Select(r => r.Resource + ":" + r.Amount), a.ResourceLoot.Select(r => r.Resource + ":" + r.Amount));
+                Assert.IsFalse(b.Flags.Contains("CD_10") || b.Flags.Contains("DEEP_CLUE"), "특별한 방을 열지 않으면 그 안의 CD·단서는 없다");
+                if (a.Status == ExtractStatus.Extracted)
+                {
+                    extracted++;
+                    Assert.IsTrue(a.Flags.Contains("CD_10"));
+                    Assert.IsTrue(a.Flags.Contains("DEEP_CLUE"));
+                    Assert.AreEqual(b.Loot.Count + 2, a.Loot.Count, "금고 표에서 HeadlessDeepRoomItems개");
+                    Assert.Greater(a.StressDelta, b.StressDelta);
+                }
+            }
+
+            Assert.Greater(extracted, 0);
+        }
+
         [Test]
         public void Headless_WandererSpecial_RaisesDeepChance()
         {

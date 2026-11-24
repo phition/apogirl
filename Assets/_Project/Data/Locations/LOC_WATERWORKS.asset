@@ -142,6 +142,7 @@ MonoBehaviour:
         Number: 1
         LootTableId: 
         SearchFlag: 
+        Seal: 0
       - RoomId: ROOM_WATER_CONTROL_1
         TemplateId: ROOM_WATER_CONTROL
         Floor: 1
@@ -149,6 +150,7 @@ MonoBehaviour:
         Number: 1
         LootTableId: 
         SearchFlag: 
+        Seal: 0
       - RoomId: ROOM_WATER_LAB_1
         TemplateId: ROOM_WATER_LAB
         Floor: 2
@@ -156,6 +158,7 @@ MonoBehaviour:
         Number: 1
         LootTableId: 
         SearchFlag: 
+        Seal: 0
       - RoomId: ROOM_WATER_LAB_2
         TemplateId: ROOM_WATER_LAB
         Floor: 2
@@ -163,6 +166,55 @@ MonoBehaviour:
         Number: 2
         LootTableId: 
         SearchFlag: 
+        Seal: 0
+      - RoomId: ROOM_DEEP_WATER_1_B
+        TemplateId: ROOM_DEEP_WATER_PUMP
+        Floor: 3
+        X: 8
+        Number: 1
+        LootTableId: 
+        SearchFlag: 
+        Seal: 2
+      - RoomId: ROOM_DEEP_WATER_1_V
+        TemplateId: ROOM_DEEP_WATER_CHEM
+        Floor: 3
+        X: 33
+        Number: 1
+        LootTableId: 
+        SearchFlag: 
+        Seal: 1
+      - RoomId: ROOM_DEEP_WATER_2_V
+        TemplateId: ROOM_DEEP_WATER_CHEM
+        Floor: 4
+        X: 9
+        Number: 2
+        LootTableId: 
+        SearchFlag: 
+        Seal: 1
+      - RoomId: ROOM_DEEP_WATER_2_B
+        TemplateId: ROOM_DEEP_WATER_PUMP
+        Floor: 4
+        X: 38
+        Number: 2
+        LootTableId: 
+        SearchFlag: 
+        Seal: 2
+      - RoomId: ROOM_DEEP_WATER_3_B
+        TemplateId: ROOM_DEEP_WATER_PUMP
+        Floor: 5
+        X: 10
+        Number: 3
+        LootTableId: 
+        SearchFlag: 
+        Seal: 2
+      - RoomId: ROOM_DEEP_WATER_3_V
+        TemplateId: ROOM_DEEP_WATER_CHEM
+        Floor: 5
+        X: 29
+        Number: 3
+        LootTableId: 
+        SearchFlag: 
+        Seal: 1
       RoomTemplates:
       - Id: ROOM_WATER_ARCHIVE
         Width: 16
@@ -282,6 +334,70 @@ MonoBehaviour:
           SpriteKey: 
           Guaranteed: 0
         DefaultLootTableId: LOOT_SUBWAY_OFFICE
+        WallDecor: 
+      - Id: ROOM_DEEP_WATER_CHEM
+        Width: 13
+        DoorXs:
+        - 1.2
+        Windows: []
+        Containers:
+        - Id: CHEM_A
+          Kind: 2
+          Floor: 0
+          X: 4.5
+          SearchSeconds: 3.5
+          LootTableId: 
+          SpriteKey: 
+          Guaranteed: 1
+        - Id: CHEM_B
+          Kind: 2
+          Floor: 0
+          X: 8
+          SearchSeconds: 3.5
+          LootTableId: 
+          SpriteKey: 
+          Guaranteed: 1
+        - Id: CRATE
+          Kind: 4
+          Floor: 0
+          X: 11.5
+          SearchSeconds: 2.5
+          LootTableId: LOOT_WATER_DEEP
+          SpriteKey: 
+          Guaranteed: 1
+        DefaultLootTableId: LOOT_WATER_VAULT
+        WallDecor: 
+      - Id: ROOM_DEEP_WATER_PUMP
+        Width: 13
+        DoorXs:
+        - 1.2
+        Windows: []
+        Containers:
+        - Id: VALVE
+          Kind: 4
+          Floor: 0
+          X: 4.5
+          SearchSeconds: 2.5
+          LootTableId: LOOT_SUBWAY_OFFICE
+          SpriteKey: 
+          Guaranteed: 1
+        - Id: CRATE
+          Kind: 4
+          Floor: 0
+          X: 8
+          SearchSeconds: 2.5
+          LootTableId: 
+          SpriteKey: 
+          Guaranteed: 1
+        - Id: CABINET
+          Kind: 2
+          Floor: 0
+          X: 11.5
+          SearchSeconds: 3.5
+          LootTableId: LOOT_WATER_DEEP
+          SpriteKey: 
+          Guaranteed: 1
+        DefaultLootTableId: LOOT_WATER_VAULT
         WallDecor: 
       Containers:
       - Id: C_WATER_TANK_1
@@ -411,6 +527,27 @@ MonoBehaviour:
         Count: 3
         Spread: 2
         Dormant: 1
+      - EnemyId: ENEMY_WANDERER
+        Floor: 3
+        RoomId: ROOM_DEEP_WATER_1_B
+        X: 9.5
+        Count: 2
+        Spread: 1
+        Dormant: 1
+      - EnemyId: ENEMY_WANDERER
+        Floor: 4
+        RoomId: ROOM_DEEP_WATER_2_B
+        X: 9.5
+        Count: 2
+        Spread: 1
+        Dormant: 1
+      - EnemyId: ENEMY_WANDERER
+        Floor: 5
+        RoomId: ROOM_DEEP_WATER_3_B
+        X: 9.5
+        Count: 2
+        Spread: 1
+        Dormant: 1
       LockedRooms:
       - ROOM_WATER_ARCHIVE_1
       ForceableRooms: []
@@ -446,8 +583,8 @@ MonoBehaviour:
         Collectible: 0
       - Id: CD_08
         Floor: 5
-        RoomId: 
-        X: 30
+        RoomId: ROOM_DEEP_WATER_3_V
+        X: 6.25
         FlagsAll: []
         FlagsNone:
         - CD_08
@@ -531,6 +668,27 @@ MonoBehaviour:
         Count: 2
         Spread: 6
         Dormant: 0
+      - EnemyId: ENEMY_WANDERER
+        Floor: 3
+        RoomId: ROOM_DEEP_WATER_1_B
+        X: 9.5
+        Count: 1
+        Spread: 0
+        Dormant: 0
+      - EnemyId: ENEMY_WANDERER
+        Floor: 4
+        RoomId: ROOM_DEEP_WATER_2_B
+        X: 9.5
+        Count: 1
+        Spread: 0
+        Dormant: 0
+      - EnemyId: ENEMY_WANDERER
+        Floor: 5
+        RoomId: ROOM_DEEP_WATER_3_B
+        X: 9.5
+        Count: 1
+        Spread: 0
+        Dormant: 0
       LockedRooms: []
       ForceableRooms:
       - ROOM_WATER_ARCHIVE_1
@@ -595,8 +753,8 @@ MonoBehaviour:
         Collectible: 0
       - Id: CD_08
         Floor: 5
-        RoomId: 
-        X: 30
+        RoomId: ROOM_DEEP_WATER_3_V
+        X: 6.25
         FlagsAll: []
         FlagsNone:
         - CD_08

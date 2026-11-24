@@ -145,8 +145,11 @@ namespace ApoGirl.Core.Expedition
 
         public static string RoomKey(string locationId, int doorIndex, int containerIndex) => locationId + "/R" + doorIndex + "." + containerIndex;
 
-        /// <summary>지역의 모든 상자 키 (복도 + 방 템플릿 상자).</summary>
-        public static List<string> AllContainerKeys(LocationDef location)
+        /// <summary>
+        /// 지역의 모든 상자 키 (복도 + 방 템플릿 상자). 헤드리스·봇은 깊은 곳 특별한 방 상자를 빼고 센다
+        /// (그 방은 ApplyDeep의 HeadlessDeepRoomChance로 따로 다룬다: 방이 늘어도 고갈 속도가 그대로).
+        /// </summary>
+        public static List<string> AllContainerKeys(LocationDef location, bool includeDeepRooms = true)
         {
             var keys = new List<string>();
             var layout = location?.Layout;
@@ -163,7 +166,7 @@ namespace ApoGirl.Core.Expedition
             for (var d = 0; d < layout.Doors.Count; d++)
             {
                 var template = layout.FindTemplate(layout.Doors[d].TemplateId);
-                if (template == null)
+                if (template == null || (!includeDeepRooms && layout.IsDeep(layout.Doors[d].Floor)))
                 {
                     continue;
                 }

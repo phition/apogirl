@@ -63,6 +63,8 @@ namespace ApoGirl.Core.Expedition
                 }
             }
 
+            RoomIssues(layout, issues);
+
             if (layout.DeepFloors <= 0)
             {
                 if (layout.Connectors.Any(c => !c.IsStairs))
@@ -95,6 +97,70 @@ namespace ApoGirl.Core.Expedition
             }
 
             return issues;
+        }
+
+        /// <summary>문이 계단·깊은 문·출구와 떨어져야 하는 거리 (계단실 폭).</summary>
+        public const float RoomConnectorGap = 3f;
+
+        /// <summary>문이 복도 상자와 떨어져야 하는 거리.</summary>
+        public const float RoomContainerGap = 1.6f;
+
+        /// <summary>
+        /// 깊은 곳 특별한 방 (큰 문·빗장): 봉인 문은 깊은 곳에만, 깊은 곳 방 문은 그 층 복도 안에서
+        /// 계단·깊은 문·출구·상자·다른 방 문과 겹치지 않는다.
+        /// </summary>
+        private static void RoomIssues(BuildingLayoutDef layout, List<string> issues)
+        {
+            var doorXs = new List<(DoorDef Door, float X)>();
+            foreach (var door in layout.Doors)
+            {
+                var deep = layout.IsDeep(door.Floor);
+                if (door.Seal != DoorSeal.None && !deep)
+                {
+                    issues.Add($"큰 문·빗장은 깊은 곳에만: {door.RoomId}");
+                }
+
+                if (!deep)
+                {
+                    continue;
+                }
+
+                var template = layout.FindTemplate(door.TemplateId);
+                if (template == null)
+                {
+                    issues.Add($"깊은 곳 방 템플릿 없음: {door.RoomId} ({door.TemplateId})");
+                    continue;
+                }
+
+                foreach (var doorX in template.DoorXs)
+                {
+                    doorXs.Add((door, door.X + doorX));
+                }
+            }
+
+            foreach (var (door, x) in doorXs)
+            {
+                if (x < 1f || x > layout.CorridorLengthOf(door.Floor) - 1f)
+                {
+                    issues.Add($"깊은 곳 방 문이 복도 밖: {door.RoomId} {x}");
+                }
+
+                if (layout.Connectors.Any(c => c.Floor == door.Floor && System.Math.Abs(c.X - x) < RoomConnectorGap))
+                {
+                    issues.Add($"깊은 곳 방 문이 계단·깊은 문·출구와 겹침: {door.RoomId} {x}");
+                }
+
+                if (layout.Exits.Any(e => e.Floor == door.Floor && System.Math.Abs(e.X - x) < RoomConnectorGap)
+                    || layout.Containers.Any(c => c.Floor == door.Floor && System.Math.Abs(c.X - x) < RoomContainerGap))
+                {
+                    issues.Add($"깊은 곳 방 문이 출구·상자와 겹침: {door.RoomId} {x}");
+                }
+
+                if (doorXs.Any(o => o.Door != door && o.Door.Floor == door.Floor && System.Math.Abs(o.X - x) < RoomConnectorGap))
+                {
+                    issues.Add($"깊은 곳 방 문끼리 겹침: {door.RoomId} {x}");
+                }
+            }
         }
 
         /// <summary>깊은 문 수 (겉 쪽에서 센다).</summary>

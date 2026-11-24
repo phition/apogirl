@@ -20,6 +20,18 @@ namespace ApoGirl.EditorTools
             ScriptableObject.CreateInstance<TestRunnerApi>().RegisterCallbacks(new Callbacks());
         }
 
+        /// <summary>EditMode 테스트 전체 실행 (MCP는 테스트 API를 직접 부를 수 없어 메뉴로 돌린다). 결과는 ResultPath.</summary>
+        [MenuItem("ApoGirl/Tests/Run EditMode Tests")]
+        public static void RunEditMode()
+        {
+            if (File.Exists(ResultPath))
+            {
+                File.Delete(ResultPath);
+            }
+
+            ScriptableObject.CreateInstance<TestRunnerApi>().Execute(new ExecutionSettings(new Filter { testMode = TestMode.EditMode }));
+        }
+
         private sealed class Callbacks : ICallbacks
         {
             public void RunStarted(ITestAdaptor testsToRun)

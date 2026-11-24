@@ -82,6 +82,7 @@ MonoBehaviour:
         Number: 101
         LootTableId: 
         SearchFlag: 
+        Seal: 0
       - RoomId: ROOM_HOUSE_102
         TemplateId: ROOM_HOUSE
         Floor: 0
@@ -89,6 +90,7 @@ MonoBehaviour:
         Number: 102
         LootTableId: 
         SearchFlag: 
+        Seal: 0
       - RoomId: ROOM_HOUSE_201
         TemplateId: ROOM_HOUSE
         Floor: 1
@@ -96,6 +98,7 @@ MonoBehaviour:
         Number: 201
         LootTableId: 
         SearchFlag: 
+        Seal: 0
       - RoomId: ROOM_HOUSE_202
         TemplateId: ROOM_HOUSE
         Floor: 1
@@ -103,6 +106,7 @@ MonoBehaviour:
         Number: 202
         LootTableId: 
         SearchFlag: 
+        Seal: 0
       - RoomId: ROOM_HOUSE_203
         TemplateId: ROOM_HOUSE
         Floor: 1
@@ -110,6 +114,39 @@ MonoBehaviour:
         Number: 203
         LootTableId: 
         SearchFlag: 
+        Seal: 0
+      - RoomId: ROOM_DEEP_RES_1_B
+        TemplateId: ROOM_DEEP_RES_STORE
+        Floor: 2
+        X: 8
+        Number: 1
+        LootTableId: 
+        SearchFlag: 
+        Seal: 2
+      - RoomId: ROOM_DEEP_RES_1_V
+        TemplateId: ROOM_DEEP_RES_VAULT
+        Floor: 2
+        X: 30
+        Number: 1
+        LootTableId: 
+        SearchFlag: 
+        Seal: 1
+      - RoomId: ROOM_DEEP_RES_2_V
+        TemplateId: ROOM_DEEP_RES_VAULT
+        Floor: 3
+        X: 9
+        Number: 2
+        LootTableId: 
+        SearchFlag: 
+        Seal: 1
+      - RoomId: ROOM_DEEP_RES_2_B
+        TemplateId: ROOM_DEEP_RES_STORE
+        Floor: 3
+        X: 26
+        Number: 2
+        LootTableId: 
+        SearchFlag: 
+        Seal: 2
       RoomTemplates:
       - Id: ROOM_HOUSE
         Width: 14
@@ -152,6 +189,70 @@ MonoBehaviour:
           SpriteKey: 
           Guaranteed: 0
         DefaultLootTableId: LOOT_HOUSE_ROOM
+        WallDecor: 
+      - Id: ROOM_DEEP_RES_VAULT
+        Width: 13
+        DoorXs:
+        - 1.2
+        Windows: []
+        Containers:
+        - Id: SAFE
+          Kind: 4
+          Floor: 0
+          X: 4.5
+          SearchSeconds: 2.5
+          LootTableId: 
+          SpriteKey: prop_mart_safe
+          Guaranteed: 1
+        - Id: LOCKER
+          Kind: 0
+          Floor: 0
+          X: 8
+          SearchSeconds: 3
+          LootTableId: 
+          SpriteKey: 
+          Guaranteed: 1
+        - Id: TRUNK
+          Kind: 4
+          Floor: 0
+          X: 11.5
+          SearchSeconds: 2.5
+          LootTableId: LOOT_RESIDENTIAL_DEEP
+          SpriteKey: 
+          Guaranteed: 1
+        DefaultLootTableId: LOOT_RESIDENTIAL_VAULT
+        WallDecor: 
+      - Id: ROOM_DEEP_RES_STORE
+        Width: 13
+        DoorXs:
+        - 1.2
+        Windows: []
+        Containers:
+        - Id: SHELF
+          Kind: 2
+          Floor: 0
+          X: 4.5
+          SearchSeconds: 3.5
+          LootTableId: LOOT_RESIDENTIAL_DEEP
+          SpriteKey: 
+          Guaranteed: 1
+        - Id: BOX
+          Kind: 4
+          Floor: 0
+          X: 8
+          SearchSeconds: 2.5
+          LootTableId: LOOT_HOUSE_KITCHEN
+          SpriteKey: 
+          Guaranteed: 1
+        - Id: CRATE
+          Kind: 4
+          Floor: 0
+          X: 11.5
+          SearchSeconds: 2.5
+          LootTableId: 
+          SpriteKey: 
+          Guaranteed: 1
+        DefaultLootTableId: LOOT_RESIDENTIAL_VAULT
         WallDecor: 
       Containers:
       - Id: C_RES_MAILBOX
@@ -265,6 +366,20 @@ MonoBehaviour:
         Count: 1
         Spread: 0
         Dormant: 0
+      - EnemyId: ENEMY_WANDERER
+        Floor: 2
+        RoomId: ROOM_DEEP_RES_1_B
+        X: 9.5
+        Count: 2
+        Spread: 1
+        Dormant: 1
+      - EnemyId: ENEMY_WANDERER
+        Floor: 3
+        RoomId: ROOM_DEEP_RES_2_B
+        X: 9.5
+        Count: 2
+        Spread: 1
+        Dormant: 1
       LockedRooms:
       - ROOM_HOUSE_102
       ForceableRooms:
@@ -336,8 +451,8 @@ MonoBehaviour:
         Collectible: 0
       - Id: CD_04
         Floor: 3
-        RoomId: 
-        X: 12
+        RoomId: ROOM_DEEP_RES_2_V
+        X: 6.25
         FlagsAll: []
         FlagsNone:
         - CD_04
@@ -400,6 +515,20 @@ MonoBehaviour:
         Count: 2
         Spread: 6
         Dormant: 0
+      - EnemyId: ENEMY_WANDERER
+        Floor: 2
+        RoomId: ROOM_DEEP_RES_1_B
+        X: 9.5
+        Count: 1
+        Spread: 0
+        Dormant: 0
+      - EnemyId: ENEMY_WANDERER
+        Floor: 3
+        RoomId: ROOM_DEEP_RES_2_B
+        X: 9.5
+        Count: 1
+        Spread: 0
+        Dormant: 0
       LockedRooms:
       - ROOM_HOUSE_102
       ForceableRooms:
@@ -407,8 +536,8 @@ MonoBehaviour:
       Encounters:
       - Id: CD_04
         Floor: 3
-        RoomId: 
-        X: 12
+        RoomId: ROOM_DEEP_RES_2_V
+        X: 6.25
         FlagsAll: []
         FlagsNone:
         - CD_04

@@ -144,7 +144,7 @@ namespace ApoGirl.Core.Simulation.Bots
                 return false;
             }
 
-            var remaining = HostileRules.AllContainerKeys(location).Count(k => !state.Exploration.LootedContainers.Contains(k));
+            var remaining = HostileRules.AllContainerKeys(location, includeDeepRooms: false).Count(k => !state.Exploration.LootedContainers.Contains(k));
             return remaining * 2 < perRun;
         }
 

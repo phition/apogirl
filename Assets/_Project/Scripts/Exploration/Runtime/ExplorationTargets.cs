@@ -110,6 +110,15 @@ namespace ApoGirl.Exploration.Runtime
         public bool Forceable;
         public bool Forced;
 
+        /// <summary>깊은 곳 특별한 방 문 (큰 문·빗장): 길게 눌러 SealProgress를 채우면 Forced.</summary>
+        public DoorSeal Seal;
+        public float SealProgress;
+
+        /// <summary>봉인 표시 코드 그림 (열리면 지운다).</summary>
+        public readonly List<GameObject> SealViews = new List<GameObject>();
+
+        public bool Sealed => Seal != DoorSeal.None && !Forced;
+
         public int Floor => Area.Floor;
 
         public void MarkSearched()

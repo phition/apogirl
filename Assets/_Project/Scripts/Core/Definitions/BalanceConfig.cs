@@ -641,6 +641,36 @@ namespace ApoGirl.Core.Definitions
         /// <summary>일방 출구: 한 번 누르면 "정말 나갈까?", 이 시간 안에 다시 누르면 나간다 (초).</summary>
         public float OneWayConfirmSeconds = 3f;
 
+        /// <summary>깊은 곳 큰 문(금고문·방화 셔터)을 밀어 여는 시간 (초, 길게 누른다).</summary>
+        public float HeavyDoorSeconds = 4f;
+
+        /// <summary>쇠지렛대가 있으면 큰 문 여는 시간 배율.</summary>
+        public float HeavyDoorCrowbarMultiplier = 0.5f;
+
+        /// <summary>큰 문을 미는 동안 0.5초마다 나는 소음 반경.</summary>
+        public float HeavyDoorNoise = 5f;
+
+        /// <summary>큰 문이 열리는 순간 쿵 하는 소음 반경.</summary>
+        public float HeavyDoorSlamNoise = 9f;
+
+        /// <summary>깊은 곳 빗장을 푸는 시간 (초, 길게 누른다).</summary>
+        public float BarredDoorSeconds = 2f;
+
+        /// <summary>빗장을 푸는 동안 0.5초마다 나는 소음 반경 (조용하다).</summary>
+        public float BarredDoorNoise = 1.5f;
+
+        /// <summary>헤드리스에서 깊은 곳에 들어간 판이 특별한 방(큰 문·빗장) 하나를 여는 확률.</summary>
+        public float HeadlessDeepRoomChance = 0.5f;
+
+        /// <summary>헤드리스에서 특별한 방을 열었을 때 그 방 전리품 표에서 줍는 물건 수.</summary>
+        public int HeadlessDeepRoomItems = 2;
+
+        /// <summary>헤드리스에서 특별한 방을 열었을 때 더하는 스트레스.</summary>
+        public int HeadlessDeepRoomStress = 1;
+
+        /// <summary>헤드리스에서 특별한 방 안의 조우(CD·단서)를 찾는 확률 (특별한 방을 연 판만, 조우마다).</summary>
+        public float HeadlessDeepRoomEncounterChance = 0.6f;
+
         /// <summary>좋아하는 물건 (기획 D.4). 기호품 칸에는 이 표에 있는 물건만 고를 수 있다.</summary>
         public LikedItemsDef[] LikedItems =
         {

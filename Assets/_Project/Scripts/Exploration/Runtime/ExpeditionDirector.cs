@@ -657,6 +657,10 @@ namespace ApoGirl.Exploration.Runtime
                     MoveTo(_corridors[target.Connector.TargetFloor], target.X);
                     EmitNoise(CurrentArea, X, _balance.StairsNoise);
                     break;
+                case TargetKind.Door when target.Sealed:
+                    Sfx("sfx_door_locked");
+                    _hud?.ShowMessage(target.Seal == DoorSeal.Heavy ? "exp.heavy_door_hold" : "exp.barred_door_hold");
+                    break;
                 case TargetKind.Door when target.RoomLocked:
                     Sfx("sfx_door_locked");
                     _hud?.ShowMessage("exp.room_shuttered");
@@ -1695,6 +1699,35 @@ namespace ApoGirl.Exploration.Runtime
                 return;
             }
 
+            if (Nearest.Kind == TargetKind.Door && Nearest.Sealed)
+            {
+                // 깊은 곳 특별한 방: 큰 문은 길게 밀어 열고(소음), 빗장은 길게 눌러 푼다(조용히). 수치는 BalanceConfig 깊은 곳 절
+                if (_input.InteractHeld)
+                {
+                    var heavy = Nearest.Seal == DoorSeal.Heavy;
+                    _searchNoiseTimer -= dt;
+                    if (_searchNoiseTimer <= 0f)
+                    {
+                        _searchNoiseTimer = SearchNoiseInterval;
+                        EmitNoise(CurrentArea, X, heavy ? _balance.HeavyDoorNoise : _balance.BarredDoorNoise);
+                        if (heavy)
+                        {
+                            Sfx("sfx_door_force", 0.3f);
+                        }
+                    }
+
+                    _searching = true;
+                    Nearest.SealProgress += dt;
+                    if (Nearest.SealProgress >= SealSeconds(Nearest))
+                    {
+                        _searching = false;
+                        Unseal(Nearest);
+                    }
+                }
+
+                return;
+            }
+
             if (Nearest.Kind == TargetKind.Container && !Nearest.Searched)
             {
                 if (_input.InteractHeld)
@@ -2021,6 +2054,7 @@ namespace ApoGirl.Exploration.Runtime
                     DoorIndex = i,
                     Door = door,
                     SpanX = door.X,
+                    IsDeep = layout.IsDeep(door.Floor),   // 깊은 곳 특별한 방: 어둡고 소리가 울린다
                     Template = template,
                     Label = Loc.F("roomname." + template.Id, door.Floor + 1, door.Number),
                 };
@@ -2039,6 +2073,12 @@ namespace ApoGirl.Exploration.Runtime
                     if (target.RoomLocked || target.Forceable)
                     {
                         target.Tint(target.RoomLocked ? new Color(0.42f, 0.42f, 0.48f) : new Color(0.88f, 0.62f, 0.56f));
+                    }
+
+                    target.Seal = door.Seal;
+                    if (door.Seal != DoorSeal.None)
+                    {
+                        AddSealViews(corridor, target);
                     }
                     AddTarget(target);
                     room.CorridorDoors.Add(target);
@@ -2420,6 +2460,74 @@ namespace ApoGirl.Exploration.Runtime
             }
 
             return (min, max);
+        }
+
+        /// <summary>특별한 방 문을 다 여는 데 걸리는 시간 (큰 문은 쇠지렛대가 있으면 빠르다).</summary>
+        public float SealSeconds(ExplorationTarget target) => target.Seal == DoorSeal.Heavy
+            ? _balance.HeavyDoorSeconds * (_toolKind == ToolKind.Crowbar ? _balance.HeavyDoorCrowbarMultiplier : 1f)
+            : _balance.BarredDoorSeconds;
+
+        /// <summary>큰 문이 열리거나 빗장이 풀렸다: 그 방의 복도 문 모두 열림, 큰 문은 쿵.</summary>
+        private void Unseal(ExplorationTarget target)
+        {
+            var heavy = target.Seal == DoorSeal.Heavy;
+            foreach (var door in target.Room.CorridorDoors)
+            {
+                door.Forced = true;
+                foreach (var view in door.SealViews)
+                {
+                    if (view != null)
+                    {
+                        Destroy(view);
+                    }
+                }
+
+                door.SealViews.Clear();
+                var doorRenderer = door.View != null ? door.View.GetComponent<SpriteRenderer>() : null;
+                var openDoor = ExplorationArt.Get(ExplorationArt.Door(Location.Id, target.Room.Template?.Id, true));
+                if (doorRenderer != null && openDoor != null)
+                {
+                    doorRenderer.sprite = openDoor;
+                }
+
+                door.Tint(Color.white);
+            }
+
+            EmitNoise(CurrentArea, X, heavy ? _balance.HeavyDoorSlamNoise : _balance.BarredDoorNoise);
+            Sfx(heavy ? "sfx_door_force" : "sfx_door_open", heavy ? 1f : 0.6f);
+            _hud?.ShowMessage(heavy ? "exp.heavy_door_opened" : "exp.barred_door_opened");
+        }
+
+        /// <summary>
+        /// 특별한 방 문 표시: 전용 그림(door_deep_heavy·door_deep_barred)이 있으면 그것, 없으면 코드 그림
+        /// (큰 문 = 철판 띠·붉은 손잡이 바퀴·경고 줄무늬, 빗장 = 문을 가로질러 벽까지 걸친 쇠막대와 걸쇠).
+        /// </summary>
+        private void AddSealViews(ExplorationArea area, ExplorationTarget target)
+        {
+            var sealedArt = ExplorationArt.Get(target.Seal == DoorSeal.Heavy ? "door_deep_heavy" : "door_deep_barred");
+            var renderer = target.View != null ? target.View.GetComponent<SpriteRenderer>() : null;
+            if (sealedArt != null && renderer != null && renderer.sprite != null)
+            {
+                renderer.sprite = sealedArt;
+                return;
+            }
+
+            var parent = area.Root != null ? area.Root.transform : _world;
+            var origin = (area.Root != null ? Vector2.zero : area.Origin) + new Vector2(target.X, 0.15f);
+            if (target.Seal == DoorSeal.Heavy)
+            {
+                target.Tint(new Color(0.6f, 0.66f, 0.74f));
+                target.SealViews.Add(BuildingView.Rect(parent, "SealPlate", origin + new Vector2(-0.52f, 0.95f), new Vector2(1.04f, 0.32f), new Color(0.2f, 0.22f, 0.25f), 1));
+                target.SealViews.Add(BuildingView.Rect(parent, "SealWheel", origin + new Vector2(-0.16f, 0.95f), new Vector2(0.32f, 0.32f), new Color(0.55f, 0.18f, 0.14f), 2));
+                target.SealViews.Add(BuildingView.Rect(parent, "SealStripe", origin + new Vector2(-0.52f, 0.02f), new Vector2(1.04f, 0.14f), new Color(0.78f, 0.62f, 0.12f), 1));
+            }
+            else
+            {
+                target.Tint(new Color(0.72f, 0.64f, 0.56f));
+                target.SealViews.Add(BuildingView.Rect(parent, "SealBar", origin + new Vector2(-0.85f, 1.18f), new Vector2(1.7f, 0.16f), new Color(0.24f, 0.21f, 0.18f), 1));
+                target.SealViews.Add(BuildingView.Rect(parent, "SealHookL", origin + new Vector2(-0.82f, 1.06f), new Vector2(0.12f, 0.4f), new Color(0.16f, 0.15f, 0.14f), 2));
+                target.SealViews.Add(BuildingView.Rect(parent, "SealHookR", origin + new Vector2(0.7f, 1.06f), new Vector2(0.12f, 0.4f), new Color(0.16f, 0.15f, 0.14f), 2));
+            }
         }
 
         private GameObject Prop(ExplorationArea area, string name, string key, float centerX, Vector2 fallbackSize, Color fallbackColor, int order)

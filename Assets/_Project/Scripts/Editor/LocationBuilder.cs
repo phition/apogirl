@@ -24,11 +24,12 @@ namespace ApoGirl.EditorTools
                 Save("LOC_SCHOOL_INTERIOR", WithCd(School(), "CD_01", 2, "ROOM_3F_ROOM_MUSIC_7")),
                 Save("LOC_STORE", WithCd(Store(), "CD_02", 0, "ROOM_STORE_OFFICE_1")),
                 Save("LOC_PHARMACY", WithCd(Pharmacy(), "CD_03", 1, "ROOM_PH_CLINIC_1")),
-                Save("LOC_RESIDENTIAL", WithCd(ResidentialDeep(Residential()), "CD_04", 3, "", 12f)),
-                Save("LOC_SUBWAY", WithCd(SubwayDeep(Subway()), "CD_05", 3, "", 12f)),
-                Save("LOC_MART", WithCd(MartDeep(Mart()), "CD_06", 3, "", 38f)),
-                Save("LOC_POLICE", WithCd(PoliceDeep(Police()), "CD_07", 1, "ROOM_POLICE_OFFICE_2")),
-                Save("LOC_WATERWORKS", WithCd(WaterworksDeep(Waterworks()), "CD_08", 5, "", 30f)),
+                // 깊은 곳이 있는 지역의 CD는 깊은 곳 특별한 방 안에 (층 = 깊은 곳 층 번호)
+                Save("LOC_RESIDENTIAL", WithCd(ResidentialDeep(Residential()), "CD_04", 3, "ROOM_DEEP_RES_2_V", DeepRoomItemX)),
+                Save("LOC_SUBWAY", WithCd(SubwayDeep(Subway()), "CD_05", 2, "ROOM_DEEP_SUB_1_B", DeepRoomItemX)),
+                Save("LOC_MART", WithCd(MartDeep(Mart()), "CD_06", 3, "ROOM_DEEP_MART_2_V", DeepRoomItemX)),
+                Save("LOC_POLICE", WithCd(PoliceDeep(Police()), "CD_07", 3, "ROOM_DEEP_POLICE_2_B", DeepRoomItemX)),
+                Save("LOC_WATERWORKS", WithCd(WaterworksDeep(Waterworks()), "CD_08", 5, "ROOM_DEEP_WATER_3_V", DeepRoomItemX)),
             };
 
             var database = AssetDatabase.LoadAssetAtPath<DefinitionDatabaseAsset>(ContentPipeline.DatabasePath);
@@ -102,6 +103,70 @@ namespace ApoGirl.EditorTools
             layout.Containers.Add(C(id, kind, DeepFloor(layout, level), x, loot));
         }
 
+        // ── 깊은 곳 특별한 방: 층마다 두 개 (큰 문 하나·빗장 하나). 상자는 늘 차 있고(Guaranteed) 물자가 많다. CD·진실 단서가 여기 있다 ──
+        // 방 안 상자 자리 4.5·8·11.5, 문 1.2. 조우(CD·단서)는 상자 사이 DeepRoomItemX.
+
+        private const float DeepRoomWidth = 13f;
+        private const float DeepRoomItemX = 6.25f;
+
+        /// <summary>특별한 방 템플릿: 기본 전리품 표는 그 지역 금고 표(LOOT_*_VAULT), 상자는 모두 Guaranteed.</summary>
+        private static RoomTemplateDef DeepRoomTemplate(string id, string vaultLoot, params ContainerDef[] containers)
+        {
+            var template = new RoomTemplateDef { Id = id, Width = DeepRoomWidth, DefaultLootTableId = vaultLoot, DoorXs = new List<float> { 1.2f } };
+            foreach (var container in containers)
+            {
+                container.Guaranteed = true;
+                template.Containers.Add(container);
+            }
+
+            return template;
+        }
+
+        /// <summary>특별한 방 안 상자 (loot 비우면 금고 표, sprite 비우면 지역·종류별 그림).</summary>
+        private static ContainerDef DC(string id, ContainerKind kind, float x, string loot = "", string sprite = "")
+        {
+            var container = C(id, kind, 0, x, loot);
+            container.SpriteKey = sprite;
+            return container;
+        }
+
+        /// <summary>특별한 방 하나: 지하 level 복도의 spanX에 문 (문 자리 = spanX + 1.2). 빗장 방에는 갇힌 감염자.</summary>
+        private static void DeepRoom(LocationDef location, string roomId, string template, int level, float spanX, DoorSeal seal)
+        {
+            var layout = location.Layout;
+            var floor = DeepFloor(layout, level);
+            layout.Doors.Add(new DoorDef { RoomId = roomId, TemplateId = template, Floor = floor, X = spanX, Number = level, Seal = seal });
+            if (seal == DoorSeal.Barred)
+            {
+                // 누군가 밖에서 빗장을 채워 가둬 둔 방: 낮엔 둘이 잠들어 있고, 밤엔 하나가 서성인다
+                location.DayVariant.Spawns.Add(Crowd("ENEMY_WANDERER", floor, roomId, 9.5f, 2, 1f));
+                location.NightVariant.Spawns.Add(Walk("ENEMY_WANDERER", floor, roomId, 9.5f, 1, 0f));
+            }
+        }
+
+        /// <summary>이미 만든 조우(진실 단서 등)를 깊은 곳 특별한 방 안으로 옮긴다 (낮·밤 모두).</summary>
+        private static void MoveEncounter(LocationDef location, string id, int level, string roomId, float x)
+        {
+            var floor = DeepFloor(location.Layout, level);
+            foreach (var variant in new[] { location.DayVariant, location.NightVariant })
+            {
+                if (variant == null)
+                {
+                    continue;
+                }
+
+                foreach (var encounter in variant.Encounters)
+                {
+                    if (encounter.Id == id)
+                    {
+                        encounter.Floor = floor;
+                        encounter.RoomId = roomId;
+                        encounter.X = x;
+                    }
+                }
+            }
+        }
+
         /// <summary>주택가: 빌라 세 동을 잇는 지하 주차장. 1층 가운데 방화문 → 지하 1 서쪽, 지하 2 서쪽 끝 비상구 → 2층.</summary>
         private static LocationDef ResidentialDeep(LocationDef location)
         {
@@ -117,6 +182,16 @@ namespace ApoGirl.EditorTools
             location.DayVariant.Spawns.Add(Walk("ENEMY_LISTENER", DeepFloor(layout, 2), "", 28f, 1, 0f));
             location.NightVariant.Spawns.Add(Walk("ENEMY_WANDERER", DeepFloor(layout, 1), "", 20f, 2, 6f));
             location.NightVariant.Spawns.Add(Walk("ENEMY_WANDERER", DeepFloor(layout, 2), "", 26f, 2, 6f));
+
+            // 특별한 방: 관리실 금고방(큰 문)·지하 창고(빗장). CD_04는 지하 2 금고방
+            layout.RoomTemplates.Add(DeepRoomTemplate("ROOM_DEEP_RES_VAULT", "LOOT_RESIDENTIAL_VAULT",
+                DC("SAFE", ContainerKind.Box, 4.5f, "", "prop_mart_safe"), DC("LOCKER", ContainerKind.Locker, 8f), DC("TRUNK", ContainerKind.Box, 11.5f, "LOOT_RESIDENTIAL_DEEP")));
+            layout.RoomTemplates.Add(DeepRoomTemplate("ROOM_DEEP_RES_STORE", "LOOT_RESIDENTIAL_VAULT",
+                DC("SHELF", ContainerKind.Cabinet, 4.5f, "LOOT_RESIDENTIAL_DEEP"), DC("BOX", ContainerKind.Box, 8f, "LOOT_HOUSE_KITCHEN"), DC("CRATE", ContainerKind.Box, 11.5f)));
+            DeepRoom(location, "ROOM_DEEP_RES_1_B", "ROOM_DEEP_RES_STORE", 1, 8f, DoorSeal.Barred);
+            DeepRoom(location, "ROOM_DEEP_RES_1_V", "ROOM_DEEP_RES_VAULT", 1, 30f, DoorSeal.Heavy);
+            DeepRoom(location, "ROOM_DEEP_RES_2_V", "ROOM_DEEP_RES_VAULT", 2, 9f, DoorSeal.Heavy);
+            DeepRoom(location, "ROOM_DEEP_RES_2_B", "ROOM_DEEP_RES_STORE", 2, 26f, DoorSeal.Barred);
             return location;
         }
 
@@ -135,6 +210,17 @@ namespace ApoGirl.EditorTools
             location.DayVariant.Spawns.Add(Walk("ENEMY_LISTENER", DeepFloor(layout, 2), "", 30f, 1, 0f));
             location.NightVariant.Spawns.Add(Walk("ENEMY_WANDERER", DeepFloor(layout, 1), "", 22f, 2, 8f));
             location.NightVariant.Spawns.Add(Walk("ENEMY_LISTENER", DeepFloor(layout, 2), "", 28f, 1, 0f));
+
+            // 특별한 방: 역무 설비실(큰 문, 지하 2에 마지막 방송이 남은 녹음기)·비상 대피 창고(빗장, CD_05는 지하 1)
+            layout.RoomTemplates.Add(DeepRoomTemplate("ROOM_DEEP_SUB_VAULT", "LOOT_SUBWAY_VAULT",
+                DC("SAFE", ContainerKind.Box, 4.5f, "", "prop_mart_safe"), DC("LOCKER", ContainerKind.Locker, 8f, "", "prop_sub_coinlocker"), DC("CABINET", ContainerKind.Cabinet, 11.5f, "LOOT_SUBWAY_DEEP")));
+            layout.RoomTemplates.Add(DeepRoomTemplate("ROOM_DEEP_SUB_SHELTER", "LOOT_SUBWAY_VAULT",
+                DC("BOX_A", ContainerKind.Box, 4.5f, "LOOT_SUBWAY_DEEP"), DC("BOX_B", ContainerKind.Box, 8f), DC("CABINET", ContainerKind.Cabinet, 11.5f, "LOOT_SUBWAY_DEEP")));
+            DeepRoom(location, "ROOM_DEEP_SUB_1_B", "ROOM_DEEP_SUB_SHELTER", 1, 8f, DoorSeal.Barred);
+            DeepRoom(location, "ROOM_DEEP_SUB_1_V", "ROOM_DEEP_SUB_VAULT", 1, 22f, DoorSeal.Heavy);
+            DeepRoom(location, "ROOM_DEEP_SUB_2_B", "ROOM_DEEP_SUB_SHELTER", 2, 11f, DoorSeal.Barred);
+            DeepRoom(location, "ROOM_DEEP_SUB_2_V", "ROOM_DEEP_SUB_VAULT", 2, 26f, DoorSeal.Heavy);
+            MoveEncounter(location, "LAST_BROADCAST", 2, "ROOM_DEEP_SUB_2_V", DeepRoomItemX);
             return location;
         }
 
@@ -154,6 +240,16 @@ namespace ApoGirl.EditorTools
             location.DayVariant.Spawns.Add(Crowd("ENEMY_WANDERER", DeepFloor(layout, 2), "", 28f, 2, 1.5f));
             location.NightVariant.Spawns.Add(Walk("ENEMY_WANDERER", DeepFloor(layout, 1), "", 22f, 2, 8f));
             location.NightVariant.Spawns.Add(Walk("ENEMY_LISTENER", DeepFloor(layout, 2), "", 26f, 1, 0f));
+
+            // 특별한 방: 대형 냉동 창고(큰 문, CD_06은 지하 2)·반품 창고(빗장)
+            layout.RoomTemplates.Add(DeepRoomTemplate("ROOM_DEEP_MART_COLD", "LOOT_MART_VAULT",
+                DC("FREEZER_A", ContainerKind.Fridge, 4.5f), DC("FREEZER_B", ContainerKind.Fridge, 8f), DC("PALLET", ContainerKind.Box, 11.5f, "LOOT_MART_DEEP")));
+            layout.RoomTemplates.Add(DeepRoomTemplate("ROOM_DEEP_MART_STOCK", "LOOT_MART_VAULT",
+                DC("PALLET_A", ContainerKind.Box, 4.5f, "LOOT_MART_DEEP"), DC("PALLET_B", ContainerKind.Box, 8f), DC("CAGE", ContainerKind.Cabinet, 11.5f, "LOOT_MART_DEEP")));
+            DeepRoom(location, "ROOM_DEEP_MART_1_V", "ROOM_DEEP_MART_COLD", 1, 7f, DoorSeal.Heavy);
+            DeepRoom(location, "ROOM_DEEP_MART_1_B", "ROOM_DEEP_MART_STOCK", 1, 39f, DoorSeal.Barred);
+            DeepRoom(location, "ROOM_DEEP_MART_2_B", "ROOM_DEEP_MART_STOCK", 2, 8f, DoorSeal.Barred);
+            DeepRoom(location, "ROOM_DEEP_MART_2_V", "ROOM_DEEP_MART_COLD", 2, 38f, DoorSeal.Heavy);
             return location;
         }
 
@@ -172,6 +268,17 @@ namespace ApoGirl.EditorTools
             location.DayVariant.Spawns.Add(Crowd("ENEMY_WANDERER", DeepFloor(layout, 1), "", 24f, 2, 1.5f));
             location.NightVariant.Spawns.Add(Walk("ENEMY_WANDERER", DeepFloor(layout, 1), "", 22f, 2, 6f));
             location.NightVariant.Spawns.Add(Walk("ENEMY_LISTENER", DeepFloor(layout, 2), "", 18f, 1, 0f));
+
+            // 특별한 방: 증거물 보관실(큰 문, 지하 1에 사건 보고서)·임시 보호실(빗장, CD_07은 지하 2)
+            layout.RoomTemplates.Add(DeepRoomTemplate("ROOM_DEEP_POLICE_EVIDENCE", "LOOT_POLICE_VAULT",
+                DC("SAFE", ContainerKind.Box, 4.5f, "", "prop_mart_safe"), DC("GEAR", ContainerKind.Locker, 8f, "", "prop_pol_gearlocker"), DC("SHELF", ContainerKind.Cabinet, 11.5f, "LOOT_POLICE_DEEP")));
+            layout.RoomTemplates.Add(DeepRoomTemplate("ROOM_DEEP_POLICE_HOLD", "LOOT_POLICE_VAULT",
+                DC("LOCKER", ContainerKind.Locker, 4.5f, "LOOT_POLICE_DEEP"), DC("BOX", ContainerKind.Box, 8f), DC("DESK", ContainerKind.Desk, 11.5f, "LOOT_POLICE_OFFICE")));
+            DeepRoom(location, "ROOM_DEEP_POLICE_1_V", "ROOM_DEEP_POLICE_EVIDENCE", 1, 7f, DoorSeal.Heavy);
+            DeepRoom(location, "ROOM_DEEP_POLICE_1_B", "ROOM_DEEP_POLICE_HOLD", 1, 34f, DoorSeal.Barred);
+            DeepRoom(location, "ROOM_DEEP_POLICE_2_V", "ROOM_DEEP_POLICE_EVIDENCE", 2, 7f, DoorSeal.Heavy);
+            DeepRoom(location, "ROOM_DEEP_POLICE_2_B", "ROOM_DEEP_POLICE_HOLD", 2, 30.5f, DoorSeal.Barred);
+            MoveEncounter(location, "POLICE_REPORT", 1, "ROOM_DEEP_POLICE_1_V", DeepRoomItemX);
             return location;
         }
 
@@ -192,12 +299,24 @@ namespace ApoGirl.EditorTools
             location.NightVariant.Spawns.Add(Walk("ENEMY_WANDERER", DeepFloor(layout, 1), "", 30f, 2, 8f));
             location.NightVariant.Spawns.Add(Walk("ENEMY_LISTENER", DeepFloor(layout, 2), "", 20f, 1, 0f));
             location.NightVariant.Spawns.Add(Walk("ENEMY_WANDERER", DeepFloor(layout, 3), "", 38f, 2, 6f));
+
+            // 특별한 방: 약품 저장고(큰 문, CD_08은 지하 3)·펌프실(빗장)
+            layout.RoomTemplates.Add(DeepRoomTemplate("ROOM_DEEP_WATER_CHEM", "LOOT_WATER_VAULT",
+                DC("CHEM_A", ContainerKind.Cabinet, 4.5f), DC("CHEM_B", ContainerKind.Cabinet, 8f), DC("CRATE", ContainerKind.Box, 11.5f, "LOOT_WATER_DEEP")));
+            layout.RoomTemplates.Add(DeepRoomTemplate("ROOM_DEEP_WATER_PUMP", "LOOT_WATER_VAULT",
+                DC("VALVE", ContainerKind.Box, 4.5f, "LOOT_SUBWAY_OFFICE"), DC("CRATE", ContainerKind.Box, 8f), DC("CABINET", ContainerKind.Cabinet, 11.5f, "LOOT_WATER_DEEP")));
+            DeepRoom(location, "ROOM_DEEP_WATER_1_B", "ROOM_DEEP_WATER_PUMP", 1, 8f, DoorSeal.Barred);
+            DeepRoom(location, "ROOM_DEEP_WATER_1_V", "ROOM_DEEP_WATER_CHEM", 1, 33f, DoorSeal.Heavy);
+            DeepRoom(location, "ROOM_DEEP_WATER_2_V", "ROOM_DEEP_WATER_CHEM", 2, 9f, DoorSeal.Heavy);
+            DeepRoom(location, "ROOM_DEEP_WATER_2_B", "ROOM_DEEP_WATER_PUMP", 2, 38f, DoorSeal.Barred);
+            DeepRoom(location, "ROOM_DEEP_WATER_3_B", "ROOM_DEEP_WATER_PUMP", 3, 10f, DoorSeal.Barred);
+            DeepRoom(location, "ROOM_DEEP_WATER_3_V", "ROOM_DEEP_WATER_CHEM", 3, 29f, DoorSeal.Heavy);
             return location;
         }
 
         /// <summary>
         /// CD 한 장 (기획 A.2): 지역마다 늘 같은 자리, 낮·밤 모두. 챙기면 깃발 {id}.
-        /// 2막 이후 4장(주택가·지하철·마트·정수장)은 깊은 곳(기획 B) 복도에 둔다 (RoomId 비움, 층 = 깊은 곳 층).
+        /// 깊은 곳이 있는 지역(주택가·지하철·마트·파출소·정수장)의 5장은 깊은 곳 특별한 방 안에 둔다 (층 = 깊은 곳 층).
         /// </summary>
         private static LocationDef WithCd(LocationDef location, string id, int floor, string roomId, float x = 4f)
         {

@@ -94,6 +94,7 @@ MonoBehaviour:
         Number: 1
         LootTableId: 
         SearchFlag: 
+        Seal: 0
       - RoomId: ROOM_POLICE_CELL_1
         TemplateId: ROOM_POLICE_CELL
         Floor: 0
@@ -101,6 +102,7 @@ MonoBehaviour:
         Number: 1
         LootTableId: 
         SearchFlag: 
+        Seal: 0
       - RoomId: ROOM_POLICE_ARMORY_1
         TemplateId: ROOM_POLICE_ARMORY
         Floor: 1
@@ -108,6 +110,7 @@ MonoBehaviour:
         Number: 1
         LootTableId: 
         SearchFlag: 
+        Seal: 0
       - RoomId: ROOM_POLICE_OFFICE_2
         TemplateId: ROOM_POLICE_OFFICE
         Floor: 1
@@ -115,6 +118,39 @@ MonoBehaviour:
         Number: 2
         LootTableId: 
         SearchFlag: 
+        Seal: 0
+      - RoomId: ROOM_DEEP_POLICE_1_V
+        TemplateId: ROOM_DEEP_POLICE_EVIDENCE
+        Floor: 2
+        X: 7
+        Number: 1
+        LootTableId: 
+        SearchFlag: 
+        Seal: 1
+      - RoomId: ROOM_DEEP_POLICE_1_B
+        TemplateId: ROOM_DEEP_POLICE_HOLD
+        Floor: 2
+        X: 34
+        Number: 1
+        LootTableId: 
+        SearchFlag: 
+        Seal: 2
+      - RoomId: ROOM_DEEP_POLICE_2_V
+        TemplateId: ROOM_DEEP_POLICE_EVIDENCE
+        Floor: 3
+        X: 7
+        Number: 2
+        LootTableId: 
+        SearchFlag: 
+        Seal: 1
+      - RoomId: ROOM_DEEP_POLICE_2_B
+        TemplateId: ROOM_DEEP_POLICE_HOLD
+        Floor: 3
+        X: 30.5
+        Number: 2
+        LootTableId: 
+        SearchFlag: 
+        Seal: 2
       RoomTemplates:
       - Id: ROOM_POLICE_OFFICE
         Width: 16
@@ -208,6 +244,70 @@ MonoBehaviour:
           Guaranteed: 0
         DefaultLootTableId: LOOT_HOUSE_ROOM
         WallDecor: 
+      - Id: ROOM_DEEP_POLICE_EVIDENCE
+        Width: 13
+        DoorXs:
+        - 1.2
+        Windows: []
+        Containers:
+        - Id: SAFE
+          Kind: 4
+          Floor: 0
+          X: 4.5
+          SearchSeconds: 2.5
+          LootTableId: 
+          SpriteKey: prop_mart_safe
+          Guaranteed: 1
+        - Id: GEAR
+          Kind: 0
+          Floor: 0
+          X: 8
+          SearchSeconds: 3
+          LootTableId: 
+          SpriteKey: prop_pol_gearlocker
+          Guaranteed: 1
+        - Id: SHELF
+          Kind: 2
+          Floor: 0
+          X: 11.5
+          SearchSeconds: 3.5
+          LootTableId: LOOT_POLICE_DEEP
+          SpriteKey: 
+          Guaranteed: 1
+        DefaultLootTableId: LOOT_POLICE_VAULT
+        WallDecor: 
+      - Id: ROOM_DEEP_POLICE_HOLD
+        Width: 13
+        DoorXs:
+        - 1.2
+        Windows: []
+        Containers:
+        - Id: LOCKER
+          Kind: 0
+          Floor: 0
+          X: 4.5
+          SearchSeconds: 3
+          LootTableId: LOOT_POLICE_DEEP
+          SpriteKey: 
+          Guaranteed: 1
+        - Id: BOX
+          Kind: 4
+          Floor: 0
+          X: 8
+          SearchSeconds: 2.5
+          LootTableId: 
+          SpriteKey: 
+          Guaranteed: 1
+        - Id: DESK
+          Kind: 1
+          Floor: 0
+          X: 11.5
+          SearchSeconds: 2
+          LootTableId: LOOT_POLICE_OFFICE
+          SpriteKey: 
+          Guaranteed: 1
+        DefaultLootTableId: LOOT_POLICE_VAULT
+        WallDecor: 
       Containers:
       - Id: C_POLICE_FRONT_DESK
         Kind: 1
@@ -298,14 +398,28 @@ MonoBehaviour:
         Count: 2
         Spread: 1.5
         Dormant: 1
+      - EnemyId: ENEMY_WANDERER
+        Floor: 2
+        RoomId: ROOM_DEEP_POLICE_1_B
+        X: 9.5
+        Count: 2
+        Spread: 1
+        Dormant: 1
+      - EnemyId: ENEMY_WANDERER
+        Floor: 3
+        RoomId: ROOM_DEEP_POLICE_2_B
+        X: 9.5
+        Count: 2
+        Spread: 1
+        Dormant: 1
       LockedRooms:
       - ROOM_POLICE_ARMORY_1
       ForceableRooms: []
       Encounters:
       - Id: POLICE_REPORT
-        Floor: 1
-        RoomId: ROOM_POLICE_OFFICE_2
-        X: 8
+        Floor: 2
+        RoomId: ROOM_DEEP_POLICE_1_V
+        X: 6.25
         FlagsAll: []
         FlagsNone:
         - POLICE_REPORT_TAKEN
@@ -331,9 +445,9 @@ MonoBehaviour:
         PlayEventInField: 0
         Collectible: 0
       - Id: CD_07
-        Floor: 1
-        RoomId: ROOM_POLICE_OFFICE_2
-        X: 4
+        Floor: 3
+        RoomId: ROOM_DEEP_POLICE_2_B
+        X: 6.25
         FlagsAll: []
         FlagsNone:
         - CD_07
@@ -396,14 +510,28 @@ MonoBehaviour:
         Count: 1
         Spread: 0
         Dormant: 0
+      - EnemyId: ENEMY_WANDERER
+        Floor: 2
+        RoomId: ROOM_DEEP_POLICE_1_B
+        X: 9.5
+        Count: 1
+        Spread: 0
+        Dormant: 0
+      - EnemyId: ENEMY_WANDERER
+        Floor: 3
+        RoomId: ROOM_DEEP_POLICE_2_B
+        X: 9.5
+        Count: 1
+        Spread: 0
+        Dormant: 0
       LockedRooms: []
       ForceableRooms:
       - ROOM_POLICE_ARMORY_1
       Encounters:
       - Id: POLICE_REPORT
-        Floor: 1
-        RoomId: ROOM_POLICE_OFFICE_2
-        X: 8
+        Floor: 2
+        RoomId: ROOM_DEEP_POLICE_1_V
+        X: 6.25
         FlagsAll: []
         FlagsNone:
         - POLICE_REPORT_TAKEN
@@ -429,9 +557,9 @@ MonoBehaviour:
         PlayEventInField: 0
         Collectible: 0
       - Id: CD_07
-        Floor: 1
-        RoomId: ROOM_POLICE_OFFICE_2
-        X: 4
+        Floor: 3
+        RoomId: ROOM_DEEP_POLICE_2_B
+        X: 6.25
         FlagsAll: []
         FlagsNone:
         - CD_07

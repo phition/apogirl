@@ -81,8 +81,9 @@ namespace ApoGirl.Core.Expedition
             ApplyHostile(request, result);
             ApplyLikedItem(request, result);
             ApplyRooftop(request, result);
-            var deep = ApplyDeep(request, result);
-            ApplyCollectibles(request, result, deep);
+            var deep = ApplyDeep(request, result, out var deepRoom);
+            ApplyCollectibles(request, result, deep, deepRoom);
+            ApplyDeepRoomEncounters(request, result, deepRoom);
             return result;
         }
 
@@ -121,9 +122,11 @@ namespace ApoGirl.Core.Expedition
         /// <summary>
         /// 깊은 곳 (기획 B): 깊은 곳이 있는 지역에서 무사히 돌아온 판은 확률로 깊이 들어가 봤다고 본다.
         /// 들어갔으면 깊은 곳 상자의 전리품 표에서 물건 하나(확률)와 스트레스. 따로 뽑은 난수로 (다른 결과를 흔들지 않는다).
+        /// 들어간 판은 다시 확률로 특별한 방(큰 문·빗장) 하나를 열어 금고 표에서 물건 몇 개와 스트레스 (deepRoom).
         /// </summary>
-        private bool ApplyDeep(ExpeditionRequest request, ExpeditionResult result)
+        private bool ApplyDeep(ExpeditionRequest request, ExpeditionResult result, out bool deepRoom)
         {
+            deepRoom = false;
             if (result.Status != ExtractStatus.Extracted || !_db.TryGetLocation(request.LocationId, out var location)
                 || location.Layout == null || location.Layout.DeepFloors <= 0)
             {
@@ -150,15 +153,21 @@ namespace ApoGirl.Core.Expedition
             if (tables.Count > 0 && random.NextDouble() < balance.HeadlessDeepItemChance
                 && _db.TryGetLootTable(tables[random.Range(0, tables.Count - 1)], out var table) && table.Entries.Count > 0)
             {
-                var total = table.Entries.Sum(e => Math.Max(0, e.Weight));
-                var roll = random.Range(0, Math.Max(0, total - 1));
-                foreach (var entry in table.Entries)
+                AddWeightedItem(table, random, result);
+            }
+
+            // 특별한 방 (큰 문·빗장): 그 방들의 기본 전리품 표(금고 표)에서 몇 개
+            var roomTables = DeepRoomTemplates(layout).Select(t => t.DefaultLootTableId).Where(id => !string.IsNullOrEmpty(id))
+                .Distinct().OrderBy(id => id, StringComparer.Ordinal).ToList();
+            if (roomTables.Count > 0 && random.NextDouble() < balance.HeadlessDeepRoomChance)
+            {
+                deepRoom = true;
+                result.StressDelta += balance.HeadlessDeepRoomStress;
+                if (_db.TryGetLootTable(roomTables[random.Range(0, roomTables.Count - 1)], out var roomTable) && roomTable.Entries.Count > 0)
                 {
-                    roll -= Math.Max(0, entry.Weight);
-                    if (roll < 0)
+                    for (var i = 0; i < balance.HeadlessDeepRoomItems; i++)
                     {
-                        result.Loot.Add(new ItemStack { ItemId = entry.ItemId, Count = Math.Max(1, entry.MinCount) });
-                        break;
+                        AddWeightedItem(roomTable, random, result);
                     }
                 }
             }
@@ -166,8 +175,61 @@ namespace ApoGirl.Core.Expedition
             return true;
         }
 
-        /// <summary>줍는 조우(CD, 기획 A.3): 무사히 돌아온 탐험에서 확률로 첫 선택지(챙긴다). 깊은 곳의 CD는 깊이 들어간 판만. 따로 뽑은 난수로.</summary>
-        private void ApplyCollectibles(ExpeditionRequest request, ExpeditionResult result, bool deep)
+        /// <summary>깊은 곳 층에 있는 방의 템플릿 (특별한 방).</summary>
+        private static IEnumerable<RoomTemplateDef> DeepRoomTemplates(BuildingLayoutDef layout) =>
+            layout.Doors.Where(d => layout.IsDeep(d.Floor)).Select(d => layout.FindTemplate(d.TemplateId)).Where(t => t != null);
+
+        /// <summary>깊은 곳 특별한 방 안의 조우인가 (헤드리스는 특별한 방을 연 판만).</summary>
+        private static bool InDeepRoom(LocationDef location, EncounterDef encounter) =>
+            location.Layout != null && location.Layout.IsDeep(encounter.Floor) && !string.IsNullOrEmpty(encounter.RoomId);
+
+        /// <summary>전리품 표에서 가중치로 물건 하나 (최소 묶음 수).</summary>
+        private static void AddWeightedItem(LootTableDef table, IRandomService random, ExpeditionResult result)
+        {
+            var total = table.Entries.Sum(e => Math.Max(0, e.Weight));
+            var roll = random.Range(0, Math.Max(0, total - 1));
+            foreach (var entry in table.Entries)
+            {
+                roll -= Math.Max(0, entry.Weight);
+                if (roll < 0)
+                {
+                    result.Loot.Add(new ItemStack { ItemId = entry.ItemId, Count = Math.Max(1, entry.MinCount) });
+                    break;
+                }
+            }
+        }
+
+        /// <summary>
+        /// 깊은 곳 특별한 방 안의 조우 (진실 단서 등, 줍는 물건 제외): 특별한 방을 연 판만 HeadlessDeepRoomEncounterChance로.
+        /// 따로 뽑은 난수로.
+        /// </summary>
+        private void ApplyDeepRoomEncounters(ExpeditionRequest request, ExpeditionResult result, bool deepRoom)
+        {
+            if (!deepRoom || !_db.TryGetLocation(request.LocationId, out var location))
+            {
+                return;
+            }
+
+            var random = new SeededRandom(SeededRandom.CreateState(request.Seed ^ 0xDEE90E));
+            foreach (var encounter in EncounterRules.Active(location, request.TimeOfDay, request.Flags)
+                         .Where(e => !e.Collectible && e.Choices.Count > 0 && InDeepRoom(location, e)).ToList())
+            {
+                if (random.NextDouble() >= _db.Balance.HeadlessDeepRoomEncounterChance)
+                {
+                    continue;
+                }
+
+                var index = _encounterChooser.Choose(encounter, request, random);
+                index = Math.Min(Math.Max(index, 0), encounter.Choices.Count - 1);
+                EncounterRules.Apply(result, encounter, encounter.Choices[index]);
+            }
+        }
+
+        /// <summary>
+        /// 줍는 조우(CD, 기획 A.3): 무사히 돌아온 탐험에서 확률로 첫 선택지(챙긴다). 깊은 곳의 CD는 깊이 들어간 판만,
+        /// 깊은 곳 특별한 방 안의 CD는 그 방을 연 판만. 따로 뽑은 난수로.
+        /// </summary>
+        private void ApplyCollectibles(ExpeditionRequest request, ExpeditionResult result, bool deep, bool deepRoom)
         {
             if (result.Status != ExtractStatus.Extracted || !_db.TryGetLocation(request.LocationId, out var location))
             {
@@ -177,7 +239,7 @@ namespace ApoGirl.Core.Expedition
             var random = new SeededRandom(SeededRandom.CreateState(request.Seed ^ 0x0C0D15));
             foreach (var encounter in EncounterRules.Active(location, request.TimeOfDay, request.Flags).Where(e => e.Collectible && e.Choices.Count > 0).ToList())
             {
-                if (location.Layout != null && location.Layout.IsDeep(encounter.Floor) && !deep)
+                if (location.Layout != null && location.Layout.IsDeep(encounter.Floor) && (!deep || (InDeepRoom(location, encounter) && !deepRoom)))
                 {
                     continue;
                 }
@@ -230,7 +292,7 @@ namespace ApoGirl.Core.Expedition
                 return;
             }
 
-            var available = HostileRules.AllContainerKeys(location).Where(k => !request.LootedContainers.Contains(k)).ToList();
+            var available = HostileRules.AllContainerKeys(location, includeDeepRooms: false).Where(k => !request.LootedContainers.Contains(k)).ToList();
             var random = new SeededRandom(SeededRandom.CreateState(request.Seed ^ 0xDE91E7));
             var picked = Math.Min(model.ContainersPerRun, available.Count);
             var rate = location.Tutorial ? 0f : _db.Balance.BaseEmptyContainerRate;
@@ -290,7 +352,8 @@ namespace ApoGirl.Core.Expedition
 
             foreach (var encounter in EncounterRules.Active(location, request.TimeOfDay, request.Flags).ToList())
             {
-                if (encounter.Collectible || encounter.Choices.Count == 0 || random.NextDouble() >= timeYield.EncounterChance)
+                // 깊은 곳 특별한 방 안의 조우는 ApplyDeepRoomEncounters에서 (방을 연 판만)
+                if (encounter.Collectible || encounter.Choices.Count == 0 || InDeepRoom(location, encounter) || random.NextDouble() >= timeYield.EncounterChance)
                 {
                     continue;
                 }

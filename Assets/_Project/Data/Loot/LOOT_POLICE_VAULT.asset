@@ -1,0 +1,49 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c4918c53a1a01a44a50fc643af2cbac, type: 3}
+  m_Name: LOOT_POLICE_VAULT
+  m_EditorClassIdentifier: ApoGirl.Data::ApoGirl.Data.LootTableAsset
+  _id: LOOT_POLICE_VAULT
+  _definition:
+    Id: LOOT_POLICE_VAULT
+    MinRolls: 3
+    MaxRolls: 4
+    EmptyChance: 0
+    Entries:
+    - ItemId: ITEM_ARMOR_RIOT
+      Weight: 1
+      MinCount: 1
+      MaxCount: 1
+    - ItemId: ITEM_WEAPON_BATON
+      Weight: 2
+      MinCount: 1
+      MaxCount: 1
+    - ItemId: ITEM_MEDKIT
+      Weight: 3
+      MinCount: 1
+      MaxCount: 1
+    - ItemId: ITEM_ANTIBIOTIC
+      Weight: 2
+      MinCount: 1
+      MaxCount: 1
+    - ItemId: ITEM_BATTERY
+      Weight: 2
+      MinCount: 1
+      MaxCount: 2
+    - ItemId: ITEM_TOOL_FLASHLIGHT
+      Weight: 1
+      MinCount: 1
+      MaxCount: 1
+    - ItemId: ITEM_CANNED_FOOD
+      Weight: 2
+      MinCount: 1
+      MaxCount: 2

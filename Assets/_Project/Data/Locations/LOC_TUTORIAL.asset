@@ -34,6 +34,7 @@ MonoBehaviour:
         Number: 1
         LootTableId: 
         SearchFlag: 
+        Seal: 0
       RoomTemplates:
       - Id: ROOM_PE_STORAGE
         Width: 12

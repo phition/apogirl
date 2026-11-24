@@ -425,6 +425,21 @@ namespace ApoGirl.Exploration.Runtime
                 }
             }
 
+            // 깊은 곳 특별한 방 문 앞 (빗장이 벽까지 걸친다)
+            foreach (var door in _layout.Doors)
+            {
+                var template = door.Floor == floor ? _layout.FindTemplate(door.TemplateId) : null;
+                if (template == null)
+                {
+                    continue;
+                }
+
+                foreach (var doorX in template.DoorXs)
+                {
+                    blocked.Add((door.X + doorX - 1.4f, door.X + doorX + 1.4f));
+                }
+            }
+
             return blocked;
         }
 

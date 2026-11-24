@@ -167,6 +167,224 @@
           "Weight": 1
         }
       ]
+    },
+    {
+      "Id": "LOOT_RESIDENTIAL_VAULT",
+      "MinRolls": 3,
+      "MaxRolls": 4,
+      "EmptyChance": 0.0,
+      "Entries": [
+        {
+          "ItemId": "ITEM_CANNED_FOOD",
+          "Weight": 4,
+          "MinCount": 1,
+          "MaxCount": 2
+        },
+        {
+          "ItemId": "ITEM_WATER_BOTTLE",
+          "Weight": 3,
+          "MinCount": 1,
+          "MaxCount": 2
+        },
+        {
+          "ItemId": "ITEM_FUEL_CAN",
+          "Weight": 2
+        },
+        {
+          "ItemId": "ITEM_MEDKIT",
+          "Weight": 2
+        },
+        {
+          "ItemId": "ITEM_BATTERY",
+          "Weight": 2,
+          "MinCount": 1,
+          "MaxCount": 2
+        },
+        {
+          "ItemId": "ITEM_TOOL_CROWBAR",
+          "Weight": 1
+        },
+        {
+          "ItemId": "ITEM_BAG_HIKING",
+          "Weight": 1
+        },
+        {
+          "ItemId": "ITEM_DUCT_TAPE",
+          "Weight": 2
+        }
+      ]
+    },
+    {
+      "Id": "LOOT_SUBWAY_VAULT",
+      "MinRolls": 3,
+      "MaxRolls": 4,
+      "EmptyChance": 0.0,
+      "Entries": [
+        {
+          "ItemId": "ITEM_MEDKIT",
+          "Weight": 3
+        },
+        {
+          "ItemId": "ITEM_BATTERY",
+          "Weight": 3,
+          "MinCount": 1,
+          "MaxCount": 2
+        },
+        {
+          "ItemId": "ITEM_WATER_BOTTLE",
+          "Weight": 3,
+          "MinCount": 1,
+          "MaxCount": 2
+        },
+        {
+          "ItemId": "ITEM_CANNED_FOOD",
+          "Weight": 2,
+          "MinCount": 1,
+          "MaxCount": 2
+        },
+        {
+          "ItemId": "ITEM_TOOL_FLASHLIGHT",
+          "Weight": 1
+        },
+        {
+          "ItemId": "ITEM_RADIO_PARTS",
+          "Weight": 2
+        },
+        {
+          "ItemId": "ITEM_ELECTRONICS",
+          "Weight": 2
+        },
+        {
+          "ItemId": "ITEM_OLD_MAP",
+          "Weight": 1
+        }
+      ]
+    },
+    {
+      "Id": "LOOT_MART_VAULT",
+      "MinRolls": 3,
+      "MaxRolls": 4,
+      "EmptyChance": 0.0,
+      "Entries": [
+        {
+          "ItemId": "ITEM_CANNED_FOOD",
+          "Weight": 6,
+          "MinCount": 2,
+          "MaxCount": 3
+        },
+        {
+          "ItemId": "ITEM_WATER_BOTTLE",
+          "Weight": 5,
+          "MinCount": 2,
+          "MaxCount": 3
+        },
+        {
+          "ItemId": "ITEM_TUNA_CAN",
+          "Weight": 2,
+          "MinCount": 1,
+          "MaxCount": 2
+        },
+        {
+          "ItemId": "ITEM_RICE",
+          "Weight": 2,
+          "MinCount": 1,
+          "MaxCount": 2
+        },
+        {
+          "ItemId": "ITEM_VITAMIN",
+          "Weight": 2
+        },
+        {
+          "ItemId": "ITEM_GAS_CANISTER",
+          "Weight": 1
+        },
+        {
+          "ItemId": "ITEM_SPORTS_DRINK",
+          "Weight": 1,
+          "MinCount": 1,
+          "MaxCount": 2
+        }
+      ]
+    },
+    {
+      "Id": "LOOT_POLICE_VAULT",
+      "MinRolls": 3,
+      "MaxRolls": 4,
+      "EmptyChance": 0.0,
+      "Entries": [
+        {
+          "ItemId": "ITEM_ARMOR_RIOT",
+          "Weight": 1
+        },
+        {
+          "ItemId": "ITEM_WEAPON_BATON",
+          "Weight": 2
+        },
+        {
+          "ItemId": "ITEM_MEDKIT",
+          "Weight": 3
+        },
+        {
+          "ItemId": "ITEM_ANTIBIOTIC",
+          "Weight": 2
+        },
+        {
+          "ItemId": "ITEM_BATTERY",
+          "Weight": 2,
+          "MinCount": 1,
+          "MaxCount": 2
+        },
+        {
+          "ItemId": "ITEM_TOOL_FLASHLIGHT",
+          "Weight": 1
+        },
+        {
+          "ItemId": "ITEM_CANNED_FOOD",
+          "Weight": 2,
+          "MinCount": 1,
+          "MaxCount": 2
+        }
+      ]
+    },
+    {
+      "Id": "LOOT_WATER_VAULT",
+      "MinRolls": 3,
+      "MaxRolls": 4,
+      "EmptyChance": 0.0,
+      "Entries": [
+        {
+          "ItemId": "ITEM_ANTIBIOTIC",
+          "Weight": 4,
+          "MinCount": 1,
+          "MaxCount": 2
+        },
+        {
+          "ItemId": "ITEM_MEDKIT",
+          "Weight": 3
+        },
+        {
+          "ItemId": "ITEM_VITAMIN",
+          "Weight": 2,
+          "MinCount": 1,
+          "MaxCount": 2
+        },
+        {
+          "ItemId": "ITEM_WATER_BOTTLE",
+          "Weight": 4,
+          "MinCount": 2,
+          "MaxCount": 3
+        },
+        {
+          "ItemId": "ITEM_CHEMICALS",
+          "Weight": 2
+        },
+        {
+          "ItemId": "ITEM_BATTERY",
+          "Weight": 1,
+          "MinCount": 1,
+          "MaxCount": 2
+        }
+      ]
     }
   ]
 }

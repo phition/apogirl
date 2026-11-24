@@ -46,6 +46,7 @@ MonoBehaviour:
         Number: 1
         LootTableId: 
         SearchFlag: 
+        Seal: 0
       - RoomId: ROOM_PH_CLINIC_1
         TemplateId: ROOM_PH_CLINIC
         Floor: 1
@@ -53,6 +54,7 @@ MonoBehaviour:
         Number: 1
         LootTableId: 
         SearchFlag: 
+        Seal: 0
       - RoomId: ROOM_PH_CLINIC_2
         TemplateId: ROOM_PH_CLINIC
         Floor: 1
@@ -60,6 +62,7 @@ MonoBehaviour:
         Number: 2
         LootTableId: 
         SearchFlag: 
+        Seal: 0
       - RoomId: ROOM_PH_STOCKROOM_1
         TemplateId: ROOM_PH_STOCKROOM
         Floor: 1
@@ -67,6 +70,7 @@ MonoBehaviour:
         Number: 1
         LootTableId: 
         SearchFlag: 
+        Seal: 0
       RoomTemplates:
       - Id: ROOM_PH_DISPENSARY
         Width: 12

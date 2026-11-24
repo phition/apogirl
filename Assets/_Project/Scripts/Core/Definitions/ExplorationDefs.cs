@@ -234,6 +234,21 @@ namespace ApoGirl.Core.Definitions
 
         /// <summary>이 방의 상자를 하나라도 뒤지면 세우는 플래그 (예: 1층 끝 교실 → 거처 이벤트).</summary>
         public string SearchFlag = "";
+
+        /// <summary>깊은 곳 특별한 방의 문 (낮·밤 같다): 큰 문은 길게 밀어 열고, 빗장은 길게 눌러 푼다. 수치는 BalanceConfig 깊은 곳 절.</summary>
+        public DoorSeal Seal;
+    }
+
+    /// <summary>방 문의 봉인 (깊은 곳 특별한 방).</summary>
+    public enum DoorSeal
+    {
+        None,
+
+        /// <summary>큰 문: 금고문·방화 셔터. 길게 밀어 연다 (쇠지렛대가 있으면 빠르다), 여는 동안 소음, 열리는 순간 쿵.</summary>
+        Heavy,
+
+        /// <summary>빗장: 밖에서 채운 쇠빗장. 길게 눌러 푼다 (조용하다). 누군가 무언가를 가둬 둔 방.</summary>
+        Barred,
     }
 
     /// <summary>
