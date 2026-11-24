@@ -1,6 +1,8 @@
-# 제작 장비 탐험 도트 그림: PixelLab 요청 기획 (2026-11-25, 승인 대기)
+# 제작 장비 탐험 도트 그림: PixelLab 요청 기획 (2026-11-25, 승인됨)
 
-제작으로 만드는 장비 가운데 **탐험 화면에 보이는 것**을 PixelLab에 요청하는 계획이다. 무엇을 받을지, 얼마가 드는지, 무엇을 정해야 하는지를 적었다. **승인 전에는 아무것도 생성하지 않는다.**
+제작으로 만드는 장비 가운데 **탐험 화면에 보이는 것**을 PixelLab에 요청하는 계획이다. 무엇을 받을지, 얼마가 드는지, 무엇을 정해야 하는지를 적었다. **아직 아무것도 생성하지 않았다.**
+
+**사용자 결정 (2026-11-25, 9절):** E1 허수아비 + 가방 · **E2 가방 1배(PPU 36)** · E3 몽둥이는 무기 겹치기 때 무기 그림 · **E4 보호구는 색 덧칠 스크립트**(추천과 다름, 굵게).
 
 - 프롬프트 원안은 [PIXELLAB_CRAFTING.md](PIXELLAB_CRAFTING.md)(2026-11-24)에 있다. 이 문서는 그 뒤에 바뀐 것을 반영해 요청 범위를 정한다.
   - 주인공 그림이 바뀌었다. 하복은 PixelLab 24프레임 2배(192×156, PPU 72)로 다시 받았다. 나머지 5벌도 **무기 겹치기 방식**으로 다시 받기로 정했다([PIXELLAB_24F_PLAN.md](PIXELLAB_24F_PLAN.md) 9절).
@@ -14,11 +16,11 @@
 
 | | 내용 |
 |---|---|
-| 이번에 받을 것 (추천) | **A. 탐험 허수아비 소품**(정지 3장 + 움직임 2줄 × 6프레임), **B. 제작 가방 겹 그림 3장** |
-| 미룰 것 (추천) | C. 몽둥이 3종은 무기 겹치기 작업 때 무기 그림 3장만, D. 보호구 3벌은 빌린 옷 유지 |
+| 이번에 받을 것 (결정) | **A. 탐험 허수아비 소품**(정지 3장 + 움직임 2줄 × 6프레임), **B. 제작 가방 겹 그림 3장(1배)** |
+| 미룰 것 (결정) | C. 몽둥이 3종은 무기 겹치기 작업 때 무기 그림 3장만, D. 보호구 3벌은 PixelLab 없이 색 덧칠 스크립트(5절 ②) |
 | 비용 (추천 범위) | 약 **$1.5** (다시 받기 포함 넉넉히 $2.5) |
 | 지금 잔량 (2026-11-25 조회) | USD 크레딧 **$5.06**, 구독 generations 4.8 (사실상 다 씀 → USD로 나감) |
-| 승인받을 것 | 9절 결정 E1~E4 |
+| 결정 | 9절 E1~E4 (2026-11-25 정해짐) |
 
 ---
 
@@ -74,11 +76,11 @@ flat orthographic side view, muted realistic colors, thin dark outline, handmade
 
 주인공 프레임마다 등 자리에 겹쳐 그리는 작은 그림이다. 자리는 프레임마다 잰 기준점(`player_anchors.json`)을 그대로 따르고, 그림 기준점만 `sprite_meta.json`에 한 줄씩 적는다. 옆에서 본 모습이고 몸에 닿는 쪽이 왼쪽이다.
 
-| 키 | 크기 (E2 추천 = 2배) | style 참고 | 프롬프트 (공통 문구 뒤) |
+| 키 | 크기 (E2 결정 = 1배, PPU 36) | style 참고 | 프롬프트 (공통 문구 뒤) |
 |---|---|---|---|
-| `bag_sling` | 36 × 40, 투명 | `bag_tote` | `A small drawstring sling pouch sewn from a faded school curtain fabric, a single knotted rope strap, lumpy because it is half full, seen from the side as worn on the back, transparent background` |
-| `bag_rucksack` | 36 × 40, 투명 | `bag_school` | `A school backpack reinforced with extra patches cut from a blue gym mat and a canvas bag, visible thick hand stitching, duct-tape repaired corners, a tied-on side pocket, seen from the side as worn on the back, transparent background` |
-| `bag_frame` | 48 × 60, 투명 | `bag_hiking` | `A large improvised frame backpack: a big sack sewn from thick curtain fabric lashed onto a light frame of bent aluminium chair legs, the frame ends stick out a little at the top and bottom, seat-belt shoulder straps, a padded waist belt, seen from the side as worn on the back, transparent background` |
+| `bag_sling` | 18 × 20, 투명 | `bag_tote` | `A small drawstring sling pouch sewn from a faded school curtain fabric, a single knotted rope strap, lumpy because it is half full, seen from the side as worn on the back, transparent background` |
+| `bag_rucksack` | 18 × 20, 투명 | `bag_school` | `A school backpack reinforced with extra patches cut from a blue gym mat and a canvas bag, visible thick hand stitching, duct-tape repaired corners, a tied-on side pocket, seen from the side as worn on the back, transparent background` |
+| `bag_frame` | 24 × 30, 투명 | `bag_hiking` | `A large improvised frame backpack: a big sack sewn from thick curtain fabric lashed onto a light frame of bent aluminium chair legs, the frame ends stick out a little at the top and bottom, seat-belt shoulder straps, a padded waist belt, seen from the side as worn on the back, transparent background` |
 
 - 프레임 배낭은 P8 장면(`EVT_CRAFT_FRAME_PACK`)의 대사와 같은 재료로 맞췄다(의자 다리 틀·커튼 천·안전벨트 끈·허리끈).
 - 손으로 만든 가방이라 **색 바꾸기 6벌은 만들지 않는다.** 색 그림이 없으면 기본 그림으로 넘어간다(`ExplorationArtMap`, 지금 `bag_tote`와 같음).
@@ -114,7 +116,16 @@ flat orthographic side view, muted realistic colors, thin dark outline, handmade
 | ② 색 덧칠 스크립트 | 빌린 옷의 옷 색 영역만 바꾸고 무늬 덧칠(종이 띠·파란 매트·녹슨 철판) | 0, 다만 5벌을 다시 받으면 다시 해야 한다 |
 | ③ 새 옷 3벌 | 겹치기 방식으로 옷마다 약 516장 | 약 $54 |
 
-**추천: ①.** 빌린 옷이 재료만 다르고 모양(정강이·가슴 보호)이 비슷하다. 5벌 다시 받기가 끝난 뒤에도 어색하면 그때 ②를 본다.
+처음 추천은 ①(빌린 옷 유지)이었다. **결정: ② 색 덧칠 스크립트**(사용자 결정 2026-11-25). PixelLab은 쓰지 않는다.
+
+②를 할 때:
+- 도구는 `code_temp/apogirl/tools/`에 새로 둔다(`armor_recolor.py`). 빌린 옷 그림 `player_{guard,padding,riot}_*`에서 옷 영역 색만 골라 바꾸고 무늬를 덧칠해 `player_{magazine,matpad,plated}_*`로 저장한다. 원본은 건드리지 않는다.
+  - 잡지 보호대(`guard` → `magazine`): 정강이·팔뚝 보호대 색을 바랜 종이색으로, 가로 줄무늬(말린 잡지 결)와 회색 테이프 띠.
+  - 매트 덧댄 보호구(`padding` → `matpad`): 패딩 색을 체육관 매트 파랑으로, 끈 자리에 짙은 띠.
+  - 철판 덧댄 조끼(`riot` → `plated`): 가슴판을 녹슨 회색으로, 판 가장자리에 리벳 점.
+- 옷 그림은 무기 5종 × 모든 동작(옷마다 약 1,600장)이다. 같은 규칙을 기계적으로 적용하니 비용은 없지만, 넣기 전에 대기·걷기·공격 비교판을 보여 준다.
+- 연결: `ItemLooks`의 세 보호구 토큰을 `magazine`·`matpad`·`plated`로 바꾸고, 입상 옷 표 `StandingConfig.PlayerOutfitToken`에는 빌린 옷 그대로 두거나 한 줄씩 더한다(입상 그림이 없으면 빌린 옷).
+- 나머지 5벌을 무기 겹치기 방식으로 다시 받으면(24F 9절) 그 뒤에 이 스크립트를 다시 돌린다. 그래서 다시 받기 전후 어느 쪽에도 쓸 수 있게 옷 영역 고르기를 색 범위가 아니라 그림별 표(옷 색 목록)로 둔다.
 
 ---
 
@@ -155,9 +166,9 @@ PixelLab 기록(`code_temp/apogirl/scratch/pixellab_log.jsonl`)의 평균 단가
 
 | | 항목 | 선택지 | 추천 |
 |---|---|---|---|
-| E1 | 이번 요청 범위 | ① A 허수아비 + B 가방 ② A만 ③ A + B + C 몽둥이 무기 그림까지 | **①.** 허수아비는 지금 사각형이라 가장 급하고, 가방은 싸고 바로 붙는다. 몽둥이 무기 그림은 겹치기 코드가 없어 지금 받아도 쓸 곳이 없다 |
-| E2 | 가방 해상도 | ① 2배(PPU 72, 위 표 크기) ② 1배(PPU 36, 기존 가방과 같음 18×20·24×30) | **①.** 한 번에 가방 하나만 메니 기존 가방과 나란히 보일 일이 없고, 주인공이 2배로 옮겨 가는 중이다. 1배 옷(5벌)에서는 화소가 더 잘게 보일 뿐 크기는 같다 |
-| E3 | 몽둥이 3종 | 4절 ①~④ | **②** 무기 겹치기 작업 때 무기 그림 3장 |
-| E4 | 보호구 3벌 | 5절 ①~③ | **①** 빌린 옷 유지 |
+| E1 | 이번 요청 범위 | ① A 허수아비 + B 가방 ② A만 ③ A + B + C 몽둥이 무기 그림까지 | **①** → **결정 ①** |
+| E2 | 가방 해상도 | ① 2배(PPU 72, 36×40·48×60) ② 1배(PPU 36, 기존 가방과 같음 18×20·24×30) | ① → **결정 ② 1배** (기존 가방과 같은 화소) |
+| E3 | 몽둥이 3종 | 4절 ①~④ | **②** → **결정 ②** 무기 겹치기 작업 때 무기 그림 3장 |
+| E4 | 보호구 3벌 | 5절 ①~③ | ① 빌린 옷 유지 → **결정 ② 색 덧칠 스크립트** |
 
-승인되면 7절 순서로 진행하고, 후보를 고를 때마다 비교판으로 묻는다.
+7절 순서로 진행하고, 후보를 고를 때마다 비교판으로 묻는다. 생성은 사용자가 시작하라고 할 때 한다.
