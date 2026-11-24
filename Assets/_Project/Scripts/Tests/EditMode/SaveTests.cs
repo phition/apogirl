@@ -122,6 +122,26 @@ namespace ApoGirl.Tests.EditMode
         }
 
         [Test]
+        public void V14Save_RenamesSlingBagToTote()
+        {
+            var state = TestContent.NewGame(_db);
+            state.Storage.Add(new ItemStack { ItemId = "ITEM_BAG_SLING", Count = 1 });
+            state.Flags.Add("CRAFTED_ACT_CRAFT_BAG_SLING");
+            state.Plan.Slots[0].ActionId = "ACT_CRAFT_BAG_SLING";
+            var root = JObject.Parse(_serializer.Serialize(state));
+            root["SaveVersion"] = 14;
+
+            var loaded = _serializer.Deserialize(root.ToString());
+
+            Assert.AreEqual(GameState.CurrentSaveVersion, loaded.SaveVersion);
+            Assert.IsTrue(loaded.Storage.Exists(s => s.ItemId == "ITEM_BAG_TOTE"));
+            Assert.IsFalse(loaded.Storage.Exists(s => s.ItemId == "ITEM_BAG_SLING"));
+            Assert.IsTrue(loaded.Flags.Contains("CRAFTED_ACT_CRAFT_BAG_TOTE"));
+            Assert.IsFalse(loaded.Flags.Contains("CRAFTED_ACT_CRAFT_BAG_SLING"));
+            Assert.AreEqual("ACT_CRAFT_BAG_TOTE", loaded.Plan.Slots[0].ActionId);
+        }
+
+        [Test]
         public void CraftJob_RoundTrips()
         {
             var state = TestContent.NewGame(_db);

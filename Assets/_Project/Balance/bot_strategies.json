@@ -112,7 +112,7 @@
       "Actions": [
         "ACT_CRAFT_WORKBENCH",
         "ACT_CRAFT_SAND_FILTER",
-        "ACT_CRAFT_BAG_SLING",
+        "ACT_CRAFT_BAG_TOTE",
         "ACT_CRAFT_CLUB",
         "ACT_CRAFT_ARMOR_MAGAZINE",
         "ACT_CRAFT_FLASHLIGHT",

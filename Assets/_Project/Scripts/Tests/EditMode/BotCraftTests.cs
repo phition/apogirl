@@ -52,7 +52,7 @@ namespace ApoGirl.Tests.EditMode
             state.Flags.Add("SAND_FILTER");
             state.Storage.Add(new ItemStack { ItemId = "ITEM_BAG_RUCKSACK", Count = 1 });
             BotPlanner.Plan(state, db, config, strategy, new SeededRandom(SeededRandom.CreateState(1)));
-            Assert.AreEqual("ACT_CRAFT_CLUB", At(state, "D4"), "더 큰 가방이 있으면 끈 주머니는 건너뛴다");
+            Assert.AreEqual("ACT_CRAFT_CLUB", At(state, "D4"), "더 큰 가방이 있으면 장바구니는 건너뛴다");
         }
 
         [Test]

@@ -55,7 +55,6 @@
     { "Item": "ITEM_BAG_SCHOOL", "Key": "bag_school" },
     { "Item": "ITEM_BAG_HIKING", "Key": "bag_hiking" },
     { "Item": "ITEM_BAG_TOTE", "Key": "bag_tote" },
-    { "Item": "ITEM_BAG_SLING", "Key": "bag_tote" },
     { "Item": "ITEM_BAG_RUCKSACK", "Key": "bag_school" },
     { "Item": "ITEM_BAG_FRAME", "Key": "bag_hiking" }
   ],
@@ -78,7 +77,6 @@
     { "Item": "ITEM_WEAPON_CLUB_TAPED", "Key": "bat" },
     { "Item": "ITEM_ARMOR_MAGAZINE", "Key": "guard" },
     { "Item": "ITEM_ARMOR_MATPAD", "Key": "padding" },
-    { "Item": "ITEM_BAG_SLING", "Key": "tote" },
     { "Item": "ITEM_BAG_RUCKSACK", "Key": "school" },
     { "Item": "ITEM_BAG_FRAME", "Key": "hiking" },
     { "Item": "ITEM_WEAPON_CLUB_REBAR", "Key": "pipe" },

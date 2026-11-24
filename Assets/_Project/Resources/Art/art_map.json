@@ -1559,8 +1559,8 @@
       "Image": "icon_cat_craft"
     },
     {
-      "Key": "act.ACT_CRAFT_BAG_SLING",
-      "Image": "item_bag_sling"
+      "Key": "act.ACT_CRAFT_BAG_TOTE",
+      "Image": "item_bag_tote"
     },
     {
       "Key": "act.ACT_CRAFT_BAG_RUCKSACK",

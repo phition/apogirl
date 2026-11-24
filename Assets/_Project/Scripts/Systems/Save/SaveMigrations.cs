@@ -24,6 +24,7 @@ namespace ApoGirl.Systems.Save
                 yield return new V11ToV12();
                 yield return new V12ToV13();
                 yield return new V13ToV14();
+                yield return new V14ToV15();
             }
         }
 
@@ -281,6 +282,75 @@ namespace ApoGirl.Systems.Save
                 if (root["Base"] is JObject baseState && baseState["Scarecrow"] == null)
                 {
                     baseState["Scarecrow"] = 0;
+                }
+            }
+        }
+
+        /// <summary>
+        /// v15: 끈 주머니 가방을 장바구니로 합침 (사용자 결정 2026-11-25). 레시피 ACT_CRAFT_BAG_SLING → ACT_CRAFT_BAG_TOTE,
+        /// 아이템 ITEM_BAG_SLING → ITEM_BAG_TOTE, 깃발 CRAFTED_ACT_CRAFT_BAG_SLING → CRAFTED_ACT_CRAFT_BAG_TOTE.
+        /// 계획·창고·장비·진행 중 제작·깃발 어디에 있든 문자열 값과 키 이름을 모두 바꾼다.
+        /// </summary>
+        private sealed class V14ToV15 : ISaveMigration
+        {
+            private static readonly (string From, string To)[] Renames =
+            {
+                ("CRAFTED_ACT_CRAFT_BAG_SLING", "CRAFTED_ACT_CRAFT_BAG_TOTE"),
+                ("ACT_CRAFT_BAG_SLING", "ACT_CRAFT_BAG_TOTE"),
+                ("ITEM_BAG_SLING", "ITEM_BAG_TOTE"),
+            };
+
+            public int FromVersion => 14;
+
+            public void Migrate(JObject root)
+            {
+                Walk(root);
+            }
+
+            private static string Rename(string value)
+            {
+                foreach (var (from, to) in Renames)
+                {
+                    if (value == from) return to;
+                }
+
+                return value;
+            }
+
+            private static void Walk(JToken token)
+            {
+                switch (token)
+                {
+                    case JObject obj:
+                        foreach (var property in obj.Properties().ToList())
+                        {
+                            Walk(property.Value);
+                            var name = Rename(property.Name);
+                            if (name != property.Name && obj[name] == null)
+                            {
+                                property.Replace(new JProperty(name, property.Value));
+                            }
+                        }
+
+                        break;
+                    case JArray array:
+                        for (var i = 0; i < array.Count; i++)
+                        {
+                            if (array[i].Type == JTokenType.String)
+                            {
+                                array[i] = Rename(array[i].Value<string>());
+                            }
+                            else
+                            {
+                                Walk(array[i]);
+                            }
+                        }
+
+                        break;
+                    case JValue value when value.Type == JTokenType.String:
+                        var renamed = Rename(value.Value<string>());
+                        if (renamed != value.Value<string>()) value.Value = renamed;
+                        break;
                 }
             }
         }
