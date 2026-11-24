@@ -206,6 +206,7 @@ namespace ApoGirl.Core.Simulation.Bots
                 runner.PrepareWeek();
                 while (!runner.IsWeekComplete && !runner.IsGameOver)
                 {
+                    BotLoadout.Choose(state, db, strategy, state.Calendar.Phase == DayPhase.Night);
                     runner.ExecuteNextSlot();
                 }
 

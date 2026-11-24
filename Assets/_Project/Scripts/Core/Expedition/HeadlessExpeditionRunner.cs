@@ -33,7 +33,10 @@ namespace ApoGirl.Core.Expedition
                              - agility * model.AgilityDownReduction
                              + request.SleepDebt * model.SleepDebtDownIncrease
                              + (request.ConsecutiveRun ? model.ConsecutiveDownIncrease : 0f);
+            downChance = ApplyLoadoutDown(request, downChance);
             downChance = Math.Min(Math.Max(downChance * request.HarmMultiplier, 0f), 0.95f);
+            var bagYield = BagYieldMultiplier(request);
+            var bagRandom = bagYield != 1f ? new SeededRandom(SeededRandom.CreateState(request.Seed ^ 0x3BA6C5)) : null;
 
             var result = new ExpeditionResult
             {
@@ -55,6 +58,11 @@ namespace ApoGirl.Core.Expedition
             foreach (var range in timeYield.Resources)
             {
                 var amount = random.Range(range.Min, Math.Max(range.Min, range.Max));
+                if (bagRandom != null && amount > 0)
+                {
+                    amount = ScaleAmount(amount, bagYield, bagRandom);
+                }
+
                 if (amount > 0)
                 {
                     result.ResourceLoot.Add(new ResourceAmount(range.Resource, amount));
@@ -87,7 +95,61 @@ namespace ApoGirl.Core.Expedition
             return result;
         }
 
-        /// <summary>기호품(기획 D.4): 그 지역 전리품 표에 있는 기호품 하나를 확률로 줍는다. 따로 뽑은 난수로 (자원 결과를 흔들지 않는다).</summary>
+        /// <summary>
+        /// 찬 장비로 쓰러짐 확률을 고친다 (제작 C5): 무기 위력·밤 손전등만큼 빼고 방어구 감소율만큼 줄인다.
+        /// 장비가 없으면 그대로다. 확률 문턱만 바꾸므로 기존 굴림 순서는 흔들지 않는다.
+        /// </summary>
+        private float ApplyLoadoutDown(ExpeditionRequest request, float downChance)
+        {
+            var loadout = request.Loadout;
+            if (loadout == null)
+            {
+                return downChance;
+            }
+
+            var balance = _db.Balance;
+            if (!string.IsNullOrEmpty(loadout.MainWeapon) && _db.TryGetItem(loadout.MainWeapon, out var weapon) && weapon.WeaponPower > 0)
+            {
+                downChance -= weapon.WeaponPower * balance.HeadlessWeaponDownPerPower;
+            }
+
+            if (request.TimeOfDay == ExpeditionTime.Night && !string.IsNullOrEmpty(loadout.Tool)
+                && _db.TryGetItem(loadout.Tool, out var tool) && tool.Tool == ToolKind.Flashlight)
+            {
+                downChance -= balance.HeadlessFlashlightNightDown;
+            }
+
+            if (!string.IsNullOrEmpty(loadout.Armor) && _db.TryGetItem(loadout.Armor, out var armor) && armor.DamageReduction > 0f)
+            {
+                downChance *= 1f - Math.Min(1f, armor.DamageReduction) * balance.HeadlessArmorDownFactor;
+            }
+
+            return downChance;
+        }
+
+        /// <summary>가방 칸 수로 자원 수확 배율 (제작 C5). 가방이 없거나 기준 칸 수면 1.</summary>
+        private float BagYieldMultiplier(ExpeditionRequest request)
+        {
+            var balance = _db.Balance;
+            var bag = request.Loadout?.Backpack;
+            if (string.IsNullOrEmpty(bag) || !_db.TryGetItem(bag, out var def) || def.GridWidth <= 0 || def.GridHeight <= 0)
+            {
+                return 1f;
+            }
+
+            var cells = def.GridWidth * def.GridHeight;
+            return Math.Max(0f, 1f + (cells - balance.HeadlessBagBaseCells) * balance.HeadlessBagYieldPerCell);
+        }
+
+        /// <summary>배율을 곱한 양: 정수 부분 + 소수 부분은 따로 뽑은 난수로 올린다.</summary>
+        private static int ScaleAmount(int amount, float multiplier, IRandomService random)
+        {
+            var scaled = amount * multiplier;
+            var whole = (int)Math.Floor(scaled);
+            return whole + (random.NextDouble() < scaled - whole ? 1 : 0);
+        }
+
+        /// <summary>기호품(기획 D.4):그 지역 전리품 표에 있는 기호품 하나를 확률로 줍는다. 따로 뽑은 난수로 (자원 결과를 흔들지 않는다).</summary>
         private void ApplyLikedItem(ExpeditionRequest request, ExpeditionResult result)
         {
             var balance = _db.Balance;

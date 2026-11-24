@@ -548,6 +548,23 @@ namespace ApoGirl.Core.Definitions
         /// <summary>헤드리스(자동) 탐험에서 그 지역의 CD(줍는 조우)를 찾아 챙기는 확률 (기획 A.3, 휴대폰에서도 모을 수 있게).</summary>
         public float HeadlessCdChance = 0.3f;
 
+        // ── 헤드리스 장비 (제작 C5) ──
+
+        /// <summary>헤드리스 쓰러짐 확률 × (1 − 방어구 피해 감소율 × 이 값).</summary>
+        public float HeadlessArmorDownFactor = 0.15f;
+
+        /// <summary>헤드리스 쓰러짐 확률에서 찬 무기 위력 1마다 빼는 값.</summary>
+        public float HeadlessWeaponDownPerPower = 0.01f;
+
+        /// <summary>헤드리스 밤 탐험에 손전등을 들면 쓰러짐 확률에서 빼는 값.</summary>
+        public float HeadlessFlashlightNightDown = 0.02f;
+
+        /// <summary>헤드리스 자원 수확의 기준 가방 칸 수 (학교 가방 5×4). 가방이 없어도 이 칸 수로 본다.</summary>
+        public int HeadlessBagBaseCells = 20;
+
+        /// <summary>가방 칸이 기준보다 많은(적은) 칸마다 헤드리스 자원 수확에 더하는(빼는) 비율.</summary>
+        public float HeadlessBagYieldPerCell = 0.012f;
+
         // ── 방과후 동아리 (확장 7) ──
 
         /// <summary>동아리를 같이 한 사람의 호감.</summary>
