@@ -888,6 +888,16 @@ namespace ApoGirl.Presentation.Screens
                 {
                     lines.Add(Loc.T("result.raid_cat"));   // 확장 2: 고양이가 먼저 털을 세웠다
                 }
+
+                if (outcome.Raid.ScarecrowRelief > 0)
+                {
+                    // 제작 P6: 교문 허수아비
+                    lines.Add(Loc.F("result.raid_scarecrow", outcome.Raid.ScarecrowRelief));
+                    if (outcome.Raid.ScarecrowFell)
+                    {
+                        lines.Add(Loc.T("result.raid_scarecrow_fell"));
+                    }
+                }
             }
 
             if (outcome.Intrusion != null)

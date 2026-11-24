@@ -57,6 +57,8 @@
       "Actions": [
         "ACT_SURV_BARRICADE",
         "ACT_SURV_REINFORCE",
+        "ACT_CRAFT_SCARECROW",
+        "ACT_CRAFT_SCARECROW_BELL",
         "ACT_NIGHT_WATCH",
         "ACT_INTRUSION",
         "ACT_SURV_TRAP",
@@ -101,6 +103,7 @@
         "ACT_CRAFT_BAG_SLING",
         "ACT_CRAFT_WORKBENCH_2",
         "ACT_CRAFT_SAND_FILTER",
+        "ACT_CRAFT_DECOY",
         "ACT_CRAFT_CLUB_REBAR"
       ]
     },
@@ -407,7 +410,8 @@
       "Actions": [
         "ACT_CRAFT_FLASHLIGHT",
         "ACT_CRAFT_HEADLAMP",
-        "ACT_CRAFT_MULTITOOL"
+        "ACT_CRAFT_MULTITOOL",
+        "ACT_CRAFT_DECOY_BELL"
       ],
       "Art": "Story/Backgrounds/bg_computer"
     },

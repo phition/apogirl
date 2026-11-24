@@ -141,6 +141,12 @@ namespace ApoGirl.Core.Rules
 
         /// <summary>뚫린 밤에 고양이가 먼저 털을 세워 경고했다 (확장 2, 피해가 조금 줄었다).</summary>
         public bool CatWarned;
+
+        /// <summary>교문 허수아비가 줄인 습격 세기 (제작 P6, 0이면 없었다).</summary>
+        public int ScarecrowRelief;
+
+        /// <summary>이번 습격으로 교문 허수아비가 쓰러졌다 (다시 만들 수 있다).</summary>
+        public bool ScarecrowFell;
     }
 
     /// <summary>밤 습격 (문서 5.5): 방어도 vs 위협도 vs 전투력.</summary>
@@ -182,10 +188,14 @@ namespace ApoGirl.Core.Rules
         public static RaidResult Resolve(GameState state, int threat, int guard, bool scripted, BalanceConfig balance, IRandomService random, StateDelta delta, bool away = false)
         {
             var strength = threat + random.Range(0, Math.Max(0, balance.RaidStrengthVariance));
+            // 제작 P6: 몰려든 무리 일부가 교문 앞 허수아비에 붙는다 (세기만 줄인다)
+            var relief = Math.Min(ScarecrowRules.Relief(state, balance), Math.Max(0, strength));
+            strength -= relief;
             var result = new RaidResult
             {
                 Scripted = scripted,
                 Strength = strength,
+                ScarecrowRelief = relief,
                 Power = DefenseRules.Power(state, balance, guard, random, true, away),
                 Away = away,
             };
@@ -229,10 +239,11 @@ namespace ApoGirl.Core.Rules
                     }
                 }
 
-                EffectApplier.ChangeResource(state, ResourceType.Food, -SpecialRules.ScaleDamage(balance.RaidBreachFood, scale), delta);
+                EffectApplier.ChangeResource(state, ResourceType.Food, -SpecialRules.ScaleDamage(balance.RaidBreachFood, scale * ScarecrowRules.BreachFoodScale(state, balance)), delta);
                 EffectApplier.ChangeDefense(state, -SpecialRules.ScaleDamage(balance.RaidBreachDefenseLoss, scale), balance, delta);
             }
 
+            ScarecrowRules.AfterRaid(state, result, balance, delta);
             EffectApplier.ChangeThreat(state, -balance.RaidThreatRelief, balance, delta);
             return result;
         }
@@ -273,6 +284,50 @@ namespace ApoGirl.Core.Rules
 
             // 퀵슬롯은 없앴다 (소모품은 탐험 중 배낭에서 쓴다). 옛 세이브에 남은 값은 비운다.
             loadout.QuickSlots.Clear();
+
+            // 챙길 것: 창고에 있는 만큼만
+            loadout.Carry ??= new List<string>();
+            var counted = new Dictionary<string, int>();
+            loadout.Carry.RemoveAll(id =>
+            {
+                if (string.IsNullOrEmpty(id))
+                {
+                    return true;
+                }
+
+                counted.TryGetValue(id, out var taken);
+                if (taken >= CountInStorage(state, id))
+                {
+                    return true;
+                }
+
+                counted[id] = taken + 1;
+                return false;
+            });
+        }
+
+        /// <summary>"챙길 것"에 담을 수 있는 창고 물건: 장비가 아닌 소모품 (회복·스트레스 완화·허수아비).</summary>
+        public static bool IsCarryable(ItemDef item) =>
+            item != null && item.Slot == EquipSlot.None && (item.UseHp > 0 || item.UseStress > 0 || item.IsDecoy);
+
+        /// <summary>챙겨 갈 배낭의 칸 수 (가방이 없으면 주머니).</summary>
+        public static int BagCells(LoadoutState loadout, IDefinitionDatabase db)
+        {
+            ItemDef bag = null;
+            var hasBag = !string.IsNullOrEmpty(loadout.Backpack) && db.TryGetItem(loadout.Backpack, out bag);
+            return hasBag && bag.GridWidth > 0 ? bag.GridWidth * bag.GridHeight : db.Balance.PocketWidth * db.Balance.PocketHeight;
+        }
+
+        /// <summary>챙긴 물건이 차지하는 칸 수.</summary>
+        public static int CarryCells(LoadoutState loadout, IDefinitionDatabase db)
+        {
+            var cells = 0;
+            foreach (var id in loadout.Carry)
+            {
+                cells += !db.TryGetItem(id, out var item) ? 0 : Math.Max(1, item.Width) * Math.Max(1, item.Height);
+            }
+
+            return cells;
         }
 
         /// <summary>창고에서 아이템 n개를 뺀다. 실제로 뺀 수를 돌려준다.

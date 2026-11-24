@@ -33,6 +33,9 @@ namespace ApoGirl.Exploration.Model
         /// <summary>적대적 생존자에게 붙잡힌 결과 (없으면 빈 문자열).</summary>
         public string HostileOutcome = "";
         public int DamageTaken;
+
+        /// <summary>세운 허수아비 수 (제작 P6).</summary>
+        public int DecoysPlaced;
         public bool DebugUsed;
         public List<ResourceAmount> Resources = new List<ResourceAmount>();
         public List<string> Items = new List<string>();

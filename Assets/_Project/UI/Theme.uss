@@ -849,7 +849,8 @@ Button.selected { border-color: var(--accent); background-color: var(--accent-so
 .exp-slot-info { color: var(--ok); font-size: 14px; }
 .exp-arrow { width: 36px; height: 44px; padding: 0; font-size: 14px; }
 .exp-quick-label { color: var(--text-dim); font-size: 14px; margin-top: 8px; }
-.exp-quick-row { flex-direction: row; }
+.exp-quick-row { flex-direction: row; flex-wrap: wrap; }
+.exp-quick-on { border-color: var(--accent); background-color: var(--accent-soft); }
 .exp-quick { width: 92px; height: 104px; padding: 6px; margin: 4px 6px 0 0; align-items: center; flex-direction: column; }
 .exp-quick .exp-icon { margin-right: 0; }
 .exp-quick-name { font-size: 12px; -unity-text-align: middle-center; white-space: normal; }

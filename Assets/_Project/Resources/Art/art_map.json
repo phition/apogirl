@@ -1639,6 +1639,30 @@
       "Image": "icon_craft_water_filter"
     },
     {
+      "Key": "act.ACT_CRAFT_SCARECROW",
+      "Image": "item_lure_alarm"
+    },
+    {
+      "Key": "act.ACT_CRAFT_DECOY",
+      "Image": "item_lure_alarm"
+    },
+    {
+      "Key": "act.ACT_CRAFT_DECOY_BELL",
+      "Image": "item_lure_alarm"
+    },
+    {
+      "Key": "act.ACT_CRAFT_SCARECROW_BELL",
+      "Image": "item_lure_alarm"
+    },
+    {
+      "Key": "item.ITEM_DECOY_DUMMY",
+      "Image": "item_lure_alarm"
+    },
+    {
+      "Key": "item.ITEM_DECOY_BELL",
+      "Image": "item_lure_alarm"
+    },
+    {
       "Key": "stat.Stamina",
       "Image": "icon_stat_stamina"
     },

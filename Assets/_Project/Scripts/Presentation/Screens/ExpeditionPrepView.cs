@@ -14,7 +14,8 @@ namespace ApoGirl.Presentation.Screens
 {
     /// <summary>
     /// 3겹 출정 준비 (문서 6.3.4-1, Docs/UI_REDESIGN_PROPOSAL.md): 왼쪽은 지역 그림 위에 목적지·시간대·예보·손실 경고,
-    /// 오른쪽은 지금 차림의 주인공 입상과 장비 칸(배낭·주무기·도구·방어구, ◀ ▶로 바꾸기). 소모품은 탐험 중 배낭에서 쓴다.
+    /// 오른쪽은 지금 차림의 주인공 입상과 장비 칸(배낭·주무기·도구·방어구, ◀ ▶로 바꾸기).
+    /// 그 아래 "챙길 것"(제작 P6): 창고 소모품(붕대·허수아비 등)을 배낭에 미리 넣는다 (누르면 하나 더, 우클릭이면 하나 빼기).
     /// 장비를 바꾸면 입상도 바로 바뀐다.
     /// </summary>
     internal sealed class ExpeditionPrepView
@@ -145,6 +146,7 @@ namespace ApoGirl.Presentation.Screens
             AddSlot("prep.tool", EquipSlot.Tool, loadout.Tool, id => loadout.Tool = id, loadout.Tool2);
             AddSlot("prep.tool2", EquipSlot.Tool, loadout.Tool2, id => loadout.Tool2 = id, loadout.Tool);
             AddSlot("prep.armor", EquipSlot.Armor, loadout.Armor, id => loadout.Armor = id);
+            BuildCarry();
 
             KoreanFont.ApplyDeep(_loadout);
 
@@ -198,6 +200,64 @@ namespace ApoGirl.Presentation.Screens
             next.SetEnabled(options.Count > 1);
             row.Add(prev);
             row.Add(next);
+            _loadout.Add(row);
+        }
+
+        /// <summary>챙길 것: 창고 소모품 종류마다 한 칸 (아이콘·이름·챙김/창고 수). 배낭 칸을 넘지 않게 담는다.</summary>
+        private void BuildCarry()
+        {
+            var db = _session.Definitions;
+            var loadout = _session.State.Loadout;
+            var kinds = _session.State.Storage
+                .Where(s => s.Count > 0 && db.TryGetItem(s.ItemId, out var def) && LoadoutRules.IsCarryable(def))
+                .Select(s => s.ItemId)
+                .Distinct()
+                .ToList();
+            if (kinds.Count == 0)
+            {
+                return;
+            }
+
+            var cells = LoadoutRules.BagCells(loadout, db);
+            var used = LoadoutRules.CarryCells(loadout, db);
+            var title = Add(_loadout, Loc.F("prep.carry", used, cells), "exp-quick-label");
+            title.tooltip = Loc.T("prep.carry_hint");
+            var row = new VisualElement();
+            row.AddToClassList("exp-quick-row");
+            foreach (var id in kinds)
+            {
+                db.TryGetItem(id, out var item);
+                var taken = loadout.Carry.Count(c => c == id);
+                var stock = LoadoutRules.CountInStorage(_session.State, id);
+                var size = Math.Max(1, item.Width) * Math.Max(1, item.Height);
+                var tile = new Button(() =>
+                {
+                    if (taken < stock && used + size <= cells)
+                    {
+                        loadout.Carry.Add(id);
+                        BuildLoadout();
+                    }
+                }) { tooltip = Loc.Item(id) + " — " + Loc.T("prep.carry_hint") };
+                tile.AddToClassList("exp-quick");
+                tile.EnableInClassList("exp-quick-on", taken > 0);
+                tile.RegisterCallback<PointerDownEvent>(evt =>
+                {
+                    if (evt.button == 1 && loadout.Carry.Remove(id))
+                    {
+                        evt.StopPropagation();
+                        BuildLoadout();
+                    }
+                }, TrickleDown.TrickleDown);
+
+                var icon = new VisualElement();
+                icon.AddToClassList("exp-icon");
+                StoryArt.SetContain(icon, StoryArt.ItemIcon(id));
+                tile.Add(icon);
+                Add(tile, Loc.Item(id), "exp-quick-name");
+                Add(tile, taken + " / " + stock, "exp-quick-name");
+                row.Add(tile);
+            }
+
             _loadout.Add(row);
         }
 

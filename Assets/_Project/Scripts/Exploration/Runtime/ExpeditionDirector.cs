@@ -81,6 +81,10 @@ namespace ApoGirl.Exploration.Runtime
         private bool _facingRight = true;
         private readonly List<ExplorationArea> _areasById = new List<ExplorationArea>();
         private readonly List<ZombieView> _zombieViews = new List<ZombieView>();
+        private readonly List<DecoyView> _decoyViews = new List<DecoyView>();
+
+        /// <summary>낮에 허수아비를 세우려 하면 한 번 경고한다 (군집을 깨울 수 있다, 제작 C7).</summary>
+        private bool _decoyDayWarned;
         private readonly List<GameObject> _silhouettes = new List<GameObject>();
         private ThreatSimulation _threat;
         private Light2D _light;
@@ -536,6 +540,7 @@ namespace ApoGirl.Exploration.Runtime
             Backpack = HasBag
                 ? new BackpackGrid(_backpackItem.GridWidth, _backpackItem.GridHeight)
                 : new BackpackGrid(_balance.PocketWidth, _balance.PocketHeight);
+            PackCarried();
             CarryCapacity = ExplorationRules.CarryCapacity(Request.Stats, _balance);
 
             BuildWorld();
@@ -646,6 +651,7 @@ namespace ApoGirl.Exploration.Runtime
 
             UpdateViews(dt);
             UpdateZombieViews();
+            UpdateDecoyViews();
             UpdateFog(dt);
             UpdateSounds();
             UpdateWindowSilhouettes();
@@ -1215,13 +1221,26 @@ namespace ApoGirl.Exploration.Runtime
         public bool IsUsable(PlacedItem placed)
         {
             var item = placed == null ? null : _db.GetItemOrNull(placed.ItemId);
-            return item != null && (item.UseHp > 0 || item.UseStress > 0);
+            return item != null && (item.UseHp > 0 || item.UseStress > 0 || item.IsDecoy);
         }
+
+        /// <summary>세우는 허수아비인가 (배낭 단추 "세우기").</summary>
+        public bool IsDecoy(PlacedItem placed) => placed != null && (_db.GetItemOrNull(placed.ItemId)?.IsDecoy ?? false);
 
         /// <summary>배낭에서 소모품을 쓴다 (배낭 우클릭). 탐험 중 HP 회복·스트레스 완화.</summary>
         public bool UseItem(PlacedItem placed)
         {
-            if (placed == null || IsFinished || !IsUsable(placed) || !Backpack.Remove(placed))
+            if (placed == null || IsFinished || !IsUsable(placed))
+            {
+                return false;
+            }
+
+            if (IsDecoy(placed) && !CanPlaceDecoy())
+            {
+                return false;
+            }
+
+            if (!Backpack.Remove(placed))
             {
                 return false;
             }
@@ -1243,8 +1262,155 @@ namespace ApoGirl.Exploration.Runtime
                 _runStress = Math.Max(0, _runStress - item.UseStress);
             }
 
+            if (item.IsDecoy)
+            {
+                PlaceDecoy(item);
+                return true;
+            }
+
             _hud?.ShowText(Loc.F("exp.used_item", Loc.Item(item.Id)));
             return true;
+        }
+
+        // ── 허수아비 (제작 P6, Docs/CRAFTING_PROPOSAL.md 3.7절) ──
+
+        /// <summary>지금 세울 수 있나: 숨어 있으면 안 되고, 낮의 첫 시도는 경고만 한다 (한 번 더 누르면 세운다).</summary>
+        private bool CanPlaceDecoy()
+        {
+            if (Hidden || CurrentArea == null || _threat == null)
+            {
+                return false;
+            }
+
+            if (Request.TimeOfDay == ExpeditionTime.Day && !_decoyDayWarned)
+            {
+                _decoyDayWarned = true;
+                _hud?.ShowText(Loc.T("exp.decoy.day_warn"), 4500);
+                return false;
+            }
+
+            return true;
+        }
+
+        /// <summary>바라보는 쪽 발치에 허수아비를 세운다. 그 판에서 끝난다 (회수 없음).</summary>
+        private void PlaceDecoy(ItemDef item)
+        {
+            var area = CurrentArea;
+            var unit = _threat.AddDecoy(AreaId(area), X + (_facingRight ? 0.7f : -0.7f), item.Decoy);
+            var bell = item.Decoy.Delay > 0f;
+            var parent = area.Root != null ? area.Root.transform : _world;
+            var origin = area.Root != null ? Vector2.zero : area.Origin;
+            var root = new GameObject("Decoy_" + unit.Id);
+            root.transform.SetParent(parent, false);
+            root.transform.localPosition = origin + new Vector2(unit.X, 0.15f);
+
+            var view = new DecoyView { Unit = unit, Root = root.transform, Area = area, Bell = bell, StandKey = bell && ExplorationArt.Get("prop_decoy_bell_stand") != null ? "prop_decoy_bell_stand" : "prop_decoy_stand" };
+            if (ExplorationArt.Get(view.StandKey) != null)
+            {
+                var art = ExplorationArt.Place(root.transform, "Art", view.StandKey, Vector2.zero, 8, new Vector2(0.6f, 1.7f), Color.white);
+                view.Art = art.GetComponent<SpriteRenderer>();
+                ExplorationLook.AddCaster(art, ExplorationLook.Settings.Shadows.Decor);
+                AddFog(art, area);
+            }
+            else
+            {
+                // 코드 그림: 빗자루 막대 + 마대 몸통 + 양동이 머리 (얼굴 없음, 사람처럼 그리지 않는다)
+                BuildingView.Rect(root.transform, "Pole", new Vector2(-0.05f, 0f), new Vector2(0.1f, 1.75f), new Color(0.45f, 0.33f, 0.2f), 8);
+                var sack = BuildingView.Rect(root.transform, "Sack", new Vector2(-0.3f, 0.35f), new Vector2(0.6f, 1.0f), new Color(0.6f, 0.5f, 0.32f), 8);
+                BuildingView.Rect(root.transform, "Bucket", new Vector2(-0.22f, 1.35f), new Vector2(0.44f, 0.36f), new Color(0.55f, 0.58f, 0.6f), 8);
+                if (bell)
+                {
+                    BuildingView.Rect(root.transform, "Bell", new Vector2(-0.09f, 1.71f), new Vector2(0.18f, 0.14f), new Color(0.85f, 0.7f, 0.25f), 8);
+                }
+
+                AddFog(sack, area);
+            }
+
+            _decoyViews.Add(view);
+            _look?.ApplyPixelLight(_world);
+            _log.DecoysPlaced++;
+            Sfx("sfx_drop");
+            _hud?.ShowText(Loc.T(bell ? "exp.decoy.placed_bell" : "exp.decoy.placed"));
+        }
+
+        /// <summary>매 프레임: 소리 낼 때 흔들고(그림이 있으면 흔들림 프레임), 넘어지면 눕힌다.</summary>
+        private void UpdateDecoyViews()
+        {
+            foreach (var view in _decoyViews)
+            {
+                var unit = view.Unit;
+                if (view.Down)
+                {
+                    continue;
+                }
+
+                if (unit.Down)
+                {
+                    view.Down = true;
+                    if (view.Art != null && ExplorationArt.Get("prop_decoy_down") != null)
+                    {
+                        view.Art.sprite = ExplorationArt.Get("prop_decoy_down");
+                        view.Root.localRotation = Quaternion.identity;
+                    }
+                    else
+                    {
+                        // 통째로 옆으로 눕는다 (조각나지 않는다)
+                        view.Root.localRotation = Quaternion.Euler(0f, 0f, -84f);
+                    }
+
+                    if (unit.AreaId == AreaId(CurrentArea))
+                    {
+                        Sfx("sfx_decoy_fall");
+                        _hud?.ShowText(Loc.T("exp.decoy.down"));
+                    }
+
+                    continue;
+                }
+
+                if (unit.RangThisTick)
+                {
+                    view.Sway = 0.7f;
+                    if (unit.AreaId == AreaId(CurrentArea))
+                    {
+                        Sfx(view.Bell ? "sfx_decoy_bell" : "sfx_decoy_rattle", 0.8f);
+                    }
+                }
+
+                if (view.Sway > 0f)
+                {
+                    view.Sway -= Time.deltaTime;
+                    var sway = view.Bell ? "prop_decoy_bell_ring_" : "prop_decoy_sway_";
+                    var frame = view.Art != null ? LoopFrame(sway, Time.time, 10f) : null;
+                    if (frame != null)
+                    {
+                        view.Art.sprite = ExplorationArt.Get(frame);
+                    }
+                    else
+                    {
+                        view.Root.localRotation = Quaternion.Euler(0f, 0f, Mathf.Sin(Time.time * 24f) * 5f * Mathf.Clamp01(view.Sway / 0.7f));
+                    }
+                }
+                else
+                {
+                    view.Root.localRotation = Quaternion.identity;
+                    if (view.Art != null)
+                    {
+                        view.Art.sprite = ExplorationArt.Get(view.StandKey);
+                    }
+                }
+            }
+        }
+
+        private sealed class DecoyView
+        {
+            public DecoyUnit Unit;
+            public Transform Root;
+            public ExplorationArea Area;
+            public SpriteRenderer Art;
+            public string StandKey;
+            public bool Bell;
+            public bool Down;
+            public float Sway;
         }
 
         /// <summary>그 아이템이 들어가는 장비 칸 (무기·가방·도구·방어구, 아니면 None).</summary>
@@ -1593,6 +1759,29 @@ namespace ApoGirl.Exploration.Runtime
 
             UpdateMultipliers();
             RefreshLook();
+        }
+
+        /// <summary>
+        /// 출정 준비에서 챙긴 창고 소모품을 배낭에 넣는다 (제작 P6). 내 것이라 쓰거나 버린 것만 귀환 때 창고에서 빠진다.
+        /// 자리가 없어 못 넣은 것은 요청에서도 빼 쓰러져도 잃지 않게 한다.
+        /// </summary>
+        private void PackCarried()
+        {
+            var carry = Request.Loadout?.Carry;
+            if (carry == null)
+            {
+                return;
+            }
+
+            for (var i = carry.Count - 1; i >= 0; i--)
+            {
+                var item = _db.GetItemOrNull(carry[i]);
+                var placed = item == null ? null : new PlacedItem { ItemId = item.Id, Width = item.Width, Height = item.Height, Weight = item.Weight, Owned = true };
+                if (placed == null || !Backpack.TryAutoPlace(placed))
+                {
+                    carry.RemoveAt(i);
+                }
+            }
         }
 
         /// <summary>가방·방어구에 따른 걸음·소음 배율 (가방을 바꾸면 다시).</summary>
@@ -3934,6 +4123,7 @@ namespace ApoGirl.Exploration.Runtime
                         : dormant ? LoopFrame(kindPrefix + "sleep_", Time.time, PixelZombieIdleFps * 0.6f, unit.Id * 7)
                             ?? LoopFrame(kindPrefix + "dormant_", Time.time, PixelZombieIdleFps * 0.6f, unit.Id * 7) ?? kindPrefix + "dormant_" + phase
                         : chasing ? LoopFrame(kindPrefix + "chase_", view.MoveTime, PixelZombieChaseFps, unit.Id) ?? kindPrefix + "chase_" + phase
+                        : unit.OnDecoy && !moved ? LoopFrame(kindPrefix + "chase_", Time.time, PixelZombieChaseFps * 0.6f, unit.Id) ?? kindPrefix + "chase_" + phase
                         : moved ? LoopFrame(kindPrefix + "walk_", view.MoveTime, PixelZombieWalkFps, unit.Id) ?? kindPrefix + "walk_" + phase
                         : LoopFrame(kindPrefix + "idle_", Time.time, PixelZombieIdleFps, unit.Id * 5) ?? kindPrefix + "walk_0";
                     view.BodyRenderer.sprite = ExplorationArt.Get(zombieKey);

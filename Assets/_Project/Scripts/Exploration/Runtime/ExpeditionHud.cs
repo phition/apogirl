@@ -307,7 +307,7 @@ namespace ApoGirl.Exploration.Runtime
             _infoButtons.Clear();
             if (_director.IsUsable(placed))
             {
-                AddInfoButton("exp.info.use", true, () => _director.UseItem(placed));
+                AddInfoButton(_director.IsDecoy(placed) ? "exp.info.place" : "exp.info.use", true, () => _director.UseItem(placed));
             }
 
             if (_director.SlotOf(placed.ItemId) != EquipSlot.None)
@@ -428,6 +428,10 @@ namespace ApoGirl.Exploration.Runtime
             if (item.UseHp > 0) use.Add(Loc.F("exp.info.hp", item.UseHp));
             if (item.UseStress > 0) use.Add(Loc.F("exp.info.stress", item.UseStress));
             if (use.Count > 0) lines.Add(string.Join(" · ", use));
+            if (item.IsDecoy)
+            {
+                lines.Add(Loc.F(item.Decoy.Delay > 0f ? "exp.info.decoy_bell" : "exp.info.decoy", Mathf.RoundToInt(item.Decoy.Seconds), Mathf.RoundToInt(item.Decoy.Delay)));
+            }
 
             if (item.Slot == EquipSlot.Weapon && item.WeaponPower > 0)
             {

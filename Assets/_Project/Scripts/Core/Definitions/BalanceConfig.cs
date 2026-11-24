@@ -610,6 +610,33 @@ namespace ApoGirl.Core.Definitions
         public int AutoPurifyDaily = 3;
         public float AutoPurifyRate = 0.9f;
 
+        // ── 허수아비 (제작 P6) ──
+
+        /// <summary>교문 허수아비가 서 있다 / 울리는 허수아비로 바꿔 세웠다 (레시피가 켠다, 쓰러지면 둘 다 꺼진다).</summary>
+        public string ScarecrowFlag = "SCARECROW_UP";
+        public string ScarecrowBellFlag = "SCARECROW_BELL";
+
+        /// <summary>교문 허수아비: 내구(막은 습격마다 −1, 뚫리면 0), 밤 습격 세기 −.</summary>
+        public int ScarecrowDurability = 3;
+        public int ScarecrowRaidRelief = 12;
+
+        /// <summary>울리는 교문 허수아비: 내구, 습격 세기 −, 뚫렸을 때 식량 피해 배율 (깡통 경보와 함께 울린다).</summary>
+        public int ScarecrowBellDurability = 4;
+        public int ScarecrowBellRaidRelief = 18;
+        public float ScarecrowBellBreachFoodScale = 0.8f;
+
+        /// <summary>세운 허수아비에 붙은 좀비 하나가 초당 깎는 체력.</summary>
+        public float DecoyBiteDps = 1f;
+
+        /// <summary>허수아비에 붙은 좀비가 주인공을 보는 거리 배율.</summary>
+        public float DecoyCaughtSightMultiplier = 0.5f;
+
+        /// <summary>소리를 따라온 좀비가 이 거리 안에 허수아비가 있으면 붙는다.</summary>
+        public float DecoyLatchDistance = 1.5f;
+
+        /// <summary>헤드리스 밤 탐험에 허수아비를 챙기면 쓰러짐 확률에서 빼는 값 (하나를 쓴다).</summary>
+        public float HeadlessDecoyNightDown = 0.04f;
+
         // ── 방과후 동아리 (확장 7) ──
 
         /// <summary>동아리를 같이 한 사람의 호감.</summary>

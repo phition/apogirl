@@ -69,6 +69,27 @@ namespace ApoGirl.Core.Definitions
         /// <summary>소모품: 탐험 중 사용 시 HP 회복, 스트레스 감소.</summary>
         public int UseHp;
         public int UseStress;
+
+        /// <summary>미끼 허수아비 (제작 P6, Docs/CRAFTING_PROPOSAL.md 3.7절): 탐험 중 배낭에서 "세우기". 지속이 0이면 미끼가 아니다.</summary>
+        public DecoyDef Decoy = new DecoyDef();
+
+        public bool IsDecoy => Decoy != null && Decoy.Seconds > 0f;
+    }
+
+    /// <summary>세운 허수아비: 지연 뒤 간격마다 소음을 내고, 붙은 좀비가 체력을 깎거나 지속이 끝나면 넘어진다.</summary>
+    [Serializable]
+    public sealed class DecoyDef
+    {
+        /// <summary>세우고 조용히 기다리는 초 (울리는 허수아비 6).</summary>
+        public float Delay;
+
+        /// <summary>소음 간격(초)과 반경.</summary>
+        public float Interval = 4f;
+        public float Radius = 6f;
+
+        /// <summary>서 있는 시간(초)과 체력 (붙은 좀비 하나가 초당 BalanceConfig.DecoyBiteDps씩 깎는다).</summary>
+        public float Seconds;
+        public float Hp = 10f;
     }
 
     [Serializable]

@@ -83,6 +83,34 @@ namespace ApoGirl.Exploration.Model
         public int AreaId { get; }
         public float X { get; }
         public float Radius { get; }
+
+        /// <summary>세운 허수아비가 낸 소리 (사람은 속지 않는다, 제작 P6).</summary>
+        public bool FromDecoy { get; set; }
+    }
+
+    /// <summary>
+    /// 세운 허수아비 (제작 P6, Docs/CRAFTING_PROPOSAL.md 3.7절): 지연 뒤 간격마다 소음을 내고,
+    /// 다가와 붙은 좀비가 체력을 깎는다. 체력이나 지속이 다하면 넘어진다 (조각나지 않는다).
+    /// </summary>
+    public sealed class DecoyUnit
+    {
+        public int Id;
+        public int AreaId;
+        public float X;
+
+        /// <summary>남은 조용한 시간 (울리는 허수아비).</summary>
+        public float Delay;
+        public float Interval;
+        public float Radius;
+        public float TimeLeft;
+        public float Hp;
+        public float NoiseTimer;
+        public bool Down;
+
+        /// <summary>이번 틱에 소리를 냈다 (그림을 흔든다).</summary>
+        public bool RangThisTick;
+
+        public bool Sounding => !Down && Delay <= 0f;
     }
 
     /// <summary>공간 연결 (문 ↔ 방 출입문). 좀비가 추격할 때 따라 들어온다. 계단은 연결하지 않는다 (계단 도주 가능).</summary>
@@ -147,6 +175,11 @@ namespace ApoGirl.Exploration.Model
         /// <summary>무기 타격 누적 (EnemyDef.Toughness에 닿으면 쓰러짐).</summary>
         public int Wounds;
 
+        /// <summary>붙잡고 있는 허수아비 (없으면 −1, 제작 P6). 붙어 있는 동안 주인공을 보는 거리가 준다.</summary>
+        public int DecoyId = -1;
+
+        public bool OnDecoy => DecoyId >= 0;
+
         public bool IsAwake => State != ZombieState.Dormant && State != ZombieState.Down;
 
         /// <summary>적대적 생존자 (사람): 낮 활동 보정을 받지 않고, 붙잡으면 피해 대신 대치가 된다.</summary>
@@ -207,6 +240,7 @@ namespace ApoGirl.Exploration.Model
         private readonly List<CrowdState> _crowds = new List<CrowdState>();
         private readonly List<AreaLink> _links = new List<AreaLink>();
         private readonly Dictionary<int, float> _areaWidths = new Dictionary<int, float>();
+        private readonly List<DecoyUnit> _decoys = new List<DecoyUnit>();
         private List<NoiseEvent> _pendingNoise = new List<NoiseEvent>();
 
         public ThreatSimulation(BalanceConfig balance, IRandomService random)
@@ -218,6 +252,8 @@ namespace ApoGirl.Exploration.Model
         public IReadOnlyList<ZombieUnit> Zombies => _zombies;
 
         public IReadOnlyList<CrowdState> Crowds => _crowds;
+
+        public IReadOnlyList<DecoyUnit> Decoys => _decoys;
 
         /// <summary>황혼 각성이 일어났다.</summary>
         public bool Awakened { get; private set; }
@@ -263,6 +299,24 @@ namespace ApoGirl.Exploration.Model
         // ── 입력 ──
 
         public void Emit(NoiseEvent noise) => _pendingNoise.Add(noise);
+
+        /// <summary>허수아비를 그 자리에 세운다 (제작 P6). 지연이 없으면 다음 틱에 바로 소리를 낸다.</summary>
+        public DecoyUnit AddDecoy(int areaId, float x, DecoyDef def)
+        {
+            var decoy = new DecoyUnit
+            {
+                Id = _decoys.Count,
+                AreaId = areaId,
+                X = Clamp(areaId, x),
+                Delay = Math.Max(0f, def.Delay),
+                Interval = Math.Max(0.5f, def.Interval),
+                Radius = Math.Max(0f, def.Radius),
+                TimeLeft = Math.Max(0f, def.Seconds),
+                Hp = Math.Max(0.1f, def.Hp),
+            };
+            _decoys.Add(decoy);
+            return decoy;
+        }
 
         /// <summary>낮 시계가 끝난 뒤 체류: 모든 군집이 깨어나 배회한다 (문서 6.3.2-(3) 황혼 각성).</summary>
         public void AwakenAll()
@@ -471,6 +525,7 @@ namespace ApoGirl.Exploration.Model
         public ThreatEvents Step(float dt, PlayerSnapshot player, ActivityMods mods)
         {
             var events = new ThreatEvents();
+            TickDecoys(dt);
             var noises = _pendingNoise;
             _pendingNoise = new List<NoiseEvent>();
             foreach (var noise in noises)
@@ -533,7 +588,8 @@ namespace ApoGirl.Exploration.Model
             }
 
             var range = zombie.Def.SightRange * mods.Sight * player.Visibility
-                        * (player.Crouching ? _balance.CrouchSightMultiplier : 1f);
+                        * (player.Crouching ? _balance.CrouchSightMultiplier : 1f)
+                        * (zombie.OnDecoy ? _balance.DecoyCaughtSightMultiplier : 1f);
             if (distance > range)
             {
                 return false;
@@ -564,6 +620,12 @@ namespace ApoGirl.Exploration.Model
             {
                 if (!zombie.IsAwake || zombie.AreaId != noise.AreaId
                     || zombie.State == ZombieState.Chase || zombie.State == ZombieState.Stunned)
+                {
+                    continue;
+                }
+
+                // 사람은 허수아비 소리에 속지 않고, 허수아비를 붙잡은 좀비는 다른 소리를 듣지 않는다
+                if ((noise.FromDecoy && zombie.IsSurvivor) || zombie.OnDecoy)
                 {
                     continue;
                 }
@@ -611,6 +673,7 @@ namespace ApoGirl.Exploration.Model
                 zombie.StunTimer -= dt;
                 if (zombie.StunTimer <= 0f)
                 {
+                    zombie.DecoyId = -1;   // 맞고 나면 허수아비를 놓고 때린 쪽으로
                     zombie.State = ZombieState.Investigate;
                     zombie.TargetArea = zombie.AreaId;
                     zombie.TargetX = player.AreaId == zombie.AreaId ? player.X : zombie.X;
@@ -635,8 +698,14 @@ namespace ApoGirl.Exploration.Model
             if (sees && zombie.Awareness >= 1f && zombie.State != ZombieState.Chase)
             {
                 zombie.LostChase = false;
+                zombie.DecoyId = -1;
                 zombie.State = ZombieState.Chase;
                 events.Spotted = true;
+            }
+
+            if (zombie.OnDecoy && TickOnDecoy(zombie, mods, dt))
+            {
+                return;
             }
 
             switch (zombie.State)
@@ -658,6 +727,7 @@ namespace ApoGirl.Exploration.Model
                     {
                         zombie.State = ZombieState.Search;
                         zombie.Timer = _balance.SearchDuration;
+                        TryLatch(zombie);
                     }
 
                     break;
@@ -667,6 +737,11 @@ namespace ApoGirl.Exploration.Model
                     break;
 
                 case ZombieState.Search:
+                    if (TryLatch(zombie))
+                    {
+                        break;
+                    }
+
                     zombie.Timer -= dt;
                     if (Math.Abs(zombie.X - zombie.TargetX) <= ArriveDistance)
                     {
@@ -761,6 +836,125 @@ namespace ApoGirl.Exploration.Model
             zombie.Timer = zombie.IsSurvivor ? _balance.SearchDuration : _balance.LostLingerSeconds;
             zombie.Awareness = 0.5f;
             zombie.LostChase = true;
+        }
+
+        // ── 허수아비 (제작 P6) ──
+
+        /// <summary>허수아비마다: 지연 → 간격마다 소음, 붙은 좀비가 깎고, 체력·지속이 다하면 넘어지며 붙은 좀비를 놓아 준다.</summary>
+        private void TickDecoys(float dt)
+        {
+            foreach (var decoy in _decoys)
+            {
+                decoy.RangThisTick = false;
+                if (decoy.Down)
+                {
+                    continue;
+                }
+
+                if (decoy.Delay > 0f)
+                {
+                    decoy.Delay -= dt;
+                    continue;
+                }
+
+                decoy.TimeLeft -= dt;
+                decoy.NoiseTimer -= dt;
+                if (decoy.NoiseTimer <= 0f)
+                {
+                    decoy.NoiseTimer = decoy.Interval;
+                    decoy.RangThisTick = true;
+                    _pendingNoise.Add(new NoiseEvent(decoy.AreaId, decoy.X, decoy.Radius) { FromDecoy = true });
+                }
+
+                foreach (var zombie in _zombies)
+                {
+                    if (zombie.DecoyId == decoy.Id && zombie.IsAwake && zombie.State != ZombieState.Stunned
+                        && Math.Abs(zombie.X - decoy.X) <= _balance.DecoyLatchDistance)
+                    {
+                        decoy.Hp -= _balance.DecoyBiteDps * dt;
+                    }
+                }
+
+                if (decoy.Hp <= 0f || decoy.TimeLeft <= 0f)
+                {
+                    decoy.Down = true;
+                    foreach (var zombie in _zombies)
+                    {
+                        if (zombie.DecoyId == decoy.Id)
+                        {
+                            Release(zombie);
+                        }
+                    }
+                }
+            }
+        }
+
+        /// <summary>소리를 따라와 멈춘 좀비가 곁의 허수아비를 사람으로 알고 붙잡는다 (사람은 속지 않는다).</summary>
+        private bool TryLatch(ZombieUnit zombie)
+        {
+            if (zombie.IsSurvivor || zombie.OnDecoy)
+            {
+                return zombie.OnDecoy;
+            }
+
+            foreach (var decoy in _decoys)
+            {
+                if (decoy.Sounding && decoy.AreaId == zombie.AreaId && Math.Abs(decoy.X - zombie.X) <= _balance.DecoyLatchDistance)
+                {
+                    zombie.DecoyId = decoy.Id;
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        /// <summary>허수아비를 붙잡고 있다: 곁에 붙어 때린다. 처리했으면 true (추격이 시작됐으면 놓는다).</summary>
+        private bool TickOnDecoy(ZombieUnit zombie, ActivityMods mods, float dt)
+        {
+            var decoy = zombie.DecoyId < _decoys.Count ? _decoys[zombie.DecoyId] : null;
+            if (zombie.State == ZombieState.Chase || decoy == null || decoy.Down || decoy.AreaId != zombie.AreaId)
+            {
+                if (zombie.State == ZombieState.Chase)
+                {
+                    zombie.DecoyId = -1;
+                }
+                else
+                {
+                    Release(zombie);
+                }
+
+                return false;
+            }
+
+            zombie.State = ZombieState.Search;
+            zombie.Timer = _balance.SearchDuration;
+            zombie.TargetArea = decoy.AreaId;
+            zombie.TargetX = decoy.X;
+            var gap = decoy.X - zombie.X;
+            if (Math.Abs(gap) > _balance.DecoyLatchDistance * 0.6f)
+            {
+                MoveToward(zombie, decoy.X, zombie.Def.WalkSpeed * mods.Speed, dt);
+            }
+            else if (Math.Abs(gap) > 0.01f)
+            {
+                zombie.Facing = Math.Sign(gap);
+            }
+
+            return true;
+        }
+
+        private void Release(ZombieUnit zombie)
+        {
+            zombie.DecoyId = -1;
+            if (zombie.State == ZombieState.Chase || zombie.State == ZombieState.Stunned || !zombie.IsAwake)
+            {
+                return;
+            }
+
+            zombie.State = ZombieState.Search;
+            zombie.Timer = _balance.SearchDuration;
+            zombie.TargetX = zombie.X;
         }
 
         /// <summary>좀비가 다시 잠들 수 있는 시간대인가 (낮: 휴면·선잠, 황혼 각성 뒤에는 아니다).</summary>

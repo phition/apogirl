@@ -382,6 +382,8 @@ namespace ApoGirl.Core.Rules
                     delta.FlagsSet.Add(flag);
                 }
             }
+
+            ScarecrowRules.OnCrafted(state, craft, balance);   // 교문 허수아비: 내구를 채운다
         }
 
         /// <summary>끝나지 못한 제작 (주가 끝났거나 새 제작이 끼어듦): 실패와 같이 돌려준다. 정리했으면 true.</summary>

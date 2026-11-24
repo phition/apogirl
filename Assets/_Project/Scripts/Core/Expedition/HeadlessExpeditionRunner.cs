@@ -34,6 +34,13 @@ namespace ApoGirl.Core.Expedition
                              + request.SleepDebt * model.SleepDebtDownIncrease
                              + (request.ConsecutiveRun ? model.ConsecutiveDownIncrease : 0f);
             downChance = ApplyLoadoutDown(request, downChance);
+            var decoy = request.TimeOfDay == ExpeditionTime.Night ? CarriedDecoy(request) : null;
+            if (decoy != null)
+            {
+                // 제작 P6: 밤에 허수아비를 하나 세워 무리를 돌린다
+                downChance -= _db.Balance.HeadlessDecoyNightDown;
+            }
+
             downChance = Math.Min(Math.Max(downChance * request.HarmMultiplier, 0f), 0.95f);
             var bagYield = BagYieldMultiplier(request);
             var bagRandom = bagYield != 1f ? new SeededRandom(SeededRandom.CreateState(request.Seed ^ 0x3BA6C5)) : null;
@@ -55,6 +62,11 @@ namespace ApoGirl.Core.Expedition
             }
 
             result.Status = ExtractStatus.Extracted;
+            if (decoy != null)
+            {
+                result.UsedItems.Add(decoy);
+            }
+
             foreach (var range in timeYield.Resources)
             {
                 var amount = random.Range(range.Min, Math.Max(range.Min, range.Max));
@@ -124,6 +136,29 @@ namespace ApoGirl.Core.Expedition
             }
 
             return downChance;
+        }
+
+        /// <summary>챙겨 간 허수아비 하나 (울리는 것을 먼저, 없으면 null).</summary>
+        private string CarriedDecoy(ExpeditionRequest request)
+        {
+            var carry = request.Loadout?.Carry;
+            if (carry == null)
+            {
+                return null;
+            }
+
+            string best = null;
+            var bestSeconds = 0f;
+            foreach (var id in carry)
+            {
+                if (_db.TryGetItem(id, out var item) && item.IsDecoy && item.Decoy.Seconds > bestSeconds)
+                {
+                    best = id;
+                    bestSeconds = item.Decoy.Seconds;
+                }
+            }
+
+            return best;
         }
 
         /// <summary>가방 칸 수로 자원 수확 배율 (제작 C5). 가방이 없거나 기준 칸 수면 1.</summary>

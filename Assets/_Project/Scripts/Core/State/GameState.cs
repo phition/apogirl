@@ -331,7 +331,15 @@ namespace ApoGirl.Core.State
         public string Tool2 { get; set; } = "";
 
         public string Armor { get; set; } = "";
+
+        /// <summary>옛 퀵슬롯 (없앴다, 옛 세이브 값은 Sanitize가 비운다).</summary>
         public List<string> QuickSlots { get; set; } = new List<string>();
+
+        /// <summary>
+        /// 출정 준비 "챙길 것" (제작 P6): 창고에서 배낭에 미리 넣어 가는 소모품. 같은 ID가 여러 번이면 여러 개.
+        /// 쓰거나 버린 것만 귀환 때 창고에서 빠지고, 쓰러지면 모두 잃는다. 옛 세이브는 빈 목록.
+        /// </summary>
+        public List<string> Carry { get; set; } = new List<string>();
     }
 
     /// <summary>한 주의 계획: 7일 × 낮/밤 = 14슬롯 (문서 4.1).</summary>

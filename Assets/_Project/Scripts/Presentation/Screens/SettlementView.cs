@@ -188,6 +188,11 @@ namespace ApoGirl.Presentation.Screens
                     {
                         lines.Add(Loc.T("settle.raid_cat"));
                     }
+
+                    if (slot.Raid.ScarecrowRelief > 0)
+                    {
+                        lines.Add(Loc.T(slot.Raid.ScarecrowFell ? "settle.raid_scarecrow_fell" : "settle.raid_scarecrow"));
+                    }
                 }
                 else if (slot.Expedition != null && slot.ExpeditionRequest != null)
                 {

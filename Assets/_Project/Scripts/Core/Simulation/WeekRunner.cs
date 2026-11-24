@@ -848,7 +848,7 @@ namespace ApoGirl.Core.Simulation
                     LoadoutRules.RemoveFromStorage(_state, id, 1, delta);
                 }
 
-                foreach (var id in loadout.QuickSlots)
+                foreach (var id in loadout.Carry)
                 {
                     LoadoutRules.RemoveFromStorage(_state, id, 1, delta);
                 }
@@ -929,7 +929,7 @@ namespace ApoGirl.Core.Simulation
             if (loadout != null)
             {
                 var used = new List<string>(result.UsedItems);
-                foreach (var id in loadout.QuickSlots)
+                foreach (var id in loadout.Carry)
                 {
                     if (string.IsNullOrEmpty(id) || used.Remove(id))
                     {
