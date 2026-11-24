@@ -873,7 +873,26 @@ Button.selected { border-color: var(--accent); background-color: var(--accent-so
 /* CD 진열장·플레이어 (기획 A) */
 .hub-cd-slot { background-color: rgba(0, 0, 0, 0.22); border-width: 1px; border-color: rgba(255, 255, 255, 0.10); }
 .hub-cd-slot.owned { background-color: rgba(0, 0, 0, 0); border-color: rgba(20, 16, 12, 0.85); -unity-background-scale-mode: scale-and-crop; }
+.hub-cd-slot.owned:hover { border-color: var(--accent); }
 .hub-cd-head { -unity-font-style: bold; margin-top: 6px; }
+/* CD 상세: 벽 자켓을 누르면 크게 + 설명 + 틀기 */
+.hub-cd-detail {
+    position: absolute;
+    width: 520px;
+    flex-direction: row;
+    padding: 12px;
+    background-color: rgb(30, 32, 36);
+    border-width: 1px;
+    border-color: var(--accent);
+    border-radius: 6px;
+}
+.hub-cd-detail-jacket { width: 220px; height: 220px; flex-shrink: 0; margin-right: 14px; }
+.hub-cd-detail-side { flex-grow: 1; flex-shrink: 1; }
+.hub-cd-detail-desc { white-space: normal; font-size: 15px; color: var(--text); margin: 6px 0 10px 0; }
+.hub-cd-detail-buttons { flex-direction: row; margin-top: 4px; }
+.hub-cd-detail-play { height: 34px; min-width: 110px; margin: 0 6px 0 0; -unity-font-style: bold; }
+.hub-cd-detail-play.playing { background-color: rgb(52, 70, 62); }
+.hub-cd-detail-close { height: 34px; min-width: 70px; margin: 0; }
 .hub-cd-track { border-left-width: 6px; }
 .hub-cd-track.playing { background-color: rgb(52, 70, 62); }
 .hub-cd-hint { font-size: 13px; opacity: 0.7; }

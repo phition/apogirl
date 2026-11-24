@@ -200,6 +200,7 @@ namespace ApoGirl.Presentation.Screens
         private readonly VisualElement _building;
         private readonly VisualElement _actorLayer;
         private readonly VisualElement _roomPanel;
+        private readonly VisualElement _cdDetail;
         private readonly HubSkyView _skyView;
         private readonly List<DoorView> _doors = new List<DoorView>();
         private Actor _player;
@@ -228,6 +229,9 @@ namespace ApoGirl.Presentation.Screens
             _host.schedule.Execute(Tick).Every(33);
             _host.RegisterCallback<ClickEvent>(_ => HideRoomPanel());
             _roomPanel.RegisterCallback<ClickEvent>(evt => evt.StopPropagation()); // 패널 안(CD 플레이어 등)을 눌러도 닫히지 않게
+            _cdDetail = Add(_host, "hub-cd-detail");
+            _cdDetail.AddToClassList("hidden");
+            _cdDetail.RegisterCallback<ClickEvent>(evt => evt.StopPropagation());
         }
 
         /// <summary>방에서 행동을 골랐을 때 (허브가 계획 보드를 그 행동으로 연다).</summary>
@@ -707,6 +711,14 @@ namespace ApoGirl.Presentation.Screens
                     continue;
                 }
 
+                var cdId = entry.Id;
+                slot.pickingMode = PickingMode.Position;   // 걸린 자켓을 누르면 크게 (CD 상세)
+                slot.tooltip = Loc.T("cd." + cdId + ".title");
+                slot.RegisterCallback<ClickEvent>(evt =>
+                {
+                    ShowCdDetail(cdId);
+                    evt.StopPropagation();
+                });
                 var jacket = StoryArt.Icon("cd." + entry.Id);
                 if (jacket != null)
                 {
@@ -754,16 +766,7 @@ namespace ApoGirl.Presentation.Screens
 
                 var button = new Button(() =>
                 {
-                    if (CdPlayer.IsPlaying(_session.State, id))
-                    {
-                        CdPlayer.Stop(_session.State);
-                        Sound.Play("Sfx/sfx_cd_stop", SoundCategory.Ui);
-                    }
-                    else
-                    {
-                        Sound.Play("Sfx/sfx_cd_insert", SoundCategory.Ui);
-                        CdPlayer.Play(_session.State, id);
-                    }
+                    ToggleCd(id);
                     ShowRoomPanel(_cdRoomId);
                 }) { text = label };
                 button.AddToClassList("hub-room-action");
@@ -785,6 +788,111 @@ namespace ApoGirl.Presentation.Screens
             hint.AddToClassList("hub-cd-hint");
             _roomPanel.Add(hint);
         }
+
+        /// <summary>CD를 튼다 (이미 돌고 있으면 끈다).</summary>
+        private void ToggleCd(string id)
+        {
+            if (CdPlayer.IsPlaying(_session.State, id))
+            {
+                CdPlayer.Stop(_session.State);
+                Sound.Play("Sfx/sfx_cd_stop", SoundCategory.Ui);
+            }
+            else
+            {
+                Sound.Play("Sfx/sfx_cd_insert", SoundCategory.Ui);
+                CdPlayer.Play(_session.State, id);
+            }
+        }
+
+        /// <summary>
+        /// CD 상세 (벽에 걸린 자켓을 눌렀을 때): 왼쪽에 크게 본 자켓, 오른쪽에 제목·주인·찾은 주차·찾았을 때의 글(`enc.{ID}.prompt`)과
+        /// 틀기/끄기 단추. 방송반 위쪽에 띄우고, 바깥을 누르거나 닫기·Esc로 닫는다.
+        /// </summary>
+        private void ShowCdDetail(string id)
+        {
+            var state = _session.State;
+            if (_executing || !CdRules.Has(state, id) || !_rooms.TryGetValue(CdRoomId(), out var room))
+            {
+                return;
+            }
+
+            _cdRoomId = room.Def.Id;
+            HideRoomPanel();
+            _cdDetail.Clear();
+
+            var jacket = new VisualElement { pickingMode = PickingMode.Ignore };
+            jacket.AddToClassList("hub-cd-detail-jacket");
+            var art = StoryArt.Icon("cd." + id);
+            if (art != null)
+            {
+                StoryArt.SetContain(jacket, art);
+            }
+            else if (ColorUtility.TryParseHtmlString(CdPlayer.All.FirstOrDefault(e => e.Id == id)?.Color ?? "", out var color))
+            {
+                jacket.style.backgroundColor = color;
+            }
+
+            _cdDetail.Add(jacket);
+
+            var side = new VisualElement();
+            side.AddToClassList("hub-cd-detail-side");
+            _cdDetail.Add(side);
+
+            var playing = CdPlayer.IsPlaying(state, id);
+            var title = new Label(Loc.T("cd." + id + ".title") + (playing ? "  ♪" : ""));
+            title.AddToClassList("hub-room-panel-title");
+            side.Add(title);
+
+            var weekText = state.CdWeeks.TryGetValue(id, out var week) ? "  ·  " + Loc.F("hub.cd.found_week", week) : "";
+            var owner = new Label(Loc.T("cd." + id + ".owner") + weekText);
+            owner.AddToClassList("hub-room-panel-note");
+            side.Add(owner);
+
+            var desc = Loc.Lookup(Loc.UiTable, "enc." + id + ".prompt");
+            if (!string.IsNullOrEmpty(desc))
+            {
+                var body = new Label(desc);
+                body.AddToClassList("hub-cd-detail-desc");
+                side.Add(body);
+            }
+
+            var buttons = new VisualElement();
+            buttons.AddToClassList("hub-cd-detail-buttons");
+            side.Add(buttons);
+
+            var play = new Button(() =>
+            {
+                ToggleCd(id);
+                ShowCdDetail(id);
+            }) { text = playing ? "■  " + Loc.T("hub.cd.stop") : "▶  " + Loc.T("hub.cd.play") };
+            play.AddToClassList("hub-cd-detail-play");
+            play.EnableInClassList("playing", playing);
+            buttons.Add(play);
+
+            var close = new Button(HideCdDetail) { text = Loc.T("common.close") };
+            close.AddToClassList("hub-cd-detail-close");
+            buttons.Add(close);
+
+            if (!CdPlayer.HasClip(id))
+            {
+                var note = new Label(Loc.T("music.no_clip"));
+                note.AddToClassList("hub-room-panel-note");
+                side.Add(note);
+            }
+
+            // 방송반 위쪽에 (화면 밖으로 나가지 않게)
+            const float width = 520f;
+            var left = Mathf.Clamp(Px(room.Def.X + room.Def.Width * 0.5f) - width * 0.5f, 0f, Px(_config.Width) - width);
+            _cdDetail.style.left = left;
+            _cdDetail.style.top = Px(FloorBottom(room.Def.Floor) - _config.FloorHeight) + 12f;
+            _cdDetail.RemoveFromClassList("hidden");
+            KoreanFont.ApplyDeep(_cdDetail);
+        }
+
+        /// <summary>CD 벽이 있는 방.</summary>
+        private string CdRoomId() => _config.Rooms.FirstOrDefault(r => r.CdShelf)?.Id ?? "";
+
+        public void HideCdDetail() => _cdDetail.AddToClassList("hidden");
 
         private void AddProp(VisualElement room, HubSectionConfig.PropDef prop, float floorY)
         {
@@ -818,6 +926,7 @@ namespace ApoGirl.Presentation.Screens
                 return;
             }
 
+            HideCdDetail();
             _roomPanel.Clear();
             var title = new Label(room.Open ? RoomName(room.Def) : Loc.T("hub.room_locked"));
             title.AddToClassList("hub-room-panel-title");
@@ -920,7 +1029,11 @@ namespace ApoGirl.Presentation.Screens
             KoreanFont.ApplyDeep(_roomPanel);
         }
 
-        public void HideRoomPanel() => _roomPanel.AddToClassList("hidden");
+        public void HideRoomPanel()
+        {
+            _roomPanel.AddToClassList("hidden");
+            HideCdDetail();
+        }
 
         // ── 사람 ──
 
