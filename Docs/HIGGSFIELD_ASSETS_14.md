@@ -6,7 +6,9 @@
 - 예: 동료 작별 4편이 모두 사람 없는 복도 컷 한 장을 같이 쓴다.
 - 예: 박 선생님이 윤 선생님 다리를 살피는 밤(`EVT_A2_NURSE_EXAM`)에 빈 보건실 배경이 나온다.
 
-이 문서는 빌려 쓰는 이벤트 59개의 대본을 읽고, **장면이 분명히 다른 22장**만 골라 새로 받는 문서다. 빌려 써도 맞는 것은 그대로 둔다(4장).
+이 문서는 빌려 쓰는 이벤트 59개의 대본을 읽고, **장면이 분명히 다른 22장**만 골라 새로 받는 문서다. 빌려 써도 맞는 것은 그대로 둔다(8절).
+
+여기에 깃발로 대본이 갈리는 컷 1장(7절, 여름 마지막 밤 옥상의 의족 갈래)을 더했다.
 
 쓰는 법:
 
@@ -30,7 +32,8 @@
 | 4 | 2·3막 이야기 장면: 생활기록부·파출소 | P2 | 3 |
 | 5 | 인물이 있어야 하는 밤 장면 | P2 | 5 |
 | 6 | 단서·소품 장면 | P3 | 7 |
-| | **합계** | | **22** |
+| 7 | 깃발 갈래: 여름 마지막 밤 옥상, 의족으로 선 윤 선생님 | P2 | 1 |
+| | **합계** | | **23** |
 
 **먼저 받을 것**: 2·3절 7장. 이야기가 가장 무거운 장면인데 지금 그림이 가장 안 맞는다.
 
@@ -49,6 +52,10 @@
 - 윤 선생님은 `{TEACHER}` 뒤에 `+다리①`처럼 적은 다리 문구를 붙인다.
 - `[안전]`: 다리·상처는 붕대와 접어 핀으로 고정한 바지로만 보인다. 피·상처 자리는 그리지 않는다.
 - 글씨는 모두 **읽을 수 없게** 둔다(`no readable text`). `SOS` 한 곳만 예외다.
+- **[명찰]** 교복 차림 인물이 나오는 컷은 프롬프트 끝에 아래 줄을 붙인다. 받은 컷 112장의 명찰에 `日本` 같은 한자가 그려져 있어서 게임에서는 흐리게 지웠다(2026-11-24). 새 컷은 처음부터 빈 명찰로 받는다.
+```
+The school name tag on the blazer is a plain blank white rectangle with no writing, no letters, no symbols, and no colored badge above it.
+```
 
 ---
 
@@ -107,9 +114,26 @@
 
 - 1주 창고 장면(`EVT_A1_STORAGE_D1~D6`)은 서진 혼자이고, 선생님은 6일 새벽에 목소리로만 나온다. 그림에 그리지 않는다.
 
+## 7. 깃발로 갈리는 컷 — 여름 마지막 밤, 의족 (1장, P2)
+
+여름 막 평가 `EVT_A2_REVIEW`는 옥상에 모두 모여 별을 보고, 서진이 손가락을 접으며 동료를 세는 장면이다. 대본은 선생님이 어떻게 올라왔는지로 갈린다(`Act2Main.yarn`).
+
+- 의족을 달았으면(`PROSTHETIC_DONE`) 의족으로 계단 열여섯 칸을 직접 올라왔다.
+- 목발이면(`CRUTCH_DONE`) 목발로 올라왔다. 지금 컷 `evt_a2_review`가 이 장면이다(목발로 막 올라온 선생님).
+- 둘 다 아니면 서진이 업고 올라왔다. 이때도 지금 컷을 쓴다.
+
+의족 갈래에 맞는 컷을 따로 받는다. 받으면 `art_map.json`에 `"Flag": "PROSTHETIC_DONE"` 줄을 기본 줄 앞에 넣는다(동아리 컷과 같은 방식).
+
+| 파일 | 이벤트 · 깃발 | 계절 | 프롬프트 |
+|---|---|---|---|
+| `evt_a2_review_prosthetic.png` | `EVT_A2_REVIEW` · `PROSTHETIC_DONE` | `[여름]` | `The last night of summer on the school rooftop under a sky full of stars, everyone sits on blankets spread on the concrete; {TEACHER} stands on his own two feet at the edge of the group, a simple homemade prosthetic lower leg of plastic pipe and padding visible below the left trouser hem, a cane in one hand, the other hand pointing up at the sky, proud and a little out of breath. {SEOJIN_SUMMER} sits on a blanket looking up at him, folding her fingers one by one as she counts the people around her, a small smile breaking out. {DOHYEON} and {NURSE} sit beside her, {YEJI} a little apart hugging her knees. Chain-link fence, the dark town below, warm lantern light.` |
+
+- 참고 시트는 4장까지라 윤 선생님·서진·도현·박 선생님 시트를 넣는다. 예지는 문구로만 그리니 작게, 조금 떨어져 앉게 했다.
+- 선생님은 목발 없이 **서 있어야** 한다. 목발이 나오면 다시 받는다.
+
 ---
 
-## 7. 그대로 두는 것
+## 8. 그대로 두는 것
 
 장면이 같거나, 같은 대본을 조건만 바꿔 쓰는 이벤트라 새로 받지 않는다.
 
@@ -118,14 +142,14 @@
 - **같은 장면**: `EVT_A1_STORE_UNLOCK`, `EVT_A2_LOCKED_HOUSE`, `EVT_A2_TEACHER_KNOWS`·`_FINDS`, `EVT_A3_OPENING`·`EVT_A3_UBC_CALL`·`EVT_RND_A3_REQUEST`(무전 컷), `EVT_A4_BLOOD_MATCH`, `EVT_A4_FINAL_CHOICE`, 송출 4편, 응답 가족·아이, 휴대폰 2편, 창고 나머지 6편(`EVT_A1_TRAPPED`·`STORAGE_D1·D3·D4·D5`·`EVT_NG_STORAGE_7DAYS`).
 - **마음 상태 `_3` 세 편**은 같은 옥상 컷을 쓰기로 12차에서 정했다.
 
-## 8. 연결 (받으면 내가 한다)
+## 9. 연결 (받으면 내가 한다)
 
 - 도구 `code_temp/apogirl/tools/install_events12.py`로 16:9·너비 1920 jpg로 바꿔 `Resources/Art/Story/Events/`에 넣는다.
-- `art_map.json` Events에서 위 표의 이벤트 줄을 새 그림으로 바꾼다. 혈액형 두 편은 `evt_a4_blood_other`를 같이 쓴다.
+- `art_map.json` Events에서 위 표의 이벤트 줄을 새 그림으로 바꾼다. 혈액형 두 편은 `evt_a4_blood_other`를 같이 쓴다. 7절 의족 컷은 바꾸지 않고 깃발 줄로 더한다.
 - 쓰는 곳이 없어진 옛 그림(`evt_a4_farewell`, `evt_a3_police` 등)은 지우지 않는다.
 
-## 9. 받는 차례 (추천)
+## 10. 받는 차례 (추천)
 
 1. 2절 3장 + 3절 4장 (P1): 4막의 가장 무거운 장면이다.
-2. 4절 3장 → 5절 5장 (P2).
+2. 4절 3장 → 5절 5장 → 7절 1장 (P2).
 3. 6절 7장 (P3).
