@@ -6975,6 +6975,14 @@ MonoBehaviour:
     m_Key: settle.craft_failed
     m_Metadata:
       m_Items: []
+  - m_Id: 1891594700865536
+    m_Key: result.craft.done.ACT_CRAFT_WORKBENCH
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1891594856054784
+    m_Key: settle.craft_done.ACT_CRAFT_WORKBENCH
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
