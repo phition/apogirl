@@ -531,6 +531,14 @@
     {
       "Npc": "NPC_CAT",
       "Key": "hub_cat"
+    },
+    {
+      "Npc": "NPC_SURVIVOR_A",
+      "Key": "hub_senior"
+    },
+    {
+      "Npc": "NPC_WANDERER",
+      "Key": "hub_wanderer"
     }
   ],
   "Teacher": {

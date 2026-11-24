@@ -31,6 +31,9 @@ namespace ApoGirl.Presentation.Art
         {
             public string Event = "";
             public string Image = "";
+
+            /// <summary>이 깃발이 켜져 있을 때만 쓰는 그림 (예: 동아리를 같이 한 사람 `CLUB_WITH_{NPC}`). 비면 기본 그림.</summary>
+            public string Flag = "";
         }
 
         [Serializable]
@@ -130,18 +133,35 @@ namespace ApoGirl.Presentation.Art
             return null;
         }
 
-        /// <summary>이벤트 동안 대화 뒤에 까는 그림 (없으면 null).</summary>
-        public static Texture2D EventImage(string eventId)
+        /// <summary>
+        /// 이벤트 동안 대화 뒤에 까는 그림 (없으면 null).
+        /// 같은 이벤트에 깃발 붙은 줄이 있으면 지금 켜진 깃발과 맞는 첫 줄을 먼저 쓰고, 없으면 깃발 없는 줄을 쓴다.
+        /// </summary>
+        public static Texture2D EventImage(string eventId, GameState state = null)
         {
+            EventEntry fallback = null;
             foreach (var entry in Map.Events)
             {
-                if (entry.Event == eventId)
+                if (entry.Event != eventId)
                 {
-                    return Story(entry.Image);
+                    continue;
+                }
+
+                if (string.IsNullOrEmpty(entry.Flag))
+                {
+                    fallback ??= entry;
+                }
+                else if (state != null && state.Flags.Contains(entry.Flag))
+                {
+                    var flagged = Story(entry.Image);
+                    if (flagged != null)
+                    {
+                        return flagged;
+                    }
                 }
             }
 
-            return null;
+            return fallback != null ? Story(fallback.Image) : null;
         }
 
         public static Texture2D Location(string locationId)

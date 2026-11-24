@@ -792,6 +792,11 @@
     },
     {
       "Event": "EVT_CLUB_STUDY",
+      "Image": "Events/evt_club_study_bystander",
+      "Flag": "CLUB_WITH_NPC_BYSTANDER"
+    },
+    {
+      "Event": "EVT_CLUB_STUDY",
       "Image": "Events/evt_club_studygroup"
     },
     {
@@ -1005,6 +1010,106 @@
     {
       "Event": "EVT_BROADCAST_LETTER",
       "Image": "Events/evt_bc_first"
+    },
+    {
+      "Event": "EVT_A1_REVIEW",
+      "Image": "Events/evt_a1_review"
+    },
+    {
+      "Event": "EVT_A2_REVIEW",
+      "Image": "Events/evt_a2_review"
+    },
+    {
+      "Event": "EVT_A3_REVIEW",
+      "Image": "Events/evt_a3_review"
+    },
+    {
+      "Event": "EVT_MIND_HURRY_1",
+      "Image": "Events/evt_mind_hurry_1"
+    },
+    {
+      "Event": "EVT_RND_A2_GENERATOR",
+      "Image": "Events/evt_rnd_a2_generator"
+    },
+    {
+      "Event": "EVT_RND_A2_LOOTERS",
+      "Image": "Events/evt_rnd_a2_looters"
+    },
+    {
+      "Event": "EVT_RND_A2_MOSQUITO",
+      "Image": "Events/evt_rnd_a2_mosquito"
+    },
+    {
+      "Event": "EVT_RND_A3_COLD_NIGHT",
+      "Image": "Events/evt_rnd_a3_cold_night"
+    },
+    {
+      "Event": "EVT_RND_A3_LEAVES",
+      "Image": "Events/evt_rnd_a3_leaves"
+    },
+    {
+      "Event": "EVT_RND_A3_PERSIMMON",
+      "Image": "Events/evt_rnd_a3_persimmon"
+    },
+    {
+      "Event": "EVT_RND_A3_TRACKS",
+      "Image": "Events/evt_rnd_a3_tracks"
+    },
+    {
+      "Event": "EVT_RND_A4_PIPE",
+      "Image": "Events/evt_rnd_a4_pipe"
+    },
+    {
+      "Event": "EVT_RND_A4_SNOW",
+      "Image": "Events/evt_rnd_a4_snow"
+    },
+    {
+      "Event": "EVT_RND_LETTER",
+      "Image": "Events/evt_rnd_letter"
+    },
+    {
+      "Event": "EVT_RND_NIGHTMARE",
+      "Image": "Events/evt_rnd_nightmare"
+    },
+    {
+      "Event": "EVT_RND_QUIET_MORNING",
+      "Image": "Events/evt_rnd_quiet_morning"
+    },
+    {
+      "Event": "EVT_RND_RAIN_LEAK",
+      "Image": "Events/evt_rnd_rain_leak"
+    },
+    {
+      "Event": "EVT_RND_WATER_SMELL",
+      "Image": "Events/evt_rnd_water_smell"
+    },
+    {
+      "Event": "EVT_TALK_02",
+      "Image": "Events/evt_talk_02"
+    },
+    {
+      "Event": "EVT_TALK_04",
+      "Image": "Events/evt_talk_04"
+    },
+    {
+      "Event": "EVT_TALK_06",
+      "Image": "Events/evt_talk_06"
+    },
+    {
+      "Event": "EVT_TALK_07",
+      "Image": "Events/evt_talk_07"
+    },
+    {
+      "Event": "EVT_TALK_09",
+      "Image": "Events/evt_talk_09"
+    },
+    {
+      "Event": "EVT_TALK_10",
+      "Image": "Events/evt_talk_10"
+    },
+    {
+      "Event": "EVT_TALK_11",
+      "Image": "Events/evt_talk_11"
     }
   ],
   "Backdrops": [

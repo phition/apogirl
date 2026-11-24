@@ -238,7 +238,7 @@ namespace ApoGirl.Presentation.Screens
         private VisualElement BuildPhoto(GameState state, BalanceConfig balance)
         {
             var eventId = PickPhotoEvent(state, balance, out var month);
-            var texture = string.IsNullOrEmpty(eventId) ? null : StoryArt.EventImage(eventId);
+            var texture = string.IsNullOrEmpty(eventId) ? null : StoryArt.EventImage(eventId, state);
             if (texture == null)
             {
                 return null;

@@ -1101,7 +1101,7 @@ namespace ApoGirl.Presentation.Screens
                 }
                 var actor = NewActor("npc");
                 actor.Id = pair.Key;
-                actor.SetLook(Frames(sprite + "_idle_", sprite), null);
+                actor.SetLook(Frames(sprite + "_idle_", sprite), Frames(sprite + "_walk_"));   // 걷기 그림이 없으면 대기 그림 그대로
                 actor.Guard = pair.Value.Role == "GUARD";
                 actor.HomeFloor = home.Def.Floor;
                 actor.HomeX = home.Def.X + home.Def.Width * (0.12f + 0.1f * (index % 4));

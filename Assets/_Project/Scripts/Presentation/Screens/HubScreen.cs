@@ -703,7 +703,7 @@ namespace ApoGirl.Presentation.Screens
 
             if (_dialoguePlayer != null && _dialoguePlayer.HasNode(ev.Node))
             {
-                _dialogueView.SetScene(StoryArt.EventImage(ev.Id));
+                _dialogueView.SetScene(StoryArt.EventImage(ev.Id, _session.State));
                 Sound.OnEvent(ev.Id);
                 var task = _dialoguePlayer.Run(ev.Node, choices, Choose, destroyCancellationToken);
                 while (!task.IsCompleted)
