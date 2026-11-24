@@ -343,7 +343,10 @@ namespace ApoGirl.Exploration.Runtime
             }
         }
 
-        /// <summary>미니창을 고른 물건 옆에 붙인다 (오른쪽에 자리가 없으면 왼쪽). 물건이 배낭에서 사라지면 닫는다.</summary>
+        /// <summary>
+        /// 미니창을 배낭 창 바깥에 고른 물건 높이로 붙인다 (배낭을 가리지 않게: 왼쪽, 자리가 없으면 오른쪽).
+        /// 물건이 배낭에서 사라지면 닫는다.
+        /// </summary>
         private void PositionInfo()
         {
             if (_infoItem == null)
@@ -363,18 +366,18 @@ namespace ApoGirl.Exploration.Runtime
             }
 
             var bound = _infoAnchor.worldBound;
+            var panel = _backpackPanel.worldBound;
             var rootWidth = _root.layout.width;
             var rootHeight = _root.layout.height;
-            var right = _root.WorldToLocal(new Vector2(bound.xMax + 8f, bound.yMin));
-            var x = right.x;
-            if (x + InfoWidth > rootWidth - 8f)
+            var x = _root.WorldToLocal(new Vector2(panel.xMin - 8f, bound.yMin)).x - InfoWidth;
+            if (x < 8f)
             {
-                x = _root.WorldToLocal(new Vector2(bound.xMin - 8f, bound.yMin)).x - InfoWidth;
+                x = _root.WorldToLocal(new Vector2(panel.xMax + 8f, bound.yMin)).x;
             }
 
             var height = _info.layout.height > 0f ? _info.layout.height : 200f;
-            var y = Mathf.Clamp(right.y, 8f, Mathf.Max(8f, rootHeight - height - 8f));
-            _info.style.left = Mathf.Max(8f, x);
+            var y = Mathf.Clamp(_root.WorldToLocal(new Vector2(0f, bound.yMin)).y, 8f, Mathf.Max(8f, rootHeight - height - 8f));
+            _info.style.left = Mathf.Clamp(x, 8f, Mathf.Max(8f, rootWidth - InfoWidth - 8f));
             _info.style.top = y;
             _info.style.visibility = Visibility.Visible;
         }
