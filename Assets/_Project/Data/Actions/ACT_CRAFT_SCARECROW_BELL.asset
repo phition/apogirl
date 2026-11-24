@@ -1,0 +1,189 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dae23a582c039304a81c2bdd418cbc38, type: 3}
+  m_Name: ACT_CRAFT_SCARECROW_BELL
+  m_EditorClassIdentifier: ApoGirl.Data::ApoGirl.Data.ActionDefinitionAsset
+  _id: ACT_CRAFT_SCARECROW_BELL
+  _definition:
+    Id: ACT_CRAFT_SCARECROW_BELL
+    Category: 5
+    SlotTag: 0
+    ResourceCosts:
+    - Resource: 5
+      Amount: 2
+    - Resource: 9
+      Amount: 1
+    FatigueCost: 6
+    StressCost: 1
+    HasCheck: 1
+    Check:
+      BaseRate: 0.5
+      StatWeights:
+      - Stat: 3
+        Weight: 0.004
+      UsesProficiency: 1
+      Proficiency: 2
+      ProficiencyWeight: 0.07
+      UsesHope: 0
+    StatGains:
+    - Stat: 3
+      Amount: 1
+    - Stat: 4
+      Amount: 1
+    HasProficiency: 1
+    Proficiency: 2
+    ProficiencyXp: 1
+    Teaching: 0
+    OnSuccess:
+      Stats: []
+      Vitals: []
+      Resources: []
+      Hidden: []
+      SleepDebt: 0
+      Conscience: 0
+      SetFlags: []
+      ClearFlags: []
+      AddClues: []
+      EndingTags: []
+      Npcs: []
+      Items: []
+      Defense: 0
+      Threat: 0
+      Facilities: []
+      AddTraits: []
+      Proficiencies: []
+      TeacherMobility: 0
+      RestorePower: 0
+      TreatInjury: 0
+      CookDish: 0
+      PurifyWater: 0
+      PurifyRate: 1
+      RaidStrength: 0
+      TeacherReinfect: 0
+      TeacherInfection: 0
+      TraumaCare: 0
+      Traps: 0
+      IntrusionResponse: 
+      Factions: []
+    OnGreatSuccess:
+      Stats: []
+      Vitals: []
+      Resources: []
+      Hidden: []
+      SleepDebt: 0
+      Conscience: 0
+      SetFlags: []
+      ClearFlags: []
+      AddClues: []
+      EndingTags: []
+      Npcs: []
+      Items: []
+      Defense: 0
+      Threat: 0
+      Facilities: []
+      AddTraits: []
+      Proficiencies: []
+      TeacherMobility: 0
+      RestorePower: 0
+      TreatInjury: 0
+      CookDish: 0
+      PurifyWater: 0
+      PurifyRate: 1
+      RaidStrength: 0
+      TeacherReinfect: 0
+      TeacherInfection: 0
+      TraumaCare: 0
+      Traps: 0
+      IntrusionResponse: 
+      Factions: []
+    OnFailure:
+      Stats: []
+      Vitals: []
+      Resources: []
+      Hidden: []
+      SleepDebt: 0
+      Conscience: 0
+      SetFlags: []
+      ClearFlags: []
+      AddClues: []
+      EndingTags: []
+      Npcs: []
+      Items: []
+      Defense: 0
+      Threat: 0
+      Facilities: []
+      AddTraits: []
+      Proficiencies: []
+      TeacherMobility: 0
+      RestorePower: 0
+      TreatInjury: 0
+      CookDish: 0
+      PurifyWater: 0
+      PurifyRate: 1
+      RaidStrength: 0
+      TeacherReinfect: 0
+      TeacherInfection: 0
+      TraumaCare: 0
+      Traps: 0
+      IntrusionResponse: 
+      Factions: []
+    ExpeditionTime: 0
+    LocationId: 
+    Unlock:
+      WeekMin: 0
+      WeekMax: 0
+      Days: 
+      Phase: 0
+      Seasons: 
+      Month: 0
+      DayOfMonth: 0
+      ActionCategories: 
+      ActionIds: []
+      FlagsAll:
+      - SEARCHED_COMPUTER
+      - SCARECROW_UP
+      FlagsAny: []
+      FlagsNone:
+      - SCARECROW_BELL
+      CluesAll: []
+      Checks:
+      - Kind: 1
+        Key: Engineering
+        Op: 0
+        Value: 1
+      AnyChecks: []
+      NpcStatuses: []
+      IsBirthday: 0
+    RaidGuard: 0
+    BonusFacilityId: 
+    BonusPerLevel: 0
+    ThreatGain: 0
+    Confined: 0
+    LockNextSlots: 0
+    LockActionId: 
+    AwayFromBase: 0
+    ClubActivity: 
+    BroadcastProgram: 
+    MinFreePower: 0
+    UpgradesPower: 0
+    Craft:
+      Line: SCARECROW
+      Tier: 3
+      Work: 2
+      Product: 
+      Count: 1
+      ItemCosts: []
+      SetFlags:
+      - SCARECROW_BELL
+      MaxOwned: 0
+      MaintainWeapon: 0
+      Next: 

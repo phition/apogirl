@@ -811,6 +811,38 @@ MonoBehaviour:
     m_Key: ACT_CRAFT_AUTO_PURIFIER.short
     m_Metadata:
       m_Items: []
+  - m_Id: 2010796640190464
+    m_Key: ACT_CRAFT_SCARECROW.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2010796698910720
+    m_Key: ACT_CRAFT_SCARECROW.short
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2010796698910721
+    m_Key: ACT_CRAFT_DECOY.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2010796698910722
+    m_Key: ACT_CRAFT_DECOY.short
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2010796698910723
+    m_Key: ACT_CRAFT_DECOY_BELL.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2010796698910724
+    m_Key: ACT_CRAFT_DECOY_BELL.short
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2010796698910725
+    m_Key: ACT_CRAFT_SCARECROW_BELL.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2010796698910726
+    m_Key: ACT_CRAFT_SCARECROW_BELL.short
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

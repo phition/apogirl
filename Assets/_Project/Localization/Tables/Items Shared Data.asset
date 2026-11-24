@@ -567,6 +567,22 @@ MonoBehaviour:
     m_Key: ITEM_TOOL_MULTITOOL.desc
     m_Metadata:
       m_Items: []
+  - m_Id: 1998642188926976
+    m_Key: ITEM_DECOY_DUMMY.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1998642243452928
+    m_Key: ITEM_DECOY_DUMMY.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1998642243452929
+    m_Key: ITEM_DECOY_BELL.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1998642243452930
+    m_Key: ITEM_DECOY_BELL.desc
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

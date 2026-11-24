@@ -7047,6 +7047,74 @@ MonoBehaviour:
     m_Key: result.purifier_stopped
     m_Metadata:
       m_Items: []
+  - m_Id: 2010798292746240
+    m_Key: settle.raid_scarecrow
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2010798364049408
+    m_Key: settle.raid_scarecrow_fell
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2010798364049409
+    m_Key: result.craft.done.ACT_CRAFT_SCARECROW
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2010798364049410
+    m_Key: settle.craft_done.ACT_CRAFT_SCARECROW
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2010798364049411
+    m_Key: result.craft.done.ACT_CRAFT_SCARECROW_BELL
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2010798364049412
+    m_Key: settle.craft_done.ACT_CRAFT_SCARECROW_BELL
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2010798364049413
+    m_Key: result.raid_scarecrow
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2010798364049414
+    m_Key: result.raid_scarecrow_fell
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2010798364049415
+    m_Key: prep.carry
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2010798368243712
+    m_Key: prep.carry_hint
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2010798368243713
+    m_Key: exp.info.place
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2010798368243714
+    m_Key: exp.info.decoy
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2010798368243715
+    m_Key: exp.info.decoy_bell
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2010798368243716
+    m_Key: exp.decoy.day_warn
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2010798368243717
+    m_Key: exp.decoy.placed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2010798368243718
+    m_Key: exp.decoy.placed_bell
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2010798368243719
+    m_Key: exp.decoy.down
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

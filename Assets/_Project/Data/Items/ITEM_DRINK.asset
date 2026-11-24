@@ -41,3 +41,9 @@ MonoBehaviour:
     LightExposure: 0
     UseHp: 3
     UseStress: 3
+    Decoy:
+      Delay: 0
+      Interval: 4
+      Radius: 6
+      Seconds: 0
+      Hp: 10
