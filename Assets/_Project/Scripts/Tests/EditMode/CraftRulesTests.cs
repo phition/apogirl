@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using ApoGirl.Core.Definitions;
+using ApoGirl.Core.Effects;
 using ApoGirl.Core.Planning;
 using ApoGirl.Core.Rules;
 using ApoGirl.Core.Simulation;
