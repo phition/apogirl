@@ -367,6 +367,20 @@
   {
    "Key": "player_summer_baton_run_*",
    "Ppu": 72
+  },
+  {
+   "Key": "bag_rucksack",
+   "Pivot": [
+    0.92,
+    0.82
+   ]
+  },
+  {
+   "Key": "bag_frame",
+   "Pivot": [
+    0.92,
+    0.7
+   ]
   }
  ]
 }
