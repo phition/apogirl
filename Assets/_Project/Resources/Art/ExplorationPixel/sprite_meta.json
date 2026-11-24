@@ -227,6 +227,146 @@
   {
    "Key": "player_summer_mop_attack_*",
    "Ppu": 72
+  },
+  {
+   "Key": "player_summer_none_idle_*",
+   "Ppu": 72
+  },
+  {
+   "Key": "player_summer_none_walk_*",
+   "Ppu": 72
+  },
+  {
+   "Key": "player_summer_none_run_*",
+   "Ppu": 72
+  },
+  {
+   "Key": "player_summer_none_crouch_*",
+   "Ppu": 72
+  },
+  {
+   "Key": "player_summer_none_search_*",
+   "Ppu": 72
+  },
+  {
+   "Key": "player_summer_none_hurt_*",
+   "Ppu": 72
+  },
+  {
+   "Key": "player_summer_none_exhausted_*",
+   "Ppu": 72
+  },
+  {
+   "Key": "player_summer_none_shove_*",
+   "Ppu": 72
+  },
+  {
+   "Key": "player_summer_none_hide_*",
+   "Ppu": 72
+  },
+  {
+   "Key": "player_summer_none_doze_*",
+   "Ppu": 72
+  },
+  {
+   "Key": "player_summer_baton_attack_*",
+   "Ppu": 72
+  },
+  {
+   "Key": "player_summer_bat_idle_*",
+   "Ppu": 72
+  },
+  {
+   "Key": "player_summer_bat_walk_*",
+   "Ppu": 72
+  },
+  {
+   "Key": "player_summer_bat_crouch_*",
+   "Ppu": 72
+  },
+  {
+   "Key": "player_summer_bat_hurt_*",
+   "Ppu": 72
+  },
+  {
+   "Key": "player_summer_bat_exhausted_*",
+   "Ppu": 72
+  },
+  {
+   "Key": "player_summer_pipe_idle_*",
+   "Ppu": 72
+  },
+  {
+   "Key": "player_summer_pipe_walk_*",
+   "Ppu": 72
+  },
+  {
+   "Key": "player_summer_pipe_run_*",
+   "Ppu": 72
+  },
+  {
+   "Key": "player_summer_pipe_crouch_*",
+   "Ppu": 72
+  },
+  {
+   "Key": "player_summer_pipe_hurt_*",
+   "Ppu": 72
+  },
+  {
+   "Key": "player_summer_pipe_exhausted_*",
+   "Ppu": 72
+  },
+  {
+   "Key": "player_summer_mop_idle_*",
+   "Ppu": 72
+  },
+  {
+   "Key": "player_summer_mop_walk_*",
+   "Ppu": 72
+  },
+  {
+   "Key": "player_summer_mop_run_*",
+   "Ppu": 72
+  },
+  {
+   "Key": "player_summer_mop_crouch_*",
+   "Ppu": 72
+  },
+  {
+   "Key": "player_summer_mop_hurt_*",
+   "Ppu": 72
+  },
+  {
+   "Key": "player_summer_mop_exhausted_*",
+   "Ppu": 72
+  },
+  {
+   "Key": "player_summer_baton_crouch_*",
+   "Ppu": 72
+  },
+  {
+   "Key": "player_summer_baton_hurt_*",
+   "Ppu": 72
+  },
+  {
+   "Key": "player_summer_baton_exhausted_*",
+   "Ppu": 72
+  },
+  {
+   "Key": "player_summer_bat_run_*",
+   "Ppu": 72
+  },
+  {
+   "Key": "player_summer_baton_idle_*",
+   "Ppu": 72
+  },
+  {
+   "Key": "player_summer_baton_walk_*",
+   "Ppu": 72
+  },
+  {
+   "Key": "player_summer_baton_run_*",
+   "Ppu": 72
   }
  ]
 }
