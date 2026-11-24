@@ -152,5 +152,51 @@ namespace ApoGirl.Core.Definitions
 
         /// <summary>한 주 계획에 하나만 놓이는 묶음 (동아리·방송). 비어 있으면 제한 없음.</summary>
         public string WeeklyGroup => IsClub ? "CLUB" : IsBroadcast ? "BROADCAST" : "";
+
+        /// <summary>제작 레시피 (Docs/CRAFTING_PROPOSAL.md 4.2절). Work가 0이면 제작이 아니다 (Unity 직렬화는 null을 두지 않는다).</summary>
+        public CraftDef Craft = new CraftDef();
+
+        public bool IsCraft => Craft != null && Craft.Work > 0;
+    }
+
+    /// <summary>제작 레시피의 앞 단계 물건 (착수 때 창고에서 뺀다).</summary>
+    [Serializable]
+    public sealed class CraftItemCost
+    {
+        public string ItemId = "";
+        public int Count = 1;
+    }
+
+    /// <summary>
+    /// 제작 레시피 (CraftRules). 낮 칸에서 착수하면 뒤 Work − 1칸이 "제작 중"으로 잠기고, 마지막 칸에서 한 번 판정한다.
+    /// 재료(ResourceCosts·ItemCosts)는 착수 칸에서 낸다.
+    /// </summary>
+    [Serializable]
+    public sealed class CraftDef
+    {
+        /// <summary>설계도의 줄 (WORKBENCH·BAG·WEAPON·ARMOR·LIGHT·WATER·DECOY)과 단계 1~3.</summary>
+        public string Line = "";
+        public int Tier;
+
+        /// <summary>완성까지 칸 수 (1~3). 0이면 제작이 아니다.</summary>
+        public int Work;
+
+        /// <summary>만드는 아이템과 개수 (설비·손질이면 비움).</summary>
+        public string Product = "";
+        public int Count = 1;
+
+        public List<CraftItemCost> ItemCosts = new List<CraftItemCost>();
+
+        /// <summary>완성 때 켜는 설비 깃발 (WORKBENCH 등).</summary>
+        public List<string> SetFlags = new List<string>();
+
+        /// <summary>창고 보관 상한 (만드는 아이템 개수, 0 = 없음).</summary>
+        public int MaxOwned;
+
+        /// <summary>무기 손질: 물건 대신 찬 무기의 내구를 채운다 (BalanceConfig.WeaponMaintainRestore).</summary>
+        public bool MaintainWeapon;
+
+        /// <summary>카드 아래 흐리게 보일 다음 단계 레시피.</summary>
+        public string Next = "";
     }
 }

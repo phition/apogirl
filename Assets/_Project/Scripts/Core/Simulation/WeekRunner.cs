@@ -29,6 +29,9 @@ namespace ApoGirl.Core.Simulation
         /// <summary>방송을 내보낸 칸 (확장 5, 방송이 아니면 null).</summary>
         public BroadcastOutcome Broadcast;
 
+        /// <summary>제작 칸의 결과 (착수·제작 중·완성·실패). 제작 칸이 아니면 null.</summary>
+        public CraftOutcome Craft;
+
         /// <summary>동료 탐험: 이 낮 칸에 나간 동료, 이 밤 칸에 돌아온 동료와 구해 온 것.</summary>
         public List<string> OutingDepartures = new List<string>();
         public List<OutingReturn> OutingReturns = new List<OutingReturn>();
@@ -276,7 +279,16 @@ namespace ApoGirl.Core.Simulation
                 ActionResolver.ResetRoutine(player);
             }
 
-            outcome.Result = ActionResolver.Resolve(_state, action, _db, _random, delta);
+            if (CraftRules.Handles(action, Balance))
+            {
+                // 제작 (Docs/CRAFTING_PROPOSAL.md): 착수 칸에서 재료, 마지막 칸에서 판정
+                outcome.Craft = CraftRules.Execute(_state, _db, action, index, _random, delta);
+                outcome.Result = outcome.Craft.Result;
+            }
+            else
+            {
+                outcome.Result = ActionResolver.Resolve(_state, action, _db, _random, delta);
+            }
 
             // 함께한 시간: 이 방에 서 있던 동료·가르친 선생님의 호감 (역할 재기획 4절)
             outcome.Together = TogetherRules.Apply(_state, _db, action, delta);
@@ -331,13 +343,16 @@ namespace ApoGirl.Core.Simulation
                 outcome.Raid = RaidRules.RollNight(_state, action, Balance, _random, delta, companionGuard, _db);
             }
 
-            // 수학여행처럼 뒤 칸까지 쓰는 행동: 뒤 칸을 정해진 행동으로 잠근다
-            if (action.LockNextSlots > 0 && !string.IsNullOrEmpty(action.LockActionId) && _db.TryGetAction(action.LockActionId, out _))
+            // 수학여행처럼 뒤 칸까지 쓰는 행동: 뒤 칸을 정해진 행동으로 잠근다.
+            // 제작은 뒤 Work − 1칸을 "제작 중"으로 (계획에서 미리 잠갔어도 실행 때 다시 맞춘다). 재료가 없어 착수하지 못했으면 잠그지 않는다.
+            var lockCount = action.IsCraft ? action.Craft.Work - 1 : action.LockNextSlots;
+            var lockId = action.IsCraft ? Balance.CraftContinueActionId : action.LockActionId;
+            if (lockCount > 0 && outcome.Craft?.Step != CraftStep.NoMaterials && !string.IsNullOrEmpty(lockId) && _db.TryGetAction(lockId, out _))
             {
                 var index = CalendarRules.SlotIndex(calendar.Day, calendar.Phase);
-                for (var k = 1; k <= action.LockNextSlots && index + k < WeekPlan.SlotCount; k++)
+                for (var k = 1; k <= lockCount && index + k < WeekPlan.SlotCount; k++)
                 {
-                    PlanPreparer.LockAction(_state.Plan, index + k, action.LockActionId);
+                    PlanPreparer.LockAction(_state.Plan, index + k, lockId);
                 }
             }
 
@@ -595,6 +610,7 @@ namespace ApoGirl.Core.Simulation
 
             var calendar = _state.Calendar;
             var summary = new WeekSummary { Week = calendar.Week, DiaryKey = "" };
+            CraftRules.Abort(_state, _db, summary.Delta);   // 제작은 주를 넘기지 않는다 (끊긴 제작은 실패처럼 돌려준다)
             UpkeepRules.ApplyWeekly(_state, Balance, summary.Delta);
             BondDecayRules.ApplyWeekly(_state, _db, summary.Delta); // 기획 C.5
             var relief = (int)System.Math.Round(SpecialRules.Value(_state, Balance, SpecialKind.WeeklyStressRelief));

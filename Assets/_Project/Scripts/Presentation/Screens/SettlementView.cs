@@ -193,6 +193,15 @@ namespace ApoGirl.Presentation.Screens
                 {
                     lines.Add(when + " " + Loc.T("location." + slot.ExpeditionRequest.LocationId) + " — " + Loc.T("settle.exp_" + slot.Expedition.Status));
                 }
+                else if (slot.Craft != null)
+                {
+                    // 제작: 완성·잘 만듦·실패만 (착수·제작 중 칸은 남기지 않는다)
+                    var craft = CraftUi.SettleLine(slot.Craft);
+                    if (craft != null)
+                    {
+                        lines.Add(when + " " + craft);
+                    }
+                }
                 else if (!string.IsNullOrEmpty(slot.ActionId) && (slot.Result == CheckResult.GreatSuccess || slot.Result == CheckResult.Failure))
                 {
                     lines.Add(when + " " + Loc.Action(slot.ActionId, "short") + " " + UiText.Result(slot.Result));

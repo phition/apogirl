@@ -461,6 +461,22 @@ namespace ApoGirl.Presentation.Screens
 
             card.Add(Line(chance + "  ·  " + Loc.F("palette.cost", preview.FatigueCost, preview.StressCost), "action-info"));
 
+            if (action.IsCraft)
+            {
+                // 제작: 재료·칸 수·못 하는 까닭, 그리고 아직 열리지 않은 다음 단계
+                var craftLine = CraftUi.CardLine(action, preview, _session);
+                if (craftLine.Length > 0)
+                {
+                    card.Add(Line(craftLine, "action-info"));
+                }
+
+                var next = CraftUi.NextLine(action, _session);
+                if (next != null)
+                {
+                    card.Add(Line(next, "action-gains"));
+                }
+            }
+
             var gains = preview.ExpectedGains.Where(g => g.Amount != 0)
                 .Select(g => UiText.Stat(g.Stat) + " " + UiText.Signed(g.Amount)).ToList();
             if (gains.Count > 0)
@@ -668,23 +684,28 @@ namespace ApoGirl.Presentation.Screens
                 Audio.Sound.Play("Sfx/ui_slot_place", Audio.SoundCategory.Ui);
             }
 
-            Report(placed);
+            Report(placed, index);
         }
 
         private void OnClear(int index)
         {
             if (_session.IsPlanning)
             {
-                Report(_session.ClearSlot(index));
+                Report(_session.ClearSlot(index), index);
             }
         }
 
-        private void Report(PlanEditResult result)
+        private void Report(PlanEditResult result, int index)
         {
             switch (result)
             {
                 case PlanEditResult.Locked:
-                    _notify(Loc.T("plan.edit_locked"));
+                    // 제작이 미리 잠근 칸이면 푸는 법을 알려 준다
+                    var craftLocked = _session.HasGame && index < _session.State.Plan.Slots.Count && _session.State.Plan.Slots[index].CraftLocked;
+                    _notify(Loc.T(craftLocked ? "plan.edit_craft_locked" : "plan.edit_locked"));
+                    break;
+                case PlanEditResult.CraftNoRoom:
+                    _notify(Loc.T("plan.edit_craft_no_room"));
                     break;
                 case PlanEditResult.WrongSlot:
                     _notify(Loc.T("plan.edit_wrong_slot"));

@@ -1203,6 +1203,54 @@
       "Image": "icon_cat_craft"
     },
     {
+      "Key": "act.ACT_CRAFT_CONTINUE",
+      "Image": "icon_cat_craft"
+    },
+    {
+      "Key": "act.ACT_CRAFT_WORKBENCH",
+      "Image": "icon_cat_craft"
+    },
+    {
+      "Key": "act.ACT_CRAFT_BAG_SLING",
+      "Image": "item_bag_sling"
+    },
+    {
+      "Key": "act.ACT_CRAFT_BAG_RUCKSACK",
+      "Image": "item_bag_rucksack"
+    },
+    {
+      "Key": "act.ACT_CRAFT_CLUB",
+      "Image": "item_weapon_bat"
+    },
+    {
+      "Key": "act.ACT_CRAFT_CLUB_TAPED",
+      "Image": "item_weapon_rebar"
+    },
+    {
+      "Key": "act.ACT_CRAFT_MAINTAIN",
+      "Image": "item_tool_wrench"
+    },
+    {
+      "Key": "act.ACT_CRAFT_ARMOR_MAGAZINE",
+      "Image": "item_armor_magazine"
+    },
+    {
+      "Key": "act.ACT_CRAFT_ARMOR_MATPAD",
+      "Image": "item_vest_utility"
+    },
+    {
+      "Key": "item.ITEM_WEAPON_CLUB",
+      "Image": "item_weapon_bat"
+    },
+    {
+      "Key": "item.ITEM_WEAPON_CLUB_TAPED",
+      "Image": "item_weapon_rebar"
+    },
+    {
+      "Key": "item.ITEM_ARMOR_MATPAD",
+      "Image": "item_vest_utility"
+    },
+    {
       "Key": "stat.Stamina",
       "Image": "icon_stat_stamina"
     },

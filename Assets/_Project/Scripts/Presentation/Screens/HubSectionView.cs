@@ -1115,8 +1115,7 @@ namespace ApoGirl.Presentation.Screens
             return "player_";
         }
 
-        private static string Token(string itemId, string prefix, string fallback) =>
-            !string.IsNullOrEmpty(itemId) && itemId.StartsWith(prefix, StringComparison.Ordinal) ? itemId.Substring(prefix.Length).ToLowerInvariant() : fallback;
+        private static string Token(string itemId, string prefix, string fallback) => StandingConfig.LookToken(itemId, prefix, fallback);
 
         /// <summary>key0, key1 … 프레임 (없으면 정지 그림 하나, 그것도 없으면 빈 목록).</summary>
         private Texture2D[] Frames(string prefix, string still = null)

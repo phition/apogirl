@@ -9,7 +9,7 @@ namespace ApoGirl.Core.State
     public sealed class GameState
     {
         /// <summary>현재 세이브 포맷 버전. 마이그레이션 시 증가시킨다.</summary>
-        public const int CurrentSaveVersion = 13;
+        public const int CurrentSaveVersion = 14;
 
         public int SaveVersion { get; set; } = CurrentSaveVersion;
         public GameStatus Status { get; set; } = GameStatus.Playing;
@@ -69,6 +69,30 @@ namespace ApoGirl.Core.State
         /// <summary>이번 주 식단 (식량·물 따로, 배분 화면에서 고르고 다음 주에도 남는다). v12에서 추가.</summary>
         public DietLevel FoodDiet { get; set; } = DietLevel.Care;
         public DietLevel WaterDiet { get; set; } = DietLevel.Care;
+
+        /// <summary>진행 중인 제작 (Docs/CRAFTING_PROPOSAL.md C1). 주 안에서만 쓰고 주가 끝나면 늘 비어 있다. v14에서 추가.</summary>
+        public CraftingState Crafting { get; set; } = new CraftingState();
+    }
+
+    /// <summary>제작 상태: 지금 만들고 있는 것 하나 (없으면 null).</summary>
+    public sealed class CraftingState
+    {
+        public CraftJob Active { get; set; }
+    }
+
+    /// <summary>진행 중인 제작 하나. 실패·중단 때 돌려줄 재료를 기억한다.</summary>
+    public sealed class CraftJob
+    {
+        public string RecipeId { get; set; } = "";
+
+        /// <summary>남은 "제작 중" 칸 수 (0이 되는 칸에서 완성 판정).</summary>
+        public int Remaining { get; set; }
+
+        /// <summary>잠긴 밤 칸에서 일했는가 (정전이면 완성 판정 −).</summary>
+        public bool NightWorked { get; set; }
+
+        public Dictionary<ResourceType, int> PaidResources { get; set; } = new Dictionary<ResourceType, int>();
+        public List<ItemStack> PaidItems { get; set; } = new List<ItemStack>();
     }
 
     /// <summary>외부 세력과의 관계.</summary>
@@ -284,6 +308,9 @@ namespace ApoGirl.Core.State
 
         /// <summary>이번 주 날씨 (M6). 주간 정산 때 다음 주 날씨를 굴린다.</summary>
         public WeatherType Weather { get; set; }
+
+        /// <summary>교문 허수아비 남은 내구 (0 = 없음, 제작 P6). v14에서 추가.</summary>
+        public int Scarecrow { get; set; }
     }
 
     public sealed class ItemStack
@@ -331,6 +358,9 @@ namespace ApoGirl.Core.State
 
         /// <summary>플레이어가 바꿀 수 없는 슬롯 (주 경계 이월, 쓰러짐, 수면 부채 4단계).</summary>
         public bool Locked { get; set; }
+
+        /// <summary>앞 칸의 제작 착수로 미리 잠근 "제작 중" 칸 (착수 카드를 빼면 풀린다, CraftRules.Relock).</summary>
+        public bool CraftLocked { get; set; }
     }
 
     /// <summary>탐험 성향 태그 (문서 8.1).</summary>

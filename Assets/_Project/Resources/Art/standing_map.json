@@ -36,7 +36,9 @@
   "Armor": [
     { "Item": "ITEM_ARMOR_GUARD", "Key": "guard" },
     { "Item": "ITEM_ARMOR_PADDING", "Key": "padding" },
-    { "Item": "ITEM_ARMOR_RIOT", "Key": "riot" }
+    { "Item": "ITEM_ARMOR_RIOT", "Key": "riot" },
+    { "Item": "ITEM_ARMOR_MAGAZINE", "Key": "guard" },
+    { "Item": "ITEM_ARMOR_MATPAD", "Key": "padding" }
   ],
   "SeasonOutfit": [
     { "Season": "Summer", "Key": "summer" },
@@ -51,16 +53,28 @@
   "Bags": [
     { "Item": "ITEM_BAG_SCHOOL", "Key": "bag_school" },
     { "Item": "ITEM_BAG_HIKING", "Key": "bag_hiking" },
-    { "Item": "ITEM_BAG_TOTE", "Key": "bag_tote" }
+    { "Item": "ITEM_BAG_TOTE", "Key": "bag_tote" },
+    { "Item": "ITEM_BAG_SLING", "Key": "bag_tote" },
+    { "Item": "ITEM_BAG_RUCKSACK", "Key": "bag_school" }
   ],
   "Weapons": [
     { "Item": "ITEM_WEAPON_MOP", "Key": "mop" },
     { "Item": "ITEM_WEAPON_BAT", "Key": "bat" },
     { "Item": "ITEM_WEAPON_PIPE", "Key": "pipe" },
-    { "Item": "ITEM_WEAPON_BATON", "Key": "baton" }
+    { "Item": "ITEM_WEAPON_BATON", "Key": "baton" },
+    { "Item": "ITEM_WEAPON_CLUB", "Key": "bat" },
+    { "Item": "ITEM_WEAPON_CLUB_TAPED", "Key": "bat" }
   ],
   "Tools": [
     { "Item": "ITEM_TOOL_FLASHLIGHT", "Key": "flashlight" }
+  ],
+  "ItemLooks": [
+    { "Item": "ITEM_WEAPON_CLUB", "Key": "bat" },
+    { "Item": "ITEM_WEAPON_CLUB_TAPED", "Key": "bat" },
+    { "Item": "ITEM_ARMOR_MAGAZINE", "Key": "guard" },
+    { "Item": "ITEM_ARMOR_MATPAD", "Key": "padding" },
+    { "Item": "ITEM_BAG_SLING", "Key": "tote" },
+    { "Item": "ITEM_BAG_RUCKSACK", "Key": "school" }
   ],
   "BagColors": [ "#8a5a36", "#4a6f9e", "#e39ab4", "#b8413b", "#e6c54f", "#6a9356" ],
   "PortraitFallback": [

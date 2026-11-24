@@ -321,9 +321,8 @@ namespace ApoGirl.Exploration.Runtime
         /// <summary>아이템 ID에서 그림 이름 조각을 뽑는다 (ITEM_WEAPON_BAT → bat). 비면 fallback.</summary>
         public static string ItemToken(string itemId, string itemPrefix, string fallback)
         {
-            return !string.IsNullOrEmpty(itemId) && itemId.StartsWith(itemPrefix, StringComparison.Ordinal)
-                ? itemId.Substring(itemPrefix.Length).ToLowerInvariant()
-                : fallback;
+            // 그림을 빌려 쓰는 아이템(제작 C10)은 standing_map.json ItemLooks 표가 먼저다
+            return ApoGirl.Presentation.Screens.StandingConfig.LookToken(itemId, itemPrefix, fallback);
         }
 
         /// <summary>

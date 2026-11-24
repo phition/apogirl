@@ -1,0 +1,75 @@
+{
+  "Actions": [
+    { "Id": "ACT_CRAFT_CONTINUE", "Category": "Craft", "SlotTag": "Both",
+      "Unlock": { "FlagsAll": [ "SYSTEM_ONLY" ] } },
+
+    { "Id": "ACT_CRAFT_WORKBENCH", "Category": "Craft", "SlotTag": "DayOnly", "FatigueCost": 10, "StressCost": 1,
+      "ResourceCosts": [ { "Resource": "Materials", "Amount": 3 } ],
+      "StatGains": [ { "Stat": "Craft", "Amount": 1 } ],
+      "HasProficiency": true, "Proficiency": "Engineering", "ProficiencyXp": 1,
+      "Unlock": { "WeekMin": 2, "FlagsNone": [ "WORKBENCH" ] },
+      "Craft": { "Line": "WORKBENCH", "Tier": 1, "Work": 1, "SetFlags": [ "WORKBENCH" ] } },
+
+    { "Id": "ACT_CRAFT_BAG_SLING", "Category": "Craft", "SlotTag": "DayOnly", "FatigueCost": 6, "StressCost": 1,
+      "ResourceCosts": [ { "Resource": "Materials", "Amount": 2 } ],
+      "StatGains": [ { "Stat": "Craft", "Amount": 1 } ],
+      "HasProficiency": true, "Proficiency": "Survival", "ProficiencyXp": 1,
+      "Unlock": { "FlagsAll": [ "WORKBENCH" ] },
+      "Craft": { "Line": "BAG", "Tier": 1, "Work": 1, "Product": "ITEM_BAG_SLING", "Next": "ACT_CRAFT_BAG_RUCKSACK" } },
+
+    { "Id": "ACT_CRAFT_BAG_RUCKSACK", "Category": "Craft", "SlotTag": "DayOnly", "FatigueCost": 7, "StressCost": 1,
+      "ResourceCosts": [ { "Resource": "Materials", "Amount": 3 } ],
+      "HasCheck": true,
+      "Check": { "BaseRate": 0.6, "StatWeights": [ { "Stat": "Craft", "Weight": 0.005 } ], "UsesProficiency": true, "Proficiency": "Survival", "ProficiencyWeight": 0.06 },
+      "StatGains": [ { "Stat": "Craft", "Amount": 1 } ],
+      "HasProficiency": true, "Proficiency": "Survival", "ProficiencyXp": 1,
+      "Unlock": { "FlagsAll": [ "WORKBENCH", "SEARCHED_HOMEEC" ], "Checks": [ { "Kind": "Proficiency", "Key": "Survival", "Op": "GreaterOrEqual", "Value": 1 } ] },
+      "Craft": { "Line": "BAG", "Tier": 2, "Work": 2, "Product": "ITEM_BAG_RUCKSACK", "ItemCosts": [ { "ItemId": "ITEM_BAG_SCHOOL", "Count": 1 } ] } },
+
+    { "Id": "ACT_CRAFT_CLUB", "Category": "Craft", "SlotTag": "DayOnly", "FatigueCost": 8, "StressCost": 1,
+      "ResourceCosts": [ { "Resource": "Materials", "Amount": 2 } ],
+      "StatGains": [ { "Stat": "Strength", "Amount": 1 }, { "Stat": "Craft", "Amount": 1 } ],
+      "HasProficiency": true, "Proficiency": "Engineering", "ProficiencyXp": 1,
+      "Unlock": { "FlagsAll": [ "WORKBENCH" ] },
+      "Craft": { "Line": "WEAPON", "Tier": 1, "Work": 1, "Product": "ITEM_WEAPON_CLUB", "Next": "ACT_CRAFT_CLUB_TAPED" } },
+
+    { "Id": "ACT_CRAFT_CLUB_TAPED", "Category": "Craft", "SlotTag": "DayOnly", "FatigueCost": 7, "StressCost": 1,
+      "ResourceCosts": [ { "Resource": "Materials", "Amount": 2 } ],
+      "HasCheck": true,
+      "Check": { "BaseRate": 0.6, "StatWeights": [ { "Stat": "Strength", "Weight": 0.004 }, { "Stat": "Craft", "Weight": 0.004 } ], "UsesProficiency": true, "Proficiency": "Engineering", "ProficiencyWeight": 0.07 },
+      "StatGains": [ { "Stat": "Craft", "Amount": 1 } ],
+      "HasProficiency": true, "Proficiency": "Engineering", "ProficiencyXp": 1,
+      "Unlock": { "FlagsAll": [ "WORKBENCH" ], "Checks": [ { "Kind": "Proficiency", "Key": "Engineering", "Op": "GreaterOrEqual", "Value": 1 } ] },
+      "Craft": { "Line": "WEAPON", "Tier": 2, "Work": 2, "Product": "ITEM_WEAPON_CLUB_TAPED", "ItemCosts": [ { "ItemId": "ITEM_WEAPON_CLUB", "Count": 1 } ] } },
+
+    { "Id": "ACT_CRAFT_MAINTAIN", "Category": "Craft", "SlotTag": "DayOnly", "FatigueCost": 4,
+      "ResourceCosts": [ { "Resource": "Materials", "Amount": 1 } ],
+      "StatGains": [ { "Stat": "Craft", "Amount": 1 } ],
+      "Unlock": { "FlagsAll": [ "WORKBENCH" ] },
+      "Craft": { "Line": "WEAPON", "Tier": 0, "Work": 1, "MaintainWeapon": true } },
+
+    { "Id": "ACT_CRAFT_ARMOR_MAGAZINE", "Category": "Craft", "SlotTag": "DayOnly", "FatigueCost": 5,
+      "ResourceCosts": [ { "Resource": "Materials", "Amount": 1 } ],
+      "StatGains": [ { "Stat": "Craft", "Amount": 1 } ],
+      "HasProficiency": true, "Proficiency": "Survival", "ProficiencyXp": 1,
+      "Unlock": { "FlagsAll": [ "WORKBENCH" ] },
+      "Craft": { "Line": "ARMOR", "Tier": 1, "Work": 1, "Product": "ITEM_ARMOR_MAGAZINE", "Next": "ACT_CRAFT_ARMOR_MATPAD" } },
+
+    { "Id": "ACT_CRAFT_ARMOR_MATPAD", "Category": "Craft", "SlotTag": "DayOnly", "FatigueCost": 7, "StressCost": 1,
+      "ResourceCosts": [ { "Resource": "Materials", "Amount": 3 } ],
+      "HasCheck": true,
+      "Check": { "BaseRate": 0.55, "StatWeights": [ { "Stat": "Craft", "Weight": 0.005 } ], "UsesProficiency": true, "Proficiency": "Survival", "ProficiencyWeight": 0.06 },
+      "StatGains": [ { "Stat": "Craft", "Amount": 1 } ],
+      "HasProficiency": true, "Proficiency": "Survival", "ProficiencyXp": 1,
+      "Unlock": { "FlagsAll": [ "WORKBENCH" ], "Checks": [ { "Kind": "Facility", "Key": "GYM", "Op": "GreaterOrEqual", "Value": 1 }, { "Kind": "Proficiency", "Key": "Survival", "Op": "GreaterOrEqual", "Value": 1 } ] },
+      "Craft": { "Line": "ARMOR", "Tier": 2, "Work": 2, "Product": "ITEM_ARMOR_MATPAD", "ItemCosts": [ { "ItemId": "ITEM_ARMOR_MAGAZINE", "Count": 1 } ] } }
+  ],
+  "Items": [
+    { "Id": "ITEM_BAG_SLING", "Width": 1, "Height": 2, "Weight": 0.3, "Value": 2, "Slot": "Backpack", "GridWidth": 3, "GridHeight": 4, "MoveSpeedMultiplier": 1.05, "NoiseMultiplier": 0.9 },
+    { "Id": "ITEM_BAG_RUCKSACK", "Width": 2, "Height": 2, "Weight": 0.8, "Value": 4, "Slot": "Backpack", "GridWidth": 5, "GridHeight": 5, "MoveSpeedMultiplier": 0.98 },
+    { "Id": "ITEM_WEAPON_CLUB", "Height": 3, "Weight": 0.9, "Noise": 0.2, "Value": 2, "Slot": "Weapon", "MaxDurability": 8, "WeaponPower": 1, "AttackNoise": 5, "AttackCooldown": 0.9, "StunSeconds": 1.8 },
+    { "Id": "ITEM_WEAPON_CLUB_TAPED", "Height": 3, "Weight": 1.1, "Noise": 0.2, "Value": 4, "Slot": "Weapon", "MaxDurability": 14, "WeaponPower": 2, "AttackNoise": 5, "AttackCooldown": 1.0, "StunSeconds": 2.0 },
+    { "Id": "ITEM_ARMOR_MAGAZINE", "Width": 2, "Weight": 0.5, "Value": 1, "Slot": "Armor", "DamageReduction": 0.12 },
+    { "Id": "ITEM_ARMOR_MATPAD", "Width": 2, "Height": 2, "Weight": 1.2, "Value": 3, "Slot": "Armor", "DamageReduction": 0.22, "NoiseMultiplier": 1.05, "MoveSpeedMultiplier": 0.97 }
+  ]
+}

@@ -105,6 +105,41 @@ namespace ApoGirl.Tests.EditMode
         }
 
         [Test]
+        public void V13Save_GetsEmptyCrafting()
+        {
+            var state = TestContent.NewGame(_db);
+            var root = JObject.Parse(_serializer.Serialize(state));
+            root["SaveVersion"] = 13;
+            root.Remove("Crafting");
+            ((JObject)root["Base"]).Remove("Scarecrow");
+
+            var loaded = _serializer.Deserialize(root.ToString());
+
+            Assert.AreEqual(GameState.CurrentSaveVersion, loaded.SaveVersion);
+            Assert.IsNotNull(loaded.Crafting);
+            Assert.IsNull(loaded.Crafting.Active);
+            Assert.AreEqual(0, loaded.Base.Scarecrow);
+        }
+
+        [Test]
+        public void CraftJob_RoundTrips()
+        {
+            var state = TestContent.NewGame(_db);
+            state.Crafting.Active = new CraftJob { RecipeId = "ACT_CRAFT_X", Remaining = 2, NightWorked = true };
+            state.Crafting.Active.PaidResources[ResourceType.Materials] = 3;
+            state.Crafting.Active.PaidItems.Add(new ItemStack { ItemId = "ITEM_X", Count = 1, Durability = 4 });
+            state.Plan.Slots[1].CraftLocked = true;
+
+            var loaded = _serializer.Deserialize(_serializer.Serialize(state));
+
+            Assert.AreEqual(2, loaded.Crafting.Active.Remaining);
+            Assert.IsTrue(loaded.Crafting.Active.NightWorked);
+            Assert.AreEqual(3, loaded.Crafting.Active.PaidResources[ResourceType.Materials]);
+            Assert.AreEqual(4, loaded.Crafting.Active.PaidItems[0].Durability);
+            Assert.IsTrue(loaded.Plan.Slots[1].CraftLocked);
+        }
+
+        [Test]
         public void LoadedGame_ContinuesIdentically()
         {
             var uninterrupted = TestContent.NewGame(_db, 777);

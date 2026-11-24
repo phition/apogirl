@@ -128,6 +128,12 @@ namespace ApoGirl.Presentation.Screens
         public ItemKey[] Weapons = Array.Empty<ItemKey>();
         public ItemKey[] Tools = Array.Empty<ItemKey>();
 
+        /// <summary>
+        /// 그림을 빌려 쓰는 아이템 (제작 C10): 아이템 ID → 그림 이름 조각 (ITEM_WEAPON_CLUB → bat).
+        /// 탐험·단면도 주인공 그림의 옷·무기·가방 토큰이 이 표를 먼저 본다 (LookToken).
+        /// </summary>
+        public ItemKey[] ItemLooks = Array.Empty<ItemKey>();
+
         /// <summary>가방 색 (탐험 그림과 같은 순서: 갈색·파랑·분홍·빨강·노랑·초록). 판의 시드로 하나를 고른다.</summary>
         public string[] BagColors = Array.Empty<string>();
 
@@ -151,14 +157,33 @@ namespace ApoGirl.Presentation.Screens
         /// <summary>주인공 픽셀 그림의 옷 이름: 방어구가 있으면 그것, 없으면 계절 교복, 그것도 없으면 uniform (동복).</summary>
         public static string PlayerOutfitToken(string armorId, int week)
         {
-            const string prefix = "ITEM_ARMOR_";
-            if (!string.IsNullOrEmpty(armorId) && armorId.StartsWith(prefix, StringComparison.Ordinal))
+            var token = LookToken(armorId, "ITEM_ARMOR_", "");
+            if (token != "")
             {
-                return armorId.Substring(prefix.Length).ToLowerInvariant();
+                return token;
             }
 
             var key = Load().SeasonOutfitKey(week);
             return key != "" ? key : "uniform";
+        }
+
+        /// <summary>
+        /// 아이템 ID에서 그림 이름 조각: ItemLooks 표에 있으면 그것(빌린 그림), 없으면 접두어를 뗀 이름
+        /// (ITEM_WEAPON_BAT → bat). 접두어가 맞지 않거나 비면 fallback.
+        /// </summary>
+        public static string LookToken(string itemId, string itemPrefix, string fallback)
+        {
+            if (string.IsNullOrEmpty(itemId))
+            {
+                return fallback;
+            }
+
+            foreach (var entry in Load().ItemLooks)
+            {
+                if (entry.Item == itemId) return entry.Key;
+            }
+
+            return itemId.StartsWith(itemPrefix, StringComparison.Ordinal) ? itemId.Substring(itemPrefix.Length).ToLowerInvariant() : fallback;
         }
 
         /// <summary>전신 그림과 지금 표정에 맞는 영상 묶음 (없으면 null: 눈 깜빡임·시선만).</summary>

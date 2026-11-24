@@ -30,6 +30,10 @@ namespace ApoGirl.Core.Planning
         public bool IsExpedition;
         public ExpeditionTime ExpeditionTime;
         public string LocationId = "";
+
+        /// <summary>제작 레시피: 완성까지 칸 수 (제작이 아니면 0)와 지금 착수할 수 없는 까닭.</summary>
+        public int CraftWork;
+        public CraftBlock CraftBlock;
     }
 
     public static class ActionPreviewer
@@ -70,6 +74,14 @@ namespace ApoGirl.Core.Planning
                 var chance = CheckResolver.ComputeChance(state, action.Check, balance, fatigue, stress) + TraitRules.Sum(state, db, TraitModifierKind.CheckBonus, key);
                 preview.SuccessChance = Math.Min(Math.Max(chance, balance.CheckMinChance), balance.CheckMaxChance);
                 preview.GreatSuccessChance = preview.SuccessChance * (balance.GreatSuccessRatio + TraitRules.Sum(state, db, TraitModifierKind.GreatSuccessBonus));
+            }
+
+            if (action.IsCraft)
+            {
+                // 제작: 앞 단계 물건·보관 상한·손질할 무기까지 본다
+                preview.CraftWork = action.Craft.Work;
+                preview.CraftBlock = CraftRules.CheckStart(state, db, action);
+                preview.Affordable &= preview.CraftBlock == CraftBlock.None;
             }
 
             if (!preview.Affordable)

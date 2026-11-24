@@ -26,6 +26,9 @@ namespace ApoGirl.Core.Planning
 
         /// <summary>한 주에 한 번만 둘 수 있는 행동 (동아리, 확장 7).</summary>
         WeeklyLimit,
+
+        /// <summary>여러 칸 제작의 뒤 칸이 주 끝을 넘거나 이미 잠긴 칸이다 (제작 C1).</summary>
+        CraftNoRoom,
     }
 
     /// <summary>주간 계획 편집 (문서 4.3 플래너 UX). 편집 후 강제 휴식 표시를 다시 계산한다.</summary>
@@ -115,7 +118,13 @@ namespace ApoGirl.Core.Planning
                 return PlanEditResult.WeeklyLimit;
             }
 
+            if (!CraftRules.FitsPlan(state, action, slotIndex))
+            {
+                return PlanEditResult.CraftNoRoom;
+            }
+
             state.Plan.Slots[slotIndex].ActionId = actionId;
+            CraftRules.Relock(state, db);
             PlanPreparer.ApplyForcedRest(state, db);
             return PlanEditResult.Ok;
         }
@@ -129,6 +138,7 @@ namespace ApoGirl.Core.Planning
             }
 
             state.Plan.Slots[slotIndex].ActionId = "";
+            CraftRules.Relock(state, db);
             PlanPreparer.ApplyForcedRest(state, db);
             return PlanEditResult.Ok;
         }
@@ -212,6 +222,7 @@ namespace ApoGirl.Core.Planning
         private static void ApplyActionIds(GameState state, IDefinitionDatabase db, IList<string> ids)
         {
             var slots = state.Plan.Slots;
+            CraftRules.ReleaseLocks(state.Plan);
             for (var i = 0; i < slots.Count; i++)
             {
                 if (slots[i].Locked)
@@ -224,6 +235,7 @@ namespace ApoGirl.Core.Planning
                 slots[i].ActionId = valid ? id : "";
             }
 
+            CraftRules.Relock(state, db);
             PlanPreparer.ApplyForcedRest(state, db);
         }
 

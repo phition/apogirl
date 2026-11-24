@@ -565,6 +565,28 @@ namespace ApoGirl.Core.Definitions
         /// <summary>가방 칸이 기준보다 많은(적은) 칸마다 헤드리스 자원 수확에 더하는(빼는) 비율.</summary>
         public float HeadlessBagYieldPerCell = 0.012f;
 
+        // ── 제작 (Docs/CRAFTING_PROPOSAL.md) ──
+
+        /// <summary>여러 칸 제작의 뒤 칸을 잠그는 공용 행동 ("제작 중").</summary>
+        public string CraftContinueActionId = "ACT_CRAFT_CONTINUE";
+
+        /// <summary>"제작 중" 칸 하나의 피로·스트레스.</summary>
+        public int CraftContinueFatigue = 7;
+        public int CraftContinueStress = 1;
+
+        /// <summary>완성 판정에 실패하면 돌려받는 자원 재료 비율 (내림). 앞 단계 물건은 모두 돌려받는다.</summary>
+        public float CraftFailRefund = 0.5f;
+
+        /// <summary>완성 판정이 대성공이면: 무기 내구 배율, 무기가 아닌 물건은 돌려받는 자재.</summary>
+        public float CraftFineDurability = 1.25f;
+        public int CraftFineRefund = 1;
+
+        /// <summary>정전(발전기 고장) 중에 잠긴 밤 칸에서 일한 제작의 완성 판정 −.</summary>
+        public float BlackoutCraftPenalty = 0.10f;
+
+        /// <summary>무기 손질: 최대 내구의 이 비율만큼 채운다 (상한 = 최대치).</summary>
+        public float WeaponMaintainRestore = 0.5f;
+
         // ── 방과후 동아리 (확장 7) ──
 
         /// <summary>동아리를 같이 한 사람의 호감.</summary>

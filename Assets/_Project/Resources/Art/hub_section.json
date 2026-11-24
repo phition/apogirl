@@ -85,7 +85,13 @@
       ],
       "Actions": [
         "ACT_SURV_MAKE_CRUTCH",
-        "ACT_SURV_MAKE_PROSTHETIC"
+        "ACT_SURV_MAKE_PROSTHETIC",
+        "ACT_CRAFT_WORKBENCH",
+        "ACT_CRAFT_CLUB",
+        "ACT_CRAFT_CLUB_TAPED",
+        "ACT_CRAFT_MAINTAIN",
+        "ACT_CRAFT_ARMOR_MAGAZINE",
+        "ACT_CRAFT_BAG_SLING"
       ]
     },
     {
@@ -293,7 +299,8 @@
         }
       ],
       "Actions": [
-        "ACT_EDU_COOKING"
+        "ACT_EDU_COOKING",
+        "ACT_CRAFT_BAG_RUCKSACK"
       ],
       "Art": "Story/Backgrounds/bg_homeec"
     },
@@ -410,7 +417,8 @@
       ],
       "Actions": [
         "ACT_EDU_SELFDEFENSE",
-        "ACT_CLUB_SPORTS"
+        "ACT_CLUB_SPORTS",
+        "ACT_CRAFT_ARMOR_MATPAD"
       ]
     },
     {

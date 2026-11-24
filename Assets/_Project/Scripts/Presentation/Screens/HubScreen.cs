@@ -1114,7 +1114,9 @@ namespace ApoGirl.Presentation.Screens
             }
 
             var deltas = UiText.DeltaLines(outcome.Delta);
-            var detail = UiText.Result(outcome.Result) + (deltas.Count > 0 ? "  " + string.Join("  ", deltas.Take(3)) : "");
+            // 제작 칸은 판정 결과 대신 제작 단계(착수·제작 중·완성…)를 보인다
+            var craft = CraftUi.TickerLine(outcome.Craft);
+            var detail = (craft.Length > 0 ? craft : UiText.Result(outcome.Result)) + (deltas.Count > 0 ? "  " + string.Join("  ", deltas.Take(3)) : "");
             var together = PeopleUi.TogetherLine(outcome.Together);
             if (together.Length > 0)
             {

@@ -23,6 +23,7 @@ namespace ApoGirl.Systems.Save
                 yield return new V10ToV11();
                 yield return new V11ToV12();
                 yield return new V12ToV13();
+                yield return new V13ToV14();
             }
         }
 
@@ -258,6 +259,28 @@ namespace ApoGirl.Systems.Save
                 foreach (var slot in slots.OfType<JObject>())
                 {
                     if (slot.Value<string>("ActionId") == Removed) slot["ActionId"] = Replacement;
+                }
+            }
+        }
+
+        /// <summary>
+        /// v14: 제작 (Docs/CRAFTING_PROPOSAL.md 4.4절). 진행 중인 제작 Crafting(빈 값)과 교문 허수아비 Base.Scarecrow(0)를 넣는다.
+        /// 계획 칸의 CraftLocked는 없으면 false라 따로 넣지 않는다.
+        /// </summary>
+        private sealed class V13ToV14 : ISaveMigration
+        {
+            public int FromVersion => 13;
+
+            public void Migrate(JObject root)
+            {
+                if (root["Crafting"] == null)
+                {
+                    root["Crafting"] = new JObject();
+                }
+
+                if (root["Base"] is JObject baseState && baseState["Scarecrow"] == null)
+                {
+                    baseState["Scarecrow"] = 0;
                 }
             }
         }
