@@ -41,6 +41,7 @@
 | 4.2 | `evt_mind_*`, `evt_favorite_found` | 프롤로그의 메아리 (마음 상태 흐름) | P2 | 9 |
 | 4.3 | `evt_talk_{02~11}`, `evt_a{1~3}_review` | 윤 선생님 대화·막 평가 | P3 | 12 |
 | 4.4 | `evt_rnd_*` | 일상 무작위 이벤트 | P3 | 17 |
+| 4.5 | `evt_cal_chobok`, `evt_a2_plan_next` (다시) | 초복 삼계탕·평면도 — 인물이 달라 윤 선생님·도현만으로 다시 | **P1** | 2 |
 
 **먼저 받을 것**: 1장에서 ★ 표시한 11장. 동료가 좋아하는 활동 짝 6장, 도현 짝 3장, 혼자 2장이다. 그다음 2장과 3장을 받는다.
 
@@ -364,6 +365,24 @@ Night inside an abandoned Korean high school, windows blacked out with cardboard
 | `evt_rnd_a4_snow.png` | `EVT_RND_A4_SNOW` | `Dawn after an overnight snowfall, the whole schoolyard covered in untouched white snow, not a single footprint, seen from a second-floor classroom window, snow piled on the window frame. [겨울]` |
 | `evt_rnd_a4_pipe.png` | `EVT_RND_A4_PIPE` | `The school cafeteria kitchen in deep winter, a frozen water pipe burst along the wall with icicles hanging from it, the floor turned into a sheet of ice, old duct tape wrapped around the pipe nearby. No people. [겨울]` |
 
+### 4.5 인물이 다르게 나온 컷 다시 그리기 (2장, P1)
+
+8차 1.4·1.5에서 받은 두 컷도 프롬프트에 인물 문구가 없었다. 그래서 생김새가 설정과 다른 학생 여럿이 나왔다. 이번에는 **윤 선생님과 도현 두 사람만** 나오게 받는다(사용자 결정 2026-11-24). 서진은 그리지 않는다.
+
+- 참고 이미지: `char_teacher_sheet.png`, `char_dohyeon_sheet.png` (2장)
+- 프롬프트 = `[F-ILLU]` + `[일관성]` + 아래 장면 + `[여름]` + `[안전]`
+- 둘 다 2막 여름이다. 윤 선생님 다리는 **목발 뒤** 문구를 쓴다. 도현은 여름이라 트랙 재킷 지퍼를 열고 소매를 걷은 차림으로 둔다(색과 모양은 시트 그대로).
+- 넣는 곳: `ArtInbox/illustrations/events12/`. 같은 이름의 지금 그림(`Story/Events/*.jpg`)을 덮어쓰고, 옛 그림은 백업으로 옮긴다. `art_map.json`은 그대로다.
+
+**문구** (자리 표시 `{TEACHER}`·`{DOHYEON}`):
+- `{TEACHER}` = `Mr. Yoon, a Korean male teacher in his mid-40s with thin glasses and a grey cardigan over a white shirt, leaning on a homemade crutch made from a mop handle and tape, his left trouser leg folded and pinned below the knee`
+- `{DOHYEON}` = `Dohyeon, a thin 15-year-old Korean boy with short messy black hair, a small adhesive bandage on his forehead, an oversized dark green track jacket with white stripes down the sleeves worn open with the sleeves pushed up, white T-shirt, faded blue jeans`
+
+| 파일 | 이벤트 | 대본 | 장면 (영어) |
+|---|---|---|---|
+| `evt_cal_chobok.png` | `EVT_CAL_CHOBOK` 초복 | `Act2Expansion.yarn`: 닭가슴살 통조림 하나로 끓인 '삼계탕', "이게 무슨 삼계탕이야. …맛있네." | `Summer evening in the classroom shelter, only two people at a pair of desks pushed together: {TEACHER} sits with his crutch leaning against the desk, holding a bowl of milky rice soup and laughing in spite of himself, sweat on his forehead; {DOHYEON} sits across from him blowing on a spoonful, cheeks flushed from the heat. Between them a dented pot of soup made from one can of chicken breast steams on a small camping stove, an empty can beside it, mismatched bowls and spoons. Warm sunset light through the window, cicada-season trees outside. Only these two characters appear.` |
+| `evt_a2_plan_next.png` | `EVT_A2_PLAN_NEXT` 평면도 "그 문은 우리가 다시 열 필요 없어" | `Act2Main.yarn`: 밤, 선생님이 평면도에 급식실·도서관·체육관 동그라미, 체육관 창고 앞에서 펜을 멈춤 | `Night in the classroom shelter, only two people at a desk lit by a flashlight lying on its side: {TEACHER} sits bent over a hand-drawn school floor plan on a large sheet of paper, three rooms circled in pencil; his pen has stopped just above one small room at the edge of the gymnasium that is left uncircled, and his face is quiet and serious. {DOHYEON} leans on the desk beside him with his chin on his folded arms, looking at the plan, then up at the teacher. The crutch leans against the desk. Dark windows, moonlight. Only these two characters appear; no text on the plan.` |
+
 **있는 그림을 쓰는 것** (새로 받지 않는다):
 
 | 이벤트 | 쓸 그림 | 까닭 |
@@ -385,7 +404,7 @@ Night inside an abandoned Korean high school, windows blacked out with cardboard
 
 ## 6. 받는 차례 (추천)
 
-1. 1장 ★ 11장: 좋아하는 짝 6, 도현 짝 3, 혼자 2. 받으면 깃발별 그림 고르기 코드와 함께 바로 잇는다.
+1. 1장 ★ 11장: 좋아하는 짝 6, 도현 짝 3, 혼자 2. 받으면 깃발별 그림 고르기 코드와 함께 바로 잇는다. 4.5의 다시 그리기 2장도 이때 같이 받는다(덮어쓰기만 하면 된다).
 2. 3.2~3.5 시트 5장: 고양이 대기·걷기, 도현, 선배, 유랑자. 단면도에 바로 보인다.
 3. 2장 개인 장면 6장 → 1장의 나머지 17장.
 4. 4.1 위기 이탈 → 4.2 마음 상태 → 4.3 → 4.4 → 3.6 걷기.
