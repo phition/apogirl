@@ -1,7 +1,7 @@
 # PixelLab 24프레임 주인공 스프라이트 다시 받기 — 정리 (2026-11-24)
 
 PixelLab에 보내기 전에 요청 내용을 정리한 문서다. 아직 아무것도 생성하지 않았다.
-결정이 필요한 항목은 7장에 모았다. 정해지면 1단계 시범 생성부터 한다.
+결정이 필요한 항목은 7장에 모았다(C1~C8). 정해지면 1단계 시범 생성부터 한다.
 
 ## 0. 버전 이름 (GIF 비교 `Docs/anim_versions/`)
 
@@ -42,7 +42,53 @@ PixelLab에 보내기 전에 요청 내용을 정리한 문서다. 아직 아무
 
 - 맨손은 태그 없이 밀치기 `shove`(3차 20장)를 쓴다.
 - 경찰봉을 어느 태그에 둘지는 7장 C3에서 정한다.
-- **주의:** 3차의 방망이·파이프·경찰봉 공격은 같은 지시문(머리 위 들기 → 가속 내려치기 → 허리춤 마무리)으로 만들어 동작이 거의 같다. 휘두르기와 내려치기를 확실히 나누려면 휘두르기를 옆으로 휘두르는 동작으로 바꿔야 한다(7장 C2).
+- 3차 방망이·파이프·경찰봉 공격은 같은 지시문으로 만들었다. 그래도 사용자가 고른 두 시트(아래 2.1)는 궤적이 달라 두 태그의 기준으로 쓴다. 두 동작이 섞이지 않게 2.2의 지시문으로 나눈다.
+
+### 2.1 두 기준 시트의 차이 (사용자 제공 8장, 2026-11-24)
+
+| | 내려치기 `smash` (하복 · 쇠파이프) | 휘두르기 `swing` (진압복 · 몽둥이·방망이) |
+|---|---|---|
+| 준비 | **두 손을 머리 위로** 올리고 무기는 머리 뒤로 넘겨 끝이 등 쪽 아래를 향한다. 팔꿈치가 머리보다 높다 | **무기를 어깨 높이에서 뒤로** 비스듬히(약 45° 위) 겨눈 타자 자세. 손은 어깨 앞, 머리보다 낮다 |
+| 궤적 | 머리 위를 지나 **몸 앞으로 곧게 위→아래**로 떨어진다(세로 반원). 무기가 몸 가운데 선을 따라 내려온다 | 뒤 위에서 **몸 옆을 지나 앞 아래로 비스듬히 쓸어내린다**(사선 반원). 허리와 어깨가 돌며 무기가 몸 옆을 지난다 |
+| 맞는 순간 | 무기가 앞쪽 허리~무릎 높이에서 거의 수평, 상체를 앞으로 숙인다 | 무기가 앞쪽 무릎~정강이 높이를 지난다. 뒷다리를 길게 뻗고 앞으로 크게 내딛는다 |
+| 마무리 | 무기를 앞으로 길게 뻗고 멈춤 | 무기가 앞 아래로 낮게 뻗은 채 몸이 따라 나간다 |
+| 무게 | 처음부터 다리를 넓게 벌리고 거의 움직이지 않는다 — 팔과 상체로 찍는다 | 뒷발에서 앞발로 크게 옮겨 간다 — 몸 전체로 휘두른다 |
+
+### 2.2 태그별 동작 지시문 (영문, 4.3 공통 지시문 뒤에 붙인다)
+
+```
+[smash] An overhead two-handed smash. Ready pose: both hands raised above her head, elbows higher than her head,
+the weapon held behind her head pointing down her back. The weapon travels straight over the top of her head
+and down in front of her body in a vertical arc along her centre line, never to the side. At the moment of impact
+the weapon is level at waist-to-knee height in front of her and her upper body bends forward. Feet stay planted
+wide apart the whole time; only the arms and upper body move. Finish holding the weapon low in front of her,
+its tip pointing down toward the floor.
+
+[swing] A two-handed diagonal side swing like a baseball batter. Ready pose: the weapon cocked back at shoulder
+height, angled about 45 degrees up behind her, hands in front of her shoulder and lower than her head. She steps
+forward with the front foot and turns her hips and shoulders, sweeping the weapon in one diagonal arc past the side
+of her body from high behind to low in front. At the moment of impact the weapon passes knee-to-shin height in
+front of her, the back leg stretched long. Finish with the weapon extended low in front, body following through.
+Never raise the weapon above her head.
+
+[thrust] A two-handed spear thrust with a long pole held level at waist height: pull back, then drive it straight
+forward and return. The pole stays horizontal and never swings up or down.
+```
+
+- 끝 자세가 두 태그 모두 "앞으로 뻗음"이면 찌르기와 헷갈린다. 그래서 **내려치기는 끝이 바닥을 향하게** 한다. 기준 시트는 앞으로 뻗고 끝나서 이 부분만 바꾼다(7장 C7).
+
+### 2.3 두 기준 시트에서 본 문제 (새로 받을 때 막을 것)
+
+| 문제 | 어디 | 막는 법 |
+|---|---|---|
+| **무기가 휘어짐·길이가 바뀜** | 내려치기 4·5번 칸 파이프가 활처럼 휘고, 1·2번 칸 끝이 갈고리처럼 꺾임 | 지시문 "a straight rigid pipe that never bends, same length in every frame" + 점검: 무기 길이 ±8% |
+| **잔 점·먼지·그림자** | 내려치기 4번 칸 흰 점, 휘두르기 3번 칸 흰 점, 3·4번 칸 회색 먼지 덩어리 | 지시문 "no dust, no ground shadow, no specks" + 넣을 때 몸과 떨어진 작은 덩어리 자동 지우기 |
+| **머리 모양이 바뀜** | 휘두르기 3~6번 칸에만 뒤로 묶은 머리(꽁지)가 생겼다 사라짐 | 지시문 "the same short bob hair in every frame, no ponytail" + 기준 그림을 매 호출 시작 프레임으로 |
+| **소품이 생김** | 휘두르기 2번 칸부터 허리에 갈색 주머니가 보임 (1번 칸엔 없음) | 지시문 "no pouch, no belt bag" (가방은 게임이 따로 얹는다) |
+| **시작이 대기 자세와 이어지지 않음** | 두 시트 모두 1번 칸이 이미 준비 자세(다리 벌림) — 대기에서 넘어갈 때 툭 튄다 | 24장의 앞 3장을 "대기 → 준비" 들어가기로 쓰거나, 게임에서 대기→1번 칸을 짧게 섞기 (7장 C8) |
+| **몸이 앞으로 미끄러짐** | 휘두르기는 몸통이 칸마다 앞으로 이동(내딛기) | 11차처럼 몸통 길을 정해 옮겨 맞춤(앞으로 4px 안팎까지만) |
+| **사이가 크게 빔** | 휘두르기 2→3번 칸, 내려치기 3→4번 칸에서 무기가 한 번에 크게 움직임 | 24장으로 늘릴 때 이 구간에 사이 프레임을 더 몰아 준다 |
+| **얼굴이 가려짐** | 내려치기 1·2번 칸 팔에 얼굴이 가려지고 머리가 뒤로 돌아 보임 | 지시문 "her face stays visible in profile" |
 - 데이터: 아이템 정의에 `AttackTag`(swing·thrust·smash)를 둔다. 탐험 그림은 무기 ID가 아니라 태그로 공격 시트를 찾는다. `exploration_art.json` `Combat.ImpactAt`도 태그별로 바꾼다.
   - 새 무기는 태그 하나와 무기 그림만 정하면 된다.
   - 무기가 모양까지 다르면 그 무기만 시트를 새로 받는다.
@@ -123,11 +169,13 @@ feet on the same floor line, exactly one character, no backpack, no motion blur,
 | | 항목 | 선택지 | 추천 |
 |---|---|---|---|
 | C1 | 해상도 | ① 2배 192×156 (PPU 72) ② 1.5배 144×120 (PPU 54) ③ 128×104 (PPU 48) | **① 2배.** 정수배라 3차 키프레임을 깨끗하게 옮길 수 있다. v3는 12장씩 두 번(한 번 6 generations)이면 된다. ②는 비율이 정수가 아니라 확대한 키프레임이 뭉개진다 |
-| C2 | 휘두르기 ↔ 내려치기 구분 | ① 휘두르기를 가슴 높이 **옆으로 휘두르기**로 새로 잡는다(3차 방망이의 자세·박자를 쓰되 궤적만 옆으로) ② 3차 그대로 두 동작 모두 머리 위 내려치기(무기만 다름) | **①.** 태그를 나누는 의미가 생긴다. 맞는 순간과 이펙트도 다르게 할 수 있다 |
+| C2 | 휘두르기 ↔ 내려치기 구분 | **정해짐 (사용자, 2026-11-24):** 2.1의 두 기준 시트 — 내려치기는 머리 위에서 세로로, 휘두르기는 어깨 높이에서 사선으로 | — |
 | C3 | 경찰봉의 태그 | ① 휘두르기 ② 내려치기 | ① 휘두르기 (짧고 가벼운 무기) |
 | C4 | 옷 6벌 일관성 | ① 하복으로 만들고 `transfer-outfit-v2`로 옮기기 ② 옷마다 따로 생성 | **①.** 체형·크기·다리 박자가 저절로 같아진다. 견적을 먼저 보고, 비싸면 ② |
 | C5 | 무기별 시트 수 | ① 이동 동작(대기·걷기·달리기·웅크림·다침·지침)도 무기마다 받기 ② 이동 동작은 태그별 쥔 자세 3종만 받고, 무기 그림은 손 자리에 붙이기 | ②가 시트 수를 약 40% 줄이고 새 무기를 더하기 쉽다. 다만 붙이는 코드가 필요하다. 1단계 시범에서 둘 다 보고 고르자 |
 | C6 | 크레딧 | 228시트 × 약 12~16 generations(다시 받기 포함)면 약 2,700~3,600으로, Tier 1 한 달(2,000)을 넘는다 | 1단계 시범(하복 6시트 안팎, 약 100 generations) → 결과를 보고 2단계 범위를 정한다 |
+| C7 | 내려치기 끝 자세 | ① 무기 끝이 바닥을 향함(찌르기와 구분) ② 기준 시트처럼 앞으로 뻗음 | ① |
+| C8 | 대기 → 공격 이어짐 | ① 24장 중 앞 3장을 들어가기 동작으로 ② 그림은 준비 자세부터, 게임이 0.1초 섞기 | ① (그림만으로 해결, 코드 없음) |
 
 ## 8. 단계
 
