@@ -6995,6 +6995,26 @@ MonoBehaviour:
     m_Key: exp.slot.Tool2
     m_Metadata:
       m_Items: []
+  - m_Id: 2000877404831744
+    m_Key: result.craft.done.ACT_CRAFT_WORKBENCH_2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2000877476134912
+    m_Key: settle.craft_done.ACT_CRAFT_WORKBENCH_2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2000877476134913
+    m_Key: result.craft.done.ACT_CRAFT_FLASHLIGHT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2000877476134914
+    m_Key: settle.craft_done.ACT_CRAFT_FLASHLIGHT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2000877476134915
+    m_Key: tool.far_light
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

@@ -16,7 +16,7 @@ MonoBehaviour:
   _definition:
     Id: ACT_CRAFT_CLUB_TAPED
     Category: 5
-    SlotTag: 1
+    SlotTag: 0
     ResourceCosts:
     - Resource: 5
       Amount: 2
@@ -183,4 +183,4 @@ MonoBehaviour:
       SetFlags: []
       MaxOwned: 0
       MaintainWeapon: 0
-      Next: 
+      Next: ACT_CRAFT_CLUB_REBAR

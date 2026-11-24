@@ -731,6 +731,62 @@ MonoBehaviour:
     m_Key: ACT_CRAFT_ARMOR_MATPAD.short
     m_Metadata:
       m_Items: []
+  - m_Id: 2000875748081664
+    m_Key: ACT_CRAFT_WORKBENCH_2.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2000875802607616
+    m_Key: ACT_CRAFT_WORKBENCH_2.short
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2000875802607617
+    m_Key: ACT_CRAFT_BAG_FRAME.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2000875802607618
+    m_Key: ACT_CRAFT_BAG_FRAME.short
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2000875802607619
+    m_Key: ACT_CRAFT_CLUB_REBAR.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2000875802607620
+    m_Key: ACT_CRAFT_CLUB_REBAR.short
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2000875802607621
+    m_Key: ACT_CRAFT_ARMOR_PLATED.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2000875802607622
+    m_Key: ACT_CRAFT_ARMOR_PLATED.short
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2000875802607623
+    m_Key: ACT_CRAFT_FLASHLIGHT.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2000875802607624
+    m_Key: ACT_CRAFT_FLASHLIGHT.short
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2000875802607625
+    m_Key: ACT_CRAFT_HEADLAMP.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2000875802607626
+    m_Key: ACT_CRAFT_HEADLAMP.short
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2000875802607627
+    m_Key: ACT_CRAFT_MULTITOOL.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2000875802607628
+    m_Key: ACT_CRAFT_MULTITOOL.short
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

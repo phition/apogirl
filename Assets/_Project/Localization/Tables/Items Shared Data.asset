@@ -527,6 +527,46 @@ MonoBehaviour:
     m_Key: ITEM_ARMOR_MATPAD.desc
     m_Metadata:
       m_Items: []
+  - m_Id: 1988721292623872
+    m_Key: ITEM_BAG_FRAME.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1988721351344128
+    m_Key: ITEM_BAG_FRAME.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1988721351344129
+    m_Key: ITEM_WEAPON_CLUB_REBAR.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1988721351344130
+    m_Key: ITEM_WEAPON_CLUB_REBAR.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1988721351344131
+    m_Key: ITEM_ARMOR_PLATED.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1988721351344132
+    m_Key: ITEM_ARMOR_PLATED.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1988721351344133
+    m_Key: ITEM_TOOL_HEADLAMP.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1988721351344134
+    m_Key: ITEM_TOOL_HEADLAMP.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1988721351344135
+    m_Key: ITEM_TOOL_MULTITOOL.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1988721351344136
+    m_Key: ITEM_TOOL_MULTITOOL.desc
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

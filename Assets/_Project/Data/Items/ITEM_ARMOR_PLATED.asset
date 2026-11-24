@@ -1,0 +1,41 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2683b83f34fcbbf4199305332182db85, type: 3}
+  m_Name: ITEM_ARMOR_PLATED
+  m_EditorClassIdentifier: ApoGirl.Data::ApoGirl.Data.ItemDefinitionAsset
+  _id: ITEM_ARMOR_PLATED
+  _definition:
+    Id: ITEM_ARMOR_PLATED
+    Width: 2
+    Height: 2
+    Weight: 2.2
+    Noise: 0.1
+    Value: 6
+    Grade: 0
+    MaxDurability: 0
+    ResourceYield: []
+    Slot: 4
+    GridWidth: 0
+    GridHeight: 0
+    MoveSpeedMultiplier: 0.93
+    NoiseMultiplier: 1.15
+    WeaponPower: 0
+    AttackNoise: 6
+    AttackCooldown: 1
+    StunSeconds: 1.5
+    DamageReduction: 0.35
+    Tool: 0
+    ExtraTools: 
+    LightRange: 1
+    LightExposure: 0
+    UseHp: 0
+    UseStress: 0

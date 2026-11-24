@@ -16,7 +16,7 @@ MonoBehaviour:
   _definition:
     Id: ACT_SURV_ALARM
     Category: 5
-    SlotTag: 1
+    SlotTag: 0
     ResourceCosts:
     - Resource: 5
       Amount: 1

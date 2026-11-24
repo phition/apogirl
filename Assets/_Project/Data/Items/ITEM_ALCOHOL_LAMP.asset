@@ -36,5 +36,8 @@ MonoBehaviour:
     StunSeconds: 1.5
     DamageReduction: 0
     Tool: 0
+    ExtraTools: 
+    LightRange: 1
+    LightExposure: 0
     UseHp: 0
     UseStress: 0
