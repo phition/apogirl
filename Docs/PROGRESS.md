@@ -3,8 +3,8 @@
 〈마지막 학기 (가제)〉 — 마일스톤별 진행 기록, 남은 작업, 하면 좋을 작업, 하지 말아야 할 작업.
 
 - 기준: 마스터 프롬프트 12장 마일스톤(원본 `C:\Users\phiti\Desktop\MASTER_PROMPT.md`), 결정 기록 부록 C(D1~D26).
-- 작성: 2026-11-25. 커밋 708개(2026-11-18 ~ 2026-11-25), 마지막 커밋 `dd893e24` (그 뒤 이번 커밋).
-- EditMode 테스트: 443개 모두 통과 (2026-11-25, 제작 P8 뒤).
+- 작성: 2026-11-25. 커밋 713개(2026-11-18 ~ 2026-11-25), 마지막 커밋 `6d10ee02` (그 뒤 이번 커밋).
+- EditMode 테스트: 444개 모두 통과 (2026-11-25, 장바구니 합치기 뒤).
 - 자세한 내용은 각 계획 문서에 있다. 이 문서는 한눈에 보는 요약이다.
 - **새 세션은 이 문서부터 읽는다.** 작업이 하나 끝날 때마다 고친다.
   - 해당 절을 고친다.
@@ -133,8 +133,8 @@ M6·M7과 함께 기획 확장(동료·CD·깊은 곳·고양이·동아리·방
 방향성:
 - 배드 49%(#20) → 59%(#21, MIXED 제작 먼저) → 53%. MIXED는 제작 전 그대로(생존 80%)이고, 제작은 거의 하지 않는다(판당 손전등 1번).
 - 제작 효과가 보이는 전략은 EDUCATION 하나다. 교육 칸 하나를 제작에 내줘 생존 58→50%, 특화 48→30%로 줄었다.
-- 끈 주머니 가방(12칸)은 헤드리스 기준 칸(20)보다 작아 차면 수확이 준다. 봇은 만들지도 차지도 않는다.
-- 마지막 조정 때 볼 것: 전략 격차·특화 문턱, 장비를 잃는 규칙과 다시 만드는 비용, 끈 주머니 가방 칸 수, 자동 정수기 조건, 제작 위주 봇 전략을 따로 둘지.
+- 1단계 가방(12칸, 지금은 장바구니)은 헤드리스 기준 칸(20)보다 작아 차면 수확이 준다. 봇은 만들지도 차지도 않는다.
+- 마지막 조정 때 볼 것: 전략 격차·특화 문턱, 장비를 잃는 규칙과 다시 만드는 비용, 1단계 가방(장바구니) 칸 수, 자동 정수기 조건, 제작 위주 봇 전략을 따로 둘지.
 
 ---|---|---|
 | 기본 | 26% | 15~25% |
@@ -183,7 +183,7 @@ M6·M7과 함께 기획 확장(동료·CD·깊은 곳·고양이·동아리·방
    - 그 뒤 main에 남은 메타 약 3,400개(다시 붙은 안드로이드 블록)를 `git checkout`하거나 `code_temp/apogirl/tools/strip_android_meta.py`로 지운다.
 2. **M6-5 남은 연결**
    - **힉스필드 14차 23장** ([HIGGSFIELD_ASSETS_14.md](HIGGSFIELD_ASSETS_14.md)) 받으면 연결: `ArtInbox/illustrations/events14/` → `install_events12.py`, `art_map.json`에서 그 이벤트 줄을 새 그림으로(혈액형 두 편은 `evt_a4_blood_other`, 의족 컷은 `"Flag": "PROSTHETIC_DONE"` 줄을 `EVT_A2_REVIEW` 기본 줄 앞에), 옛 그림은 남김.
-   - **PixelLab 제작 장비 도트 그림** ([PIXELLAB_CRAFTING_REQUEST.md](PIXELLAB_CRAFTING_REQUEST.md), 결정 2026-11-25): 사용자가 시작하라고 하면 허수아비 소품(`prop_decoy_*`)·가방 3(1배) 생성 → 비교판으로 고르기 → 넣기(`ItemLooks`·`sprite_meta.json`). 보호구 3벌은 색 덧칠 스크립트 `armor_recolor.py`(5절 ②, PixelLab 없음). 몽둥이 무기 그림 3장은 5벌 다시 받기(24F 9절) 때.
+   - **PixelLab 제작 장비 도트 그림** ([PIXELLAB_CRAFTING_REQUEST.md](PIXELLAB_CRAFTING_REQUEST.md), 결정 2026-11-25): 사용자가 시작하라고 하면 허수아비 소품(`prop_decoy_*`)·가방 2(덧댄 배낭·프레임 배낭, 1배) 생성 → 비교판으로 고르기 → 넣기(`ItemLooks`·`sprite_meta.json`). 보호구 3벌은 색 덧칠 스크립트 `armor_recolor.py`(5절 ②, PixelLab 없음). 몽둥이 무기 그림 3장은 5벌 다시 받기(24F 9절) 때.
    - **힉스필드 15차 18개** ([HIGGSFIELD_ASSETS_15.md](HIGGSFIELD_ASSETS_15.md)) 받으면 연결: 제작 장면 컷 4(`events15/` → `art_map.json` `EVT_CRAFT_*`의 빌린 배경 `Backgrounds/bg_*`를 `Events/evt_craft_*`로), 아이콘 6(`art_map.json` Icons 빌린 줄), 단면도 허수아비 3·자동 정수기 1(`hub_section.json` `ENTRANCE`·`SCIENCE` `Built`), 효과음 4(`sound_map.json`, 허수아비 소음·쓰러짐·제작 완성에서 부르기).
    - 이벤트가 없어 보류한 컷: `evt_deep_door`·`evt_deep_oneway`·`evt_season_*`·`evt_cat_warn`, 그리고 `stand_item_*`.
    - CD 음원 8곡(8차 2.4절).
@@ -353,4 +353,5 @@ M6·M7과 함께 기획 확장(동료·CD·깊은 곳·고양이·동아리·방
 - 2026-11-25 · 봇 MIXED D4를 설비 먼저 `BUILD|CRAFT|EDU`로 (사용자 결정): #21에서 제작 먼저 칸이 MIXED의 하나뿐인 설비 칸을 가져가 굶주림이 늘었다. 이제 모든 전략이 설비 칸에서 설비를 먼저 고르고, EDUCATION D6 `CRAFT|EDU`만 제작이 먼저다. 봇 제작 테스트는 제작 먼저 칸을 테스트 안에서 만든다. 봇 5전략 × 40판 → BOT_ENDING_LOG #22(배드 53%, MIXED 생존 80% 그대로) · 코드 b962319d · 기록 이 커밋
 - 2026-11-25 · 제작 P8 이야기 입구: 짧은 장면 4편 `Content/Story/craft_events.json` + `Resources/Dialogue/Events/Craft.yarn`(Story, 우선 44, 선생님이 누웠거나 격리·남겨진 판은 안 나옴) — 작업대 첫날 `EVT_CRAFT_WORKBENCH`(`ACT_CRAFT_WORKBENCH` + `WORKBENCH`, 도현이 있으면 줄칼 한 줄), 첫 허수아비 `EVT_CRAFT_SCARECROW`(`ACT_CRAFT_SCARECROW` + `SCARECROW_UP`, 양동이에 눈을 그리려다 선생님이 말림 — 얼굴 없는 허수아비 규칙을 이야기로), 자동 정수기 첫 아침 `EVT_CRAFT_PURIFIER`(낮 + `AUTO_PURIFIER`, 과학실 첫 장면을 봤으면 "1기압에서 100도" 되받기), 프레임 배낭 `EVT_CRAFT_FRAME_PACK`(`CRAFTED_ACT_CRAFT_BAG_FRAME`, 여러 칸 제작이라 깃발로). 선생님 설정은 마스터 프롬프트에 있는 것만 쓴다(새 과거사 없음). 그림은 빈 방 배경을 빌림(창고·교문·과학실·가사실). 힉스필드 15차 [HIGGSFIELD_ASSETS_15.md](HIGGSFIELD_ASSETS_15.md): 장면 컷 4·아이콘 6·단면도 설비 4·효과음 4(기획서 6.2절), 허수아비 안전 규칙(얼굴 없음·사람/아이처럼 안 보임). EditMode 443개 통과 · 코드 aae8055f · 생성 에셋 c71a5885 · 기록 이 커밋
 - 2026-11-25 · 제작 장비 탐험 도트 그림 요청 기획 [PIXELLAB_CRAFTING_REQUEST.md](PIXELLAB_CRAFTING_REQUEST.md)(문서만, 결정 E1~E4 2026-11-25): 탐험에 보이는 제작 장비 전수(허수아비 2 = 지금 코드 사각형, 가방 3·몽둥이 3·보호구 3 = 빌린 그림, 손전등 줄 = 빛만). 결정: A 허수아비 소품(정지 3 + 흔들림·자명종 6프레임 2줄, 키 `prop_decoy_*`는 코드에 이미 있음)·B 가방 겹 그림 3(**1배 PPU 36**, 색 바꾸기 없음)을 받는다, 약 $1.3(상한 $2.5, 잔량 USD $5.06). 몽둥이는 무기 겹치기 작업(24F 9절) 때 무기 그림 3장, **보호구는 PixelLab 없이 색 덧칠 스크립트**(추천은 빌린 옷 유지였음) · 기록 13228ae7·이 커밋
+- 2026-11-25 · 끈 주머니 가방을 장바구니로 합침 (사용자 결정): 1단계 가방 레시피 `ACT_CRAFT_BAG_SLING` → `ACT_CRAFT_BAG_TOTE` "장바구니 만들기", 결과물은 기존 전리품 `ITEM_BAG_TOTE`(4×3 12칸, 걸음·소음 같음, 무게 0.3→0.2), 그림·아이콘도 장바구니 그대로. `ITEM_BAG_SLING` 아이템·문구·빌림 표 줄을 지우고, 세이브 v15(`V14ToV15`)가 옛 세이브의 레시피·아이템·`CRAFTED_` 깃발 이름을 바꾼다(테스트 `V14Save_RenamesSlingBagToTote`). 봇·단면도 행동 목록도 새 ID로. PixelLab 요청에서 `bag_sling`을 빼 가방 2장(약 $1.0). 문구 표 옛 키는 Sync가 지우지 않아 남는다(야간 작업과 같음). EditMode 444개 통과 · 코드 a975ea04 · 생성 에셋 6d10ee02 · 기록 이 커밋
 - 2026-11-25 · 배분 화면 스크롤(사용자 요청): 동료가 늘면 식단 칸이 눌려 단추·글이 겹치던 것 — `Theme.uss` 식단·머리글·안내·단추 줄·동료 줄은 `flex-shrink: 0`, 동료 목록 `give-list`만 남은 높이를 차지(`flex-basis: 0`, 최소 120px)하고 세로 스크롤(`Hub.uxml` ScrollView `mode="Vertical"`) · 이 커밋

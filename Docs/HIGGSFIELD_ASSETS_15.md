@@ -66,7 +66,7 @@
 | `icon_craft_auto_purifier.png` | 자동 정수기 카드 `ACT_CRAFT_AUTO_PURIFIER` | `icon_craft_water_filter` | `two stacked translucent plastic water tanks joined by a clear hose and a small electric pump with a short power cable and a tiny lightning mark, clear water in the lower tank` |
 
 - 허수아비 세 개는 1절 안전 규칙을 그대로 지킨다.
-- 그 밖의 새 장비(끈 주머니 가방·프레임 배낭·쇠심 몽둥이·잡지 보호대·덧댄 보호대·헤드랜턴 등)는 지금 빌린 아이콘이 크게 어긋나지 않아 이번에는 받지 않는다. 빌린 목록은 [PIXELLAB_CRAFTING.md](PIXELLAB_CRAFTING.md) 0.1절.
+- 그 밖의 새 장비(덧댄 배낭·프레임 배낭·쇠심 몽둥이·잡지 보호대·덧댄 보호대·헤드랜턴 등)는 지금 빌린 아이콘이 크게 어긋나지 않아 이번에는 받지 않는다. 빌린 목록은 [PIXELLAB_CRAFTING.md](PIXELLAB_CRAFTING.md) 0.1절.
 
 ---
 

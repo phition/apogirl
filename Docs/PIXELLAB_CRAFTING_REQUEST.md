@@ -4,6 +4,8 @@
 
 **사용자 결정 (2026-11-25, 9절):** E1 허수아비 + 가방 · **E2 가방 1배(PPU 36)** · E3 몽둥이는 무기 겹치기 때 무기 그림 · **E4 보호구는 색 덧칠 스크립트**(추천과 다름, 굵게).
 
+**끈 주머니 가방은 뺐다 (사용자 결정 2026-11-25):** 1단계 가방 레시피를 처음부터 **장바구니 만들기**(`ACT_CRAFT_BAG_TOTE` → 기존 `ITEM_BAG_TOTE`)로 바꾸고, 그림도 장바구니(`bag_tote`, 색 6벌)를 그대로 쓴다. `ITEM_BAG_SLING`은 없앴다(세이브 v15가 옛 이름을 바꾼다). 그래서 가방 요청은 2장이다.
+
 - 프롬프트 원안은 [PIXELLAB_CRAFTING.md](PIXELLAB_CRAFTING.md)(2026-11-24)에 있다. 이 문서는 그 뒤에 바뀐 것을 반영해 요청 범위를 정한다.
   - 주인공 그림이 바뀌었다. 하복은 PixelLab 24프레임 2배(192×156, PPU 72)로 다시 받았다. 나머지 5벌도 **무기 겹치기 방식**으로 다시 받기로 정했다([PIXELLAB_24F_PLAN.md](PIXELLAB_24F_PLAN.md) 9절).
   - 탐험 허수아비가 게임에 들어갔다(제작 P6). 그림 키 `prop_decoy_*`가 코드에 있어 파일만 넣으면 바로 붙는다.
@@ -16,9 +18,9 @@
 
 | | 내용 |
 |---|---|
-| 이번에 받을 것 (결정) | **A. 탐험 허수아비 소품**(정지 3장 + 움직임 2줄 × 6프레임), **B. 제작 가방 겹 그림 3장(1배)** |
+| 이번에 받을 것 (결정) | **A. 탐험 허수아비 소품**(정지 3장 + 움직임 2줄 × 6프레임), **B. 제작 가방 겹 그림 2장(1배)** |
 | 미룰 것 (결정) | C. 몽둥이 3종은 무기 겹치기 작업 때 무기 그림 3장만, D. 보호구 3벌은 PixelLab 없이 색 덧칠 스크립트(5절 ②) |
-| 비용 (추천 범위) | 약 **$1.5** (다시 받기 포함 넉넉히 $2.5) |
+| 비용 (결정 범위) | 약 **$1.0** (다시 받기 포함 넉넉히 $2.0) |
 | 지금 잔량 (2026-11-25 조회) | USD 크레딧 **$5.06**, 구독 generations 4.8 (사실상 다 씀 → USD로 나감) |
 | 결정 | 9절 E1~E4 (2026-11-25 정해짐) |
 
@@ -30,7 +32,6 @@
 |---|---|---|---|---|
 | 휴대 허수아비 `ITEM_DECOY_DUMMY` | `ACT_CRAFT_DECOY` | 바닥에 세운 소품, 소리 낼 때 흔들림, 부서지면 쓰러짐 | **코드 그림(사각형 3개)** | **A** |
 | 울리는 허수아비 `ITEM_DECOY_BELL` | `ACT_CRAFT_DECOY_BELL` | 위 + 자명종 | **코드 그림** | **A** |
-| 끈 주머니 가방 `ITEM_BAG_SLING` | `ACT_CRAFT_BAG_SLING` | 주인공 등에 겹쳐 그리는 가방 | 빌림 `bag_tote` | **B** |
 | 덧댄 배낭 `ITEM_BAG_RUCKSACK` | `ACT_CRAFT_BAG_RUCKSACK` | 같음 | 빌림 `bag_school` | **B** |
 | 프레임 배낭 `ITEM_BAG_FRAME` | `ACT_CRAFT_BAG_FRAME` | 같음 | 빌림 `bag_hiking` | **B** |
 | 나무 몽둥이 `ITEM_WEAPON_CLUB` | `ACT_CRAFT_CLUB` | 주인공 손의 무기(모든 동작) | 빌림 `bat` | C (결정 E3) |
@@ -72,19 +73,18 @@ flat orthographic side view, muted realistic colors, thin dark outline, handmade
 - 흔들림은 허수아비가 소리를 낼 때(좀비를 끌 때) 0.7초 돈다. 쓰러짐 그림은 내구가 다했을 때 한 장으로 바뀐다. 코드는 이미 있다.
 - 받은 뒤 점검: 투명 배경, 바닥 줄(맨 아래 줄 ±1px), 6장 사이 크기 ±3%, 몸에서 떨어진 잔 점 없음, **양동이에 얼굴처럼 보이는 무늬 없음**.
 
-## 3. 요청 B: 제작 가방 겹 그림 3장
+## 3. 요청 B: 제작 가방 겹 그림 2장
 
 주인공 프레임마다 등 자리에 겹쳐 그리는 작은 그림이다. 자리는 프레임마다 잰 기준점(`player_anchors.json`)을 그대로 따르고, 그림 기준점만 `sprite_meta.json`에 한 줄씩 적는다. 옆에서 본 모습이고 몸에 닿는 쪽이 왼쪽이다.
 
 | 키 | 크기 (E2 결정 = 1배, PPU 36) | style 참고 | 프롬프트 (공통 문구 뒤) |
 |---|---|---|---|
-| `bag_sling` | 18 × 20, 투명 | `bag_tote` | `A small drawstring sling pouch sewn from a faded school curtain fabric, a single knotted rope strap, lumpy because it is half full, seen from the side as worn on the back, transparent background` |
 | `bag_rucksack` | 18 × 20, 투명 | `bag_school` | `A school backpack reinforced with extra patches cut from a blue gym mat and a canvas bag, visible thick hand stitching, duct-tape repaired corners, a tied-on side pocket, seen from the side as worn on the back, transparent background` |
 | `bag_frame` | 24 × 30, 투명 | `bag_hiking` | `A large improvised frame backpack: a big sack sewn from thick curtain fabric lashed onto a light frame of bent aluminium chair legs, the frame ends stick out a little at the top and bottom, seat-belt shoulder straps, a padded waist belt, seen from the side as worn on the back, transparent background` |
 
 - 프레임 배낭은 P8 장면(`EVT_CRAFT_FRAME_PACK`)의 대사와 같은 재료로 맞췄다(의자 다리 틀·커튼 천·안전벨트 끈·허리끈).
-- 손으로 만든 가방이라 **색 바꾸기 6벌은 만들지 않는다.** 색 그림이 없으면 기본 그림으로 넘어간다(`ExplorationArtMap.BagKey`). 지금 끈 주머니 가방은 장바구니 `bag_tote`를 빌려 판마다 장바구니 색(6벌) 가운데 하나로 보인다.
-- 연결: `ItemLooks`에서 세 가방의 토큰을 `tote`·`school`·`hiking` → `sling`·`rucksack`·`frame`으로 바꾼다. 입상·단면도 그림은 토큰에 맞는 그림이 없으면 빌린 그림을 그대로 쓴다.
+- 손으로 만든 가방이라 **색 바꾸기 6벌은 만들지 않는다.** 색 그림이 없으면 기본 그림으로 넘어간다(`ExplorationArtMap.BagKey`).
+- 연결: `ItemLooks`에서 두 가방의 토큰을 `school`·`hiking` → `rucksack`·`frame`으로 바꾼다. 1단계 장바구니는 원래 장바구니 그림이라 고칠 것이 없다. 입상·단면도 그림은 토큰에 맞는 그림이 없으면 빌린 그림을 그대로 쓴다.
 - 받은 뒤 점검: 하복(2배)과 동복(1배) 탐험 화면에서 대기·걷기·달리기·웅크림을 렌더해 비교판을 보여 준다. 가방이 몸에서 뜨거나 몸을 가리면 기준점을 고친다.
 
 ## 4. C. 몽둥이 3종 (결정 E3)
@@ -137,8 +137,8 @@ PixelLab 기록(`code_temp/apogirl/scratch/pixellab_log.jsonl`)의 평균 단가
 |---|---|---|
 | A 허수아비 정지 | 후보 3장 + 고치기 2장 | 약 $0.43 |
 | A 허수아비 움직임 | 2줄 × 다시 받기 포함 3번 | 약 $0.10 |
-| B 가방 | 3종 × 후보 3장 | 약 $0.80 |
-| **A + B 합계** | | **약 $1.33** (여유 포함 $2.5 상한) |
+| B 가방 | 2종 × 후보 3장 | 약 $0.53 |
+| **A + B 합계** | | **약 $1.06** (여유 포함 $2.0 상한) |
 | C ② 몽둥이 무기 그림 (나중) | 3장 × 후보 2장 | 약 $0.53 |
 
 - 생성 직전에 잔량(무료)을 다시 보고, 상한 $2.5를 넘을 것 같으면 멈추고 묻는다.
@@ -148,9 +148,9 @@ PixelLab 기록(`code_temp/apogirl/scratch/pixellab_log.jsonl`)의 평균 단가
 
 1. 잔량 확인 → A 허수아비 서 있는 그림 후보 3장 → **비교판을 보여 주고 사용자가 고른다.**
 2. 고른 그림으로 자명종·쓰러짐 2장, 움직임 2줄.
-3. B 가방 3종 후보 3장씩 → 비교판 → 사용자가 고른다.
+3. B 가방 2종 후보 3장씩 → 비교판 → 사용자가 고른다.
 4. 후보는 `code_temp/apogirl/pl_craft/{decoy,bag}/`에 받고, 고른 것만 `ExplorationPixel/`에 넣는다. 가져오기 설정은 기존 소품·가방과 같다(필터 없음, 압축 없음).
-5. `sprite_meta.json`(가방 기준점·2배면 `Ppu` 72), `ItemLooks` 토큰 3칸을 고친다.
+5. `sprite_meta.json`(가방 기준점·2배면 `Ppu` 72), `ItemLooks` 토큰 2칸을 고친다.
 6. 탐험 화면 렌더(허수아비 세우기·흔들림·쓰러짐, 가방 4동작 × 하복·동복)를 `Docs/anim_versions/craft_props/`에 두고 보여 준다. EditMode 테스트를 돌린다.
 7. PROGRESS·이 문서에 기록하고 커밋한다. 메타 파일의 안드로이드 블록은 지우지 않는다.
 

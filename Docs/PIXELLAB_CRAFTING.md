@@ -34,7 +34,7 @@
 
 | 새 아이템 | 탐험·입상 그림 토큰 | 아이콘 (없는 동안) |
 |---|---|---|
-| `ITEM_BAG_SLING` 끈 주머니 가방 | `tote` | `item_bag_sling` (여분 있음) |
+| ~~끈 주머니 가방~~ → 1단계는 장바구니 `ITEM_BAG_TOTE`로 바꿈(2026-11-25) | `tote` (원래 그림) | `item_bag_tote` |
 | `ITEM_BAG_RUCKSACK` 덧댄 배낭 | `school` | `item_bag_rucksack` (여분 있음) |
 | `ITEM_BAG_FRAME` 프레임 배낭 | `hiking` | `item_bag_frame` (여분 있음) |
 | `ITEM_WEAPON_CLUB` 나무 몽둥이 | `bat` | `item_weapon_bat` |
@@ -69,7 +69,6 @@ flat orthographic side view, muted realistic colors, thin dark outline, handmade
 
 | 파일 (키) | 크기 | style | 프롬프트 (공통 문구 뒤) |
 |---|---|---|---|
-| `bag_sling` | 18 × 20, 투명 | `bag_tote` | `A small drawstring sling pouch sewn from a faded school curtain fabric, a single knotted rope strap, lumpy because it is half full, seen from the side as worn on the back, transparent background` |
 | `bag_rucksack` | 18 × 20, 투명 | `bag_school` | `A school backpack reinforced with extra patches cut from a gym mat and a canvas bag, visible thick hand stitching, duct-tape repaired corners, a tied-on side pocket, seen from the side as worn on the back, transparent background` |
 | `bag_frame` | 24 × 30, 투명 | `bag_hiking` | `A large improvised frame backpack: a big canvas sack lashed with rope onto a light frame made from metal chair legs, the frame ends stick out a little at the top and bottom, a rolled blanket strapped under it, seen from the side as worn on the back, transparent background` |
 
