@@ -7018,6 +7018,38 @@ MonoBehaviour:
     m_Localized: "\uBA40\uB9AC \uBE44\uCDA4"
     m_Metadata:
       m_Items: []
+  - m_Id: 2004154531987456
+    m_Localized: "\uD398\uD2B8\uBCD1\uC5D0 \uBAA8\uB798\uC640 \uC22F\uC744 \uCC44\uC6CC \uD544\uD130\uB97C \uC138\uC6E0\uB2E4 \u2014 \uBE57\uBB3C\uC744 \uC870\uAE08\uC529 \uAC78\uB7EC \uC900\uB2E4"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2004154607484928
+    m_Localized: "\uD398\uD2B8\uBCD1\uC5D0 \uBAA8\uB798\uC640 \uC22F\uC744 \uCC44\uC6CC \uD544\uD130\uB97C \uC138\uC6E0\uB2E4. \uBE57\uBB3C\uC744 \uC870\uAE08\uC529 \uAC78\uB7EC \uC904 \uAC83\uC774\uB2E4."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2004154607484929
+    m_Localized: "\uAC00\uC0AC\uC2E4\uC5D0 \uB053\uC784 \uC815\uC218\uB300\uB97C \uAFB8\uB838\uB2E4 \u2014 \uC5F0\uB8CC\uAC00 \uC788\uC73C\uBA74 \uD55C \uBC88\uC5D0 \uB354 \uB9CE\uC774 \uAC70\uB978\uB2E4"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2004154607484930
+    m_Localized: "\uAC00\uC0AC\uC2E4\uC5D0 \uB053\uC784 \uC815\uC218\uB300\uB97C \uAFB8\uB838\uB2E4. \uC5F0\uB8CC\uB9CC \uC788\uC73C\uBA74 \uD55C \uBC88\uC5D0 \uB354 \uB9CE\uC740 \uBB3C\uC744 \uAC70\uB97C \uC218 \uC788\uB2E4."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2004154607484931
+    m_Localized: "\uACFC\uD559\uC2E4\uC758 \uC790\uB3D9 \uC815\uC218\uAE30\uAC00 \uB3CC\uAE30 \uC2DC\uC791\uD588\uB2E4 \u2014 \uC804\uAE30\uAC00 \uC788\uC73C\uBA74 \uC544\uCE68\uB9C8\uB2E4 \uBE57\uBB3C\uC744 \uAC70\uB978\uB2E4"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2004154607484932
+    m_Localized: "\uACFC\uD559\uC2E4\uC758 \uC790\uB3D9 \uC815\uC218\uAE30\uAC00 \uC6C5\uC6C5 \uB3CC\uAE30 \uC2DC\uC791\uD588\uB2E4. \uC804\uAE30\uB9CC \uC788\uC73C\uBA74 \uC544\uCE68\uB9C8\uB2E4 \uBE57\uBB3C\uC744 \uAC78\uB7EC \uC900\uB2E4."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2004154607484933
+    m_Localized: "\uC815\uC218\uAE30\uAC00 \uBC24\uC0C8 \uBE57\uBB3C\uC744 \uAC78\uB800\uB2E4 (\uC2DD\uC218 +{0})"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2004154607484934
+    m_Localized: "\uC804\uAE30\uAC00 \uB04A\uACA8 \uC815\uC218\uAE30\uAC00 \uBA48\uCDC4\uB2E4"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

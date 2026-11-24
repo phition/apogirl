@@ -787,6 +787,30 @@ MonoBehaviour:
     m_Key: ACT_CRAFT_MULTITOOL.short
     m_Metadata:
       m_Items: []
+  - m_Id: 2004152879431680
+    m_Key: ACT_CRAFT_SAND_FILTER.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2004152942346240
+    m_Key: ACT_CRAFT_SAND_FILTER.short
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2004152942346241
+    m_Key: ACT_CRAFT_BOIL_STATION.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2004152942346242
+    m_Key: ACT_CRAFT_BOIL_STATION.short
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2004152942346243
+    m_Key: ACT_CRAFT_AUTO_PURIFIER.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2004152942346244
+    m_Key: ACT_CRAFT_AUTO_PURIFIER.short
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

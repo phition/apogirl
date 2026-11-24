@@ -7015,6 +7015,38 @@ MonoBehaviour:
     m_Key: tool.far_light
     m_Metadata:
       m_Items: []
+  - m_Id: 2004154531987456
+    m_Key: result.craft.done.ACT_CRAFT_SAND_FILTER
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2004154607484928
+    m_Key: settle.craft_done.ACT_CRAFT_SAND_FILTER
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2004154607484929
+    m_Key: result.craft.done.ACT_CRAFT_BOIL_STATION
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2004154607484930
+    m_Key: settle.craft_done.ACT_CRAFT_BOIL_STATION
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2004154607484931
+    m_Key: result.craft.done.ACT_CRAFT_AUTO_PURIFIER
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2004154607484932
+    m_Key: settle.craft_done.ACT_CRAFT_AUTO_PURIFIER
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2004154607484933
+    m_Key: result.purifier
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2004154607484934
+    m_Key: result.purifier_stopped
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
