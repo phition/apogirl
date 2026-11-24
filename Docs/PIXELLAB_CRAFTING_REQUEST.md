@@ -83,7 +83,7 @@ flat orthographic side view, muted realistic colors, thin dark outline, handmade
 | `bag_frame` | 24 × 30, 투명 | `bag_hiking` | `A large improvised frame backpack: a big sack sewn from thick curtain fabric lashed onto a light frame of bent aluminium chair legs, the frame ends stick out a little at the top and bottom, seat-belt shoulder straps, a padded waist belt, seen from the side as worn on the back, transparent background` |
 
 - 프레임 배낭은 P8 장면(`EVT_CRAFT_FRAME_PACK`)의 대사와 같은 재료로 맞췄다(의자 다리 틀·커튼 천·안전벨트 끈·허리끈).
-- 손으로 만든 가방이라 **색 바꾸기 6벌은 만들지 않는다.** 색 그림이 없으면 기본 그림으로 넘어간다(`ExplorationArtMap`, 지금 `bag_tote`와 같음).
+- 손으로 만든 가방이라 **색 바꾸기 6벌은 만들지 않는다.** 색 그림이 없으면 기본 그림으로 넘어간다(`ExplorationArtMap.BagKey`). 지금 끈 주머니 가방은 장바구니 `bag_tote`를 빌려 판마다 장바구니 색(6벌) 가운데 하나로 보인다.
 - 연결: `ItemLooks`에서 세 가방의 토큰을 `tote`·`school`·`hiking` → `sling`·`rucksack`·`frame`으로 바꾼다. 입상·단면도 그림은 토큰에 맞는 그림이 없으면 빌린 그림을 그대로 쓴다.
 - 받은 뒤 점검: 하복(2배)과 동복(1배) 탐험 화면에서 대기·걷기·달리기·웅크림을 렌더해 비교판을 보여 준다. 가방이 몸에서 뜨거나 몸을 가리면 기준점을 고친다.
 
