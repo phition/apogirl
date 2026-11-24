@@ -1,0 +1,926 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>스프라이트 시트 툴</title>
+<style>
+  :root {
+    --bg: #1d1f24; --panel: #262930; --panel2: #2e323a; --line: #3b404a;
+    --text: #e4e6ea; --dim: #9aa0aa; --accent: #6cb4ff; --warn: #ff8a65; --ok: #8bd48b;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; height: 100%; background: var(--bg); color: var(--text);
+    font: 13px/1.4 "Malgun Gothic", "Apple SD Gothic Neo", sans-serif; }
+  body { display: grid; grid-template-rows: auto 1fr auto; }
+  header { display: flex; gap: 8px; align-items: center; padding: 6px 10px; background: var(--panel); border-bottom: 1px solid var(--line); flex-wrap: wrap; }
+  header h1 { font-size: 14px; margin: 0 10px 0 0; }
+  main { display: grid; grid-template-columns: 300px 1fr 340px; min-height: 0; }
+  aside, section { min-height: 0; overflow: auto; }
+  aside { background: var(--panel); border-right: 1px solid var(--line); padding: 8px; }
+  aside.right { border-right: 0; border-left: 1px solid var(--line); }
+  fieldset { border: 1px solid var(--line); border-radius: 6px; margin: 0 0 8px; padding: 6px 8px 8px; }
+  legend { color: var(--accent); padding: 0 4px; }
+  .row { display: flex; gap: 6px; align-items: center; margin: 4px 0; flex-wrap: wrap; }
+  .row label { color: var(--dim); }
+  input[type=number] { width: 64px; }
+  input, select, button { background: var(--panel2); color: var(--text); border: 1px solid var(--line); border-radius: 4px; padding: 3px 6px; font: inherit; }
+  button { cursor: pointer; }
+  button:hover { border-color: var(--accent); }
+  button.primary { background: #2f5b88; border-color: #3d73aa; }
+  button:disabled { opacity: .45; cursor: default; }
+  .hint { color: var(--dim); font-size: 12px; }
+  #center { display: grid; grid-template-rows: 1fr auto auto; min-height: 0; }
+  #stageWrap { position: relative; overflow: auto; display: flex; align-items: center; justify-content: center; background: #15161a; }
+  #stage { image-rendering: pixelated; cursor: grab; }
+  #stage.dragging { cursor: grabbing; }
+  #drop { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; color: var(--dim); font-size: 16px; pointer-events: none; text-align: center; }
+  #transport { display: flex; gap: 6px; align-items: center; padding: 6px 10px; background: var(--panel); border-top: 1px solid var(--line); flex-wrap: wrap; }
+  #strip { display: flex; gap: 6px; padding: 8px; overflow-x: auto; background: var(--panel); border-top: 1px solid var(--line); min-height: 128px; }
+  .thumb { flex: 0 0 auto; width: 92px; border: 2px solid var(--line); border-radius: 5px; background: #15161a; cursor: pointer; position: relative; }
+  .thumb canvas { display: block; width: 88px; height: 88px; image-rendering: pixelated; }
+  .thumb .cap { font-size: 11px; color: var(--dim); text-align: center; padding: 1px 0 2px; white-space: nowrap; }
+  .thumb .cap b { color: var(--text); }
+  .thumb.sel { border-color: var(--accent); }
+  .thumb.playing { box-shadow: 0 0 0 2px var(--ok) inset; }
+  .thumb.dropL { border-left-color: var(--warn); border-left-width: 5px; }
+  .thumb.dropR { border-right-color: var(--warn); border-right-width: 5px; }
+  .thumb .off { position: absolute; top: 2px; right: 3px; font-size: 10px; color: var(--warn); }
+  #sheetView { width: 100%; image-rendering: pixelated; cursor: crosshair; background: #15161a; border: 1px solid var(--line); }
+  footer { padding: 4px 10px; background: var(--panel); border-top: 1px solid var(--line); color: var(--dim); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  footer.err { color: var(--warn); }
+  /* 좁은 창: 무대를 맨 위에, 양옆 패널은 아래로 */
+  @media (max-width: 1100px) {
+    body { height: auto; }
+    main { grid-template-columns: 1fr; }
+    #center { order: -1; grid-template-rows: 60vh auto auto; }
+    aside, aside.right { border: 0; border-top: 1px solid var(--line); }
+  }
+  kbd { background: var(--panel2); border: 1px solid var(--line); border-radius: 3px; padding: 0 4px; font-size: 11px; }
+  .keys td { padding: 1px 4px; vertical-align: top; }
+</style>
+</head>
+<body>
+<header>
+  <h1>스프라이트 시트 툴</h1>
+  <button id="btnOpen" class="primary">시트 열기…</button>
+  <input id="fileInput" type="file" accept="image/png,image/*" multiple hidden>
+  <span class="hint">png를 끌어다 놓아도 된다. 여러 장을 고르면 한 장 = 한 프레임.</span>
+  <span style="flex:1"></span>
+  <button id="btnUndo" title="Ctrl+Z">되돌리기</button>
+  <button id="btnRedo" title="Ctrl+Y">다시</button>
+  <button id="btnSaveJson" title="칸 설정·프레임 순서·오프셋을 json으로">편집 기록 저장</button>
+  <button id="btnLoadJson">편집 기록 불러오기</button>
+  <input id="jsonInput" type="file" accept=".json,application/json" hidden>
+</header>
+
+<main>
+  <!-- 왼쪽: 감지·칸 설정·프레임 편집 -->
+  <aside>
+    <fieldset>
+      <legend>배경</legend>
+      <div class="row"><label>방식</label>
+        <select id="bgMode">
+          <option value="auto">자동</option>
+          <option value="alpha">투명 배경</option>
+          <option value="key">단색 배경(키 색)</option>
+        </select>
+        <input id="keyColor" type="color" value="#ff00ff" title="키 색">
+      </div>
+      <div class="row"><label>허용 오차</label><input id="keyTol" type="number" value="90" min="1" max="300">
+        <label>알파 문턱</label><input id="alphaThr" type="number" value="16" min="0" max="254"></div>
+    </fieldset>
+
+    <fieldset>
+      <legend>칸 (시트 원본)</legend>
+      <div class="row"><label>가로 칸</label><input id="gCols" type="number" min="1" value="1">
+        <label>세로 칸</label><input id="gRows" type="number" min="1" value="1"></div>
+      <div class="row"><label>칸 너비</label><input id="gW" type="number" min="1" value="1">
+        <label>높이</label><input id="gH" type="number" min="1" value="1"></div>
+      <div class="row"><label>여백 x</label><input id="gOx" type="number" value="0">
+        <label>y</label><input id="gOy" type="number" value="0"></div>
+      <div class="row"><label>칸 사이 x</label><input id="gGx" type="number" value="0">
+        <label>y</label><input id="gGy" type="number" value="0"></div>
+      <div class="row">
+        <button id="btnAutoGrid" title="칸 수·크기를 다시 감지">칸 자동 감지</button>
+        <button id="btnFitCell" title="칸 너비·높이를 (시트 − 여백) ÷ 칸 수로">칸 크기 = 시트÷칸 수</button>
+      </div>
+      <div class="row"><button id="btnApplyGrid" class="primary">이 칸으로 프레임 다시 뽑기</button></div>
+      <div class="hint">칸 경계를 넘은 그림(대걸레 끝·발)은 이어진 덩어리째 가장 많이 겹친 칸의 프레임으로 붙는다.</div>
+    </fieldset>
+
+    <fieldset>
+      <legend>선택 프레임</legend>
+      <div class="row"><label>오프셋 x</label><input id="fDx" type="number" value="0">
+        <label>y</label><input id="fDy" type="number" value="0"></div>
+      <div class="row">
+        <button id="btnDup" title="Ctrl+D">복제(바로 뒤)</button>
+        <button id="btnDel" title="Delete">삭제</button>
+      </div>
+      <div class="row">
+        <button id="btnCopy" title="Ctrl+C">복사</button>
+        <button id="btnPasteBefore" title="Ctrl+Shift+V">앞에 붙여넣기</button>
+        <button id="btnPasteAfter" title="Ctrl+V">뒤에 붙여넣기</button>
+      </div>
+      <div class="row">
+        <button id="btnMoveL" title="Alt+←">◀ 앞으로</button>
+        <button id="btnMoveR" title="Alt+→">뒤로 ▶</button>
+        <button id="btnResetOff">오프셋 0</button>
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <legend>전체 프레임</legend>
+      <div class="row">
+        <button id="btnFeet" title="모든 프레임의 그림 아래 끝을 바닥선에 맞춘다">발을 바닥선에</button>
+        <button id="btnHead" title="머리(그림 위쪽 20%)의 가로 중심을 선택 프레임에 맞춘다">머리 기준 가로 맞춤</button>
+      </div>
+      <div class="row">
+        <button id="btnClearOff">오프셋 모두 0</button>
+        <button id="btnResetFrames" title="칸 순서대로 모든 프레임을 다시 넣는다">프레임 처음대로</button>
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <legend>단축키</legend>
+      <table class="keys hint">
+        <tr><td><kbd>Space</kbd></td><td>재생 / 멈춤</td></tr>
+        <tr><td><kbd>,</kbd> <kbd>.</kbd></td><td>이전 / 다음 프레임</td></tr>
+        <tr><td><kbd>←↑→↓</kbd></td><td>오프셋 1px (Shift 10px)</td></tr>
+        <tr><td>무대 끌기</td><td>오프셋 옮기기</td></tr>
+        <tr><td><kbd>Alt</kbd>+<kbd>←→</kbd></td><td>순서 옮기기 (띠에서 끌어도 됨)</td></tr>
+        <tr><td><kbd>Ctrl</kbd>+<kbd>D</kbd> / <kbd>Del</kbd></td><td>복제 / 삭제</td></tr>
+        <tr><td><kbd>Ctrl</kbd>+<kbd>C</kbd> <kbd>V</kbd></td><td>복사 / 뒤에 붙여넣기</td></tr>
+        <tr><td><kbd>Ctrl</kbd>+<kbd>Z</kbd> <kbd>Y</kbd></td><td>되돌리기 / 다시</td></tr>
+      </table>
+    </fieldset>
+  </aside>
+
+  <!-- 가운데: 무대·재생·프레임 띠 -->
+  <div id="center">
+    <div id="stageWrap">
+      <canvas id="stage" width="10" height="10"></canvas>
+      <div id="drop">시트 png를 여기에 끌어다 놓거나 [시트 열기…]</div>
+    </div>
+    <div id="transport">
+      <button id="btnPlay" class="primary" style="width:64px">재생</button>
+      <button id="btnPrev">◀|</button>
+      <button id="btnNext">|▶</button>
+      <label>fps</label><input id="fps" type="range" min="1" max="60" value="12" style="width:110px"><input id="fpsNum" type="number" min="1" max="60" value="12" style="width:52px">
+      <label>배율</label><select id="zoom"><option value="fit">맞춤</option><option>0.5</option><option>1</option><option>2</option><option>3</option><option>4</option><option>6</option><option>8</option></select>
+      <label>어니언</label><select id="onion"><option value="0">끔</option><option value="1" selected>이전 1</option><option value="2">이전 2</option><option value="3">이전 3</option></select>
+      <label><input id="onionNext" type="checkbox"> 다음도</label>
+      <label>바닥선 y</label><input id="baseline" type="number" value="0"><button id="btnAutoBase" title="프레임 아래 끝의 중앙값">자동</button>
+      <label>배경</label><select id="stageBg"><option value="checker">체크</option><option value="#15161a">어둡게</option><option value="#808080">회색</option><option value="#ffffff">흰색</option><option value="#00b140">초록</option></select>
+      <label><input id="showBox" type="checkbox"> 그림 테두리</label>
+      <span id="frameInfo" class="hint"></span>
+    </div>
+    <div id="strip"></div>
+  </div>
+
+  <!-- 오른쪽: 원본 시트·저장 -->
+  <aside class="right">
+    <fieldset>
+      <legend>원본 시트</legend>
+      <canvas id="sheetView" width="10" height="10"></canvas>
+      <div class="hint">칸 클릭 = 그 칸을 쓰는 프레임 선택, 더블클릭 = 그 칸을 선택 프레임 뒤에 추가.<br>파란 선 = 칸, 노란 상자 = 감지한 그림 위치, 회색 칸 = 비어서 뺀 칸.</div>
+      <div id="sheetInfo" class="hint"></div>
+    </fieldset>
+
+    <fieldset>
+      <legend>저장</legend>
+      <div class="row"><label>이름</label><input id="outName" type="text" style="width:200px" value="sprite"></div>
+      <div class="row"><label>가로 칸</label><input id="oCols" type="number" min="1" value="6">
+        <label>세로 칸</label><input id="oRows" type="number" min="0" value="0" title="0 = 프레임 수에 맞춰 자동"></div>
+      <div class="row"><label>칸 너비</label><input id="oW" type="number" min="1" value="448">
+        <label>높이</label><input id="oH" type="number" min="1" value="380"></div>
+      <div class="row">
+        <select id="oPreset">
+          <option value="">크기 바로 고르기…</option>
+          <option value="src">원본 칸 크기 (배율 1)</option>
+          <option value="96x78">96×78 (탐험 프레임)</option>
+          <option value="128x128">128×128</option>
+          <option value="256x256">256×256</option>
+        </select>
+      </div>
+      <div class="row"><label>배율</label><input id="oScale" type="number" step="0.01" min="0.01" value="1" style="width:72px">
+        <button id="btnFitScale" title="모든 프레임이 칸 안에 들어가는 가장 큰 배율">맞춤</button></div>
+      <div class="row"><label>바닥 여백</label><input id="oPad" type="number" value="0" title="출력 칸 아래 끝에서 바닥선까지 픽셀">
+        <label>줄이기</label><select id="oSmooth"><option value="1">부드럽게</option><option value="0">가장 가까운 픽셀</option></select></div>
+      <div class="hint">원본의 (칸 가운데, 바닥선)이 출력 칸의 (가운데, 아래 − 바닥 여백)에 온다.</div>
+      <div class="row" style="margin-top:6px">
+        <button id="btnExportSheet" class="primary">시트 png 저장</button>
+        <button id="btnExportFrames">프레임별 png 저장</button>
+      </div>
+      <div class="hint">프레임별 저장은 폴더를 고를 수 있으면 그 폴더에 <code>이름_0.png</code>… 로, 아니면 zip 하나로 내려받는다.</div>
+      <canvas id="exportPreview" width="10" height="10" style="width:100%;margin-top:6px;image-rendering:pixelated;display:none;background:#15161a"></canvas>
+    </fieldset>
+  </aside>
+</main>
+
+<footer id="status">준비됨.</footer>
+
+<script>
+'use strict';
+// ───────────────────────────── 상태 ─────────────────────────────
+const S = {
+  sheet: null,      // { canvas, w, h, name, rgba(Uint8ClampedArray, 키 처리 후), mask(Uint8Array) }
+  grid: { cols: 1, rows: 1, w: 1, h: 1, ox: 0, oy: 0, gx: 0, gy: 0 },
+  cells: [],        // 칸마다 { r, c, x, y, sprite(canvas|null), bx, by, bw, bh, headCx }
+  frames: [],       // { cell, dx, dy }
+  sel: 0,
+  clip: null,
+  baseline: 0,      // 칸 좌표의 바닥선 y
+  playing: false, playIdx: 0, lastTick: 0,
+  undo: [], redo: [],
+};
+const $ = id => document.getElementById(id);
+const num = id => Number($(id).value) || 0;
+
+function status(msg, err) { const f = $('status'); f.textContent = msg; f.className = err ? 'err' : ''; }
+
+// ───────────────────────────── 불러오기 ─────────────────────────────
+// 파일(Blob) 또는 주소 → ImageBitmap (색을 건드리지 않게 premultiply·색공간 변환 끔)
+async function loadImage(src) {
+  try {
+    const blob = src instanceof Blob ? src : await (await fetch(src)).blob();
+    return await createImageBitmap(blob, { premultiplyAlpha: 'none', colorSpaceConversion: 'none' });
+  } catch (e) { throw new Error('그림을 읽지 못했다: ' + (src.name || src)); }
+}
+
+async function openFiles(files) {
+  files = [...files].filter(f => f.type.startsWith('image/') || /\.png$/i.test(f.name));
+  if (!files.length) return;
+  files.sort((a, b) => a.name.localeCompare(b.name, undefined, { numeric: true }));
+  const imgs = [];
+  for (const f of files) imgs.push(await loadImage(f));
+  if (imgs.length === 1) setSheet(imgs[0], files[0].name, null);
+  else setSheetFromFrames(imgs, files[0].name);
+}
+
+// 프레임 파일 여러 장 → 가로로 이어 붙인 시트 (칸 = 가장 큰 그림 크기, 아래 가운데 맞춤)
+function setSheetFromFrames(imgs, name) {
+  const w = Math.max(...imgs.map(i => i.width)), h = Math.max(...imgs.map(i => i.height));
+  const cv = document.createElement('canvas'); cv.width = w * imgs.length; cv.height = h;
+  const cx = cv.getContext('2d');
+  imgs.forEach((im, i) => cx.drawImage(im, i * w + Math.floor((w - im.width) / 2), h - im.height));
+  const base = name.replace(/\.[^.]+$/, '').replace(/_\d+$/, '');
+  setSheet(cv, base + '.png', { cols: imgs.length, rows: 1, w, h, ox: 0, oy: 0, gx: 0, gy: 0 });
+  status(`프레임 파일 ${imgs.length}장을 한 줄 시트로 붙였다 (칸 ${w}×${h}).`);
+}
+
+function setSheet(img, name, forcedGrid) {
+  const cv = document.createElement('canvas'); cv.width = img.width; cv.height = img.height;
+  const cx = cv.getContext('2d', { willReadFrequently: true });
+  cx.drawImage(img, 0, 0);
+  S.sheet = { canvas: cv, w: cv.width, h: cv.height, name, src: cx.getImageData(0, 0, cv.width, cv.height).data };
+  $('outName').value = name.replace(/\.[^.]+$/, '').replace(/_sheet$/i, '');
+  $('drop').style.display = 'none';
+  S.undo = []; S.redo = [];
+  buildMask();
+  if (forcedGrid) setGridInputs(forcedGrid); else autoGrid();
+  extract(true);
+  setOutputFromSource();
+  const g = S.grid;
+  status(`${name}: ${S.sheet.w}×${S.sheet.h}, 배경 ${S.sheet.modeLabel}, 칸 ${g.cols}×${g.rows} (${g.w}×${g.h}), 프레임 ${S.frames.length}개.`);
+}
+
+// ───────────────────────────── 배경 → 마스크 ─────────────────────────────
+function hexToRgb(h) { const v = parseInt(h.slice(1), 16); return [v >> 16 & 255, v >> 8 & 255, v & 255]; }
+
+function buildMask() {
+  const sh = S.sheet, src = sh.src, n = sh.w * sh.h;
+  let mode = $('bgMode').value;
+  if (mode === 'auto') {
+    // 네 귀퉁이가 투명하면 투명 배경, 아니면 귀퉁이 색을 키 색으로
+    const corners = [0, sh.w - 1, (sh.h - 1) * sh.w, n - 1];
+    const transparent = corners.filter(i => src[i * 4 + 3] < 128).length;
+    if (transparent >= 3) mode = 'alpha';
+    else {
+      mode = 'key';
+      // 귀퉁이 중 가장 흔한 색
+      const cols = corners.map(i => [src[i * 4], src[i * 4 + 1], src[i * 4 + 2]]);
+      cols.sort((a, b) => cols.filter(c => dist(c, b) < 30).length - cols.filter(c => dist(c, a) < 30).length);
+      $('keyColor').value = '#' + cols[0].map(v => v.toString(16).padStart(2, '0')).join('');
+    }
+  }
+  const rgba = new Uint8ClampedArray(src);
+  const mask = new Uint8Array(n);
+  if (mode === 'alpha') {
+    const thr = num('alphaThr');
+    for (let i = 0; i < n; i++) mask[i] = src[i * 4 + 3] > thr ? 1 : 0;
+    sh.modeLabel = '투명';
+  } else {
+    // 단색 키: 키 색과의 거리로 알파를 부드럽게 만들고, 가장자리에 남은 키 색을 걷어 낸다
+    const k = hexToRgb($('keyColor').value), tol = Math.max(1, num('keyTol'));
+    const lo = tol * 0.6, hi = tol * 1.4;
+    for (let i = 0; i < n; i++) {
+      const p = i * 4, d = Math.hypot(src[p] - k[0], src[p + 1] - k[1], src[p + 2] - k[2]);
+      let a = d <= lo ? 0 : d >= hi ? 1 : (d - lo) / (hi - lo);
+      a *= src[p + 3] / 255;
+      if (a > 0 && a < 1) for (let c = 0; c < 3; c++) rgba[p + c] = (src[p + c] - (1 - a) * k[c]) / a;
+      rgba[p + 3] = Math.round(a * 255);
+      mask[i] = a >= 0.5 ? 1 : 0;
+    }
+    sh.modeLabel = '단색 키 ' + $('keyColor').value;
+  }
+  sh.rgba = rgba; sh.mask = mask;
+}
+function dist(a, b) { return Math.hypot(a[0] - b[0], a[1] - b[1], a[2] - b[2]); }
+
+// ───────────────────────────── 칸 자동 감지 ─────────────────────────────
+// 열(행) 투영 P에서 칸 수 n 후보를 본다.
+//  ① 경계 자리(±4%)가 거의 비어 있어야 하고(경계를 넘은 대걸레 끝 정도는 봐준다),
+//  ② 모든 칸 띠에 그림이 어느 정도 있어야 한다.
+//  진짜 칸 수의 약수(6칸이면 2·3)도, 칸 안 빈 틈에 우연히 경계가 걸린 큰 수(6칸인데 18)도 ①②를 지나므로
+//  ③ 칸 띠들의 모양이 서로 닮은 정도(평균 띠와의 코사인 유사도)를 재서, 가장 닮은 값에 가까운 후보 중 가장 큰 n을 고른다.
+//  ArtInbox 11차 228장·10차 플레이어/좀비 시트로 맞춰 본 규칙이다. 틀리면 칸 수를 직접 고친다.
+function detectCount(P) {
+  const L = P.length; let max = 0; for (const v of P) if (v > max) max = v;
+  if (!max) return 1;
+  const M = 64, cands = [];
+  for (let n = 2; n <= 24; n++) {
+    const cw = L / n; if (cw < 8) break;
+    const win = Math.max(2, Math.round(cw * 0.04));
+    let cost = 0, worst = 0;
+    for (let k = 1; k < n; k++) {
+      const b = Math.round(k * cw); let m = Infinity;
+      for (let x = Math.max(0, b - win); x <= Math.min(L - 1, b + win); x++) if (P[x] < m) m = P[x];
+      cost += m / max; worst = Math.max(worst, m / max);
+    }
+    cost /= (n - 1);
+    if (cost > 0.12 || worst > 0.45) continue;
+    // 칸 띠마다 M칸으로 줄인 모양
+    const segs = [], mass = [];
+    for (let k = 0; k < n; k++) {
+      const a = Math.round(k * cw), b = Math.round((k + 1) * cw), len = b - a, s = new Float64Array(M); let sum = 0;
+      for (let x = a; x < b; x++) { s[Math.floor((x - a) * M / len)] += P[x]; sum += P[x]; }
+      segs.push(s); mass.push(sum);
+    }
+    const med = [...mass].sort((p, q) => p - q)[Math.floor(n / 2)];
+    if (med <= 0 || Math.min(...mass) < 0.1 * med) continue;
+    const mean = new Float64Array(M); for (const s of segs) for (let i = 0; i < M; i++) mean[i] += s[i] / n;
+    const norm = v => Math.sqrt(v.reduce((t, x) => t + x * x, 0)) || 1e-9, mn = norm(mean);
+    let cos = 0; for (const s of segs) { let d = 0; for (let i = 0; i < M; i++) d += s[i] * mean[i]; cos += d / (norm(s) * mn); }
+    cands.push({ n, cos: cos / n });
+  }
+  if (!cands.length) return 1;
+  const top = Math.max(...cands.map(c => c.cos));
+  return Math.max(...cands.filter(c => c.cos >= top - 0.06).map(c => c.n));
+}
+
+function autoGrid() {
+  const sh = S.sheet, colP = new Float64Array(sh.w), rowP = new Float64Array(sh.h);
+  for (let y = 0; y < sh.h; y++) for (let x = 0; x < sh.w; x++) if (sh.mask[y * sh.w + x]) { colP[x]++; rowP[y]++; }
+  const cols = detectCount(colP), rows = detectCount(rowP);
+  setGridInputs({ cols, rows, w: Math.floor(sh.w / cols), h: Math.floor(sh.h / rows), ox: 0, oy: 0, gx: 0, gy: 0 });
+}
+
+function setGridInputs(g) {
+  $('gCols').value = g.cols; $('gRows').value = g.rows; $('gW').value = g.w; $('gH').value = g.h;
+  $('gOx').value = g.ox; $('gOy').value = g.oy; $('gGx').value = g.gx; $('gGy').value = g.gy;
+}
+function readGridInputs() {
+  return { cols: Math.max(1, num('gCols')), rows: Math.max(1, num('gRows')), w: Math.max(1, num('gW')), h: Math.max(1, num('gH')),
+    ox: num('gOx'), oy: num('gOy'), gx: num('gGx'), gy: num('gGy') };
+}
+
+// ───────────────────────────── 프레임 뽑기 ─────────────────────────────
+// 이어진 덩어리(8방향)마다 가장 많이 겹친 칸에 붙인다 → 칸 경계를 넘은 그림도 제 프레임에 남는다.
+function labelComponents(mask, w, h) {
+  const lab = new Int32Array(w * h), parent = [0];
+  const find = a => { while (parent[a] !== a) { parent[a] = parent[parent[a]]; a = parent[a]; } return a; };
+  const unite = (a, b) => { a = find(a); b = find(b); if (a !== b) { if (a < b) parent[b] = a; else parent[a] = b; } };
+  for (let y = 0; y < h; y++) for (let x = 0; x < w; x++) {
+    const i = y * w + x; if (!mask[i]) continue;
+    let l = 0;
+    const nb = [x > 0 ? i - 1 : -1, y > 0 && x > 0 ? i - w - 1 : -1, y > 0 ? i - w : -1, y > 0 && x < w - 1 ? i - w + 1 : -1];
+    for (const j of nb) if (j >= 0 && lab[j]) { if (!l) l = lab[j]; else if (lab[j] !== l) unite(l, lab[j]); }
+    if (!l) { l = parent.length; parent.push(l); }
+    lab[i] = l;
+  }
+  const remap = new Int32Array(parent.length); let n = 0;
+  for (let l = 1; l < parent.length; l++) { const r = find(l); if (!remap[r]) remap[r] = ++n; remap[l] = remap[r]; }
+  for (let i = 0; i < lab.length; i++) if (lab[i]) lab[i] = remap[lab[i]];
+  return { lab, count: n };
+}
+
+function cellRect(g, r, c) { return { x: g.ox + c * (g.w + g.gx), y: g.oy + r * (g.h + g.gy) }; }
+
+function extract(resetFrames) {
+  const sh = S.sheet; if (!sh) return;
+  const g = readGridInputs(); S.grid = g;
+  const W = sh.w, H = sh.h, nCells = g.cols * g.rows;
+  const { lab, count } = labelComponents(sh.mask, W, H);
+  // 덩어리 × 칸 겹침 수
+  const cellOf = (x, y) => {
+    const c = Math.min(g.cols - 1, Math.max(0, Math.round((x - g.ox - g.w / 2) / (g.w + g.gx))));
+    const r = Math.min(g.rows - 1, Math.max(0, Math.round((y - g.oy - g.h / 2) / (g.h + g.gy))));
+    return r * g.cols + c;
+  };
+  const colCell = new Int32Array(W), rowCell = new Int32Array(H);
+  for (let x = 0; x < W; x++) colCell[x] = cellOf(x, g.oy + g.h / 2) % g.cols;
+  for (let y = 0; y < H; y++) rowCell[y] = Math.floor(cellOf(g.ox + g.w / 2, y) / g.cols);
+  const overlap = new Float64Array((count + 1) * nCells);
+  for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) {
+    const l = lab[y * W + x]; if (l) overlap[l * nCells + rowCell[y] * g.cols + colCell[x]]++;
+  }
+  const compCell = new Int32Array(count + 1).fill(-1);
+  for (let l = 1; l <= count; l++) {
+    let best = -1, bv = 0;
+    for (let k = 0; k < nCells; k++) { const v = overlap[l * nCells + k]; if (v > bv) { bv = v; best = k; } }
+    compCell[l] = best;
+  }
+  // 칸마다 그림 상자
+  const bb = Array.from({ length: nCells }, () => ({ x0: Infinity, y0: Infinity, x1: -1, y1: -1 }));
+  for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) {
+    const l = lab[y * W + x]; if (!l) continue;
+    const b = bb[compCell[l]]; if (x < b.x0) b.x0 = x; if (x > b.x1) b.x1 = x; if (y < b.y0) b.y0 = y; if (y > b.y1) b.y1 = y;
+  }
+  // 칸마다 그림 캔버스 (경계를 넘은 부분 포함, 반투명 가장자리 화소도 포함)
+  const cells = [];
+  for (let k = 0; k < nCells; k++) {
+    const r = Math.floor(k / g.cols), c = k % g.cols, o = cellRect(g, r, c), b = bb[k];
+    const cell = { r, c, x: o.x, y: o.y, sprite: null, bx: 0, by: 0, bw: 0, bh: 0, headCx: 0 };
+    if (b.x1 >= 0) {
+      // 반투명 가장자리(마스크 밖)를 살리려고 1px 넓힌다
+      const x0 = Math.max(0, b.x0 - 1), y0 = Math.max(0, b.y0 - 1), x1 = Math.min(W - 1, b.x1 + 1), y1 = Math.min(H - 1, b.y1 + 1);
+      const bw = x1 - x0 + 1, bh = y1 - y0 + 1;
+      const id = new ImageData(bw, bh), d = id.data;
+      for (let y = y0; y <= y1; y++) for (let x = x0; x <= x1; x++) {
+        const i = y * W + x; let own = lab[i] ? compCell[lab[i]] === k : false;
+        if (!lab[i] && sh.rgba[i * 4 + 3] > 0) {
+          // 마스크 밖 가장자리 화소: 이웃 덩어리가 이 칸 것이면 같이 가져온다
+          for (let dy = -1; dy <= 1 && !own; dy++) for (let dx = -1; dx <= 1 && !own; dx++) {
+            const xx = x + dx, yy = y + dy; if (xx < 0 || yy < 0 || xx >= W || yy >= H) continue;
+            const ll = lab[yy * W + xx]; if (ll && compCell[ll] === k) own = true;
+          }
+        }
+        if (!own) continue;
+        const p = i * 4, q = ((y - y0) * bw + (x - x0)) * 4;
+        d[q] = sh.rgba[p]; d[q + 1] = sh.rgba[p + 1]; d[q + 2] = sh.rgba[p + 2]; d[q + 3] = sh.rgba[p + 3];
+      }
+      const cv = document.createElement('canvas'); cv.width = bw; cv.height = bh; cv.getContext('2d').putImageData(id, 0, 0);
+      Object.assign(cell, { sprite: cv, bx: x0, by: y0, bw, bh });
+      // 머리 가로 중심: 그림 위 20% 화소의 x 평균 (칸 좌표)
+      let sx = 0, sn = 0; const hy = Math.max(1, Math.round(bh * 0.2));
+      for (let y = 0; y < hy; y++) for (let x = 0; x < bw; x++) if (d[(y * bw + x) * 4 + 3] > 128) { sx += x; sn++; }
+      cell.headCx = (sn ? sx / sn : bw / 2) + x0 - o.x;
+    }
+    cells.push(cell);
+  }
+  S.cells = cells;
+  if (resetFrames || S.frames.some(f => f.cell >= nCells)) {
+    S.frames = cells.map((c, i) => c.sprite ? { cell: i, dx: 0, dy: 0 } : null).filter(Boolean);
+    S.sel = 0;
+  }
+  autoBaseline();
+  const empty = cells.filter(c => !c.sprite).length;
+  $('sheetInfo').textContent = `시트 ${W}×${H} · 칸 ${g.cols}×${g.rows} (${g.w}×${g.h}) · 그림 있는 칸 ${nCells - empty}${empty ? ` · 빈 칸 ${empty}` : ''}`;
+  refreshAll();
+}
+
+function autoBaseline() {
+  const b = S.frames.map(f => S.cells[f.cell]).filter(c => c && c.sprite).map(c => c.by + c.bh - c.y).sort((a, b) => a - b);
+  S.baseline = b.length ? b[Math.floor(b.length / 2)] : S.grid.h;
+  $('baseline').value = S.baseline;
+}
+
+// ───────────────────────────── 되돌리기 ─────────────────────────────
+function snapshot() { return JSON.stringify({ frames: S.frames, sel: S.sel }); }
+function pushUndo() { S.undo.push(snapshot()); if (S.undo.length > 300) S.undo.shift(); S.redo = []; }
+function restore(s) { const o = JSON.parse(s); S.frames = o.frames; S.sel = o.sel; refreshAll(); }
+function undo() { if (!S.undo.length) return; S.redo.push(snapshot()); restore(S.undo.pop()); status('되돌렸다.'); }
+function redo() { if (!S.redo.length) return; S.undo.push(snapshot()); restore(S.redo.pop()); status('다시 했다.'); }
+
+// ───────────────────────────── 프레임 편집 ─────────────────────────────
+function clampSel() { S.sel = Math.max(0, Math.min(S.frames.length - 1, S.sel)); }
+function cur() { return S.frames[S.sel]; }
+
+const Edit = {
+  duplicate() { const f = cur(); if (!f) return; pushUndo(); S.frames.splice(S.sel + 1, 0, { ...f }); S.sel++; refreshAll(); status(`프레임을 복제해 ${S.sel}번 자리에 넣었다.`); },
+  remove() { if (!cur()) return; pushUndo(); S.frames.splice(S.sel, 1); clampSel(); refreshAll(); status(`프레임을 뺐다. 남은 프레임 ${S.frames.length}개.`); },
+  copy() { const f = cur(); if (!f) return; S.clip = { ...f }; status(`${S.sel}번 프레임을 복사했다.`); },
+  paste(after = true) {
+    if (!S.clip) { status('복사한 프레임이 없다.', true); return; }
+    pushUndo(); const at = S.frames.length ? S.sel + (after ? 1 : 0) : 0;
+    S.frames.splice(at, 0, { ...S.clip }); S.sel = at; refreshAll(); status(`${at}번 자리에 붙여넣었다.`);
+  },
+  move(delta) {
+    const to = S.sel + delta; if (!cur() || to < 0 || to >= S.frames.length) return;
+    pushUndo(); const [f] = S.frames.splice(S.sel, 1); S.frames.splice(to, 0, f); S.sel = to; refreshAll();
+  },
+  moveTo(from, to) {
+    if (from === to || from < 0 || from >= S.frames.length) return;
+    pushUndo(); const [f] = S.frames.splice(from, 1); if (to > from) to--; S.frames.splice(to, 0, f); S.sel = to; refreshAll();
+  },
+  insertCell(cell) { pushUndo(); const at = S.frames.length ? S.sel + 1 : 0; S.frames.splice(at, 0, { cell, dx: 0, dy: 0 }); S.sel = at; refreshAll(); status(`칸 ${cell}을 ${at}번 자리에 넣었다.`); },
+  nudge(dx, dy, noUndo) { const f = cur(); if (!f) return; if (!noUndo) pushUndo(); f.dx += dx; f.dy += dy; refreshFrameInputs(); draw(); drawStripThumb(S.sel); },
+  setOffset(dx, dy) { const f = cur(); if (!f) return; pushUndo(); f.dx = dx; f.dy = dy; draw(); drawStripThumb(S.sel); },
+  feet() {
+    pushUndo();
+    for (const f of S.frames) { const c = S.cells[f.cell]; if (c.sprite) f.dy = S.baseline - (c.by + c.bh - c.y); }
+    refreshAll(); status('모든 프레임의 그림 아래 끝을 바닥선에 맞췄다.');
+  },
+  head() {
+    const ref = cur(); if (!ref) return; const rc = S.cells[ref.cell]; const target = rc.headCx + ref.dx;
+    pushUndo();
+    for (const f of S.frames) { const c = S.cells[f.cell]; if (c.sprite) f.dx = Math.round(target - c.headCx); }
+    refreshAll(); status(`머리 가로 중심을 ${S.sel}번 프레임(x ${target.toFixed(1)})에 맞췄다.`);
+  },
+  clearOffsets() { pushUndo(); for (const f of S.frames) { f.dx = 0; f.dy = 0; } refreshAll(); },
+  resetFrames() { pushUndo(); S.frames = S.cells.map((c, i) => c.sprite ? { cell: i, dx: 0, dy: 0 } : null).filter(Boolean); S.sel = 0; refreshAll(); },
+};
+
+// ───────────────────────────── 그리기 ─────────────────────────────
+let checker = null;
+function checkerPattern(ctx) {
+  if (!checker) {
+    const c = document.createElement('canvas'); c.width = c.height = 16; const x = c.getContext('2d');
+    x.fillStyle = '#3a3d44'; x.fillRect(0, 0, 16, 16); x.fillStyle = '#2c2f35'; x.fillRect(0, 0, 8, 8); x.fillRect(8, 8, 8, 8);
+    checker = c;
+  }
+  return ctx.createPattern(checker, 'repeat');
+}
+
+const tintCache = new WeakMap();
+function tinted(cv, color) {
+  const key = color; let m = tintCache.get(cv); if (!m) { m = {}; tintCache.set(cv, m); }
+  if (!m[key]) {
+    const t = document.createElement('canvas'); t.width = cv.width; t.height = cv.height; const x = t.getContext('2d');
+    x.drawImage(cv, 0, 0); x.globalCompositeOperation = 'source-atop'; x.fillStyle = color; x.globalAlpha = 0.55; x.fillRect(0, 0, t.width, t.height);
+    m[key] = t;
+  }
+  return m[key];
+}
+
+function stageGeom() {
+  const g = S.grid, pad = Math.round(Math.max(g.w, g.h) * 0.18);
+  const vw = g.w + pad * 2, vh = g.h + pad * 2;
+  let z = $('zoom').value;
+  if (z === 'fit') { const wrap = $('stageWrap'); z = Math.min((wrap.clientWidth - 16) / vw, (wrap.clientHeight - 16) / vh); }
+  z = Math.max(0.1, Number(z));
+  return { pad, vw, vh, z };
+}
+
+function draw() {
+  const cv = $('stage'), ctx = cv.getContext('2d');
+  if (!S.sheet) return;
+  const { pad, vw, vh, z } = stageGeom();
+  const W = Math.round(vw * z), H = Math.round(vh * z);
+  if (cv.width !== W || cv.height !== H) { cv.width = W; cv.height = H; }
+  ctx.imageSmoothingEnabled = false;
+  const bg = $('stageBg').value;
+  ctx.fillStyle = bg === 'checker' ? checkerPattern(ctx) : bg; ctx.fillRect(0, 0, W, H);
+  const g = S.grid;
+  // 칸 테두리
+  ctx.strokeStyle = 'rgba(108,180,255,.45)'; ctx.setLineDash([6, 4]); ctx.lineWidth = 1;
+  ctx.strokeRect(Math.round(pad * z) + .5, Math.round(pad * z) + .5, Math.round(g.w * z), Math.round(g.h * z));
+  ctx.setLineDash([]);
+  // 가운데 세로선
+  ctx.strokeStyle = 'rgba(255,255,255,.18)';
+  const cxl = Math.round((pad + g.w / 2) * z) + .5; ctx.beginPath(); ctx.moveTo(cxl, 0); ctx.lineTo(cxl, H); ctx.stroke();
+
+  const idx = S.playing ? S.playIdx : S.sel;
+  const drawFrame = (i, tint, alpha) => {
+    const f = S.frames[i]; if (!f) return; const c = S.cells[f.cell]; if (!c || !c.sprite) return;
+    const x = (pad + c.bx - c.x + f.dx) * z, y = (pad + c.by - c.y + f.dy) * z;
+    ctx.globalAlpha = alpha; ctx.drawImage(tint ? tinted(c.sprite, tint) : c.sprite, Math.round(x), Math.round(y), Math.round(c.bw * z), Math.round(c.bh * z)); ctx.globalAlpha = 1;
+    if ($('showBox').checked && !tint) { ctx.strokeStyle = 'rgba(255,220,80,.8)'; ctx.strokeRect(Math.round(x) + .5, Math.round(y) + .5, Math.round(c.bw * z), Math.round(c.bh * z)); }
+  };
+  const n = S.frames.length, on = Number($('onion').value);
+  if (n > 1) {
+    for (let k = on; k >= 1; k--) drawFrame(((idx - k) % n + n) % n, '#ff5050', 0.45 / k);
+    if ($('onionNext').checked) drawFrame((idx + 1) % n, '#4a9bff', 0.4);
+  }
+  drawFrame(idx, null, 1);
+  // 바닥선
+  const by = Math.round((pad + S.baseline) * z) + .5;
+  ctx.strokeStyle = '#ff5a5a'; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(0, by); ctx.lineTo(W, by); ctx.stroke();
+  ctx.fillStyle = '#ff8a8a'; ctx.font = '11px sans-serif'; ctx.fillText(`바닥선 y=${S.baseline}`, 4, by - 4);
+  const f = S.frames[idx];
+  $('frameInfo').textContent = f ? `프레임 ${idx + 1}/${n} · 칸 ${S.cells[f.cell].c},${S.cells[f.cell].r} · 오프셋 (${f.dx}, ${f.dy})` : '프레임 없음';
+  document.querySelectorAll('.thumb').forEach((t, i) => t.classList.toggle('playing', S.playing && i === S.playIdx));
+}
+
+function drawSheetView() {
+  const cv = $('sheetView'), sh = S.sheet; if (!sh) return;
+  const maxW = cv.parentElement.clientWidth - 4, z = Math.min(1, maxW / sh.w);
+  cv.width = Math.round(sh.w * z); cv.height = Math.round(sh.h * z);
+  const ctx = cv.getContext('2d'); ctx.imageSmoothingEnabled = true;
+  ctx.fillStyle = checkerPattern(ctx); ctx.fillRect(0, 0, cv.width, cv.height);
+  ctx.drawImage(sh.canvas, 0, 0, cv.width, cv.height);
+  const g = S.grid, used = new Set(S.frames.map(f => f.cell)), selCell = cur() ? cur().cell : -1;
+  ctx.font = '10px sans-serif';
+  S.cells.forEach((c, k) => {
+    if (!c.sprite) { ctx.fillStyle = 'rgba(0,0,0,.45)'; ctx.fillRect(c.x * z, c.y * z, g.w * z, g.h * z); }
+    ctx.strokeStyle = k === selCell ? '#6cb4ff' : 'rgba(108,180,255,.55)'; ctx.lineWidth = k === selCell ? 2 : 1;
+    ctx.strokeRect(c.x * z + .5, c.y * z + .5, g.w * z, g.h * z);
+    if (c.sprite) { ctx.strokeStyle = 'rgba(255,220,80,.85)'; ctx.lineWidth = 1; ctx.strokeRect(c.bx * z + .5, c.by * z + .5, c.bw * z, c.bh * z); }
+    ctx.fillStyle = used.has(k) ? '#fff' : '#ff8a65'; ctx.fillText(String(k), c.x * z + 3, c.y * z + 11);
+  });
+  cv._z = z;
+}
+
+function thumbFor(i, cv) {
+  const f = S.frames[i], c = S.cells[f.cell], g = S.grid, ctx = cv.getContext('2d');
+  const s = Math.min(cv.width / g.w, cv.height / g.h);
+  ctx.clearRect(0, 0, cv.width, cv.height); ctx.imageSmoothingEnabled = true;
+  const ox = (cv.width - g.w * s) / 2, oy = (cv.height - g.h * s) / 2;
+  ctx.strokeStyle = 'rgba(255,90,90,.6)'; ctx.beginPath(); ctx.moveTo(0, oy + S.baseline * s + .5); ctx.lineTo(cv.width, oy + S.baseline * s + .5); ctx.stroke();
+  if (c && c.sprite) ctx.drawImage(c.sprite, ox + (c.bx - c.x + f.dx) * s, oy + (c.by - c.y + f.dy) * s, c.bw * s, c.bh * s);
+}
+function drawStripThumb(i) { const t = $('strip').children[i]; if (!t) return; thumbFor(i, t.querySelector('canvas')); const f = S.frames[i]; t.querySelector('.off').textContent = (f.dx || f.dy) ? `${f.dx},${f.dy}` : ''; }
+
+let dragFrom = -1;
+function buildStrip() {
+  const strip = $('strip'); strip.innerHTML = '';
+  S.frames.forEach((f, i) => {
+    const t = document.createElement('div'); t.className = 'thumb' + (i === S.sel ? ' sel' : ''); t.draggable = true;
+    const cv = document.createElement('canvas'); cv.width = 88; cv.height = 88; t.appendChild(cv);
+    const c = S.cells[f.cell];
+    const cap = document.createElement('div'); cap.className = 'cap'; cap.innerHTML = `<b>${i}</b> · 칸 ${c.c},${c.r}`; t.appendChild(cap);
+    const off = document.createElement('div'); off.className = 'off'; t.appendChild(off);
+    t.onclick = () => { S.sel = i; if (S.playing) togglePlay(); refreshAll(false); };
+    t.ondragstart = e => { dragFrom = i; e.dataTransfer.effectAllowed = 'move'; e.dataTransfer.setData('text/plain', String(i)); };
+    t.ondragover = e => { if (dragFrom < 0) return; e.preventDefault(); const r = t.getBoundingClientRect(), right = e.clientX > r.left + r.width / 2;
+      t.classList.toggle('dropR', right); t.classList.toggle('dropL', !right); };
+    t.ondragleave = () => t.classList.remove('dropL', 'dropR');
+    t.ondrop = e => { e.preventDefault(); e.stopPropagation(); t.classList.remove('dropL', 'dropR'); if (dragFrom < 0) return;
+      const r = t.getBoundingClientRect(), to = i + (e.clientX > r.left + r.width / 2 ? 1 : 0); Edit.moveTo(dragFrom, to); dragFrom = -1; };
+    t.ondragend = () => { dragFrom = -1; };
+    strip.appendChild(t);
+    thumbFor(i, cv);
+    off.textContent = (f.dx || f.dy) ? `${f.dx},${f.dy}` : '';
+  });
+  const sel = strip.children[S.sel]; if (sel) sel.scrollIntoView({ block: 'nearest', inline: 'nearest' });
+}
+
+function refreshFrameInputs() { const f = cur(); $('fDx').value = f ? f.dx : 0; $('fDy').value = f ? f.dy : 0; }
+function refreshAll() {
+  clampSel(); buildStrip(); refreshFrameInputs(); draw(); drawSheetView();
+  const has = S.frames.length > 0;
+  ['btnDup', 'btnDel', 'btnCopy', 'btnMoveL', 'btnMoveR', 'btnResetOff', 'btnExportSheet', 'btnExportFrames', 'btnPlay'].forEach(id => $(id).disabled = !has);
+  $('btnUndo').disabled = !S.undo.length; $('btnRedo').disabled = !S.redo.length;
+}
+
+// ───────────────────────────── 재생 ─────────────────────────────
+function togglePlay() {
+  S.playing = !S.playing; $('btnPlay').textContent = S.playing ? '멈춤' : '재생';
+  if (S.playing) { S.playIdx = S.sel; S.lastTick = performance.now(); requestAnimationFrame(tick); }
+  else { S.sel = S.playIdx; refreshAll(); }
+}
+function tick(now) {
+  if (!S.playing) return;
+  const fps = Math.max(1, num('fpsNum')), step = 1000 / fps;
+  if (now - S.lastTick >= step) {
+    const k = Math.floor((now - S.lastTick) / step); S.lastTick += k * step;
+    if (S.frames.length) S.playIdx = (S.playIdx + k) % S.frames.length;
+    draw();
+  }
+  requestAnimationFrame(tick);
+}
+function stepFrame(d) { if (!S.frames.length) return; if (S.playing) togglePlay(); S.sel = ((S.sel + d) % S.frames.length + S.frames.length) % S.frames.length; refreshAll(); }
+
+// ───────────────────────────── 저장 ─────────────────────────────
+function setOutputFromSource() {
+  const g = S.grid; $('oCols').value = g.cols; $('oRows').value = 0; $('oW').value = g.w; $('oH').value = g.h;
+  $('oScale').value = 1; $('oPad').value = g.h - S.baseline;
+}
+function outOpts() {
+  const n = S.frames.length, cols = Math.max(1, num('oCols')), rowsIn = num('oRows');
+  return { n, cols, rows: Math.max(rowsIn, Math.ceil(n / cols)), w: Math.max(1, num('oW')), h: Math.max(1, num('oH')),
+    s: Math.max(0.001, num('oScale')), pad: num('oPad'), smooth: $('oSmooth').value === '1' };
+}
+// 프레임 i를 ctx의 (ox, oy) 칸에 그린다
+function renderFrame(ctx, i, ox, oy, o) {
+  const f = S.frames[i], c = S.cells[f.cell]; if (!c || !c.sprite) return;
+  const g = S.grid, px = o.w / 2, py = o.h - o.pad;            // 출력 기준점
+  const sx = c.bx - c.x + f.dx - g.w / 2, sy = c.by - c.y + f.dy - S.baseline; // 원본 기준점에서 그림 왼쪽 위까지
+  ctx.imageSmoothingEnabled = o.smooth; ctx.imageSmoothingQuality = 'high';
+  ctx.save(); ctx.beginPath(); ctx.rect(ox, oy, o.w, o.h); ctx.clip();
+  if (o.smooth && o.s < 0.5) {
+    // 크게 줄일 때는 반씩 여러 번 줄여야 덜 뭉개진다
+    let src = c.sprite, w = src.width, h = src.height;
+    while (w * o.s < w / 2 && w > 2) {
+      const t = document.createElement('canvas'); t.width = Math.max(1, Math.round(w / 2)); t.height = Math.max(1, Math.round(h / 2));
+      const tx = t.getContext('2d'); tx.imageSmoothingQuality = 'high'; tx.drawImage(src, 0, 0, t.width, t.height);
+      src = t; w = t.width; h = t.height; if (w <= c.bw * o.s * 2) break;
+    }
+    ctx.drawImage(src, ox + px + sx * o.s, oy + py + sy * o.s, c.bw * o.s, c.bh * o.s);
+  } else ctx.drawImage(c.sprite, ox + px + sx * o.s, oy + py + sy * o.s, c.bw * o.s, c.bh * o.s);
+  ctx.restore();
+}
+function renderSheet() {
+  const o = outOpts(), cv = document.createElement('canvas'); cv.width = o.cols * o.w; cv.height = o.rows * o.h;
+  const ctx = cv.getContext('2d');
+  for (let i = 0; i < o.n; i++) renderFrame(ctx, i, (i % o.cols) * o.w, Math.floor(i / o.cols) * o.h, o);
+  return cv;
+}
+function renderFrames() {
+  const o = outOpts();
+  return S.frames.map((_, i) => { const cv = document.createElement('canvas'); cv.width = o.w; cv.height = o.h; renderFrame(cv.getContext('2d'), i, 0, 0, o); return cv; });
+}
+// 모든 프레임이 출력 칸에 들어가는 가장 큰 배율.
+// 지금 바닥 여백으로 맞추되, 바닥선 아래로 내려간 그림(대걸레 머리 등) 때문에 배율이 크게 줄면
+// 그 몫만큼 바닥 여백을 늘려서 맞춘다.
+function fitScale() {
+  const o = outOpts(), g = S.grid, px = o.w / 2;
+  let maxL = 0, maxR = 0, maxUp = 0, maxDown = 0;
+  for (const f of S.frames) {
+    const c = S.cells[f.cell]; if (!c.sprite) continue;
+    const L = c.bx - c.x + f.dx - g.w / 2, T = c.by - c.y + f.dy - S.baseline;
+    maxL = Math.max(maxL, -L); maxR = Math.max(maxR, L + c.bw); maxUp = Math.max(maxUp, -T); maxDown = Math.max(maxDown, T + c.bh);
+  }
+  const lim = (room, need) => need > 0 ? room / need : Infinity;
+  const sx = Math.min(lim(px, maxL), lim(o.w - px, maxR));
+  const sFixed = Math.min(sx, lim(o.h - o.pad, maxUp), lim(o.pad, maxDown));
+  const sAuto = Math.min(sx, lim(o.h, maxUp + maxDown));      // 여백 = 바닥선 아래 몫
+  let s = sFixed, msg = '';
+  if (sFixed < sAuto * 0.98) {
+    s = sAuto; const pad = Math.ceil(maxDown * s); $('oPad').value = pad;
+    s = Math.min(sx, lim(o.h - pad, maxUp), lim(pad, maxDown));
+    msg = ` 바닥선 아래로 내려간 그림 때문에 바닥 여백을 ${pad}px로 늘렸다.`;
+  }
+  if (!isFinite(s) || s <= 0) s = 1;
+  $('oScale').value = Math.floor(s * 1000) / 1000;
+  status(`배율 ${$('oScale').value}: 모든 프레임이 ${o.w}×${o.h} 칸 안에 들어간다.${msg}`);
+  showExportPreview();
+}
+function showExportPreview() {
+  if (!S.frames.length) return;
+  const sheet = renderSheet(), pv = $('exportPreview');
+  pv.width = sheet.width; pv.height = sheet.height; pv.style.display = 'block';
+  const x = pv.getContext('2d'); x.clearRect(0, 0, pv.width, pv.height); x.drawImage(sheet, 0, 0);
+  const o = outOpts(); x.strokeStyle = 'rgba(108,180,255,.5)';
+  for (let c = 1; c < o.cols; c++) { x.beginPath(); x.moveTo(c * o.w + .5, 0); x.lineTo(c * o.w + .5, pv.height); x.stroke(); }
+  for (let r = 1; r < o.rows; r++) { x.beginPath(); x.moveTo(0, r * o.h + .5); x.lineTo(pv.width, r * o.h + .5); x.stroke(); }
+}
+const toBlob = cv => new Promise(res => cv.toBlob(res, 'image/png'));
+function download(blob, name) { const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = name; document.body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(a.href), 5000); }
+
+async function exportSheet() {
+  const cv = renderSheet(), blob = await toBlob(cv), name = ($('outName').value || 'sprite') + '_sheet.png';
+  showExportPreview();
+  try {
+    if (window.showSaveFilePicker) {
+      const h = await showSaveFilePicker({ suggestedName: name, types: [{ description: 'PNG', accept: { 'image/png': ['.png'] } }] });
+      const w = await h.createWritable(); await w.write(blob); await w.close();
+      status(`저장했다: ${h.name} (${cv.width}×${cv.height}, 프레임 ${S.frames.length}개)`); return;
+    }
+  } catch (e) { if (e.name === 'AbortError') return; }
+  download(blob, name); status(`내려받았다: ${name} (${cv.width}×${cv.height}, 프레임 ${S.frames.length}개)`);
+}
+
+async function exportFrames() {
+  const frames = renderFrames(), base = $('outName').value || 'sprite';
+  const blobs = await Promise.all(frames.map(toBlob));
+  try {
+    if (window.showDirectoryPicker) {
+      const dir = await showDirectoryPicker({ mode: 'readwrite' });
+      for (let i = 0; i < blobs.length; i++) {
+        const h = await dir.getFileHandle(`${base}_${i}.png`, { create: true }); const w = await h.createWritable(); await w.write(blobs[i]); await w.close();
+      }
+      status(`${dir.name} 폴더에 ${base}_0.png ~ ${base}_${blobs.length - 1}.png 를 저장했다 (${frames[0].width}×${frames[0].height}).`); return;
+    }
+  } catch (e) { if (e.name === 'AbortError') return; }
+  const files = await Promise.all(blobs.map(async (b, i) => ({ name: `${base}_${i}.png`, data: new Uint8Array(await b.arrayBuffer()) })));
+  download(makeZip(files), base + '_frames.zip'); status(`${base}_frames.zip 으로 내려받았다 (프레임 ${files.length}장).`);
+}
+
+// 압축 없는(store) zip
+const CRC = (() => { const t = new Uint32Array(256); for (let n = 0; n < 256; n++) { let c = n; for (let k = 0; k < 8; k++) c = c & 1 ? 0xEDB88320 ^ (c >>> 1) : c >>> 1; t[n] = c >>> 0; } return t; })();
+function crc32(d) { let c = 0xFFFFFFFF; for (let i = 0; i < d.length; i++) c = CRC[(c ^ d[i]) & 255] ^ (c >>> 8); return (c ^ 0xFFFFFFFF) >>> 0; }
+function makeZip(files) {
+  const enc = new TextEncoder(), parts = [], central = []; let off = 0;
+  for (const f of files) {
+    const nm = enc.encode(f.name), crc = crc32(f.data), h = new DataView(new ArrayBuffer(30));
+    h.setUint32(0, 0x04034b50, true); h.setUint16(4, 20, true); h.setUint16(6, 0x800, true); h.setUint32(14, crc, true);
+    h.setUint32(18, f.data.length, true); h.setUint32(22, f.data.length, true); h.setUint16(26, nm.length, true);
+    parts.push(h, nm, f.data);
+    const c = new DataView(new ArrayBuffer(46));
+    c.setUint32(0, 0x02014b50, true); c.setUint16(4, 20, true); c.setUint16(6, 20, true); c.setUint16(8, 0x800, true); c.setUint32(16, crc, true);
+    c.setUint32(20, f.data.length, true); c.setUint32(24, f.data.length, true); c.setUint16(28, nm.length, true); c.setUint32(42, off, true);
+    central.push(c, nm); off += 30 + nm.length + f.data.length;
+  }
+  const cSize = central.reduce((s, p) => s + p.byteLength, 0), e = new DataView(new ArrayBuffer(22));
+  e.setUint32(0, 0x06054b50, true); e.setUint16(8, files.length, true); e.setUint16(10, files.length, true); e.setUint32(12, cSize, true); e.setUint32(16, off, true);
+  return new Blob([...parts, ...central, e], { type: 'application/zip' });
+}
+
+// 편집 기록(json): 칸 설정·배경·바닥선·프레임 목록
+function saveJson() {
+  if (!S.sheet) return;
+  const o = { sheet: S.sheet.name, size: [S.sheet.w, S.sheet.h], bg: { mode: $('bgMode').value, key: $('keyColor').value, tol: num('keyTol'), alpha: num('alphaThr') },
+    grid: S.grid, baseline: S.baseline, frames: S.frames, output: outOpts() };
+  download(new Blob([JSON.stringify(o, null, 1)], { type: 'application/json' }), ($('outName').value || 'sprite') + '_edit.json');
+}
+async function loadJson(file) {
+  if (!S.sheet) { status('먼저 시트를 연다.', true); return; }
+  const o = JSON.parse(await file.text());
+  if (o.size && (o.size[0] !== S.sheet.w || o.size[1] !== S.sheet.h)) status(`주의: 기록의 시트 크기 ${o.size.join('×')}가 지금 시트와 다르다.`, true);
+  if (o.bg) { $('bgMode').value = o.bg.mode; $('keyColor').value = o.bg.key; $('keyTol').value = o.bg.tol; $('alphaThr').value = o.bg.alpha; buildMask(); }
+  setGridInputs(o.grid); extract(true);
+  pushUndo(); S.frames = o.frames.filter(f => f.cell < S.cells.length); S.baseline = o.baseline; $('baseline').value = o.baseline;
+  if (o.output) { $('oCols').value = o.output.cols; $('oW').value = o.output.w; $('oH').value = o.output.h; $('oScale').value = o.output.s; $('oPad').value = o.output.pad; $('oSmooth').value = o.output.smooth ? '1' : '0'; }
+  refreshAll(); status(`편집 기록을 불러왔다: 프레임 ${S.frames.length}개.`);
+}
+
+// ───────────────────────────── 이벤트 연결 ─────────────────────────────
+$('btnOpen').onclick = () => $('fileInput').click();
+$('fileInput').onchange = e => { openFiles(e.target.files).catch(err => status(err.message, true)); e.target.value = ''; };
+document.addEventListener('dragover', e => { if (e.dataTransfer.types.includes('Files')) e.preventDefault(); });
+document.addEventListener('drop', e => { if (!e.dataTransfer.files.length) return; e.preventDefault(); openFiles(e.dataTransfer.files).catch(err => status(err.message, true)); });
+
+const reMask = () => { if (!S.sheet) return; buildMask(); extract(false); status(`배경: ${S.sheet.modeLabel}`); };
+['bgMode', 'keyColor', 'keyTol', 'alphaThr'].forEach(id => $(id).onchange = reMask);
+$('btnAutoGrid').onclick = () => { if (!S.sheet) return; autoGrid(); extract(true); setOutputFromSource(); status(`칸 감지: ${S.grid.cols}×${S.grid.rows} (${S.grid.w}×${S.grid.h})`); };
+$('btnFitCell').onclick = () => { if (!S.sheet) return; const g = readGridInputs();
+  $('gW').value = Math.floor((S.sheet.w - g.ox * 2 - g.gx * (g.cols - 1)) / g.cols); $('gH').value = Math.floor((S.sheet.h - g.oy * 2 - g.gy * (g.rows - 1)) / g.rows); };
+$('btnApplyGrid').onclick = () => { if (!S.sheet) return; extract(true); status(`칸 ${S.grid.cols}×${S.grid.rows}로 프레임 ${S.frames.length}개를 다시 뽑았다.`); };
+
+$('fDx').onchange = () => Edit.setOffset(num('fDx'), num('fDy'));
+$('fDy').onchange = () => Edit.setOffset(num('fDx'), num('fDy'));
+$('btnDup').onclick = Edit.duplicate; $('btnDel').onclick = Edit.remove; $('btnCopy').onclick = Edit.copy;
+$('btnPasteAfter').onclick = () => Edit.paste(true); $('btnPasteBefore').onclick = () => Edit.paste(false);
+$('btnMoveL').onclick = () => Edit.move(-1); $('btnMoveR').onclick = () => Edit.move(1);
+$('btnResetOff').onclick = () => Edit.setOffset(0, 0);
+$('btnFeet').onclick = Edit.feet; $('btnHead').onclick = Edit.head; $('btnClearOff').onclick = Edit.clearOffsets; $('btnResetFrames').onclick = Edit.resetFrames;
+$('btnUndo').onclick = undo; $('btnRedo').onclick = redo;
+
+$('btnPlay').onclick = togglePlay; $('btnPrev').onclick = () => stepFrame(-1); $('btnNext').onclick = () => stepFrame(1);
+$('fps').oninput = () => $('fpsNum').value = $('fps').value; $('fpsNum').onchange = () => $('fps').value = $('fpsNum').value;
+['zoom', 'onion', 'onionNext', 'stageBg', 'showBox'].forEach(id => $(id).onchange = draw);
+$('baseline').onchange = () => { S.baseline = num('baseline'); draw(); buildStrip(); };
+$('btnAutoBase').onclick = () => { autoBaseline(); draw(); buildStrip(); };
+window.addEventListener('resize', () => { draw(); drawSheetView(); });
+
+$('oPreset').onchange = () => {
+  const v = $('oPreset').value; $('oPreset').value = ''; if (!S.sheet) return;
+  if (v === 'src') setOutputFromSource();
+  else if (v) { const [w, h] = v.split('x').map(Number); $('oW').value = w; $('oH').value = h; $('oPad').value = 0; fitScale(); return; }
+  showExportPreview();
+};
+['oCols', 'oRows', 'oW', 'oH', 'oScale', 'oPad', 'oSmooth'].forEach(id => $(id).onchange = showExportPreview);
+$('btnFitScale').onclick = fitScale;
+$('btnExportSheet').onclick = () => exportSheet().catch(e => status('저장 실패: ' + e.message, true));
+$('btnExportFrames').onclick = () => exportFrames().catch(e => status('저장 실패: ' + e.message, true));
+$('btnSaveJson').onclick = saveJson;
+$('btnLoadJson').onclick = () => $('jsonInput').click();
+$('jsonInput').onchange = e => { if (e.target.files[0]) loadJson(e.target.files[0]).catch(err => status(err.message, true)); e.target.value = ''; };
+
+// 원본 시트 보기: 클릭 = 그 칸 프레임 선택, 더블클릭 = 추가
+function sheetCellAt(e) {
+  const cv = $('sheetView'), r = cv.getBoundingClientRect(), z = cv._z * (r.width / cv.width);
+  const x = (e.clientX - r.left) / z, y = (e.clientY - r.top) / z, g = S.grid;
+  return S.cells.findIndex(c => x >= c.x && x < c.x + g.w && y >= c.y && y < c.y + g.h);
+}
+$('sheetView').onclick = e => { const k = sheetCellAt(e); const i = S.frames.findIndex(f => f.cell === k); if (i >= 0) { S.sel = i; refreshAll(); } };
+$('sheetView').ondblclick = e => { const k = sheetCellAt(e); if (k >= 0 && S.cells[k].sprite) Edit.insertCell(k); };
+
+// 무대 끌기 = 오프셋
+let drag = null;
+$('stage').onpointerdown = e => {
+  if (!cur()) return; if (S.playing) togglePlay();
+  drag = { x: e.clientX, y: e.clientY, dx: cur().dx, dy: cur().dy, z: stageGeom().z * ($('stage').getBoundingClientRect().width / $('stage').width), pushed: false };
+  $('stage').setPointerCapture(e.pointerId); $('stage').classList.add('dragging');
+};
+$('stage').onpointermove = e => {
+  if (!drag) return; const f = cur();
+  const nx = drag.dx + Math.round((e.clientX - drag.x) / drag.z), ny = drag.dy + Math.round((e.clientY - drag.y) / drag.z);
+  if (nx === f.dx && ny === f.dy) return;
+  if (!drag.pushed) { pushUndo(); drag.pushed = true; }
+  f.dx = nx; f.dy = ny; refreshFrameInputs(); draw();
+};
+$('stage').onpointerup = () => { if (drag) { drag = null; $('stage').classList.remove('dragging'); drawStripThumb(S.sel); refreshAll(); } };
+
+document.addEventListener('keydown', e => {
+  if (e.target.matches('input, select, textarea')) return;
+  const k = e.key, ctrl = e.ctrlKey || e.metaKey;
+  if (k === ' ') { e.preventDefault(); if (S.frames.length) togglePlay(); }
+  else if (k === ',' ) stepFrame(-1);
+  else if (k === '.') stepFrame(1);
+  else if (ctrl && (k === 'z' || k === 'Z') && !e.shiftKey) { e.preventDefault(); undo(); }
+  else if (ctrl && (k === 'y' || k === 'Y' || ((k === 'z' || k === 'Z') && e.shiftKey))) { e.preventDefault(); redo(); }
+  else if (ctrl && (k === 'd' || k === 'D')) { e.preventDefault(); Edit.duplicate(); }
+  else if (ctrl && (k === 'c' || k === 'C')) { Edit.copy(); }
+  else if (ctrl && (k === 'v' || k === 'V')) { Edit.paste(!e.shiftKey); }
+  else if (k === 'Delete' || k === 'Backspace') { e.preventDefault(); Edit.remove(); }
+  else if (e.altKey && (k === 'ArrowLeft' || k === 'ArrowRight')) { e.preventDefault(); Edit.move(k === 'ArrowLeft' ? -1 : 1); }
+  else if (k.startsWith('Arrow')) {
+    e.preventDefault(); if (S.playing) togglePlay(); const d = e.shiftKey ? 10 : 1;
+    Edit.nudge(k === 'ArrowLeft' ? -d : k === 'ArrowRight' ? d : 0, k === 'ArrowUp' ? -d : k === 'ArrowDown' ? d : 0);
+  }
+});
+
+// 주소에 ?src=그림주소 를 붙이면 그 시트를 바로 연다 (로컬 서버로 띄웠을 때)
+(async () => {
+  const src = new URLSearchParams(location.search).get('src');
+  if (!src) { refreshAll(); return; }
+  try { const im = await loadImage(src); setSheet(im, decodeURIComponent(src.split('/').pop()), null); }
+  catch (e) { status(e.message, true); }
+})();
+window.SST = { S, Edit, extract, autoGrid, renderSheet, renderFrames, fitScale, makeZip, setSheet, loadImage };
+</script>
+</body>
+</html>
