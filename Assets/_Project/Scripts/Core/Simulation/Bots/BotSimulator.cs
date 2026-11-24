@@ -137,6 +137,7 @@ namespace ApoGirl.Core.Simulation.Bots
 
         /// <summary>제작 P7: 레시피별 처음 완성한 주, 완성 횟수 (손질 포함).</summary>
         public readonly Dictionary<string, int> CraftFirstWeek = new Dictionary<string, int>();
+        public readonly Dictionary<string, int> CraftCounts = new Dictionary<string, int>();
         public int Crafts;
 
         public bool Survived => Status == GameStatus.Rescued;
@@ -256,6 +257,8 @@ namespace ApoGirl.Core.Simulation.Bots
             if (outcome.Craft != null && outcome.Craft.Finished)
             {
                 result.Crafts++;
+                result.CraftCounts.TryGetValue(outcome.Craft.RecipeId, out var made);
+                result.CraftCounts[outcome.Craft.RecipeId] = made + 1;
                 if (!result.CraftFirstWeek.ContainsKey(outcome.Craft.RecipeId))
                 {
                     result.CraftFirstWeek[outcome.Craft.RecipeId] = outcome.Week;

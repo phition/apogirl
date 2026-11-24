@@ -439,13 +439,14 @@ namespace ApoGirl.Core.Simulation.Bots
                 {
                     var list = runs.Where(r => r.StrategyId == s).ToList();
                     var firsts = list.Where(r => r.CraftFirstWeek.ContainsKey(recipe)).Select(r => r.CraftFirstWeek[recipe]).OrderBy(w => w).ToList();
-                    return firsts.Count == 0 ? "-" : $"{P(firsts.Count, list.Count)} ({Percentile(firsts, 0.5f)}주)";
+                    var perRun = list.Average(r => r.CraftCounts.TryGetValue(recipe, out var n) ? n : 0);
+                    return firsts.Count == 0 ? "-" : $"{P(firsts.Count, list.Count)} ({Percentile(firsts, 0.5f)}주) · {F(perRun)}회";
                 });
                 sb.AppendLine($"| {recipe} | " + string.Join(" | ", cells) + " |");
             }
 
             sb.AppendLine();
-            sb.AppendLine("칸: 완성한 판 비율 (처음 완성한 주의 중앙값).");
+            sb.AppendLine("칸: 완성한 판 비율 (처음 완성한 주의 중앙값) · 판당 완성 횟수.");
             sb.AppendLine();
         }
 
