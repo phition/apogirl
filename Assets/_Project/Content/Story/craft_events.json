@@ -1,0 +1,15 @@
+{
+  "Events": [
+    { "Id": "EVT_CRAFT_WORKBENCH", "Kind": "Story", "Priority": 44,
+      "Condition": { "FlagsNone": [ "TEACHER_BEDRIDDEN", "TEACHER_ISOLATED", "TEACHER_LEFT_BEHIND" ], "ActionIds": [ "ACT_CRAFT_WORKBENCH" ], "FlagsAll": [ "WORKBENCH" ] } },
+
+    { "Id": "EVT_CRAFT_SCARECROW", "Kind": "Story", "Priority": 44,
+      "Condition": { "FlagsNone": [ "TEACHER_BEDRIDDEN", "TEACHER_ISOLATED", "TEACHER_LEFT_BEHIND" ], "ActionIds": [ "ACT_CRAFT_SCARECROW" ], "FlagsAll": [ "SCARECROW_UP" ] } },
+
+    { "Id": "EVT_CRAFT_PURIFIER", "Kind": "Story", "Priority": 44,
+      "Condition": { "FlagsNone": [ "TEACHER_BEDRIDDEN", "TEACHER_ISOLATED", "TEACHER_LEFT_BEHIND" ], "Phase": "Day", "FlagsAll": [ "AUTO_PURIFIER" ] } },
+
+    { "Id": "EVT_CRAFT_FRAME_PACK", "Kind": "Story", "Priority": 44,
+      "Condition": { "FlagsNone": [ "TEACHER_BEDRIDDEN", "TEACHER_ISOLATED", "TEACHER_LEFT_BEHIND" ], "FlagsAll": [ "CRAFTED_ACT_CRAFT_BAG_FRAME" ] } }
+  ]
+}

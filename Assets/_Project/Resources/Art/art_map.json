@@ -75,6 +75,22 @@
   ],
   "Events": [
     {
+      "Event": "EVT_CRAFT_WORKBENCH",
+      "Image": "Backgrounds/bg_storage"
+    },
+    {
+      "Event": "EVT_CRAFT_SCARECROW",
+      "Image": "Backgrounds/bg_school_gate"
+    },
+    {
+      "Event": "EVT_CRAFT_PURIFIER",
+      "Image": "Backgrounds/bg_science"
+    },
+    {
+      "Event": "EVT_CRAFT_FRAME_PACK",
+      "Image": "Backgrounds/bg_homeec"
+    },
+    {
       "Event": "EVT_A1_TRAPPED",
       "Image": "Events/evt_ng_storage"
     },
