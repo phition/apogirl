@@ -3,6 +3,8 @@
 [CRAFTING_PROPOSAL.md](CRAFTING_PROPOSAL.md) 결정 C10(사용자 결정 2026-11-24)에 따라 **지금은 기존 그림과 아이콘을 빌려 쓴다.** 이 문서는 나중에 PixelLab에 맡길 프롬프트만 모은 것이다. **아직 아무것도 제출하지 않았다.**
 탐험 화면은 픽셀 아트라서 힉스필드가 아니라 PixelLab으로 만든다([PIXELLAB_DEEP.md](PIXELLAB_DEEP.md)와 같은 방식).
 
+> **요청 범위·비용·결정은 [PIXELLAB_CRAFTING_REQUEST.md](PIXELLAB_CRAFTING_REQUEST.md)(2026-11-25)를 따른다.** 이 문서는 프롬프트 원안이다. 그 뒤 주인공 그림이 24프레임·무기 겹치기 방식으로 바뀌어, 몽둥이·보호구의 길은 요청 문서 4·5절이 최신이다.
+
 - 도구는 `code_temp/apogirl/tools/pixellab.py`를 쓴다.
   - 한 장짜리: `image_pro`
   - 움직임: `animate`
