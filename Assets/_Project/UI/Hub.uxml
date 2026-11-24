@@ -150,7 +150,7 @@
                 </ui:VisualElement>
                 <ui:VisualElement name="give-diet" class="give-diet" />
                 <ui:Label name="give-hint" class="give-hint" />
-                <ui:ScrollView name="give-list" class="give-list" />
+                <ui:ScrollView name="give-list" class="give-list" mode="Vertical" horizontal-scroller-visibility="Hidden" vertical-scroller-visibility="Auto" />
                 <ui:VisualElement name="give-buttons" class="give-buttons" />
             </ui:VisualElement>
         </ui:VisualElement>

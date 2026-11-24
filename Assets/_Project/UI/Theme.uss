@@ -1044,20 +1044,23 @@ Button.selected { border-color: var(--accent); background-color: var(--accent-so
 
 /* ── 이번 주 배분하기 (GiveSheetView, 기획 D.3) ── */
 .give-panel { width: 1360px; height: 860px; background-color: rgb(26, 28, 32); border-width: 1px; border-color: var(--accent-soft); border-radius: 10px; padding: 22px 28px; }
-.give-head { flex-direction: row; align-items: flex-end; margin-bottom: 4px; }
+.give-head { flex-shrink: 0; flex-direction: row; align-items: flex-end; margin-bottom: 4px; }
 .give-title { font-size: 30px; -unity-font-style: bold; color: var(--accent); flex-grow: 1; }
 .give-stock { font-size: 18px; color: var(--text); }
-.give-hint { font-size: 15px; color: var(--text-dim); white-space: normal; margin-bottom: 12px; }
-.give-list { flex-grow: 1; }
-.give-diet { padding: 10px 12px; margin-bottom: 10px; background-color: rgb(38, 36, 30); border-width: 1px; border-color: var(--accent-soft); border-radius: 8px; }
+.give-hint { flex-shrink: 0; font-size: 15px; color: var(--text-dim); white-space: normal; margin-bottom: 12px; }
+/* 동료가 늘면 목록만 스크롤 (식단·단추 칸은 줄지 않는다) */
+.give-list { flex-grow: 1; flex-shrink: 1; flex-basis: 0; min-height: 120px; }
+.give-list .unity-scroll-view__content-container { flex-shrink: 0; }
+.give-list .unity-scroll-view__vertical-scroller { margin-left: 6px; }
+.give-diet { flex-shrink: 0; padding: 10px 12px; margin-bottom: 10px; background-color: rgb(38, 36, 30); border-width: 1px; border-color: var(--accent-soft); border-radius: 8px; }
 .give-diet-title { font-size: 18px; -unity-font-style: bold; color: var(--accent); margin-bottom: 4px; }
-.give-diet-row { flex-direction: row; align-items: center; margin: 2px 0; }
+.give-diet-row { flex-shrink: 0; flex-direction: row; align-items: center; margin: 2px 0; }
 .give-diet-name { width: 90px; font-size: 16px; color: var(--text); }
 .give-diet-need { font-size: 15px; color: var(--text-dim); margin-left: 10px; }
 .give-diet-need.short { color: rgb(236, 140, 120); }
 .give-diet-note { font-size: 13px; color: var(--text-dim); white-space: normal; margin-top: 4px; }
 .give-empty { font-size: 15px; color: var(--text-dim); margin: 8px 4px; }
-.give-row { flex-direction: row; align-items: center; padding: 10px 12px; margin-bottom: 8px; background-color: rgb(34, 36, 41); border-width: 1px; border-color: var(--line); border-radius: 8px; }
+.give-row { flex-shrink: 0; flex-direction: row; align-items: center; padding: 10px 12px; margin-bottom: 8px; background-color: rgb(34, 36, 41); border-width: 1px; border-color: var(--line); border-radius: 8px; }
 .give-info { width: 300px; flex-shrink: 0; }
 .give-condition { font-size: 13px; color: var(--text-dim); white-space: normal; margin-top: 2px; }
 .give-choices { flex-grow: 1; flex-shrink: 1; }
@@ -1067,7 +1070,7 @@ Button.selected { border-color: var(--accent); background-color: var(--accent-so
 .give-choice.with-icon { padding-left: 32px; }
 .give-choice.liked { color: rgb(236, 178, 170); }
 .give-choice.selected { background-color: var(--accent-soft); border-color: var(--accent); color: rgb(250, 246, 236); }
-.give-buttons { flex-direction: row; justify-content: flex-end; margin-top: 12px; }
+.give-buttons { flex-shrink: 0; flex-direction: row; justify-content: flex-end; margin-top: 12px; }
 .give-confirm { min-width: 220px; }
 
 /* 단면도 말풍선 */
