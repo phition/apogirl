@@ -81,7 +81,18 @@ namespace ApoGirl.Presentation.Screens
                 return "";
             }
 
-            return Loc.F("result.craft." + craft.Step, Thing(craft), craft.Remaining);
+            return Special(craft, "result.craft.done.") ?? Loc.F("result.craft." + craft.Step, Thing(craft), craft.Remaining);
+        }
+
+        /// <summary>레시피 전용 완성 문구 (예: 작업대를 놓았다). 완성·잘 만듦에만, 없으면 null.</summary>
+        private static string Special(CraftOutcome craft, string prefix)
+        {
+            if (craft.Step != CraftStep.Done && craft.Step != CraftStep.Fine)
+            {
+                return null;
+            }
+
+            return Loc.Lookup(Loc.UiTable, prefix + craft.RecipeId);
         }
 
         /// <summary>결산 일기 한 줄: 완성·잘 만듦·실패만 (착수·제작 중은 남기지 않는다). 없으면 null.</summary>
@@ -90,6 +101,12 @@ namespace ApoGirl.Presentation.Screens
             if (craft == null)
             {
                 return null;
+            }
+
+            var special = Special(craft, "settle.craft_done.");
+            if (special != null)
+            {
+                return special;
             }
 
             switch (craft.Step)

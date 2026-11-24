@@ -83,6 +83,13 @@
           "X": 96
         }
       ],
+      "BuiltProps": [
+        {
+          "Flag": "WORKBENCH",
+          "Key": "prop_mart_toolrack",
+          "X": 40
+        }
+      ],
       "Actions": [
         "ACT_SURV_MAKE_CRUTCH",
         "ACT_SURV_MAKE_PROSTHETIC",

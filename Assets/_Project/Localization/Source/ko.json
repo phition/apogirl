@@ -464,6 +464,8 @@
     "result.craft.Failed": "{0} 만들기 실패 — 재료 일부를 건졌다",
     "result.craft.NoMaterials": "재료가 모자라 {0} 만들기를 시작하지 못했다",
     "result.craft.Maintained": "{0} 손질을 마쳤다",
+    "result.craft.done.ACT_CRAFT_WORKBENCH": "창고 한쪽에 작업대를 놓았다 — 이제 뭔가 만들 수 있을 것 같다",
+    "settle.craft_done.ACT_CRAFT_WORKBENCH": "창고 한쪽에 작업대를 놓았다. 이제 뭔가를 만들 수 있을 것 같다.",
     "settle.craft_done": "{0} 만들었다",
     "settle.craft_fine": "{0} 잘 만들었다",
     "settle.craft_failed": "{0} 만들기에 실패했다",
