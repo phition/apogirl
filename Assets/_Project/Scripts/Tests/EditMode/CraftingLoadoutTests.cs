@@ -44,7 +44,7 @@ namespace ApoGirl.Tests.EditMode
                 TestContent.CreateItems().Concat(Equipment()), new[] { TestContent.CreateLootTable() }, new[] { TestContent.CreateLocation() });
         }
 
-        private static GameState StateWith(IDefinitionDatabase db, params string[] items)
+        private static GameState StateWith(InMemoryDefinitionDatabase db, params string[] items)
         {
             var state = TestContent.NewGame(db, 7);
             state.Storage.Clear();
