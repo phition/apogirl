@@ -86,6 +86,25 @@ namespace ApoGirl.Tests.EditMode
         }
 
         [Test]
+        public void V12Save_NightWorkBecomesNightRest()
+        {
+            var state = TestContent.NewGame(_db);
+            state.Plan.Slots[1].ActionId = "ACT_NIGHT_WORK";
+            state.LastWeekPlan = new WeekPlan();
+            state.LastWeekPlan.Slots[3].ActionId = "ACT_NIGHT_WORK";
+            state.PlanPresets.Add(new PlanPreset { Name = "옛 계획", ActionIds = { "ACT_REST_DAY", "ACT_NIGHT_WORK" } });
+            var root = JObject.Parse(_serializer.Serialize(state));
+            root["SaveVersion"] = 12;
+
+            var loaded = _serializer.Deserialize(root.ToString());
+
+            Assert.AreEqual(GameState.CurrentSaveVersion, loaded.SaveVersion);
+            Assert.AreEqual("ACT_REST_NIGHT", loaded.Plan.Slots[1].ActionId);
+            Assert.AreEqual("ACT_REST_NIGHT", loaded.LastWeekPlan.Slots[3].ActionId);
+            CollectionAssert.AreEqual(new[] { "ACT_REST_DAY", "ACT_REST_NIGHT" }, loaded.PlanPresets[0].ActionIds);
+        }
+
+        [Test]
         public void LoadedGame_ContinuesIdentically()
         {
             var uninterrupted = TestContent.NewGame(_db, 777);

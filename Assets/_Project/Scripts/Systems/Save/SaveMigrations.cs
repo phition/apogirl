@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using Newtonsoft.Json.Linq;
 
 namespace ApoGirl.Systems.Save
@@ -21,6 +22,7 @@ namespace ApoGirl.Systems.Save
                 yield return new V9ToV10();
                 yield return new V10ToV11();
                 yield return new V11ToV12();
+                yield return new V12ToV13();
             }
         }
 
@@ -213,6 +215,50 @@ namespace ApoGirl.Systems.Save
 
             public void Migrate(JObject root)
             {
+            }
+        }
+
+        /// <summary>
+        /// v13: 야간 작업(ACT_NIGHT_WORK)을 없앴다 (Docs/CRAFTING_PROPOSAL.md C3).
+        /// 이번 주 계획·지난주 계획·계획 프리셋에 남은 칸은 밤 휴식(ACT_REST_NIGHT)으로 바꾼다.
+        /// </summary>
+        private sealed class V12ToV13 : ISaveMigration
+        {
+            private const string Removed = "ACT_NIGHT_WORK";
+            private const string Replacement = "ACT_REST_NIGHT";
+
+            public int FromVersion => 12;
+
+            public void Migrate(JObject root)
+            {
+                ReplaceInPlan(root["Plan"] as JObject);
+                ReplaceInPlan(root["LastWeekPlan"] as JObject);
+                if (root["PlanPresets"] is JArray presets)
+                {
+                    foreach (var preset in presets.OfType<JObject>())
+                    {
+                        if (preset["ActionIds"] is JArray ids)
+                        {
+                            for (var i = 0; i < ids.Count; i++)
+                            {
+                                if (ids[i].Type == JTokenType.String && ids[i].Value<string>() == Removed) ids[i] = Replacement;
+                            }
+                        }
+                    }
+                }
+            }
+
+            private static void ReplaceInPlan(JObject plan)
+            {
+                if (plan?["Slots"] is not JArray slots)
+                {
+                    return;
+                }
+
+                foreach (var slot in slots.OfType<JObject>())
+                {
+                    if (slot.Value<string>("ActionId") == Removed) slot["ActionId"] = Replacement;
+                }
             }
         }
     }

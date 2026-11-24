@@ -85,8 +85,7 @@
       ],
       "Actions": [
         "ACT_SURV_MAKE_CRUTCH",
-        "ACT_SURV_MAKE_PROSTHETIC",
-        "ACT_NIGHT_WORK"
+        "ACT_SURV_MAKE_PROSTHETIC"
       ]
     },
     {

@@ -214,7 +214,7 @@ namespace ApoGirl.Tests.EditMode
             var db = M6Act4Tests.ShippedDb();
             bool Open(GameState s, string id) => PlanEditing.IsUnlocked(s, db, db.GetAction(id));
             var education = new[] { "ACT_EDU_ENGINEERING", "ACT_EDU_SCIENCE", "ACT_EDU_MUSIC" };
-            var defense = new[] { "ACT_SURV_TRAP", "ACT_SURV_ALARM", "ACT_SURV_COVERS", "ACT_NIGHT_WORK" };
+            var defense = new[] { "ACT_SURV_TRAP", "ACT_SURV_ALARM", "ACT_SURV_COVERS" };
 
             GameState Make(params string[] flags)
             {

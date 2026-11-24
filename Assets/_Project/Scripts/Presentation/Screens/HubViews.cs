@@ -288,6 +288,7 @@ namespace ApoGirl.Presentation.Screens
         private static readonly ActionCategory[] Tabs =
         {
             ActionCategory.Education, ActionCategory.Survival, ActionCategory.Rest, ActionCategory.Daily, ActionCategory.Expedition,
+            ActionCategory.Craft,
         };
 
         private readonly GameSession _session;
@@ -331,9 +332,18 @@ namespace ApoGirl.Presentation.Screens
 
         public void Refresh()
         {
+            // 제작 탭은 열린 제작 카드가 하나라도 있을 때만 보인다 (Docs/CRAFTING_PROPOSAL.md 1.1절)
+            var craftOpen = _session.ActionsIn(ActionCategory.Craft).Any(_session.IsUnlocked);
+            if (!craftOpen && _category == ActionCategory.Craft)
+            {
+                _category = ActionCategory.Education;
+            }
+
             foreach (var category in Tabs)
             {
-                _tabs.Q("tab-" + category).EnableInClassList("selected", category == _category);
+                var tab = _tabs.Q("tab-" + category);
+                tab.EnableInClassList("selected", category == _category);
+                tab.style.display = category != ActionCategory.Craft || craftOpen ? DisplayStyle.Flex : DisplayStyle.None;
             }
 
             _list.Clear();

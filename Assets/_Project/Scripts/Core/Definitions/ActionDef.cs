@@ -13,6 +13,8 @@ namespace ApoGirl.Core.Definitions
         Rest,
         Daily,
         Expedition,
+        /// <summary>물건·설비 만들기 (Docs/CRAFTING_PROPOSAL.md). 에셋에 저장된 정수가 밀리지 않게 맨 끝에 둔다.</summary>
+        Craft,
     }
 
     /// <summary>배치 가능한 슬롯 (문서 6.1 슬롯 구분).</summary>

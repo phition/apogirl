@@ -1199,6 +1199,10 @@
       "Image": "icon_cat_expedition"
     },
     {
+      "Key": "cat.Craft",
+      "Image": "icon_cat_craft"
+    },
+    {
       "Key": "stat.Stamina",
       "Image": "icon_stat_stamina"
     },
@@ -1433,10 +1437,6 @@
     {
       "Key": "act.ACT_NIGHT_WATCH",
       "Image": "icon_act_watch"
-    },
-    {
-      "Key": "act.ACT_NIGHT_WORK",
-      "Image": "icon_act_night_work"
     },
     {
       "Key": "act.ACT_DAILY_ROOFTOP",

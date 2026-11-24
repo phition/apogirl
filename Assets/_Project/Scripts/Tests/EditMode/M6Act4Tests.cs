@@ -115,7 +115,7 @@ namespace ApoGirl.Tests.EditMode
                 }
 
                 // 거처 선택별 거점 행동(교실 수업·창고 방어)과 특수실도 함께 열린다
-                foreach (var id in new[] { "ACT_EDU_SCIENCE", "ACT_EDU_MUSIC", "ACT_EDU_ENGINEERING", "ACT_NIGHT_WORK", "ACT_SURV_COVERS" })
+                foreach (var id in new[] { "ACT_EDU_SCIENCE", "ACT_EDU_MUSIC", "ACT_EDU_ENGINEERING", "ACT_SURV_COVERS" })
                 {
                     Assert.IsTrue(session.IsUnlocked(db.GetAction(id)), id + " 해금");
                 }
