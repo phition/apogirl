@@ -780,15 +780,105 @@
     },
     {
       "Event": "EVT_CLUB_BOARDGAME",
-      "Image": "Events/evt_club_boardgame"
+      "Image": "Events/evt_club_boardgame_bystander",
+      "Flag": "CLUB_WITH_NPC_BYSTANDER"
+    },
+    {
+      "Event": "EVT_CLUB_BOARDGAME",
+      "Image": "Events/evt_club_boardgame_dohyeon",
+      "Flag": "CLUB_WITH_NPC_DOHYEON"
+    },
+    {
+      "Event": "EVT_CLUB_BOARDGAME",
+      "Image": "Events/evt_club_boardgame_nurse",
+      "Flag": "CLUB_WITH_NPC_NURSE"
+    },
+    {
+      "Event": "EVT_CLUB_BOARDGAME",
+      "Image": "Events/evt_club_boardgame_ringleader",
+      "Flag": "CLUB_WITH_NPC_RINGLEADER"
+    },
+    {
+      "Event": "EVT_CLUB_BOARDGAME",
+      "Image": "Events/evt_club_boardgame_senior",
+      "Flag": "CLUB_WITH_NPC_SURVIVOR_A"
+    },
+    {
+      "Event": "EVT_CLUB_BOARDGAME",
+      "Image": "Events/evt_club_boardgame_wanderer",
+      "Flag": "CLUB_WITH_NPC_WANDERER"
+    },
+    {
+      "Event": "EVT_CLUB_BOARDGAME",
+      "Image": "Events/evt_club_boardgame_solo"
     },
     {
       "Event": "EVT_CLUB_SINGING",
-      "Image": "Events/evt_club_sing"
+      "Image": "Events/evt_club_sing_bystander",
+      "Flag": "CLUB_WITH_NPC_BYSTANDER"
+    },
+    {
+      "Event": "EVT_CLUB_SINGING",
+      "Image": "Events/evt_club_sing_dohyeon",
+      "Flag": "CLUB_WITH_NPC_DOHYEON"
+    },
+    {
+      "Event": "EVT_CLUB_SINGING",
+      "Image": "Events/evt_club_sing_nurse",
+      "Flag": "CLUB_WITH_NPC_NURSE"
+    },
+    {
+      "Event": "EVT_CLUB_SINGING",
+      "Image": "Events/evt_club_sing_ringleader",
+      "Flag": "CLUB_WITH_NPC_RINGLEADER"
+    },
+    {
+      "Event": "EVT_CLUB_SINGING",
+      "Image": "Events/evt_club_sing_senior",
+      "Flag": "CLUB_WITH_NPC_SURVIVOR_A"
+    },
+    {
+      "Event": "EVT_CLUB_SINGING",
+      "Image": "Events/evt_club_sing_wanderer",
+      "Flag": "CLUB_WITH_NPC_WANDERER"
+    },
+    {
+      "Event": "EVT_CLUB_SINGING",
+      "Image": "Events/evt_club_sing_solo"
     },
     {
       "Event": "EVT_CLUB_SPORTS",
-      "Image": "Events/evt_club_exercise"
+      "Image": "Events/evt_club_sports_bystander",
+      "Flag": "CLUB_WITH_NPC_BYSTANDER"
+    },
+    {
+      "Event": "EVT_CLUB_SPORTS",
+      "Image": "Events/evt_club_sports_dohyeon",
+      "Flag": "CLUB_WITH_NPC_DOHYEON"
+    },
+    {
+      "Event": "EVT_CLUB_SPORTS",
+      "Image": "Events/evt_club_sports_nurse",
+      "Flag": "CLUB_WITH_NPC_NURSE"
+    },
+    {
+      "Event": "EVT_CLUB_SPORTS",
+      "Image": "Events/evt_club_sports_ringleader",
+      "Flag": "CLUB_WITH_NPC_RINGLEADER"
+    },
+    {
+      "Event": "EVT_CLUB_SPORTS",
+      "Image": "Events/evt_club_sports_senior",
+      "Flag": "CLUB_WITH_NPC_SURVIVOR_A"
+    },
+    {
+      "Event": "EVT_CLUB_SPORTS",
+      "Image": "Events/evt_club_sports_wanderer",
+      "Flag": "CLUB_WITH_NPC_WANDERER"
+    },
+    {
+      "Event": "EVT_CLUB_SPORTS",
+      "Image": "Events/evt_club_sports_solo"
     },
     {
       "Event": "EVT_CLUB_STUDY",
@@ -797,7 +887,56 @@
     },
     {
       "Event": "EVT_CLUB_STUDY",
-      "Image": "Events/evt_club_studygroup"
+      "Image": "Events/evt_club_study_dohyeon",
+      "Flag": "CLUB_WITH_NPC_DOHYEON"
+    },
+    {
+      "Event": "EVT_CLUB_STUDY",
+      "Image": "Events/evt_club_study_nurse",
+      "Flag": "CLUB_WITH_NPC_NURSE"
+    },
+    {
+      "Event": "EVT_CLUB_STUDY",
+      "Image": "Events/evt_club_study_ringleader",
+      "Flag": "CLUB_WITH_NPC_RINGLEADER"
+    },
+    {
+      "Event": "EVT_CLUB_STUDY",
+      "Image": "Events/evt_club_study_senior",
+      "Flag": "CLUB_WITH_NPC_SURVIVOR_A"
+    },
+    {
+      "Event": "EVT_CLUB_STUDY",
+      "Image": "Events/evt_club_study_wanderer",
+      "Flag": "CLUB_WITH_NPC_WANDERER"
+    },
+    {
+      "Event": "EVT_CLUB_STUDY",
+      "Image": "Events/evt_club_study_solo"
+    },
+    {
+      "Event": "EVT_CLUB_BOND_BYSTANDER",
+      "Image": "Events/evt_club_bond_bystander"
+    },
+    {
+      "Event": "EVT_CLUB_BOND_DOHYEON",
+      "Image": "Events/evt_club_bond_dohyeon"
+    },
+    {
+      "Event": "EVT_CLUB_BOND_NURSE",
+      "Image": "Events/evt_club_bond_nurse"
+    },
+    {
+      "Event": "EVT_CLUB_BOND_RINGLEADER",
+      "Image": "Events/evt_club_bond_ringleader"
+    },
+    {
+      "Event": "EVT_CLUB_BOND_SENIOR",
+      "Image": "Events/evt_club_bond_senior"
+    },
+    {
+      "Event": "EVT_CLUB_BOND_WANDERER",
+      "Image": "Events/evt_club_bond_wanderer"
     },
     {
       "Event": "EVT_BROADCAST_FIRST",
@@ -1110,6 +1249,94 @@
     {
       "Event": "EVT_TALK_11",
       "Image": "Events/evt_talk_11"
+    },
+    {
+      "Event": "EVT_CRISIS_LEAVE_NURSE",
+      "Image": "Events/evt_crisis_leave_nurse"
+    },
+    {
+      "Event": "EVT_CRISIS_LEAVE_DOHYEON",
+      "Image": "Events/evt_crisis_leave_dohyeon"
+    },
+    {
+      "Event": "EVT_CRISIS_LEAVE_BYSTANDER",
+      "Image": "Events/evt_crisis_leave_bystander"
+    },
+    {
+      "Event": "EVT_CRISIS_LEAVE_RINGLEADER",
+      "Image": "Events/evt_crisis_leave_ringleader"
+    },
+    {
+      "Event": "EVT_CRISIS_LEAVE_SENIOR",
+      "Image": "Events/evt_crisis_leave_senior"
+    },
+    {
+      "Event": "EVT_MIND_LAUGH_1",
+      "Image": "Events/evt_mind_laugh_1"
+    },
+    {
+      "Event": "EVT_MIND_LAUGH_2",
+      "Image": "Events/evt_mind_laugh_2"
+    },
+    {
+      "Event": "EVT_MIND_LAUGH_3",
+      "Image": "Events/evt_mind_rooftop_dusk"
+    },
+    {
+      "Event": "EVT_MIND_HURRY_2",
+      "Image": "Events/evt_mind_hurry_2"
+    },
+    {
+      "Event": "EVT_MIND_HURRY_3",
+      "Image": "Events/evt_mind_hurry_3"
+    },
+    {
+      "Event": "EVT_MIND_FACE_1",
+      "Image": "Events/evt_mind_face_1"
+    },
+    {
+      "Event": "EVT_MIND_FACE_2",
+      "Image": "Events/evt_mind_face_2"
+    },
+    {
+      "Event": "EVT_MIND_FACE_3",
+      "Image": "Events/evt_mind_rooftop_dusk"
+    },
+    {
+      "Event": "EVT_MIND_TELL_3",
+      "Image": "Events/evt_mind_rooftop_dusk"
+    },
+    {
+      "Event": "EVT_FAVORITE_FOUND",
+      "Image": "Events/evt_favorite_found"
+    },
+    {
+      "Event": "EVT_RND_A2_TROPICAL_NIGHT",
+      "Image": "Events/evt_rnd_a2_tropical_night"
+    },
+    {
+      "Event": "EVT_RND_RATS",
+      "Image": "Events/evt_rnd_rats"
+    },
+    {
+      "Event": "EVT_RND_TEACHER_PAIN",
+      "Image": "Events/evt_rnd_teacher_pain"
+    },
+    {
+      "Event": "EVT_TALK_03",
+      "Image": "Events/evt_talk_03"
+    },
+    {
+      "Event": "EVT_TALK_08",
+      "Image": "Events/evt_talk_08"
+    },
+    {
+      "Event": "EVT_RND_A3_REQUEST",
+      "Image": "Events/evt_a3_radio"
+    },
+    {
+      "Event": "EVT_RND_A4_GREETING",
+      "Image": "Events/evt_a3_dj_show"
     }
   ],
   "Backdrops": [
