@@ -310,17 +310,56 @@ namespace ApoGirl.Exploration.Runtime
         public ItemDef ToolAt(int index) => index >= 0 && index < ToolSlotCount ? _tools[index] : null;
 
         /// <summary>그 종류의 도구를 어느 도구 칸에든 차고 있다.</summary>
-        public bool HasTool(ToolKind kind)
+        public bool HasTool(ToolKind kind) => ToolDoing(kind) != null;
+
+        /// <summary>그 일을 하는 첫 도구 (겸용 도구 포함, 없으면 null).</summary>
+        public ItemDef ToolDoing(ToolKind kind)
         {
             foreach (var tool in _tools)
             {
-                if (tool != null && tool.Tool == kind)
+                if (tool != null && tool.Does(kind))
                 {
-                    return true;
+                    return tool;
                 }
             }
 
-            return false;
+            return null;
+        }
+
+        /// <summary>찬 빛 도구 중 가장 멀리 비추는 것의 시야 배율 (헤드랜턴 1.33, 없으면 1).</summary>
+        public float LightRange
+        {
+            get
+            {
+                var best = 0f;
+                foreach (var tool in _tools)
+                {
+                    if (tool != null && tool.Does(ToolKind.Flashlight))
+                    {
+                        best = Mathf.Max(best, tool.LightRange > 0f ? tool.LightRange : 1f);
+                    }
+                }
+
+                return best > 0f ? best : 1f;
+            }
+        }
+
+        /// <summary>켠 빛이 눈에 띄는 정도: 가장 멀리 비추는 빛 도구의 LightExposure (0이면 공통 값).</summary>
+        private float LightExposure
+        {
+            get
+            {
+                ItemDef best = null;
+                foreach (var tool in _tools)
+                {
+                    if (tool != null && tool.Does(ToolKind.Flashlight) && (best == null || tool.LightRange > best.LightRange))
+                    {
+                        best = tool;
+                    }
+                }
+
+                return best != null && best.LightExposure > 0f ? best.LightExposure : _balance.FlashlightExposure;
+            }
         }
         public ItemDef BackpackItem => _backpackItem;
 
@@ -402,7 +441,7 @@ namespace ApoGirl.Exploration.Runtime
 
             return PlayerViewRules.CanPlayerSee(
                 AreaId(CurrentArea), X, _facingRight ? 1 : -1, DarkHere, FlashlightOn && !Hidden,
-                unit.AreaId, unit.X, _balance);
+                unit.AreaId, unit.X, _balance, LightRange);
         }
 
         /// <summary>문틈으로 살피는 중인 문 (W를 누르고 있는 동안).</summary>
@@ -420,8 +459,8 @@ namespace ApoGirl.Exploration.Runtime
         /// </summary>
         public float PeekViewRange => PeekTarget == null || IsDark ? 0f : PeekArea.IsRoom ? _balance.RoomPeekRange : _balance.PeekRange;
 
-        /// <summary>좀비 눈에 띄는 정도: 낮 1, 어둠 0.6, 손전등 1.5.</summary>
-        public float Visibility => (!IsDark ? 1f : FlashlightOn ? _balance.FlashlightExposure : _balance.DarknessVisibility)
+        /// <summary>좀비 눈에 띄는 정도: 낮 1, 어둠 0.6, 손전등 1.5 (헤드랜턴 1.3).</summary>
+        public float Visibility => (!IsDark ? 1f : FlashlightOn ? LightExposure : _balance.DarknessVisibility)
                                    * Mathf.Max(0.3f, 1f - Request.Modifier("StealthBonus"));
 
         /// <summary>탐험 카메라 (HUD가 월드 위치를 화면 좌표로 바꿀 때 사용).</summary>
@@ -1219,7 +1258,7 @@ namespace ApoGirl.Exploration.Runtime
 
             if (item.Slot == EquipSlot.Weapon && item.WeaponPower > 0) return EquipSlot.Weapon;
             if (item.Slot == EquipSlot.Backpack && item.GridWidth > 0) return EquipSlot.Backpack;
-            if (item.Slot == EquipSlot.Tool && item.Tool != ToolKind.None) return EquipSlot.Tool;
+            if (item.Slot == EquipSlot.Tool && (item.Tool != ToolKind.None || item.ExtraTools.Count > 0)) return EquipSlot.Tool;
             if (item.Slot == EquipSlot.Armor) return EquipSlot.Armor;
             return EquipSlot.None;
         }
@@ -2892,6 +2931,11 @@ namespace ApoGirl.Exploration.Runtime
                 if (_flashlightHot != null) _flashlightHot.enabled = flashOn;
                 if (_flashlightSpill != null) _flashlightSpill.enabled = flashOn;
 
+                // 빛 도구마다 닿는 거리 (헤드랜턴은 더 멀리)
+                var reach = LightRange;
+                _flashlight.pointLightOuterRadius = 11f * reach;
+                if (_flashlightHot != null) _flashlightHot.pointLightOuterRadius = 13f * reach;
+
                 // 손에 든 빛: 걸을 때 살짝 흔들리고(뛰면 더), 아주 조금 떨린다
                 var swayAmount = _animMoving ? (_animRunning ? 3.2f : 1.6f) : 0.35f;
                 var sway = Mathf.Sin(Time.time * (_animMoving ? (_animRunning ? 13f : 8f) : 1.7f)) * swayAmount;
@@ -3409,7 +3453,7 @@ namespace ApoGirl.Exploration.Runtime
 
         private bool SeesThroughWindow(int areaId, float mappedPlayerX, ZombieUnit unit)
         {
-            return FullVision || PlayerViewRules.CanPlayerSee(areaId, mappedPlayerX, _facingRight ? 1 : -1, IsDarkIn(_areasById[areaId]), FlashlightOn && !Hidden, areaId, unit.X, _balance);
+            return FullVision || PlayerViewRules.CanPlayerSee(areaId, mappedPlayerX, _facingRight ? 1 : -1, IsDarkIn(_areasById[areaId]), FlashlightOn && !Hidden, areaId, unit.X, _balance, LightRange);
         }
 
         private void PlaceSilhouette(int index, ExplorationArea area, float x, bool dormant)
@@ -3787,7 +3831,7 @@ namespace ApoGirl.Exploration.Runtime
 
             // 좀비와 같은 시야 규칙: 어둠 속에서는 맨눈 거리 안이거나 손전등이 비추는 쪽만 (넓은 기물은 가장 가까운 끝으로 잰다)
             var nearest = Mathf.Clamp(X, prop.Min, prop.Max);
-            return PlayerViewRules.CanPlayerSee(0, X, _facingRight ? 1 : -1, DarkHere, FlashlightOn && !Hidden, 0, nearest, _balance);
+            return PlayerViewRules.CanPlayerSee(0, X, _facingRight ? 1 : -1, DarkHere, FlashlightOn && !Hidden, 0, nearest, _balance, LightRange);
         }
 
         private void UpdateFog(float dt)

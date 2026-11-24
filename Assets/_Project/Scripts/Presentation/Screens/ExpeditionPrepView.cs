@@ -236,7 +236,7 @@ namespace ApoGirl.Presentation.Screens
                 case EquipSlot.Armor:
                     return Loc.F("prep.info_armor", (int)Math.Round(item.DamageReduction * 100));
                 case EquipSlot.Tool:
-                    return Loc.T("tool." + item.Tool);
+                    return UiText.ToolKinds(item);
                 default:
                     return "";
             }

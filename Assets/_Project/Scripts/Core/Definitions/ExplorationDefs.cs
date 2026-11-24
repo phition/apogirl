@@ -54,6 +54,18 @@ namespace ApoGirl.Core.Definitions
 
         public ToolKind Tool;
 
+        /// <summary>도구 칸 하나로 더 하는 일 (랜턴 멀티툴 = 빛 + 쇠지렛대, Docs/CRAFTING_PROPOSAL.md 3.5절).</summary>
+        public List<ToolKind> ExtraTools = new List<ToolKind>();
+
+        /// <summary>빛 도구: 손전등 시야 배율 (FlashlightViewDistance × 값, 헤드랜턴 1.33).</summary>
+        public float LightRange = 1f;
+
+        /// <summary>빛 도구: 켰을 때 좀비 눈에 띄는 정도 (0이면 BalanceConfig.FlashlightExposure).</summary>
+        public float LightExposure;
+
+        /// <summary>그 종류의 도구 일을 하는가 (Tool 또는 ExtraTools).</summary>
+        public bool Does(ToolKind kind) => kind != ToolKind.None && (Tool == kind || (ExtraTools != null && ExtraTools.Contains(kind)));
+
         /// <summary>소모품: 탐험 중 사용 시 HP 회복, 스트레스 감소.</summary>
         public int UseHp;
         public int UseStress;

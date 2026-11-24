@@ -69,7 +69,7 @@ namespace ApoGirl.Core.Rules
     }
 
     /// <summary>
-    /// 제작 (Docs/CRAFTING_PROPOSAL.md 3.0절·4.2절, 결정 C1): 낮 칸에서 착수하면 뒤 Work − 1칸이 "제작 중"으로 잠긴다.
+    /// 제작 (Docs/CRAFTING_PROPOSAL.md 3.0절·4.2절, 결정 C1): 낮·밤 어느 칸에서나 착수하고, 뒤 Work − 1칸이 "제작 중"으로 잠긴다.
     /// 재료는 착수 칸에서 내고, 마지막 칸에서 한 번 판정한다. 진행은 주를 넘기지 않는다.
     /// </summary>
     public static class CraftRules
@@ -240,7 +240,8 @@ namespace ApoGirl.Core.Rules
                 return outcome;
             }
 
-            var job = new CraftJob { RecipeId = recipe.Id, Remaining = craft.Work - 1 };
+            // 밤 칸에서 착수해도 밤 작업이다 (정전이면 완성 판정 −, 사용자 결정 2026-11-24: 제작은 낮·밤 모두)
+            var job = new CraftJob { RecipeId = recipe.Id, Remaining = craft.Work - 1, NightWorked = state.Calendar.Phase == DayPhase.Night };
             PayResources(state, db, recipe, job, delta);
             PayItems(state, db, craft, job, delta);
             state.Crafting.Active = job;
@@ -308,11 +309,15 @@ namespace ApoGirl.Core.Rules
             return outcome;
         }
 
-        /// <summary>완성 판정 확률: 행동 판정 공식 − 정전 중 밤 작업.</summary>
+        /// <summary>작업대 Ⅱ가 있으면 모든 제작 판정에 더하는 값.</summary>
+        public static float WorkshopBonus(GameState state, BalanceConfig balance) =>
+            !string.IsNullOrEmpty(balance.WorkshopFlag) && state.Flags.Contains(balance.WorkshopFlag) ? balance.WorkshopCheckBonus : 0f;
+
+        /// <summary>완성 판정 확률: 행동 판정 공식 + 작업대 Ⅱ − 정전 중 밤 작업.</summary>
         public static float Chance(GameState state, IDefinitionDatabase db, ActionDef recipe, bool nightWorked)
         {
             var balance = db.Balance;
-            var chance = ActionResolver.CheckChance(state, recipe, db);
+            var chance = ActionResolver.CheckChance(state, recipe, db) + WorkshopBonus(state, balance);
             if (nightWorked && state.Flags.Contains(PowerRules.FlagBroken))
             {
                 chance -= balance.BlackoutCraftPenalty;

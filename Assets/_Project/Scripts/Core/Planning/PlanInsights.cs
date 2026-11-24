@@ -72,6 +72,10 @@ namespace ApoGirl.Core.Planning
                 var stress = Math.Min(balance.VitalMax, player.Vitals.Stress + preview.StressCost);
                 var key = action.Check.UsesProficiency ? action.Check.Proficiency.ToString() : "";
                 var chance = CheckResolver.ComputeChance(state, action.Check, balance, fatigue, stress) + TraitRules.Sum(state, db, TraitModifierKind.CheckBonus, key);
+                if (action.IsCraft)
+                {
+                    chance += Rules.CraftRules.WorkshopBonus(state, balance);
+                }
                 preview.SuccessChance = Math.Min(Math.Max(chance, balance.CheckMinChance), balance.CheckMaxChance);
                 preview.GreatSuccessChance = preview.SuccessChance * (balance.GreatSuccessRatio + TraitRules.Sum(state, db, TraitModifierKind.GreatSuccessBonus));
             }

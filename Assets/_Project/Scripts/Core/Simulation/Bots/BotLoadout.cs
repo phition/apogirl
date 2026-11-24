@@ -25,11 +25,10 @@ namespace ApoGirl.Core.Simulation.Bots
             loadout.Backpack = Pick(state, db, EquipSlot.Backpack, loadout.Backpack, def => def.GridWidth * def.GridHeight);
             loadout.MainWeapon = Pick(state, db, EquipSlot.Weapon, loadout.MainWeapon, def => WeaponScore(state, def));
             loadout.Armor = Pick(state, db, EquipSlot.Armor, loadout.Armor, def => def.DamageReduction);
-            loadout.Tool = Pick(state, db, EquipSlot.Tool, loadout.Tool, def => ToolScore(def, night));
-            // 둘째 도구 칸: 첫 칸과 다른 종류 중 가장 나은 것
-            var firstKind = !string.IsNullOrEmpty(loadout.Tool) && db.TryGetItem(loadout.Tool, out var first) ? first.Tool : ToolKind.None;
-            loadout.Tool2 = Pick(state, db, EquipSlot.Tool, loadout.Tool2,
-                def => firstKind != ToolKind.None && def.Tool == firstKind ? 0f : ToolScore(def, night));
+            loadout.Tool = Pick(state, db, EquipSlot.Tool, loadout.Tool, def => ToolScore(def, night, null));
+            // 둘째 도구 칸: 첫 칸이 못 하는 일 중 가장 나은 것 (멀티툴이면 빛·지렛대를 이미 다 한다)
+            var first = !string.IsNullOrEmpty(loadout.Tool) && db.TryGetItem(loadout.Tool, out var firstDef) ? firstDef : null;
+            loadout.Tool2 = Pick(state, db, EquipSlot.Tool, loadout.Tool2, def => ToolScore(def, night, first));
             if (loadout.Tool2 == loadout.Tool)
             {
                 loadout.Tool2 = "";
@@ -79,14 +78,21 @@ namespace ApoGirl.Core.Simulation.Bots
             return def.WeaponPower * (float)left / def.MaxDurability;
         }
 
-        private static float ToolScore(ItemDef def, bool night)
+        /// <summary>도구 점수: 하는 일마다 (밤엔 빛 2·지렛대 1, 낮엔 반대) + 빛이 더 멀리 닿는 만큼. covered가 이미 하는 일은 뺀다.</summary>
+        private static float ToolScore(ItemDef def, bool night, ItemDef covered)
         {
-            switch (def.Tool)
+            var score = 0f;
+            if (def.Does(ToolKind.Flashlight) && (covered == null || !covered.Does(ToolKind.Flashlight)))
             {
-                case ToolKind.Flashlight: return night ? 2f : 1f;
-                case ToolKind.Crowbar: return night ? 1f : 2f;
-                default: return 0f;
+                score += (night ? 2f : 1f) + Math.Max(0f, def.LightRange - 1f);
             }
+
+            if (def.Does(ToolKind.Crowbar) && (covered == null || !covered.Does(ToolKind.Crowbar)))
+            {
+                score += night ? 1f : 2f;
+            }
+
+            return score;
         }
     }
 }

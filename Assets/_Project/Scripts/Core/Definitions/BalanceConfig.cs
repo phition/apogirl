@@ -581,8 +581,14 @@ namespace ApoGirl.Core.Definitions
         public float CraftFineDurability = 1.25f;
         public int CraftFineRefund = 1;
 
-        /// <summary>정전(발전기 고장) 중에 잠긴 밤 칸에서 일한 제작의 완성 판정 −.</summary>
+        /// <summary>정전(발전기 고장) 중에 밤 칸에서 일한(착수했거나 이어 한) 제작의 완성 판정 −.</summary>
         public float BlackoutCraftPenalty = 0.10f;
+
+        /// <summary>작업대 Ⅱ(바이스·공구판)를 달면 켜지는 깃발: 3단계 물건 해금.</summary>
+        public string WorkshopFlag = "WORKBENCH_2";
+
+        /// <summary>작업대 Ⅱ: 모든 제작 판정 +.</summary>
+        public float WorkshopCheckBonus = 0.05f;
 
         /// <summary>무기 손질: 최대 내구의 이 비율만큼 채운다 (상한 = 최대치).</summary>
         public float WeaponMaintainRestore = 0.5f;

@@ -237,7 +237,7 @@ namespace ApoGirl.Core.Expedition
         }
 
         private bool IsFlashlight(string itemId) =>
-            !string.IsNullOrEmpty(itemId) && _db.TryGetItem(itemId, out var tool) && tool.Tool == ToolKind.Flashlight;
+            !string.IsNullOrEmpty(itemId) && _db.TryGetItem(itemId, out var tool) && tool.Does(ToolKind.Flashlight);
 
         /// <summary>깊은 곳 층에 있는 방의 템플릿 (특별한 방).</summary>
         private static IEnumerable<RoomTemplateDef> DeepRoomTemplates(BuildingLayoutDef layout) =>

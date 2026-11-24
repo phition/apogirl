@@ -450,6 +450,11 @@ namespace ApoGirl.Exploration.Runtime
                 lines.Add(Loc.F("exp.info.reduction", Mathf.RoundToInt(item.DamageReduction * 100f)));
             }
 
+            if (item.Slot == EquipSlot.Tool && (item.Tool != ToolKind.None || item.ExtraTools.Count > 0))
+            {
+                lines.Add(UiText.ToolKinds(item));
+            }
+
             if (item.ResourceYield.Count > 0)
             {
                 lines.Add(Loc.F("exp.info.yield", string.Join(" · ", item.ResourceYield.Select(r => UiText.Resource(r.Resource) + " +" + r.Amount))));

@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using ApoGirl.Core.Definitions;
 using ApoGirl.Core.Effects;
 using ApoGirl.Core.Planning;
 using ApoGirl.Core.Rules;
@@ -26,6 +27,29 @@ namespace ApoGirl.Presentation.Text
         public static string Result(CheckResult result) => Loc.T("result." + result);
 
         public static string Signed(int value) => value > 0 ? "+" + value : value.ToString();
+
+        /// <summary>도구가 하는 일: "손전등 · 쇠지렛대" (빛이 더 멀리 닿으면 "멀리 비춤"을 붙인다).</summary>
+        public static string ToolKinds(ItemDef item)
+        {
+            if (item == null)
+            {
+                return "";
+            }
+
+            var kinds = new List<string>();
+            if (item.Tool != ToolKind.None) kinds.Add(Loc.T("tool." + item.Tool));
+            if (item.ExtraTools != null)
+            {
+                kinds.AddRange(item.ExtraTools.Where(k => k != ToolKind.None && k != item.Tool).Select(k => Loc.T("tool." + k)));
+            }
+
+            if (item.Does(ToolKind.Flashlight) && item.LightRange > 1.01f)
+            {
+                kinds.Add(Loc.T("tool.far_light"));
+            }
+
+            return kinds.Count == 0 ? Loc.T("tool.None") : string.Join(" · ", kinds);
+        }
 
         public static string SlotLabel(int slotIndex)
         {

@@ -98,7 +98,9 @@
         "ACT_CRAFT_CLUB_TAPED",
         "ACT_CRAFT_MAINTAIN",
         "ACT_CRAFT_ARMOR_MAGAZINE",
-        "ACT_CRAFT_BAG_SLING"
+        "ACT_CRAFT_BAG_SLING",
+        "ACT_CRAFT_WORKBENCH_2",
+        "ACT_CRAFT_CLUB_REBAR"
       ]
     },
     {
@@ -307,7 +309,8 @@
       ],
       "Actions": [
         "ACT_EDU_COOKING",
-        "ACT_CRAFT_BAG_RUCKSACK"
+        "ACT_CRAFT_BAG_RUCKSACK",
+        "ACT_CRAFT_BAG_FRAME"
       ],
       "Art": "Story/Backgrounds/bg_homeec"
     },
@@ -398,7 +401,11 @@
           "X": 108
         }
       ],
-      "Actions": [],
+      "Actions": [
+        "ACT_CRAFT_FLASHLIGHT",
+        "ACT_CRAFT_HEADLAMP",
+        "ACT_CRAFT_MULTITOOL"
+      ],
       "Art": "Story/Backgrounds/bg_computer"
     },
     {
@@ -427,7 +434,8 @@
       "Actions": [
         "ACT_EDU_SELFDEFENSE",
         "ACT_CLUB_SPORTS",
-        "ACT_CRAFT_ARMOR_MATPAD"
+        "ACT_CRAFT_ARMOR_MATPAD",
+        "ACT_CRAFT_ARMOR_PLATED"
       ]
     },
     {

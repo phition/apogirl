@@ -40,7 +40,7 @@ namespace ApoGirl.Tests.EditMode
             {
                 Id = id,
                 Category = ActionCategory.Craft,
-                SlotTag = SlotTag.DayOnly,
+                SlotTag = SlotTag.Both,
                 FatigueCost = 5,
                 ResourceCosts = { new ResourceAmount(ResourceType.Materials, materials) },
                 Craft = craft,
@@ -106,11 +106,28 @@ namespace ApoGirl.Tests.EditMode
         }
 
         [Test]
+        public void Plan_NightStart_LocksNextDaySlot_AndCountsAsNightWork()
+        {
+            var db = Db();
+            var state = NewState(db, 10);
+
+            Assert.AreEqual(PlanEditResult.Ok, PlanEditing.SetSlot(state, db, 1, Two), "밤 칸에서도 착수한다");
+            Assert.IsTrue(state.Plan.Slots[2].CraftLocked, "다음 날 낮이 \"제작 중\"");
+            Assert.AreEqual(PlanEditResult.Ok, PlanEditing.SetSlot(state, db, 3, One), "1칸 제작도 밤에 둔다");
+
+            state.Calendar.Phase = DayPhase.Night;
+            state.Storage.Add(Stack(Club, 8));
+            Assert.AreEqual(CraftStep.Started, Run(state, db, Two, 1).Step);
+            Assert.IsTrue(state.Crafting.Active.NightWorked, "밤에 착수하면 밤 작업");
+        }
+
+        [Test]
         public void Plan_NoRoomAtWeekEnd_OrBeforeOtherLock()
         {
             var db = Db();
             var state = NewState(db, 10);
 
+            Assert.AreEqual(PlanEditResult.CraftNoRoom, PlanEditing.SetSlot(state, db, 13, Two), "7일 밤에서 2칸은 주를 넘는다");
             Assert.AreEqual(PlanEditResult.CraftNoRoom, PlanEditing.SetSlot(state, db, 12, Three), "7일 낮에서 3칸은 주를 넘는다");
             Assert.AreEqual(PlanEditResult.Ok, PlanEditing.SetSlot(state, db, 12, Two), "2칸은 7일 밤까지 들어간다");
             Assert.IsTrue(state.Plan.Slots[13].CraftLocked);

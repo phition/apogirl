@@ -1556,7 +1556,7 @@
     },
     {
       "Key": "act.ACT_CRAFT_CLUB_TAPED",
-      "Image": "item_weapon_rebar"
+      "Image": "item_weapon_bat"
     },
     {
       "Key": "act.ACT_CRAFT_MAINTAIN",
@@ -1568,7 +1568,7 @@
     },
     {
       "Key": "act.ACT_CRAFT_ARMOR_MATPAD",
-      "Image": "item_vest_utility"
+      "Image": "item_armor_kneepads"
     },
     {
       "Key": "item.ITEM_WEAPON_CLUB",
@@ -1576,11 +1576,55 @@
     },
     {
       "Key": "item.ITEM_WEAPON_CLUB_TAPED",
-      "Image": "item_weapon_rebar"
+      "Image": "item_weapon_bat"
     },
     {
       "Key": "item.ITEM_ARMOR_MATPAD",
+      "Image": "item_armor_kneepads"
+    },
+    {
+      "Key": "act.ACT_CRAFT_WORKBENCH_2",
+      "Image": "icon_cat_craft"
+    },
+    {
+      "Key": "act.ACT_CRAFT_BAG_FRAME",
+      "Image": "item_bag_frame"
+    },
+    {
+      "Key": "act.ACT_CRAFT_CLUB_REBAR",
+      "Image": "item_weapon_rebar"
+    },
+    {
+      "Key": "act.ACT_CRAFT_ARMOR_PLATED",
       "Image": "item_vest_utility"
+    },
+    {
+      "Key": "act.ACT_CRAFT_FLASHLIGHT",
+      "Image": "item_tool_flashlight"
+    },
+    {
+      "Key": "act.ACT_CRAFT_HEADLAMP",
+      "Image": "item_tool_flashlight"
+    },
+    {
+      "Key": "act.ACT_CRAFT_MULTITOOL",
+      "Image": "item_tool_crowbar"
+    },
+    {
+      "Key": "item.ITEM_WEAPON_CLUB_REBAR",
+      "Image": "item_weapon_rebar"
+    },
+    {
+      "Key": "item.ITEM_ARMOR_PLATED",
+      "Image": "item_vest_utility"
+    },
+    {
+      "Key": "item.ITEM_TOOL_HEADLAMP",
+      "Image": "item_tool_flashlight"
+    },
+    {
+      "Key": "item.ITEM_TOOL_MULTITOOL",
+      "Image": "item_tool_crowbar"
     },
     {
       "Key": "stat.Stamina",
