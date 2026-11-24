@@ -62,7 +62,7 @@ namespace ApoGirl.Presentation.Screens
             public bool CdShelf;
             public float CdShelfX = -1f;
             public float CdShelfY = 56;
-            public float CdJacketSize = 12;
+            public float CdJacketSize = 15;
             public float CdJacketGap = 2;
         }
 
