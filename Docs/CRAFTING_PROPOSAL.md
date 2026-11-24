@@ -1,6 +1,6 @@
 # 제작 기획: 제작 탭 + 교실 해금 + 3단계 테크트리
 
-> 상태: **기획 확정, 구현 중 (P1·P2 끝)**. 2026-11-24에 쓰고, 같은 날 사용자가 C1~C10을 정했다(7절). 결정에 맞춰 본문을 고쳤다. P1·P2를 구현했다(8절 표).
+> 상태: **기획 확정, 구현 중 (P1~P3 끝)**. 2026-11-24에 쓰고, 같은 날 사용자가 C1~C10을 정했다(7절). 결정에 맞춰 본문을 고쳤다. P1~P3을 구현했다(8절 표).
 > 관련: 마스터 프롬프트 5.6절(장비·내구도·수리/제작)·6.1절(밤 슬롯 "야간 작업(제작)")·6.2절(생존)·6.3.6절(배낭 업그레이드는 제작/발견), [ROLE_ROOMS_PROPOSAL.md](ROLE_ROOMS_PROPOSAL.md)(방 묶음), [UI_REDESIGN_PROPOSAL.md](UI_REDESIGN_PROPOSAL.md)(다섯 겹), [M7_PLAN.md](M7_PLAN.md)(교실동 특수실·빗물), [BOT_ENDING_LOG.md](BOT_ENDING_LOG.md).
 > 부록 C(D1~D26)는 바꾸지 않는다. D5(주 14칸)·D7(강제 휴식)·D25(배낭 종류는 로드아웃으로)·D26(목표 맞추기는 마지막에)을 그대로 따른다.
 
@@ -166,7 +166,7 @@ C2에 따라 물건·설비 카드 8개를 옮기기로 했는데, 그중 야간
 
 | 레시피 | 단계 | 해금 교실 | 재료 | 칸 | 판정 | 효과 |
 |---|---|---|---|---|---|---|
-| `ACT_CRAFT_WORKBENCH` 작업대 만들기 | Ⅰ | 창고 방 (2주차~) | 자재 3 | 1 | 없음 | 설비 `WORKBENCH`(시설 `WORKSHOP` 1단계). 손재주 +1, 공학 경험 1 |
+| `ACT_CRAFT_WORKBENCH` 작업대 만들기 | Ⅰ | 창고 방 (2주차~) | 자재 3 | 1 | 없음 | 설비 `WORKBENCH`(시설 `WORKSHOP` 1단계 — P3에서는 깃발만, 시설은 P4에서 Ⅱ와 함께). 손재주 +1, 공학 경험 1 |
 | `ACT_CRAFT_WORKBENCH_2` 바이스·공구판 달기 | Ⅱ | 창고 방 + 공학 2 | 자재 6 | 2 | 0.55 + 손재주 0.004 + 공학 0.08 | `WORKSHOP` 2단계: 3단계 물건 해금, 모든 제작 판정 +0.05 |
 
 > 시설로 두는 이유: 기존 `FacilityDef`(단계·`CheckBonus` 보정)와 조건 `Facility`를 그대로 쓴다. 단면도 창고 방에 `hub_obj_workbench` 그림.
@@ -411,7 +411,7 @@ C2에 따라 물건·설비 카드 8개를 옮기기로 했는데, 그중 야간
 
 | 파일 | 더할 것 |
 |---|---|
-| `Resources/Art/exploration_art.json` | `ItemLooks`: 새 아이템 → 기존 그림 토큰. `ITEM_WEAPON_CLUB`·`_CLUB_TAPED` → `bat`, `_CLUB_REBAR` → `pipe`, `ITEM_ARMOR_MAGAZINE` → `guard`, `_MATPAD` → `padding`, `_PLATED` → `riot`, `ITEM_BAG_SLING` → `tote`, `_RUCKSACK` → `school`, `_FRAME` → `hiking`. `ExplorationArtMap.ItemToken`이 이 표를 먼저 본다 |
+| `Resources/Art/standing_map.json` (구현 때 옮김: 탐험·단면도·입상이 함께 쓰는 `StandingConfig.LookToken`이 Presentation 어셈블리에 있어서) | `ItemLooks`: 새 아이템 → 기존 그림 토큰. `ITEM_WEAPON_CLUB`·`_CLUB_TAPED` → `bat`, `_CLUB_REBAR` → `pipe`, `ITEM_ARMOR_MAGAZINE` → `guard`, `_MATPAD` → `padding`, `_PLATED` → `riot`, `ITEM_BAG_SLING` → `tote`, `_RUCKSACK` → `school`, `_FRAME` → `hiking`. `ExplorationArtMap.ItemToken`·단면도·입상이 이 표를 먼저 본다 |
 | `Resources/Art/standing_map.json` | 입상 소품도 같은 표를 따른다(`StandingView`가 `item_` + 토큰) |
 | `Resources/Art/art_map.json` `Icons` | `cat.Craft`, `act.ACT_CRAFT_*`, 아이템 아이콘은 `item_{토큰}` 규칙 그대로(새 이름 그림이 있으면 그것) |
 | `Resources/Art/hub_section.json` | 방별 `Actions`에 새 레시피, 설비 그림(작업대·끓임 정수대·자동 정수기·허수아비) — 깃발 조건 이미지 규칙 |
@@ -540,7 +540,7 @@ C10에 따라 아래 그림이 생기기 전까지는 기존 아이콘과 그림
 | **P0** | 이 문서 + C1~C10 사용자 결정(2026-11-24) + PixelLab 프롬프트 문서 | **끝남** |
 | **P1 제작 탭 뼈대** (**끝남** ec403c69·b8b7d19d) | `ActionCategory.Craft`(맨 끝), 팔레트 탭·아이콘(`icon_craft_workbench` 가져오기)·`cat.Craft` 문구, C2 카드 7개 옮기기(`Category`만), C3 `ACT_NIGHT_WORK` 걷어 내기(3.0절 목록), 테스트의 분류 사용 확인 | 기존 테스트 통과. **같은 시드 봇 결과가 바뀌지 않는다**(분류만 바뀌고, 야간 작업은 봇이 쓰지 않음) |
 | **P2 장비 반영** (**끝남** 8122f1c6·44d1c3d1) | C5 헤드리스 로드아웃·봇 `Loadout: Best` (C4에 따라 습격 전투력은 건드리지 않음) | 장비 없음이면 같은 결과(테스트). BOT_ENDING_LOG "장비 반영" 절 |
-| **P3 제작 코어 + 1·2단계** | `CraftDef`·`CraftRules`, C1 칸 잠금(계획할 때 미리 잠그기·`ACT_CRAFT_CONTINUE`·마지막 칸 판정·실패 환불), 세이브 v14, 미리보기·결과 한 줄·결산 일기, `crafting.json`: 작업대 Ⅰ, 가방·무기·보호구 1~2단계, 무기 손질, `ItemLooks` | EditMode 테스트(비용·소비·잠금·주 끝 막기·판정·완성·상한·세이브). 직접 만들어 장착해 탐험 |
+| **P3 제작 코어 + 1·2단계** (**끝남** 09efbf86·0b60ab37·f6da46c2) | `CraftDef`·`CraftRules`, C1 칸 잠금(계획할 때 미리 잠그기·`ACT_CRAFT_CONTINUE`·마지막 칸 판정·실패 환불), 세이브 v14, 미리보기·결과 한 줄·결산 일기, `crafting.json`: 작업대 Ⅰ, 가방·무기·보호구 1~2단계, 무기 손질, `ItemLooks` | EditMode 테스트(비용·소비·잠금·주 끝 막기·판정·완성·상한·세이브). 직접 만들어 장착해 탐험 |
 | **P4 손전등 줄 + 3단계** | `ItemDef.LightRange`·`LightExposure`·`ExtraTools`, 탐험 반영(빛 거리·노출·지렛대 겸용), 작업대 Ⅱ, 세 줄의 3단계, 컴퓨터실 방 행동 | 탐험에서 헤드랜턴·멀티툴 확인 |
 | **P5 정수 줄** | 모래 필터(주간)·끓임 정수대(정수 행동 강화·연료)·자동 정수기(`Appliances` + 아침 정수 + 정전 정지) | 테스트(전력·정전·장마). 봇 절 |
 | **P6 허수아비** | 교문 허수아비(`RaidRules`, `Base.Scarecrow`), 휴대·울리는 허수아비(`ThreatSimulation` 미끼 표적, `ExpeditionDirector` 세우기, HUD "세우기"), 출정 준비 "챙길 것" 칸, 헤드리스 `HeadlessDecoyNightDown`, 플레이 기록 항목 | 탐험에서 좀비가 몰려가고 사람은 속지 않는 것 확인. 봇 절 |
