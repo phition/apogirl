@@ -289,5 +289,26 @@ namespace ApoGirl.Tests.EditMode
             Assert.AreEqual(1, LoadoutRules.CountInStorage(state, Taped));
             Assert.IsNull(state.Crafting.Active);
         }
+
+        [Test]
+        public void Workshop_AddsCheckBonus_ToEveryCraft()
+        {
+            var db = Db(0.5f);
+            var state = NewState(db, 10);
+            var recipe = db.GetAction(Two);
+            var before = CraftRules.Chance(state, db, recipe, false);
+            state.Flags.Add(db.Balance.WorkshopFlag);
+            Assert.AreEqual(before + db.Balance.WorkshopCheckBonus, CraftRules.Chance(state, db, recipe, false), 1e-4f, "작업대 Ⅱ +0.05");
+        }
+
+        [Test]
+        public void MultiTool_DoesLightAndCrowbar()
+        {
+            var multi = new ItemDef { Id = "ITEM_T_MULTI", Slot = EquipSlot.Tool, Tool = ToolKind.Flashlight, ExtraTools = { ToolKind.Crowbar } };
+            Assert.IsTrue(multi.Does(ToolKind.Flashlight));
+            Assert.IsTrue(multi.Does(ToolKind.Crowbar));
+            Assert.IsFalse(multi.Does(ToolKind.None));
+            Assert.IsFalse(new ItemDef { Tool = ToolKind.Flashlight }.Does(ToolKind.Crowbar));
+        }
     }
 }
