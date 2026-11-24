@@ -6895,6 +6895,10 @@ MonoBehaviour:
     m_Key: exp.prompt_door_barred
     m_Metadata:
       m_Items: []
+  - m_Id: 1847793265426432
+    m_Key: cat.Craft
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

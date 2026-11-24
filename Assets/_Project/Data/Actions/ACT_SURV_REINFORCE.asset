@@ -15,7 +15,7 @@ MonoBehaviour:
   _id: ACT_SURV_REINFORCE
   _definition:
     Id: ACT_SURV_REINFORCE
-    Category: 1
+    Category: 5
     SlotTag: 1
     ResourceCosts:
     - Resource: 5

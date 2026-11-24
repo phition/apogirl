@@ -15,7 +15,7 @@ MonoBehaviour:
   _id: ACT_SURV_RAIN_BARREL
   _definition:
     Id: ACT_SURV_RAIN_BARREL
-    Category: 1
+    Category: 5
     SlotTag: 1
     ResourceCosts:
     - Resource: 5

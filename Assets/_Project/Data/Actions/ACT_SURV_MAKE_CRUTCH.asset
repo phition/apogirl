@@ -15,7 +15,7 @@ MonoBehaviour:
   _id: ACT_SURV_MAKE_CRUTCH
   _definition:
     Id: ACT_SURV_MAKE_CRUTCH
-    Category: 1
+    Category: 5
     SlotTag: 1
     ResourceCosts:
     - Resource: 5
