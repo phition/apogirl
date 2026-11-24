@@ -3,7 +3,7 @@
 〈마지막 학기 (가제)〉 — 마일스톤별 진행 기록, 남은 작업, 하면 좋을 작업, 하지 말아야 할 작업.
 
 - 기준: 마스터 프롬프트 12장 마일스톤(원본 `C:\Users\phiti\Desktop\MASTER_PROMPT.md`), 결정 기록 부록 C(D1~D26).
-- 작성: 2026-11-24. 커밋 678개(2026-11-18 ~ 2026-11-24), 마지막 커밋 `10a73271` (그 뒤 이번 커밋).
+- 작성: 2026-11-24. 커밋 678개(2026-11-18 ~ 2026-11-24), 마지막 커밋 `8b69b200` (그 뒤 이번 커밋).
 - EditMode 테스트: 425개 모두 통과 (2026-11-24, PixelLab 24F 하복 뒤).
 - 자세한 내용은 각 계획 문서에 있다. 이 문서는 한눈에 보는 요약이다.
 - **새 세션은 이 문서부터 읽는다.** 작업이 하나 끝날 때마다 고친다.
@@ -183,6 +183,7 @@ M6·M7과 함께 기획 확장(동료·CD·깊은 곳·고양이·동아리·방
    - 사용자가 Unity Hub → Installs → 6000.6.8f1 → 모듈에서 Android Build Support를 지운다.
    - 그 뒤 main에 남은 메타 약 3,400개(다시 붙은 안드로이드 블록)를 `git checkout`하거나 `code_temp/apogirl/tools/strip_android_meta.py`로 지운다.
 2. **M6-5 남은 연결**
+   - **힉스필드 14차 22장** ([HIGGSFIELD_ASSETS_14.md](HIGGSFIELD_ASSETS_14.md)) 받으면 연결: `ArtInbox/illustrations/events14/` → `install_events12.py`, `art_map.json`에서 그 이벤트 줄을 새 그림으로(혈액형 두 편은 `evt_a4_blood_other`), 옛 그림은 남김.
    - 이벤트가 없어 보류한 컷: `evt_deep_door`·`evt_deep_oneway`·`evt_season_*`·`evt_cat_warn`, 그리고 `stand_item_*`.
    - CD 음원 8곡(8차 2.4절).
    - 탐험 주인공 프레임 늘리기(20~24프레임): 227묶음 모두 24프레임으로 연결 끝(2026-11-24, [HIGGSFIELD_ASSETS_11_ALL.md](HIGGSFIELD_ASSETS_11_ALL.md) 0절). 남은 일: 게임에서 옷·무기마다 걷기·달리기·공격을 보고 튀는 칸이 있으면 그 묶음만 다시.
@@ -336,7 +337,8 @@ M6·M7과 함께 기획 확장(동료·CD·깊은 곳·고양이·동아리·방
 - 2026-11-24 · 힉스필드 12차 문서 정리: 사용자가 13차를 먼저 받음(`ArtInbox/illustrations/redo13/` 18장). 12차 4.5절(초복·평면도)은 13차 2.4·2.5로 받았으니 안내만 남기고 요약표 0장, 인물 문구를 13차 1절과 맞춤(도현 곧은 머리, 윤 선생님 머리·바지 + 다리 ①~④, 서진 `{SEOJIN_SUMMER}`·`{SEOJIN_WINTER}` — 여름 컷 4장에 적용), 머리에 13차 결과를 보조 참고로 쓰는 표(시트 먼저, 남는 자리에 한 장), 5장 `evt_cat_warn`은 13차 부록으로 받음, 8차 다시 받기는 13차 몫 · 44c02cef
 - 2026-11-24 · 힉스필드 13차 연결: 받은 18장(`ArtInbox/illustrations/redo13/`, 2688×1520)을 너비 1920 jpg(품질 88)로 `Resources/Art/Story/Events/`의 같은 이름에 덮어씀 — 8차 컷 17장 + `evt_cat_warn`(이벤트가 아직 없어 연결 안 된 여분). `art_map.json`은 그대로. 옛 그림은 `code_temp/apogirl/backup_redo13/`, 도구 `code_temp/apogirl/tools/install_redo13.py` · de729889
 - 2026-11-24 · 힉스필드 12차 1차분 연결: 이벤트 컷 25장(`events12/`: 막 평가 3·선생님 대화 7·무작위 14·`EVT_MIND_HURRY_1`, 정사각 8장은 위 40% 기준 16:9로 자름, 너비 1920 jpg)을 `art_map.json` Events에 한 줄씩. 동아리 컷은 받은 1장(`evt_club_study_bystander`)을 `"Flag": "CLUB_WITH_NPC_BYSTANDER"` 줄로 — `StoryArt.EventImage(eventId, state)`가 같은 이벤트에서 켜진 깃발과 맞는 줄을 먼저, 없으면 깃발 없는 줄(허브 대화·생활기록부 사진). 단면도 시트 11장 → 96×78 프레임(투명 띠로 16칸을 찾아 인물 키 64·박 선생님 65·선배 67·유랑자 72·고양이 25로 줄이고 머리 가운데·발 줄 맞춤): 고양이 대기·걷기(삼색 임시 그림 대신 치즈 고양이), 도현 대기 다시(초록 트랙 재킷), 선배·유랑자 대기(`hub_section.json` `NpcSprites`에 `NPC_SURVIVOR_A`·`NPC_WANDERER`), 걷기 6(도현·박 선생님·예지·하린·선배 8칸 — 시트 마지막 줄이 잘려서 — ·유랑자) — 동료는 `{키}_walk_` 그림이 있으면 걸을 때 쓴다(`HubSectionView`). 옛 그림 `code_temp/apogirl/backup_hub12/`, 도구 `install_hub12.py`·`h12_segment.py` · 9b867a12
-- 2026-11-24 · 힉스필드 12차 나머지 51장 연결: 동아리 활동 4종은 이벤트마다 동료 6줄(`"Flag": "CLUB_WITH_{NPC}"`, 선배는 `NPC_SURVIVOR_A`) + 혼자 `_solo` 1줄(기본) — 옛 8차 동아리 컷 4장(`evt_club_boardgame`·`_exercise`·`_sing`·`_studygroup`)은 `code_temp/apogirl/backup_club12/`로, 동아리 개인 장면 6(`EVT_CLUB_BOND_*`)·위기 이탈 5·마음 상태(`evt_mind_rooftop_dusk`는 `LAUGH_3`·`FACE_3`·`TELL_3` 셋이 함께)·`EVT_FAVORITE_FOUND`·무작위 3(열대야·쥐·선생님 통증)·대화 2(`TALK_03`·`08`), 무전 신청곡·인사는 12차 문서대로 있는 컷(`evt_a3_radio`·`evt_a3_dj_show`). 이제 이벤트 289개 모두 그림이 있다(`m3_samples.json` 3개는 정의 DB에 없음). 도구 `code_temp/apogirl/tools/art_map12b.py` · 이 커밋
+- 2026-11-24 · 힉스필드 12차 나머지 51장 연결: 동아리 활동 4종은 이벤트마다 동료 6줄(`"Flag": "CLUB_WITH_{NPC}"`, 선배는 `NPC_SURVIVOR_A`) + 혼자 `_solo` 1줄(기본) — 옛 8차 동아리 컷 4장(`evt_club_boardgame`·`_exercise`·`_sing`·`_studygroup`)은 `code_temp/apogirl/backup_club12/`로, 동아리 개인 장면 6(`EVT_CLUB_BOND_*`)·위기 이탈 5·마음 상태(`evt_mind_rooftop_dusk`는 `LAUGH_3`·`FACE_3`·`TELL_3` 셋이 함께)·`EVT_FAVORITE_FOUND`·무작위 3(열대야·쥐·선생님 통증)·대화 2(`TALK_03`·`08`), 무전 신청곡·인사는 12차 문서대로 있는 컷(`evt_a3_radio`·`evt_a3_dj_show`). 이제 이벤트 289개 모두 그림이 있다(`m3_samples.json` 3개는 정의 DB에 없음). 도구 `code_temp/apogirl/tools/art_map12b.py` · d8eebab7
+- 2026-11-24 · 힉스필드 14차 문서 [HIGGSFIELD_ASSETS_14.md](HIGGSFIELD_ASSETS_14.md): 그림 없는 이벤트는 없지만 남의 컷·빈 방 배경을 빌려 쓰는 이벤트 59개의 대본을 읽어, 장면이 분명히 다른 22장을 새로 — P1 출석부(`EVT_A4_TEACHER_BEDRIDDEN`)·최후통첩·혈액형 못 맞춤(`MISMATCH`·`UNKNOWN` 한 장)·동료 작별 4, P2 생활기록부·파출소 밖·파출소 칠판·박 선생님 진찰·1-5반 첫 밤·창고 첫 밤·102호 노크·마트 응답, P3 무전 인사(옥상 SOS)·약국 전단지·공문·보건실 쪽지·바리케이드 교실·창고 2·6일째. 강철·준 인물 문구 더함, 그대로 둘 것 목록(7절). 받는 곳 `ArtInbox/illustrations/events14/`, 작업 제출은 사용자 · 이 커밋
 - 2026-11-24 · CD 벽 전시: 방송반 진열장 칸 대신 벽 가운데쯤에 자켓 자리 8개를 한 줄로(`HubSectionView.AddCdShelf`, `hub_section.json` `CdShelfX` −1 = 가운데 정렬·`CdShelfY` 58·`CdJacketSize` 15(처음 12에서 키움)·`CdJacketGap` 2), 주운 CD는 그 자리에 표지 `cd.{ID}`(`UI/CD/cd_0n`)가 걸리고 못 구한 자리는 흐린 빈 틀. 진열장·케이스 그림 `hub_obj_cd_shelf`·`hub_obj_cd_case`는 이제 안 씀 · 이 커밋
 - 2026-11-24 · 탐험 배낭 물건 미니창을 배낭 창 바깥(왼쪽, 자리가 없으면 오른쪽)에 누른 물건 높이로 띄움 — 미니창이 배낭을 가려 정리하기 불편하던 것(`ExpeditionHud.PositionInfo`) · 0084bd68
 - 2026-11-24 · CD 상세: 방송반 벽에 걸린 자켓을 누르면 방송반 위에 상세 창(`HubSectionView.ShowCdDetail`, `Theme.uss` `.hub-cd-detail`) — 왼쪽 자켓 크게(220px), 오른쪽 제목·주인·찾은 주차·찾았을 때의 글(`enc.{ID}.prompt` 재사용)·틀기/끄기·닫기(`common.close`). 바깥·Esc로 닫힘, 방 패널 CD 목록과 같은 틀기 동작(`ToggleCd`) · 이 커밋
