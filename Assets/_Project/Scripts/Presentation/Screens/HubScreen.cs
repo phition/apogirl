@@ -1123,6 +1123,16 @@ namespace ApoGirl.Presentation.Screens
                 detail += "  · " + together;
             }
 
+            // 자동 정수기 (제작 P5): 아침에 거른 물, 정전으로 멈춤
+            if (outcome.MorningPurified > 0)
+            {
+                detail += "  · " + Loc.F("result.purifier", outcome.MorningPurified);
+            }
+            else if (outcome.PurifierStopped)
+            {
+                detail += "  · " + Loc.T("result.purifier_stopped");
+            }
+
             foreach (var club in PeopleUi.ClubLines(outcome.Club))
             {
                 detail += "  · " + club;

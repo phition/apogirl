@@ -100,6 +100,7 @@
         "ACT_CRAFT_ARMOR_MAGAZINE",
         "ACT_CRAFT_BAG_SLING",
         "ACT_CRAFT_WORKBENCH_2",
+        "ACT_CRAFT_SAND_FILTER",
         "ACT_CRAFT_CLUB_REBAR"
       ]
     },
@@ -224,6 +225,7 @@
       "Id": "SCIENCE",
       "Built": [
         {
+          "Flag": "SAND_FILTER",
           "Image": "UI/HubObj/hub_obj_water_filter"
         }
       ],
@@ -310,7 +312,8 @@
       "Actions": [
         "ACT_EDU_COOKING",
         "ACT_CRAFT_BAG_RUCKSACK",
-        "ACT_CRAFT_BAG_FRAME"
+        "ACT_CRAFT_BAG_FRAME",
+        "ACT_CRAFT_BOIL_STATION"
       ],
       "Art": "Story/Backgrounds/bg_homeec"
     },

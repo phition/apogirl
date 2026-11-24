@@ -125,7 +125,32 @@
       "StatGains": [ { "Stat": "Intellect", "Amount": 1 }, { "Stat": "Craft", "Amount": 2 } ],
       "HasProficiency": true, "Proficiency": "Engineering", "ProficiencyXp": 2,
       "Unlock": { "FlagsAll": [ "SEARCHED_COMPUTER", "WORKBENCH_2" ], "Checks": [ { "Kind": "Proficiency", "Key": "Engineering", "Op": "GreaterOrEqual", "Value": 3 } ] },
-      "Craft": { "Line": "LIGHT", "Tier": 3, "Work": 3, "Product": "ITEM_TOOL_MULTITOOL", "ItemCosts": [ { "ItemId": "ITEM_TOOL_HEADLAMP", "Count": 1 }, { "ItemId": "ITEM_TOOL_CROWBAR", "Count": 1 } ] } }
+      "Craft": { "Line": "LIGHT", "Tier": 3, "Work": 3, "Product": "ITEM_TOOL_MULTITOOL", "ItemCosts": [ { "ItemId": "ITEM_TOOL_HEADLAMP", "Count": 1 }, { "ItemId": "ITEM_TOOL_CROWBAR", "Count": 1 } ] } },
+
+    { "Id": "ACT_CRAFT_SAND_FILTER", "Category": "Craft", "SlotTag": "Both", "FatigueCost": 5,
+      "ResourceCosts": [ { "Resource": "Materials", "Amount": 2 } ],
+      "StatGains": [ { "Stat": "Intellect", "Amount": 1 }, { "Stat": "Craft", "Amount": 1 } ],
+      "HasProficiency": true, "Proficiency": "Survival", "ProficiencyXp": 1,
+      "Unlock": { "FlagsAll": [ "WORKBENCH" ], "FlagsNone": [ "SAND_FILTER" ] },
+      "Craft": { "Line": "WATER", "Tier": 1, "Work": 1, "SetFlags": [ "SAND_FILTER" ], "Next": "ACT_CRAFT_BOIL_STATION" } },
+
+    { "Id": "ACT_CRAFT_BOIL_STATION", "Category": "Craft", "SlotTag": "Both", "FatigueCost": 7, "StressCost": 1,
+      "ResourceCosts": [ { "Resource": "Materials", "Amount": 3 } ],
+      "HasCheck": true,
+      "Check": { "BaseRate": 0.6, "StatWeights": [ { "Stat": "Intellect", "Weight": 0.004 } ], "UsesProficiency": true, "Proficiency": "Survival", "ProficiencyWeight": 0.06 },
+      "StatGains": [ { "Stat": "Intellect", "Amount": 1 }, { "Stat": "Craft", "Amount": 1 } ],
+      "HasProficiency": true, "Proficiency": "Survival", "ProficiencyXp": 1,
+      "Unlock": { "FlagsAll": [ "SAND_FILTER", "SEARCHED_HOMEEC" ], "FlagsNone": [ "BOIL_STATION" ], "Checks": [ { "Kind": "Proficiency", "Key": "Survival", "Op": "GreaterOrEqual", "Value": 2 } ] },
+      "Craft": { "Line": "WATER", "Tier": 2, "Work": 2, "SetFlags": [ "BOIL_STATION" ], "Next": "ACT_CRAFT_AUTO_PURIFIER" } },
+
+    { "Id": "ACT_CRAFT_AUTO_PURIFIER", "Category": "Craft", "SlotTag": "Both", "FatigueCost": 8, "StressCost": 2,
+      "ResourceCosts": [ { "Resource": "Materials", "Amount": 5 }, { "Resource": "Battery", "Amount": 2 } ],
+      "HasCheck": true,
+      "Check": { "BaseRate": 0.4, "StatWeights": [ { "Stat": "Intellect", "Weight": 0.005 } ], "UsesProficiency": true, "Proficiency": "Science", "ProficiencyWeight": 0.08 },
+      "StatGains": [ { "Stat": "Intellect", "Amount": 2 }, { "Stat": "Craft", "Amount": 1 } ],
+      "HasProficiency": true, "Proficiency": "Science", "ProficiencyXp": 2,
+      "Unlock": { "FlagsAll": [ "BOIL_STATION", "POWER_RESTORED" ], "FlagsNone": [ "AUTO_PURIFIER" ], "Checks": [ { "Kind": "Facility", "Key": "SCIENCE", "Op": "GreaterOrEqual", "Value": 1 }, { "Kind": "Proficiency", "Key": "Science", "Op": "GreaterOrEqual", "Value": 2 } ] },
+      "Craft": { "Line": "WATER", "Tier": 3, "Work": 3, "SetFlags": [ "AUTO_PURIFIER" ] } }
   ],
   "Items": [
     { "Id": "ITEM_BAG_SLING", "Width": 1, "Height": 2, "Weight": 0.3, "Value": 2, "Slot": "Backpack", "GridWidth": 3, "GridHeight": 4, "MoveSpeedMultiplier": 1.05, "NoiseMultiplier": 0.9 },

@@ -227,6 +227,9 @@ namespace ApoGirl.Core.Rules
                 EffectApplier.ChangeResource(state, ResourceType.RawWater, rain, delta);
             }
 
+            // 모래 필터 (제작 P5): 모인 빗물 조금을 저절로 거른다
+            PurifyRules.ApplyWeeklyFilter(state, balance, delta);
+
             if (state.Flags.Contains(FlagRoofGarden) && CalendarRules.GetSeason(state.Calendar.Week) != Season.Winter)
             {
                 EffectApplier.ChangeResource(state, ResourceType.Food, balance.RoofGardenFood, delta);

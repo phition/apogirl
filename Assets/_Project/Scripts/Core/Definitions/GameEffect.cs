@@ -9,6 +9,9 @@ namespace ApoGirl.Core.Definitions
     [Serializable]
     public sealed class GameEffect
     {
+        /// <summary>얕은 사본 (숫자만 바꿔 쓸 때, 목록은 원본과 같이 쓴다).</summary>
+        public GameEffect Clone() => (GameEffect)MemberwiseClone();
+
         public List<StatAmount> Stats = new List<StatAmount>();
         public List<VitalAmount> Vitals = new List<VitalAmount>();
         public List<ResourceAmount> Resources = new List<ResourceAmount>();

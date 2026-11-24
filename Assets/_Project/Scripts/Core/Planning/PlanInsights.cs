@@ -76,6 +76,8 @@ namespace ApoGirl.Core.Planning
                 {
                     chance += Rules.CraftRules.WorkshopBonus(state, balance);
                 }
+
+                chance += Rules.PurifyRules.CheckBonus(state, balance, action);
                 preview.SuccessChance = Math.Min(Math.Max(chance, balance.CheckMinChance), balance.CheckMaxChance);
                 preview.GreatSuccessChance = preview.SuccessChance * (balance.GreatSuccessRatio + TraitRules.Sum(state, db, TraitModifierKind.GreatSuccessBonus));
             }

@@ -116,7 +116,7 @@ namespace ApoGirl.Core.Simulation
             }
 
             // 비용을 못 냈으면 아무 효과도 없다 (빗물 없이 정수해도 실패 보상을 받지 않게)
-            EffectApplier.Apply(state, affordable ? EffectFor(action, result) : null, balance, delta, recovery);
+            EffectApplier.Apply(state, affordable ? PurifyRules.Adjust(state, balance, action, result, EffectFor(action, result), delta) : null, balance, delta, recovery);
             return result;
         }
 
@@ -143,6 +143,7 @@ namespace ApoGirl.Core.Simulation
             var key = action.Check.UsesProficiency ? action.Check.Proficiency.ToString() : "";
             chance += TraitRules.Sum(state, db, TraitModifierKind.CheckBonus, key);
             chance += MentorBondRules.CheckBonus(state, action, balance); // 기획 C.1: 선생님 호감 구간
+            chance += PurifyRules.CheckBonus(state, balance, action);      // 끓임 정수대 (제작 P5)
             return Math.Min(Math.Max(chance, balance.CheckMinChance), balance.CheckMaxChance);
         }
 

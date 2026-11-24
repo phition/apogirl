@@ -593,6 +593,23 @@ namespace ApoGirl.Core.Definitions
         /// <summary>무기 손질: 최대 내구의 이 비율만큼 채운다 (상한 = 최대치).</summary>
         public float WeaponMaintainRestore = 0.5f;
 
+        /// <summary>정수 줄이 강화하는 정수 행동.</summary>
+        public string PurifyActionId = "ACT_SURV_PURIFY_WATER";
+
+        /// <summary>모래 필터: 주간 정산 때 저절로 거르는 빗물, 그 비율. 정수 행동이 실패해도 남는 비율.</summary>
+        public int SandFilterWeeklyRaw = 4;
+        public float SandFilterRate = 0.75f;
+        public float SandFilterFailRate = 0.7f;
+
+        /// <summary>끓임 정수대: 정수 한 번에 거르는 빗물, 드는 연료, 판정 + (연료가 없으면 예전대로).</summary>
+        public int BoilStationPurify = 18;
+        public int BoilStationFuel = 1;
+        public float BoilStationCheckBonus = 0.1f;
+
+        /// <summary>자동 정수기 (전력 1): 매일 아침 식사 전에 거르는 빗물, 그 비율.</summary>
+        public int AutoPurifyDaily = 3;
+        public float AutoPurifyRate = 0.9f;
+
         // ── 방과후 동아리 (확장 7) ──
 
         /// <summary>동아리를 같이 한 사람의 호감.</summary>
@@ -636,6 +653,7 @@ namespace ApoGirl.Core.Definitions
         public ApplianceDef[] Appliances =
         {
             new ApplianceDef { Id = "FRIDGE", Power = 1, Flag = "SEARCHED_HOMEEC", FoodSpoilageBonus = 30 },
+            new ApplianceDef { Id = "PURIFIER", Power = 1, Flag = "AUTO_PURIFIER" },   // 자동 정수기 (제작 P5): 냉장고 다음 차례
         };
 
         // ── 방송반 송출 (확장 5) ──

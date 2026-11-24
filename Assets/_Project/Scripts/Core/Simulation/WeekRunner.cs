@@ -62,6 +62,10 @@ namespace ApoGirl.Core.Simulation
         /// <summary>아침 식사에서 식량·물이 모자라 식단을 못 지켰다 (그날 스트레스).</summary>
         public bool DietShort;
 
+        /// <summary>아침에 자동 정수기가 거른 식수 (제작 P5), 정수기가 전기가 없어 멈췄는가.</summary>
+        public int MorningPurified;
+        public bool PurifierStopped;
+
         /// <summary>낮 침입 대응 결과 (없으면 null).</summary>
         public IntrusionResult Intrusion;
 
@@ -212,6 +216,9 @@ namespace ApoGirl.Core.Simulation
             if (calendar.Phase == DayPhase.Day)
             {
                 // 아침 식사 (동료가 외출하기 전에 다 같이). 식량 절약은 짝수 날(주 3번)에만: 그 차례 번호로 소수점을 나눠 쌓는다
+                // 자동 정수기 (제작 P5): 식사 전에 거른다 — 그날 아침 물로 바로 먹는다
+                outcome.MorningPurified = PurifyRules.ApplyMorning(_state, Balance, delta);
+                outcome.PurifierStopped = PurifyRules.PurifierStopped(_state, Balance);
                 var savingStep = (calendar.Week - 1) * (CalendarState.DaysPerWeek / 2) + calendar.Day / 2;
                 outcome.DietShort = UpkeepRules.ApplyMorning(
                     _state, Balance, delta, _random, TraitRules.Spread(TraitRules.Sum(_state, _db, TraitModifierKind.FoodSaving), savingStep));

@@ -1627,6 +1627,18 @@
       "Image": "item_tool_crowbar"
     },
     {
+      "Key": "act.ACT_CRAFT_SAND_FILTER",
+      "Image": "icon_craft_water_filter"
+    },
+    {
+      "Key": "act.ACT_CRAFT_BOIL_STATION",
+      "Image": "icon_craft_cooking_station"
+    },
+    {
+      "Key": "act.ACT_CRAFT_AUTO_PURIFIER",
+      "Image": "icon_craft_water_filter"
+    },
+    {
       "Key": "stat.Stamina",
       "Image": "icon_stat_stamina"
     },
