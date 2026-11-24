@@ -23,11 +23,12 @@ namespace ApoGirl.Tests.EditMode
             OnFailure = new GameEffect { PurifyWater = 12, PurifyRate = 0.5f },
         };
 
+        /// <summary>테스트 콘텐츠의 간단한 정수 행동을 실제와 같은 모양(빗물 12, 성공 0.8·대성공 1·실패 0.5)으로 바꾼 DB.</summary>
         private static InMemoryDefinitionDatabase Db(out ActionDef purify)
         {
             var balance = new BalanceConfig();
             purify = Purify(balance);
-            return new InMemoryDefinitionDatabase(balance, TestContent.CreateActions().Concat(new[] { purify }), new[] { TestContent.CreateModel() },
+            return new InMemoryDefinitionDatabase(balance, TestContent.CreateActions().Where(a => a.Id != balance.PurifyActionId).Concat(new[] { purify }), new[] { TestContent.CreateModel() },
                 TestContent.CreateItems(), new[] { TestContent.CreateLootTable() }, new[] { TestContent.CreateLocation() });
         }
 
