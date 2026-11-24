@@ -843,6 +843,14 @@ MonoBehaviour:
     m_Key: ACT_CRAFT_SCARECROW_BELL.short
     m_Metadata:
       m_Items: []
+  - m_Id: 2034489143607296
+    m_Key: ACT_CRAFT_BAG_TOTE.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2034489210716160
+    m_Key: ACT_CRAFT_BAG_TOTE.short
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

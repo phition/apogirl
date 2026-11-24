@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dae23a582c039304a81c2bdd418cbc38, type: 3}
-  m_Name: ACT_CRAFT_BAG_SLING
+  m_Name: ACT_CRAFT_BAG_TOTE
   m_EditorClassIdentifier: ApoGirl.Data::ApoGirl.Data.ActionDefinitionAsset
-  _id: ACT_CRAFT_BAG_SLING
+  _id: ACT_CRAFT_BAG_TOTE
   _definition:
-    Id: ACT_CRAFT_BAG_SLING
+    Id: ACT_CRAFT_BAG_TOTE
     Category: 5
     SlotTag: 0
     ResourceCosts:
@@ -167,7 +167,7 @@ MonoBehaviour:
       Line: BAG
       Tier: 1
       Work: 1
-      Product: ITEM_BAG_SLING
+      Product: ITEM_BAG_TOTE
       Count: 1
       ItemCosts: []
       SetFlags: []
