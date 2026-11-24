@@ -318,6 +318,9 @@ namespace ApoGirl.Presentation.Screens
 
         public string SelectedActionId { get; private set; } = "";
 
+        /// <summary>제작 탭 머리의 "설계도" 단추 (제작 P7, CraftTreeView).</summary>
+        public Action OpenTree { get; set; }
+
         /// <summary>행동을 고른 상태로 (단면도에서 방의 행동을 눌렀을 때). 그 행동의 분류 탭으로 옮긴다.</summary>
         public void Select(string actionId)
         {
@@ -347,6 +350,13 @@ namespace ApoGirl.Presentation.Screens
             }
 
             _list.Clear();
+            if (_category == ActionCategory.Craft && OpenTree != null)
+            {
+                var tree = new Button(() => OpenTree()) { text = Loc.T("craft.tree.open_button") };
+                tree.AddToClassList("ct-open");
+                _list.Add(tree);
+            }
+
             foreach (var action in _session.ActionsIn(_category))
             {
                 if (!_session.IsUnlocked(action))

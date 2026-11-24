@@ -87,6 +87,9 @@ namespace ApoGirl.Core.Simulation.Bots
 
         /// <summary>장비 고르기 (제작 C5, BotLoadout): "Best"(창고에서 가장 좋은 것) 또는 "None"(빈 칸 그대로).</summary>
         public string Loadout = BotLoadout.Best;
+
+        /// <summary>밤 칸에 창고의 휴대 허수아비 하나를 챙긴다 (제작 P7, BotCraft.ChooseCarry → 헤드리스 HeadlessDecoyNightDown).</summary>
+        public bool UseDecoyAtNight = true;
     }
 
     /// <summary>조건부 규칙: 조건이 맞으면 지정 칸을 후보로 바꾼다 (후보가 하나도 안 되면 그대로 둔다).</summary>

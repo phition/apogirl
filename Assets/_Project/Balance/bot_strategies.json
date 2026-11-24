@@ -107,6 +107,33 @@
         "ACT_BROADCAST_LETTER"
       ]
     },
+    "CRAFT": {
+      "Pick": "First",
+      "Actions": [
+        "ACT_CRAFT_WORKBENCH",
+        "ACT_CRAFT_SAND_FILTER",
+        "ACT_CRAFT_BAG_SLING",
+        "ACT_CRAFT_CLUB",
+        "ACT_CRAFT_ARMOR_MAGAZINE",
+        "ACT_CRAFT_FLASHLIGHT",
+        "ACT_CRAFT_SCARECROW",
+        "ACT_CRAFT_BOIL_STATION",
+        "ACT_CRAFT_WORKBENCH_2",
+        "ACT_CRAFT_BAG_RUCKSACK",
+        "ACT_CRAFT_CLUB_TAPED",
+        "ACT_CRAFT_ARMOR_MATPAD",
+        "ACT_CRAFT_HEADLAMP",
+        "ACT_CRAFT_DECOY",
+        "ACT_CRAFT_AUTO_PURIFIER",
+        "ACT_CRAFT_SCARECROW_BELL",
+        "ACT_CRAFT_BAG_FRAME",
+        "ACT_CRAFT_CLUB_REBAR",
+        "ACT_CRAFT_ARMOR_PLATED",
+        "ACT_CRAFT_MULTITOOL",
+        "ACT_CRAFT_DECOY_BELL",
+        "ACT_CRAFT_MAINTAIN"
+      ]
+    },
     "BUILD": {
       "Pick": "First",
       "Actions": [
@@ -306,7 +333,7 @@
         "EDU",
         "EXP_DAY",
         "EDU",
-        "BUILD|EDU",
+        "BUILD|CRAFT|EDU",
         "EXP_DAY",
         "EDU",
         "ACT_SURV_PURIFY_WATER|ACT_SURV_CLEAN"
@@ -366,7 +393,7 @@
         "EDU",
         "ACT_REST_DAY",
         "EDU",
-        "BUILD|EDU",
+        "BUILD|CRAFT|EDU",
         "ACT_REST_DAY",
         "EDU",
         "ACT_SURV_PURIFY_WATER|ACT_SURV_CLEAN"
@@ -439,7 +466,7 @@
         "EDU",
         "EXP_DAY",
         "EDU",
-        "BUILD|EDU",
+        "CRAFT|BUILD|EDU",
         "ACT_REST_DAY",
         "EDU",
         "ACT_SURV_PURIFY_WATER|ACT_SURV_CLEAN"
@@ -513,7 +540,7 @@
         "EDU_FOCUS",
         "EDU",
         "EDU_FOCUS",
-        "EDU",
+        "CRAFT|EDU",
         "ACT_SURV_PURIFY_WATER|ACT_SURV_CLEAN"
       ],
       "Night": [
@@ -621,7 +648,7 @@
         "EDU",
         "EXP_DAY",
         "EDU",
-        "BUILD|EDU",
+        "BUILD|CRAFT|EDU",
         "ACT_REST_DAY",
         "ACT_DAILY_ROOFTOP|EDU",
         "ACT_SURV_PURIFY_WATER|ACT_SURV_CLEAN"

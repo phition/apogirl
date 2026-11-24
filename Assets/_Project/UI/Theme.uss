@@ -900,6 +900,31 @@ Button.selected { border-color: var(--accent); background-color: var(--accent-so
 .hub-room-built.standalone { position: relative; left: 0; right: 0; bottom: 0; justify-content: flex-start; margin-bottom: 6px; }
 
 /* ── 3겹 세력 화면 (FactionView) ── */
+/* 설계도 (제작 P7, CraftTreeView) */
+.ct-open { margin: 2px 2px 8px 2px; padding: 6px 10px; font-size: 16px; -unity-font-style: bold; color: var(--accent); border-color: var(--accent-soft); }
+.ct-panel { width: 1500px; height: 880px; background-color: rgb(26, 28, 32); border-width: 1px; border-color: var(--accent-soft); border-radius: 10px; padding: 22px 26px; }
+.ct-head { flex-direction: row; align-items: center; margin-bottom: 14px; }
+.ct-title { font-size: 30px; -unity-font-style: bold; color: rgb(240, 236, 226); margin-right: 16px; }
+.ct-hint { flex-grow: 1; flex-shrink: 1; font-size: 15px; color: var(--text-dim); white-space: normal; }
+.ct-close { padding: 6px 16px; font-size: 16px; }
+.ct-body { flex-grow: 1; }
+.ct-row { flex-direction: row; align-items: center; padding: 8px 0; border-bottom-width: 1px; border-color: var(--line); }
+.ct-line { width: 120px; flex-shrink: 0; font-size: 18px; -unity-font-style: bold; color: var(--accent); }
+.ct-cells { flex-direction: row; flex-wrap: wrap; align-items: center; flex-grow: 1; flex-shrink: 1; }
+.ct-arrow { font-size: 22px; color: var(--text-dim); margin: 0 6px; }
+.ct-cell { width: 270px; min-height: 84px; margin: 4px 0; padding: 8px 10px; flex-direction: column; align-items: stretch; background-color: rgb(34, 36, 41); border-width: 1px; border-color: var(--line); border-radius: 6px; }
+.ct-cell.open { border-color: var(--accent); }
+.ct-cell.built { background-color: rgb(36, 46, 40); border-color: rgb(110, 160, 120); }
+.ct-cell.locked { opacity: 0.6; }
+.ct-cell-top { flex-direction: row; align-items: center; }
+.ct-icon { width: 40px; height: 40px; margin-right: 8px; flex-shrink: 0; }
+.ct-names { flex-grow: 1; flex-shrink: 1; }
+.ct-name { font-size: 17px; -unity-font-style: bold; color: rgb(240, 236, 226); white-space: normal; }
+.ct-status { font-size: 13px; color: var(--text-dim); }
+.ct-cell.open .ct-status { color: var(--accent); }
+.ct-cell.built .ct-status { color: rgb(140, 200, 150); }
+.ct-detail { font-size: 13px; color: var(--text-dim); white-space: normal; margin-top: 4px; -unity-text-align: upper-left; }
+
 .fac-panel { width: 1400px; height: 860px; background-color: rgb(26, 28, 32); border-width: 1px; border-color: var(--accent-soft); border-radius: 10px; padding: 24px 28px; }
 .fac-head { flex-direction: row; margin-bottom: 18px; }
 .fac-portrait { width: 200px; height: 240px; border-radius: 8px; background-color: rgb(40, 42, 48); margin-right: 24px; align-items: center; justify-content: center; }

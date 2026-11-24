@@ -17,10 +17,15 @@ namespace ApoGirl.Core.Simulation.Bots
         public const string RestDay = "ACT_REST_DAY";
         public const string RestNight = "ACT_REST_NIGHT";
 
-        /// <summary>잠기지 않은 칸을 모두 다시 채운다: 틀 → 전략 규칙 → 공통 규칙 순.</summary>
+        /// <summary>
+        /// 잠기지 않은 칸을 모두 다시 채운다: 틀 → 전략 규칙 → 공통 규칙 순.
+        /// 마지막에 여러 칸 제작(제작 P7)의 뒤 칸이 탐험·다른 제작·잠긴 칸에 걸리면 그 칸을 같은 후보에서 다시 고르고(그 레시피는 건너뜀),
+        /// 뒤 칸을 "제작 중"으로 잠근다 (CraftRules.Relock).
+        /// </summary>
         public static void Plan(GameState state, IDefinitionDatabase db, BotConfigDef config, BotStrategyDef strategy, IRandomService random)
         {
             var slots = state.Plan.Slots;
+            var sources = new string[slots.Count];
             for (var i = 0; i < slots.Count; i++)
             {
                 if (slots[i].Locked)
@@ -32,6 +37,7 @@ namespace ApoGirl.Core.Simulation.Bots
                 var template = day ? strategy.Day : strategy.Night;
                 var dayIndex = i / 2;
                 var candidates = dayIndex < template.Count ? template[dayIndex] : "";
+                sources[i] = candidates;
                 slots[i].ActionId = Resolve(state, db, config, candidates, i, random) ?? (day ? RestDay : RestNight);
             }
 
@@ -55,9 +61,61 @@ namespace ApoGirl.Core.Simulation.Bots
                     if (id != null)
                     {
                         slots[index].ActionId = id;
+                        sources[index] = rule.Use;
                     }
                 }
             }
+
+            FitCrafts(state, db, config, sources, random);
+        }
+
+        /// <summary>여러 칸 제작의 뒤 칸이 비어 있는가: 잠기지 않았고(이미 "제작 중"이면 괜찮음), 탐험·다른 제작이 아니다.</summary>
+        public static bool CraftFits(GameState state, IDefinitionDatabase db, ActionDef action, int slotIndex)
+        {
+            if (action == null || !action.IsCraft)
+            {
+                return true;
+            }
+
+            if (!CraftRules.FitsPlan(state, action, slotIndex))
+            {
+                return false;
+            }
+
+            var slots = state.Plan.Slots;
+            for (var k = 1; k < action.Craft.Work; k++)
+            {
+                var next = slots[slotIndex + k];
+                if (next.CraftLocked)
+                {
+                    continue;
+                }
+
+                if (db.TryGetAction(next.ActionId ?? "", out var other) && (other.IsExpedition || other.IsCraft))
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        private static void FitCrafts(GameState state, IDefinitionDatabase db, BotConfigDef config, string[] sources, IRandomService random)
+        {
+            var slots = state.Plan.Slots;
+            for (var i = 0; i < slots.Count; i++)
+            {
+                if (slots[i].Locked || !db.TryGetAction(slots[i].ActionId ?? "", out var action) || !action.IsCraft || CraftFits(state, db, action, i))
+                {
+                    continue;
+                }
+
+                var index = i;
+                var day = i % 2 == 0;
+                slots[i].ActionId = Resolve(state, db, config, sources[i], i, random, a => !CraftFits(state, db, a, index)) ?? (day ? RestDay : RestNight);
+            }
+
+            CraftRules.Relock(state, db);
         }
 
         /// <summary>"D1"~"D7" → 0,2,…,12 / "N1"~"N7" → 1,3,…,13. 잘못되면 -1.</summary>
@@ -80,8 +138,9 @@ namespace ApoGirl.Core.Simulation.Bots
             }
         }
 
-        /// <summary>"후보|후보|…"에서 이 칸에 쓸 수 있는 첫 행동 ID (없으면 null).</summary>
-        public static string Resolve(GameState state, IDefinitionDatabase db, BotConfigDef config, string candidates, int slotIndex, IRandomService random)
+        /// <summary>"후보|후보|…"에서 이 칸에 쓸 수 있는 첫 행동 ID (없으면 null). reject가 참인 행동은 건너뛴다.</summary>
+        public static string Resolve(GameState state, IDefinitionDatabase db, BotConfigDef config, string candidates, int slotIndex, IRandomService random,
+            Func<ActionDef, bool> reject = null)
         {
             foreach (var token in Split(candidates))
             {
@@ -90,7 +149,7 @@ namespace ApoGirl.Core.Simulation.Bots
                     var usable = new List<(string Id, float Weight)>();
                     for (var i = 0; i < group.Actions.Count; i++)
                     {
-                        if (Usable(state, db, group.Actions[i], slotIndex))
+                        if (Usable(state, db, group.Actions[i], slotIndex, reject))
                         {
                             usable.Add((group.Actions[i], i < group.Weights.Count ? group.Weights[i] : 1f));
                         }
@@ -104,7 +163,7 @@ namespace ApoGirl.Core.Simulation.Bots
                     return group.Pick == BotPickMode.First ? usable[0].Id : usable[WeightedIndex(usable.Select(u => u.Weight).ToList(), random)].Id;
                 }
 
-                if (Usable(state, db, token, slotIndex))
+                if (Usable(state, db, token, slotIndex, reject))
                 {
                     return token;
                 }
@@ -118,10 +177,12 @@ namespace ApoGirl.Core.Simulation.Bots
             return (candidates ?? "").Split('|').Select(t => t.Trim()).Where(t => t.Length > 0);
         }
 
-        private static bool Usable(GameState state, IDefinitionDatabase db, string actionId, int slotIndex)
+        private static bool Usable(GameState state, IDefinitionDatabase db, string actionId, int slotIndex, Func<ActionDef, bool> reject)
         {
             return db.TryGetAction(actionId, out var action) && PlanEditing.IsUnlocked(state, db, action) && PlanEditing.IsAllowedIn(action, slotIndex)
-                   && !Exhausted(state, db, action) && Affordable(state, db, action);
+                   && !Exhausted(state, db, action) && Affordable(state, db, action)
+                   && (!action.IsCraft || (CraftRules.FitsPlan(state, action, slotIndex) && BotCraft.Wanted(state, db, action)))
+                   && (reject == null || !reject(action));
         }
 
         /// <summary>지금 가진 자원으로 비용을 낼 수 있는가 (빗물 없이 정수, 약 없이 치료를 두지 않는다).</summary>

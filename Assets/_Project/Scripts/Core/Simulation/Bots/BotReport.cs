@@ -393,6 +393,8 @@ namespace ApoGirl.Core.Simulation.Bots
             sb.AppendLine();
 
             // 막 끝 자원 (13·26·39·52주)
+            AppendCraft(sb, runs);
+
             sb.AppendLine("## 막 끝 자원 평균 (식량 / 물 / 약, 살아 있는 판)");
             sb.AppendLine();
             sb.AppendLine("| 전략 | 13주 | 26주 | 39주 | 52주 |");
@@ -411,6 +413,41 @@ namespace ApoGirl.Core.Simulation.Bots
         }
 
         // ── 도우미 ──
+
+        /// <summary>제작 (P7, Docs/CRAFTING_PROPOSAL.md 4.8): 판당 완성 수, 정수 설비·교문 허수아비가 있었던 주 비율, 레시피별 완성 판 비율·첫 완성 주(중앙).</summary>
+        private static void AppendCraft(StringBuilder sb, IReadOnlyList<BotRunResult> runs)
+        {
+            var strategies = runs.Select(r => r.StrategyId).Distinct().ToList();
+            sb.AppendLine("## 제작 (제작 P7)");
+            sb.AppendLine();
+            sb.AppendLine("| 전략 | 완성 / 판 | 정수 설비 주 | 끓임 정수대↑ 주 | 자동 정수기 주 | 교문 허수아비 주 |");
+            sb.AppendLine("|---|---|---|---|---|---|");
+            foreach (var g in runs.GroupBy(r => r.StrategyId))
+            {
+                var list = g.ToList();
+                var weeks = list.SelectMany(r => r.Weeks).ToList();
+                sb.AppendLine($"| {g.Key} | {F(list.Average(r => r.Crafts))} | {P(weeks.Count(w => w.PurifierTier >= 1), weeks.Count)} | {P(weeks.Count(w => w.PurifierTier >= 2), weeks.Count)} " +
+                              $"| {P(weeks.Count(w => w.PurifierTier >= 3), weeks.Count)} | {P(weeks.Count(w => w.Scarecrow), weeks.Count)} |");
+            }
+
+            sb.AppendLine();
+            sb.AppendLine("| 레시피 | " + string.Join(" | ", strategies) + " |");
+            sb.AppendLine("|---|" + string.Concat(strategies.Select(_ => "---|")));
+            foreach (var recipe in runs.SelectMany(r => r.CraftFirstWeek.Keys).Distinct().OrderBy(k => k, StringComparer.Ordinal))
+            {
+                var cells = strategies.Select(s =>
+                {
+                    var list = runs.Where(r => r.StrategyId == s).ToList();
+                    var firsts = list.Where(r => r.CraftFirstWeek.ContainsKey(recipe)).Select(r => r.CraftFirstWeek[recipe]).OrderBy(w => w).ToList();
+                    return firsts.Count == 0 ? "-" : $"{P(firsts.Count, list.Count)} ({Percentile(firsts, 0.5f)}주)";
+                });
+                sb.AppendLine($"| {recipe} | " + string.Join(" | ", cells) + " |");
+            }
+
+            sb.AppendLine();
+            sb.AppendLine("칸: 완성한 판 비율 (처음 완성한 주의 중앙값).");
+            sb.AppendLine();
+        }
 
         private static string Rate(IReadOnlyCollection<BotExpeditionSample> list)
         {

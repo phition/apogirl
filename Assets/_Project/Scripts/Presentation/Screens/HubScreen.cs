@@ -51,6 +51,7 @@ namespace ApoGirl.Presentation.Screens
         private ExpeditionPrepView _prep;
         private SettlementView _settlement;
         private FactionView _faction;
+        private CraftTreeView _craftTree;
         private RecordDiaryView _diary;
         private StorageView _storage;
         private EventDialoguePlayer _dialoguePlayer;
@@ -94,6 +95,8 @@ namespace ApoGirl.Presentation.Screens
             _diary = new RecordDiaryView(_root, _session);
             _storage = new StorageView(_root, _session);
             _palette = new PaletteView(_root, _session);
+            _craftTree = new CraftTreeView(_root, _session) { Picked = id => _palette.Select(id) };
+            _palette.OpenTree = _craftTree.Show;
             _planner = new PlannerView(_root, _session, _palette.ActionFor, ShowToast);
             _planSide = new PlanSideView(_root, _session);
             _layers = new HubLayers(_root) { CanPlan = () => _session.IsPlanning, Opened = () => _storage.Refresh() };
@@ -243,6 +246,13 @@ namespace ApoGirl.Presentation.Screens
             if (_give.IsOpen && keyboard.escapeKey.wasPressedThisFrame)
             {
                 _give.Hide();
+                return;
+            }
+
+            // Esc: 설계도가 열려 있으면 닫는다 (계획 보드는 그대로)
+            if (_craftTree.IsOpen && keyboard.escapeKey.wasPressedThisFrame)
+            {
+                _craftTree.Hide();
                 return;
             }
 

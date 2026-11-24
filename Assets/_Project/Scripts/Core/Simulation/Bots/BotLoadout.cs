@@ -61,7 +61,7 @@ namespace ApoGirl.Core.Simulation.Bots
         }
 
         /// <summary>위력 × 남은 내구 비율 (찬 무기 내구는 그 ID의 맨 앞 묶음, 0이면 새것).</summary>
-        private static float WeaponScore(GameState state, ItemDef def)
+        internal static float WeaponScore(GameState state, ItemDef def)
         {
             if (def.WeaponPower <= 0)
             {

@@ -39,6 +39,10 @@ namespace ApoGirl.Core.Simulation.Bots
         public int CompanionsInjured;
         public int CompanionsMinor;
         public int CompanionsOnAptitude;
+
+        /// <summary>제작 P7: 정수 설비 단계 (0 없음, 1 모래 필터, 2 끓임 정수대, 3 자동 정수기), 교문 허수아비가 서 있었다.</summary>
+        public int PurifierTier;
+        public bool Scarecrow;
     }
 
     /// <summary>동료 탐험 한 번 (역할 재기획 P5 진단).</summary>
@@ -131,6 +135,10 @@ namespace ApoGirl.Core.Simulation.Bots
         public readonly List<BotExpeditionSample> Expeditions = new List<BotExpeditionSample>();
         public readonly List<BotOutingSample> Outings = new List<BotOutingSample>();
 
+        /// <summary>제작 P7: 레시피별 처음 완성한 주, 완성 횟수 (손질 포함).</summary>
+        public readonly Dictionary<string, int> CraftFirstWeek = new Dictionary<string, int>();
+        public int Crafts;
+
         public bool Survived => Status == GameStatus.Rescued;
     }
 
@@ -206,7 +214,13 @@ namespace ApoGirl.Core.Simulation.Bots
                 runner.PrepareWeek();
                 while (!runner.IsWeekComplete && !runner.IsGameOver)
                 {
-                    BotLoadout.Choose(state, db, strategy, state.Calendar.Phase == DayPhase.Night);
+                    var night = state.Calendar.Phase == DayPhase.Night;
+                    BotLoadout.Choose(state, db, strategy, night);
+                    if (strategy.UseDecoyAtNight)
+                    {
+                        BotCraft.ChooseCarry(state, db, night);
+                    }
+
                     runner.ExecuteNextSlot();
                 }
 
@@ -239,6 +253,15 @@ namespace ApoGirl.Core.Simulation.Bots
 
         private static void Record(BotRunResult result, SlotOutcome outcome)
         {
+            if (outcome.Craft != null && outcome.Craft.Finished)
+            {
+                result.Crafts++;
+                if (!result.CraftFirstWeek.ContainsKey(outcome.Craft.RecipeId))
+                {
+                    result.CraftFirstWeek[outcome.Craft.RecipeId] = outcome.Week;
+                }
+            }
+
             foreach (var back in outcome.OutingReturns ?? new List<OutingReturn>())
             {
                 result.Outings.Add(new BotOutingSample
@@ -284,6 +307,10 @@ namespace ApoGirl.Core.Simulation.Bots
                 CompanionsInjured = joined.Count(n => n.Value.InjuredWeeks > 0),
                 CompanionsMinor = joined.Count(n => n.Value.MinorWoundWeeks > 0),
                 CompanionsOnAptitude = joined.Count(n => RoleRules.HasAptitude(db.Balance, n.Key, n.Value.Role) && RoleRules.IsActive(state, n.Key, db.Balance)),
+                PurifierTier = state.Flags.Contains(PurifyRules.FlagAutoPurifier) ? 3
+                    : state.Flags.Contains(PurifyRules.FlagBoilStation) ? 2
+                    : state.Flags.Contains(PurifyRules.FlagSandFilter) ? 1 : 0,
+                Scarecrow = ScarecrowRules.IsStanding(state),
                 Week = week,
                 Food = b.GetResource(ResourceType.Food),
                 Water = b.GetResource(ResourceType.Water),

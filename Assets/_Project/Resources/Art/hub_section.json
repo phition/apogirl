@@ -85,6 +85,12 @@
           "X": 96
         }
       ],
+      "Built": [
+        {
+          "Flag": "WORKBENCH",
+          "Image": "UI/HubObj/hub_obj_workbench"
+        }
+      ],
       "BuiltProps": [
         {
           "Flag": "WORKBENCH",
@@ -252,7 +258,8 @@
       "Actions": [
         "ACT_EDU_SCIENCE",
         "ACT_EDU_ENGINEERING",
-        "ACT_SURV_PURIFY_WATER"
+        "ACT_SURV_PURIFY_WATER",
+        "ACT_CRAFT_AUTO_PURIFIER"
       ]
     },
     {
@@ -289,6 +296,10 @@
         {
           "Flag": "COOKED_DISH",
           "Image": "UI/HubObj/hub_obj_cooking_station"
+        },
+        {
+          "Flag": "BOIL_STATION",
+          "Image": "UI/HubObj/hub_obj_boil_station"
         }
       ],
       "NameKey": "hubroom.HOMEEC",

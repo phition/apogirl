@@ -1031,6 +1031,233 @@
       ]
     },
     {
+      "Id": "craft",
+      "Title": "제작",
+      "Kind": "Fields",
+      "Hint": "제작 판정·정수 설비·허수아비·헤드리스 장비. 레시피 재료·칸 수는 Content/Base/crafting.json에서 고친다.",
+      "Rows": [
+        {
+          "Field": "CraftContinueFatigue",
+          "Group": "제작 칸",
+          "Name": "\"제작 중\" 칸 피로",
+          "Unit": "점",
+          "When": "Now"
+        },
+        {
+          "Field": "CraftContinueStress",
+          "Group": "제작 칸",
+          "Name": "\"제작 중\" 칸 스트레스",
+          "Unit": "점",
+          "When": "Now"
+        },
+        {
+          "Field": "CraftFailRefund",
+          "Group": "제작 판정",
+          "Name": "실패 때 돌려받는 재료",
+          "Unit": "비율",
+          "When": "Now",
+          "Note": "앞 단계 물건은 모두"
+        },
+        {
+          "Field": "CraftFineDurability",
+          "Group": "제작 판정",
+          "Name": "대성공 무기 내구",
+          "Unit": "×",
+          "When": "Now"
+        },
+        {
+          "Field": "CraftFineRefund",
+          "Group": "제작 판정",
+          "Name": "대성공 돌려받는 자재",
+          "Unit": "개",
+          "When": "Now",
+          "Note": "무기가 아닌 물건"
+        },
+        {
+          "Field": "BlackoutCraftPenalty",
+          "Group": "제작 판정",
+          "Name": "정전 밤 제작 판정 −",
+          "Unit": "확률",
+          "When": "Now"
+        },
+        {
+          "Field": "WorkshopCheckBonus",
+          "Group": "제작 판정",
+          "Name": "작업대 Ⅱ 판정 +",
+          "Unit": "확률",
+          "When": "Now"
+        },
+        {
+          "Field": "WeaponMaintainRestore",
+          "Group": "제작 판정",
+          "Name": "무기 손질로 채우는 내구",
+          "Unit": "비율",
+          "When": "Now",
+          "Note": "최대 내구 대비"
+        },
+        {
+          "Field": "SandFilterWeeklyRaw",
+          "Group": "정수",
+          "Name": "모래 필터 주마다 거르는 빗물",
+          "Unit": "개/주",
+          "When": "NextWeek"
+        },
+        {
+          "Field": "SandFilterRate",
+          "Group": "정수",
+          "Name": "모래 필터 거름 비율",
+          "Unit": "비율",
+          "When": "NextWeek"
+        },
+        {
+          "Field": "SandFilterFailRate",
+          "Group": "정수",
+          "Name": "정수 실패해도 남는 비율",
+          "Unit": "비율",
+          "When": "Now",
+          "Note": "모래 필터가 있을 때"
+        },
+        {
+          "Field": "BoilStationPurify",
+          "Group": "정수",
+          "Name": "끓임 정수대 한 번에 거르는 빗물",
+          "Unit": "개",
+          "When": "Now"
+        },
+        {
+          "Field": "BoilStationFuel",
+          "Group": "정수",
+          "Name": "끓임 정수대 연료",
+          "Unit": "개",
+          "When": "Now"
+        },
+        {
+          "Field": "BoilStationCheckBonus",
+          "Group": "정수",
+          "Name": "끓임 정수대 판정 +",
+          "Unit": "확률",
+          "When": "Now"
+        },
+        {
+          "Field": "AutoPurifyDaily",
+          "Group": "정수",
+          "Name": "자동 정수기 하루 거르는 빗물",
+          "Unit": "/일",
+          "When": "Now",
+          "Note": "전력 1"
+        },
+        {
+          "Field": "AutoPurifyRate",
+          "Group": "정수",
+          "Name": "자동 정수기 거름 비율",
+          "Unit": "비율",
+          "When": "Now"
+        },
+        {
+          "Field": "ScarecrowDurability",
+          "Group": "교문 허수아비",
+          "Name": "허수아비 내구",
+          "Unit": "번",
+          "When": "NextWeek",
+          "Note": "새로 세울 때부터"
+        },
+        {
+          "Field": "ScarecrowRaidRelief",
+          "Group": "교문 허수아비",
+          "Name": "허수아비 습격 세기 −",
+          "Unit": "점",
+          "When": "Now"
+        },
+        {
+          "Field": "ScarecrowBellDurability",
+          "Group": "교문 허수아비",
+          "Name": "울리는 허수아비 내구",
+          "Unit": "번",
+          "When": "NextWeek",
+          "Note": "새로 세울 때부터"
+        },
+        {
+          "Field": "ScarecrowBellRaidRelief",
+          "Group": "교문 허수아비",
+          "Name": "울리는 허수아비 습격 세기 −",
+          "Unit": "점",
+          "When": "Now"
+        },
+        {
+          "Field": "ScarecrowBellBreachFoodScale",
+          "Group": "교문 허수아비",
+          "Name": "울리는 허수아비 뚫렸을 때 식량 피해",
+          "Unit": "×",
+          "When": "Now"
+        },
+        {
+          "Field": "DecoyBiteDps",
+          "Group": "휴대 허수아비",
+          "Name": "붙은 좀비 하나가 깎는 체력",
+          "Unit": "/초",
+          "When": "NextExpedition"
+        },
+        {
+          "Field": "DecoyCaughtSightMultiplier",
+          "Group": "휴대 허수아비",
+          "Name": "붙은 좀비 시야",
+          "Unit": "×",
+          "When": "NextExpedition"
+        },
+        {
+          "Field": "DecoyLatchDistance",
+          "Group": "휴대 허수아비",
+          "Name": "붙는 거리",
+          "Unit": "칸",
+          "When": "NextExpedition"
+        },
+        {
+          "Field": "HeadlessDecoyNightDown",
+          "Group": "휴대 허수아비",
+          "Name": "헤드리스 밤 쓰러짐 −",
+          "Unit": "확률",
+          "When": "NextExpedition",
+          "Note": "챙기면 하나를 쓴다"
+        },
+        {
+          "Field": "HeadlessArmorDownFactor",
+          "Group": "헤드리스 장비",
+          "Name": "방어구 쓰러짐 감소 계수",
+          "Unit": "×",
+          "When": "NextExpedition",
+          "Note": "× 피해 감소율"
+        },
+        {
+          "Field": "HeadlessWeaponDownPerPower",
+          "Group": "헤드리스 장비",
+          "Name": "무기 위력 1당 쓰러짐 −",
+          "Unit": "확률",
+          "When": "NextExpedition"
+        },
+        {
+          "Field": "HeadlessFlashlightNightDown",
+          "Group": "헤드리스 장비",
+          "Name": "밤 손전등 쓰러짐 −",
+          "Unit": "확률",
+          "When": "NextExpedition"
+        },
+        {
+          "Field": "HeadlessBagBaseCells",
+          "Group": "헤드리스 장비",
+          "Name": "수확 기준 가방 칸",
+          "Unit": "칸",
+          "When": "NextExpedition"
+        },
+        {
+          "Field": "HeadlessBagYieldPerCell",
+          "Group": "헤드리스 장비",
+          "Name": "가방 한 칸당 수확",
+          "Unit": "비율",
+          "When": "NextExpedition"
+        }
+      ]
+    },
+    {
       "Id": "difficulty",
       "Title": "난이도",
       "Kind": "Difficulty",
