@@ -330,8 +330,10 @@
       "FloorTex": "wall_floor_broadcast",
       "Facility": "BROADCAST",
       "CdShelf": true,
-      "CdShelfX": 80,
-      "CdShelfY": 52,
+      "CdShelfX": -1,
+      "CdShelfY": 58,
+      "CdJacketSize": 12,
+      "CdJacketGap": 2,
       "Props": [
         {
           "Key": "prop_console",

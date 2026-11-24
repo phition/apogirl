@@ -57,10 +57,13 @@ namespace ApoGirl.Presentation.Screens
             /// <summary>지어 놓으면 단면도에 실제로 놓이는 구조물 (옥상 빗물받이·텃밭·안테나 등, 조건은 Flag/MinDefense).</summary>
             public BuiltPropDef[] BuiltProps = Array.Empty<BuiltPropDef>();
 
-            /// <summary>CD 진열장 (기획 A): 벽에 칸이 보이고, 방을 누르면 CD 플레이어가 뜬다. X·Y는 방 안 그림 픽셀 (Y는 바닥에서 위로).</summary>
+            /// <summary>CD 벽 전시 (기획 A): 벽에 자켓 자리가 한 줄로 있고, 방을 누르면 CD 플레이어가 뜬다.
+            /// X는 줄 왼쪽 끝(음수면 방 가운데 정렬), Y는 바닥에서 자켓 아래까지, 크기·간격은 방 안 그림 픽셀.</summary>
             public bool CdShelf;
-            public float CdShelfX = 90;
-            public float CdShelfY = 30;
+            public float CdShelfX = -1f;
+            public float CdShelfY = 56;
+            public float CdJacketSize = 12;
+            public float CdJacketGap = 2;
         }
 
         [Serializable]
@@ -680,48 +683,39 @@ namespace ApoGirl.Presentation.Screens
         private static bool BuiltShown(GameState state, HubSectionConfig.BuiltPropDef built) =>
             (string.IsNullOrEmpty(built.Flag) || state.Flags.Contains(built.Flag)) && state.Base.Defense >= built.MinDefense;
 
-        /// <summary>CD 진열장 칸 (기획 A): 처음부터 빈 칸이 다 보이고, 주운 CD는 그 색으로 꽂힌다.</summary>
+        /// <summary>
+        /// CD 벽 전시 (기획 A): 방송반 벽 가운데쯤에 자켓 자리 8개가 한 줄로 있고, 주운 CD는 그 자리에 표지(`cd.{ID}`)가 걸린다.
+        /// 아직 못 구한 자리는 흐린 빈 틀. 표지 그림이 없으면 CD 색 칸.
+        /// </summary>
         private void AddCdShelf(GameState state, VisualElement room, HubSectionConfig.RoomDef def, float floorY)
         {
-            const float slotW = 5f, slotH = 8f;
+            var size = def.CdJacketSize;
+            var gap = def.CdJacketGap;
             var slots = CdPlayer.Slots;
-            var shelf = Place(room, "hub-cd-shelf", def.CdShelfX, floorY - def.CdShelfY - slotH - 2f, slots * slotW + 2f, slotH + 2f);
-            shelf.pickingMode = PickingMode.Ignore;
-            var shelfArt = StoryArt.Ui("HubObj/hub_obj_cd_shelf");   // 에셋 8차: 나무 진열장·CD 케이스 (없으면 색 칸)
-            var caseArt = StoryArt.Ui("HubObj/hub_obj_cd_case");
-            if (shelfArt != null)
-            {
-                shelf.style.backgroundImage = new StyleBackground(shelfArt);
-                shelf.style.backgroundColor = Color.clear;
-                shelf.style.borderTopWidth = 0f;
-                shelf.style.borderBottomWidth = 0f;
-                shelf.style.borderLeftWidth = 0f;
-                shelf.style.borderRightWidth = 0f;
-            }
-
+            var row = slots * size + (slots - 1) * gap;
+            var left = def.CdShelfX >= 0f ? def.CdShelfX : (def.Width - row) * 0.5f;
+            var top = floorY - def.CdShelfY - size;
             for (var i = 0; i < slots; i++)
             {
                 var entry = i < CdPlayer.All.Count ? CdPlayer.All[i] : null;
-                var slot = Place(shelf, "hub-cd-slot", 1f + i * slotW, 1f, slotW - 1f, slotH);
+                var slot = Place(room, "hub-cd-slot", left + i * (size + gap), top, size, size);
                 slot.pickingMode = PickingMode.Ignore;
                 var owned = entry != null && CdRules.Has(state, entry.Id);
                 slot.EnableInClassList("owned", owned);
-                if (owned && ColorUtility.TryParseHtmlString(entry.Color, out var color))
+                if (!owned)
                 {
-                    if (caseArt != null)
-                    {
-                        slot.style.backgroundImage = new StyleBackground(caseArt);
-                        slot.style.backgroundColor = Color.clear;
-                        slot.style.unityBackgroundImageTintColor = Color.Lerp(Color.white, color, 0.6f);
-                    }
-                    else
-                    {
-                        slot.style.backgroundColor = color;
-                    }
+                    continue;
                 }
-                else if (caseArt != null && shelfArt != null)
+
+                var jacket = StoryArt.Icon("cd." + entry.Id);
+                if (jacket != null)
                 {
-                    slot.style.backgroundColor = Color.clear;   // 빈 칸은 진열장 그림 그대로
+                    slot.style.backgroundImage = new StyleBackground(jacket);
+                    slot.style.backgroundColor = Color.clear;
+                }
+                else if (ColorUtility.TryParseHtmlString(entry.Color, out var color))
+                {
+                    slot.style.backgroundColor = color;
                 }
             }
         }

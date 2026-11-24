@@ -871,9 +871,8 @@ Button.selected { border-color: var(--accent); background-color: var(--accent-so
 .hub-room-action.with-icon { padding-left: 36px; }
 
 /* CD 진열장·플레이어 (기획 A) */
-.hub-cd-shelf { background-color: rgb(58, 44, 34); border-width: 1px; border-color: rgb(30, 22, 16); }
-.hub-cd-slot { background-color: rgba(0, 0, 0, 0.45); }
-.hub-cd-slot.owned { border-width: 1px; border-color: rgba(255, 255, 255, 0.5); }
+.hub-cd-slot { background-color: rgba(0, 0, 0, 0.22); border-width: 1px; border-color: rgba(255, 255, 255, 0.10); }
+.hub-cd-slot.owned { background-color: rgba(0, 0, 0, 0); border-color: rgba(20, 16, 12, 0.85); -unity-background-scale-mode: scale-and-crop; }
 .hub-cd-head { -unity-font-style: bold; margin-top: 6px; }
 .hub-cd-track { border-left-width: 6px; }
 .hub-cd-track.playing { background-color: rgb(52, 70, 62); }
