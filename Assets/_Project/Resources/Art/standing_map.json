@@ -75,12 +75,12 @@
   "ItemLooks": [
     { "Item": "ITEM_WEAPON_CLUB", "Key": "bat" },
     { "Item": "ITEM_WEAPON_CLUB_TAPED", "Key": "bat" },
-    { "Item": "ITEM_ARMOR_MAGAZINE", "Key": "guard" },
-    { "Item": "ITEM_ARMOR_MATPAD", "Key": "padding" },
+    { "Item": "ITEM_ARMOR_MAGAZINE", "Key": "magazine" },
+    { "Item": "ITEM_ARMOR_MATPAD", "Key": "matpad" },
     { "Item": "ITEM_BAG_RUCKSACK", "Key": "rucksack" },
     { "Item": "ITEM_BAG_FRAME", "Key": "frame" },
     { "Item": "ITEM_WEAPON_CLUB_REBAR", "Key": "pipe" },
-    { "Item": "ITEM_ARMOR_PLATED", "Key": "riot" },
+    { "Item": "ITEM_ARMOR_PLATED", "Key": "plated" },
     { "Item": "ITEM_TOOL_HEADLAMP", "Key": "flashlight" },
     { "Item": "ITEM_TOOL_MULTITOOL", "Key": "flashlight" }
   ],
