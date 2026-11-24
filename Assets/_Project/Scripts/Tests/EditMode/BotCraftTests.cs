@@ -20,6 +20,7 @@ namespace ApoGirl.Tests.EditMode
             state.Calendar.Week = 6;
             state.Flags.Add("LOC_SCHOOL_DAY");
             state.Base.Resources[ResourceType.Materials] = materials;
+            state.Player.Vitals.Cleanliness = 100; // 청결 규칙(D4 청소)이 끼어들지 않게
             return state;
         }
 

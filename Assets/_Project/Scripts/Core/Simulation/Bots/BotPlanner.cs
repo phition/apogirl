@@ -24,6 +24,8 @@ namespace ApoGirl.Core.Simulation.Bots
         /// </summary>
         public static void Plan(GameState state, IDefinitionDatabase db, BotConfigDef config, BotStrategyDef strategy, IRandomService random)
         {
+            // 지난번 계획의 "제작 중" 잠금은 풀고 처음부터 다시 고른다
+            CraftRules.ReleaseLocks(state.Plan);
             var slots = state.Plan.Slots;
             var sources = new string[slots.Count];
             for (var i = 0; i < slots.Count; i++)
