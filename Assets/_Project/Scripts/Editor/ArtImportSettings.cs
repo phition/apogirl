@@ -51,7 +51,7 @@ namespace ApoGirl.EditorTools
                 settings.spritePivot = PivotFor(key);
 
                 // 픽셀 아트 표 (sprite_meta.json): 그림마다 기준점·테두리(조각 반복용)를 따로 정할 수 있다
-                if (path.StartsWith(PixelFolder) && TryGetMeta(key, out var meta))
+                if (path.StartsWith(PixelFolder) && TryGetMeta(key, path.IndexOf('/', PixelFolder.Length) < 0, out var meta))
                 {
                     if (meta.Pivot != null && meta.Pivot.Length == 2)
                     {
@@ -61,6 +61,12 @@ namespace ApoGirl.EditorTools
                     if (meta.Border != null && meta.Border.Length == 4)
                     {
                         settings.spriteBorder = new Vector4(meta.Border[0], meta.Border[1], meta.Border[2], meta.Border[3]);
+                    }
+
+                    // 2배 해상도 그림(192×156 등)은 PPU도 2배로 두어 세계 크기를 맞춘다 (settings가 PPU도 덮어쓰므로 거기에 넣는다)
+                    if (meta.Ppu > 0f)
+                    {
+                        settings.spritePixelsPerUnit = meta.Ppu;
                     }
                 }
 
@@ -119,6 +125,9 @@ namespace ApoGirl.EditorTools
 
             /// <summary>테두리 픽셀 (왼쪽·아래·오른쪽·위). 있으면 늘리지 않고 가운데 조각을 반복해 그린다 (창문).</summary>
             public float[] Border;
+
+            /// <summary>화소/유닛. 0이면 폴더 기본값(36). 2배 해상도 그림은 72.</summary>
+            public float Ppu;
         }
 
         [System.Serializable]
@@ -131,7 +140,7 @@ namespace ApoGirl.EditorTools
         private static System.Collections.Generic.Dictionary<string, SpriteMeta> _meta;
         private static System.DateTime _metaTime;
 
-        private static bool TryGetMeta(string key, out SpriteMeta meta)
+        private static bool TryGetMeta(string key, bool allowPrefix, out SpriteMeta meta)
         {
             meta = null;
             if (!File.Exists(MetaPath))
@@ -154,7 +163,24 @@ namespace ApoGirl.EditorTools
                 }
             }
 
-            return _meta.TryGetValue(key, out meta);
+            if (_meta.TryGetValue(key, out meta) || !allowPrefix)
+            {
+                return meta != null;
+            }
+
+            // 키 끝이 '*'인 줄은 앞부분이 같은 모든 그림에 적용한다 (가장 긴 앞부분이 이긴다). 하위 폴더(Hub/ 등)에는 적용하지 않는다
+            var best = -1;
+            foreach (var pair in _meta)
+            {
+                var k = pair.Key;
+                if (k.EndsWith("*") && k.Length - 1 > best && key.StartsWith(k.Substring(0, k.Length - 1)))
+                {
+                    best = k.Length - 1;
+                    meta = pair.Value;
+                }
+            }
+
+            return meta != null;
         }
 
         /// <summary>같은 키(또는 대표 프레임)의 코드 그림 피벗. 없으면 아래 가운데.</summary>

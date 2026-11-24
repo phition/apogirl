@@ -215,6 +215,18 @@
     0.0,
     0.0
    ]
+  },
+  {
+   "Key": "player_summer_bat_attack_*",
+   "Ppu": 72
+  },
+  {
+   "Key": "player_summer_pipe_attack_*",
+   "Ppu": 72
+  },
+  {
+   "Key": "player_summer_mop_attack_*",
+   "Ppu": 72
   }
  ]
 }

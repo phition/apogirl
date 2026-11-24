@@ -16550,170 +16550,170 @@
 },
 {
 "Key": "player_summer_bat_attack_0",
-"X": -0.079,
-"Y": 1.041,
-"Angle": -8.6,
+"X": 0.044,
+"Y": 0.97,
+"Angle": -9.8,
 "Lift": 0.0
 },
 {
 "Key": "player_summer_bat_attack_1",
-"X": -0.083,
-"Y": 1.039,
-"Angle": -9.3,
+"X": 0.017,
+"Y": 0.988,
+"Angle": -9.8,
 "Lift": 0.0
 },
 {
 "Key": "player_summer_bat_attack_2",
-"X": -0.087,
-"Y": 1.037,
-"Angle": -9.9,
+"X": 0.007,
+"Y": 1.016,
+"Angle": -9.8,
 "Lift": 0.0
 },
 {
 "Key": "player_summer_bat_attack_3",
-"X": -0.091,
-"Y": 1.035,
-"Angle": -10.6,
+"X": -0.011,
+"Y": 1.09,
+"Angle": -9.8,
 "Lift": 0.0
 },
 {
 "Key": "player_summer_bat_attack_4",
-"X": -0.098,
-"Y": 1.041,
-"Angle": -10.4,
+"X": -0.002,
+"Y": 1.145,
+"Angle": -9.8,
 "Lift": 0.0
 },
 {
 "Key": "player_summer_bat_attack_5",
-"X": -0.106,
-"Y": 1.046,
-"Angle": -10.1,
+"X": -0.011,
+"Y": 1.173,
+"Angle": -9.8,
 "Lift": 0.0
 },
 {
 "Key": "player_summer_bat_attack_6",
-"X": -0.113,
-"Y": 1.052,
-"Angle": -9.9,
+"X": -0.02,
+"Y": 1.136,
+"Angle": -9.8,
 "Lift": 0.0
 },
 {
 "Key": "player_summer_bat_attack_7",
-"X": -0.089,
-"Y": 1.044,
-"Angle": -9.7,
+"X": -0.03,
+"Y": 1.099,
+"Angle": -9.8,
 "Lift": 0.0
 },
 {
 "Key": "player_summer_bat_attack_8",
-"X": -0.065,
-"Y": 1.037,
-"Angle": -9.5,
+"X": -0.011,
+"Y": 1.044,
+"Angle": -9.8,
 "Lift": 0.0
 },
 {
 "Key": "player_summer_bat_attack_9",
-"X": -0.014,
-"Y": 1.029,
-"Angle": -9.3,
+"X": 0.026,
+"Y": 0.96,
+"Angle": -9.8,
 "Lift": 0.0
 },
 {
 "Key": "player_summer_bat_attack_10",
-"X": 0.036,
-"Y": 1.005,
-"Angle": -9.7,
+"X": 0.035,
+"Y": 0.868,
+"Angle": -9.8,
 "Lift": 0.0
 },
 {
 "Key": "player_summer_bat_attack_11",
-"X": 0.057,
-"Y": 0.982,
-"Angle": -10.2,
+"X": 0.049,
+"Y": 0.831,
+"Angle": -9.8,
 "Lift": 0.0
 },
 {
 "Key": "player_summer_bat_attack_12",
-"X": 0.05,
-"Y": 0.958,
-"Angle": -10.6,
+"X": 0.044,
+"Y": 0.84,
+"Angle": -9.8,
 "Lift": 0.0
 },
 {
 "Key": "player_summer_bat_attack_13",
-"X": 0.063,
-"Y": 0.953,
-"Angle": -10.6,
+"X": 0.086,
+"Y": 0.858,
+"Angle": -9.8,
 "Lift": 0.0
 },
 {
 "Key": "player_summer_bat_attack_14",
-"X": 0.075,
-"Y": 0.949,
-"Angle": -10.7,
+"X": 0.091,
+"Y": 0.858,
+"Angle": -9.8,
 "Lift": 0.0
 },
 {
 "Key": "player_summer_bat_attack_15",
-"X": 0.087,
-"Y": 0.944,
-"Angle": -10.7,
+"X": 0.105,
+"Y": 0.858,
+"Angle": -9.8,
 "Lift": 0.0
 },
 {
 "Key": "player_summer_bat_attack_16",
-"X": 0.1,
-"Y": 0.951,
-"Angle": -10.2,
+"X": 0.109,
+"Y": 0.849,
+"Angle": -9.8,
 "Lift": 0.0
 },
 {
 "Key": "player_summer_bat_attack_17",
-"X": 0.085,
-"Y": 0.959,
+"X": 0.109,
+"Y": 0.849,
 "Angle": -9.8,
 "Lift": 0.0
 },
 {
 "Key": "player_summer_bat_attack_18",
-"X": 0.098,
-"Y": 0.966,
-"Angle": -9.3,
+"X": 0.105,
+"Y": 0.858,
+"Angle": -9.8,
 "Lift": 0.0
 },
 {
 "Key": "player_summer_bat_attack_19",
-"X": 0.094,
-"Y": 0.967,
-"Angle": -9.1,
+"X": 0.077,
+"Y": 0.858,
+"Angle": -9.8,
 "Lift": 0.0
 },
 {
 "Key": "player_summer_bat_attack_20",
-"X": 0.062,
-"Y": 0.969,
-"Angle": -8.8,
+"X": 0.054,
+"Y": 0.858,
+"Angle": -9.8,
 "Lift": 0.0
 },
 {
 "Key": "player_summer_bat_attack_21",
-"X": 0.031,
-"Y": 0.97,
-"Angle": -8.6,
+"X": 0.044,
+"Y": 0.849,
+"Angle": -9.8,
 "Lift": 0.0
 },
 {
 "Key": "player_summer_bat_attack_22",
-"X": 0.031,
-"Y": 0.97,
-"Angle": -8.6,
+"X": 0.035,
+"Y": 0.849,
+"Angle": -9.8,
 "Lift": 0.0
 },
 {
 "Key": "player_summer_bat_attack_23",
-"X": 0.031,
-"Y": 0.97,
-"Angle": -8.6,
+"X": 0.03,
+"Y": 0.84,
+"Angle": -9.8,
 "Lift": 0.0
 },
 {
@@ -18566,169 +18566,169 @@
 },
 {
 "Key": "player_summer_mop_attack_0",
-"X": -0.166,
-"Y": 1.21,
+"X": -0.092,
+"Y": 1.201,
 "Angle": -6.8,
 "Lift": 0.0
 },
 {
 "Key": "player_summer_mop_attack_1",
-"X": -0.189,
-"Y": 1.182,
+"X": -0.124,
+"Y": 1.173,
 "Angle": -6.8,
 "Lift": 0.0
 },
 {
 "Key": "player_summer_mop_attack_2",
-"X": -0.161,
-"Y": 1.127,
+"X": -0.152,
+"Y": 1.136,
 "Angle": -6.8,
 "Lift": 0.0
 },
 {
 "Key": "player_summer_mop_attack_3",
-"X": -0.152,
-"Y": 1.071,
+"X": -0.18,
+"Y": 1.099,
 "Angle": -6.8,
 "Lift": 0.0
 },
 {
 "Key": "player_summer_mop_attack_4",
-"X": -0.157,
-"Y": 1.034,
+"X": -0.199,
+"Y": 1.071,
 "Angle": -6.8,
 "Lift": 0.0
 },
 {
 "Key": "player_summer_mop_attack_5",
 "X": -0.208,
-"Y": 0.978,
+"Y": 1.034,
 "Angle": -6.8,
 "Lift": 0.0
 },
 {
 "Key": "player_summer_mop_attack_6",
-"X": -0.24,
-"Y": 0.932,
+"X": -0.208,
+"Y": 1.025,
 "Angle": -6.8,
 "Lift": 0.0
 },
 {
 "Key": "player_summer_mop_attack_7",
-"X": -0.263,
-"Y": 0.877,
+"X": -0.171,
+"Y": 0.997,
 "Angle": -6.8,
 "Lift": 0.0
 },
 {
 "Key": "player_summer_mop_attack_8",
-"X": -0.226,
-"Y": 0.858,
+"X": -0.171,
+"Y": 0.988,
 "Angle": -6.8,
 "Lift": 0.0
 },
 {
 "Key": "player_summer_mop_attack_9",
-"X": -0.203,
-"Y": 0.821,
+"X": -0.157,
+"Y": 0.969,
 "Angle": -6.8,
 "Lift": 0.0
 },
 {
 "Key": "player_summer_mop_attack_10",
-"X": -0.152,
-"Y": 0.784,
+"X": -0.18,
+"Y": 0.969,
 "Angle": -6.8,
 "Lift": 0.0
 },
 {
 "Key": "player_summer_mop_attack_11",
-"X": -0.143,
-"Y": 0.775,
+"X": -0.171,
+"Y": 0.96,
 "Angle": -6.8,
 "Lift": 0.0
 },
 {
 "Key": "player_summer_mop_attack_12",
-"X": -0.129,
-"Y": 0.803,
+"X": -0.175,
+"Y": 0.951,
 "Angle": -6.8,
 "Lift": 0.0
 },
 {
 "Key": "player_summer_mop_attack_13",
-"X": -0.152,
-"Y": 0.849,
+"X": -0.166,
+"Y": 0.951,
 "Angle": -6.8,
 "Lift": 0.0
 },
 {
 "Key": "player_summer_mop_attack_14",
-"X": -0.198,
-"Y": 0.877,
+"X": -0.203,
+"Y": 0.969,
 "Angle": -6.8,
 "Lift": 0.0
 },
 {
 "Key": "player_summer_mop_attack_15",
-"X": -0.254,
-"Y": 0.886,
+"X": -0.231,
+"Y": 0.997,
 "Angle": -6.8,
 "Lift": 0.0
 },
 {
 "Key": "player_summer_mop_attack_16",
-"X": -0.268,
-"Y": 0.886,
+"X": -0.259,
+"Y": 1.043,
 "Angle": -6.8,
 "Lift": 0.0
 },
 {
 "Key": "player_summer_mop_attack_17",
-"X": -0.263,
-"Y": 0.932,
+"X": -0.245,
+"Y": 1.09,
 "Angle": -6.8,
 "Lift": 0.0
 },
 {
 "Key": "player_summer_mop_attack_18",
-"X": -0.231,
-"Y": 0.978,
+"X": -0.208,
+"Y": 1.136,
 "Angle": -6.8,
 "Lift": 0.0
 },
 {
 "Key": "player_summer_mop_attack_19",
-"X": -0.194,
-"Y": 1.025,
+"X": -0.171,
+"Y": 1.182,
 "Angle": -6.8,
 "Lift": 0.0
 },
 {
 "Key": "player_summer_mop_attack_20",
-"X": -0.157,
-"Y": 1.025,
+"X": -0.129,
+"Y": 1.21,
 "Angle": -6.8,
 "Lift": 0.0
 },
 {
 "Key": "player_summer_mop_attack_21",
-"X": -0.138,
-"Y": 1.025,
+"X": -0.12,
+"Y": 1.229,
 "Angle": -6.8,
 "Lift": 0.0
 },
 {
 "Key": "player_summer_mop_attack_22",
-"X": -0.129,
-"Y": 1.025,
+"X": -0.12,
+"Y": 1.219,
 "Angle": -6.8,
 "Lift": 0.0
 },
 {
 "Key": "player_summer_mop_attack_23",
-"X": -0.138,
-"Y": 1.025,
+"X": -0.129,
+"Y": 1.219,
 "Angle": -6.8,
 "Lift": 0.0
 },
@@ -21058,169 +21058,169 @@
 },
 {
 "Key": "player_summer_pipe_attack_0",
-"X": -0.052,
-"Y": 1.065,
+"X": 0.006,
+"Y": 1.092,
 "Angle": -6.2,
 "Lift": 0.0
 },
 {
 "Key": "player_summer_pipe_attack_1",
-"X": -0.042,
-"Y": 1.065,
+"X": -0.013,
+"Y": 1.092,
 "Angle": -6.2,
 "Lift": 0.0
 },
 {
 "Key": "player_summer_pipe_attack_2",
-"X": -0.042,
-"Y": 1.074,
+"X": -0.04,
+"Y": 1.092,
 "Angle": -6.2,
 "Lift": 0.0
 },
 {
 "Key": "player_summer_pipe_attack_3",
-"X": -0.033,
-"Y": 1.074,
+"X": -0.031,
+"Y": 1.092,
 "Angle": -6.2,
 "Lift": 0.0
 },
 {
 "Key": "player_summer_pipe_attack_4",
-"X": -0.042,
-"Y": 1.111,
+"X": -0.04,
+"Y": 1.092,
 "Angle": -6.2,
 "Lift": 0.0
 },
 {
 "Key": "player_summer_pipe_attack_5",
-"X": -0.042,
-"Y": 1.093,
+"X": -0.031,
+"Y": 1.074,
 "Angle": -6.2,
 "Lift": 0.0
 },
 {
 "Key": "player_summer_pipe_attack_6",
-"X": -0.056,
-"Y": 1.056,
+"X": -0.05,
+"Y": 1.027,
 "Angle": -6.2,
 "Lift": 0.0
 },
 {
 "Key": "player_summer_pipe_attack_7",
-"X": -0.038,
-"Y": 0.972,
+"X": -0.022,
+"Y": 0.99,
 "Angle": -6.2,
 "Lift": 0.0
 },
 {
 "Key": "player_summer_pipe_attack_8",
-"X": -0.01,
-"Y": 0.917,
+"X": -0.003,
+"Y": 0.944,
 "Angle": -6.2,
 "Lift": 0.0
 },
 {
 "Key": "player_summer_pipe_attack_9",
-"X": 0.027,
-"Y": 0.898,
+"X": 0.034,
+"Y": 0.935,
 "Angle": -6.2,
 "Lift": 0.0
 },
 {
 "Key": "player_summer_pipe_attack_10",
-"X": 0.045,
-"Y": 0.889,
+"X": 0.043,
+"Y": 0.926,
 "Angle": -6.2,
 "Lift": 0.0
 },
 {
 "Key": "player_summer_pipe_attack_11",
-"X": 0.059,
-"Y": 0.889,
+"X": 0.043,
+"Y": 0.926,
 "Angle": -6.2,
 "Lift": 0.0
 },
 {
 "Key": "player_summer_pipe_attack_12",
-"X": 0.069,
-"Y": 0.87,
+"X": 0.052,
+"Y": 0.907,
 "Angle": -6.2,
 "Lift": 0.0
 },
 {
 "Key": "player_summer_pipe_attack_13",
-"X": 0.069,
-"Y": 0.852,
+"X": 0.052,
+"Y": 0.879,
 "Angle": -6.2,
 "Lift": 0.0
 },
 {
 "Key": "player_summer_pipe_attack_14",
-"X": 0.064,
-"Y": 0.843,
+"X": 0.062,
+"Y": 0.87,
 "Angle": -6.2,
 "Lift": 0.0
 },
 {
 "Key": "player_summer_pipe_attack_15",
-"X": 0.073,
-"Y": 0.833,
+"X": 0.066,
+"Y": 0.851,
 "Angle": -6.2,
 "Lift": 0.0
 },
 {
 "Key": "player_summer_pipe_attack_16",
-"X": 0.078,
-"Y": 0.824,
+"X": 0.052,
+"Y": 0.842,
 "Angle": -6.2,
 "Lift": 0.0
 },
 {
 "Key": "player_summer_pipe_attack_17",
-"X": 0.073,
-"Y": 0.833,
+"X": 0.034,
+"Y": 0.851,
 "Angle": -6.2,
 "Lift": 0.0
 },
 {
 "Key": "player_summer_pipe_attack_18",
-"X": 0.055,
-"Y": 0.852,
+"X": 0.001,
+"Y": 0.879,
 "Angle": -6.2,
 "Lift": 0.0
 },
 {
 "Key": "player_summer_pipe_attack_19",
-"X": 0.041,
-"Y": 0.87,
+"X": -0.013,
+"Y": 0.898,
 "Angle": -6.2,
 "Lift": 0.0
 },
 {
 "Key": "player_summer_pipe_attack_20",
-"X": 0.022,
-"Y": 0.87,
+"X": -0.031,
+"Y": 0.898,
 "Angle": -6.2,
 "Lift": 0.0
 },
 {
 "Key": "player_summer_pipe_attack_21",
-"X": 0.018,
-"Y": 0.87,
+"X": -0.022,
+"Y": 0.907,
 "Angle": -6.2,
 "Lift": 0.0
 },
 {
 "Key": "player_summer_pipe_attack_22",
-"X": -0.001,
-"Y": 0.87,
+"X": -0.054,
+"Y": 0.898,
 "Angle": -6.2,
 "Lift": 0.0
 },
 {
 "Key": "player_summer_pipe_attack_23",
-"X": -0.005,
-"Y": 0.87,
+"X": -0.077,
+"Y": 0.889,
 "Angle": -6.2,
 "Lift": 0.0
 },
