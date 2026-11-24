@@ -22,7 +22,8 @@ namespace ApoGirl.Core.Simulation.Bots
             }
 
             var loadout = state.Loadout;
-            loadout.Backpack = Pick(state, db, EquipSlot.Backpack, loadout.Backpack, def => def.GridWidth * def.GridHeight);
+            // 가방: 헤드리스는 가방이 없어도 기준 칸(HeadlessBagBaseCells)으로 보므로 그보다 큰 가방만 고른다
+            loadout.Backpack = Pick(state, db, EquipSlot.Backpack, loadout.Backpack, def => def.GridWidth * def.GridHeight - db.Balance.HeadlessBagBaseCells);
             loadout.MainWeapon = Pick(state, db, EquipSlot.Weapon, loadout.MainWeapon, def => WeaponScore(state, def));
             loadout.Armor = Pick(state, db, EquipSlot.Armor, loadout.Armor, def => def.DamageReduction);
             loadout.Tool = Pick(state, db, EquipSlot.Tool, loadout.Tool, def => ToolScore(def, night, null));

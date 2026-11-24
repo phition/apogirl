@@ -31,6 +31,12 @@ namespace ApoGirl.Core.Simulation.Bots
                 return true;
             }
 
+            // 헤드리스 기준 칸보다 작은 가방은 차도 수확이 줄 뿐이라 만들지 않는다
+            if (product.Slot == EquipSlot.Backpack && product.GridWidth * product.GridHeight <= db.Balance.HeadlessBagBaseCells)
+            {
+                return false;
+            }
+
             var score = Score(state, product);
             if (score <= 0f)
             {
