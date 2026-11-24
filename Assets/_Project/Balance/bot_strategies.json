@@ -466,7 +466,7 @@
         "EDU",
         "EXP_DAY",
         "EDU",
-        "CRAFT|BUILD|EDU",
+        "BUILD|CRAFT|EDU",
         "ACT_REST_DAY",
         "EDU",
         "ACT_SURV_PURIFY_WATER|ACT_SURV_CLEAN"

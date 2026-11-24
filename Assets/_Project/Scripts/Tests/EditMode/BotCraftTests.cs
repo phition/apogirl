@@ -24,6 +24,14 @@ namespace ApoGirl.Tests.EditMode
             return state;
         }
 
+        /// <summary>MIXED에서 D4만 제작 먼저 (실제 전략은 설비 먼저 — 사용자 결정 2026-11-25).</summary>
+        private static BotStrategyDef CraftFirst(BotConfigDef config)
+        {
+            var strategy = config.Strategies.First(s => s.Id == "MIXED");
+            strategy.Day[3] = "CRAFT|EDU";
+            return strategy;
+        }
+
         private static string At(GameState state, string slot) => state.Plan.Slots[BotPlanner.SlotIndex(slot)].ActionId;
 
         [Test]
@@ -31,7 +39,7 @@ namespace ApoGirl.Tests.EditMode
         {
             var db = M6Act4Tests.ShippedDb();
             var config = Config();
-            var strategy = config.Strategies.First(s => s.Id == "MIXED");
+            var strategy = CraftFirst(config);
             var state = State(db, 20);
 
             BotPlanner.Plan(state, db, config, strategy, new SeededRandom(SeededRandom.CreateState(1)));
@@ -52,7 +60,7 @@ namespace ApoGirl.Tests.EditMode
         {
             var db = M6Act4Tests.ShippedDb();
             var config = Config();
-            var strategy = config.Strategies.First(s => s.Id == "MIXED");
+            var strategy = CraftFirst(config);
             var state = State(db, 20);
             state.Flags.UnionWith(new[] { "WORKBENCH", "SAND_FILTER", "SEARCHED_HOMEEC" });
             state.Player.Proficiency[ProficiencyType.Survival] = new ProficiencyState { Level = 2, Xp = db.Balance.ProficiencyXpThresholds[1] };
