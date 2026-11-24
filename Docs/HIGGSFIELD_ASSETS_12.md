@@ -16,6 +16,24 @@
   - 윤 선생님 대화 9와 막 평가 3
   - 일상 무작위 이벤트 17
 
+**13차를 먼저 받았다 (2026-11-24).** [HIGGSFIELD_ASSETS_13.md](HIGGSFIELD_ASSETS_13.md)는 8차 이벤트 컷 가운데 다른 사람이 나온 컷을 다시 받는 문서다. 사용자가 이 12차보다 먼저 받았다. 그래서 이 문서를 다음과 같이 고쳤다.
+
+- 옛 4.5절(초복 삼계탕·평면도 다시 그리기 2장)은 13차 2.4·2.5로 받았다. 이 문서에서는 받지 않는다(4.5절은 안내만 남겼다).
+- 받은 13차 18장은 `ArtInbox/illustrations/redo13/`에 있다. 게임에 덮어쓰는 일은 13차 문서를 따른다.
+- 인물 문구를 13차 1절과 같게 맞췄다(0.2).
+  - 도현은 곧은 머리다. 13차 검토에서 곱슬로 나온 컷이 있었다.
+  - 서진은 계절별 차림 `{SEOJIN_SUMMER}`·`{SEOJIN_WINTER}`를 쓴다.
+  - 윤 선생님 다리는 13차의 ①~④ 문구를 쓴다.
+- **13차 결과를 보조 참고 이미지로 쓸 수 있다.** 인물이 둘 이상 나오는 컷에서 그림체와 사람 사이 키·크기 비율을 맞추는 데 쓴다. 참고는 4장까지이므로 **인물 시트를 먼저 넣고**, 자리가 남을 때만 13차 컷을 한 장 더한다.
+
+| 이 문서의 컷 | 보조 참고로 좋은 13차 컷 |
+|---|---|
+| 서진·도현이 나오는 컷 (1.3 운동, 2 도현 개인 장면, 4.1 도현 위기 이탈) | `redo13/evt_bc_first.png`, `redo13/evt_a3_finale.png` |
+| 윤 선생님이 나오는 컷 (4.2 마음 상태, 4.3 대화·막 평가, 4.4 선생님 통증) | `redo13/evt_a1_power_plan.png`(1막), `redo13/evt_cal_vacation.png`(2막), `redo13/evt_a3_mart_news.png`(3막), `redo13/evt_cal_dongji.png`(병세) |
+| 여럿이 모인 컷 (4.2 `evt_mind_laugh_2`·`_face_2`, 4.3 `evt_a2_review`·`evt_a3_review`, 4.4 정전·열대야·추운 밤) | `redo13/evt_a3_dj_research.png`, `redo13/evt_hr_first_night.png` |
+| 박 선생님이 나오는 컷 (1.x 박 선생님 짝, 2 박 선생님 개인 장면, 4.1, 4.3 `evt_talk_08`) | `redo13/evt_a3_diagnosis.png` |
+| 2학년 선배가 나오는 컷 (1.x 선배 짝, 2 선배 개인 장면, 4.1) | `redo13/evt_bond_senior_3.png` |
+
 쓰는 법:
 
 - 쓰는 법·모델·공통 공식은 [HIGGSFIELD_ASSETS.md](HIGGSFIELD_ASSETS.md) 0장을 따른다.
@@ -41,7 +59,7 @@
 | 4.2 | `evt_mind_*`, `evt_favorite_found` | 프롤로그의 메아리 (마음 상태 흐름) | P2 | 9 |
 | 4.3 | `evt_talk_{02~11}`, `evt_a{1~3}_review` | 윤 선생님 대화·막 평가 | P3 | 12 |
 | 4.4 | `evt_rnd_*` | 일상 무작위 이벤트 | P3 | 17 |
-| 4.5 | `evt_cal_chobok`, `evt_a2_plan_next` (다시) | 초복 삼계탕·평면도 — 인물이 달라 서진·윤 선생님·도현으로 다시 | **P1** | 2 |
+| 4.5 | ~~`evt_cal_chobok`, `evt_a2_plan_next`~~ | **13차 2.4·2.5로 받음** — 여기서는 받지 않는다 | — | 0 |
 
 **먼저 받을 것**: 1장에서 ★ 표시한 11장. 동료가 좋아하는 활동 짝 6장, 도현 짝 3장, 혼자 2장이다. 그다음 2장과 3장을 받는다.
 
@@ -57,16 +75,19 @@ Character consistency: draw every named character exactly as in the attached cha
 | 인물 | 시트 | 문구 |
 |---|---|---|
 | 주인공 서진 | `char_seojin_sheet.png` | `Seojin, a 16-year-old Korean girl with a straight black bob just above the shoulders and straight bangs, navy school blazer, white shirt with a navy striped tie, navy plaid pleated knee-length skirt, black opaque tights, dark canvas sneakers` |
+| 서진 (여름) `{SEOJIN_SUMMER}` | 같은 시트 | `Seojin, a 16-year-old Korean girl with a straight black bob just above the shoulders and straight bangs, in a summer school uniform: white short-sleeved shirt with a navy striped tie, a beige knit sweater vest, navy plaid pleated knee-length skirt` |
+| 서진 (겨울) `{SEOJIN_WINTER}` | 같은 시트 | `Seojin, a 16-year-old Korean girl with a straight black bob just above the shoulders and straight bangs, a worn dark padded jacket over her navy school uniform, navy plaid skirt, black tights` |
 | 서진 (체육복) | 같은 시트 | `Seojin, a 16-year-old Korean girl with a straight black bob and straight bangs, in a plain dark navy school gym jacket and navy track pants` |
-| 도현 | `char_dohyeon_sheet.png` | `Dohyeon, a thin 15-year-old Korean boy with short messy black hair, a small adhesive bandage on his forehead, an oversized dark green track jacket with white stripes down the sleeves, white T-shirt, faded blue jeans, black sneakers` |
+| 도현 | `char_dohyeon_sheet.png` | `Dohyeon, a thin 15-year-old Korean boy with short messy straight black hair, a small adhesive bandage on his forehead, an oversized dark green track jacket with white stripes down the sleeves, white T-shirt, faded blue jeans, black sneakers` |
 | 박 선생님 (보건) | `char_nurse_sheet.png` | `Nurse Park, a Korean school nurse in her 40s with a neat short dark bob, a white nurse gown over an olive quilted padded vest, sleeves rolled up, a small pouch on her belt, grey trousers, brown shoes` |
 | 송예지 | `char_bystander_sheet.png` | `Yeji, a slim 16-year-old Korean girl with long straight black hair tied low, a slightly oversized navy school blazer, white shirt, navy pleated skirt, white socks and white sneakers, shy posture` |
 | 최하린 | `char_ringleader_sheet.png` | `Harin, a thin 16-year-old Korean girl with shoulder-length brown hair, sharp but tired eyes, an oversized olive-green hooded parka over a navy school uniform, black tights, dark loafers` |
 | 2학년 선배 | `char_senior_sheet.png` | `the senior, a tall quiet 17-year-old Korean boy with messy dark hair falling over his eyes, a faded dark navy zip-up gym jacket over a white shirt, dark trousers, white sneakers, a thin pale fully healed scar along his left jaw; he never speaks and writes in a small notebook instead` |
 | 유랑자 | `char_wanderer_sheet.png` | `the wanderer, a sun-weathered Korean man in his 50s, a worn wide-brim canvas hat, a faded olive hiking jacket, cargo trousers, hiking boots, a big old backpack with a rolled bedroll, a wooden walking stick` |
-| 윤 선생님 | `char_teacher_sheet.png` | `Mr. Yoon, a Korean male teacher in his mid-40s with thin glasses and a grey cardigan over a white shirt` + 8차 0.3의 **다리 문구** (그 막에 맞춰) |
+| 윤 선생님 | `char_teacher_sheet.png` | `Mr. Yoon, a Korean male teacher in his mid-40s with short black hair, thin glasses and a grey cardigan over a white shirt, dark trousers` + [13차](HIGGSFIELD_ASSETS_13.md) 1절의 **다리 문구 ①~④** 가운데 그 막 것 |
 
 - 프롬프트 안의 자리 표시: `{SEOJIN}` 서진, `{DOHYEON}` 도현, `{NURSE}` 박 선생님, `{YEJI}` 송예지, `{HARIN}` 최하린, `{SENIOR}` 2학년 선배, `{WANDERER}` 유랑자, `{TEACHER}` 윤 선생님. 자리 표시를 위 문구로 바꾼다.
+- 계절이 붙은 컷(4장의 `[여름]`·`[겨울]`)에서 서진은 `{SEOJIN_SUMMER}`·`{SEOJIN_WINTER}`를 쓴다. 표에는 그렇게 바꿔 적었다.
 - 동아리는 14주부터 열리고(여름~겨울), 밤 행동이다. 그래서 동아리 컷은 **계절 문구 없이 밤 실내**로 받는다. 서진은 재킷 차림이 기본이고, 운동 컷만 체육복이다.
 - 선배의 흉터는 "가늘고 다 나은 흰 흉터"로만 그린다(`[안전]`: 상처·피 없음).
 - 유랑자는 동아리 무렵 이미 동료라서 얼굴을 가리지 않는다. 모자 그늘이 조금 지는 정도로 둔다.
@@ -320,25 +341,25 @@ Night inside an abandoned Korean high school, windows blacked out with cardboard
 | `evt_mind_rooftop_dusk.png` | `EVT_MIND_LAUGH_3`, `EVT_MIND_FACE_3`, `EVT_MIND_TELL_3` | `Dusk on the school rooftop, {SEOJIN} leans on the chain-link fence railing seen from slightly behind, looking down over the school gate at the zebra crosswalk in front of it, the traffic light dark for a year, an empty bus stop beyond. Long golden light, quiet. [F-KOREA]` |
 | `evt_favorite_found.png` | `EVT_FAVORITE_FOUND` (메아리) | `Late night, {SEOJIN} sits at a desk unable to close her notebook, writing fast, a candle already burned halfway down, textbooks open around her, a small absorbed smile.` |
 
-`{TEACHER}`에는 윤 선생님 문구를 넣는다. 다리 문구는 마음 상태 이벤트가 열리는 막에 맞춘다(1·2막 목발, 4막은 의족·지팡이).
+`{TEACHER}`에는 윤 선생님 문구를 넣는다. 다리 문구는 13차 1절의 ①~④ 가운데 마음 상태 이벤트가 열리는 막 것을 쓴다. `_1`은 1막이라 ① 또는 ②, `_2`는 2막이라 ②, `evt_mind_hurry_3`(구조 직전 연습)은 4막이라 ③이다.
 
 ### 4.3 윤 선생님 대화·막 평가 (12장, P3) — `Content/Story/act{1,2,3}_events.json`
 
-선생님과 둘이 나누는 밤 이야기다. 01·05·12·13은 이미 그림이 있다. 다리 문구는 그 막에 맞춘다.
+선생님과 둘이 나누는 밤 이야기다. 01·05·12·13은 이미 그림이 있다. 다리 문구는 13차 1절의 ①~④ 가운데 그 막 것을 쓴다. 1막은 ①·②, 2막은 ②, 3막은 ③이고, `evt_talk_08`은 열이 나기 시작한 2막이라 ②다. `evt_a2_review`는 목발이라고 적혀 있으니 ②다.
 
 | 파일 | 이벤트 | 장면 (영어) |
 |---|---|---|
 | `evt_talk_02.png` | `EVT_TALK_02` (1막) | `Night in the classroom shelter, {TEACHER} sits by the window looking out at the dark city, half turned away, a quiet loneliness; {SEOJIN} sits on a mat nearby holding a mug, listening.` |
 | `evt_talk_03.png` | `EVT_TALK_03` (1막) | `Spring night, {TEACHER} recites a short poem in a low voice with his eyes closed, one finger keeping the rhythm; {SEOJIN} listens with her chin on her knees. A candle, cherry petals stuck to the window glass. [봄]` |
 | `evt_talk_04.png` | `EVT_TALK_04` (1막) | `Night, {SEOJIN} holds a dead smartphone in both hands, the black screen reflecting the candle; {TEACHER} sits across from her, waiting gently for her to talk.` |
-| `evt_talk_06.png` | `EVT_TALK_06` (2막) | `Summer evening, {TEACHER} laughs softly while telling a story, holding an old worn notebook from his school days; {SEOJIN} smiles, a paper fan in her hand. [여름]` |
+| `evt_talk_06.png` | `EVT_TALK_06` (2막) | `Summer evening, {TEACHER} laughs softly while telling a story, holding an old worn notebook from his school days; {SEOJIN_SUMMER} smiles, a paper fan in her hand. [여름]` |
 | `evt_talk_07.png` | `EVT_TALK_07` (2막) | `Night, {SEOJIN} lies on her mat turning a friend's school ID card over in her fingers in the beam of a flashlight (no readable text, the photo blurred); {TEACHER} sits a little away, not pressing her.` |
 | `evt_talk_08.png` | `EVT_TALK_08` (2막) | `Night, {TEACHER} sits with his hand resting on the folded, pinned left trouser leg below the knee, a tired, slightly feverish face; {NURSE} kneels beside him checking his temperature with the back of her hand; {SEOJIN} watches from the doorway.` |
 | `evt_talk_09.png` | `EVT_TALK_09` (3막) | `Autumn night on the classroom floor, {TEACHER} and {SEOJIN} sit side by side wrapped in blankets; he has just asked her something and she stares at the ceiling, thinking about a future for the first time in a long while. [가을]` |
 | `evt_talk_10.png` | `EVT_TALK_10` (3막) | `Daytime in the classroom, {SEOJIN} explains a math problem on a small chalkboard to {DOHYEON}, who is nodding; {TEACHER} watches from his desk with a proud, quiet smile.` |
 | `evt_talk_11.png` | `EVT_TALK_11` (3막, 격리 중) | `Close view of the floor at the bottom of the broadcasting room door: a single handwritten lesson-plan sheet has just been slid out through the gap under the door (no readable text, neat rows of lines); {SEOJIN}'s hand reaches for it. Dim corridor light, the door stays closed.` |
 | `evt_a1_review.png` | `EVT_A1_REVIEW` (1막 끝) | `The last night of spring, {TEACHER} sits cross-legged on the gym mats with a notebook open instead of an attendance book, giving a playful mid-term review; {SEOJIN} sits straight like a student waiting for her grade, trying not to smile. [봄]` |
-| `evt_a2_review.png` | `EVT_A2_REVIEW` (2막 끝) | `The last night of summer on the school rooftop, everyone gathered sitting on blankets under the stars; {TEACHER} has just reached the top of the stairs with his crutch, breathing hard but grinning, and {SEOJIN} and {DOHYEON} reach out to him. [여름]` |
+| `evt_a2_review.png` | `EVT_A2_REVIEW` (2막 끝) | `The last night of summer on the school rooftop, everyone gathered sitting on blankets under the stars; {TEACHER} has just reached the top of the stairs with his crutch, breathing hard but grinning, and {SEOJIN_SUMMER} and {DOHYEON} reach out to him. [여름]` |
 | `evt_a3_review.png` | `EVT_A3_REVIEW` (3막 끝) | `Dawn after a night raid, everyone lies exhausted on the classroom floor under extra blankets, someone snoring; a broken barricaded door lets cold wind in; {SEOJIN} lies awake, a tired smile at the snoring. Pale blue dawn light. [가을]` |
 
 ### 4.4 일상 무작위 이벤트 (17장, P3)
@@ -350,11 +371,11 @@ Night inside an abandoned Korean high school, windows blacked out with cardboard
 | `evt_rnd_rain_leak.png` | `EVT_RND_RAIN_LEAK` | `Morning in a classroom after heavy rain, a dark water stain spreading across the ceiling tiles, drops falling into a dented bucket set on a desk, a puddle on the floor, grey light.` |
 | `evt_rnd_nightmare.png` | `EVT_RND_NIGHTMARE` | `Dreamlike dark image: the inside of a cramped school storage room seen from the floor, a gym mat in the corner, a door with a round handle and a thin line of light under it, everything slightly blurred and cold blue, no people.` |
 | `evt_rnd_rats.png` | `EVT_RND_RATS` | `Close view of a cardboard food box on a storage shelf with one corner gnawed open, a torn rice bag beside it, a few grains spilled, a tiny rat tail disappearing behind the shelf, flashlight beam.` |
-| `evt_rnd_water_smell.png` | `EVT_RND_WATER_SMELL` | `Close view of a blue plastic water container being poured into a cup, the water slightly cloudy with a thin film on the surface, {SEOJIN}'s hand hesitating, a frown visible at the edge of the frame. Humid summer light. [여름]` |
+| `evt_rnd_water_smell.png` | `EVT_RND_WATER_SMELL` | `Close view of a blue plastic water container being poured into a cup, the water slightly cloudy with a thin film on the surface, {SEOJIN_SUMMER}'s hand hesitating, a frown visible at the edge of the frame. Humid summer light. [여름]` |
 | `evt_rnd_quiet_morning.png` | `EVT_RND_QUIET_MORNING` | `A rare quiet morning, a sparrow on the classroom windowsill, two paper cups of instant coffee mix on a desk with steam, soft sunlight; through the window green leaves on the cherry tree by the schoolyard. [봄]` |
 | `evt_rnd_teacher_pain.png` | `EVT_RND_TEACHER_PAIN` | `Midnight in the classroom shelter, {TEACHER} sits up on his mat with his jaw clenched, both hands gripping just above his left knee over the folded, pinned trouser leg, eyes shut in pain; a dim lantern, others asleep in the background.` |
 | `evt_rnd_letter.png` | `EVT_RND_LETTER` | `Close view of {SEOJIN}'s hands holding a page torn from an exercise book: an unsent letter, handwriting erased and rewritten many times (no readable text), a date in the corner smudged; dust and flashlight light.` |
-| `evt_rnd_a2_mosquito.png` | `EVT_RND_A2_MOSQUITO` | `Hot summer night in the classroom shelter, {SEOJIN} sits up on her mat mid-slap with her palm against her own cheek, annoyed and sleepy, a thin curl of smoke from a mosquito coil on a tin lid. [여름]` |
+| `evt_rnd_a2_mosquito.png` | `EVT_RND_A2_MOSQUITO` | `Hot summer night in the classroom shelter, {SEOJIN_SUMMER} sits up on her mat mid-slap with her palm against her own cheek, annoyed and sleepy, a thin curl of smoke from a mosquito coil on a tin lid. [여름]` |
 | `evt_rnd_a2_generator.png` | `EVT_RND_A2_GENERATOR` | `Evening, the fluorescent lights in the classroom have just gone out; everyone looks up at the ceiling, faces lit only by one flashlight, a dinner left half eaten on the desks.` |
 | `evt_rnd_a2_looters.png` | `EVT_RND_A2_LOOTERS` | `Daytime by the school gate, a strange spray-painted mark on the concrete wall: a circle with an arrow; nearby a section of chain-link fence has been cut open. No people. [여름] [F-KOREA]` |
 | `evt_rnd_a2_tropical_night.png` | `EVT_RND_A2_TROPICAL_NIGHT` | `Sweltering tropical night, everyone lies on the bare concrete classroom floor with wet towels around their necks, one person slowly waving a hand fan, windows half open with mosquito netting, moonlight. [여름]` |
@@ -365,27 +386,9 @@ Night inside an abandoned Korean high school, windows blacked out with cardboard
 | `evt_rnd_a4_snow.png` | `EVT_RND_A4_SNOW` | `Dawn after an overnight snowfall, the whole schoolyard covered in untouched white snow, not a single footprint, seen from a second-floor classroom window, snow piled on the window frame. [겨울]` |
 | `evt_rnd_a4_pipe.png` | `EVT_RND_A4_PIPE` | `The school cafeteria kitchen in deep winter, a frozen water pipe burst along the wall with icicles hanging from it, the floor turned into a sheet of ice, old duct tape wrapped around the pipe nearby. No people. [겨울]` |
 
-### 4.5 인물이 다르게 나온 컷 다시 그리기 (2장, P1)
+### 4.5 (13차로 옮김) 초복 삼계탕·평면도 다시 그리기
 
-8차 1.4·1.5에서 받은 두 컷도 프롬프트에 인물 문구가 없었다. 그래서 생김새가 설정과 다른 학생 여럿이 나왔다. 이번에는 **서진·윤 선생님·도현 세 사람만** 나오게 받는다(사용자 결정 2026-11-24). 다른 사람은 그리지 않는다.
-
-- 참고 이미지: `char_seojin_sheet.png`, `char_teacher_sheet.png`, `char_dohyeon_sheet.png` (3장)
-- 프롬프트 = `[F-ILLU]` + `[일관성]` + 아래 장면 + `[여름]` + `[안전]`
-- 둘 다 2막 여름이다.
-  - 윤 선생님 다리는 **목발 뒤** 문구를 쓴다.
-  - 서진은 여름 교복이다. 시트의 얼굴·머리는 그대로 두고 재킷만 벗는다(탐험·입상의 여름 교복 `summer`과 같은 차림).
-  - 도현은 트랙 재킷 지퍼를 열고 소매를 걷는다. 색과 모양은 시트 그대로다.
-- 넣는 곳: `ArtInbox/illustrations/events12/`. 같은 이름의 지금 그림(`Story/Events/*.jpg`)을 덮어쓰고, 옛 그림은 백업으로 옮긴다. `art_map.json`은 그대로다.
-
-**문구** (자리 표시 `{SEOJIN}`·`{TEACHER}`·`{DOHYEON}`):
-- `{SEOJIN}` = `Seojin, a 16-year-old Korean girl with a straight black bob just above the shoulders and straight bangs, in a summer school uniform: white short-sleeved shirt with a navy striped tie, a beige knit sweater vest, navy plaid pleated knee-length skirt`
-- `{TEACHER}` = `Mr. Yoon, a Korean male teacher in his mid-40s with thin glasses and a grey cardigan over a white shirt, leaning on a homemade crutch made from a mop handle and tape, his left trouser leg folded and pinned below the knee`
-- `{DOHYEON}` = `Dohyeon, a thin 15-year-old Korean boy with short messy black hair, a small adhesive bandage on his forehead, an oversized dark green track jacket with white stripes down the sleeves worn open with the sleeves pushed up, white T-shirt, faded blue jeans`
-
-| 파일 | 이벤트 | 대본 | 장면 (영어) |
-|---|---|---|---|
-| `evt_cal_chobok.png` | `EVT_CAL_CHOBOK` 초복 | `Act2Expansion.yarn`: 닭가슴살 통조림 하나로 끓인 '삼계탕', "이게 무슨 삼계탕이야. …맛있네." | `Summer evening in the classroom shelter, exactly three people around a pair of desks pushed together: {SEOJIN} ladles milky rice soup into a bowl, a shy proud smile; {TEACHER} sits with his crutch leaning against the desk, holding his bowl and laughing in spite of himself, sweat on his forehead; {DOHYEON} blows on a spoonful, cheeks flushed from the heat. In the middle a dented pot of soup made from one can of chicken breast steams on a small camping stove, the empty can beside it, mismatched bowls and spoons. Warm sunset light through the window, cicada-season trees outside. Only these three characters appear.` |
-| `evt_a2_plan_next.png` | `EVT_A2_PLAN_NEXT` 평면도 "그 문은 우리가 다시 열 필요 없어" | `Act2Main.yarn`: 밤, 선생님이 평면도에 급식실·도서관·체육관 동그라미, 서진이 "체육관 창고는… 안 가도 되죠?" 묻자 펜을 멈춤 | `Night in the classroom shelter, exactly three people at a desk lit by a flashlight lying on its side: {TEACHER} sits bent over a hand-drawn school floor plan on a large sheet of paper, three rooms circled in pencil; his pen has stopped just above one small room at the edge of the gymnasium that is left uncircled, and he looks up gently at Seojin. {SEOJIN} sits across from him, hands gripping her knees, eyes fixed on that small room, tense. {DOHYEON} leans on the desk beside the teacher with his chin on his folded arms, glancing between the two. The crutch leans against the desk. Dark windows, moonlight. Only these three characters appear; no text on the plan.` |
+이 절에 있던 두 컷(`evt_cal_chobok`·`evt_a2_plan_next`, 서진·윤 선생님·도현)은 [HIGGSFIELD_ASSETS_13.md](HIGGSFIELD_ASSETS_13.md) 2.4·2.5로 옮겨 **받았다**(2026-11-24, `ArtInbox/illustrations/redo13/`). 프롬프트는 13차 문서 2절에 함께 있다. 이 문서에서는 다시 받지 않는다.
 
 **있는 그림을 쓰는 것** (새로 받지 않는다):
 
@@ -399,16 +402,17 @@ Night inside an abandoned Korean high school, windows blacked out with cardboard
 ## 5. 만들지 않는 것 · 확인한 여분
 
 - **연결 안 된 여분 그림 6장**은 이미 쓸 곳이 있다. 그래서 이번 문서에 넣지 않았다.
-  - `evt_cat_warn`(고양이 경고), `evt_deep_door`·`evt_deep_oneway`(깊은 곳), `evt_season_flood`·`evt_season_snow_block`(계절 재해): 아직 이벤트가 없는 기능용이다.
+  - `evt_cat_warn`(고양이 경고), `evt_deep_door`·`evt_deep_oneway`(깊은 곳), `evt_season_flood`·`evt_season_snow_block`(계절 재해): 아직 이벤트가 없는 기능용이다. `evt_cat_warn`은 인물을 맞춰 13차 부록으로 다시 받았다.
   - `evt_lost_found`: 분실물 상자 그림이다. 편지 이벤트(4.4 `evt_rnd_letter`)를 받기 전에 임시로 쓸 수 있다.
 - **고양이 이벤트 컷**(`evt_cat_*`)은 이미 치즈 고양이로 잘 나와서 다시 받지 않는다. 3장의 고양이 도트는 이 컷의 고양이를 따른다.
 - **박 선생님·송예지·최하린 단면도 대기 그림**은 설정화와 크게 어긋나지 않아 그대로 둔다(걷기만 3.6).
 - **탐험 화면 주인공 스프라이트**는 이 문서에 없다. [PIXELLAB_24F_PLAN.md](PIXELLAB_24F_PLAN.md) 9절의 남은 5벌(PixelLab 크레딧을 채운 뒤)을 따른다.
 - 대사 초상·입상은 이번에 필요한 것이 없다.
+- **8차 이벤트 컷 다시 받기**는 13차 문서의 몫이다. 이 문서에 넣지 않는다. 13차에서 맞게 나왔다고 본 컷(13차 0.2)도 다시 받지 않는다.
 
 ## 6. 받는 차례 (추천)
 
-1. 1장 ★ 11장: 좋아하는 짝 6, 도현 짝 3, 혼자 2. 받으면 깃발별 그림 고르기 코드와 함께 바로 잇는다. 4.5의 다시 그리기 2장도 이때 같이 받는다(덮어쓰기만 하면 된다).
+1. 1장 ★ 11장: 좋아하는 짝 6, 도현 짝 3, 혼자 2. 받으면 깃발별 그림 고르기 코드와 함께 바로 잇는다. (옛 4.5의 2장은 13차로 이미 받았다.)
 2. 3.2~3.5 시트 5장: 고양이 대기·걷기, 도현, 선배, 유랑자. 단면도에 바로 보인다.
 3. 2장 개인 장면 6장 → 1장의 나머지 17장.
 4. 4.1 위기 이탈 → 4.2 마음 상태 → 4.3 → 4.4 → 3.6 걷기.
