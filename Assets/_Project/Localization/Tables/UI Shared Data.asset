@@ -7115,6 +7115,106 @@ MonoBehaviour:
     m_Key: exp.decoy.down
     m_Metadata:
       m_Items: []
+  - m_Id: 2016874186686464
+    m_Key: craft.tree.open_button
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2016874257989632
+    m_Key: craft.tree.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2016874257989633
+    m_Key: craft.tree.hint
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2016874257989634
+    m_Key: craft.tree.built
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2016874257989635
+    m_Key: craft.tree.made
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2016874257989636
+    m_Key: craft.tree.open
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2016874257989637
+    m_Key: craft.tree.locked
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2016874257989638
+    m_Key: craft.line.WORKBENCH
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2016874257989639
+    m_Key: craft.line.WATER
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2016874257989640
+    m_Key: craft.line.BAG
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2016874257989641
+    m_Key: craft.line.WEAPON
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2016874257989642
+    m_Key: craft.line.ARMOR
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2016874257989643
+    m_Key: craft.line.LIGHT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2016874257989644
+    m_Key: craft.line.SCARECROW
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2016874257989645
+    m_Key: craft.line.OTHER
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2016874257989646
+    m_Key: craft.req.week
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2016874257989647
+    m_Key: craft.req.crafted
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2016874257989648
+    m_Key: craft.req.built
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2016874257989649
+    m_Key: craft.req.room
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2016874257989650
+    m_Key: craft.req.prof
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2016874257989651
+    m_Key: craft.req.facility
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2016874257989652
+    m_Key: craft.req.flag.ALARM_INSTALLED
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2016874257989653
+    m_Key: craft.req.flag.POWER_RESTORED
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2016874257989654
+    m_Key: craft.req.flag.UI_DEFENSE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2016874257989655
+    m_Key: craft.req.other
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
