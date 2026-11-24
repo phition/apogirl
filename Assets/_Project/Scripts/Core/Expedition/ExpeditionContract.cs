@@ -264,6 +264,7 @@ namespace ApoGirl.Core.Expedition
                 Backpack = source.Backpack,
                 MainWeapon = source.MainWeapon,
                 Tool = source.Tool,
+                Tool2 = source.Tool2,
                 Armor = source.Armor,
                 QuickSlots = new List<string>(), // 퀵슬롯은 없앴다
             };

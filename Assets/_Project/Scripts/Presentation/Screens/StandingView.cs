@@ -281,7 +281,7 @@ namespace ApoGirl.Presentation.Screens
             look.Bag = Find(config.Bags, loadout.Backpack) ?? "";
             look.BagColor = config.BagColors.Length > 0 ? (state.Rng.Seed & 0x7fffffff) % config.BagColors.Length : 0;
             look.Weapon = Find(config.Weapons, loadout.MainWeapon) ?? "";
-            look.Tool = Find(config.Tools, loadout.Tool) ?? "";
+            look.Tool = Find(config.Tools, loadout.Tool) ?? Find(config.Tools, loadout.Tool2) ?? "";
             return look;
         }
 

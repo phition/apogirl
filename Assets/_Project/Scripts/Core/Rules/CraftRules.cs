@@ -528,6 +528,7 @@ namespace ApoGirl.Core.Rules
             if (loadout.Backpack == itemId) loadout.Backpack = "";
             if (loadout.MainWeapon == itemId) loadout.MainWeapon = "";
             if (loadout.Tool == itemId) loadout.Tool = "";
+            if (loadout.Tool2 == itemId) loadout.Tool2 = "";
             if (loadout.Armor == itemId) loadout.Armor = "";
         }
 

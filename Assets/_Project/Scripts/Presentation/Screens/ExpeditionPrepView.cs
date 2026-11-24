@@ -142,7 +142,8 @@ namespace ApoGirl.Presentation.Screens
 
             AddSlot("prep.backpack", EquipSlot.Backpack, loadout.Backpack, id => loadout.Backpack = id);
             AddSlot("prep.weapon", EquipSlot.Weapon, loadout.MainWeapon, id => loadout.MainWeapon = id);
-            AddSlot("prep.tool", EquipSlot.Tool, loadout.Tool, id => loadout.Tool = id);
+            AddSlot("prep.tool", EquipSlot.Tool, loadout.Tool, id => loadout.Tool = id, loadout.Tool2);
+            AddSlot("prep.tool2", EquipSlot.Tool, loadout.Tool2, id => loadout.Tool2 = id, loadout.Tool);
             AddSlot("prep.armor", EquipSlot.Armor, loadout.Armor, id => loadout.Armor = id);
 
             KoreanFont.ApplyDeep(_loadout);
@@ -151,10 +152,11 @@ namespace ApoGirl.Presentation.Screens
             _standing.React("determined", 600f);
         }
 
-        private void AddSlot(string labelKey, EquipSlot slot, string current, Action<string> set)
+        /// <summary>장비 한 칸 (◀ ▶로 고른다). other: 같은 종류 다른 칸에 찬 것 (도구 두 칸은 서로 다른 도구만).</summary>
+        private void AddSlot(string labelKey, EquipSlot slot, string current, Action<string> set, string other = "")
         {
             var options = new List<string> { "" };
-            options.AddRange(Owned(slot).Select(o => o.ItemId));
+            options.AddRange(Owned(slot).Select(o => o.ItemId).Where(id => string.IsNullOrEmpty(other) || id != other));
             var index = Math.Max(0, options.IndexOf(current));
 
             var row = new VisualElement();

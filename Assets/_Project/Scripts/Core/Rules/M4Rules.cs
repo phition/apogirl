@@ -246,6 +246,7 @@ namespace ApoGirl.Core.Rules
             if (!string.IsNullOrEmpty(loadout.Backpack)) yield return loadout.Backpack;
             if (!string.IsNullOrEmpty(loadout.MainWeapon)) yield return loadout.MainWeapon;
             if (!string.IsNullOrEmpty(loadout.Tool)) yield return loadout.Tool;
+            if (!string.IsNullOrEmpty(loadout.Tool2)) yield return loadout.Tool2;
             if (!string.IsNullOrEmpty(loadout.Armor)) yield return loadout.Armor;
         }
 
@@ -267,6 +268,7 @@ namespace ApoGirl.Core.Rules
             if (CountInStorage(state, loadout.Backpack) <= 0) loadout.Backpack = "";
             if (CountInStorage(state, loadout.MainWeapon) <= 0) loadout.MainWeapon = "";
             if (CountInStorage(state, loadout.Tool) <= 0) loadout.Tool = "";
+            if (CountInStorage(state, loadout.Tool2) <= 0 || loadout.Tool2 == loadout.Tool) loadout.Tool2 = "";   // 같은 도구 두 칸은 뜻이 없다
             if (CountInStorage(state, loadout.Armor) <= 0) loadout.Armor = "";
 
             // 퀵슬롯은 없앴다 (소모품은 탐험 중 배낭에서 쓴다). 옛 세이브에 남은 값은 비운다.

@@ -91,8 +91,11 @@ namespace ApoGirl.Exploration.Runtime
         private ItemDef _weapon;
         private ItemDef _armor;
         private ItemDef _backpackItem;
-        private ItemDef _tool;
-        private ToolKind _toolKind;
+
+        /// <summary>도구 칸 수 (손전등과 쇠지렛대를 함께 찰 수 있게 두 칸).</summary>
+        public const int ToolSlotCount = 2;
+
+        private readonly ItemDef[] _tools = new ItemDef[ToolSlotCount];
         private int _weaponDurability;
         private int _weaponWear;
         private float _attackTimer;
@@ -101,7 +104,7 @@ namespace ApoGirl.Exploration.Runtime
         // 탐험 중 장비 바꾸기: 찬 것이 가지고 나간 장비(창고에 있는 것)인지, 가지고 나간 무기가 닳은 양, 버리고 온 내 장비
         private bool _weaponOwned;
         private bool _bagOwned;
-        private bool _toolOwned;
+        private readonly bool[] _toolsOwned = new bool[ToolSlotCount];
         private bool _armorOwned;
         private int _ownedWeaponWear;
         private bool _equipChanged;
@@ -304,8 +307,21 @@ namespace ApoGirl.Exploration.Runtime
         /// <summary>장비 (HUD 표시용).</summary>
         public ItemDef Weapon => _weapon;
         public ItemDef Armor => _armor;
-        public ToolKind ToolKind => _toolKind;
-        public ItemDef Tool => _tool;
+        public ItemDef ToolAt(int index) => index >= 0 && index < ToolSlotCount ? _tools[index] : null;
+
+        /// <summary>그 종류의 도구를 어느 도구 칸에든 차고 있다.</summary>
+        public bool HasTool(ToolKind kind)
+        {
+            foreach (var tool in _tools)
+            {
+                if (tool != null && tool.Tool == kind)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
         public ItemDef BackpackItem => _backpackItem;
 
         /// <summary>격자가 있는 가방을 메고 있다 (없으면 주머니).</summary>
@@ -666,7 +682,7 @@ namespace ApoGirl.Exploration.Runtime
                     _hud?.ShowMessage("exp.room_shuttered");
                     break;
                 case TargetKind.Door when target.Forceable && !target.Forced:
-                    if (_toolKind != ToolKind.Crowbar)
+                    if (!HasTool(ToolKind.Crowbar))
                     {
                         Sfx("sfx_door_locked");
                         _hud?.ShowMessage("exp.room_locked_need_crowbar");
@@ -728,7 +744,7 @@ namespace ApoGirl.Exploration.Runtime
                         Sfx("sfx_door_locked");
                         _hud?.ShowMessage("exp.exit_blocked." + target.Exit.BlockedBy);   // 눈에 파묻혀 쇠지렛대로도 안 된다
                     }
-                    else if (target.Locked && _toolKind == ToolKind.Crowbar)
+                    else if (target.Locked && HasTool(ToolKind.Crowbar))
                     {
                         target.Locked = false;
                         var exitRenderer = target.View != null ? target.View.GetComponent<SpriteRenderer>() : null;
@@ -1060,7 +1076,7 @@ namespace ApoGirl.Exploration.Runtime
         /// <summary>손전등 켜기/끄기 (F). 어둠 속 수색이 빨라지는 대신 멀리서도 눈에 띈다.</summary>
         public void ToggleFlashlight()
         {
-            if (_toolKind != ToolKind.Flashlight && !FlashlightOn)
+            if (!HasTool(ToolKind.Flashlight) && !FlashlightOn)
             {
                 _hud?.ShowMessage("exp.no_flashlight");
                 return;
@@ -1208,8 +1224,11 @@ namespace ApoGirl.Exploration.Runtime
             return EquipSlot.None;
         }
 
-        /// <summary>배낭의 장비를 찬다. 차고 있던 것은 배낭으로 들어간다 (가방은 지금 배낭 내용물이 새 가방에 다 들어갈 때만).</summary>
-        public bool Equip(PlacedItem placed)
+        /// <summary>
+        /// 배낭의 장비를 찬다. 차고 있던 것은 배낭으로 들어간다 (가방은 지금 배낭 내용물이 새 가방에 다 들어갈 때만).
+        /// 도구는 toolIndex 칸에 (−1이면 빈 칸부터). 같은 종류를 찬 칸이 있으면 그 칸과 바꾼다.
+        /// </summary>
+        public bool Equip(PlacedItem placed, int toolIndex = -1)
         {
             if (placed == null || IsFinished || !Backpack.Items.Contains(placed))
             {
@@ -1234,12 +1253,13 @@ namespace ApoGirl.Exploration.Runtime
                     RefreshLook();
                     break;
                 case EquipSlot.Tool:
-                    if (!SwapInto(placed, _tool, _toolOwned, 0))
+                    var index = ToolIndexFor(item, toolIndex);
+                    if (!SwapInto(placed, _tools[index], _toolsOwned[index], 0))
                     {
                         return false;
                     }
 
-                    SetTool(item, placed.Owned);
+                    SetTool(index, item, placed.Owned);
                     break;
                 case EquipSlot.Armor:
                     if (!SwapInto(placed, _armor, _armorOwned, 0))
@@ -1270,15 +1290,16 @@ namespace ApoGirl.Exploration.Runtime
             return true;
         }
 
-        /// <summary>찬 무기·도구·방어구를 벗어 배낭에 넣는다. 가방은 벗을 수 없다.</summary>
-        public bool Unequip(EquipSlot slot)
+        /// <summary>찬 무기·도구·방어구를 벗어 배낭에 넣는다 (도구는 toolIndex 칸). 가방은 벗을 수 없다.</summary>
+        public bool Unequip(EquipSlot slot, int toolIndex = 0)
         {
+            toolIndex = Math.Min(Math.Max(toolIndex, 0), ToolSlotCount - 1);
             if (IsFinished)
             {
                 return false;
             }
 
-            var current = slot == EquipSlot.Weapon ? _weapon : slot == EquipSlot.Tool ? _tool : slot == EquipSlot.Armor ? _armor : null;
+            var current = slot == EquipSlot.Weapon ? _weapon : slot == EquipSlot.Tool ? _tools[toolIndex] : slot == EquipSlot.Armor ? _armor : null;
             if (current == null)
             {
                 if (slot == EquipSlot.Backpack && _backpackItem != null)
@@ -1289,7 +1310,7 @@ namespace ApoGirl.Exploration.Runtime
                 return false;
             }
 
-            var owned = slot == EquipSlot.Weapon ? _weaponOwned : slot == EquipSlot.Armor ? _armorOwned : _toolOwned;
+            var owned = slot == EquipSlot.Weapon ? _weaponOwned : slot == EquipSlot.Armor ? _armorOwned : _toolsOwned[toolIndex];
             var placed = Backpack.TryAutoPlace(current.Id, current.Width, current.Height, current.Weight);
             if (placed == null)
             {
@@ -1316,7 +1337,7 @@ namespace ApoGirl.Exploration.Runtime
             }
             else
             {
-                SetTool(null, false);
+                SetTool(toolIndex, null, false);
             }
 
             _equipChanged = true;
@@ -1346,15 +1367,41 @@ namespace ApoGirl.Exploration.Runtime
             return true;
         }
 
-        private void SetTool(ItemDef tool, bool owned)
+        private void SetTool(int index, ItemDef tool, bool owned)
         {
-            _tool = tool;
-            _toolOwned = tool != null && owned;
-            _toolKind = tool?.Tool ?? ToolKind.None;
-            if (FlashlightOn && _toolKind != ToolKind.Flashlight)
+            _tools[index] = tool;
+            _toolsOwned[index] = tool != null && owned;
+            if (FlashlightOn && !HasTool(ToolKind.Flashlight))
             {
                 ToggleFlashlight();
             }
+        }
+
+        /// <summary>도구를 넣을 칸: 같은 종류를 찬 칸 → 고른 칸 → 빈 칸 → 첫 칸.</summary>
+        private int ToolIndexFor(ItemDef item, int requested)
+        {
+            for (var i = 0; i < ToolSlotCount; i++)
+            {
+                if (_tools[i] != null && _tools[i].Tool == item.Tool)
+                {
+                    return i;
+                }
+            }
+
+            if (requested >= 0 && requested < ToolSlotCount)
+            {
+                return requested;
+            }
+
+            for (var i = 0; i < ToolSlotCount; i++)
+            {
+                if (_tools[i] == null)
+                {
+                    return i;
+                }
+            }
+
+            return 0;
         }
 
         /// <summary>가방 바꾸기: 새 가방 격자에 지금 배낭 내용물과 벗은 가방이 다 들어가야 바꾼다.</summary>
@@ -1494,12 +1541,15 @@ namespace ApoGirl.Exploration.Runtime
             _backpackItem = _db.GetItemOrNull(loadout.Backpack);
             _weapon = _db.GetItemOrNull(loadout.MainWeapon);
             _armor = _db.GetItemOrNull(loadout.Armor);
-            _tool = _db.GetItemOrNull(loadout.Tool);
-            _toolKind = _tool?.Tool ?? ToolKind.None;
+            _tools[0] = _db.GetItemOrNull(loadout.Tool);
+            _tools[1] = loadout.Tool2 != loadout.Tool ? _db.GetItemOrNull(loadout.Tool2) : null;
             _weaponDurability = _weapon == null ? 0 : Request.WeaponDurability > 0 ? Request.WeaponDurability : _weapon.MaxDurability;
             _weaponOwned = _weapon != null;
             _bagOwned = _backpackItem != null;
-            _toolOwned = _tool != null;
+            for (var i = 0; i < ToolSlotCount; i++)
+            {
+                _toolsOwned[i] = _tools[i] != null;
+            }
             _armorOwned = _armor != null;
 
             UpdateMultipliers();
@@ -1888,12 +1938,17 @@ namespace ApoGirl.Exploration.Runtime
                 {
                     Backpack = _backpackItem?.Id ?? "",
                     MainWeapon = _weapon?.Id ?? "",
-                    Tool = _tool?.Id ?? "",
+                    Tool = _tools[0]?.Id ?? "",
+                    Tool2 = _tools[1]?.Id ?? "",
                     Armor = _armor?.Id ?? "",
                 };
                 if (_weapon != null && !_weaponOwned) Result.EquippedLoot.Add(_weapon.Id);
                 if (_backpackItem != null && !_bagOwned) Result.EquippedLoot.Add(_backpackItem.Id);
-                if (_tool != null && !_toolOwned) Result.EquippedLoot.Add(_tool.Id);
+                for (var i = 0; i < ToolSlotCount; i++)
+                {
+                    if (_tools[i] != null && !_toolsOwned[i]) Result.EquippedLoot.Add(_tools[i].Id);
+                }
+
                 if (_armor != null && !_armorOwned) Result.EquippedLoot.Add(_armor.Id);
                 Result.EquippedLootWear = _weapon != null && !_weaponOwned ? _weaponWear : 0;
             }
@@ -2464,7 +2519,7 @@ namespace ApoGirl.Exploration.Runtime
 
         /// <summary>특별한 방 문을 다 여는 데 걸리는 시간 (큰 문은 쇠지렛대가 있으면 빠르다).</summary>
         public float SealSeconds(ExplorationTarget target) => target.Seal == DoorSeal.Heavy
-            ? _balance.HeavyDoorSeconds * (_toolKind == ToolKind.Crowbar ? _balance.HeavyDoorCrowbarMultiplier : 1f)
+            ? _balance.HeavyDoorSeconds * (HasTool(ToolKind.Crowbar) ? _balance.HeavyDoorCrowbarMultiplier : 1f)
             : _balance.BarredDoorSeconds;
 
         /// <summary>큰 문이 열리거나 빗장이 풀렸다: 그 방의 복도 문 모두 열림, 큰 문은 쿵.</summary>

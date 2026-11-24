@@ -326,6 +326,10 @@ namespace ApoGirl.Core.State
         public string Backpack { get; set; } = "";
         public string MainWeapon { get; set; } = "";
         public string Tool { get; set; } = "";
+
+        /// <summary>두 번째 도구 칸 (손전등과 쇠지렛대를 함께). 옛 세이브는 빈 칸.</summary>
+        public string Tool2 { get; set; } = "";
+
         public string Armor { get; set; } = "";
         public List<string> QuickSlots { get; set; } = new List<string>();
     }

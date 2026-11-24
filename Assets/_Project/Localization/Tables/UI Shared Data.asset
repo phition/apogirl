@@ -6983,6 +6983,18 @@ MonoBehaviour:
     m_Key: settle.craft_done.ACT_CRAFT_WORKBENCH
     m_Metadata:
       m_Items: []
+  - m_Id: 1901595708375040
+    m_Key: prep.tool2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1901595783872512
+    m_Key: exp.slot.Tool1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1901595783872513
+    m_Key: exp.slot.Tool2
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

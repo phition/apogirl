@@ -892,6 +892,7 @@ namespace ApoGirl.Core.Simulation
                 _state.Loadout.Backpack = result.FinalLoadout.Backpack;
                 _state.Loadout.MainWeapon = result.FinalLoadout.MainWeapon;
                 _state.Loadout.Tool = result.FinalLoadout.Tool;
+                _state.Loadout.Tool2 = result.FinalLoadout.Tool2;
                 _state.Loadout.Armor = result.FinalLoadout.Armor;
             }
 

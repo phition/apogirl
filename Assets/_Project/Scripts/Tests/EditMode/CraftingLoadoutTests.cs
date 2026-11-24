@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using ApoGirl.Core.Definitions;
 using ApoGirl.Core.Expedition;
+using ApoGirl.Core.Rules;
 using ApoGirl.Core.Simulation.Bots;
 using ApoGirl.Core.State;
 using NUnit.Framework;
@@ -149,9 +150,16 @@ namespace ApoGirl.Tests.EditMode
             Assert.AreEqual(Hiking, state.Loadout.Backpack, "칸이 가장 많은 가방");
             Assert.AreEqual(Padding, state.Loadout.Armor, "감소율이 가장 높은 방어구");
             Assert.AreEqual(Flashlight, state.Loadout.Tool, "밤에는 손전등");
+            Assert.AreEqual(Crowbar, state.Loadout.Tool2, "둘째 도구 칸에는 다른 종류(지렛대)");
 
             BotLoadout.Choose(state, db, strategy, night: false);
             Assert.AreEqual(Crowbar, state.Loadout.Tool, "낮에는 지렛대");
+            Assert.AreEqual(Flashlight, state.Loadout.Tool2);
+
+            // 같은 도구를 두 칸에 찰 수 없다
+            state.Loadout.Tool2 = state.Loadout.Tool;
+            LoadoutRules.Sanitize(state);
+            Assert.AreEqual("", state.Loadout.Tool2);
 
             var none = StateWith(db, Bat, Hiking);
             BotLoadout.Choose(none, db, new BotStrategyDef { Loadout = "None" }, night: true);

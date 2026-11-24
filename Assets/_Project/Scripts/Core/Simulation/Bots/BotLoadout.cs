@@ -26,6 +26,14 @@ namespace ApoGirl.Core.Simulation.Bots
             loadout.MainWeapon = Pick(state, db, EquipSlot.Weapon, loadout.MainWeapon, def => WeaponScore(state, def));
             loadout.Armor = Pick(state, db, EquipSlot.Armor, loadout.Armor, def => def.DamageReduction);
             loadout.Tool = Pick(state, db, EquipSlot.Tool, loadout.Tool, def => ToolScore(def, night));
+            // 둘째 도구 칸: 첫 칸과 다른 종류 중 가장 나은 것
+            var firstKind = !string.IsNullOrEmpty(loadout.Tool) && db.TryGetItem(loadout.Tool, out var first) ? first.Tool : ToolKind.None;
+            loadout.Tool2 = Pick(state, db, EquipSlot.Tool, loadout.Tool2,
+                def => firstKind != ToolKind.None && def.Tool == firstKind ? 0f : ToolScore(def, night));
+            if (loadout.Tool2 == loadout.Tool)
+            {
+                loadout.Tool2 = "";
+            }
         }
 
         /// <summary>그 칸에 맞는 창고 물건 중 점수가 가장 높은 것 (같으면 지금 찬 것, 그다음 창고 앞쪽). 점수 0 이하뿐이면 지금 것.</summary>

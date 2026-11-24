@@ -17,7 +17,7 @@ namespace ApoGirl.Exploration.Runtime
         /// 새 판을 만들어 그 행동(예: ACT_EXP_DAY_MART)의 탐험을 바로 시작한다. 이미 탐험 중이면 먼저 끝내고 false (한 번 더 부른다).
         /// slot: 0 = 1일 낮, 1 = 1일 밤.
         /// </summary>
-        public static bool Start(string actionId, int slot = 0, string weapon = "", string armor = "", string bag = "", string tool = "")
+        public static bool Start(string actionId, int slot = 0, string weapon = "", string armor = "", string bag = "", string tool = "", string tool2 = "")
         {
             var running = Object.FindAnyObjectByType<ExpeditionDirector>();
             if (running != null)
@@ -57,7 +57,7 @@ namespace ApoGirl.Exploration.Runtime
                 session.State.Flags.Add(flag);
             }
 
-            foreach (var id in new[] { weapon, armor, bag, tool })
+            foreach (var id in new[] { weapon, armor, bag, tool, tool2 })
             {
                 if (!string.IsNullOrEmpty(id))
                 {
@@ -69,6 +69,7 @@ namespace ApoGirl.Exploration.Runtime
             session.State.Loadout.Armor = armor ?? "";
             session.State.Loadout.Backpack = bag ?? "";
             session.State.Loadout.Tool = tool ?? "";
+            session.State.Loadout.Tool2 = tool2 ?? "";
             session.SetSlot(slot, actionId);
             session.BeginWeek();
             var outcome = session.Step();

@@ -652,6 +652,9 @@ namespace ApoGirl.Systems.Session
                 case EquipSlot.Tool when string.IsNullOrEmpty(loadout.Tool):
                     loadout.Tool = itemId;
                     break;
+                case EquipSlot.Tool when string.IsNullOrEmpty(loadout.Tool2) && loadout.Tool != itemId:
+                    loadout.Tool2 = itemId;
+                    break;
                 case EquipSlot.Armor when string.IsNullOrEmpty(loadout.Armor):
                     loadout.Armor = itemId;
                     break;

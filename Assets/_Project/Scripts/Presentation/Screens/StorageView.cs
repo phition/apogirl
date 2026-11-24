@@ -48,7 +48,7 @@ namespace ApoGirl.Presentation.Screens
             // 바뀐 게 없으면 다시 그리지 않는다
             var key = string.Join(",", Resources.Select(r => state.Base.GetResource(r)))
                       + "|" + string.Join(",", state.Storage.Select(s => s.ItemId + "x" + s.Count + "d" + s.Durability))
-                      + "|" + state.Loadout.Backpack + state.Loadout.MainWeapon + state.Loadout.Tool + state.Loadout.Armor;
+                      + "|" + state.Loadout.Backpack + state.Loadout.MainWeapon + state.Loadout.Tool + state.Loadout.Tool2 + state.Loadout.Armor;
             if (key == _shownKey)
             {
                 return;
@@ -81,7 +81,7 @@ namespace ApoGirl.Presentation.Screens
             // ── 아이템: 같은 것끼리 합쳐 종류별로 ──
             var db = _session.Definitions;
             var liked = new HashSet<string>(db.Balance.LikedItems.SelectMany(l => l.Items));
-            var equipped = new HashSet<string>(new[] { state.Loadout.Backpack, state.Loadout.MainWeapon, state.Loadout.Tool, state.Loadout.Armor }.Where(id => !string.IsNullOrEmpty(id)));
+            var equipped = new HashSet<string>(new[] { state.Loadout.Backpack, state.Loadout.MainWeapon, state.Loadout.Tool, state.Loadout.Tool2, state.Loadout.Armor }.Where(id => !string.IsNullOrEmpty(id)));
             var items = state.Storage.Where(s => s.Count > 0)
                 .GroupBy(s => s.ItemId)
                 .Select(g => (Id: g.Key, Count: g.Sum(s => s.Count), Durability: g.Max(s => s.Durability)))
