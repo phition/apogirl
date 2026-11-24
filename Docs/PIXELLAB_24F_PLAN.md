@@ -2,7 +2,7 @@
 
 ## 시범 결과 (하복 × 공격 태그 3종, 2026-11-24)
 
-비교 GIF·24장 시트: `Docs/anim_versions/pl24_pilot/`(커밋 안 함). 그림 `code_temp/apogirl/pl24/v3/final/`. 쓴 돈 약 $4.7(구독 generations가 다 떨어져 USD 크레딧으로 나감).
+비교 GIF·24장 시트·문 그림: `Docs/anim_versions/pl24_pilot/`. 그림 `code_temp/apogirl/pl24/v3/final/`. 쓴 돈 약 $4.7(구독 generations가 다 떨어져 USD 크레딧으로 나감).
 
 | 시도 | 방법 | 결과 |
 |---|---|---|
