@@ -125,7 +125,7 @@ flat orthographic side view, muted realistic colors, thin dark outline, slightly
 - 도구: `code_temp/apogirl/tools/gen_deep_p2.py`(생성), `install_deep_p2.py`(고른 후보 자르기·설치·기준점).
 - 확인: 다섯 지역 깊은 층 캡처 — 빌라(천장 띠·비상등·차·CD), 지하철(수레), 마트(비닐 커튼), 경찰서(철망 보관함), 정수장 장마 침수 층(반투명 물이 정강이까지, 약품 통이 잠김). 디버그 탐험도 세션의 주·날씨를 받아 장마·폭설 지도가 보인다.
 
-## 6.3 P3 — 특별한 방 문 (2026-11-24, 아직 만들지 않음)
+## 6.3 P3 — 특별한 방 문 (2026-11-24, 넣음)
 
 깊은 층마다 큰 문 방·빗장 방이 하나씩 생겼다. 지금은 `door_metal_closed` 위에 코드 그림(큰 문 = 철판 띠·붉은 바퀴·노란 줄, 빗장 = 가로 쇠막대·걸쇠)을 얹는다. 아래 키로 넣으면 `ExpeditionDirector.AddSealViews`가 바로 그 그림을 쓰고, 열리면 `door_metal_open`으로 바뀐다.
 
@@ -135,6 +135,7 @@ flat orthographic side view, muted realistic colors, thin dark outline, slightly
 | `door_deep_barred` | 40 × 78, 투명 | `door_metal_closed` | `A plain grey steel door barred from the outside: a thick rusty iron crossbar laid across two heavy brackets bolted to the frame, a loop of chain hanging from it, faint scratch marks on the door from the inside, standing on the floor, transparent background` |
 
 - 빗장 막대는 문 폭보다 조금 길게(양쪽 벽 걸쇠까지) 그려도 된다. 문 둘 다 겉 층 문(`door_metal_closed`)과 높이를 맞춘다.
+- 넣음 (2026-11-24): 도구 `code_temp/apogirl/tools/gen_deep_p3.py`, 후보 `scratch/pl/deep3/`. 큰 문 = 후보 0번(붉은 바퀴·경고 줄·리벳). 빗장 문은 첫 후보들이 문짝이 비어 보여서, 큰 문 그림을 style로 "꽉 찬 문짝 + 빗장·자물쇠"로 다시 받아 4번을 골랐다. 알파를 0/255로, 아래 끝을 `door_metal_closed`와 같은 줄(77)에 맞췄다.
 
 ## 7. 만들지 않는 것
 
