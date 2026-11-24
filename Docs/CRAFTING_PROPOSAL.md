@@ -545,7 +545,7 @@ C10에 따라 아래 그림이 생기기 전까지는 기존 아이콘과 그림
 | **P4 손전등 줄 + 3단계** (**끝남** dd577d1b·a9072350 — 작업대는 시설 대신 깃발 `WORKBENCH_2`) | `ItemDef.LightRange`·`LightExposure`·`ExtraTools`, 탐험 반영(빛 거리·노출·지렛대 겸용), 작업대 Ⅱ, 세 줄의 3단계, 컴퓨터실 방 행동 | 탐험에서 헤드랜턴·멀티툴 확인 |
 | **P5 정수 줄** (**끝남** 3719e097 — 규칙 `PurifyRules`) | 모래 필터(주간)·끓임 정수대(정수 행동 강화·연료)·자동 정수기(`Appliances` + 아침 정수 + 정전 정지) | 테스트(전력·정전·장마). 봇 절 |
 | **P6 허수아비** (**끝남** 7588947f — 규칙 `ScarecrowRules`, 미끼 `ThreatSimulation.AddDecoy`, 챙길 것 `LoadoutState.Carry`) | 교문 허수아비(`RaidRules`, `Base.Scarecrow`), 휴대·울리는 허수아비(`ThreatSimulation` 미끼 표적, `ExpeditionDirector` 세우기, HUD "세우기"), 출정 준비 "챙길 것" 칸, 헤드리스 `HeadlessDecoyNightDown`, 플레이 기록 항목 | 탐험에서 좀비가 몰려가고 사람은 속지 않는 것 확인. 봇 절 |
-| **P7 화면·봇 마무리** | 설계도 `CraftTreeView`, 단면도 설비 그림, 봇 `CRAFT` 그룹·전략 칸·보고서 "제작" 절, 밸런스 표 "제작" 탭 | 봇 5전략 × 40판 → BOT_ENDING_LOG(확률 + 방향성) |
+| **P7 화면·봇 마무리** (**끝남** 454ef41c — 설계도 `CraftTreeView`, 봇 `BotCraft`, BOT_ENDING_LOG #21) | 설계도 `CraftTreeView`, 단면도 설비 그림, 봇 `CRAFT` 그룹·전략 칸·보고서 "제작" 절, 밸런스 표 "제작" 탭 | 봇 5전략 × 40판 → BOT_ENDING_LOG(확률 + 방향성) |
 | **P8 이야기 입구** | `Craft.yarn` 짧은 장면 3~4편(작업대 첫날·첫 허수아비·정수기 첫 아침·프레임 배낭), 그림 프롬프트 문서(6.2절) | 대본 읽기 확인 |
 
 ---
