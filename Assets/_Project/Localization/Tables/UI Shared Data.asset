@@ -6899,6 +6899,82 @@ MonoBehaviour:
     m_Key: cat.Craft
     m_Metadata:
       m_Items: []
+  - m_Id: 1866970495729664
+    m_Key: plan.edit_craft_locked
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1866970562838528
+    m_Key: plan.edit_craft_no_room
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1866970562838529
+    m_Key: craft.hint
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1866970562838530
+    m_Key: craft.work.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1866970562838531
+    m_Key: craft.work.3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1866970562838532
+    m_Key: craft.next
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1866970562838533
+    m_Key: craft.block.Items
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1866970562838534
+    m_Key: craft.block.MaxOwned
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1866970562838535
+    m_Key: craft.block.NothingToMaintain
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1866970562838536
+    m_Key: result.craft.Started
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1866970562838537
+    m_Key: result.craft.Working
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1866970562838538
+    m_Key: result.craft.Done
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1866970562838539
+    m_Key: result.craft.Fine
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1866970562838540
+    m_Key: result.craft.Failed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1866970562838541
+    m_Key: result.craft.NoMaterials
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1866970562838542
+    m_Key: result.craft.Maintained
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1866970562838543
+    m_Key: settle.craft_done
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1866970562838544
+    m_Key: settle.craft_fine
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1866970562838545
+    m_Key: settle.craft_failed
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

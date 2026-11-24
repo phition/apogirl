@@ -174,3 +174,14 @@ MonoBehaviour:
     BroadcastProgram: LETTER
     MinFreePower: 2
     UpgradesPower: 0
+    Craft:
+      Line: 
+      Tier: 0
+      Work: 0
+      Product: 
+      Count: 1
+      ItemCosts: []
+      SetFlags: []
+      MaxOwned: 0
+      MaintainWeapon: 0
+      Next: 

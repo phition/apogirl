@@ -659,6 +659,78 @@ MonoBehaviour:
     m_Key: ACT_SURV_UPGRADE_POWER.short
     m_Metadata:
       m_Items: []
+  - m_Id: 1866968834785280
+    m_Key: ACT_CRAFT_CONTINUE.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1866968889311232
+    m_Key: ACT_CRAFT_CONTINUE.short
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1866968889311233
+    m_Key: ACT_CRAFT_WORKBENCH.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1866968893505536
+    m_Key: ACT_CRAFT_WORKBENCH.short
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1866968893505537
+    m_Key: ACT_CRAFT_BAG_SLING.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1866968893505538
+    m_Key: ACT_CRAFT_BAG_SLING.short
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1866968893505539
+    m_Key: ACT_CRAFT_BAG_RUCKSACK.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1866968893505540
+    m_Key: ACT_CRAFT_BAG_RUCKSACK.short
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1866968893505541
+    m_Key: ACT_CRAFT_CLUB.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1866968893505542
+    m_Key: ACT_CRAFT_CLUB.short
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1866968893505543
+    m_Key: ACT_CRAFT_CLUB_TAPED.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1866968893505544
+    m_Key: ACT_CRAFT_CLUB_TAPED.short
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1866968893505545
+    m_Key: ACT_CRAFT_MAINTAIN.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1866968893505546
+    m_Key: ACT_CRAFT_MAINTAIN.short
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1866968893505547
+    m_Key: ACT_CRAFT_ARMOR_MAGAZINE.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1866968893505548
+    m_Key: ACT_CRAFT_ARMOR_MAGAZINE.short
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1866968893505549
+    m_Key: ACT_CRAFT_ARMOR_MATPAD.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1866968893505550
+    m_Key: ACT_CRAFT_ARMOR_MATPAD.short
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

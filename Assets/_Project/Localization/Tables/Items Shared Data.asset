@@ -479,6 +479,54 @@ MonoBehaviour:
     m_Key: ITEM_WEAPON_BATON.desc
     m_Metadata:
       m_Items: []
+  - m_Id: 1854814383521792
+    m_Key: ITEM_BAG_SLING.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1854814433853440
+    m_Key: ITEM_BAG_SLING.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1854814433853441
+    m_Key: ITEM_BAG_RUCKSACK.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1854814433853442
+    m_Key: ITEM_BAG_RUCKSACK.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1854814433853443
+    m_Key: ITEM_WEAPON_CLUB.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1854814433853444
+    m_Key: ITEM_WEAPON_CLUB.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1854814433853445
+    m_Key: ITEM_WEAPON_CLUB_TAPED.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1854814433853446
+    m_Key: ITEM_WEAPON_CLUB_TAPED.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1854814433853447
+    m_Key: ITEM_ARMOR_MAGAZINE.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1854814433853448
+    m_Key: ITEM_ARMOR_MAGAZINE.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1854814433853449
+    m_Key: ITEM_ARMOR_MATPAD.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1854814433853450
+    m_Key: ITEM_ARMOR_MATPAD.desc
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

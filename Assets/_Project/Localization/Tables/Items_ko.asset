@@ -482,6 +482,54 @@ MonoBehaviour:
     m_Localized: "\uC811\uC5C8\uB2E4 \uD3B4\uB294 \uACBD\uCC30 \uC0BC\uB2E8\uBD09."
     m_Metadata:
       m_Items: []
+  - m_Id: 1854814383521792
+    m_Localized: "\uB048 \uC8FC\uBA38\uB2C8 \uAC00\uBC29"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1854814433853440
+    m_Localized: "\uCC9C \uC870\uAC01\uACFC \uB048\uC73C\uB85C \uAFF0\uB9E8 \uC791\uC740 \uAC00\uBC29. \uAC00\uBCCD\uACE0 \uC870\uC6A9\uD558\uB2E4."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1854814433853441
+    m_Localized: "\uB367\uB304 \uBC30\uB0AD"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1854814433853442
+    m_Localized: "\uCC45\uAC00\uBC29\uC5D0 \uCC9C\uC744 \uB367\uB300\uACE0 \uC8FC\uBA38\uB2C8\uB97C \uB298\uB9B0 \uBC30\uB0AD."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1854814433853443
+    m_Localized: "\uB098\uBB34 \uBABD\uB465\uC774"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1854814433853444
+    m_Localized: "\uBD80\uC11C\uC9C4 \uCC45\uC0C1 \uB2E4\uB9AC\uB97C \uB2E4\uB4EC\uC740 \uBABD\uB465\uC774. \uAE08\uBC29 \uB2F3\uB294\uB2E4."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1854814433853445
+    m_Localized: "\uD14C\uC774\uD504 \uAC10\uC740 \uBABD\uB465\uC774"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1854814433853446
+    m_Localized: "\uBABD\uB465\uC774\uC5D0 \uD14C\uC774\uD504\uB97C \uB2E8\uB2E8\uD788 \uAC10\uC544 \uC190\uC7A1\uC774\uC640 \uBA38\uB9AC\uB97C \uBCF4\uAC15\uD588\uB2E4."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1854814433853447
+    m_Localized: "\uC7A1\uC9C0 \uBCF4\uD638\uB300"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1854814433853448
+    m_Localized: "\uB450\uAEBC\uC6B4 \uC7A1\uC9C0\uB97C \uD314\uACFC \uC815\uAC15\uC774\uC5D0 \uD14C\uC774\uD504\uB85C \uAC10\uC558\uB2E4."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1854814433853449
+    m_Localized: "\uB9E4\uD2B8 \uB367\uB304 \uBCF4\uD638\uAD6C"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1854814433853450
+    m_Localized: "\uCCB4\uC721\uAD00 \uB9E4\uD2B8\uB97C \uC798\uB77C \uB367\uB304 \uBCF4\uD638\uAD6C. \uC870\uAE08 \uBB34\uAC81\uB2E4."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []
