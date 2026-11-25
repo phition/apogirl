@@ -25,7 +25,7 @@ I:\workshop\code_temp\pixeloe_try\venv\Scripts\python.exe -I I:\workshop\code_te
 - 인물(조우 인물·동료 NPC 서 있기·숨기)은 확실히 낫다. 단순 축소는 얼굴·옷이 뭉개지고 PixelOE는 얼굴선·옷 무늬가 또렷하다.
 - 사진처럼 질감이 많은 설비·배경은 잔점이 지저분해진다 → 단순 축소가 낫다.
 - 이벤트 컷은 원화로 쓰므로 바꾸지 않는다.
-- 동작 프레임 여러 장은 프레임마다 점이 달라 깜빡일 수 있다 → 넣기 전에 GIF로 이어 보고 확인.
+- 동작 프레임 여러 장은 프레임마다 점이 달라 깜빡일 수 있다 → 넣기 전에 GIF로 이어 보고 확인 (`sprite-gif` 스킬, `Tools/sprite_gif.py`).
 
 ## 2. 도트 이펙트: pixelfx (MIT)
 
