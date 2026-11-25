@@ -3,7 +3,7 @@
 〈마지막 학기 (가제)〉 — 마일스톤별 진행 기록, 남은 작업, 하면 좋을 작업, 하지 말아야 할 작업.
 
 - 기준: 마스터 프롬프트 12장 마일스톤(원본 `C:\Users\phiti\Desktop\MASTER_PROMPT.md`), 결정 기록 부록 C(D1~D26).
-- 작성: 2026-11-25. 커밋 811개(2026-11-18 ~ 2026-11-25), 마지막 커밋 `79d17c7e` (그 뒤 이번 커밋).
+- 작성: 2026-11-25. 커밋 811개(2026-11-18 ~ 2026-11-25), 마지막 커밋 `55f5e6e8` (그 뒤 이번 커밋).
 - EditMode 테스트: 486개 모두 통과 (2026-11-26, 쉬는 카드 회복량 표시 뒤).
 - 자세한 내용은 각 계획 문서에 있다. 이 문서는 한눈에 보는 요약이다.
 - **새 세션은 이 문서부터 읽는다.** 작업이 하나 끝날 때마다 고친다.
@@ -185,6 +185,7 @@ M6·M7과 함께 기획 확장(동료·CD·깊은 곳·고양이·동아리·방
    - 그 뒤 main에 남은 메타 약 3,400개(다시 붙은 안드로이드 블록)를 `git checkout`하거나 `code_temp/apogirl/tools/strip_android_meta.py`로 지운다.
 2. **M6-5 남은 연결**
    - **제작 장비 탐험 도트 남은 것** ([PIXELLAB_CRAFTING_REQUEST.md](PIXELLAB_CRAFTING_REQUEST.md)): 허수아비·가방 2·보호구 3벌(색 덧칠)은 넣었다. 몽둥이 무기 그림 3장은 5벌 다시 받기(24F 9절) 때 — 그때 `armor_recolor.py install`도 다시 돌린다. 허수아비·가방·보호구를 실제 탐험 화면에서 아직 보지 않았다(미리보기만).
+   - **힉스필드 17차 받으면 연결** ([HIGGSFIELD_ASSETS_17.md](HIGGSFIELD_ASSETS_17.md)): 소풍·수학여행·여름 축제 컷 6장, `ArtInbox/illustrations/redo17/` → `Story/Events` 덮어쓰기, 예전 그림은 `code_temp/apogirl/backup_redo17/`.
    - 이벤트가 없어 보류한 컷: `evt_deep_door`·`evt_deep_oneway`·`evt_season_*`·`evt_cat_warn`, 그리고 `stand_item_*`.
    - 탐험 주인공 프레임 늘리기(20~24프레임): 227묶음 모두 24프레임으로 연결 끝(2026-11-24, [HIGGSFIELD_ASSETS_11_ALL.md](HIGGSFIELD_ASSETS_11_ALL.md) 0절). 남은 일: 게임에서 옷·무기마다 걷기·달리기·공격을 보고 튀는 칸이 있으면 그 묶음만 다시.
    - 탐험 주인공 PixelLab 24F 나머지 5벌(하복은 끝남): **크레딧을 채운 뒤 사용자가 말하면** 무기 겹치기 방식(C5 ②)으로 — 무기 그림 4장·겹치기 코드 시범부터 ([PIXELLAB_24F_PLAN](PIXELLAB_24F_PLAN.md) 9장). **힉스필드로 받는 길도 있다: [HIGGSFIELD_ASSETS_16.md](HIGGSFIELD_ASSETS_16.md)** — 하복 시트를 입력으로 옷만 바꾸기·무기 지우기, 무기 그림 7장(몽둥이 3종 포함), A 시범 21 → B 55 → C 70, 입력·프롬프트는 `ArtInbox/sprites16/`(`Tools/make_higgsfield_doc16.py`). 받으면 넣기 도구·겹치기 코드를 만든다.
@@ -413,3 +414,4 @@ M6·M7과 함께 기획 확장(동료·CD·깊은 곳·고양이·동아리·방
 - 2026-11-25 · 유랑자 나침반(사용자 요청): `EVT_BOND_WANDERER_3`에서 '나침반을 받는다'(`TAKE_COMPASS`)를 고를 때만 깃발 `WANDERER_COMPASS`(`BalanceConfig.CompassFlag`) + 대본 한 줄. 탐험 중 깃발이 있으면 왼쪽 위 위치 정보 아래에 나침반 뱃지(`Expedition.uxml` `compass-badge`, 아이콘 여분 `item_tool_compass` → `art_map.json` Icons `exp.compass`)가 늘 붙어 백의 한마디로 나가는 길을 짚는다(`ExpeditionDirector.CompassHint`: 바깥 길 → 학교 쪽 끝, 깊은 곳 → 일방 출구(없으면 들어온 문), 건물 안 → 잠기지·막히지 않은 출구 중 이 층에 가까운 것, 문구 `exp.compass.*`). 나침반이 없으면 위치 정보는 그대로. 약국·지하철 층마다 문구 확인, EditMode 485개 통과.
 - 2026-11-26 · 쉬는 카드 회복량 표시(사용자 요청): 계획 보드 카드의 "피로 · 스트레스"가 비용만 보여 휴식·일기·동아리 등이 +0이었다. 미리보기 `ActionPreview.FatigueRelief`·`StressRelief`(성공 효과의 음수 값 × 회복 배율 + 휴식 스트레스 회복 `StressRules.RestRelief`, 회복 배율은 `ActionResolver.RecoveryMultiplier`로 해결과 같은 식)를 더해 카드는 비용 − 회복(`FatigueNet`·`StressNet`)을 부호와 함께(`palette.cost` "피로 {0} · 스트레스 {1}", 예: 밤 휴식 피로 -15 · 스트레스 -10, 운동 동아리 피로 +5 · 스트레스 -6). 소풍·수학여행 낮 칸은 회복이 장면에서 와 0으로 나온다. 테스트 `Preview_RestShowsFallingFatigueAndStress_MatchingResolve`, EditMode 486개 통과.
 - 2026-11-26 · 힉스필드 12차 이벤트 컷 다시 받은 13장 교체(사용자가 `ArtInbox/illustrations/events12`에서 바꿈): `evt_rnd_a2_looters`·`a4_pipe`·`a4_snow`·`a3_persimmon`·`a3_tracks`·`a3_leaves`·`quiet_morning`·`nightmare`·`rain_leak`·`a3_cold_night`·`a2_generator`·`evt_a3_review`·`evt_talk_11` (16:9·너비 1920 jpg, `install_events12.py`와 같은 처리). 같이 새로 저장된 `evt_rnd_rats`·`a2_tropical_night`·`teacher_pain`·`evt_talk_08`·`talk_03`은 이미 들어간 그림과 같아 그대로.
+- 2026-11-26 · 힉스필드 17차 문서([HIGGSFIELD_ASSETS_17.md](HIGGSFIELD_ASSETS_17.md), 사용자 요청): 소풍·수학여행·행사 컷 11장을 인물 초상과 비교해, 게임 인물이 아닌 사람이 나온 2차 컷 6장(`evt_outing_summer`·`_autumn`·`_winter`, `evt_trip_depart`·`_return`, `evt_cal_summer_festival`)을 13차 형식(인물 이름 문구·시트 참고·`[일관성]`)으로 다시 받는 프롬프트. 장면은 각 이벤트 첫 선택지·판마다 갈리는 대사에 맞춤. 제출은 사용자.
