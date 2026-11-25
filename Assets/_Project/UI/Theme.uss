@@ -1292,7 +1292,7 @@ Button.base-advice-line:hover { background-color: rgba(185, 163, 122, 0.18); col
 .people-factions-tab:hover { background-color: rgb(44, 46, 52); }
 .people-factions.expanded .people-factions-tab { color: var(--text-dim); }
 .people-factions-sheet {
-    width: 340px; max-height: 620px; padding: 10px 12px;
+    width: 340px; max-height: 760px; padding: 10px 12px;
     background-color: rgb(30, 32, 36); border-width: 1px; border-right-width: 0; border-color: var(--line);
     border-top-left-radius: 8px; border-bottom-left-radius: 8px;
 }

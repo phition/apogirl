@@ -231,10 +231,15 @@ namespace ApoGirl.Presentation.Screens
                     Sync();
                 };
 
-                // 지금 거래할 수 있는 세력이 있으면 접힌 탭에 초록 점 (.trade-ready)
+            }
+
+            // 지금 거래할 수 있는 세력이 있으면 접힌 탭 모서리에 초록 점 (.trade-ready).
+            // 탭(Button) 안에 넣으면 글자 크기로 재지 못해 탭이 줄어드니 덧판에 직접 띄운다.
+            if (_root != null)
+            {
                 var dot = new VisualElement { name = "people-factions-dot", pickingMode = PickingMode.Ignore };
                 dot.AddToClassList("people-factions-dot");
-                _tab.Add(dot);
+                _root.Add(dot);
             }
 
             Sync();
