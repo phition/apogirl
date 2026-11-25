@@ -321,6 +321,7 @@ namespace ApoGirl.Presentation.Screens
             {
                 var label = new Label(flag.Text);
                 label.AddToClassList("person-flag");
+                label.AddToClassList(FlagClass(flag.Kind));
                 SetFlagIcon(label, flag.Icon);
                 card.Add(label);
             }
@@ -403,16 +404,46 @@ namespace ApoGirl.Presentation.Screens
             }
         }
 
-        /// <summary>인물 카드 한 줄: 문구 + (있으면) 아이콘 키. 문자열은 아이콘 없이 그대로 바뀐다.</summary>
+        /// <summary>
+        /// 인물 카드 아래 글줄의 종류 — 색을 나눈다 (2026-11-25 사용자 요청: 전부 붉으면 다 나쁜 소식처럼 읽힌다).
+        /// Bad 몸·마음이 상함(부상·상처·감염·지침), Warn 손해가 나는 사정(정원 초과·방 없음·특기 꺼짐), Info 지금 형편(거동·고양이),
+        /// Trait 그 사람다움(좋아하는 활동·켜진 특기·적성·바람).
+        /// </summary>
+        private enum FlagKind
+        {
+            Bad,
+            Warn,
+            Info,
+            Trait,
+        }
+
+        private static string FlagClass(FlagKind kind)
+        {
+            switch (kind)
+            {
+                case FlagKind.Bad: return "flag-bad";
+                case FlagKind.Warn: return "flag-warn";
+                case FlagKind.Info: return "flag-info";
+                default: return "flag-trait";
+            }
+        }
+
+        /// <summary>인물 카드 한 줄: 문구 + 종류 + (있으면) 아이콘 키. 문자열은 아이콘 없이 '상태' 줄로 바뀐다.</summary>
         private readonly struct Flag
         {
             public readonly string Text;
             public readonly string Icon;
+            public readonly FlagKind Kind;
 
-            public Flag(string text, string icon = null)
+            public Flag(string text, string icon = null, FlagKind kind = FlagKind.Info)
             {
                 Text = text;
                 Icon = icon;
+                Kind = kind;
+            }
+
+            public Flag(string text, FlagKind kind) : this(text, null, kind)
+            {
             }
 
             public static implicit operator Flag(string text) => new Flag(text);
@@ -457,7 +488,7 @@ namespace ApoGirl.Presentation.Screens
                 var stage = InfectionRules.TeacherStage(state, balance);
                 if (stage > 0)
                 {
-                    yield return Loc.T("teacher.stage." + Math.Min(stage, 4));
+                    yield return new Flag(Loc.T("teacher.stage." + Math.Min(stage, 4)), FlagKind.Bad);
                 }
 
                 yield break;
@@ -472,27 +503,28 @@ namespace ApoGirl.Presentation.Screens
             var npc = state.Npcs[id];
             if (npc.InjuredWeeks > 0)
             {
-                yield return new Flag(Loc.F("people.injured", npc.InjuredWeeks), "status.injured");
+                yield return new Flag(Loc.F("people.injured", npc.InjuredWeeks), "status.injured", FlagKind.Bad);
             }
 
             if (npc.MinorWoundWeeks > 0)
             {
-                yield return new Flag(Loc.T("people.minor_wound"), "status.minor_wound");
+                yield return new Flag(Loc.T("people.minor_wound"), "status.minor_wound", FlagKind.Bad);
             }
 
             // 동아리 (확장 7): 한 번이라도 같이 해 봤으면 좋아하는 활동을 느낌 문구로
             var liked = ClubRules.LikedActivity(balance, id);
             if (liked.Length > 0 && npc.ClubCounts.Values.Sum() > 0)
             {
-                yield return Loc.T("people.club_likes." + liked);
+                yield return new Flag(Loc.T("people.club_likes." + liked), FlagKind.Trait);
             }
 
             // 특기 (기획 C.2 ②): 켜져 있으면 무엇을 해 주는지, 마음이 멀어져 꺼졌으면 그 사실만
             if (SpecialRules.IsUnlocked(state, balance, id))
             {
-                yield return new Flag(SpecialRules.IsActive(state, balance, id)
+                var on = SpecialRules.IsActive(state, balance, id);
+                yield return new Flag(on
                     ? Loc.F("people.special_on", Loc.T("special." + id + ".name"), Loc.T("special." + id + ".desc"))
-                    : Loc.F("people.special_off", Loc.T("special." + id + ".name")), "special." + id);
+                    : Loc.F("people.special_off", Loc.T("special." + id + ".name")), "special." + id, on ? FlagKind.Trait : FlagKind.Warn);
             }
 
             // 역할 재기획: 적성은 느낌 문구로만, 정원을 넘었거나 방이 아직 없으면 그 사실만
@@ -502,15 +534,15 @@ namespace ApoGirl.Presentation.Screens
             {
                 if (!RoleRules.IsActive(state, id, balance))
                 {
-                    yield return Loc.T("people.role_overflow");
+                    yield return new Flag(Loc.T("people.role_overflow"), FlagKind.Warn);
                 }
                 else if (RoleRules.RoomScale(state, role, balance) <= 0f)
                 {
-                    yield return Loc.T("people.role_no_room");
+                    yield return new Flag(Loc.T("people.role_no_room"), FlagKind.Warn);
                 }
                 else if (RoleRules.HasAptitude(balance, id, role.Id))
                 {
-                    yield return Loc.T("people.aptitude." + id + "." + role.Id);
+                    yield return new Flag(Loc.T("people.aptitude." + id + "." + role.Id), FlagKind.Trait);
                 }
             }
 
@@ -518,20 +550,20 @@ namespace ApoGirl.Presentation.Screens
             var openAptitude = TogetherRules.OpenAptitudeRole(state, db, id);
             if (openAptitude != null && (role == null || !RoleRules.HasAptitude(balance, id, role.Id)))
             {
-                yield return Loc.T("people.aptitude." + id + "." + openAptitude);
+                yield return new Flag(Loc.T("people.aptitude." + id + "." + openAptitude), FlagKind.Trait);
             }
             else if (TogetherRules.WishesForAptitudeRoom(state, db, id))
             {
                 var wish = Loc.Lookup(Loc.UiTable, "people.wish." + id);
                 if (!string.IsNullOrEmpty(wish))
                 {
-                    yield return wish;
+                    yield return new Flag(wish, FlagKind.Trait);
                 }
             }
 
             if (GiveRules.IsStressed(npc, balance))
             {
-                yield return Loc.T("people.stressed");
+                yield return new Flag(Loc.T("people.stressed"), FlagKind.Bad);
             }
         }
     }

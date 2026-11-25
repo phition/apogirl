@@ -1090,6 +1090,11 @@ Button.selected { border-color: var(--accent); background-color: var(--accent-so
 .person-bar { height: 20px; margin: 1px 0; }
 .person-bar .unity-progress-bar__title { font-size: 13px; }
 .person-flag { font-size: 14px; color: var(--danger); margin-top: 3px; white-space: normal; }
+/* 인물 카드 글줄 종류별 색 (PeopleView.FlagKind, 2026-11-25 사용자 결정: 부드러운 종이톤 — 전부 붉으면 다 나쁜 소식처럼 읽힌다) */
+.person-flag.flag-bad { color: #d48a7c; }     /* 부상·상처·지침·감염 */
+.person-flag.flag-warn { color: #a9b8c6; }    /* 정원 초과·방 없음·특기 꺼짐 */
+.person-flag.flag-info { color: #d6ad6a; }    /* 거동·고양이 */
+.person-flag.flag-trait { color: #cbb68c; }   /* 좋아하는 활동·켜진 특기·적성·바람 */
 .person-outing { font-size: 14px; color: var(--accent); margin-top: 3px; white-space: normal; }
 .person-stay { margin: 6px 0 0 0; padding: 3px 10px; font-size: 14px; align-self: flex-start; }
 .person-stay.on { border-color: var(--accent); color: var(--accent); }
