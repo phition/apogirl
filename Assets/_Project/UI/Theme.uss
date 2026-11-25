@@ -403,6 +403,50 @@ Button.selected { border-color: var(--accent); background-color: var(--accent-so
 .slot:disabled { opacity: 1; }
 .slot.done:disabled { opacity: 0.4; }
 
+/* 선생님 추천 편성 (Docs/TEACHER_PLAN_PROPOSAL.md): 보드 머리 단추, 흐름 띠, 분필 밑줄·고정 꼬리표·끌기, 메모 */
+.board-tools { flex-direction: row; align-items: center; margin-right: 8px; }
+.board-tool { height: 30px; margin-left: 6px; padding: 0 10px; font-size: 15px; }
+.board-tool.teacher { background-color: #3d3a2c; border-color: var(--accent); color: #f1e6c8; -unity-font-style: bold; }
+.board-tool:disabled { opacity: 0.35; }
+.board-tool.teacher.dim { opacity: 0.45; border-color: #6b6658; }
+.planner-col { flex-grow: 1; margin-right: 12px; min-width: 0; }
+.planner-col > .planner { margin-right: 0; position: relative; }
+.plan-flow { height: 128px; flex-shrink: 0; margin-top: 4px; }
+.plan-flow-strip { flex-direction: row; flex-grow: 1; }
+.plan-flow-graph { flex-grow: 1; margin: 0 3px; background-color: rgba(255, 255, 255, 0.03); border-radius: 6px; }
+.plan-flow-bottom { flex-direction: row; align-items: center; height: 30px; }
+.flow-legend { font-size: 13px; margin-right: 8px; }
+.flow-legend.fatigue { color: rgb(232, 176, 74); }
+.flow-legend.stress { color: rgb(204, 115, 217); }
+.flow-legend.debt { color: rgb(107, 156, 224); }
+.plan-flow-stats { flex-direction: row; flex-grow: 1; overflow: hidden; }
+.flow-chip { font-size: 13px; padding: 1px 6px; margin-right: 4px; border-radius: 8px; background-color: rgba(255, 255, 255, 0.07); }
+.flow-chip.up { background-color: rgba(110, 170, 90, 0.35); }
+.flow-chip.down { background-color: rgba(200, 90, 80, 0.35); }
+.flow-chip.none { color: var(--text-dim); }
+.plan-flow-summary { font-size: 13px; color: var(--text-dim); }
+.plan-flow-summary.danger { color: var(--danger); }
+.slot { position: relative; transition-property: opacity, scale; transition-duration: 0.18s; }
+.slot-chalk { position: absolute; left: 22%; right: 22%; bottom: 4px; height: 3px; border-radius: 2px; opacity: 0; transition-property: opacity; transition-duration: 0.3s; }
+.slot.slot-day .slot-chalk { background-color: rgba(70, 55, 30, 0.75); }
+.slot.slot-night .slot-chalk { background-color: rgba(240, 236, 222, 0.85); }
+.slot.teacher .slot-chalk { opacity: 1; }
+.slot.chalk-pre { opacity: 0.25; scale: 0.92 0.92; }
+.slot-pin { position: absolute; top: 2px; right: 3px; font-size: 11px; padding: 0 4px; border-radius: 6px; color: var(--text-dim); background-color: rgba(0, 0, 0, 0.25); opacity: 0; }
+.slot:hover .slot-pin { opacity: 0.7; }
+.slot-pin.on { opacity: 1; color: #1b1407; background-color: var(--accent); }
+.slot-pin:hover { opacity: 1; }
+.slot.drop-ok { border-color: rgba(120, 200, 120, 0.7); border-width: 2px; }
+.slot.drop-bad { opacity: 0.45; }
+.slot.drop-target { border-color: var(--accent); border-width: 3px; }
+.slot.drag-source { opacity: 0.5; }
+.slot-drag-ghost { position: absolute; padding: 4px 10px; border-radius: 6px; background-color: rgba(231, 176, 74, 0.9); color: #1b1407; -unity-font-style: bold; font-size: 15px; }
+.teacher-memo { margin-bottom: 6px; padding: 6px 8px; border-radius: 6px; background-color: rgba(185, 163, 122, 0.12); border-left-width: 3px; border-color: var(--accent); }
+.teacher-memo-title { -unity-font-style: bold; color: var(--accent); font-size: 15px; margin-bottom: 2px; }
+.teacher-memo-line { font-size: 14px; white-space: normal; }
+.slot-detail { font-size: 14px; white-space: normal; color: var(--text-dim); min-height: 64px; margin-bottom: 4px; }
+.slot-detail.on { color: #e8e2d4; }
+
 .warnings { flex-grow: 1; min-height: 64px; }
 .warning { color: var(--warn); font-size: 15px; }
 .warning-none { color: var(--text-dim); font-size: 15px; }

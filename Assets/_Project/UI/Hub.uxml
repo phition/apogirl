@@ -91,6 +91,8 @@
             <ui:VisualElement class="board-head">
                 <ui:Label name="board-title" class="board-title" />
                 <ui:Label name="board-hint" class="board-hint" />
+                <!-- 선생님 추천 · 되돌리기 · 다시 하기 · 전부 비우기 (HubScreen.BindBoardTools) -->
+                <ui:VisualElement name="board-tools" class="board-tools" />
                 <ui:Button name="board-close" class="drawer-close" />
             </ui:VisualElement>
             <ui:VisualElement class="board-body">
@@ -99,8 +101,14 @@
                     <ui:Label name="palette-hint" class="palette-hint" />
                     <ui:ScrollView name="palette-list" class="palette-list" />
                 </ui:VisualElement>
-                <ui:VisualElement name="planner" class="planner" />
+                <ui:VisualElement class="planner-col">
+                    <ui:VisualElement name="planner" class="planner" />
+                    <!-- 흐름 띠: 칸마다 예상 피로·스트레스·수면 부채, 아래 능력치 기대 증감 (PlanFlowView) -->
+                    <ui:VisualElement name="plan-flow" class="plan-flow" />
+                </ui:VisualElement>
                 <ui:VisualElement name="plan-side" class="plan-side">
+                    <ui:VisualElement name="teacher-memo" class="teacher-memo hidden" />
+                    <ui:Label name="slot-detail" class="slot-detail" />
                     <ui:ScrollView name="warnings" class="warnings" />
                     <ui:Label name="forecast" class="forecast" />
                     <ui:VisualElement name="plan-buttons" class="button-row" />

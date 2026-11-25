@@ -1258,6 +1258,175 @@
       ]
     },
     {
+      "Id": "teacher",
+      "Title": "선생님 추천",
+      "Kind": "Fields",
+      "Hint": "계획 보드 [선생님 추천]이 한 주를 짜는 기준. 다음에 추천을 누를 때부터 먹는다. 봇 전략 TEACHER도 같은 값을 쓴다.",
+      "Rows": [
+        {
+          "Field": "TeacherMinRests",
+          "Group": "편성 기본",
+          "Name": "쉬는 칸 최소",
+          "Unit": "칸/주",
+          "When": "Now"
+        },
+        {
+          "Field": "TeacherMinExpeditions",
+          "Group": "편성 기본",
+          "Name": "탐험 최소",
+          "Unit": "번/주",
+          "When": "Now"
+        },
+        {
+          "Field": "TeacherMaxExpeditions",
+          "Group": "편성 기본",
+          "Name": "탐험 최대",
+          "Unit": "번/주",
+          "When": "Now"
+        },
+        {
+          "Field": "TeacherMinDaily",
+          "Group": "편성 기본",
+          "Name": "일상 최소",
+          "Unit": "칸/주",
+          "When": "Now"
+        },
+        {
+          "Field": "TeacherMaxDevelop",
+          "Group": "편성 기본",
+          "Name": "거점 개발 최대",
+          "Unit": "칸/주",
+          "When": "Now"
+        },
+        {
+          "Field": "TeacherMaxSameClass",
+          "Group": "편성 기본",
+          "Name": "같은 수업 최대",
+          "Unit": "칸/주",
+          "When": "Now"
+        },
+        {
+          "Field": "TeacherCriticalShortDay",
+          "Group": "자원",
+          "Name": "이 요일 안에 바닥나면 탐험 2번",
+          "Unit": "일",
+          "When": "Now"
+        },
+        {
+          "Field": "TeacherPurifyBatch",
+          "Group": "자원",
+          "Name": "빗물 이만큼마다 정수 한 번 더",
+          "Unit": "개",
+          "When": "Now"
+        },
+        {
+          "Field": "TeacherMaxPurify",
+          "Group": "자원",
+          "Name": "정수 최대",
+          "Unit": "칸/주",
+          "When": "Now"
+        },
+        {
+          "Field": "TeacherCleanBelow",
+          "Group": "자원",
+          "Name": "청결이 이 밑이면 씻기",
+          "Unit": "점",
+          "When": "Now"
+        },
+        {
+          "Field": "TeacherInfectionTreat",
+          "Group": "자원",
+          "Name": "감염이 이 위면 처치",
+          "Unit": "점",
+          "When": "Now"
+        },
+        {
+          "Field": "TeacherFatigueLimit",
+          "Group": "무리 막기",
+          "Name": "칸마다 피로 한계",
+          "Unit": "점",
+          "When": "Now"
+        },
+        {
+          "Field": "TeacherStressLimit",
+          "Group": "무리 막기",
+          "Name": "칸마다 스트레스 한계",
+          "Unit": "점",
+          "When": "Now"
+        },
+        {
+          "Field": "TeacherSleepDebtLimit",
+          "Group": "무리 막기",
+          "Name": "수면 부채 한계",
+          "Unit": "점",
+          "When": "Now"
+        },
+        {
+          "Field": "TeacherEndFatigue",
+          "Group": "무리 막기",
+          "Name": "주 끝 피로 목표",
+          "Unit": "점",
+          "When": "Now"
+        },
+        {
+          "Field": "TeacherEndStress",
+          "Group": "무리 막기",
+          "Name": "주 끝 스트레스 목표",
+          "Unit": "점",
+          "When": "Now"
+        },
+        {
+          "Field": "TeacherTidyPasses",
+          "Group": "무리 막기",
+          "Name": "다듬기 횟수",
+          "Unit": "번",
+          "When": "Now"
+        },
+        {
+          "Field": "TeacherRooftopStress",
+          "Group": "일상",
+          "Name": "스트레스 이 위면 옥상",
+          "Unit": "점",
+          "When": "Now"
+        },
+        {
+          "Field": "TeacherTalkAffinity",
+          "Group": "일상",
+          "Name": "호감 이 밑이면 이야기",
+          "Unit": "점",
+          "When": "Now"
+        },
+        {
+          "Field": "TeacherClassTeachBonus",
+          "Group": "수업",
+          "Name": "선생님 수업 가산",
+          "Unit": "배",
+          "When": "Now"
+        },
+        {
+          "Field": "TeacherClassLowStatBonus",
+          "Group": "수업",
+          "Name": "낮은 능력치 가산",
+          "Unit": "배",
+          "When": "Now"
+        },
+        {
+          "Field": "TeacherClassFavoriteBonus",
+          "Group": "수업",
+          "Name": "좋아하는 과목 가산",
+          "Unit": "배",
+          "When": "Now"
+        },
+        {
+          "Field": "TeacherNoteLines",
+          "Group": "메모",
+          "Name": "선생님 메모 줄 수",
+          "Unit": "줄",
+          "When": "Now"
+        }
+      ]
+    },
+    {
       "Id": "difficulty",
       "Title": "난이도",
       "Kind": "Difficulty",

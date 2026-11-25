@@ -768,15 +768,43 @@ namespace ApoGirl.Presentation.Screens
         }
     }
 
-    /// <summary>하단 주간 플래너: 7일 × 낮/밤.</summary>
+    /// <summary>
+    /// 하단 주간 플래너: 7일 × 낮/밤. 손질 (Docs/TEACHER_PLAN_PROPOSAL.md 5절):
+    /// 누르기 = 고른 행동 넣기(빈손이면 그 칸 행동 집기), 끌기 = 옮기기·바꾸기, 오른쪽 = 비우기,
+    /// 칸 오른쪽 위 "고정" 꼬리표 = 고정 시간표 켜고 끄기. 선생님이 넣은 칸은 분필 밑줄.
+    /// </summary>
     internal sealed class PlannerView
     {
+        private const float DragThreshold = 8f;
+
         private readonly GameSession _session;
         private readonly Func<DayPhase, string> _selectedAction;
         private readonly Action<string> _notify;
-        private readonly Button[] _cells = new Button[WeekPlan.SlotCount];
+        private readonly VisualElement _planner;
+        private readonly VisualElement[] _cells = new VisualElement[WeekPlan.SlotCount];
         private readonly VisualElement[] _icons = new VisualElement[WeekPlan.SlotCount];
         private readonly Label[] _labels = new Label[WeekPlan.SlotCount];
+        private readonly Label[] _pins = new Label[WeekPlan.SlotCount];
+
+        private int _press = -1;
+        private UnityEngine.Vector2 _pressAt;
+        private bool _dragging;
+        private int _dropTarget = -1;
+        private string[][] _dropIds;
+        private Label _dragGhost;
+
+        /// <summary>빈손으로 찬 칸을 누르면 그 행동을 팔레트에서 고른다 (스포이트).</summary>
+        public Action<string> Picked;
+
+        /// <summary>마우스가 올라간 칸 (-1 = 나감).</summary>
+        public Action<int> Hovered;
+
+        /// <summary>놓으면 바뀔 계획 (흐름 띠 유령 비교, null = 끔).</summary>
+        public Action<IList<string>> GhostChanged;
+
+        /// <summary>고정 시간표 (칸 → 값). 꼬리표를 누르면 TogglePin.</summary>
+        public Func<IDictionary<int, string>> Pins;
+        public Action<int> TogglePin;
 
         /// <param name="selectedAction">그 시간대 칸에 놓을 행동 (없으면 "", 그 시간대에 열리지 않은 지역 탐험이면 null).</param>
         public PlannerView(VisualElement root, GameSession session, Func<DayPhase, string> selectedAction, Action<string> notify)
@@ -784,7 +812,7 @@ namespace ApoGirl.Presentation.Screens
             _session = session;
             _selectedAction = selectedAction;
             _notify = notify;
-            var planner = root.Q("planner");
+            _planner = root.Q("planner");
 
             var header = new VisualElement();
             header.AddToClassList("planner-row");
@@ -798,7 +826,7 @@ namespace ApoGirl.Presentation.Screens
                 header.Add(label);
             }
 
-            planner.Add(header);
+            _planner.Add(header);
             foreach (var phase in new[] { DayPhase.Day, DayPhase.Night })
             {
                 var row = new VisualElement();
@@ -809,31 +837,44 @@ namespace ApoGirl.Presentation.Screens
                 for (var day = 1; day <= CalendarState.DaysPerWeek; day++)
                 {
                     var index = CalendarRules.SlotIndex(day, phase);
-                    var cell = new Button(() => OnClick(index));
+                    var cell = new VisualElement();
                     cell.AddToClassList("slot");
                     cell.AddToClassList(phase == DayPhase.Day ? "slot-day" : "slot-night");
-                    cell.AddToClassList("no-click-sound");
-                    cell.RegisterCallback<PointerDownEvent>(evt =>
-                    {
-                        if (evt.button == 1)
-                        {
-                            OnClear(index);
-                        }
-                    });
-                    // 칸 안: 위에 행동 아이콘, 아래에 굵은 이름
+                    cell.RegisterCallback<PointerDownEvent>(evt => OnDown(index, evt));
+                    cell.RegisterCallback<PointerMoveEvent>(evt => OnMove(index, evt));
+                    cell.RegisterCallback<PointerUpEvent>(evt => OnUp(index, evt));
+                    cell.RegisterCallback<PointerEnterEvent>(_ => OnEnter(index));
+                    cell.RegisterCallback<PointerLeaveEvent>(_ => OnLeave(index));
+
+                    // 칸 안: 위에 행동 아이콘, 아래에 굵은 이름, 바닥에 분필 밑줄, 오른쪽 위 고정 꼬리표
                     var icon = new VisualElement { pickingMode = PickingMode.Ignore };
                     icon.AddToClassList("slot-icon");
                     var label = new Label { pickingMode = PickingMode.Ignore };
                     label.AddToClassList("slot-label");
+                    var chalk = new VisualElement { pickingMode = PickingMode.Ignore };
+                    chalk.AddToClassList("slot-chalk");
+                    var pin = new Label(Loc.T("teacher.pin_tag"));
+                    pin.AddToClassList("slot-pin");
+                    pin.RegisterCallback<PointerDownEvent>(evt =>
+                    {
+                        evt.StopPropagation();
+                        if (evt.button == 0 && _session.IsPlanning)
+                        {
+                            TogglePin?.Invoke(index);
+                        }
+                    });
                     cell.Add(icon);
                     cell.Add(label);
+                    cell.Add(chalk);
+                    cell.Add(pin);
                     _cells[index] = cell;
                     _icons[index] = icon;
                     _labels[index] = label;
+                    _pins[index] = pin;
                     row.Add(cell);
                 }
 
-                planner.Add(row);
+                _planner.Add(row);
             }
         }
 
@@ -843,13 +884,22 @@ namespace ApoGirl.Presentation.Screens
             var calendar = state.Calendar;
             var current = calendar.WeekComplete ? WeekPlan.SlotCount : CalendarRules.SlotIndex(calendar.Day, calendar.Phase);
             var executing = _session.IsExecuting;
+            var planning = _session.IsPlanning;
+            var pins = Pins?.Invoke();
 
             for (var i = 0; i < _cells.Length; i++)
             {
                 var slot = state.Plan.Slots[i];
                 var cell = _cells[i];
                 var empty = string.IsNullOrEmpty(slot.ActionId);
+                var pinned = pins != null && pins.ContainsKey(i);
                 var text = empty ? Loc.T("planner.empty") : Loc.Action(slot.ActionId, "short");
+                if (empty && pinned && planning)
+                {
+                    // 비어 있는 고정 칸: 선생님 추천을 누르면 들어갈 것
+                    text = Loc.F("teacher.pin_empty", PinName(pins[i]));
+                }
+
                 if (slot.Locked)
                 {
                     text += "\n" + Loc.T("planner.locked");
@@ -863,15 +913,45 @@ namespace ApoGirl.Presentation.Screens
                 var iconTexture = empty ? null : SlotIcon(slot);
                 StoryArt.SetContain(_icons[i], iconTexture);
                 _icons[i].style.display = iconTexture == null ? DisplayStyle.None : DisplayStyle.Flex;
-                cell.tooltip = empty ? string.Empty : Loc.Action(slot.ActionId);
                 cell.EnableInClassList("empty", empty);
                 cell.EnableInClassList("locked", slot.Locked);
                 cell.EnableInClassList("forced", slot.ForcedRest && !slot.Locked);
                 cell.EnableInClassList("warned", warnedSlots.Contains(i));
                 cell.EnableInClassList("done", executing && i < current);
                 cell.EnableInClassList("current", executing && i == current);
-                cell.SetEnabled(_session.IsPlanning);
+                cell.EnableInClassList("teacher", planning && _session.IsTeacherSlot(i) && !slot.Locked);
+                cell.EnableInClassList("pinned", planning && pinned);
+                _pins[i].EnableInClassList("on", pinned);
+                _pins[i].style.display = planning && !slot.Locked ? DisplayStyle.Flex : DisplayStyle.None;
+                cell.SetEnabled(planning);
             }
+        }
+
+        /// <summary>선생님 추천 직후: 선생님 칸을 앞에서부터 한 칸씩 분필로 채운다 (칸마다 40ms, 전부 0.6초 안).</summary>
+        public void PlayChalk(IReadOnlyList<bool> placed)
+        {
+            var order = Enumerable.Range(0, _cells.Length).Where(i => placed[i]).ToList();
+            if (order.Count == 0)
+            {
+                return;
+            }
+
+            var step = Math.Min(40, 600 / order.Count);
+            foreach (var i in order)
+            {
+                _cells[i].AddToClassList("chalk-pre");
+            }
+
+            for (var k = 0; k < order.Count; k++)
+            {
+                var cell = _cells[order[k]];
+                cell.schedule.Execute(() => cell.RemoveFromClassList("chalk-pre")).ExecuteLater(30 + k * step);
+            }
+        }
+
+        private string PinName(string token)
+        {
+            return token == TeacherPins.ClubToken ? Loc.T("teacher.pin_club") : Loc.Action(token, "short");
         }
 
         /// <summary>칸 아이콘: 강제 휴식 → 행동 아이콘 → 행동 분류 아이콘 (도크 칸과 같은 순서).</summary>
@@ -892,6 +972,166 @@ namespace ApoGirl.Presentation.Screens
             return icon;
         }
 
+        // ── 누르기·끌기 ──
+
+        private void OnDown(int index, PointerDownEvent evt)
+        {
+            if (!_session.IsPlanning)
+            {
+                return;
+            }
+
+            if (evt.button == 1)
+            {
+                OnClear(index);
+                return;
+            }
+
+            if (evt.button != 0)
+            {
+                return;
+            }
+
+            _press = index;
+            _pressAt = evt.position;
+            _dragging = false;
+            _cells[index].CapturePointer(evt.pointerId);
+        }
+
+        private void OnMove(int index, PointerMoveEvent evt)
+        {
+            if (_press < 0 || !_cells[_press].HasPointerCapture(evt.pointerId))
+            {
+                return;
+            }
+
+            if (!_dragging)
+            {
+                var slot = _session.State.Plan.Slots[_press];
+                if (((UnityEngine.Vector2)evt.position - _pressAt).magnitude < DragThreshold || string.IsNullOrEmpty(slot.ActionId) || slot.Locked)
+                {
+                    return;
+                }
+
+                BeginDrag();
+            }
+
+            // 끄는 그림은 마우스를 따라가고, 아래 칸을 놓을 곳으로 본다
+            var local = _planner.WorldToLocal(evt.position);
+            _dragGhost.style.left = local.x - 40f;
+            _dragGhost.style.top = local.y - 18f;
+            var target = Array.FindIndex(_cells, c => c.worldBound.Contains(evt.position));
+            if (target != _dropTarget)
+            {
+                if (_dropTarget >= 0) _cells[_dropTarget].RemoveFromClassList("drop-target");
+                _dropTarget = target;
+                if (target >= 0) _cells[target].AddToClassList("drop-target");
+                GhostChanged?.Invoke(target >= 0 && target != _press ? _dropIds[target] : null);
+            }
+        }
+
+        private void OnUp(int index, PointerUpEvent evt)
+        {
+            if (_press < 0)
+            {
+                return;
+            }
+
+            var from = _press;
+            if (_cells[from].HasPointerCapture(evt.pointerId))
+            {
+                _cells[from].ReleasePointer(evt.pointerId);
+            }
+
+            _press = -1;
+            if (_dragging)
+            {
+                var to = _dropTarget;
+                EndDrag();
+                if (to >= 0 && to != from)
+                {
+                    var moved = _session.MoveSlot(from, to);
+                    if (moved == PlanEditResult.Ok)
+                    {
+                        Audio.Sound.Play("Sfx/ui_slot_place", Audio.SoundCategory.Ui);
+                    }
+
+                    Report(moved, to);
+                }
+
+                return;
+            }
+
+            if (_cells[from].worldBound.Contains(evt.position))
+            {
+                OnClick(from);
+            }
+        }
+
+        private void BeginDrag()
+        {
+            _dragging = true;
+            var actionId = _session.State.Plan.Slots[_press].ActionId;
+            _dropIds = new string[_cells.Length][];
+            for (var i = 0; i < _cells.Length; i++)
+            {
+                _dropIds[i] = i == _press ? null : _session.PreviewIds(_press, i, null);
+                _cells[i].EnableInClassList("drop-ok", i != _press && _dropIds[i] != null);
+                _cells[i].EnableInClassList("drop-bad", i != _press && _dropIds[i] == null && !_session.State.Plan.Slots[i].Locked);
+            }
+
+            _cells[_press].AddToClassList("drag-source");
+            _dragGhost = new Label(Loc.Action(actionId, "short")) { pickingMode = PickingMode.Ignore };
+            _dragGhost.AddToClassList("slot-drag-ghost");
+            _planner.Add(_dragGhost);
+        }
+
+        private void EndDrag()
+        {
+            _dragging = false;
+            _dropTarget = -1;
+            _dropIds = null;
+            _dragGhost?.RemoveFromHierarchy();
+            _dragGhost = null;
+            foreach (var cell in _cells)
+            {
+                cell.RemoveFromClassList("drop-ok");
+                cell.RemoveFromClassList("drop-bad");
+                cell.RemoveFromClassList("drop-target");
+                cell.RemoveFromClassList("drag-source");
+            }
+
+            GhostChanged?.Invoke(null);
+        }
+
+        private void OnEnter(int index)
+        {
+            if (_dragging)
+            {
+                return;
+            }
+
+            Hovered?.Invoke(index);
+
+            // 고른 행동이 있으면 놓았을 때의 흐름을 미리 보여 준다
+            var actionId = _session.IsPlanning ? _selectedAction(CalendarRules.PhaseOf(index)) : null;
+            if (!string.IsNullOrEmpty(actionId) && _session.State.Plan.Slots[index].ActionId != actionId)
+            {
+                GhostChanged?.Invoke(_session.PreviewIds(-1, index, actionId));
+            }
+        }
+
+        private void OnLeave(int index)
+        {
+            if (_dragging)
+            {
+                return;
+            }
+
+            Hovered?.Invoke(-1);
+            GhostChanged?.Invoke(null);
+        }
+
         private void OnClick(int index)
         {
             var phase = CalendarRules.PhaseOf(index);
@@ -905,6 +1145,14 @@ namespace ApoGirl.Presentation.Screens
 
             if (actionId.Length == 0)
             {
+                // 빈손: 찬 칸이면 그 행동을 집는다 (스포이트)
+                var slot = _session.State.Plan.Slots[index];
+                if (!string.IsNullOrEmpty(slot.ActionId) && !slot.Locked && slot.ActionId != _session.Definitions.Balance.CraftContinueActionId)
+                {
+                    Picked?.Invoke(slot.ActionId);
+                    return;
+                }
+
                 _notify(Loc.T("plan.select_first"));
                 return;
             }
@@ -955,18 +1203,85 @@ namespace ApoGirl.Presentation.Screens
         }
     }
 
-    /// <summary>플래너 옆: 경고, 예상 수면 부채.</summary>
+    /// <summary>플래너 옆: 선생님 메모, 마우스가 올라간 칸 설명, 경고, 예상 수면 부채.</summary>
     internal sealed class PlanSideView
     {
         private readonly GameSession _session;
         private readonly ScrollView _warnings;
         private readonly Label _forecast;
+        private readonly VisualElement _memo;
+        private readonly Label _detail;
 
         public PlanSideView(VisualElement root, GameSession session)
         {
             _session = session;
             _warnings = root.Q<ScrollView>("warnings");
             _forecast = root.Q<Label>("forecast");
+            _memo = root.Q("teacher-memo");
+            _detail = root.Q<Label>("slot-detail");
+        }
+
+        /// <summary>칸 설명 (Docs/TEACHER_PLAN_PROPOSAL.md 6.3 칸 꼬리표): 무엇·왜(선생님)·예상 피로·스트레스·능력치. -1이면 안내 한 줄.</summary>
+        public void ShowSlot(int slot, WeekProjection projection)
+        {
+            if (!_session.IsPlanning || slot < 0 || projection == null)
+            {
+                _detail.text = _session.IsPlanning ? Loc.T("plan.slot_hint") : "";
+                _detail.RemoveFromClassList("on");
+                return;
+            }
+
+            var balance = _session.Definitions.Balance;
+            var planned = _session.State.Plan.Slots[slot];
+            var p = projection.Slots[slot];
+            var beforeFatigue = slot == 0 ? projection.StartFatigue : projection.Slots[slot - 1].Fatigue;
+            var beforeStress = slot == 0 ? projection.StartStress : projection.Slots[slot - 1].Stress;
+            var lines = new List<string>
+            {
+                Loc.F("plan.slot_title", Loc.T("weekday." + CalendarRules.Weekday(CalendarRules.DayOf(slot), balance)), UiText.Phase(CalendarRules.PhaseOf(slot)),
+                    string.IsNullOrEmpty(planned.ActionId) ? Loc.T("plan.slot_empty_rest") : Loc.Action(planned.ActionId)),
+            };
+            var reason = _session.IsTeacherSlot(slot) ? _session.TeacherReason(slot) : null;
+            if (reason != null)
+            {
+                lines.Add(Loc.F("plan.slot_teacher", TeacherText.Note(reason, balance)));
+            }
+
+            lines.Add(Loc.F(p.Uncertain ? "plan.slot_flow_rough" : "plan.slot_flow", beforeFatigue, p.Fatigue, beforeStress, p.Stress, p.SleepDebt));
+            var gains = Enumerable.Range(0, WeekForecast.StatCount).Where(s => p.Gains[s] >= 0.05f)
+                .Select(s => UiText.Stat((StatType)s) + " +" + p.Gains[s].ToString("0.#")).ToList();
+            if (gains.Count > 0)
+            {
+                lines.Add(string.Join(" · ", gains));
+            }
+
+            _detail.text = string.Join("\n", lines);
+            _detail.AddToClassList("on");
+        }
+
+        private void RefreshMemo()
+        {
+            _memo.Clear();
+            var notes = _session.IsPlanning ? _session.TeacherNotes : null;
+            _memo.EnableInClassList("hidden", notes == null || notes.Count == 0);
+            if (notes == null || notes.Count == 0)
+            {
+                return;
+            }
+
+            var head = new Label(Loc.T("teacher.memo_title"));
+            head.AddToClassList("teacher-memo-title");
+            _memo.Add(head);
+            var balance = _session.Definitions.Balance;
+            foreach (var note in notes)
+            {
+                var where = note.Slot >= 0
+                    ? Loc.T("weekday." + CalendarRules.Weekday(CalendarRules.DayOf(note.Slot), balance)) + UiText.Phase(CalendarRules.PhaseOf(note.Slot)) + " · "
+                    : "";
+                var line = new Label(where + TeacherText.Note(note, balance));
+                line.AddToClassList("teacher-memo-line");
+                _memo.Add(line);
+            }
         }
 
         /// <returns>경고가 걸린 슬롯 번호.</returns>
@@ -974,10 +1289,17 @@ namespace ApoGirl.Presentation.Screens
         {
             var warned = new HashSet<int>();
             _warnings.Clear();
+            RefreshMemo();
             if (!_session.IsPlanning)
             {
                 _forecast.text = "";
+                _detail.text = "";
                 return warned;
+            }
+
+            if (!_detail.ClassListContains("on"))
+            {
+                _detail.text = Loc.T("plan.slot_hint");
             }
 
             var warnings = _session.Warnings();

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using ApoGirl.Core.Expedition;
+using ApoGirl.Core.Planning;
 using ApoGirl.Core.Rules;
 using ApoGirl.Core.Simulation;
 using ApoGirl.Core.State;
@@ -39,6 +40,16 @@ namespace ApoGirl.Presentation.Screens
         private PaletteView _palette;
         private PlannerView _planner;
         private PlanSideView _planSide;
+        private PlanFlowView _flow;
+        private List<string> _pins = new List<string>();
+        private Button _teacherButton;
+        private Button _undoButton;
+        private Button _redoButton;
+        private Button _clearButton;
+
+        // 선생님 추천 직후 한마디 (그 주 계획 단계 동안)
+        private string _teacherSay;
+        private int _teacherSayWeek = -1;
         private CardOverlay _card;
         private DebugPanelView _debug;
         private BalanceLabView _lab;
@@ -103,6 +114,22 @@ namespace ApoGirl.Presentation.Screens
             _palette.OpenTree = _craftTree.Show;
             _planner = new PlannerView(_root, _session, _palette.ActionFor, ShowToast);
             _planSide = new PlanSideView(_root, _session);
+            _flow = new PlanFlowView(_root, _session);
+            _pins = TeacherPinPrefs.Load(_session.Definitions.Balance);
+            _session.TeacherPins = _pins;
+            _planner.Picked = id =>
+            {
+                _palette.Select(id);
+                ShowToast(Loc.F("plan.picked", Loc.Action(id, "short")));
+            };
+            _planner.Hovered = slot =>
+            {
+                _flow.SetFocus(slot);
+                _planSide.ShowSlot(slot, _flow.Current);
+            };
+            _planner.GhostChanged = ids => _flow.SetGhost(ids);
+            _planner.Pins = () => TeacherPins.Parse(_pins);
+            _planner.TogglePin = TogglePin;
             _layers = new HubLayers(_root) { CanPlan = () => _session.IsPlanning, Opened = () => _storage.Refresh() };
             _layers.BaseOpened = () =>
             {
@@ -300,6 +327,20 @@ namespace ApoGirl.Presentation.Screens
                 _layers.ToggleBoard();
             }
 
+            // 계획 되돌리기·다시 하기 (Docs/TEACHER_PLAN_PROPOSAL.md 5.3)
+            if (!busy && _session.IsPlanning && keyboard.ctrlKey.isPressed)
+            {
+                if (keyboard.zKey.wasPressedThisFrame)
+                {
+                    if (keyboard.shiftKey.isPressed) RedoPlan();
+                    else UndoPlan();
+                }
+                else if (keyboard.yKey.wasPressedThisFrame)
+                {
+                    RedoPlan();
+                }
+            }
+
             if (!busy && keyboard.escapeKey.wasPressedThisFrame)
             {
                 _section.HideRoomPanel();
@@ -344,6 +385,7 @@ namespace ApoGirl.Presentation.Screens
                 }
             };
 
+            BindBoardTools();
             var planButtons = _root.Q("plan-buttons");
             planButtons.Add(SmallButton(Loc.T("plan.copy_last"), () => _session.CopyLastWeek()));
             planButtons.Add(SmallButton(Loc.T("plan.save_preset"), ShowSavePresetCard));
@@ -387,6 +429,8 @@ namespace ApoGirl.Presentation.Screens
             _palette.Refresh();
             var warned = _planSide.Refresh();
             _planner.Refresh(warned);
+            _flow.Refresh();
+            RefreshBoardTools();
             _dock.Refresh(warned);
             _miniVitals.Refresh();
             _people.Refresh();
@@ -494,6 +538,11 @@ namespace ApoGirl.Presentation.Screens
             if (_session.IsExecuting)
             {
                 return Loc.T("teacher.running");
+            }
+
+            if (_teacherSay != null && _teacherSayWeek == state.Calendar.Week && _session.IsPlanning)
+            {
+                return _teacherSay;
             }
 
             if (state.Player.SleepDebt >= 3)
@@ -1247,6 +1296,145 @@ namespace ApoGirl.Presentation.Screens
             _toast.text = message;
             _toast.RemoveFromClassList("hidden");
             _toast.schedule.Execute(() => _toast.AddToClassList("hidden")).ExecuteLater(1800);
+        }
+
+        // ── 선생님 추천 · 되돌리기 (Docs/TEACHER_PLAN_PROPOSAL.md) ──
+
+        private void BindBoardTools()
+        {
+            var tools = _root.Q("board-tools");
+            _teacherButton = BoardTool(Loc.T("teacher.recommend"), Recommend);
+            _teacherButton.AddToClassList("teacher");
+            _undoButton = BoardTool(Loc.T("plan.undo"), UndoPlan);
+            _redoButton = BoardTool(Loc.T("plan.redo"), RedoPlan);
+            _clearButton = BoardTool(Loc.T("plan.clear_all"), ClearPlan);
+            tools.Add(_teacherButton);
+            tools.Add(_undoButton);
+            tools.Add(_redoButton);
+            tools.Add(_clearButton);
+        }
+
+        private static Button BoardTool(string text, System.Action onClick)
+        {
+            var button = SmallButton(text, onClick);
+            button.AddToClassList("board-tool");
+            return button;
+        }
+
+        private void RefreshBoardTools()
+        {
+            var planning = _session.IsPlanning;
+            _teacherButton.SetEnabled(planning);
+            _teacherButton.EnableInClassList("dim", !_session.TeacherAvailable);
+            _undoButton.SetEnabled(_session.CanUndoPlan);
+            _redoButton.SetEnabled(_session.CanRedoPlan);
+            _clearButton.SetEnabled(planning);
+        }
+
+        /// <summary>선생님 추천: 빈 칸·선생님 칸을 채운다 (Shift를 누르고 있으면 플레이어 칸까지 전부 다시).</summary>
+        private void Recommend()
+        {
+            if (!_session.IsPlanning)
+            {
+                return;
+            }
+
+            if (!_session.TeacherAvailable)
+            {
+                ShowToast(Loc.T(_session.HasMetTeacher ? "teacher.absent" : "teacher.not_met"));
+                return;
+            }
+
+            var all = Keyboard.current != null && Keyboard.current.shiftKey.isPressed;
+            _session.TeacherPins = _pins;
+            var result = _session.Recommend(all);
+            if (result == null)
+            {
+                return;
+            }
+
+            Sound.Play("Sfx/ui_slot_place", SoundCategory.Ui);
+            _planner.PlayChalk(result.Placed);
+            _standing.React("smile", 1.6f);
+            _teacherSay = TeacherSay(result);
+            _teacherSayWeek = _session.State.Calendar.Week;
+            Refresh();
+        }
+
+        /// <summary>추천 직후 선생님 한마디: 급한 까닭이 있으면 그것, 아니면 무난한 말.</summary>
+        private string TeacherSay(TeacherResult result)
+        {
+            var keys = result.Reasons.Where(r => r != null).Select(r => r.Key).ToList();
+            var balance = _session.Definitions.Balance;
+            var story = result.Reasons.FirstOrDefault(r => r != null && (r.Key == "teacher.why.story" || r.Key == "teacher.why.story_person"));
+            if (keys.Contains("teacher.why.medicine")) return Loc.T("teacher.say.medicine");
+            if (keys.Contains("teacher.why.short")) return Loc.T("teacher.say.short");
+            if (story != null) return Loc.F("teacher.say.story", TeacherText.Token(story.Args.FirstOrDefault(), balance));
+            if (keys.Contains("teacher.why.tidy")) return Loc.T("teacher.say.tidy");
+            if (keys.Contains("teacher.why.daily_care")) return Loc.T("teacher.say.care");
+            return Loc.T("teacher.say.default." + _session.State.Calendar.Week % 3);
+        }
+
+        private void UndoPlan()
+        {
+            if (_session.UndoPlan())
+            {
+                ShowToast(Loc.T("plan.undone"));
+            }
+        }
+
+        private void RedoPlan()
+        {
+            if (_session.RedoPlan())
+            {
+                ShowToast(Loc.T("plan.redone"));
+            }
+        }
+
+        private void ClearPlan()
+        {
+            if (_session.ClearPlan())
+            {
+                ShowToast(Loc.T("plan.cleared"));
+            }
+        }
+
+        /// <summary>고정 시간표 켜고 끄기 (칸 오른쪽 위 꼬리표). 플레이어 설정이라 다른 판에도 남는다 (D2).</summary>
+        private void TogglePin(int slot)
+        {
+            var pins = TeacherPins.Parse(_pins);
+            var db = _session.Definitions;
+            bool on;
+            if (pins.ContainsKey(slot))
+            {
+                pins.Remove(slot);
+                on = false;
+            }
+            else
+            {
+                var id = _session.State.Plan.Slots[slot].ActionId;
+                if (string.IsNullOrEmpty(id) || !db.TryGetAction(id, out var action))
+                {
+                    ShowToast(Loc.T("teacher.pin_need_action"));
+                    return;
+                }
+
+                if (action.IsExpedition || action.IsCraft || id == db.Balance.CraftContinueActionId)
+                {
+                    ShowToast(Loc.T("teacher.pin_not_this"));
+                    return;
+                }
+
+                pins[slot] = TeacherPins.TokenFor(db, id);
+                on = true;
+            }
+
+            _pins = TeacherPins.Format(pins).ToList();
+            TeacherPinPrefs.Save(_pins);
+            _session.TeacherPins = _pins;
+            Sound.Play("Sfx/ui_slot_place", SoundCategory.Ui);
+            ShowToast(Loc.T(on ? "teacher.pin_on" : "teacher.pin_off"));
+            Refresh();
         }
 
         private static Button SmallButton(string text, System.Action onClick)
