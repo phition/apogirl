@@ -7939,6 +7939,242 @@ MonoBehaviour:
     m_Key: people.factions.pending
     m_Metadata:
       m_Items: []
+  - m_Id: 2301575573028864
+    m_Key: teacher.recommend
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2301575635943424
+    m_Key: teacher.absent
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2301575635943425
+    m_Key: teacher.not_met
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2301575635943426
+    m_Key: teacher.pin_tag
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2301575635943427
+    m_Key: teacher.pin_empty
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2301575635943428
+    m_Key: teacher.pin_club
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2301575635943429
+    m_Key: teacher.pin_on
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2301575635943430
+    m_Key: teacher.pin_off
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2301575635943431
+    m_Key: teacher.pin_need_action
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2301575635943432
+    m_Key: teacher.pin_not_this
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2301575635943433
+    m_Key: teacher.memo_title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2301575635943434
+    m_Key: teacher.why.pin
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2301575635943435
+    m_Key: teacher.why.story
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2301575635943436
+    m_Key: teacher.why.story_person
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2301575635943437
+    m_Key: teacher.why.explore
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2301575635943438
+    m_Key: teacher.why.short
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2301575635943439
+    m_Key: teacher.why.tight
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2301575635943440
+    m_Key: teacher.why.medicine
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2301575635943441
+    m_Key: teacher.why.rest
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2301575635943442
+    m_Key: teacher.why.rest_after
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2301575635943443
+    m_Key: teacher.why.craft
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2301575635943444
+    m_Key: teacher.why.daily
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2301575635943445
+    m_Key: teacher.why.daily_care
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2301575635943446
+    m_Key: teacher.why.daily_talk
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2301575635943447
+    m_Key: teacher.why.daily_rooftop
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2301575635943448
+    m_Key: teacher.why.treat
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2301575635943449
+    m_Key: teacher.why.treat_infection
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2301575635943450
+    m_Key: teacher.why.develop
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2301575635943451
+    m_Key: teacher.why.purify_more
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2301575635943452
+    m_Key: teacher.why.class
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2301575635943453
+    m_Key: teacher.why.class_teach
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2301575635943454
+    m_Key: teacher.why.tidy
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2301575635943455
+    m_Key: teacher.say.medicine
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2301575635943456
+    m_Key: teacher.say.short
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2301575635943457
+    m_Key: teacher.say.story
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2301575635943458
+    m_Key: teacher.say.tidy
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2301575635943459
+    m_Key: teacher.say.care
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2301575635943460
+    m_Key: teacher.say.default.0
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2301575635943461
+    m_Key: teacher.say.default.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2301575635943462
+    m_Key: teacher.say.default.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2301575635943463
+    m_Key: plan.undo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2301575635943464
+    m_Key: plan.redo
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2301575635943465
+    m_Key: plan.clear_all
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2301575635943466
+    m_Key: plan.undone
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2301575635943467
+    m_Key: plan.redone
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2301575635943468
+    m_Key: plan.cleared
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2301575635943469
+    m_Key: plan.picked
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2301575635943470
+    m_Key: plan.slot_hint
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2301575635943471
+    m_Key: plan.slot_title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2301575635943472
+    m_Key: plan.slot_empty_rest
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2301575635943473
+    m_Key: plan.slot_teacher
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2301575635943474
+    m_Key: plan.slot_flow
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2301575635943475
+    m_Key: plan.slot_flow_rough
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2301575635943476
+    m_Key: plan.memo_where
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2301575635943477
+    m_Key: flow.fatigue
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2301575635943478
+    m_Key: flow.stress
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2301575635943479
+    m_Key: flow.sleep_debt
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2301575635943480
+    m_Key: flow.no_gain
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2301575635943481
+    m_Key: flow.summary
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
