@@ -1298,3 +1298,6 @@ Button.base-advice-line:hover { background-color: rgba(185, 163, 122, 0.18); col
 }
 .people-factions-list { flex-shrink: 1; }
 .people-factions-list .faction-bar { margin: 2px 0 2px 0; }
+/* 세력 덧판을 펼치면 판이 인물 서랍에 틈 없이 붙고, 접기 탭은 판 왼쪽으로 (자식 순서: 판, 탭 → 거꾸로 놓아 판이 서랍 쪽) */
+.people-factions.expanded { flex-direction: row-reverse; }
+.people-factions.expanded .people-factions-sheet { border-top-left-radius: 0; }
