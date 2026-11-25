@@ -113,7 +113,278 @@ namespace ApoGirl.Presentation.Screens
                 RoomsCard(state);
             }
 
+            _roleCard = null;
+            if (db.Extras.Roles.Count > 0 && Companions(state).Count > 0)
+            {
+                RolesCard(state);
+            }
+
             KoreanFont.ApplyDeep(_host);
+        }
+
+        // ── 역할 판 (P3) ──
+
+        /// <summary>역할 칸에서 [ + ]를 눌러 사람을 고르는 중인 역할 (null이면 아님).</summary>
+        private string _picking;
+
+        private VisualElement _roleCard;
+
+        /// <summary>서랍 안 역할 칸으로 내린다 (인물 서랍·방 패널의 역할 줄을 눌렀을 때). 접혀 있으면 편다.</summary>
+        public void ScrollToRoles()
+        {
+            if (PlayerPrefs.GetInt(FoldPrefix + "roles", 0) != 0)
+            {
+                PlayerPrefs.SetInt(FoldPrefix + "roles", 0);
+                PlayerPrefs.Save();
+                Refresh();
+            }
+
+            var scroll = _host.GetFirstAncestorOfType<ScrollView>();
+            _host.schedule.Execute(() =>
+            {
+                if (_roleCard != null && scroll != null)
+                {
+                    scroll.ScrollTo(_roleCard);
+                }
+            }).StartingIn(60);
+        }
+
+        /// <summary>합류한 동료 (고양이 빼고, 역할을 맡을 수 있는 사람).</summary>
+        private static List<string> Companions(GameState state) =>
+            state.Npcs.Where(n => n.Value.Status == NpcStatus.Joined && !CatRules.IsCat(n.Key))
+                .Select(n => n.Key).OrderBy(id => id, StringComparer.Ordinal).ToList();
+
+        /// <summary>
+        /// 역할 6줄 × 자리(정원): 방 묶음과 배율, 맡은 사람 뱃지(적성 ★·스트레스·다침·외출·정원 넘침), 빈 자리 [ + ].
+        /// 맨 아래 쉬는 사람. 바꾸기는 계획 중에만 (GameSession.SetNpcRole, 규칙은 RoleRules.Assign 그대로).
+        /// </summary>
+        private void RolesCard(GameState state)
+        {
+            var db = _session.Definitions;
+            var balance = db.Balance;
+            var companions = Companions(state);
+            var idle = companions.Where(id => string.IsNullOrEmpty(state.Npcs[id].Role)).ToList();
+            var assigned = companions.Count - idle.Count;
+            var openSlots = db.Extras.Roles.Where(r => RoleRules.IsAvailable(state, r))
+                .Sum(r => Math.Max(0, balance.RoleCapacity - RoleRules.Holders(state, r.Id).Count));
+            var tone = idle.Count > 0 && openSlots > 0 ? "warn" : "ok";
+            var verdict = idle.Count > 0 && openSlots > 0 ? Loc.F("base.roles.idle_count", idle.Count) : Loc.F("base.roles.filled", assigned);
+            var body = Card("roles", "base.roles", "menu.people", verdict, tone);
+            _roleCard = _host.Children().LastOrDefault();
+            if (body == null)
+            {
+                return;
+            }
+
+            var planning = _session.IsPlanning;
+            var outings = planning ? OutingRules.Plan(state, db) : new Dictionary<string, List<OutingPlan>>();
+            _section ??= HubSectionConfig.Load();
+            foreach (var role in db.Extras.Roles)
+            {
+                var available = RoleRules.IsAvailable(state, role);
+                var row = new VisualElement();
+                row.AddToClassList("base-role");
+                row.EnableInClassList("locked", !available);
+
+                // 머리: 역할 이름 + 방 묶음·배율
+                var head = new VisualElement();
+                head.AddToClassList("base-role-head");
+                var name = new Label(Loc.T("role." + role.Id)) { tooltip = Loc.T("role." + role.Id + ".desc") };
+                name.AddToClassList("base-role-name");
+                StoryArt.SetIcon(name, StoryArt.Icon("role." + role.Id), 18f);
+                head.Add(name);
+                var rooms = new Label(RoleRooms(state, role, available));
+                rooms.AddToClassList("base-role-rooms");
+                head.Add(rooms);
+                row.Add(head);
+
+                if (available)
+                {
+                    var slots = new VisualElement();
+                    slots.AddToClassList("base-role-slots");
+                    var holders = RoleRules.Holders(state, role.Id);
+                    foreach (var id in holders)
+                    {
+                        slots.Add(HolderBadge(state, role, id, outings, planning));
+                    }
+
+                    var capacity = balance.RoleCapacity <= 0 ? holders.Count + 1 : balance.RoleCapacity;
+                    for (var i = holders.Count; i < capacity; i++)
+                    {
+                        var roleId = role.Id;
+                        var add = new Button(() =>
+                        {
+                            _picking = _picking == roleId ? null : roleId;
+                            Refresh();
+                        }) { text = "+", tooltip = Loc.T(planning ? "base.roles.add_hint" : "base.roles.planning_only") };
+                        add.AddToClassList("base-role-add");
+                        add.EnableInClassList("on", _picking == role.Id);
+                        add.SetEnabled(planning && companions.Any(id => state.Npcs[id].Role != roleId));
+                        slots.Add(add);
+                    }
+
+                    row.Add(slots);
+                    if (planning && _picking == role.Id)
+                    {
+                        row.Add(Candidates(state, role, companions));
+                    }
+                }
+
+                body.Add(row);
+            }
+
+            // 쉬는 사람
+            var rest = new VisualElement();
+            rest.AddToClassList("base-role-rest");
+            var restTitle = new Label(Loc.T(idle.Count > 0 ? "base.roles.idle" : "base.roles.idle_none"));
+            restTitle.AddToClassList("base-role-rest-title");
+            rest.Add(restTitle);
+            foreach (var id in idle)
+            {
+                var badge = Badge(id, "");
+                var wish = Loc.T("people.wish." + id);
+                badge.tooltip = wish != "people.wish." + id ? wish : Loc.T("base.roles.idle_hint");
+                rest.Add(badge);
+            }
+
+            body.Add(rest);
+        }
+
+        /// <summary>역할의 방 묶음: 열린 방 이름 · 배율, 열린 방이 없으면 잠김과 여는 방법.</summary>
+        private string RoleRooms(GameState state, RoleDef role, bool available)
+        {
+            if (role.Rooms.Count == 0)
+            {
+                return "";
+            }
+
+            var open = role.Rooms.Where(r => RoleRules.IsRoomOpen(state, r)).ToList();
+            if (!available || open.Count == 0)
+            {
+                var first = _section.Rooms.FirstOrDefault(r => r.Id == role.Rooms[0].Id);
+                var hint = first != null ? RoomText.Hint(first) : "";
+                return role.Basic ? Loc.T("base.roles.no_room") : Loc.F("base.roles.locked", hint);
+            }
+
+            var names = string.Join("·", open.Select(r => RoomNameOf(r.Id)));
+            var scale = RoleRules.RoomScale(state, role, _session.Definitions.Balance);
+            var closed = role.Rooms.Count - open.Count;
+            var text = scale > 1.001f ? names + "  " + Loc.F("base.roles.scale", scale.ToString("0.##", System.Globalization.CultureInfo.InvariantCulture)) : names;
+            return closed > 0 ? text + "  " + Loc.F("base.roles.more_rooms", closed) : text;
+        }
+
+        private string RoomNameOf(string roomId)
+        {
+            var room = _section.Rooms.FirstOrDefault(r => r.Id == roomId);
+            return room != null ? HubSectionConfig.RoomName(room) : roomId;
+        }
+
+        /// <summary>맡은 사람 뱃지. 우클릭 = 역할에서 뺀다 (계획 중).</summary>
+        private VisualElement HolderBadge(GameState state, RoleDef role, string id, Dictionary<string, List<OutingPlan>> outings, bool planning)
+        {
+            var balance = _session.Definitions.Balance;
+            var npc = state.Npcs[id];
+            var tags = new List<string>();
+            var notes = new List<string>();
+            var badge = Badge(id, RoleRules.HasAptitude(balance, id, role.Id) ? Loc.T("hub.room_aptitude") : "");
+            if (!RoleRules.IsActive(state, id, balance))
+            {
+                badge.AddToClassList("overflow");
+                notes.Add(Loc.T("people.role_overflow"));
+            }
+
+            if (GiveRules.IsStressed(npc, balance))
+            {
+                badge.AddToClassList("weak");
+                notes.Add(Loc.T("base.roles.stressed"));
+            }
+
+            if (npc.InjuredWeeks > 0)
+            {
+                badge.AddToClassList("weak");
+                tags.Add(Loc.T("base.roles.injured_tag"));
+                notes.Add(Loc.T("base.roles.injured"));
+            }
+
+            if (outings.TryGetValue(id, out var plans) && plans.Count > 0)
+            {
+                tags.Add(Loc.F("base.roles.out_tag", plans.Count));
+                notes.Add(Loc.F("base.roles.out", plans.Count));
+            }
+
+            if (tags.Count > 0)
+            {
+                var tag = new Label(string.Join(" ", tags));
+                tag.AddToClassList("base-role-tag");
+                badge.Add(tag);
+            }
+
+            if (planning)
+            {
+                notes.Add(Loc.T("base.roles.remove_hint"));
+                var npcId = id;
+                badge.RegisterCallback<PointerDownEvent>(evt =>
+                {
+                    if (evt.button == 1)
+                    {
+                        _session.SetNpcRole(npcId, "");
+                        evt.StopPropagation();
+                    }
+                });
+            }
+
+            badge.tooltip = string.Join("\n", notes);
+            return badge;
+        }
+
+        /// <summary>[ + ] 아래: 이 역할을 맡길 수 있는 사람 (쉬는 사람 먼저, 지금 맡은 역할을 작게).</summary>
+        private VisualElement Candidates(GameState state, RoleDef role, List<string> companions)
+        {
+            var balance = _session.Definitions.Balance;
+            var strip = new VisualElement();
+            strip.AddToClassList("base-role-pick");
+            var title = new Label(Loc.T("base.roles.pick"));
+            title.AddToClassList("base-role-pick-title");
+            strip.Add(title);
+            foreach (var id in companions.Where(c => state.Npcs[c].Role != role.Id).OrderBy(c => string.IsNullOrEmpty(state.Npcs[c].Role) ? 0 : 1))
+            {
+                var current = state.Npcs[id].Role;
+                var badge = Badge(id, RoleRules.HasAptitude(balance, id, role.Id) ? Loc.T("hub.room_aptitude") : "");
+                if (!string.IsNullOrEmpty(current))
+                {
+                    var tag = new Label(Loc.T("role." + current));
+                    tag.AddToClassList("base-role-tag");
+                    badge.Add(tag);
+                }
+
+                var npcId = id;
+                var roleId = role.Id;
+                badge.AddToClassList("pick");
+                badge.tooltip = string.IsNullOrEmpty(current) ? Loc.T("base.roles.pick_hint") : Loc.F("base.roles.move_hint", Loc.T("role." + current));
+                badge.RegisterCallback<ClickEvent>(_ =>
+                {
+                    _picking = null;
+                    if (!_session.SetNpcRole(npcId, roleId))
+                    {
+                        Refresh();
+                    }
+                });
+                strip.Add(badge);
+            }
+
+            return strip;
+        }
+
+        /// <summary>얼굴 + 이름 (+ 적성 ★) 뱃지.</summary>
+        private static VisualElement Badge(string id, string mark)
+        {
+            var badge = new VisualElement();
+            badge.AddToClassList("base-person");
+            badge.Add(PeopleUi.Badge(id, 26f));
+            var name = new Label(PeopleUi.Name(id) + (string.IsNullOrEmpty(mark) ? "" : " " + mark));
+            name.AddToClassList("base-person-name");
+            badge.Add(name);
+            return badge;
         }
 
         // ── 시설 (P2) ──

@@ -272,6 +272,9 @@ namespace ApoGirl.Presentation.Screens
         /// <summary>방에서 행동을 골랐을 때 (허브가 계획 보드를 그 행동으로 연다).</summary>
         public Action<string> ActionPicked { get; set; }
 
+        /// <summary>방 패널의 "○○ 자리" 줄을 눌렀을 때 (허브가 거점 서랍의 역할 판을 연다).</summary>
+        public Action RolesRequested { get; set; }
+
         private float Px(float art) => art * _config.Scale;
 
         private float ArtHeight => _config.FloorHeight * 3 + _config.RoofHeight + _config.Ground;
@@ -1116,6 +1119,19 @@ namespace ApoGirl.Presentation.Screens
             {
                 var line = new Label(people);
                 line.AddToClassList("hub-room-panel-note");
+                if (RolesRequested != null)
+                {
+                    // 거점 상황판 P3: "○○ 자리" 줄을 누르면 역할 판으로
+                    line.AddToClassList("clickable");
+                    line.tooltip = Loc.T("hub.room_people_hint");
+                    line.RegisterCallback<ClickEvent>(evt =>
+                    {
+                        evt.StopPropagation();
+                        HideRoomPanel();
+                        RolesRequested?.Invoke();
+                    });
+                }
+
                 _roomPanel.Add(line);
             }
         }

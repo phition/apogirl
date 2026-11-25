@@ -1218,3 +1218,27 @@ Button.selected { border-color: var(--accent); background-color: var(--accent-so
 .hub-ring { border-width: 0; border-color: rgba(255, 214, 140, 0); transition-property: border-color, border-width; transition-duration: 0.25s; }
 .hub-ring.on { border-width: 6px; border-color: rgba(255, 220, 150, 1); background-color: rgba(255, 214, 140, 0.2); }
 .hub-room-panel-effect { color: #a9cfa3; font-size: 14px; white-space: normal; margin-bottom: 2px; }
+/* 거점 상황판 역할 판 (BASE_TAB_PROPOSAL P3): 역할마다 한 줄, 자리 뱃지·빈 자리 [+], 후보 고르기, 쉬는 사람 */
+.base-role { margin: 3px 0; padding: 4px 6px; border-radius: 4px; background-color: rgba(185, 163, 122, 0.06); }
+.base-role.locked { opacity: 0.55; }
+.base-role-head { flex-direction: row; align-items: center; }
+.base-role-name { font-size: 15px; -unity-font-style: bold; color: var(--text); margin: 0; padding: 0 0 0 2px; min-height: 22px; -unity-text-align: middle-left; }
+.base-role-rooms { font-size: 13px; color: var(--text-dim); white-space: normal; margin: 1px 0 0 0; padding: 0; }
+.base-role-slots { flex-direction: row; flex-wrap: wrap; align-items: center; margin-top: 3px; }
+.base-person { flex-direction: row; align-items: center; margin: 2px 6px 2px 0; padding: 1px 6px 1px 1px; border-radius: 14px; border-width: 1px; border-color: var(--line); background-color: rgba(0, 0, 0, 0.18); }
+.base-person.weak { border-color: #b0865a; }
+.base-person.overflow { opacity: 0.5; border-color: var(--danger); }
+.base-person.pick { background-color: rgba(127, 163, 122, 0.12); }
+.base-person.pick:hover { background-color: rgba(127, 163, 122, 0.3); }
+.base-person-name { font-size: 13px; color: var(--text); margin: 0 0 0 4px; padding: 0; }
+.base-role-tag { font-size: 12px; color: var(--text-dim); margin: 0 0 0 4px; padding: 0; }
+.base-role-add { width: 28px; height: 28px; margin: 2px 6px 2px 0; padding: 0; border-radius: 14px; border-width: 1px; border-color: var(--line); background-color: transparent; color: var(--text-dim); font-size: 16px; -unity-text-align: middle-center; }
+.base-role-add:hover { border-color: var(--accent); color: var(--text); }
+.base-role-add.on { background-color: var(--accent-soft); border-color: var(--accent); color: var(--text); }
+.base-role-pick { margin: 4px 0 2px 0; padding: 4px 6px; border-radius: 4px; border-width: 1px; border-color: var(--accent); background-color: rgba(0, 0, 0, 0.22); flex-direction: row; flex-wrap: wrap; align-items: center; }
+.base-role-pick-title { width: 100%; font-size: 13px; color: var(--text-dim); margin: 0 0 3px 0; padding: 0; }
+.base-role-rest { margin-top: 6px; padding-top: 4px; border-top-width: 1px; border-color: var(--line); flex-direction: row; flex-wrap: wrap; align-items: center; }
+.base-role-rest-title { font-size: 13px; color: var(--text-dim); margin: 0 8px 0 0; padding: 0; }
+/* 누르면 역할 판으로 넘어가는 글 (인물 서랍 역할·방 패널 자리 줄) */
+.person-role.clickable:hover, .hub-room-panel-note.clickable:hover { color: var(--accent); }
+.hub-room-panel-note.clickable { -unity-font-style: bold; }

@@ -155,7 +155,7 @@ namespace ApoGirl.Presentation.Screens
             _baseSection.Add(Header("status.base"));
             _baseInfo = Row(_baseSection);
             _baseInfo.style.whiteSpace = WhiteSpace.Normal;
-            _baseSection.Add(_companions);
+            // 동료 역할은 위 거점 상황판의 역할 칸(역할 판)에서 바꾼다 (BASE_TAB_PROPOSAL P3)
 
             basePanel.Add(_factionSection);
             _factionSection.Add(Header("status.factions"));
@@ -210,38 +210,6 @@ namespace ApoGirl.Presentation.Screens
             _factionSection.EnableInClassList("hidden", !any);
         }
 
-        private readonly VisualElement _companions = new VisualElement();
-
-        /// <summary>합류한 동료: 누르면 역할이 차례로 바뀐다 (계획 단계에서만).</summary>
-        private void RefreshCompanions(GameState state)
-        {
-            _companions.Clear();
-            foreach (var pair in state.Npcs.Where(n => n.Value.Status == NpcStatus.Joined && !Core.Rules.CatRules.IsCat(n.Key)))
-            {
-                var npcId = pair.Key;
-                var npc = pair.Value;
-                var roleName = string.IsNullOrEmpty(npc.Role) ? Loc.T("role.none") : Loc.T("role." + npc.Role);
-                var button = new Button(() =>
-                {
-                    // 역할 재기획: 방이 열린 역할만, 정원이 찬 역할은 건너뛴다 (마지막 다음은 역할 없음)
-                    var roles = Core.Rules.RoleRules.Choices(_session.State, _session.Definitions, npcId);
-                    if (roles.Count == 0) return;
-                    var index = roles.FindIndex(r => r.Id == npc.Role);
-                    var next = index + 1 >= roles.Count ? "" : roles[index + 1].Id;
-                    _session.SetNpcRole(npcId, next);
-                })
-                {
-                    text = Loc.T("npc." + npcId) + " · " + roleName,
-                    tooltip = string.IsNullOrEmpty(npc.Role) ? Loc.T("status.role_hint") : Loc.T("role." + npc.Role + ".desc"),
-                };
-                button.AddToClassList("small-button");
-                button.AddToClassList("companion-button");
-                StoryArt.SetIcon(button, StoryArt.Icon("npc." + npcId), 28f);
-                button.SetEnabled(_session.IsPlanning && _session.Definitions.Extras.Roles.Count > 0);
-                _companions.Add(button);
-            }
-        }
-
         public void Refresh()
         {
             var state = _session.State;
@@ -261,9 +229,8 @@ namespace ApoGirl.Presentation.Screens
             }
 
             _baseInfo.text = string.Join("\n", people);
-            _baseInfo.EnableInClassList("hidden", people.Count == 0);
+            _baseSection.EnableInClassList("hidden", people.Count == 0);
 
-            RefreshCompanions(state);
             RefreshFactions(state);
         }
 

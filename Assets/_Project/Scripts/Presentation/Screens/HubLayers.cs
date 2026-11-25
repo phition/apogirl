@@ -94,6 +94,12 @@ namespace ApoGirl.Presentation.Screens
 
         public void CloseBase() => Set(_right, false);
 
+        /// <summary>거점 서랍을 연다 (이미 열려 있으면 그대로).</summary>
+        public void OpenBase()
+        {
+            if (!BaseOpen) ToggleBase();
+        }
+
         public bool BaseOpen => IsOpen(_right);
 
         /// <summary>거점 단추 오른쪽 위의 빨간 점 (거점 상황판에 새 알림이 있을 때).</summary>

@@ -225,6 +225,9 @@ namespace ApoGirl.Presentation.Screens
         /// <summary>"이번 주는 남아 줘"를 바꿨을 때 (허브가 계획 보드·서랍을 새로 그린다).</summary>
         public Action Changed { get; set; }
 
+        /// <summary>역할 글을 눌렀을 때 (허브가 거점 서랍의 역할 판을 연다).</summary>
+        public Action RolesRequested { get; set; }
+
         public void Refresh()
         {
             if (_panel == null)
@@ -278,6 +281,19 @@ namespace ApoGirl.Presentation.Screens
                 {
                     StoryArt.SetIcon(role, StoryArt.Icon("role." + roleNpc.Role), 18f);   // 에셋 8차 역할 아이콘
                 }
+
+                // 거점 상황판 P3: 동료의 역할 글을 누르면 거점 서랍의 역할 판으로 (선생님은 역할이 없다)
+                if (id != GiveRules.TeacherId && RolesRequested != null)
+                {
+                    role.AddToClassList("clickable");
+                    role.tooltip = Loc.T("hub.room_people_hint");
+                    role.RegisterCallback<ClickEvent>(evt =>
+                    {
+                        evt.StopPropagation();
+                        RolesRequested?.Invoke();
+                    });
+                }
+
                 nameRow.Add(role);
             }
 

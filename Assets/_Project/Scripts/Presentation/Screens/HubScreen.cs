@@ -159,7 +159,8 @@ namespace ApoGirl.Presentation.Screens
                     Refresh();
                 },
             };
-            _people = new PeopleDrawerView(_root, _session) { Changed = Refresh };
+            _people = new PeopleDrawerView(_root, _session) { Changed = Refresh, RolesRequested = ShowRoles };
+            _section.RolesRequested = ShowRoles;
             _give = new GiveSheetView(_root, _session);
             _teacherBox.RegisterCallback<ClickEvent>(_ =>
             {
@@ -353,6 +354,13 @@ namespace ApoGirl.Presentation.Screens
                 StoryArt.SetIcon(button, StoryArt.Icon(speed == ExecutionSpeed.Normal ? "ctl.speed_1" : speed == ExecutionSpeed.Fast ? "ctl.speed_2" : "ctl.skip"), 18f);
                 speedButtons.Add(button);
             }
+        }
+
+        /// <summary>거점 서랍을 열고 역할 판까지 내린다 (인물 서랍 역할 글·방 패널 "○○ 자리" 줄에서, P3).</summary>
+        private void ShowRoles()
+        {
+            _layers.OpenBase();
+            _baseBoard.ScrollToRoles();
         }
 
         private void Refresh()
