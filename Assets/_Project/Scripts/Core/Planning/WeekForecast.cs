@@ -42,7 +42,8 @@ namespace ApoGirl.Core.Planning
 
     /// <summary>
     /// 계획 흐름 예측 (Docs/TEACHER_PLAN_PROPOSAL.md 6절). WeekRunner와 같은 규칙을 칸마다 따르되,
-    /// 판정·탐험의 무작위는 기대값(평균)으로 둔다. 아침·저녁 식사, 동료 외출, 이벤트는 넣지 않는다.
+    /// 판정·탐험의 무작위는 기대값(평균)으로 둔다. 아침·저녁 식사, 동료 외출, 이벤트는 넣지 않고,
+    /// 저녁 허기·갈증·한파 스트레스는 지금 단계 그대로 밤 칸마다 더한다 (배부름 회복은 빼서 보수적으로).
     /// 상태를 바꾸지 않는다.
     /// </summary>
     public static class WeekForecast
@@ -77,6 +78,11 @@ namespace ApoGirl.Core.Planning
                 stats[s] = player.GetStat((StatType)s);
             }
 
+            // 저녁(밤 칸 시작)마다 오르는 스트레스: 지금 허기·갈증 단계의 벌(배부름 회복은 세지 않아 보수적), 한파
+            var evening = Math.Max(0, UpkeepRules.Band(balance.SatietyBands, player.Vitals.Satiety - balance.SatietyDailyDrain)?.Stress ?? 0)
+                          + Math.Max(0, UpkeepRules.Band(balance.HydrationBands, player.Vitals.Hydration - balance.HydrationDailyDrain)?.Stress ?? 0)
+                          + (state.Base.Weather == WeatherType.Cold ? Math.Max(0, balance.ColdDailyStress) : 0);
+
             for (var i = 0; i < count; i++)
             {
                 var slot = new SlotProjection();
@@ -85,6 +91,10 @@ namespace ApoGirl.Core.Planning
                 var id = string.IsNullOrEmpty(planned) ? PlanPreparer.RestIdFor(i, balance) : planned;
                 var fatigueBefore = fatigue;
                 var stressBefore = stress;
+                if (CalendarRules.PhaseOf(i) == DayPhase.Night)
+                {
+                    stress = Clamp(stress + evening, balance);
+                }
 
                 if (!db.TryGetAction(id, out var action))
                 {

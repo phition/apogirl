@@ -158,25 +158,35 @@ namespace ApoGirl.Tests.EditMode
         [Test]
         public void Recommend_KeepsRulesThroughAYear()
         {
-            // TEACHER 봇처럼 한 해를 돌리며 주마다 추천을 점검한다
+            // TEACHER 봇처럼 한 해를 돌리며 주마다 추천을 점검한다.
+            // 판이 일찍 끝나면 (밸런스는 마지막에 맞춘다, D26) 다음 시드로 이어서 추천한 주를 40주 넘게 모은다.
             var db = ContentDb();
             Assert.IsTrue(Config().Strategies.First(s => s.Id == "TEACHER").TeacherPlan);
             var recommended = 0;
-            var state = Run(db, 11, 53, (st, result, hints) =>
+            var ends = new List<string>();
+            foreach (var seed in new[] { 11, 12, 13, 14, 15 })
             {
-                recommended++;
-                AssertRules(st, db, result, st.Calendar.Week + "주");
-
-                // 이야기가 기다리는 탐험(낮·밤까지 정해진)이 둘 수 있는 것이면 들어간다
-                var placeable = hints.FirstOrDefault(h => !h.IsEncounter && db.Actions.Any(a => a.Id == h.ActionId && !BotPlanner.Exhausted(st, db, a)));
-                if (placeable != null)
+                var state = Run(db, seed, 53, (st, result, hints) =>
                 {
-                    Assert.IsTrue(hints.Any(h => st.Plan.Slots.Any(s => s.ActionId == h.ActionId)),
-                        $"{st.Calendar.Week}주: 이야기 탐험 {placeable.ActionId}");
-                }
-            });
+                    recommended++;
+                    AssertRules(st, db, result, st.Calendar.Week + "주");
 
-            Assert.GreaterOrEqual(recommended, 20, $"선생님이 대부분의 주를 짠다 (끝: {state.Status} {state.Calendar.Week}주)");
+                    // 이야기가 기다리는 탐험(낮·밤까지 정해진)이 둘 수 있는 것이면 들어간다
+                    var placeable = hints.FirstOrDefault(h => !h.IsEncounter && db.Actions.Any(a => a.Id == h.ActionId && !BotPlanner.Exhausted(st, db, a)));
+                    if (placeable != null)
+                    {
+                        Assert.IsTrue(hints.Any(h => st.Plan.Slots.Any(s => s.ActionId == h.ActionId)),
+                            $"{st.Calendar.Week}주: 이야기 탐험 {placeable.ActionId}");
+                    }
+                });
+                ends.Add($"{seed}판 {state.Status} {state.Calendar.Week}주");
+                if (recommended >= 40)
+                {
+                    break;
+                }
+            }
+
+            Assert.GreaterOrEqual(recommended, 40, "선생님이 짠 주 (끝: " + string.Join(", ", ends) + ")");
         }
 
         [Test]
@@ -335,6 +345,11 @@ namespace ApoGirl.Tests.EditMode
             while (!runner.IsWeekComplete && !runner.IsGameOver && !surprise)
             {
                 runner.ExecuteNextSlot();
+                if (surprise)
+                {
+                    break; // 습격·이벤트가 난 칸은 예측 밖이라 비교하지 않는다
+                }
+
                 Assert.LessOrEqual(Math.Abs(forecast.Slots[slot].Fatigue - state.Player.Vitals.Fatigue), 5, $"{TeacherPins.Key(slot)} 피로");
                 Assert.LessOrEqual(state.Player.Vitals.Stress, forecast.Slots[slot].Stress, $"{TeacherPins.Key(slot)} 스트레스 (보수적)");
                 Assert.AreEqual(forecast.Slots[slot].SleepDebt, state.Player.SleepDebt, $"{TeacherPins.Key(slot)} 수면 부채");

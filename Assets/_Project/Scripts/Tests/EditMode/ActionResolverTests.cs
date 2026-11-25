@@ -34,7 +34,7 @@ namespace ApoGirl.Tests.EditMode
             Assert.AreEqual(15, _state.Player.GetStat(StatType.Intellect));
             Assert.AreEqual(12, _state.Player.GetStat(StatType.Empathy));
             Assert.AreEqual(5, _state.Player.Vitals.Fatigue);
-            Assert.AreEqual(2, _state.Player.Vitals.Stress);
+            Assert.AreEqual(6, _state.Player.Vitals.Stress); // 경중 2단계 → 밸런스 5~10에서 6
         }
 
         [Test]

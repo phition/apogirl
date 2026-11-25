@@ -637,6 +637,12 @@ namespace ApoGirl.Core.Planning
                         if (Free(slot) && Usable(id, slot) && Place(slot, id, new TeacherNote(slot, note.Key, note.Args)))
                         {
                             placed++;
+                            if (id == "ACT_TREAT_WOUND" || id == "ACT_TREAT_INFECTION")
+                            {
+                                // 치료는 다듬기에서 휴식으로 바꾸지 않는다 (스트레스가 넘쳐도 감염·부상이 먼저)
+                                _guaranteed.Add(slot);
+                            }
+
                             break;
                         }
                     }
