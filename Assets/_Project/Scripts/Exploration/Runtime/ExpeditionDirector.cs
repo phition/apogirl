@@ -3356,22 +3356,27 @@ namespace ApoGirl.Exploration.Runtime
                     : area.Width * (0.1f + 0.3f * (float)random.NextDouble());
             }
 
-            // 한 무리: 첫 사람 근처에 나머지가 선다
+            // 한 무리: 첫 사람 근처에 나머지가 선다. 겉모습은 사람마다 판 시드로 고른다 (무리면 섞인다)
+            var looks = ExplorationArt.SurvivorLooks;
             for (var i = 0; i < count; i++)
             {
                 var offset = i == 0 ? 0f : (i % 2 == 1 ? 1f : -1f) * (1.5f + 1.2f * (i / 2));
                 var unit = _threat.AddZombie(enemy, AreaId(area), x + offset);
-                var sprites = ExplorationArt.Get("survivor_idle") != null;
+                var look = looks[random.Range(0, looks.Count - 1)];
+                var idleKey = ExplorationArt.HasPixel(look + "_idle_0") ? look + "_idle_0" : "survivor_idle";
+                var sprites = ExplorationArt.Get(idleKey) != null;
                 var body = sprites
-                    ? ExplorationArt.Place(_world, "Survivor_" + unit.Id, "survivor_idle", Vector2.zero, 6, Vector2.zero, Color.white)
+                    ? ExplorationArt.Place(_world, "Survivor_" + unit.Id, idleKey, Vector2.zero, 6, Vector2.zero, Color.white)
                     : BuildingView.Rect(_world, "Survivor_" + unit.Id, Vector2.zero, Vector2.one, SurvivorTint, 6);
                 ExplorationLook.AddCaster(body, ExplorationLook.Settings.Shadows.People);
                 var marker = BuildingView.Rect(_world, "Awareness_" + unit.Id, Vector2.zero, Vector2.one, Color.yellow, 12);
                 _zombieViews.Add(new ZombieView
                 {
                     Unit = unit, Body = body.transform, BodyRenderer = body.GetComponent<SpriteRenderer>(), Marker = marker.transform,
-                    MarkerRenderer = marker.GetComponent<SpriteRenderer>(), Kind = "survivor", Sprites = sprites, Survivor = true, LastX = unit.X,
+                    MarkerRenderer = marker.GetComponent<SpriteRenderer>(), Kind = look, Sprites = sprites, Survivor = true, LastX = unit.X,
+                    Seated = ExplorationArt.HasPixel(look + "_sit_0"),
                 });
+                unit.Resting = ExplorationArt.HasPixel(look + "_sit_0");
             }
         }
 
@@ -4098,11 +4103,21 @@ namespace ApoGirl.Exploration.Runtime
                     {
                         if (walking) view.BodyRenderer.flipX = unit.X < view.LastX;
                         var running = unit.State == ZombieState.Chase;
-                        var survivorPrefix = running ? "survivor_run_" : "survivor_walk_";
+                        var look = view.Kind + "_";   // 겉모습 (survivor_ · hiker_ …)
+                        var survivorPrefix = look + (running ? "run_" : "walk_");
                         var survivorCount = ExplorationArt.FrameCount(survivorPrefix, 4);
                         var frame = (int)(view.MoveTime * (running ? 12f : 7f)) % survivorCount;
-                        var survivorKey = ReactFrame(view, "survivor_") is string survivorReact ? survivorReact : unit.State == ZombieState.Stunned ? LoopFrame("survivor_stun_", Time.time, PixelZombieIdleFps, unit.Id * 3) ?? "survivor_stun"
-                            : !walking ? LoopFrame("survivor_idle_", Time.time, PixelIdleFps, unit.Id * 5) ?? "survivor_idle"
+
+                        // 앉아 있는 그림이 있으면 처음 자리에서 아무것도 눈치채기 전까지만 앉아 있다 (한 번 일어나면 다시 앉지 않는다)
+                        if (view.Seated && (walking || !unit.Resting || unit.Awareness > ExplorationArt.SurvivorStandAwareness))
+                        {
+                            view.Seated = false;
+                            unit.Resting = false;
+                        }
+
+                        var survivorKey = ReactFrame(view, look) is string survivorReact ? survivorReact : unit.State == ZombieState.Stunned ? LoopFrame(look + "stun_", Time.time, PixelZombieIdleFps, unit.Id * 3) ?? look + "stun"
+                            : view.Seated ? LoopFrame(look + "sit_", Time.time, PixelIdleFps, unit.Id * 5)
+                            : !walking ? LoopFrame(look + "idle_", Time.time, PixelIdleFps, unit.Id * 5) ?? "survivor_idle"
                             : LoopFrame(survivorPrefix, view.MoveTime, running ? PixelRunFps : PixelWalkFps) ?? survivorPrefix + frame;
                         view.BodyRenderer.sprite = ExplorationArt.Get(survivorKey);
                         view.Body.localPosition = new Vector3(origin.x + unit.X, origin.y + 0.15f, 0f);
@@ -4193,6 +4208,9 @@ namespace ApoGirl.Exploration.Runtime
             public float LastX;
             public float MoveTime;
 
+            /// <summary>적대 생존자가 처음 자리에 앉아 있는 중 (앉은 그림이 있는 겉모습만). 일어나면 다시 앉지 않는다.</summary>
+            public bool Seated;
+
             /// <summary>기절 중 머리 위에서 도는 별 (처음 기절할 때 만든다).</summary>
             public Transform Dizzy;
             public SpriteRenderer DizzyRenderer;
@@ -4272,7 +4290,7 @@ namespace ApoGirl.Exploration.Runtime
         private bool HasDownFrames(ZombieUnit unit)
         {
             var view = _zombieViews.Find(v => v.Unit == unit);
-            return view != null && ExplorationArt.HasPixel((view.Survivor ? "survivor_" : "zombie_" + view.Kind + "_") + "down_0");
+            return view != null && ExplorationArt.HasPixel((view.Survivor ? view.Kind + "_" : "zombie_" + view.Kind + "_") + "down_0");
         }
 
         /// <summary>반응 동작 중이면 그 프레임 키 (끝났거나 그림이 없으면 null). 반응 중에는 주인공 쪽을 본다.</summary>

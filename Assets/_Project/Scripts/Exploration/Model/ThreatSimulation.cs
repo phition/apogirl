@@ -179,6 +179,9 @@ namespace ApoGirl.Exploration.Model
         /// <summary>추격하다 놓쳤다: 놓친 곳 근처를 서성인 뒤 물러난다 (낮에는 조금 물러나 다시 잠들고, 밤에는 멀리 물러나 배회).</summary>
         public bool LostChase;
 
+        /// <summary>처음 자리에 앉아 쉬는 중 (앉은 그림이 있는 생존자): 순찰하지 않고 제자리에 있다. 대기 말고 다른 상태가 되면 풀리고 다시 앉지 않는다.</summary>
+        public bool Resting;
+
         /// <summary>무기 타격 누적 (EnemyDef.Toughness에 닿으면 쓰러짐).</summary>
         public int Wounds;
 
@@ -728,9 +731,19 @@ namespace ApoGirl.Exploration.Model
                 return;
             }
 
+            if (zombie.State != ZombieState.Idle)
+            {
+                zombie.Resting = false;   // 무언가에 반응해 일어났다
+            }
+
             switch (zombie.State)
             {
                 case ZombieState.Idle:
+                    if (zombie.Resting)
+                    {
+                        break;   // 앉아 쉬는 사람은 제자리
+                    }
+
                     zombie.Timer -= dt;
                     if (zombie.Timer <= 0f || Math.Abs(zombie.X - zombie.TargetX) <= ArriveDistance)
                     {

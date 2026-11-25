@@ -82,6 +82,38 @@ namespace ApoGirl.Exploration.Runtime
             public EncounterRule[] Encounters = Array.Empty<EncounterRule>();
             public DecorRule[] Decor = Array.Empty<DecorRule>();
             public CombatRule Combat = new CombatRule();
+
+            /// <summary>적대 생존자 겉모습 (그림 접두어 {이름}_idle_·walk_·run_·hit_·pushed_·stun_, 있으면 sit_). 사람마다 판 시드로 하나를 고른다.</summary>
+            public string[] SurvivorLooks = Array.Empty<string>();
+
+            /// <summary>앉아 쉬던 생존자가 일어나는 알아챔 정도 (0~1).</summary>
+            public float SurvivorStandAwareness = 0.15f;
+        }
+
+        /// <summary>앉아 쉬던 생존자가 일어나는 알아챔 정도 (exploration_art.json SurvivorStandAwareness).</summary>
+        public static float SurvivorStandAwareness => Map.SurvivorStandAwareness;
+
+        /// <summary>적대 생존자 겉모습 후보. 표에 없거나 그림이 없는 것은 빼고, 다 빠지면 "survivor".</summary>
+        public static IReadOnlyList<string> SurvivorLooks
+        {
+            get
+            {
+                var looks = new List<string>();
+                foreach (var look in Map.SurvivorLooks ?? Array.Empty<string>())
+                {
+                    if (!string.IsNullOrEmpty(look) && HasPixel(look + "_walk_0"))
+                    {
+                        looks.Add(look);
+                    }
+                }
+
+                if (looks.Count == 0)
+                {
+                    looks.Add("survivor");
+                }
+
+                return looks;
+            }
         }
 
         [Serializable]
