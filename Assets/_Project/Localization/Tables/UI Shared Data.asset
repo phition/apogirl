@@ -7871,6 +7871,18 @@ MonoBehaviour:
     m_Key: advice.ADV_ALARM
     m_Metadata:
       m_Items: []
+  - m_Id: 2250886620659712
+    m_Key: people.factions.open
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2250886687768576
+    m_Key: people.factions.close
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2250886687768577
+    m_Key: people.factions.hint
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
