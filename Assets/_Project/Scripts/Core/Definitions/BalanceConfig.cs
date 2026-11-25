@@ -976,6 +976,9 @@ namespace ApoGirl.Core.Definitions
         /// <summary>주 끝 식량·물이 다음 주 소비보다 적으면 부족 탐험을 두 번 넣는다.</summary>
         public bool TeacherTwoWhenUnderAWeek = true;
 
+        /// <summary>요리 수업 (성공하면 식량·물을 쓴다): 식량이 여유분(TeacherSupplyBufferWeeks)보다 적은 주에는 추천하지 않는다.</summary>
+        public string TeacherCookingActionId = "ACT_EDU_COOKING";
+
         /// <summary>다듬기: 흐름 예측에서 이 값 이상이 되는 칸이 있으면 앞의 무거운 칸을 쉬게 바꾼다 (최대 TeacherTidyPasses번).</summary>
         public int TeacherFatigueLimit = 80;
         public int TeacherStressLimit = 70;

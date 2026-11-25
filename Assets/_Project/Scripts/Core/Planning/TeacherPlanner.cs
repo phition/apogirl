@@ -242,7 +242,7 @@ namespace ApoGirl.Core.Planning
                 PlaceRests();
                 PlaceDaily();
                 PlaceDevelop(food, water);
-                PlaceClasses();
+                PlaceClasses(food);
                 Tidy();
                 FillRest();
                 Result.Notes.Sort((a, b) => a.Slot.CompareTo(b.Slot));
@@ -307,7 +307,10 @@ namespace ApoGirl.Core.Planning
                     var critical = forecast.ShortDay > 0 && forecast.ShortDay <= _balance.TeacherCriticalShortDay;
                     var underAWeek = _balance.TeacherTwoWhenUnderAWeek && forecast.End < forecast.NextWeekNeed;
                     var wanted = critical || underAWeek ? 2 : 1;
-                    var have = PlannedExpeditions().Count(i => Yield(_db.GetAction(_slots[i].ActionId).LocationId, resource) >= bestYield * 0.5f);
+                    // 급할 때는 이야기·기본 탐험을 세지 않고 부족 탐험만 센다 (이야기 지역은 수확이 적을 수 있다)
+                    var have = PlannedExpeditions().Count(i => critical || underAWeek
+                        ? IsShortageNote(Result.Reasons[i])
+                        : Yield(_db.GetAction(_slots[i].ActionId).LocationId, resource) >= bestYield * 0.5f);
                     var key = forecast.ShortDay > 0 ? "teacher.why.short" : "teacher.why.tight";
                     var places = Locations().Where(l => Yield(l, resource) >= bestYield * 0.5f)
                         .OrderByDescending(l => Yield(l, resource)).ThenBy(l => l, StringComparer.Ordinal).ToList();
@@ -642,8 +645,10 @@ namespace ApoGirl.Core.Planning
 
             // ── ⑧ 수업 ──
 
-            private void PlaceClasses()
+            private void PlaceClasses(SupplyForecast food)
             {
+                // 요리 수업은 성공하면 식량·물을 쓴다 (CookingRules): 식량이 빠듯한 주에는 넣지 않는다
+                var skipCooking = food != null && food.End < food.NextWeekNeed * Math.Max(1f, _balance.TeacherSupplyBufferWeeks);
                 var lowest = Enumerable.Range(0, WeekForecast.StatCount).Select(s => (StatType)s)
                     .OrderBy(s => _state.Player.GetStat(s)).First();
                 var teacherHere = Available(_state, _balance) && !TeacherIll(_state, _balance);
@@ -656,7 +661,8 @@ namespace ApoGirl.Core.Planning
                     }
 
                     var best = classes
-                        .Where(a => Usable(a.Id, slot) && CountWhere(i => _slots[i].ActionId == a.Id) < _balance.TeacherMaxSameClass)
+                        .Where(a => Usable(a.Id, slot) && CountWhere(i => _slots[i].ActionId == a.Id) < _balance.TeacherMaxSameClass
+                                    && !(skipCooking && a.Id == _balance.TeacherCookingActionId))
                         .Select(a => (Action: a, Score: ClassScore(a, lowest, teacherHere)))
                         .OrderByDescending(x => x.Score)
                         .ThenBy(x => x.Action.Id, StringComparer.Ordinal)
@@ -871,6 +877,9 @@ namespace ApoGirl.Core.Planning
                 var yield = model.Day.Resources.Count > 0 ? model.Day : model.Night;
                 return yield.Resources.Where(r => r.Resource == resource).Sum(r => (r.Min + r.Max) / 2f) * Remaining(locationId, model);
             }
+
+            private static bool IsShortageNote(TeacherNote note) =>
+                note != null && (note.Key == "teacher.why.short" || note.Key == "teacher.why.tight");
 
             /// <summary>그 탐험(낮 또는 밤)의 자원 기대량.</summary>
             private float RunYield(ActionDef run, ResourceType resource)

@@ -1313,6 +1313,13 @@
           "When": "Now"
         },
         {
+          "Field": "TeacherSupplyBufferWeeks",
+          "Group": "자원",
+          "Name": "식량·물 여유 목표",
+          "Unit": "주치",
+          "When": "Now"
+        },
+        {
           "Field": "TeacherPurifyBatch",
           "Group": "자원",
           "Name": "빗물 이만큼마다 정수 한 번 더",
