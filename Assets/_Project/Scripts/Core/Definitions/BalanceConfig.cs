@@ -441,6 +441,9 @@ namespace ApoGirl.Core.Definitions
         /// <summary>예고 깃발 접두어 (+NPC ID). 다음 주 이벤트 EVT_CRISIS_LEAVE_{키}가 이 깃발로 열린다.</summary>
         public string CrisisLeaveFlagPrefix = "LEAVE_WARN_";
 
+        /// <summary>예고가 위기 주(식량·식수 바닥, 습격 돌파)에 났으면 켜는 깃발 접두어 (+NPC ID). 떠나는 장면 대사가 위기 때 말·평소 말로 갈린다.</summary>
+        public string CrisisLeaveHardTimesFlagPrefix = "LEAVE_CRISIS_";
+
         /// <summary>습격에 뚫린 밤, 호감이 이 값 이상인 동료가 주인공 앞을 막아설 수 있다.</summary>
         public int RaidCoverMinAffinity = 60;
         public float RaidCoverChance = 0.5f;

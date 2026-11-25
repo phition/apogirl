@@ -214,6 +214,7 @@
         "CrisisLeaveBelowAffinity",
         "CrisisLeavePerWeek",
         "CrisisLeaveFlagPrefix",
+        "CrisisLeaveHardTimesFlagPrefix",
         "RaidCoverMinAffinity",
         "RaidCoverChance",
         "RaidCoverHpScale",

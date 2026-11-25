@@ -69,7 +69,7 @@ namespace ApoGirl.Tests.EditMode
 
             state.Npcs[CatRules.CatId].Affinity = -50;
             state.Base.SetResource(ResourceType.Food, 0);
-            CollectionAssert.IsEmpty(CrisisRules.WarnWeekly(state, balance), "고양이는 위기 이탈 후보가 아니다");
+            CollectionAssert.IsEmpty(CrisisRules.WarnWeekly(state, balance, true), "고양이는 위기 이탈 후보가 아니다");
 
             var db = TestContent.CreateDatabase();
             CollectionAssert.IsEmpty(RoleRules.Choices(state, db, CatRules.CatId));

@@ -18,8 +18,18 @@ namespace ApoGirl.Core.Rules
     {
         public static string WarnFlag(BalanceConfig balance, string npcId) => (balance.CrisisLeaveFlagPrefix ?? "LEAVE_WARN_") + npcId;
 
-        /// <summary>떠날 후보(호감이 기준 미만, 낮은 사람부터 한 주에 CrisisLeavePerWeek명)에 예고 깃발을 켜고 그 ID들을 돌려준다.</summary>
-        public static List<string> WarnWeekly(GameState state, BalanceConfig balance)
+        /// <summary>예고가 위기 주에 났는지 (대본 Events/Crisis.yarn이 이 깃발로 위기 때 말과 평소 말을 가른다).</summary>
+        public static string HardTimesFlag(BalanceConfig balance, string npcId) => (balance.CrisisLeaveHardTimesFlagPrefix ?? "LEAVE_CRISIS_") + npcId;
+
+        /// <summary>결산 때 식량이나 식수가 바닥났거나, 그 주 습격에 뚫렸으면 위기 주.</summary>
+        public static bool IsCrisisWeek(GameState state, bool raidBreached) =>
+            raidBreached || state.Base.GetResource(ResourceType.Food) <= 0 || state.Base.GetResource(ResourceType.Water) <= 0;
+
+        /// <summary>
+        /// 떠날 후보(호감이 기준 미만, 낮은 사람부터 한 주에 CrisisLeavePerWeek명)에 예고 깃발을 켜고 그 ID들을 돌려준다.
+        /// 위기 주였으면 HardTimesFlag도 켜고, 아니면 지운다 (떠나는 장면의 말이 갈린다).
+        /// </summary>
+        public static List<string> WarnWeekly(GameState state, BalanceConfig balance, bool raidBreached)
         {
             var warned = new List<string>();
             if (balance.CrisisLeavePerWeek <= 0)
@@ -35,9 +45,19 @@ namespace ApoGirl.Core.Rules
                 .Where(n => !EchoRules.HopeSparesLeave(state, balance, n.Key)) // 프롤로그의 메아리 G: 희망이 높으면 확률로 비켜 간다
                 .Take(balance.CrisisLeavePerWeek)
                 .Select(n => n.Key);
+            var crisis = IsCrisisWeek(state, raidBreached);
             foreach (var id in candidates)
             {
                 state.Flags.Add(WarnFlag(balance, id));
+                if (crisis)
+                {
+                    state.Flags.Add(HardTimesFlag(balance, id));
+                }
+                else
+                {
+                    state.Flags.Remove(HardTimesFlag(balance, id));
+                }
+
                 warned.Add(id);
             }
 
