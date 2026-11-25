@@ -1122,6 +1122,12 @@ namespace ApoGirl.Core.Definitions
         public float HurtInvulnSeconds = 2f;
         public float HurtBlinkPerSecond = 8f;
 
+        /// <summary>
+        /// 적대적 생존자가 좀비에게 물리면 그 자리에 멈춰(기절 별) 깜빡이는 시간(초). 그동안 좀비는 그 사람을 물지 않고 다른 사람(주인공·다른 생존자)을 노린다.
+        /// 생존자는 주인공과 사이에 좀비가 있으면 걸어서(좀비를 깨우지 않는다) 다가오고, 없으면 달려온다 (ThreatSimulation).
+        /// </summary>
+        public float SurvivorBittenSeconds = 3f;
+
         /// <summary>쓰러졌을 때 허브로 돌아가는 HP (중상, 사망 아님).</summary>
         public int DownRemainingHp = 15;
 

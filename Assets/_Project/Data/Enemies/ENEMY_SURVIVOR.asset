@@ -18,7 +18,7 @@ MonoBehaviour:
     Kind: 1
     WalkSpeed: 1.4
     RunSpeed: 3.7
-    SightRange: 12
+    SightRange: 8
     HearingMultiplier: 1.8
     AwarenessRate: 2.2
     Damage: 0

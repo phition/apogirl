@@ -3490,6 +3490,16 @@ namespace ApoGirl.Exploration.Runtime
                 }
             }
 
+            // 좀비에게 물린 생존자: 움찔(맞음 동작) + 무는 소리 (같은 공간에서만 들린다)
+            foreach (var bitten in events.BittenSurvivors)
+            {
+                React(bitten, "hit_");
+                if (bitten.AreaId == AreaId(CurrentArea))
+                {
+                    Presentation.Audio.Sound.PlayNear("Sfx/sfx_z_grab", bitten.X - X, 12f, Presentation.Audio.SoundCategory.Sfx, 0.7f);
+                }
+            }
+
             _log.CrowdsWoken += events.WokenCrowds.Count;
             if (events.Spotted)
             {
@@ -4102,7 +4112,7 @@ namespace ApoGirl.Exploration.Runtime
                     if (view.Sprites)
                     {
                         if (walking) view.BodyRenderer.flipX = unit.X < view.LastX;
-                        var running = unit.State == ZombieState.Chase;
+                        var running = unit.State == ZombieState.Chase && !unit.Sneaking;   // 사이에 좀비가 있으면 쫓아도 걷는다
                         var look = view.Kind + "_";   // 겉모습 (survivor_ · hiker_ …)
                         var survivorPrefix = look + (running ? "run_" : "walk_");
                         var survivorCount = ExplorationArt.FrameCount(survivorPrefix, 4);
@@ -4131,6 +4141,12 @@ namespace ApoGirl.Exploration.Runtime
 
                     view.LastX = unit.X;
                     view.BodyRenderer.color = view.Sprites ? Color.white : unit.State == ZombieState.Stunned ? new Color(0.45f, 0.45f, 0.6f) : SurvivorTint;
+                    if (unit.BiteGuard > 0f && Mathf.Repeat(Time.time * Mathf.Max(0.1f, _balance.HurtBlinkPerSecond), 1f) >= 0.5f)
+                    {
+                        // 좀비에게 물린 뒤: 그 자리에서 깜빡인다 (머리 위 별은 기절 상태가 그린다)
+                        var c = view.BodyRenderer.color;
+                        view.BodyRenderer.color = new Color(c.r, c.g, c.b, c.a * 0.25f);
+                    }
                     goto Marker;
                 }
 

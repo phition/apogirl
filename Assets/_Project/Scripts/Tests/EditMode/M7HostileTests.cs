@@ -164,6 +164,83 @@ namespace ApoGirl.Tests.EditMode
         }
 
         [Test]
+        public void Survivor_WalksQuietlyWhenZombieBetween_RunsOtherwise()
+        {
+            float Advance(bool zombieBetween)
+            {
+                var (sim, _) = Sim();
+                if (zombieBetween)
+                {
+                    sim.AddZombie(new EnemyDef { Id = "Z", SightRange = 7f }, 0, 14f, sim.AddCrowd(0, 14f));
+                }
+
+                var unit = sim.AddZombie(Survivor(), 0, 10f);
+                unit.Facing = 1;
+                unit.State = ZombieState.Chase;
+                unit.Awareness = 1f;
+                var player = new PlayerSnapshot { AreaId = 0, X = 20f };
+                for (var i = 0; i < 20; i++) sim.Step(0.05f, player, ActivityMods.Neutral);
+                if (zombieBetween)
+                {
+                    Assert.IsTrue(unit.Sneaking, "사이에 좀비가 있으면 걷는다");
+                    Assert.IsFalse(sim.Crowds[0].Awake, "걸어오는 사람은 좀비를 깨우지 않는다");
+                }
+                else
+                {
+                    Assert.IsFalse(unit.Sneaking);
+                }
+
+                return unit.X - 10f;
+            }
+
+            Assert.AreEqual(1.4f, Advance(true), 0.1f, "걷는 빠르기");
+            Assert.AreEqual(3.7f, Advance(false), 0.1f, "달리는 빠르기");
+        }
+
+        [Test]
+        public void Zombie_BitesNearerSurvivor_WhoFreezes_ThenGoesForPlayer()
+        {
+            var (sim, balance) = Sim();
+            var zombie = sim.AddZombie(new EnemyDef { Id = "Z", WalkSpeed = 1f, RunSpeed = 3f, SightRange = 7f, AwarenessRate = 1.5f, Damage = 10, HitCooldown = 1f, AttackRange = 0.7f }, 0, 10f);
+            zombie.Facing = 1;
+            zombie.State = ZombieState.Chase;
+            zombie.Awareness = 1f;
+
+            // 생존자는 좀비 쪽을 보고 앉아 있어 등 뒤의 주인공을 못 본다
+            var survivor = sim.AddZombie(Survivor(), 0, 12f);
+            survivor.Facing = -1;
+            survivor.Resting = true;
+            var player = new PlayerSnapshot { AreaId = 0, X = 15f };
+
+            var bitten = false;
+            var damage = 0;
+            for (var i = 0; i < 100 && !bitten; i++)
+            {
+                var events = sim.Step(0.02f, player, ActivityMods.Neutral);
+                bitten = events.BittenSurvivors.Contains(survivor);
+                damage += events.Damage;
+            }
+
+            Assert.IsTrue(bitten, "더 가까운 생존자를 문다");
+            Assert.AreEqual(0, damage, "주인공은 아직 안 물렸다");
+            Assert.AreEqual(ZombieState.Stunned, survivor.State, "그 자리에 멈춰 기절(별)");
+            Assert.AreEqual(balance.SurvivorBittenSeconds, survivor.BiteGuard, 0.05f);
+
+            // 생존자가 무적인 동안 좀비는 주인공에게 간다
+            var survivorX = survivor.X;
+            var playerBitten = false;
+            for (var t = 0f; t < balance.SurvivorBittenSeconds - 0.1f && !playerBitten; t += 0.02f)
+            {
+                var events = sim.Step(0.02f, player, ActivityMods.Neutral);
+                playerBitten = events.Damage > 0;
+                Assert.IsFalse(events.BittenSurvivors.Contains(survivor), "무적 중엔 다시 물지 않는다");
+            }
+
+            Assert.IsTrue(playerBitten, "다른 사람(주인공)을 노린다");
+            Assert.AreEqual(survivorX, survivor.X, 1e-4f, "물린 생존자는 제자리");
+        }
+
+        [Test]
         public void Survivor_IsNotDownedByWeapons_AndIgnoresDaytimeSluggishness()
         {
             var (sim, _) = Sim();

@@ -138,6 +138,6 @@
     { "Id": "ENEMY_WANDERER", "WalkSpeed": 1.0, "RunSpeed": 3.2, "SightRange": 7.0, "HearingMultiplier": 1.0, "AwarenessRate": 1.2, "Damage": 12, "HitCooldown": 1.2, "AttackRange": 0.7, "Toughness": 3 },
     { "Id": "ENEMY_LISTENER", "WalkSpeed": 0.8, "RunSpeed": 3.0, "SightRange": 4.0, "HearingMultiplier": 2.0, "AwarenessRate": 1.0, "Damage": 10, "HitCooldown": 1.2, "AttackRange": 0.7, "Toughness": 3 },
     { "Id": "ENEMY_WATCHER", "WalkSpeed": 0.9, "RunSpeed": 3.4, "SightRange": 10.0, "HearingMultiplier": 0.6, "AwarenessRate": 1.7, "Damage": 12, "HitCooldown": 1.1, "AttackRange": 0.7, "Toughness": 4 },
-    { "Id": "ENEMY_SURVIVOR", "Kind": "Survivor", "WalkSpeed": 1.4, "RunSpeed": 3.7, "SightRange": 12.0, "HearingMultiplier": 1.8, "AwarenessRate": 2.2, "Damage": 0, "HitCooldown": 1.0, "AttackRange": 0.8, "Toughness": 99, "SeesHiddenWithin": 2.5, "PatrolRange": 14.0, "CanBeDowned": false }
+    { "Id": "ENEMY_SURVIVOR", "Kind": "Survivor", "WalkSpeed": 1.4, "RunSpeed": 3.7, "SightRange": 8.0, "HearingMultiplier": 1.8, "AwarenessRate": 2.2, "Damage": 0, "HitCooldown": 1.0, "AttackRange": 0.8, "Toughness": 99, "SeesHiddenWithin": 2.5, "PatrolRange": 14.0, "CanBeDowned": false }
   ]
 }

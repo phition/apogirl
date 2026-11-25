@@ -3,7 +3,7 @@
 〈마지막 학기 (가제)〉 — 마일스톤별 진행 기록, 남은 작업, 하면 좋을 작업, 하지 말아야 할 작업.
 
 - 기준: 마스터 프롬프트 12장 마일스톤(원본 `C:\Users\phiti\Desktop\MASTER_PROMPT.md`), 결정 기록 부록 C(D1~D26).
-- 작성: 2026-11-25. 커밋 724개(2026-11-18 ~ 2026-11-25), 마지막 커밋 `23932353` (그 뒤 이번 커밋).
+- 작성: 2026-11-25. 커밋 724개(2026-11-18 ~ 2026-11-25), 마지막 커밋 `2c10f86f` (그 뒤 이번 커밋).
 - EditMode 테스트: 444개 모두 통과 (2026-11-25, 힉스필드 15차 연결 뒤).
 - 자세한 내용은 각 계획 문서에 있다. 이 문서는 한눈에 보는 요약이다.
 - **새 세션은 이 문서부터 읽는다.** 작업이 하나 끝날 때마다 고친다.
@@ -366,4 +366,5 @@ M6·M7과 함께 기획 확장(동료·CD·깊은 곳·고양이·동아리·방
 - 2026-11-25 · 좀비에게 물릴 때(사용자 요청): 손이 닿는 거리(`AttackRange`)에서 문 좀비는 주인공의 다침 동작 동안(`BalanceConfig.HurtReactSeconds` 0.4초) 그 자리에 멈췄다가 다시 다가온다(`ZombieUnit.HoldTimer`, 기절이 먼저). 다침 동작이 끝난 뒤 3초(`HurtInvulnSeconds`)는 무적 — 주인공·가방이 깜빡이고(`HurtBlinkPerSecond` 8) 아무도 물지 않아 다침 동작·소리·문구도 없다(`PlayerSnapshot.Invulnerable`, 한 틱에 한 마리만 문다 `ThreatEvents.HitBy`). 테스트 `Bite_HoldsDuringHurt_ThenClosesIn_AndInvulnerableIsNotBitten` · bbac7ca8
 - 2026-11-25 · 적대 생존자 겉모습 둘째 '등산복 남자'(사용자 요청): 빨강·짙은 회색 배색 등산 재킷·모자·크로스백·등산화, 검은 몽둥이를 걸음마다 까딱 — `ExplorationPixel/hiker_{walk,run,idle,hit,pushed,stun}_n`(학생 생존자와 같은 프레임 수 16·16·16·12·8·16)과 앉아 담배 피는 대기 `hiker_sit_0..31`(손을 입으로·불똥이 밝아짐·연기). 생성 스크립트 `code_temp/apogirl/aseprite_work/hiker_gen.py`(걷기·자세 함수)·`hiker_sit_gen.py`·`hiker_anims.py`(게임 키 이름으로 전부), Aseprite 원본 `hiker_walk.aseprite`·`hiker_idle_smoke.aseprite`. 생존자마다 판 시드로 겉모습을 고른다(`exploration_art.json` `SurvivorLooks`, 무리면 섞임, `ZombieView.Kind` = 겉모습 이름). 앉은 그림이 있는 겉모습은 처음 자리에서 `ZombieUnit.Resting`(순찰 안 함)으로 앉아 있다가 대기 말고 다른 상태가 되거나 알아챔이 `SurvivorStandAwareness` 0.15를 넘으면 일어나 다시 앉지 않는다. 기절 별 자리 `DizzyOffsets` hiker 1.5.
 - 2026-11-25 · 적대 생존자 겉모습 셋째 '트레이닝복 여자'(사용자 요청): 주인공과 비슷한 키(~61px), 긴 머리·흰 마스크(아래 한 줄만 그늘)·남색 트레이닝 상의(흰 두 줄)·무릎 기장 주름 치마·분홍 백팩·흰 운동화, 나무 막대 — `ExplorationPixel/woman_{walk,run,idle,hit,pushed,stun}_n`(16·16·16·12·8·16)과 처음 자리에서 서서 폰을 보는 `woman_phone_0..31`(대기 `idle_`도 같은 폰 보기, 막대는 뒷손). 쉬는 그림을 앉기·폰 둘 다 받도록 `ZombieView.Seated` → `RestPose`(`sit_`·`phone_`, `RestPoseOf`). 생성 스크립트 `code_temp/apogirl/aseprite_work/woman_gen.py`·`woman_anims.py`. `SurvivorLooks`에 `woman`, 기절 별 자리 1.52.
-- 2026-11-25 · 물린 뒤 무적 3초 → 2초(사용자 요청, `BalanceConfig.HurtInvulnSeconds`) · 이 커밋
+- 2026-11-25 · 물린 뒤 무적 3초 → 2초(사용자 요청, `BalanceConfig.HurtInvulnSeconds`) · f5c7c717
+- 2026-11-25 · 적대적 생존자와 좀비(사용자 요청): 생존자 시야 12 → 8(`ENEMY_SURVIVOR`). 추격하는 생존자는 주인공과 사이에 좀비(잠든 것 포함)가 있으면 걸어서(`ZombieUnit.Sneaking`, 걷는 그림), 없으면 달려온다 — 생존자는 걸어도 달려도 좀비를 깨우지 않는다(원래대로). 좀비는 보이는 사람(주인공·깨어 있는 생존자) 가운데 물 수 있는 가장 가까운 사람을 노린다(`ThreatSimulation.PickPrey`): 생존자가 더 가까우면 생존자를 물고, 물린 생존자는 3초(`BalanceConfig.SurvivorBittenSeconds`) 그 자리에서 기절(머리 위 별)·깜빡이며(`ZombieUnit.BiteGuard`) 맞음 동작·무는 소리, 그동안 좀비는 잠깐 멈췄다가 다른 사람(주인공·다른 생존자)에게 간다. 모두 무적이면 가장 가까운 사람 곁으로. 생존자를 쫓는 좀비는 "발각" 문구를 띄우지 않는다. 생존자는 다치거나 쓰러지지 않는다. 테스트 2개(`M7HostileTests`) · 이 커밋

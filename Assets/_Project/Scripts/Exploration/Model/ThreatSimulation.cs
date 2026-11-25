@@ -182,6 +182,12 @@ namespace ApoGirl.Exploration.Model
         /// <summary>처음 자리에 앉아 쉬는 중 (앉은 그림이 있는 생존자): 순찰하지 않고 제자리에 있다. 대기 말고 다른 상태가 되면 풀리고 다시 앉지 않는다.</summary>
         public bool Resting;
 
+        /// <summary>생존자: 주인공과 사이에 좀비가 있어 걸어서 다가가는 중 (추격이어도 걷는 그림).</summary>
+        public bool Sneaking;
+
+        /// <summary>생존자: 좀비에게 물린 뒤 남은 시간 — 그 자리에 멈춰(기절) 깜빡이고, 그동안 좀비는 물지 않고 다른 사람을 노린다.</summary>
+        public float BiteGuard;
+
         /// <summary>무기 타격 누적 (EnemyDef.Toughness에 닿으면 쓰러짐).</summary>
         public int Wounds;
 
@@ -233,6 +239,9 @@ namespace ApoGirl.Exploration.Model
 
         /// <summary>이번 틱에 주인공을 문 좀비 (한 틱에 한 마리만 문다).</summary>
         public ZombieUnit HitBy;
+
+        /// <summary>이번 틱에 좀비에게 물린 생존자 (반응 동작·소리는 호출 측).</summary>
+        public readonly List<ZombieUnit> BittenSurvivors = new List<ZombieUnit>();
 
         public readonly List<CrowdState> WokenCrowds = new List<CrowdState>();
     }
@@ -681,6 +690,11 @@ namespace ApoGirl.Exploration.Model
                 zombie.HitTimer -= dt;
             }
 
+            if (zombie.BiteGuard > 0f)
+            {
+                zombie.BiteGuard -= dt;
+            }
+
             // 물고 난 뒤: 주인공이 움찔하는 동안 그 자리에 멈춘다 (맞아 기절하면 기절이 먼저)
             if (zombie.HoldTimer > 0f)
             {
@@ -705,10 +719,14 @@ namespace ApoGirl.Exploration.Model
                 return;
             }
 
-            var sees = CanSee(zombie, player, mods);
+            // 좀비는 보이는 사람 중 물 수 있는 가장 가까운 사람을 노린다 (생존자도 사람이다). 사람은 주인공만 본다.
+            ZombieUnit prey = null;
+            var target = player;
+            var sees = zombie.IsSurvivor ? CanSee(zombie, player, mods) : PickPrey(zombie, player, mods, out prey, out target);
+            zombie.Sneaking = false;
             if (sees)
             {
-                var distance = Math.Abs(player.X - zombie.X);
+                var distance = Math.Abs(target.X - zombie.X);
                 var range = Math.Max(0.1f, zombie.Def.SightRange * mods.Sight);
                 var closeness = 1f + Math.Max(0f, 1f - distance / range);
                 zombie.Awareness = Math.Min(1f, zombie.Awareness + zombie.Def.AwarenessRate * closeness * dt);
@@ -723,7 +741,7 @@ namespace ApoGirl.Exploration.Model
                 zombie.LostChase = false;
                 zombie.DecoyId = -1;
                 zombie.State = ZombieState.Chase;
-                events.Spotted = true;
+                events.Spotted |= prey == null;
             }
 
             if (zombie.OnDecoy && TickOnDecoy(zombie, mods, dt))
@@ -766,7 +784,7 @@ namespace ApoGirl.Exploration.Model
                     break;
 
                 case ZombieState.Chase:
-                    TickChase(zombie, dt, player, mods, events, sees);
+                    TickChase(zombie, dt, player, mods, events, sees, prey, target);
                     break;
 
                 case ZombieState.Search:
@@ -824,15 +842,36 @@ namespace ApoGirl.Exploration.Model
             }
         }
 
-        private void TickChase(ZombieUnit zombie, float dt, PlayerSnapshot player, ActivityMods mods, ThreatEvents events, bool sees)
+        private void TickChase(ZombieUnit zombie, float dt, PlayerSnapshot player, ActivityMods mods, ThreatEvents events, bool sees, ZombieUnit prey, PlayerSnapshot target)
         {
             if (sees)
             {
-                zombie.TargetArea = player.AreaId;
-                zombie.TargetX = player.X;
+                zombie.TargetArea = target.AreaId;
+                zombie.TargetX = target.X;
             }
 
-            var arrived = MoveToward(zombie, zombie.TargetX, zombie.Def.RunSpeed * mods.Speed, dt);
+            // 생존자: 주인공과 사이에 좀비가 있으면 깨우지 않게 걸어서, 없으면 달려서
+            zombie.Sneaking = zombie.IsSurvivor && ZombieBetween(zombie.AreaId, zombie.X, zombie.TargetX);
+            var speed = zombie.Sneaking ? zombie.Def.WalkSpeed : zombie.Def.RunSpeed;
+            var arrived = MoveToward(zombie, zombie.TargetX, speed * mods.Speed, dt);
+
+            // 좀비가 생존자를 문다: 생존자는 그 자리에 멈춰 기절(별)·깜빡이고, 좀비는 잠깐 멈췄다가 다른 사람을 노린다
+            if (prey != null)
+            {
+                if (sees && Math.Abs(prey.X - zombie.X) <= zombie.Def.AttackRange && zombie.HitTimer <= 0f && prey.BiteGuard <= 0f)
+                {
+                    prey.State = ZombieState.Stunned;
+                    prey.StunTimer = _balance.SurvivorBittenSeconds;
+                    prey.BiteGuard = _balance.SurvivorBittenSeconds;
+                    prey.Resting = false;
+                    prey.Sneaking = false;
+                    events.BittenSurvivors.Add(prey);
+                    zombie.HitTimer = zombie.Def.HitCooldown;
+                    zombie.HoldTimer = _balance.HurtReactSeconds;
+                }
+
+                return;
+            }
 
             if (sees && zombie.IsSurvivor && Math.Abs(player.X - zombie.X) <= zombie.Def.AttackRange)
             {
@@ -873,6 +912,70 @@ namespace ApoGirl.Exploration.Model
             zombie.Timer = zombie.IsSurvivor ? _balance.SearchDuration : _balance.LostLingerSeconds;
             zombie.Awareness = 0.5f;
             zombie.LostChase = true;
+        }
+
+        // ── 사람 고르기 (좀비 ↔ 주인공·생존자) ──
+
+        /// <summary>
+        /// 좀비가 노릴 사람: 보이는 사람(주인공·깨어 있는 생존자) 가운데 물 수 있는(무적이 아닌) 가장 가까운 사람,
+        /// 모두 무적이면 보이는 가장 가까운 사람. 보이는 사람이 없으면 false. prey = 생존자(주인공이면 null), target = 그 사람의 자리.
+        /// </summary>
+        private bool PickPrey(ZombieUnit zombie, PlayerSnapshot player, ActivityMods mods, out ZombieUnit prey, out PlayerSnapshot target)
+        {
+            prey = null;
+            target = player;
+            var found = false;
+            var bestValid = false;
+            var bestDistance = float.MaxValue;
+            if (CanSee(zombie, player, mods))
+            {
+                found = true;
+                bestValid = !player.Invulnerable;
+                bestDistance = Math.Abs(player.X - zombie.X);
+            }
+
+            foreach (var other in _zombies)
+            {
+                if (!other.IsSurvivor || !other.IsAwake || other.AreaId != zombie.AreaId)
+                {
+                    continue;
+                }
+
+                var snapshot = new PlayerSnapshot { AreaId = other.AreaId, X = other.X };
+                if (!CanSee(zombie, snapshot, mods))
+                {
+                    continue;
+                }
+
+                var valid = other.BiteGuard <= 0f;
+                var distance = Math.Abs(other.X - zombie.X);
+                if (!found || (valid && !bestValid) || (valid == bestValid && distance < bestDistance))
+                {
+                    found = true;
+                    bestValid = valid;
+                    bestDistance = distance;
+                    prey = other;
+                    target = snapshot;
+                }
+            }
+
+            return found;
+        }
+
+        /// <summary>그 공간에서 두 자리 사이에 좀비(잠든 것 포함, 쓰러진 것 제외)가 있는가.</summary>
+        private bool ZombieBetween(int areaId, float fromX, float toX)
+        {
+            var low = Math.Min(fromX, toX);
+            var high = Math.Max(fromX, toX);
+            foreach (var zombie in _zombies)
+            {
+                if (!zombie.IsSurvivor && !zombie.IsDown && zombie.AreaId == areaId && zombie.X > low && zombie.X < high)
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         // ── 허수아비 (제작 P6) ──
