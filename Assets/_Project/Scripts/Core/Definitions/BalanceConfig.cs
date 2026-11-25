@@ -413,10 +413,10 @@ namespace ApoGirl.Core.Definitions
 
         /// <summary>
         /// 동료 특기 (기획 C.2 ②): 마지막 개인 장면(호감 80)을 보면 깃발 SpecialFlagPrefix+NPC가 켜진다.
-        /// 합류해 있고 호감이 SpecialMinAffinity 이상일 때만 효과 (떨어지면 잠시 꺼짐).
+        /// 합류해 있고 호감이 SpecialMinAffinity 이상일 때만 효과 (떨어지면 잠시 꺼짐). 얻는 장면은 호감 80, 켜져 있는 기준은 60 (사용자 결정 2026-11-25).
         /// </summary>
         public string SpecialFlagPrefix = "SPECIAL_";
-        public int SpecialMinAffinity = 80;
+        public int SpecialMinAffinity = 60;
         public CompanionSpecialDef[] CompanionSpecials =
         {
             new CompanionSpecialDef { NpcId = "NPC_NURSE", Kind = SpecialKind.MedicineCostDown, Value = 1 },

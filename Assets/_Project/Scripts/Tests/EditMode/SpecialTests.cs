@@ -25,9 +25,9 @@ namespace ApoGirl.Tests.EditMode
         {
             var balance = new BalanceConfig();
             Assert.IsFalse(SpecialRules.IsActive(State(balance, "NPC_DOHYEON", 90, unlocked: false), balance, "NPC_DOHYEON"), "장면을 보지 않았으면 없다");
-            Assert.IsTrue(SpecialRules.IsActive(State(balance, "NPC_DOHYEON", 80), balance, "NPC_DOHYEON"));
+            Assert.IsTrue(SpecialRules.IsActive(State(balance, "NPC_DOHYEON", balance.SpecialMinAffinity), balance, "NPC_DOHYEON"));
 
-            var cooled = State(balance, "NPC_DOHYEON", 79);
+            var cooled = State(balance, "NPC_DOHYEON", balance.SpecialMinAffinity - 1);
             Assert.IsTrue(SpecialRules.IsUnlocked(cooled, balance, "NPC_DOHYEON"));
             Assert.IsFalse(SpecialRules.IsActive(cooled, balance, "NPC_DOHYEON"), "호감이 떨어지면 잠시 꺼진다");
 
