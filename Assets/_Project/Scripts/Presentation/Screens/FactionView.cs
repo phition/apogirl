@@ -19,7 +19,7 @@ namespace ApoGirl.Presentation.Screens
     /// </summary>
     internal sealed class FactionView
     {
-        private static readonly (FactionTier Tier, int From, int To)[] Bands =
+        internal static readonly (FactionTier Tier, int From, int To)[] Bands =
         {
             (FactionTier.Hostile, FactionRules.MinStanding, FactionRules.HostileMax),
             (FactionTier.Wary, FactionRules.HostileMax, FactionRules.WaryMax),

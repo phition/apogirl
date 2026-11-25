@@ -1292,12 +1292,55 @@ Button.base-advice-line:hover { background-color: rgba(185, 163, 122, 0.18); col
 .people-factions-tab:hover { background-color: rgb(44, 46, 52); }
 .people-factions.expanded .people-factions-tab { color: var(--text-dim); }
 .people-factions-sheet {
-    width: 320px; max-height: 560px; padding: 10px 12px;
+    width: 340px; max-height: 620px; padding: 10px 12px;
     background-color: rgb(30, 32, 36); border-width: 1px; border-right-width: 0; border-color: var(--line);
     border-top-left-radius: 8px; border-bottom-left-radius: 8px;
 }
 .people-factions-list { flex-shrink: 1; }
-.people-factions-list .faction-bar { margin: 2px 0 2px 0; }
+/* 접힌 탭의 초록 점: 지금 거래할 수 있는 세력이 있을 때 */
+.people-factions-dot { display: none; position: absolute; top: 4px; left: 4px; width: 8px; height: 8px; border-radius: 4px; background-color: rgb(120, 200, 110); }
+.people-factions.trade-ready .people-factions-dot { display: flex; }
+.people-factions.expanded .people-factions-dot { display: none; }
+/* 세력 카드 (FactionAddonView.Card): 누르면 거래 화면 */
+.fac-mini {
+    margin: 0 0 8px 0; padding: 8px 10px;
+    background-color: rgb(38, 40, 46); border-width: 1px; border-color: var(--line); border-radius: 6px;
+}
+.fac-mini:hover { background-color: rgb(46, 49, 56); border-color: var(--accent); }
+.fac-mini.gone { opacity: 0.6; }
+.fac-mini-head { flex-direction: row; align-items: center; }
+.fac-mini-face {
+    width: 44px; height: 44px; margin-right: 10px; flex-shrink: 0;
+    border-radius: 22px; border-width: 2px; border-color: rgb(20, 20, 22);
+    align-items: center; justify-content: center; overflow: hidden;
+}
+.fac-mini-initial { font-size: 20px; -unity-font-style: bold; color: rgb(255, 255, 255); text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7); }
+.fac-mini-side { flex-grow: 1; flex-shrink: 1; }
+.fac-mini-title { flex-direction: row; align-items: center; }
+.fac-mini-name { font-size: 16px; -unity-font-style: bold; color: var(--text); margin-right: 6px; flex-shrink: 1; }
+.fac-mini-tier { padding: 1px 8px; border-radius: 9px; font-size: 13px; -unity-font-style: bold; color: rgb(20, 20, 22); }
+.fac-mini-trend { margin-left: auto; font-size: 13px; -unity-font-style: bold; }
+.fac-mini-trend.up { color: rgb(130, 200, 120); }
+.fac-mini-trend.down { color: rgb(220, 110, 100); }
+.fac-mini-gauge { flex-direction: row; height: 8px; margin: 6px 0 2px 0; border-radius: 3px; overflow: visible; }
+.fac-mini-band { height: 8px; opacity: 0.75; }
+.fac-mini-marker {
+    position: absolute; top: -3px; width: 4px; height: 14px; margin-left: -2px;
+    background-color: rgb(255, 255, 255); border-width: 1px; border-color: rgb(20, 20, 22); border-radius: 1px;
+}
+.fac-mini-next { font-size: 12px; color: var(--text-dim); }
+.fac-mini-status { margin-top: 6px; font-size: 14px; color: var(--text); white-space: normal; }
+.fac-mini-effect { margin-top: 2px; font-size: 13px; color: var(--text-dim); white-space: normal; }
+.fac-mini-foot {
+    flex-direction: row; align-items: center; justify-content: space-between;
+    margin-top: 6px; padding-top: 5px; border-top-width: 1px; border-color: rgba(255, 255, 255, 0.08);
+}
+.fac-mini-trade { font-size: 13px; flex-shrink: 1; white-space: normal; }
+.fac-mini-trade.dim { color: var(--text-dim); }
+.fac-mini-trade.ready { color: rgb(130, 200, 120); -unity-font-style: bold; }
+.fac-mini-trade.warn { color: rgb(220, 160, 90); }
+.fac-mini-link { font-size: 13px; color: var(--accent); -unity-font-style: bold; flex-shrink: 0; margin-left: 8px; }
+.fac-mini-pending { margin-top: 3px; font-size: 12px; color: rgb(140, 180, 220); white-space: normal; }
 /* 세력 덧판을 펼치면 판이 인물 서랍에 틈 없이 붙고, 접기 탭은 판 왼쪽으로 (자식 순서: 판, 탭 → 거꾸로 놓아 판이 서랍 쪽) */
 .people-factions.expanded { flex-direction: row-reverse; }
 .people-factions.expanded .people-factions-sheet { border-top-left-radius: 0; }

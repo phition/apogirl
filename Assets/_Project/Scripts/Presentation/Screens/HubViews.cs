@@ -198,7 +198,7 @@ namespace ApoGirl.Presentation.Screens
     }
 
     /// <summary>
-    /// 세력 덧판: 인물 서랍 왼쪽 가장자리에 붙은 화살표 탭 — 누르면 왼쪽으로 펼쳐 알게 된 세력(이름·평판 막대·근황)을 보인다.
+    /// 세력 덧판: 인물 서랍 왼쪽 가장자리에 붙은 화살표 탭 — 누르면 왼쪽으로 펼쳐 알게 된 세력 카드(얼굴·단계·평판 띠·근황·영향·거래 상태)를 보인다.
     /// 예전에는 거점 서랍 아래에 있었다 (2026-11-25 사용자 요청으로 옮김). 아는 세력이 없으면 탭도 숨긴다.
     /// </summary>
     internal sealed class FactionAddonView
@@ -230,6 +230,11 @@ namespace ApoGirl.Presentation.Screens
                     _expanded = !_expanded;
                     Sync();
                 };
+
+                // 지금 거래할 수 있는 세력이 있으면 접힌 탭에 초록 점 (.trade-ready)
+                var dot = new VisualElement { name = "people-factions-dot", pickingMode = PickingMode.Ignore };
+                dot.AddToClassList("people-factions-dot");
+                _tab.Add(dot);
             }
 
             Sync();
@@ -249,7 +254,13 @@ namespace ApoGirl.Presentation.Screens
             }
         }
 
-        /// <summary>알게 된 세력: 이름 · 단계 평판, 아래 한 줄 근황.</summary>
+        /// <summary>최근 평판 변화를 머리 줄에 보이는 기간 (주).</summary>
+        private const int RecentWeeks = 3;
+
+        /// <summary>
+        /// 알게 된 세력마다 카드 하나: 얼굴·이름·단계 칩·최근 변화 / 다섯 단계 띠와 다음 단계까지 / 근황 / 지금 받는 영향 /
+        /// 거래 상태(지금 가능 n건·다음 거래까지·필요한 단계·물자 부족)와 무전 도착 예정. 카드를 누르면 거래 화면.
+        /// </summary>
         public void Refresh()
         {
             if (_root == null)
@@ -260,6 +271,7 @@ namespace ApoGirl.Presentation.Screens
             var state = _session.State;
             _factions.Clear();
             var any = false;
+            var anyReady = false;
             foreach (var def in _session.Definitions.Extras.Factions)
             {
                 if (!state.Factions.TryGetValue(def.Id, out var faction) || !faction.Known)
@@ -268,36 +280,221 @@ namespace ApoGirl.Presentation.Screens
                 }
 
                 any = true;
-                var tier = FactionRules.TierOf(faction.Standing);
-                var gone = FactionRules.IsGone(state, def);
-                var factionId = def.Id;
-                var statusKey = gone ? "faction." + def.Id + ".status.gone" : "faction." + def.Id + ".status." + tier;
-                var button = new Button(() => FactionClicked?.Invoke(factionId))
-                {
-                    text = Loc.F("status.faction", Loc.T("faction." + def.Id + ".name"), gone ? Loc.T("faction.tier.gone") : Loc.T("faction.tier." + tier),
-                        (faction.Standing > 0 ? "+" : "") + faction.Standing),
-                    tooltip = Loc.T(statusKey),
-                };
-                button.AddToClassList("small-button");
-                button.AddToClassList("companion-button");
-                button.AddToClassList("faction-" + tier.ToString().ToLowerInvariant());
-                _factions.Add(button);
-
-                // ProgressBar는 음수 최솟값을 그리지 못해서 0~200으로 옮겨 그린다 (가운데 = 평판 0)
-                var bar = new ProgressBar { lowValue = 0, highValue = FactionRules.MaxStanding - FactionRules.MinStanding, value = faction.Standing - FactionRules.MinStanding };
-                bar.AddToClassList("faction-bar");
-                _factions.Add(bar);
-
-                var status = new Label();
-                status.AddToClassList("status-row");
-                _factions.Add(status);
-                status.text = Loc.T(statusKey);
-                status.AddToClassList("dim");
-                status.style.whiteSpace = WhiteSpace.Normal;
+                _factions.Add(Card(def, faction, out var ready));
+                anyReady |= ready > 0;
             }
 
             _root.EnableInClassList("hidden", !any);
+            _root.EnableInClassList("trade-ready", anyReady);
             Sync();
+        }
+
+        private VisualElement Card(FactionDef def, FactionState faction, out int ready)
+        {
+            var state = _session.State;
+            var tier = FactionRules.TierOf(faction.Standing);
+            var gone = FactionRules.IsGone(state, def);
+            var tierClass = "tier-" + (gone ? "gone" : tier.ToString().ToLowerInvariant());
+            var factionId = def.Id;
+
+            var card = new VisualElement();
+            card.AddToClassList("fac-mini");
+            card.EnableInClassList("gone", gone);
+            card.AddManipulator(new Clickable(() => FactionClicked?.Invoke(factionId)));
+            card.tooltip = Loc.T("people.factions.card_hint");
+
+            // ── 머리: 얼굴 | 이름·단계·최근 변화 / 단계 띠 / 다음 단계까지 ──
+            var head = new VisualElement();
+            head.AddToClassList("fac-mini-head");
+            var face = new VisualElement();
+            face.AddToClassList("fac-mini-face");
+            face.AddToClassList(tierClass);
+            var portrait = StoryArt.Faction(def.Id);
+            if (portrait != null)
+            {
+                StoryArt.SetCover(face, portrait);
+            }
+            else
+            {
+                var name0 = Loc.T("faction." + def.Id + ".name");
+                Add(face, name0.Length > 0 ? name0.Substring(0, 1) : "?", "fac-mini-initial");
+            }
+
+            head.Add(face);
+
+            var side = new VisualElement();
+            side.AddToClassList("fac-mini-side");
+            var titleRow = new VisualElement();
+            titleRow.AddToClassList("fac-mini-title");
+            Add(titleRow, Loc.T("faction." + def.Id + ".name"), "fac-mini-name");
+            var chip = Add(titleRow, gone ? Loc.T("faction.tier.gone") : Loc.T("faction.tier." + tier), "fac-mini-tier");
+            chip.AddToClassList(tierClass);
+            if (!gone && faction.Log.Count > 0 && faction.Log[0].Standing != 0 && state.Calendar.Week - faction.Log[0].Week < RecentWeeks)
+            {
+                var last = faction.Log[0];
+                var trend = Add(titleRow, (last.Standing > 0 ? "▲" : "▼") + UiText.Signed(last.Standing), "fac-mini-trend");
+                trend.AddToClassList(last.Standing > 0 ? "up" : "down");
+                trend.tooltip = Loc.F("faction.log.week", last.Week) + "  "
+                    + (string.IsNullOrEmpty(last.TextKey) ? Loc.T("faction.log.drift") : Loc.T(last.TextKey));
+            }
+
+            side.Add(titleRow);
+            if (!gone)
+            {
+                side.Add(MiniGauge(faction.Standing));
+                Add(side, NextTierText(faction.Standing, tier), "fac-mini-next");
+            }
+
+            head.Add(side);
+            card.Add(head);
+
+            // ── 근황 · 지금 받는 영향 ──
+            Add(card, Loc.T(gone ? "faction." + def.Id + ".status.gone" : "faction." + def.Id + ".status." + tier), "fac-mini-status");
+            if (!gone)
+            {
+                foreach (var effect in def.Effects)
+                {
+                    if (tier >= effect.MinTier && tier <= effect.MaxTier && !string.IsNullOrEmpty(effect.TextKey))
+                    {
+                        Add(card, "· " + Loc.T(effect.TextKey), "fac-mini-effect");
+                    }
+                }
+            }
+
+            // ── 거래 줄: 상태 | 거래 화면 ▸ ──
+            var foot = new VisualElement();
+            foot.AddToClassList("fac-mini-foot");
+            var summary = Add(foot, TradeSummary(def, faction, gone, out ready, out var summaryClass), "fac-mini-trade");
+            summary.AddToClassList(summaryClass);
+            Add(foot, Loc.T(def.Trades.Count > 0 && !gone ? "people.factions.open_trade" : "people.factions.open_card"), "fac-mini-link");
+            card.Add(foot);
+
+            var pending = new List<string>();
+            foreach (var item in faction.Pending)
+            {
+                if (item.Value != 0 && Enum.TryParse<ResourceType>(item.Key, out var type))
+                {
+                    pending.Add(UiText.Resource(type) + " " + item.Value);
+                }
+            }
+
+            if (pending.Count > 0)
+            {
+                Add(card, Loc.F("people.factions.pending", string.Join(", ", pending)), "fac-mini-pending");
+            }
+
+            return card;
+        }
+
+        /// <summary>다섯 단계 색 띠 위에 지금 자리 (거래 화면 눈금의 작은 판).</summary>
+        private static VisualElement MiniGauge(int standing)
+        {
+            var gauge = new VisualElement();
+            gauge.AddToClassList("fac-mini-gauge");
+            var span = (float)(FactionRules.MaxStanding - FactionRules.MinStanding);
+            foreach (var band in FactionView.Bands)
+            {
+                var part = new VisualElement();
+                part.AddToClassList("fac-mini-band");
+                part.AddToClassList("tier-" + band.Tier.ToString().ToLowerInvariant());
+                part.style.width = Length.Percent(100f * (band.To - band.From) / span);
+                part.tooltip = Loc.T("faction.tier." + band.Tier);
+                gauge.Add(part);
+            }
+
+            var marker = new VisualElement();
+            marker.AddToClassList("fac-mini-marker");
+            marker.pickingMode = PickingMode.Ignore;
+            marker.style.left = Length.Percent(100f * (standing - FactionRules.MinStanding) / span);
+            gauge.Add(marker);
+            return gauge;
+        }
+
+        /// <summary>"평판 −20 · 중립까지 +1" — 한 단계 위까지 남은 양 (동맹이면 끝).</summary>
+        private static string NextTierText(int standing, FactionTier tier)
+        {
+            var value = Loc.F("people.factions.standing", UiText.Signed(standing));
+            int next;
+            switch (tier)
+            {
+                case FactionTier.Hostile: next = FactionRules.HostileMax + 1; break;
+                case FactionTier.Wary: next = FactionRules.WaryMax + 1; break;
+                case FactionTier.Neutral: next = FactionRules.FriendlyMin; break;
+                case FactionTier.Friendly: next = FactionRules.AlliedMin; break;
+                default: return value + "  ·  " + Loc.T("people.factions.top");
+            }
+
+            return value + "  ·  " + Loc.F("people.factions.next", Loc.T("faction.tier." + (tier + 1)), next - standing);
+        }
+
+        /// <summary>거래 상태 한 줄: 지금 가능 n건 / 다음 거래까지 n주 / 물자 부족 / 필요한 단계 / 계획 중에만 / 거래 없음.</summary>
+        private string TradeSummary(FactionDef def, FactionState faction, bool gone, out int ready, out string cssClass)
+        {
+            ready = 0;
+            cssClass = "dim";
+            if (gone)
+            {
+                return Loc.T("people.factions.trade_gone");
+            }
+
+            if (def.Trades.Count == 0)
+            {
+                return Loc.T("people.factions.trade_none");
+            }
+
+            var weekly = false;
+            var shortOf = false;
+            var planning = false;
+            var minTier = FactionTier.Allied;
+            foreach (var offer in def.Trades)
+            {
+                var blocker = _session.TradeBlocker(def.Id, offer.Id);
+                if (blocker == null)
+                {
+                    ready++;
+                }
+
+                weekly |= blocker == "faction.trade.weekly";
+                shortOf |= blocker == "faction.trade.short";
+                planning |= blocker == "faction.trade.planning";
+                if (offer.MinTier < minTier)
+                {
+                    minTier = offer.MinTier;
+                }
+            }
+
+            if (ready > 0)
+            {
+                cssClass = "ready";
+                return Loc.F("people.factions.trade_ready", ready);
+            }
+
+            if (planning)
+            {
+                return Loc.T("people.factions.trade_planning");
+            }
+
+            if (weekly)
+            {
+                var wait = faction.LastTradeWeek + Math.Max(1, def.TradeIntervalWeeks) - _session.State.Calendar.Week;
+                return Loc.F("people.factions.trade_wait", Math.Max(1, wait));
+            }
+
+            if (shortOf)
+            {
+                cssClass = "warn";
+                return Loc.T("people.factions.trade_short");
+            }
+
+            return Loc.F("people.factions.trade_tier", Loc.T("faction.tier." + minTier));
+        }
+
+        private static Label Add(VisualElement parent, string text, string cssClass)
+        {
+            var label = new Label(text);
+            label.AddToClassList(cssClass);
+            parent.Add(label);
+            return label;
         }
     }
 
