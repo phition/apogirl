@@ -970,6 +970,12 @@ namespace ApoGirl.Core.Definitions
         /// <summary>식량·물이 이 날 안에 바닥나면 부족 탐험을 두 번 넣는다 (그 밖에는 한 번).</summary>
         public int TeacherCriticalShortDay = 3;
 
+        /// <summary>주 끝 식량·물이 다음 주 소비 × 이 값보다 적으면 부족 탐험을 한 번 넣는다 (봇 TEACHER 굶주림 대책, 1 = 한 주치만 봄).</summary>
+        public float TeacherSupplyBufferWeeks = 2f;
+
+        /// <summary>주 끝 식량·물이 다음 주 소비보다 적으면 부족 탐험을 두 번 넣는다.</summary>
+        public bool TeacherTwoWhenUnderAWeek = true;
+
         /// <summary>다듬기: 흐름 예측에서 이 값 이상이 되는 칸이 있으면 앞의 무거운 칸을 쉬게 바꾼다 (최대 TeacherTidyPasses번).</summary>
         public int TeacherFatigueLimit = 80;
         public int TeacherStressLimit = 70;

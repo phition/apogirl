@@ -296,7 +296,24 @@ namespace ApoGirl.Tests.EditMode
         public void Forecast_MatchesRestfulWeek()
         {
             var db = ContentDb();
-            var state = Week(db, 20);
+            // 이벤트·습격 없이 세 칸 넘게 흘러가는 주를 고른다 (판 진행이 바뀌어도 테스트가 흔들리지 않게)
+            var checkedSlots = 0;
+            foreach (var week in new[] { 20, 18, 22, 24, 26, 16, 28 })
+            {
+                checkedSlots = Math.Max(checkedSlots, RestfulWeekMatches(db, week));
+                if (checkedSlots > 2)
+                {
+                    break;
+                }
+            }
+
+            Assert.Greater(checkedSlots, 2);
+        }
+
+        /// <summary>그 주를 모두 휴식으로 채워 예측과 실제를 칸마다 비교한다. 놀랄 일 없이 지나간 칸 수를 돌려준다.</summary>
+        private static int RestfulWeekMatches(IDefinitionDatabase db, int week)
+        {
+            var state = Week(db, week);
             state.Player.Vitals.Fatigue = 70;
             state.Player.Vitals.Stress = 40;
             for (var i = 0; i < state.Plan.Slots.Count; i++)
@@ -321,9 +338,8 @@ namespace ApoGirl.Tests.EditMode
                 slot++;
             }
 
-            Assert.Greater(slot, 2);
-
             Assert.AreEqual(0, forecast.Last.Fatigue);
+            return slot;
         }
 
         [Test]

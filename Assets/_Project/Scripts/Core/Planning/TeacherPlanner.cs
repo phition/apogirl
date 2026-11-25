@@ -290,7 +290,7 @@ namespace ApoGirl.Core.Planning
             {
                 foreach (var (resource, forecast) in new[] { (ResourceType.Food, food), (ResourceType.Water, water) })
                 {
-                    if (forecast == null || (forecast.ShortDay <= 0 && forecast.End >= forecast.NextWeekNeed))
+                    if (forecast == null || (forecast.ShortDay <= 0 && forecast.End >= forecast.NextWeekNeed * Math.Max(1f, _balance.TeacherSupplyBufferWeeks)))
                     {
                         continue;
                     }
@@ -304,7 +304,9 @@ namespace ApoGirl.Core.Planning
                     // 그 자원을 넉넉히 주는 지역(가장 좋은 곳의 절반 이상)에 이미 간다면 그만큼 덜 넣는다.
                     // 며칠 안에 바닥나면(TeacherCriticalShortDay) 두 번.
                     var bestYield = Yield(best, resource);
-                    var wanted = forecast.ShortDay > 0 && forecast.ShortDay <= _balance.TeacherCriticalShortDay ? 2 : 1;
+                    var critical = forecast.ShortDay > 0 && forecast.ShortDay <= _balance.TeacherCriticalShortDay;
+                    var underAWeek = _balance.TeacherTwoWhenUnderAWeek && forecast.End < forecast.NextWeekNeed;
+                    var wanted = critical || underAWeek ? 2 : 1;
                     var have = PlannedExpeditions().Count(i => Yield(_db.GetAction(_slots[i].ActionId).LocationId, resource) >= bestYield * 0.5f);
                     var key = forecast.ShortDay > 0 ? "teacher.why.short" : "teacher.why.tight";
                     var places = Locations().Where(l => Yield(l, resource) >= bestYield * 0.5f)
