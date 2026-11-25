@@ -121,7 +121,7 @@ namespace ApoGirl.Presentation.Screens
                 RolesCard(state);
             }
 
-            KoreanFont.ApplyDeep(_host);
+            // 글꼴은 Theme.uss(#drawer-right)가 정한다 — 글자마다 맑은 고딕을 박으면 그걸 덮어 버려 ApplyDeep은 쓰지 않는다
         }
 
         // ── 다음 할 일 (P4) ──

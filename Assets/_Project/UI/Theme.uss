@@ -1263,3 +1263,11 @@ Button.selected { border-color: var(--accent); background-color: var(--accent-so
 .base-advice-lines { flex-grow: 1; flex-shrink: 1; }
 .base-advice-line { font-size: 15px; color: var(--text); white-space: normal; -unity-text-align: upper-left; margin: 2px 0; padding: 2px 4px; border-width: 0; border-radius: 4px; background-color: transparent; }
 Button.base-advice-line:hover { background-color: rgba(185, 163, 122, 0.18); color: var(--accent); }
+/* ── 거점 서랍 글꼴 (사용자 결정 2026-11-25): 제목·칸 머리·판정 칩은 학교안심 엣지, 그 밖의 내용 글은 부산단디손글씨 (UI/Fonts, ArtInbox에서 받음) ──
+   #drawer-right 범위라 인물 서랍(같은 drawer-right 클래스)에는 안 번진다. BaseBoardView는 이 때문에 KoreanFont.ApplyDeep을 쓰지 않는다. */
+#drawer-right .unity-text-element { -unity-font-definition: url("Fonts/BusanDandiHand.ttf"); }
+#drawer-right .drawer-title, #drawer-right .base-card-title, #drawer-right .section-header, #drawer-right .base-verdict, #drawer-right .base-supply-head { -unity-font-definition: url("Fonts/HakgyoansimEdge.ttf"); }
+/* 손글씨는 같은 크기에서 작고 가늘어 보여 1px씩 키운다 */
+#drawer-right .base-line, #drawer-right .base-alert, #drawer-right .base-advice-line, #drawer-right .base-room-name { font-size: 16px; }
+#drawer-right .base-room-text { font-size: 15px; }
+#drawer-right .base-repel-parts { font-size: 14px; }
