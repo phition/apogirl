@@ -149,8 +149,10 @@ namespace ApoGirl.Presentation.Screens
                 var name = new Label(isOpen ? HubSectionConfig.RoomName(room) : Loc.F("base.rooms.locked", HubSectionConfig.RoomName(room)));
                 name.AddToClassList("base-room-name");
                 row.Add(name);
-                var text = new Label(isOpen ? RoomText.Summary(db, room) : RoomText.Hint(room));
+                var effects = RoomText.Effects(db, room.Facility);
+                var text = new Label(!isOpen ? RoomText.Hint(room) : effects.Count > 0 ? string.Join(" · ", effects) : RoomText.Use(room));
                 text.AddToClassList("base-room-text");
+                text.EnableInClassList("use", isOpen && effects.Count == 0);   // 효과(초록)가 아니라 쓰임(보통 글자)
                 row.Add(text);
                 row.RegisterCallback<PointerEnterEvent>(_ => RoomHovered?.Invoke(roomId));
                 row.RegisterCallback<PointerLeaveEvent>(_ => RoomHovered?.Invoke(null));

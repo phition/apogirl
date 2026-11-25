@@ -263,6 +263,7 @@ namespace ApoGirl.Presentation.Screens
             _host.schedule.Execute(Tick).Every(33);
             _host.RegisterCallback<ClickEvent>(_ => HideRoomPanel());
             _roomPanel.RegisterCallback<ClickEvent>(evt => evt.StopPropagation()); // 패널 안(CD 플레이어 등)을 눌러도 닫히지 않게
+            _roomPanel.RegisterCallback<GeometryChangedEvent>(_ => ClampRoomPanel()); // 1층 방 패널이 단면도 아래(계획 칸)로 넘치지 않게
             _cdDetail = Add(_host, "hub-cd-detail");
             _cdDetail.AddToClassList("hidden");
             _cdDetail.RegisterCallback<ClickEvent>(evt => evt.StopPropagation());
@@ -1058,6 +1059,16 @@ namespace ApoGirl.Presentation.Screens
         {
             _roomPanel.AddToClassList("hidden");
             HideCdDetail();
+        }
+
+        /// <summary>방 패널 아래 끝이 단면도 밖으로 나가면 그만큼 위로 올린다.</summary>
+        private void ClampRoomPanel()
+        {
+            var max = _host.layout.height - _roomPanel.layout.height - 4f;
+            if (max > 0f && _roomPanel.layout.y > max + 0.5f)
+            {
+                _roomPanel.style.top = max;
+            }
         }
 
         private string _highlighted;

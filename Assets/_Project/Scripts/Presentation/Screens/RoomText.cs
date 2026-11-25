@@ -57,13 +57,7 @@ namespace ApoGirl.Presentation.Screens
             return Loc.F("facility.mod." + modifier.Kind, number);
         }
 
-        /// <summary>상황판 한 줄: 효과가 있으면 효과, 없으면 이 방의 쓰임.</summary>
-        public static string Summary(IDefinitionDatabase db, HubSectionConfig.RoomDef room)
-        {
-            var effects = Effects(db, room.Facility);
-            return effects.Count > 0 ? string.Join(" · ", effects) : Use(room);
-        }
-
+        /// <summary>이 방의 쓰임 (효과가 없는 방의 상황판 한 줄).</summary>
         public static string Use(HubSectionConfig.RoomDef room) => Loc.T("hubroom." + room.Id + ".use");
 
         /// <summary>잠긴 방을 여는 방법.</summary>

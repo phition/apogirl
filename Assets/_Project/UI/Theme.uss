@@ -1212,8 +1212,9 @@ Button.selected { border-color: var(--accent); background-color: var(--accent-so
 .base-room-name { width: 92px; flex-shrink: 0; font-size: 15px; -unity-font-style: bold; color: var(--text); -unity-text-align: upper-left; white-space: normal; margin: 0; padding: 0; }
 .base-room-text { flex-grow: 1; flex-shrink: 1; font-size: 14px; color: #a9cfa3; -unity-text-align: upper-left; white-space: normal; margin: 0; padding: 0; }
 .base-room.locked .base-room-name { color: var(--text-dim); -unity-font-style: normal; }
+.base-room-text.use { color: var(--text); }
 .base-room.locked .base-room-text { color: var(--text-dim); }
 /* 단면도: 상황판에서 가리킨 방의 빛 테두리 */
 .hub-ring { border-width: 0; border-color: rgba(255, 214, 140, 0); transition-property: border-color, border-width; transition-duration: 0.25s; }
-.hub-ring.on { border-width: 4px; border-color: rgba(255, 214, 140, 0.95); background-color: rgba(255, 214, 140, 0.12); }
+.hub-ring.on { border-width: 6px; border-color: rgba(255, 220, 150, 1); background-color: rgba(255, 214, 140, 0.2); }
 .hub-room-panel-effect { color: #a9cfa3; font-size: 14px; white-space: normal; margin-bottom: 2px; }
