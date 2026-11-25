@@ -7687,6 +7687,94 @@ MonoBehaviour:
     m_Key: hub.room_aptitude
     m_Metadata:
       m_Items: []
+  - m_Id: 2227350275375104
+    m_Key: hub.room_people_hint
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2227350346678272
+    m_Key: base.roles
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2227350346678273
+    m_Key: base.roles.idle_count
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2227350346678274
+    m_Key: base.roles.filled
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2227350346678275
+    m_Key: base.roles.scale
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2227350346678276
+    m_Key: base.roles.more_rooms
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2227350346678277
+    m_Key: base.roles.locked
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2227350346678278
+    m_Key: base.roles.no_room
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2227350346678279
+    m_Key: base.roles.add_hint
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2227350346678280
+    m_Key: base.roles.planning_only
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2227350346678281
+    m_Key: base.roles.remove_hint
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2227350346678282
+    m_Key: base.roles.pick
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2227350346678283
+    m_Key: base.roles.pick_hint
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2227350346678284
+    m_Key: base.roles.move_hint
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2227350346678285
+    m_Key: base.roles.idle
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2227350346678286
+    m_Key: base.roles.idle_none
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2227350346678287
+    m_Key: base.roles.idle_hint
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2227350346678288
+    m_Key: base.roles.stressed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2227350346678289
+    m_Key: base.roles.injured
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2227350346678290
+    m_Key: base.roles.injured_tag
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2227350346678291
+    m_Key: base.roles.out
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2227350346678292
+    m_Key: base.roles.out_tag
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
