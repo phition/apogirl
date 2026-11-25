@@ -1119,7 +1119,7 @@ namespace ApoGirl.Core.Definitions
         /// 그 뒤 무적 시간(초) 동안 주인공이 깜빡이며 더 물리지 않고 다침 동작도 없다. 깜빡임은 초당 횟수.
         /// </summary>
         public float HurtReactSeconds = 0.4f;
-        public float HurtInvulnSeconds = 3f;
+        public float HurtInvulnSeconds = 2f;
         public float HurtBlinkPerSecond = 8f;
 
         /// <summary>쓰러졌을 때 허브로 돌아가는 HP (중상, 사망 아님).</summary>
