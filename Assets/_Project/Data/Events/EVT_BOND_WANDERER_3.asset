@@ -113,7 +113,8 @@ MonoBehaviour:
           Amount: 1
         SleepDebt: 0
         Conscience: 0
-        SetFlags: []
+        SetFlags:
+        - WANDERER_COMPASS
         ClearFlags: []
         AddClues: []
         EndingTags: []

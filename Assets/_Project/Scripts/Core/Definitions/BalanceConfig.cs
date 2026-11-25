@@ -771,6 +771,9 @@ namespace ApoGirl.Core.Definitions
         /// <summary>유랑자 특기(깊은 곳 출구를 안다)가 있으면 더하는 확률.</summary>
         public float HeadlessDeepSpecialBonus = 0.35f;
 
+        /// <summary>유랑자 나침반 깃발 (EVT_BOND_WANDERER_3 '나침반을 받는다'). 있으면 탐험 화면 위치 정보 아래에 나가는 길 뱃지가 붙는다.</summary>
+        public string CompassFlag = "WANDERER_COMPASS";
+
         /// <summary>헤드리스에서 깊은 곳에 들어갔을 때 깊은 곳 전리품 표에서 물건 하나를 줍는 확률.</summary>
         public float HeadlessDeepItemChance = 0.6f;
 

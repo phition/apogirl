@@ -540,6 +540,69 @@ namespace ApoGirl.Exploration.Runtime
             }
         }
 
+        /// <summary>유랑자 나침반을 받았다 (출정 때 깃발).</summary>
+        public bool HasCompass => Request.Flags != null && Request.Flags.Contains(_balance.CompassFlag);
+
+        /// <summary>
+        /// 나침반 뱃지: 백의 한마디로 나가는 길을 짚는다. 바깥 길이면 학교 쪽 끝, 깊은 곳이면 일방 출구(없으면 들어온 문),
+        /// 건물 안이면 열린 출구 중 이 층에 가까운 것. 나침반이 없으면 null.
+        /// </summary>
+        public string CompassHint
+        {
+            get
+            {
+                if (!HasCompass || CurrentArea == null)
+                {
+                    return null;
+                }
+
+                var layout = Location.Layout;
+                if (CurrentArea.IsOutdoor)
+                {
+                    return Loc.F("exp.compass.road", Loc.T(CurrentArea.IsEntryRoad ? "exp.side_west" : "exp.side_east"));
+                }
+
+                if (layout.IsDeep(Floor))
+                {
+                    var oneWay = layout.Connectors.Find(c => c.Kind == ConnectorKind.OneWayExit && !c.Collapsed);
+                    if (oneWay == null)
+                    {
+                        return Loc.T("exp.compass.deep_back");
+                    }
+
+                    var side = SideOf(layout, oneWay.Floor, oneWay.X);
+                    return oneWay.Floor == Floor ? Loc.F("exp.compass.oneway_here", side) : Loc.F("exp.compass.oneway", layout.DeepLevel(oneWay.Floor), side);
+                }
+
+                ExitDef best = null;
+                foreach (var exit in layout.Exits)
+                {
+                    if (exit.StartsLocked || !string.IsNullOrEmpty(exit.BlockedBy))
+                    {
+                        continue;
+                    }
+
+                    if (best == null || Math.Abs(exit.Floor - Floor) < Math.Abs(best.Floor - Floor)
+                        || (exit.Floor == best.Floor && exit.Kind == ExitKind.Main && best.Kind != ExitKind.Main))
+                    {
+                        best = exit;
+                    }
+                }
+
+                best = best ?? layout.Exits.Find(e => e.Kind == ExitKind.Main);
+                if (best == null)
+                {
+                    return null;
+                }
+
+                var exitSide = SideOf(layout, best.Floor, best.X);
+                return best.Floor == Floor ? Loc.F("exp.compass.exit_here", exitSide) : Loc.F("exp.compass.exit", best.Floor + 1, exitSide);
+            }
+        }
+
+        private static string SideOf(BuildingLayoutDef layout, int floor, float x)
+            => Loc.T(x < layout.CorridorLengthOf(floor) * 0.5f ? "exp.side_west" : "exp.side_east");
+
         private void Start()
         {
             var session = GameApp.EnsureSession(_fallbackDatabase);
@@ -2781,6 +2844,7 @@ namespace ApoGirl.Exploration.Runtime
                 Origin = new Vector2(_outdoors.Count * 90f, -70f),
                 Width = width,
                 Label = Loc.T(entry ? "exp.area_entry" : "exp.area_escape"),
+                IsEntryRoad = entry,
             };
             _outdoors.Add(area);
             _areasById.Add(area);

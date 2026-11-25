@@ -8231,6 +8231,30 @@ MonoBehaviour:
     m_Key: storage.hint
     m_Metadata:
       m_Items: []
+  - m_Id: 2370145661239296
+    m_Key: exp.compass.exit_here
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2370145728348160
+    m_Key: exp.compass.exit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2370145728348161
+    m_Key: exp.compass.oneway_here
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2370145728348162
+    m_Key: exp.compass.oneway
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2370145728348163
+    m_Key: exp.compass.deep_back
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2370145728348164
+    m_Key: exp.compass.road
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

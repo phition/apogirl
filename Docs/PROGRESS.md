@@ -3,7 +3,7 @@
 〈마지막 학기 (가제)〉 — 마일스톤별 진행 기록, 남은 작업, 하면 좋을 작업, 하지 말아야 할 작업.
 
 - 기준: 마스터 프롬프트 12장 마일스톤(원본 `C:\Users\phiti\Desktop\MASTER_PROMPT.md`), 결정 기록 부록 C(D1~D26).
-- 작성: 2026-11-25. 커밋 811개(2026-11-18 ~ 2026-11-25), 마지막 커밋 `98b325a9` (그 뒤 이번 커밋).
+- 작성: 2026-11-25. 커밋 811개(2026-11-18 ~ 2026-11-25), 마지막 커밋 `d7a76601` (그 뒤 이번 커밋).
 - EditMode 테스트: 485개 모두 통과 (2026-11-25, 이탈 장면 평소용 대사 뒤).
 - 자세한 내용은 각 계획 문서에 있다. 이 문서는 한눈에 보는 요약이다.
 - **새 세션은 이 문서부터 읽는다.** 작업이 하나 끝날 때마다 고친다.
@@ -410,3 +410,4 @@ M6·M7과 함께 기획 확장(동료·CD·깊은 곳·고양이·동아리·방
 - 2026-11-25 · 특기·합류·이탈 호감 손질(사용자 결정): 특기를 얻는 세 번째 개인 장면 호감 80 → 60(`bond_events.json` 다섯 편, 유랑자는 방문 사다리라 그대로), 합류하면 호감 30에서 시작(`BalanceConfig.JoinAffinity`, 더 낮으면 올리고 합류 장면의 호감 변화는 그 위에 — `EffectApplier.ChangeNpc`, 이미 합류한 동료는 다시 안 함), 위기 이탈 예고 기준 호감 0 미만 → 10 미만(`CrisisLeaveBelowAffinity`, 위기 주 조건은 그대로). `EventSystemTests`에 합류 바닥 확인. EditMode 484개 통과, 봇 #27(배드 99% 그대로).
 - 2026-11-25 · 이탈 예고를 위기 주와 떼어 냄(사용자 결정): 결산마다 호감 10 미만 동료 한 명에 `LEAVE_WARN_*`(`CrisisRules.WarnWeekly(state, balance)`, 옛 `IsCrisisWeek`·습격 돌파 인자 없앰). 떠나는 장면 대사(`Events/Crisis.yarn`)는 '먹을 게 없다'는 위기 때 말이라 평소에 나오면 어색할 수 있다 — 남은 일. `CrisisTests` 고침, EditMode 484개 통과, 봇 #28(#27과 같음 — 봇 판에선 호감 10 미만이 안 나옴).
 - 2026-11-25 · 이탈 장면 평소용 대사: 예고하는 주가 위기 주(습격 돌파·식량이나 물 바닥)였으면 `LEAVE_CRISIS_{NPC}`를 켜고 아니면 끈다(`CrisisRules.WarnWeekly(state, balance, raidBreached)`·`IsCrisisWeek`·`HardTimesFlag`, 접두어 `BalanceConfig.CrisisLeaveHardTimesFlagPrefix`). `Events/Crisis.yarn`에서 박 선생님·도현·송예지·최하린의 '먹을 게 없다' 줄을 이 깃발로 갈라 평소용 줄을 새로 씀(보건실 찾는 사람이 없다·할 일이 없다·자리만 차지한다·밥 먹을 때 눈을 피한다). 선배는 위기 말이 없어 그대로. 테스트 `Warn_MarksHardTimes_OnlyInCrisisWeek`, EditMode 485개 통과.
+- 2026-11-25 · 유랑자 나침반(사용자 요청): `EVT_BOND_WANDERER_3`에서 '나침반을 받는다'(`TAKE_COMPASS`)를 고를 때만 깃발 `WANDERER_COMPASS`(`BalanceConfig.CompassFlag`) + 대본 한 줄. 탐험 중 깃발이 있으면 왼쪽 위 위치 정보 아래에 나침반 뱃지(`Expedition.uxml` `compass-badge`, 아이콘 여분 `item_tool_compass` → `art_map.json` Icons `exp.compass`)가 늘 붙어 백의 한마디로 나가는 길을 짚는다(`ExpeditionDirector.CompassHint`: 바깥 길 → 학교 쪽 끝, 깊은 곳 → 일방 출구(없으면 들어온 문), 건물 안 → 잠기지·막히지 않은 출구 중 이 층에 가까운 것, 문구 `exp.compass.*`). 나침반이 없으면 위치 정보는 그대로. 약국·지하철 층마다 문구 확인, EditMode 485개 통과.

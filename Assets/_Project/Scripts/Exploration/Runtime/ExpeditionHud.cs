@@ -23,6 +23,8 @@ namespace ApoGirl.Exploration.Runtime
         private readonly Label _clockPhase;
         private readonly Label _clockTime;
         private readonly Label _location;
+        private readonly VisualElement _compassBadge;
+        private readonly Label _compassLabel;
         private readonly Label _room;
         private readonly Label _vitals;
         private readonly Label _weight;
@@ -76,6 +78,13 @@ namespace ApoGirl.Exploration.Runtime
             _clockTime = root.Q<Label>("clock-time");
             _location = root.Q<Label>("location-label");
             _room = root.Q<Label>("room-label");
+            _compassBadge = root.Q("compass-badge");
+            _compassLabel = root.Q<Label>("compass-label");
+            var compassIcon = root.Q("compass-icon");
+            if (compassIcon != null)
+            {
+                compassIcon.style.backgroundImage = new StyleBackground(Presentation.Art.StoryArt.Icon("exp.compass"));
+            }
             _vitals = root.Q<Label>("vitals-label");
             _weight = root.Q<Label>("weight-label");
             _prompt = root.Q<Label>("prompt-label");
@@ -188,6 +197,12 @@ namespace ApoGirl.Exploration.Runtime
             _clockBar.EnableInClassList("late", clock.Phase == ClockPhase.Dusk || clock.Phase == ClockPhase.Dawn);
 
             _room.text = _director.LocationLabel;
+            var compass = _director.CompassHint;
+            _compassBadge?.EnableInClassList("hidden", compass == null);
+            if (compass != null && _compassLabel != null)
+            {
+                _compassLabel.text = compass;
+            }
             _backpackTitle.text = Loc.T(_director.BagKey("exp.backpack")); // 가방을 바꿔 메면 주머니 ↔ 배낭
             _vitals.text = Loc.F("exp.vitals", _director.Hp);
             _vitals.EnableInClassList("danger", _director.Hp <= 30);

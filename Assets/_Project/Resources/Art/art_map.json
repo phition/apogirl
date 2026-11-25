@@ -1408,6 +1408,10 @@
   ],
   "Icons": [
     {
+      "Key": "exp.compass",
+      "Image": "item_tool_compass"
+    },
+    {
       "Key": "act.ACT_SURV_BARRICADE",
       "Image": "icon_craft_barricade_desks"
     },

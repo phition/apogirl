@@ -1167,6 +1167,9 @@
         {
           "Id": "TAKE_COMPASS",
           "Effect": {
+            "SetFlags": [
+              "WANDERER_COMPASS"
+            ],
             "Hidden": [
               {
                 "Hidden": "Hope",

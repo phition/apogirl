@@ -40,6 +40,9 @@ namespace ApoGirl.Exploration.Runtime
 
         /// <summary>깊은 곳 복도 (기획 B): 늘 어둡고 소리가 울린다. 깊은 문·일방 출구로만 오간다.</summary>
         public bool IsDeep;
+
+        /// <summary>바깥 길 중 진입로 (왼쪽 끝이 학교 쪽). 탈출로는 오른쪽 끝이 학교 쪽.</summary>
+        public bool IsEntryRoad;
         public int Floor;
         public Vector2 Origin;
         public float Width;

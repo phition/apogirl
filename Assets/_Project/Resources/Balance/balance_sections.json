@@ -393,6 +393,7 @@
       "Fields": [
         "HeadlessDeepChance",
         "HeadlessDeepSpecialBonus",
+        "CompassFlag",
         "HeadlessDeepItemChance",
         "HeadlessDeepStress",
         "DeepNoiseMultiplier",
