@@ -3,7 +3,7 @@
 〈마지막 학기 (가제)〉 — 마일스톤별 진행 기록, 남은 작업, 하면 좋을 작업, 하지 말아야 할 작업.
 
 - 기준: 마스터 프롬프트 12장 마일스톤(원본 `C:\Users\phiti\Desktop\MASTER_PROMPT.md`), 결정 기록 부록 C(D1~D26).
-- 작성: 2026-11-25. 커밋 724개(2026-11-18 ~ 2026-11-25), 마지막 커밋 `6ba02d9e` (그 뒤 이번 커밋).
+- 작성: 2026-11-25. 커밋 724개(2026-11-18 ~ 2026-11-25), 마지막 커밋 `b2bcc1f4` (그 뒤 이번 커밋).
 - EditMode 테스트: 444개 모두 통과 (2026-11-25, 힉스필드 15차 연결 뒤).
 - 자세한 내용은 각 계획 문서에 있다. 이 문서는 한눈에 보는 요약이다.
 - **새 세션은 이 문서부터 읽는다.** 작업이 하나 끝날 때마다 고친다.
@@ -369,4 +369,5 @@ M6·M7과 함께 기획 확장(동료·CD·깊은 곳·고양이·동아리·방
 - 2026-11-25 · 물린 뒤 무적 3초 → 2초(사용자 요청, `BalanceConfig.HurtInvulnSeconds`) · f5c7c717
 - 2026-11-25 · 적대적 생존자와 좀비(사용자 요청): 생존자 시야 12 → 8(`ENEMY_SURVIVOR`). 추격하는 생존자는 주인공과 사이에 좀비(잠든 것 포함)가 있으면 걸어서(`ZombieUnit.Sneaking`, 걷는 그림), 없으면 달려온다 — 생존자는 걸어도 달려도 좀비를 깨우지 않는다(원래대로). 좀비는 보이는 사람(주인공·깨어 있는 생존자) 가운데 물 수 있는 가장 가까운 사람을 노린다(`ThreatSimulation.PickPrey`): 생존자가 더 가까우면 생존자를 물고, 물린 생존자는 3초(`BalanceConfig.SurvivorBittenSeconds`) 그 자리에서 기절(머리 위 별)·깜빡이며(`ZombieUnit.BiteGuard`) 맞음 동작·무는 소리, 그동안 좀비는 잠깐 멈췄다가 다른 사람(주인공·다른 생존자)에게 간다. 모두 무적이면 가장 가까운 사람 곁으로. 생존자를 쫓는 좀비는 "발각" 문구를 띄우지 않는다. 생존자는 다치거나 쓰러지지 않는다. 테스트 2개(`M7HostileTests`) · 6302618c
 - 2026-11-25 · 도트 도구 스킬(사용자 결정: 원화→도트는 PixelOE, 도트 이펙트는 pixelfx): 프로젝트 스킬 `.claude/skills/pixel-art-tools/SKILL.md`(설치 위치·실행법·잘 되는 것/안 되는 것·넣는 규칙). 도구 `code_temp/apogirl/tools/pixeloe_convert.py`(투명 배경 처리, 단순 축소 비교 그림)·`pixelfx_make.py`(24fps·좌우 뒤집기·기준점 제안), PixelOE는 I: 가상환경 `code_temp/pixeloe_try/venv`(CPU torch). PixelOE 시험: 인물은 확실히 낫고 사진 같은 설비·배경은 잔점이 생김 — 게임 그림은 바꾸지 않음 · 이 커밋
-- 2026-11-25 · 힉스필드 14차 연결 ([HIGGSFIELD_ASSETS_14.md](HIGGSFIELD_ASSETS_14.md), 23장): 남의 컷·빈 방 배경을 빌려 쓰던 이벤트 23개를 새 컷으로(`install_events12.py`로 너비 1920 jpg, `art_map.json` Events 줄만 바꿈, 혈액형 두 편은 `evt_a4_blood_other`), 여름 마지막 밤 의족 갈래는 `EVT_A2_REVIEW` + `"Flag": "PROSTHETIC_DONE"` 줄을 기본 줄 앞에. 명찰에 글씨 같은 무늬가 있는 3장(교실·창고 2일째·방송 응답 마트)은 `nametag_blur.py`로 흐리게(칸 `code_temp/nametag/result_14.txt`, 원본 `backup_nametag/`). 옛 그림(`evt_a4_farewell`·`evt_a3_police` 등)은 남김. 남은 작업에서 14차·CD 음원 줄(음원은 8차 때 이미 연결)을 지움 · 이 커밋
+- 2026-11-25 · 힉스필드 14차 연결 ([HIGGSFIELD_ASSETS_14.md](HIGGSFIELD_ASSETS_14.md), 23장): 남의 컷·빈 방 배경을 빌려 쓰던 이벤트 23개를 새 컷으로(`install_events12.py`로 너비 1920 jpg, `art_map.json` Events 줄만 바꿈, 혈액형 두 편은 `evt_a4_blood_other`), 여름 마지막 밤 의족 갈래는 `EVT_A2_REVIEW` + `"Flag": "PROSTHETIC_DONE"` 줄을 기본 줄 앞에. 명찰에 글씨 같은 무늬가 있는 3장(교실·창고 2일째·방송 응답 마트)은 `nametag_blur.py`로 흐리게(칸 `code_temp/nametag/result_14.txt`, 원본 `backup_nametag/`). 옛 그림(`evt_a4_farewell`·`evt_a3_police` 등)은 남김. 남은 작업에서 14차·CD 음원 줄(음원은 8차 때 이미 연결)을 지움 · `42c4b80f`
+- 2026-11-25 · 탐험 화면 정리(사용자 요청): 코드명으로 보이던 방 이름 12개(`roomname.ROOM_HOUSE` "{1}호"·마트 사무실·창고·역무실·역 매점·화장실·파출소 사무실·유치장·장비 보관실·정수장 자료 보관실·중앙 제어실·수질 검사실, `ko.json`). 빌라 잠긴 녹색 문은 '잠긴 집' 조우 그림이 102호 문(잠김 색)과 0.2칸 어긋나 겹쳐 있던 것 — 방 문 위에 놓인 조우는 그 문 자리에 맞춰 그리고 밑 문을 숨기며 그림자를 드리우지 않음(`ExplorationTarget.CoveredDoorView`, 물자를 두면 문이 다시 보임). 계단실 어둠이 방 바깥벽과 같은 순서(-5)라 방이 계단에 걸친 곳(마트 1층·깊은 곳 7곳)에서 벽지가 어둠을 덮던 것 — 계단실 -4·문틀 -3·계단 그림 -2로 올리고, 계단실 안에 걸친 벽·바닥 장식·방 창문·명패는 숨김(`BuildingView.ClearWell`). Unity에서 빌라·마트·파출소 지하 확인 · `b2bcc1f4`
