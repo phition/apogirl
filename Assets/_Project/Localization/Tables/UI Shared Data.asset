@@ -7215,6 +7215,54 @@ MonoBehaviour:
     m_Key: craft.req.other
     m_Metadata:
       m_Items: []
+  - m_Id: 2199865286475776
+    m_Key: roomname.ROOM_HOUSE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2199865345196032
+    m_Key: roomname.ROOM_MART_OFFICE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2199865345196033
+    m_Key: roomname.ROOM_MART_WAREHOUSE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2199865345196034
+    m_Key: roomname.ROOM_SUBWAY_OFFICE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2199865345196035
+    m_Key: roomname.ROOM_SUBWAY_KIOSK
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2199865345196036
+    m_Key: roomname.ROOM_SUBWAY_RESTROOM
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2199865345196037
+    m_Key: roomname.ROOM_POLICE_OFFICE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2199865345196038
+    m_Key: roomname.ROOM_POLICE_CELL
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2199865345196039
+    m_Key: roomname.ROOM_POLICE_ARMORY
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2199865345196040
+    m_Key: roomname.ROOM_WATER_ARCHIVE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2199865345196041
+    m_Key: roomname.ROOM_WATER_CONTROL
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2199865345196042
+    m_Key: roomname.ROOM_WATER_LAB
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

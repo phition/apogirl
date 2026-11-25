@@ -21,7 +21,7 @@ MonoBehaviour:
     - Resource: 5
       Amount: 3
     FatigueCost: 7
-    StressCost: 1
+    StressCost: 2
     HasCheck: 1
     Check:
       BaseRate: 0.6

@@ -38,7 +38,7 @@ MonoBehaviour:
       BaseDownChance: 0.05
       Fatigue: 15
       StressMin: 6
-      StressMax: 12
+      StressMax: 6
       ConscienceMax: 2
       DawnReturnChance: 0
       HpLossOnDown: 30
@@ -63,8 +63,8 @@ MonoBehaviour:
         Max: 4
       BaseDownChance: 0.1
       Fatigue: 20
-      StressMin: 15
-      StressMax: 15
+      StressMin: 8
+      StressMax: 8
       ConscienceMax: 0
       DawnReturnChance: 0.2
       HpLossOnDown: 30

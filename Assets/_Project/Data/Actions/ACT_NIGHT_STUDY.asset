@@ -19,7 +19,7 @@ MonoBehaviour:
     SlotTag: 2
     ResourceCosts: []
     FatigueCost: 8
-    StressCost: 3
+    StressCost: 5
     HasCheck: 1
     Check:
       BaseRate: 0.55
