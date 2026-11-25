@@ -130,6 +130,13 @@ namespace ApoGirl.Presentation.Screens
                     ShowToast(Loc.T("plan.pick_slot"));
                 },
             };
+            // 거점 상황판 시설 칸 (P2): 마우스를 올리면 단면도의 그 방이 빛나고, 누르면 서랍을 닫고 그 방을 보여 준다
+            _baseBoard.RoomHovered = id => _section.Highlight(id);
+            _baseBoard.RoomPicked = id =>
+            {
+                _layers.CloseBase();
+                _section.FocusRoom(id);
+            };
             _teacherBox = _root.Q("teacher-box");
             _card = new CardOverlay(_root);
             _lab = new BalanceLabView(_root, _session, Refresh);

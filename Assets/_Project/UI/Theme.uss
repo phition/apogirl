@@ -1206,3 +1206,14 @@ Button.selected { border-color: var(--accent); background-color: var(--accent-so
 .base-action.with-icon { padding-left: 28px; }
 /* 거점 단추의 빨간 점 */
 .hud-alert-dot { position: absolute; right: 3px; top: 3px; width: 10px; height: 10px; border-radius: 5px; border-width: 1px; border-color: #1d1f22; background-color: var(--danger); }
+/* 거점 상황판 시설 칸 (BASE_TAB_PROPOSAL P2): 방마다 한 줄, 누르면 단면도의 그 방 */
+.base-room { flex-direction: row; align-items: flex-start; margin: 1px 0; padding: 3px 6px; min-height: 26px; background-color: transparent; border-width: 0; border-radius: 4px; }
+.base-room:hover { background-color: rgba(185, 163, 122, 0.14); }
+.base-room-name { width: 92px; flex-shrink: 0; font-size: 15px; -unity-font-style: bold; color: var(--text); -unity-text-align: upper-left; white-space: normal; margin: 0; padding: 0; }
+.base-room-text { flex-grow: 1; flex-shrink: 1; font-size: 14px; color: #a9cfa3; -unity-text-align: upper-left; white-space: normal; margin: 0; padding: 0; }
+.base-room.locked .base-room-name { color: var(--text-dim); -unity-font-style: normal; }
+.base-room.locked .base-room-text { color: var(--text-dim); }
+/* 단면도: 상황판에서 가리킨 방의 빛 테두리 */
+.hub-ring { border-width: 0; border-color: rgba(255, 214, 140, 0); transition-property: border-color, border-width; transition-duration: 0.25s; }
+.hub-ring.on { border-width: 4px; border-color: rgba(255, 214, 140, 0.95); background-color: rgba(255, 214, 140, 0.12); }
+.hub-room-panel-effect { color: #a9cfa3; font-size: 14px; white-space: normal; margin-bottom: 2px; }

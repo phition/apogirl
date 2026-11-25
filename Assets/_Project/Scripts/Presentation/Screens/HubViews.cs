@@ -247,7 +247,7 @@ namespace ApoGirl.Presentation.Screens
             var state = _session.State;
             var balance = _session.Definitions.Balance;
 
-            var facilities = state.Base.Facilities.Where(f => f.Value > 0).Select(f => Loc.T("facility." + f.Key)).ToList();
+            // 시설은 위 거점 상황판의 시설 칸이 보여 준다 (BASE_TAB_PROPOSAL P2)
             var people = new List<string>();
             if (_session.HasMetTeacher)
             {
@@ -260,7 +260,8 @@ namespace ApoGirl.Presentation.Screens
                 people.Add(Loc.T("teacher.stage." + Math.Min(stage, 4)));
             }
 
-            _baseInfo.text = Loc.F("status.facilities", facilities.Count > 0 ? string.Join(", ", facilities) : "-") + "\n" + string.Join("\n", people);
+            _baseInfo.text = string.Join("\n", people);
+            _baseInfo.EnableInClassList("hidden", people.Count == 0);
 
             RefreshCompanions(state);
             RefreshFactions(state);

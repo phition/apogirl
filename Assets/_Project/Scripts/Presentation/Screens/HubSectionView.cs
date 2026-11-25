@@ -186,6 +186,33 @@ namespace ApoGirl.Presentation.Screens
 
             return _loaded;
         }
+
+        /// <summary>방이 열렸는가: 늘 열림, 깃발, 또는 시설 레벨 1 이상.</summary>
+        public static bool IsRoomOpen(GameState state, RoomDef room)
+        {
+            if (room.Always)
+            {
+                return true;
+            }
+
+            if (!string.IsNullOrEmpty(room.Flag) && state.Flags.Contains(room.Flag))
+            {
+                return true;
+            }
+
+            return !string.IsNullOrEmpty(room.Facility) && state.Base.Facilities.TryGetValue(room.Facility, out var level) && level > 0;
+        }
+
+        /// <summary>방 이름: NameKey, 없으면 시설 이름.</summary>
+        public static string RoomName(RoomDef room)
+        {
+            if (!string.IsNullOrEmpty(room.NameKey))
+            {
+                return Loc.T(room.NameKey);
+            }
+
+            return !string.IsNullOrEmpty(room.Facility) ? Loc.T("facility." + room.Facility) : room.Id;
+        }
     }
 
     /// <summary>
@@ -425,20 +452,7 @@ namespace ApoGirl.Presentation.Screens
             return string.Join(",", parts);
         }
 
-        private bool IsOpen(GameState state, HubSectionConfig.RoomDef room)
-        {
-            if (room.Always)
-            {
-                return true;
-            }
-
-            if (!string.IsNullOrEmpty(room.Flag) && state.Flags.Contains(room.Flag))
-            {
-                return true;
-            }
-
-            return !string.IsNullOrEmpty(room.Facility) && state.Base.Facilities.TryGetValue(room.Facility, out var level) && level > 0;
-        }
+        private static bool IsOpen(GameState state, HubSectionConfig.RoomDef room) => HubSectionConfig.IsRoomOpen(state, room);
 
         private string Shelter(GameState state) =>
             !string.IsNullOrEmpty(_config.ShelterFlag) && state.Flags.Contains(_config.ShelterFlag) ? _config.ShelterRoom : _config.DefaultShelter;
@@ -578,6 +592,10 @@ namespace ApoGirl.Presentation.Screens
                     view.Glow = Place(element, "hub-glow", 0, 0, def.Width, height);
                     view.Glow.pickingMode = PickingMode.Ignore;
                 }
+
+                view.Ring = Place(element, "hub-ring", 0, 0, def.Width, height);
+                view.Ring.pickingMode = PickingMode.Ignore;
+                view.Ring.EnableInClassList("on", def.Id == _highlighted);
 
                 var name = new Label(RoomName(def));
                 name.AddToClassList("hub-room-name");
@@ -914,15 +932,7 @@ namespace ApoGirl.Presentation.Screens
             Image(element, texture);
         }
 
-        private string RoomName(HubSectionConfig.RoomDef def)
-        {
-            if (!string.IsNullOrEmpty(def.NameKey))
-            {
-                return Loc.T(def.NameKey);
-            }
-
-            return !string.IsNullOrEmpty(def.Facility) ? Loc.T("facility." + def.Facility) : def.Id;
-        }
+        private static string RoomName(HubSectionConfig.RoomDef def) => HubSectionConfig.RoomName(def);
 
         // ── 방 누르기 ──
 
@@ -976,8 +986,17 @@ namespace ApoGirl.Presentation.Screens
                 (picture ?? _roomPanel).Add(shelf);
             }
 
+            if (!room.Open)
+            {
+                // 잠긴 방: 어디를 탐험하면 열리는지 (BASE_TAB_PROPOSAL P2)
+                var hint = new Label(RoomText.Hint(room.Def));
+                hint.AddToClassList("hub-room-panel-note");
+                _roomPanel.Add(hint);
+            }
+
             if (room.Open)
             {
+                AddRoomFacts(room);
                 var state = _session.State;
                 var actions = new List<string>(room.Def.Actions);
                 if (room.Def.Id == Shelter(state))
@@ -1039,6 +1058,55 @@ namespace ApoGirl.Presentation.Screens
         {
             _roomPanel.AddToClassList("hidden");
             HideCdDetail();
+        }
+
+        private string _highlighted;
+        private int _focusTicket;
+
+        /// <summary>그 방에 빛 테두리 (null이면 끈다). 거점 상황판 시설 줄에 마우스를 올렸을 때.</summary>
+        public void Highlight(string roomId)
+        {
+            _highlighted = roomId;
+            _focusTicket++;
+            foreach (var room in _rooms.Values)
+            {
+                room.Ring?.EnableInClassList("on", room.Def.Id == roomId);
+            }
+        }
+
+        /// <summary>그 방을 보여 준다: 빛 테두리 + 방 패널, 잠시 뒤 테두리는 꺼진다 (거점 상황판 시설 줄을 눌렀을 때).</summary>
+        public void FocusRoom(string roomId)
+        {
+            Highlight(roomId);
+            ShowRoomPanel(roomId);
+            var ticket = _focusTicket;
+            _host.schedule.Execute(() =>
+            {
+                if (ticket == _focusTicket)
+                {
+                    Highlight(null);
+                }
+            }).StartingIn(2500);
+        }
+
+        /// <summary>방 패널의 효과·맡은 사람 줄 (거점 상황판 시설 칸과 같은 말).</summary>
+        private void AddRoomFacts(RoomView room)
+        {
+            var db = _session.Definitions;
+            foreach (var effect in RoomText.Effects(db, room.Def.Facility))
+            {
+                var line = new Label(effect);
+                line.AddToClassList("hub-room-panel-effect");
+                _roomPanel.Add(line);
+            }
+
+            var people = RoomText.People(_session.State, db, room.Def.Id);
+            if (people != null)
+            {
+                var line = new Label(people);
+                line.AddToClassList("hub-room-panel-note");
+                _roomPanel.Add(line);
+            }
         }
 
         // ── 사람 ──
@@ -1443,6 +1511,9 @@ namespace ApoGirl.Presentation.Screens
             public VisualElement Element;
             public VisualElement Dark;
             public VisualElement Glow;
+
+            /// <summary>거점 상황판에서 가리킨 방의 빛 테두리 (BASE_TAB_PROPOSAL P2).</summary>
+            public VisualElement Ring;
             public Label Name;
             public bool Open;
         }

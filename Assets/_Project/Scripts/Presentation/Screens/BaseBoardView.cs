@@ -108,7 +108,54 @@ namespace ApoGirl.Presentation.Screens
                 PowerCard(power);
             }
 
+            if (state.Base.Facilities.Any(f => f.Value > 0))
+            {
+                RoomsCard(state);
+            }
+
             KoreanFont.ApplyDeep(_host);
+        }
+
+        // ── 시설 (P2) ──
+
+        /// <summary>시설 줄에 마우스를 올렸다·뗐다 (null) — 허브가 단면도에서 그 방을 빛낸다.</summary>
+        public Action<string> RoomHovered { get; set; }
+
+        /// <summary>시설 줄을 눌렀다 — 허브가 서랍을 닫고 단면도에서 그 방을 보여 준다.</summary>
+        public Action<string> RoomPicked { get; set; }
+
+        private HubSectionConfig _section;
+
+        /// <summary>단면도의 방마다 한 줄: 연 방은 효과(없으면 쓰임), 잠긴 방은 "?"와 여는 방법. 연 방이 먼저.</summary>
+        private void RoomsCard(GameState state)
+        {
+            _section ??= HubSectionConfig.Load();
+            var rooms = _section.Rooms;
+            var open = rooms.Where(r => HubSectionConfig.IsRoomOpen(state, r)).ToList();
+            var body = Card("rooms", "base.rooms", "menu.school", Loc.F("base.rooms.count", open.Count, rooms.Length), "ok");
+            if (body == null)
+            {
+                return;
+            }
+
+            var db = _session.Definitions;
+            foreach (var room in open.Concat(rooms.Where(r => !open.Contains(r))))
+            {
+                var isOpen = open.Contains(room);
+                var roomId = room.Id;
+                var row = new Button(() => RoomPicked?.Invoke(roomId)) { tooltip = Loc.T("base.rooms.hint") };
+                row.AddToClassList("base-room");
+                row.EnableInClassList("locked", !isOpen);
+                var name = new Label(isOpen ? HubSectionConfig.RoomName(room) : Loc.F("base.rooms.locked", HubSectionConfig.RoomName(room)));
+                name.AddToClassList("base-room-name");
+                row.Add(name);
+                var text = new Label(isOpen ? RoomText.Summary(db, room) : RoomText.Hint(room));
+                text.AddToClassList("base-room-text");
+                row.Add(text);
+                row.RegisterCallback<PointerEnterEvent>(_ => RoomHovered?.Invoke(roomId));
+                row.RegisterCallback<PointerLeaveEvent>(_ => RoomHovered?.Invoke(null));
+                body.Add(row);
+            }
         }
 
         // ── 안전 ──
