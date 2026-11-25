@@ -257,7 +257,6 @@ Button.selected { border-color: var(--accent); background-color: var(--accent-so
 .board.closed { translate: 0 720px; opacity: 0; }
 /* 보드가 열리면 입상은 왼쪽에 그대로 두고, 선생님 한마디는 보드 위로 올린다 */
 .board-open .teacher-box { bottom: 700px; transition-property: bottom, right; transition-duration: 0.25s; }
-.board-open .vitals-mini { display: none; }
 .board-hint { color: var(--text-dim); font-size: 14px; margin-right: 10px; }
 .board-body { flex-direction: row; flex-grow: 1; min-height: 0; }
 .palette { width: 420px; margin-right: 12px; }
