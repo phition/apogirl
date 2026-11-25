@@ -12,4 +12,4 @@
 | `Resources/Art/ExplorationPixel/fx_pfx_thrust_0..14` | `melee/thrust` | 대걸레 찌르기 |
 
 만든 법: `node tools/render.mjs <id> --sheet --no-actor --fps 24` → 시트를 프레임으로 자르고 끝의 빈 프레임을 버림
-(`I:\workshop\code_temp\pixelfx_try\tools\cut.py`). 기준점은 `sprite_meta.json`. 옛 그림 `fx_hit_heavy_`·`fx_hit_thrust_`은 그대로 두었다.
+(`I:\workshop\code_temp\pixelfx_try\tools\cut.py`). 기준점(맞는 자리)은 `sprite_meta.json`. 찌르기는 게임의 뒤집기 규칙(주인공이 왼쪽이면 뒤집음)에 맞춰 좌우를 미리 뒤집었다. 옛 그림 `fx_hit_heavy_`·`fx_hit_thrust_`은 그대로 두었다.

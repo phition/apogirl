@@ -3,7 +3,7 @@
 〈마지막 학기 (가제)〉 — 마일스톤별 진행 기록, 남은 작업, 하면 좋을 작업, 하지 말아야 할 작업.
 
 - 기준: 마스터 프롬프트 12장 마일스톤(원본 `C:\Users\phiti\Desktop\MASTER_PROMPT.md`), 결정 기록 부록 C(D1~D26).
-- 작성: 2026-11-25. 커밋 724개(2026-11-18 ~ 2026-11-25), 마지막 커밋 `2cbd20dc` (그 뒤 이번 커밋).
+- 작성: 2026-11-25. 커밋 724개(2026-11-18 ~ 2026-11-25), 마지막 커밋 `80b64997` (그 뒤 이번 커밋).
 - EditMode 테스트: 444개 모두 통과 (2026-11-25, 힉스필드 15차 연결 뒤).
 - 자세한 내용은 각 계획 문서에 있다. 이 문서는 한눈에 보는 요약이다.
 - **새 세션은 이 문서부터 읽는다.** 작업이 하나 끝날 때마다 고친다.
@@ -361,3 +361,4 @@ M6·M7과 함께 기획 확장(동료·CD·깊은 곳·고양이·동아리·방
 - 2026-11-25 · 힉스필드 16차 문서(사용자 요청: PixelLab 몫을 힉스필드로): [HIGGSFIELD_ASSETS_16.md](HIGGSFIELD_ASSETS_16.md) — 24F 계획 9장(나머지 5벌, 무기 겹치기 C5 ②)과 몽둥이 3종(E3 ②)을 옮김. 11차처럼 새로 그리게 하지 않고 PixelLab 하복 2배 시트를 입력으로 옷만 바꾸거나 무기만 지운다(자세·박자·크기 하복 그대로). A 시범(무기 그림 7·하복 쥔 자세 12·무기 지운 휘두르기·내려치기 2) → B 옷 5벌 맨손 10동작 + 대걸레 찌르기 55 → C 쥔 자세·무기 지운 공격 70, 모두 146. 생성 `Tools/make_higgsfield_doc16.py`가 입력 시트·옷/무기 참고·프롬프트를 `ArtInbox/sprites16/`에 만든다. 제출 안 함 · `82198b9d`
 - 2026-11-25 · 16차 문서에 잠든 좀비 소리(사용자 요청): 코 고는 것처럼 들리던 `sfx_z_dormant_crowd`(6초 반복, 잠든 좀비 14칸 안 환경음)를 낮게 목 안에서 그르렁거리는 소리로 다시 받는 프롬프트(Seed Audio, 본판·짧은 판, 코골이·콧소리 금지) — 7절, 프롬프트 파일 `ArtInbox/sprites16/prompts/sfx_z_dormant_crowd.txt`. 제출 안 함 · 이 커밋
 - 2026-11-25 · 기절 별(사용자 요청): 좀비·생존자가 맞아 기절하면 머리 위 노란 알아챔 게이지 대신 별 세 개가 빛줄기를 끌며 돈다 — Aseprite로 그린 32×16 12프레임 `ExplorationPixel/fx_dizzy_0..11`(원본 `code_temp/apogirl/aseprite_work/fx_dizzy_stars.aseprite`), `ExpeditionDirector.UpdateDizzy`(빛 안 받는 이펙트 재질), 설정 `exploration_art.json` `Combat.DizzyFx`·`DizzyFramesPerSecond`·`DizzyOffsets`(종류별 머리 높이·고개 숙인 쪽 가로 거리, 기절 프레임 평균에서 잼, 그림이 왼쪽을 보면 반대로). 그림이 없으면 예전 게이지. 플레이로 확인함(낮 1층 복도, 배회·청각형)
+- 2026-11-25 · 타격 이펙트를 pixelfx로(사용자 요청): 오픈소스 [patch-gg/pixelfx](https://github.com/patch-gg/pixelfx)(MIT)의 `impacts/blunt-hit`·`melee/thrust`를 24fps로 렌더해 `ExplorationPixel/fx_pfx_blunt_0..21`(방망이·파이프)·`fx_pfx_thrust_0..14`(대걸레)로 넣고 `Combat.ImpactAt[].Fx`를 바꿈. 기준점은 맞는 자리(가슴)가 되게 `sprite_meta.json`, 찌르기는 `HitFx`가 주인공이 왼쪽일 때 뒤집으므로 좌우를 미리 뒤집음(옛 `fx_hit_thrust_`는 이 규칙에서 주인공 쪽으로 날아가는 방향이었다). 옛 그림은 그대로 둠, 경찰봉은 기본 `fx_hit_` 그대로. 출처 `Art/ThirdParty/pixelfx/`(CREDITS·LICENSE), 렌더 도구 `code_temp/pixelfx_try/`. 그림 가져오기만 Unity에서 확인, 플레이 확인은 아직 · `80b64997` · 이 커밋
