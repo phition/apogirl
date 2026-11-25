@@ -3,7 +3,7 @@
 〈마지막 학기 (가제)〉 — 마일스톤별 진행 기록, 남은 작업, 하면 좋을 작업, 하지 말아야 할 작업.
 
 - 기준: 마스터 프롬프트 12장 마일스톤(원본 `C:\Users\phiti\Desktop\MASTER_PROMPT.md`), 결정 기록 부록 C(D1~D26).
-- 작성: 2026-11-25. 커밋 724개(2026-11-18 ~ 2026-11-25), 마지막 커밋 `2c10f86f` (그 뒤 이번 커밋).
+- 작성: 2026-11-25. 커밋 724개(2026-11-18 ~ 2026-11-25), 마지막 커밋 `6ba02d9e` (그 뒤 이번 커밋).
 - EditMode 테스트: 444개 모두 통과 (2026-11-25, 힉스필드 15차 연결 뒤).
 - 자세한 내용은 각 계획 문서에 있다. 이 문서는 한눈에 보는 요약이다.
 - **새 세션은 이 문서부터 읽는다.** 작업이 하나 끝날 때마다 고친다.
@@ -102,6 +102,8 @@ M6·M7과 함께 기획 확장(동료·CD·깊은 곳·고양이·동아리·방
 | 8차 | [_8](HIGGSFIELD_ASSETS_8.md) | 이벤트 컷 90·아이콘·방송반·CD·음악실·소리 | ✅ 연결. 이벤트가 없는 컷 몇 장은 보류 |
 | 9차 | — | 다시 그리기 79장(초상 32 투명 png·이벤트·엔딩·지역) | ✅ 덮어쓰기 |
 | **10차** | [_10](HIGGSFIELD_ASSETS_10.md) | 탐험 스프라이트 다듬기: 대걸레 웅크려 걷기, 무기 공격 20프레임, 타격 이펙트, 좀비 맞음·쓰러짐, 새 동작 96묶음(다침·헐떡임은 무기 5종 모두) | ✅ 287장 중 275장 연결(3921프레임, 도구 `code_temp/apogirl/tools/install_s10.py`). 계단 12장·문 열기는 쓰지 않기로 함(사용자 결정 2026-11-23) |
+| 11~15차 | [_11_ALL](HIGGSFIELD_ASSETS_11_ALL.md) · [_12](HIGGSFIELD_ASSETS_12.md) · [_13](HIGGSFIELD_ASSETS_13.md) · [_14](HIGGSFIELD_ASSETS_14.md) · [_15](HIGGSFIELD_ASSETS_15.md) | 주인공 24프레임·동아리/빈 이벤트 컷·인물 다시·빌린 컷 23·제작 | ✅ 연결 |
+| 16차 | [_16](HIGGSFIELD_ASSETS_16.md) | 주인공 나머지 5벌·무기 7·잠든 좀비 소리 | ⏳ 받기 전 |
 | PixelLab | [PIXELLAB_DEEP](PIXELLAB_DEEP.md) | 탐험 픽셀 아트, 깊은 곳 P1·P2, 옥상, 계단, 단면도 하늘 | ✅ |
 
 ---
@@ -182,10 +184,8 @@ M6·M7과 함께 기획 확장(동료·CD·깊은 곳·고양이·동아리·방
    - 사용자가 Unity Hub → Installs → 6000.6.8f1 → 모듈에서 Android Build Support를 지운다.
    - 그 뒤 main에 남은 메타 약 3,400개(다시 붙은 안드로이드 블록)를 `git checkout`하거나 `code_temp/apogirl/tools/strip_android_meta.py`로 지운다.
 2. **M6-5 남은 연결**
-   - **힉스필드 14차 23장** ([HIGGSFIELD_ASSETS_14.md](HIGGSFIELD_ASSETS_14.md)) 받으면 연결: `ArtInbox/illustrations/events14/` → `install_events12.py`, `art_map.json`에서 그 이벤트 줄을 새 그림으로(혈액형 두 편은 `evt_a4_blood_other`, 의족 컷은 `"Flag": "PROSTHETIC_DONE"` 줄을 `EVT_A2_REVIEW` 기본 줄 앞에), 옛 그림은 남김.
    - **제작 장비 탐험 도트 남은 것** ([PIXELLAB_CRAFTING_REQUEST.md](PIXELLAB_CRAFTING_REQUEST.md)): 허수아비·가방 2·보호구 3벌(색 덧칠)은 넣었다. 몽둥이 무기 그림 3장은 5벌 다시 받기(24F 9절) 때 — 그때 `armor_recolor.py install`도 다시 돌린다. 허수아비·가방·보호구를 실제 탐험 화면에서 아직 보지 않았다(미리보기만).
    - 이벤트가 없어 보류한 컷: `evt_deep_door`·`evt_deep_oneway`·`evt_season_*`·`evt_cat_warn`, 그리고 `stand_item_*`.
-   - CD 음원 8곡(8차 2.4절).
    - **잠든 좀비 소리 다시 받기** ([HIGGSFIELD_ASSETS_16.md](HIGGSFIELD_ASSETS_16.md) 7절): 받으면 `ArtInbox/sound16/` → 이음매·크기 맞춰 `Sfx/sfx_z_dormant_crowd.wav`를 바꾸고 옛 소리는 `code_temp/apogirl/backup_sound16/`.
    - 탐험 주인공 프레임 늘리기(20~24프레임): 227묶음 모두 24프레임으로 연결 끝(2026-11-24, [HIGGSFIELD_ASSETS_11_ALL.md](HIGGSFIELD_ASSETS_11_ALL.md) 0절). 남은 일: 게임에서 옷·무기마다 걷기·달리기·공격을 보고 튀는 칸이 있으면 그 묶음만 다시.
    - 탐험 주인공 PixelLab 24F 나머지 5벌(하복은 끝남): **크레딧을 채운 뒤 사용자가 말하면** 무기 겹치기 방식(C5 ②)으로 — 무기 그림 4장·겹치기 코드 시범부터 ([PIXELLAB_24F_PLAN](PIXELLAB_24F_PLAN.md) 9장). **힉스필드로 받는 길도 있다: [HIGGSFIELD_ASSETS_16.md](HIGGSFIELD_ASSETS_16.md)** — 하복 시트를 입력으로 옷만 바꾸기·무기 지우기, 무기 그림 7장(몽둥이 3종 포함), A 시범 21 → B 55 → C 70, 입력·프롬프트는 `ArtInbox/sprites16/`(`Tools/make_higgsfield_doc16.py`). 받으면 넣기 도구·겹치기 코드를 만든다.
@@ -367,5 +367,6 @@ M6·M7과 함께 기획 확장(동료·CD·깊은 곳·고양이·동아리·방
 - 2026-11-25 · 적대 생존자 겉모습 둘째 '등산복 남자'(사용자 요청): 빨강·짙은 회색 배색 등산 재킷·모자·크로스백·등산화, 검은 몽둥이를 걸음마다 까딱 — `ExplorationPixel/hiker_{walk,run,idle,hit,pushed,stun}_n`(학생 생존자와 같은 프레임 수 16·16·16·12·8·16)과 앉아 담배 피는 대기 `hiker_sit_0..31`(손을 입으로·불똥이 밝아짐·연기). 생성 스크립트 `code_temp/apogirl/aseprite_work/hiker_gen.py`(걷기·자세 함수)·`hiker_sit_gen.py`·`hiker_anims.py`(게임 키 이름으로 전부), Aseprite 원본 `hiker_walk.aseprite`·`hiker_idle_smoke.aseprite`. 생존자마다 판 시드로 겉모습을 고른다(`exploration_art.json` `SurvivorLooks`, 무리면 섞임, `ZombieView.Kind` = 겉모습 이름). 앉은 그림이 있는 겉모습은 처음 자리에서 `ZombieUnit.Resting`(순찰 안 함)으로 앉아 있다가 대기 말고 다른 상태가 되거나 알아챔이 `SurvivorStandAwareness` 0.15를 넘으면 일어나 다시 앉지 않는다. 기절 별 자리 `DizzyOffsets` hiker 1.5.
 - 2026-11-25 · 적대 생존자 겉모습 셋째 '트레이닝복 여자'(사용자 요청): 주인공과 비슷한 키(~61px), 긴 머리·흰 마스크(아래 한 줄만 그늘)·남색 트레이닝 상의(흰 두 줄)·무릎 기장 주름 치마·분홍 백팩·흰 운동화, 나무 막대 — `ExplorationPixel/woman_{walk,run,idle,hit,pushed,stun}_n`(16·16·16·12·8·16)과 처음 자리에서 서서 폰을 보는 `woman_phone_0..31`(대기 `idle_`도 같은 폰 보기, 막대는 뒷손). 쉬는 그림을 앉기·폰 둘 다 받도록 `ZombieView.Seated` → `RestPose`(`sit_`·`phone_`, `RestPoseOf`). 생성 스크립트 `code_temp/apogirl/aseprite_work/woman_gen.py`·`woman_anims.py`. `SurvivorLooks`에 `woman`, 기절 별 자리 1.52.
 - 2026-11-25 · 물린 뒤 무적 3초 → 2초(사용자 요청, `BalanceConfig.HurtInvulnSeconds`) · f5c7c717
-- 2026-11-25 · 적대적 생존자와 좀비(사용자 요청): 생존자 시야 12 → 8(`ENEMY_SURVIVOR`). 추격하는 생존자는 주인공과 사이에 좀비(잠든 것 포함)가 있으면 걸어서(`ZombieUnit.Sneaking`, 걷는 그림), 없으면 달려온다 — 생존자는 걸어도 달려도 좀비를 깨우지 않는다(원래대로). 좀비는 보이는 사람(주인공·깨어 있는 생존자) 가운데 물 수 있는 가장 가까운 사람을 노린다(`ThreatSimulation.PickPrey`): 생존자가 더 가까우면 생존자를 물고, 물린 생존자는 3초(`BalanceConfig.SurvivorBittenSeconds`) 그 자리에서 기절(머리 위 별)·깜빡이며(`ZombieUnit.BiteGuard`) 맞음 동작·무는 소리, 그동안 좀비는 잠깐 멈췄다가 다른 사람(주인공·다른 생존자)에게 간다. 모두 무적이면 가장 가까운 사람 곁으로. 생존자를 쫓는 좀비는 "발각" 문구를 띄우지 않는다. 생존자는 다치거나 쓰러지지 않는다. 테스트 2개(`M7HostileTests`) · 이 커밋
+- 2026-11-25 · 적대적 생존자와 좀비(사용자 요청): 생존자 시야 12 → 8(`ENEMY_SURVIVOR`). 추격하는 생존자는 주인공과 사이에 좀비(잠든 것 포함)가 있으면 걸어서(`ZombieUnit.Sneaking`, 걷는 그림), 없으면 달려온다 — 생존자는 걸어도 달려도 좀비를 깨우지 않는다(원래대로). 좀비는 보이는 사람(주인공·깨어 있는 생존자) 가운데 물 수 있는 가장 가까운 사람을 노린다(`ThreatSimulation.PickPrey`): 생존자가 더 가까우면 생존자를 물고, 물린 생존자는 3초(`BalanceConfig.SurvivorBittenSeconds`) 그 자리에서 기절(머리 위 별)·깜빡이며(`ZombieUnit.BiteGuard`) 맞음 동작·무는 소리, 그동안 좀비는 잠깐 멈췄다가 다른 사람(주인공·다른 생존자)에게 간다. 모두 무적이면 가장 가까운 사람 곁으로. 생존자를 쫓는 좀비는 "발각" 문구를 띄우지 않는다. 생존자는 다치거나 쓰러지지 않는다. 테스트 2개(`M7HostileTests`) · 6302618c
 - 2026-11-25 · 도트 도구 스킬(사용자 결정: 원화→도트는 PixelOE, 도트 이펙트는 pixelfx): 프로젝트 스킬 `.claude/skills/pixel-art-tools/SKILL.md`(설치 위치·실행법·잘 되는 것/안 되는 것·넣는 규칙). 도구 `code_temp/apogirl/tools/pixeloe_convert.py`(투명 배경 처리, 단순 축소 비교 그림)·`pixelfx_make.py`(24fps·좌우 뒤집기·기준점 제안), PixelOE는 I: 가상환경 `code_temp/pixeloe_try/venv`(CPU torch). PixelOE 시험: 인물은 확실히 낫고 사진 같은 설비·배경은 잔점이 생김 — 게임 그림은 바꾸지 않음 · 이 커밋
+- 2026-11-25 · 힉스필드 14차 연결 ([HIGGSFIELD_ASSETS_14.md](HIGGSFIELD_ASSETS_14.md), 23장): 남의 컷·빈 방 배경을 빌려 쓰던 이벤트 23개를 새 컷으로(`install_events12.py`로 너비 1920 jpg, `art_map.json` Events 줄만 바꿈, 혈액형 두 편은 `evt_a4_blood_other`), 여름 마지막 밤 의족 갈래는 `EVT_A2_REVIEW` + `"Flag": "PROSTHETIC_DONE"` 줄을 기본 줄 앞에. 명찰에 글씨 같은 무늬가 있는 3장(교실·창고 2일째·방송 응답 마트)은 `nametag_blur.py`로 흐리게(칸 `code_temp/nametag/result_14.txt`, 원본 `backup_nametag/`). 옛 그림(`evt_a4_farewell`·`evt_a3_police` 등)은 남김. 남은 작업에서 14차·CD 음원 줄(음원은 8차 때 이미 연결)을 지움 · 이 커밋
