@@ -3,7 +3,7 @@
 〈마지막 학기 (가제)〉 — 마일스톤별 진행 기록, 남은 작업, 하면 좋을 작업, 하지 말아야 할 작업.
 
 - 기준: 마스터 프롬프트 12장 마일스톤(원본 `C:\Users\phiti\Desktop\MASTER_PROMPT.md`), 결정 기록 부록 C(D1~D26).
-- 작성: 2026-11-25. 커밋 811개(2026-11-18 ~ 2026-11-25), 마지막 커밋 `c02408a2` (그 뒤 이번 커밋).
+- 작성: 2026-11-25. 커밋 811개(2026-11-18 ~ 2026-11-25), 마지막 커밋 `2a21c6a4` (그 뒤 이번 커밋).
 - EditMode 테스트: 484개 모두 통과 (2026-11-25, 특기·합류·이탈 호감 손질 뒤).
 - 자세한 내용은 각 계획 문서에 있다. 이 문서는 한눈에 보는 요약이다.
 - **새 세션은 이 문서부터 읽는다.** 작업이 하나 끝날 때마다 고친다.
@@ -186,6 +186,7 @@ M6·M7과 함께 기획 확장(동료·CD·깊은 곳·고양이·동아리·방
 2. **M6-5 남은 연결**
    - **제작 장비 탐험 도트 남은 것** ([PIXELLAB_CRAFTING_REQUEST.md](PIXELLAB_CRAFTING_REQUEST.md)): 허수아비·가방 2·보호구 3벌(색 덧칠)은 넣었다. 몽둥이 무기 그림 3장은 5벌 다시 받기(24F 9절) 때 — 그때 `armor_recolor.py install`도 다시 돌린다. 허수아비·가방·보호구를 실제 탐험 화면에서 아직 보지 않았다(미리보기만).
    - 이벤트가 없어 보류한 컷: `evt_deep_door`·`evt_deep_oneway`·`evt_season_*`·`evt_cat_warn`, 그리고 `stand_item_*`.
+   - **이탈 장면 평소용 대사** (2026-11-25): 이탈 예고가 위기 주가 아니어도 켜지게 되어, `Events/Crisis.yarn`의 '먹을 게 없다·다 같이 굶는다' 같은 말이 물자가 넉넉할 때도 나온다. 위기 여부로 갈라 평소용 줄을 쓰거나 위기 말을 덜어 낸다.
    - **잠든 좀비 소리 다시 받기** ([HIGGSFIELD_ASSETS_16.md](HIGGSFIELD_ASSETS_16.md) 7절): 받으면 `ArtInbox/sound16/` → 이음매·크기 맞춰 `Sfx/sfx_z_dormant_crowd.wav`를 바꾸고 옛 소리는 `code_temp/apogirl/backup_sound16/`.
    - 탐험 주인공 프레임 늘리기(20~24프레임): 227묶음 모두 24프레임으로 연결 끝(2026-11-24, [HIGGSFIELD_ASSETS_11_ALL.md](HIGGSFIELD_ASSETS_11_ALL.md) 0절). 남은 일: 게임에서 옷·무기마다 걷기·달리기·공격을 보고 튀는 칸이 있으면 그 묶음만 다시.
    - 탐험 주인공 PixelLab 24F 나머지 5벌(하복은 끝남): **크레딧을 채운 뒤 사용자가 말하면** 무기 겹치기 방식(C5 ②)으로 — 무기 그림 4장·겹치기 코드 시범부터 ([PIXELLAB_24F_PLAN](PIXELLAB_24F_PLAN.md) 9장). **힉스필드로 받는 길도 있다: [HIGGSFIELD_ASSETS_16.md](HIGGSFIELD_ASSETS_16.md)** — 하복 시트를 입력으로 옷만 바꾸기·무기 지우기, 무기 그림 7장(몽둥이 3종 포함), A 시범 21 → B 55 → C 70, 입력·프롬프트는 `ArtInbox/sprites16/`(`Tools/make_higgsfield_doc16.py`). 받으면 넣기 도구·겹치기 코드를 만든다.
@@ -409,3 +410,4 @@ M6·M7과 함께 기획 확장(동료·CD·깊은 곳·고양이·동아리·방
 - 2026-11-25 · 특기가 켜져 있는 호감 기준 80 → 60(사용자 결정, `BalanceConfig.SpecialMinAffinity`). 특기를 얻는 세 번째 개인 장면은 그대로 호감 80이라, 얻은 뒤 호감이 60 밑으로 떨어질 때만 꺼진다. `SpecialTests`는 기준값을 읽게 고침. EditMode 484개 통과.
 - 2026-11-25 · 인물 서랍에서 꺼진 특기 줄을 뺌(사용자 결정): 켜져 있을 때만 '특기 · 이름: 효과'를 적는다(`PeopleView.Flags`, `SpecialRules.IsActive`). 문구 `people.special_off`는 원본에서 지움(Sync Tables는 남은 키를 지우지 않아 생성 테이블엔 남아 있다, 쓰는 곳 없음).
 - 2026-11-25 · 특기·합류·이탈 호감 손질(사용자 결정): 특기를 얻는 세 번째 개인 장면 호감 80 → 60(`bond_events.json` 다섯 편, 유랑자는 방문 사다리라 그대로), 합류하면 호감 30에서 시작(`BalanceConfig.JoinAffinity`, 더 낮으면 올리고 합류 장면의 호감 변화는 그 위에 — `EffectApplier.ChangeNpc`, 이미 합류한 동료는 다시 안 함), 위기 이탈 예고 기준 호감 0 미만 → 10 미만(`CrisisLeaveBelowAffinity`, 위기 주 조건은 그대로). `EventSystemTests`에 합류 바닥 확인. EditMode 484개 통과, 봇 #27(배드 99% 그대로).
+- 2026-11-25 · 이탈 예고를 위기 주와 떼어 냄(사용자 결정): 결산마다 호감 10 미만 동료 한 명에 `LEAVE_WARN_*`(`CrisisRules.WarnWeekly(state, balance)`, 옛 `IsCrisisWeek`·습격 돌파 인자 없앰). 떠나는 장면 대사(`Events/Crisis.yarn`)는 '먹을 게 없다'는 위기 때 말이라 평소에 나오면 어색할 수 있다 — 남은 일. `CrisisTests` 고침, EditMode 484개 통과, 봇 #28(#27과 같음 — 봇 판에선 호감 10 미만이 안 나옴).

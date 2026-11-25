@@ -23,29 +23,27 @@ namespace ApoGirl.Tests.EditMode
         }
 
         [Test]
-        public void Warn_OnlyInCrisisWeek_LowestBelowZeroFirst()
+        public void Warn_BelowThreshold_EvenWithoutCrisis_LowestFirst()
         {
             var balance = new BalanceConfig();
-            var state = State(("NPC_DOHYEON", -5), ("NPC_BYSTANDER", -12), ("NPC_NURSE", 30));
-            Assert.IsEmpty(CrisisRules.WarnWeekly(state, balance, raidBreached: false), "물자가 있고 습격도 없으면 위기가 아니다");
-
-            state.Base.Resources[ResourceType.Water] = 0;
-            var warned = CrisisRules.WarnWeekly(state, balance, raidBreached: false);
-            CollectionAssert.AreEqual(new[] { "NPC_BYSTANDER" }, warned, "한 주에 한 명, 호감이 가장 낮은 사람");
+            var state = State(("NPC_DOHYEON", balance.CrisisLeaveBelowAffinity - 1), ("NPC_BYSTANDER", -12), ("NPC_NURSE", 30));
+            var warned = CrisisRules.WarnWeekly(state, balance);
+            CollectionAssert.AreEqual(new[] { "NPC_BYSTANDER" }, warned, "물자가 있어도(위기가 아니어도) 한 주에 한 명, 호감이 가장 낮은 사람");
             Assert.IsTrue(state.Flags.Contains(CrisisRules.WarnFlag(balance, "NPC_BYSTANDER")));
 
-            CollectionAssert.AreEqual(new[] { "NPC_DOHYEON" }, CrisisRules.WarnWeekly(state, balance, raidBreached: false), "이미 예고한 사람은 건너뛴다");
+            CollectionAssert.AreEqual(new[] { "NPC_DOHYEON" }, CrisisRules.WarnWeekly(state, balance), "이미 예고한 사람은 건너뛴다");
+            Assert.IsEmpty(CrisisRules.WarnWeekly(state, balance), "기준 이상(간호 30)은 후보가 아니다");
         }
 
         [Test]
-        public void Warn_RaidBreach_IsCrisis_TeacherNeverLeaves()
+        public void Warn_TeacherNeverLeaves_ThresholdIsStrict()
         {
             var balance = new BalanceConfig();
-            var state = State(("NPC_TEACHER", -50), ("NPC_NURSE", 10));
-            Assert.IsEmpty(CrisisRules.WarnWeekly(state, balance, raidBreached: true), "선생님은 떠나지 않고, 호감 0 이상은 후보가 아니다");
+            var state = State(("NPC_TEACHER", -50), ("NPC_NURSE", balance.CrisisLeaveBelowAffinity));
+            Assert.IsEmpty(CrisisRules.WarnWeekly(state, balance), "선생님은 떠나지 않고, 호감이 기준과 같으면 후보가 아니다");
 
-            state.Npcs["NPC_NURSE"].Affinity = -1;
-            CollectionAssert.AreEqual(new[] { "NPC_NURSE" }, CrisisRules.WarnWeekly(state, balance, raidBreached: true));
+            state.Npcs["NPC_NURSE"].Affinity = balance.CrisisLeaveBelowAffinity - 1;
+            CollectionAssert.AreEqual(new[] { "NPC_NURSE" }, CrisisRules.WarnWeekly(state, balance));
         }
 
         [Test]

@@ -10,23 +10,19 @@ namespace ApoGirl.Core.Rules
 {
     /// <summary>
     /// 위기 때 남느냐 떠나느냐 (기획 C.2 ③).
-    /// - 위기 주(결산 때 식량·식수가 바닥, 또는 그 주 습격에 뚫림)에 호감이 CrisisLeaveBelowAffinity 미만인 동료가
-    ///   떠날 기색을 보인다: 깃발 LEAVE_WARN_{NPC} → 다음 주 첫 칸에 EVT_CRISIS_LEAVE_{키}로 붙잡을 기회.
+    /// - 주 결산 때 호감이 CrisisLeaveBelowAffinity 미만인 동료가 떠날 기색을 보인다 (위기 주가 아니어도, 사용자 결정 2026-11-25 —
+    ///   예전엔 식량·식수 바닥이나 습격 돌파 주에만): 깃발 LEAVE_WARN_{NPC} → 다음 주 첫 칸에 EVT_CRISIS_LEAVE_{키}로 붙잡을 기회.
     /// - 습격에 뚫린 밤, 호감이 RaidCoverMinAffinity 이상인 동료가 주인공 앞을 막아서다 대신 다치기도 한다.
     /// </summary>
     public static class CrisisRules
     {
         public static string WarnFlag(BalanceConfig balance, string npcId) => (balance.CrisisLeaveFlagPrefix ?? "LEAVE_WARN_") + npcId;
 
-        /// <summary>결산 때 식량이나 식수가 바닥났거나, 그 주 습격에 뚫렸으면 위기 주.</summary>
-        public static bool IsCrisisWeek(GameState state, bool raidBreached) =>
-            raidBreached || state.Base.GetResource(ResourceType.Food) <= 0 || state.Base.GetResource(ResourceType.Water) <= 0;
-
-        /// <summary>위기 주면 떠날 후보(호감이 낮은 사람부터)에 예고 깃발을 켜고 그 ID들을 돌려준다.</summary>
-        public static List<string> WarnWeekly(GameState state, BalanceConfig balance, bool raidBreached)
+        /// <summary>떠날 후보(호감이 기준 미만, 낮은 사람부터 한 주에 CrisisLeavePerWeek명)에 예고 깃발을 켜고 그 ID들을 돌려준다.</summary>
+        public static List<string> WarnWeekly(GameState state, BalanceConfig balance)
         {
             var warned = new List<string>();
-            if (!IsCrisisWeek(state, raidBreached) || balance.CrisisLeavePerWeek <= 0)
+            if (balance.CrisisLeavePerWeek <= 0)
             {
                 return warned;
             }

@@ -432,7 +432,7 @@ namespace ApoGirl.Core.Definitions
 
         // ── 위기 때 남느냐 떠나느냐 (기획 C.2 ③) ──
 
-        /// <summary>위기 주(결산 때 식량·식수가 바닥, 또는 그 주 습격에 뚫림)에 호감이 이 값 미만인 동료가 떠날 후보 (C.5: 0 미만 → 사용자 결정 2026-11-25: 10 미만).</summary>
+        /// <summary>주 결산 때 호감이 이 값 미만인 동료가 떠날 후보 (C.5: 위기 주에 0 미만 → 사용자 결정 2026-11-25: 위기와 상관없이 10 미만).</summary>
         public int CrisisLeaveBelowAffinity = 10;
 
         /// <summary>한 주에 예고하는 동료 수 (호감이 낮은 사람부터).</summary>
