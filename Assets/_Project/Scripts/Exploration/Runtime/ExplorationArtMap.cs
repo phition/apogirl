@@ -83,7 +83,7 @@ namespace ApoGirl.Exploration.Runtime
             public DecorRule[] Decor = Array.Empty<DecorRule>();
             public CombatRule Combat = new CombatRule();
 
-            /// <summary>적대 생존자 겉모습 (그림 접두어 {이름}_idle_·walk_·run_·hit_·pushed_·stun_, 있으면 sit_). 사람마다 판 시드로 하나를 고른다.</summary>
+            /// <summary>적대 생존자 겉모습 (그림 접두어 {이름}_idle_·walk_·run_·hit_·pushed_·stun_, 처음 자리에서 쉬는 그림이 있으면 sit_(앉아 담배) 또는 phone_(서서 폰)). 사람마다 판 시드로 하나를 고른다.</summary>
             public string[] SurvivorLooks = Array.Empty<string>();
 
             /// <summary>앉아 쉬던 생존자가 일어나는 알아챔 정도 (0~1).</summary>

@@ -1284,9 +1284,10 @@
    { "Kind": "listener", "Height": 1.39, "X": 0.13 },
    { "Kind": "watcher", "Height": 1.46, "X": 0.1 },
    { "Kind": "survivor", "Height": 1.28, "X": 0.08 },
-   { "Kind": "hiker", "Height": 1.5, "X": 0.05 }
+   { "Kind": "hiker", "Height": 1.5, "X": 0.05 },
+   { "Kind": "woman", "Height": 1.52, "X": 0.03 }
   ]
  },
- "SurvivorLooks": ["survivor", "hiker"],
+ "SurvivorLooks": ["survivor", "hiker", "woman"],
  "SurvivorStandAwareness": 0.15
 }
