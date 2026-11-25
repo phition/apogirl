@@ -176,6 +176,7 @@ namespace ApoGirl.Presentation.Screens
             _screen?.EnableInClassList("board-open", IsOpen(_board));
             // 오른쪽 서랍(거점·인물)이 열리면 선생님 한 줄을 서랍 왼쪽으로 비켜 둔다
             _screen?.EnableInClassList("right-drawer-open", IsOpen(_right) || IsOpen(_people));
+            _screen?.EnableInClassList("base-drawer-open", IsOpen(_right));   // 거점 서랍은 더 넓어 더 비킨다
         }
     }
 

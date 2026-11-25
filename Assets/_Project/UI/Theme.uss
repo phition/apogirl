@@ -1271,3 +1271,7 @@ Button.base-advice-line:hover { background-color: rgba(185, 163, 122, 0.18); col
 #drawer-right .base-line, #drawer-right .base-alert, #drawer-right .base-advice-line, #drawer-right .base-room-name { font-size: 16px; }
 #drawer-right .base-room-text { font-size: 15px; }
 #drawer-right .base-repel-parts { font-size: 14px; }
+/* 거점 서랍은 상황판이라 더 넓게 (인물 서랍은 440 그대로) — 열리면 선생님 한 줄도 그만큼 더 비킨다 */
+#drawer-right { width: 520px; }
+#drawer-right.closed { translate: 540px 0; }
+.base-drawer-open .teacher-box { right: 538px; }
