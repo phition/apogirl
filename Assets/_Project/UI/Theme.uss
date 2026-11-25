@@ -1244,14 +1244,14 @@ Button.selected { border-color: var(--accent); background-color: var(--accent-so
 .person-role.clickable:hover, .hub-room-panel-note.clickable:hover { color: var(--accent); }
 .hub-room-panel-note.clickable { -unity-font-style: bold; }
 /* P1 화면 확인 손질 (BASE_TAB_PROPOSAL): 서랍 스크롤바는 가늘게 테마색, 상황판 막대 글자는 왼쪽, 오른쪽 서랍이 열리면 선생님 한 줄을 비켜 둔다 */
-.drawer-body .unity-scroller--vertical { width: 8px; margin-left: 4px; }
-.drawer-body .unity-scroller--vertical .unity-scroller__low-button,
-.drawer-body .unity-scroller--vertical .unity-scroller__high-button { display: none; }
-.drawer-body .unity-scroller--vertical .unity-scroller__slider { width: 8px; margin: 0; padding: 0; }
-.drawer-body .unity-scroller--vertical .unity-base-slider__drag-container { width: 8px; margin: 0; }
-.drawer-body .unity-scroller--vertical .unity-base-slider__tracker { width: 8px; left: 0; border-width: 0; border-radius: 4px; background-color: rgba(185, 163, 122, 0.08); }
-.drawer-body .unity-scroller--vertical .unity-base-slider__dragger { width: 8px; left: 0; border-width: 0; border-radius: 4px; background-color: rgba(185, 163, 122, 0.45); }
-.drawer-body .unity-scroller--vertical .unity-base-slider__dragger:hover { background-color: var(--accent); }
+.drawer-body .unity-scroller--vertical , .people-factions-list .unity-scroller--vertical { width: 8px; margin-left: 4px; }
+.drawer-body .unity-scroller--vertical .unity-scroller__low-button, .people-factions-list .unity-scroller--vertical .unity-scroller__low-button,
+.drawer-body .unity-scroller--vertical .unity-scroller__high-button , .people-factions-list .unity-scroller--vertical .unity-scroller__high-button { display: none; }
+.drawer-body .unity-scroller--vertical .unity-scroller__slider , .people-factions-list .unity-scroller--vertical .unity-scroller__slider { width: 8px; margin: 0; padding: 0; }
+.drawer-body .unity-scroller--vertical .unity-base-slider__drag-container , .people-factions-list .unity-scroller--vertical .unity-base-slider__drag-container { width: 8px; margin: 0; }
+.drawer-body .unity-scroller--vertical .unity-base-slider__tracker , .people-factions-list .unity-scroller--vertical .unity-base-slider__tracker { width: 8px; left: 0; border-width: 0; border-radius: 4px; background-color: rgba(185, 163, 122, 0.08); }
+.drawer-body .unity-scroller--vertical .unity-base-slider__dragger , .people-factions-list .unity-scroller--vertical .unity-base-slider__dragger { width: 8px; left: 0; border-width: 0; border-radius: 4px; background-color: rgba(185, 163, 122, 0.45); }
+.drawer-body .unity-scroller--vertical .unity-base-slider__dragger:hover , .people-factions-list .unity-scroller--vertical .unity-base-slider__dragger:hover { background-color: var(--accent); }
 .base-bar .unity-progress-bar__title-container { justify-content: flex-start; align-items: center; padding-left: 8px; }
 .base-bar .unity-progress-bar__title { -unity-text-align: middle-left; font-size: 14px; color: var(--text); }
 .teacher-box { transition-property: right, bottom; transition-duration: 0.25s; }
@@ -1303,7 +1303,7 @@ Button.base-advice-line:hover { background-color: rgba(185, 163, 122, 0.18); col
 .people-factions.expanded .people-factions-dot { display: none; }
 /* 세력 카드 (FactionAddonView.Card): 누르면 거래 화면 */
 .fac-mini {
-    margin: 0 0 8px 0; padding: 8px 10px;
+    margin: 0 0 6px 0; padding: 7px 10px;
     background-color: rgb(38, 40, 46); border-width: 1px; border-color: var(--line); border-radius: 6px;
 }
 .fac-mini:hover { background-color: rgb(46, 49, 56); border-color: var(--accent); }
@@ -1329,8 +1329,8 @@ Button.base-advice-line:hover { background-color: rgba(185, 163, 122, 0.18); col
     background-color: rgb(255, 255, 255); border-width: 1px; border-color: rgb(20, 20, 22); border-radius: 1px;
 }
 .fac-mini-next { font-size: 12px; color: var(--text-dim); }
-.fac-mini-status { margin-top: 6px; font-size: 14px; color: var(--text); white-space: normal; }
-.fac-mini-effect { margin-top: 2px; font-size: 13px; color: var(--text-dim); white-space: normal; }
+.fac-mini-status { margin-top: 5px; font-size: 14px; color: var(--text); white-space: normal; }
+.fac-mini-effect { margin-top: 1px; font-size: 12px; color: var(--text-dim); white-space: normal; }
 .fac-mini-foot {
     flex-direction: row; align-items: center; justify-content: space-between;
     margin-top: 6px; padding-top: 5px; border-top-width: 1px; border-color: rgba(255, 255, 255, 0.08);
