@@ -3,8 +3,8 @@
 〈마지막 학기 (가제)〉 — 마일스톤별 진행 기록, 남은 작업, 하면 좋을 작업, 하지 말아야 할 작업.
 
 - 기준: 마스터 프롬프트 12장 마일스톤(원본 `C:\Users\phiti\Desktop\MASTER_PROMPT.md`), 결정 기록 부록 C(D1~D26).
-- 작성: 2026-11-25. 커밋 719개(2026-11-18 ~ 2026-11-25), 마지막 커밋 `82198b9d` (그 뒤 이번 커밋).
-- EditMode 테스트: 444개 모두 통과 (2026-11-25, 보호구 색 덧칠 넣은 뒤).
+- 작성: 2026-11-25. 커밋 724개(2026-11-18 ~ 2026-11-25), 마지막 커밋 `ba8929e7` (그 뒤 이번 커밋).
+- EditMode 테스트: 444개 모두 통과 (2026-11-25, 힉스필드 15차 연결 뒤).
 - 자세한 내용은 각 계획 문서에 있다. 이 문서는 한눈에 보는 요약이다.
 - **새 세션은 이 문서부터 읽는다.** 작업이 하나 끝날 때마다 고친다.
   - 해당 절을 고친다.
@@ -184,7 +184,6 @@ M6·M7과 함께 기획 확장(동료·CD·깊은 곳·고양이·동아리·방
 2. **M6-5 남은 연결**
    - **힉스필드 14차 23장** ([HIGGSFIELD_ASSETS_14.md](HIGGSFIELD_ASSETS_14.md)) 받으면 연결: `ArtInbox/illustrations/events14/` → `install_events12.py`, `art_map.json`에서 그 이벤트 줄을 새 그림으로(혈액형 두 편은 `evt_a4_blood_other`, 의족 컷은 `"Flag": "PROSTHETIC_DONE"` 줄을 `EVT_A2_REVIEW` 기본 줄 앞에), 옛 그림은 남김.
    - **제작 장비 탐험 도트 남은 것** ([PIXELLAB_CRAFTING_REQUEST.md](PIXELLAB_CRAFTING_REQUEST.md)): 허수아비·가방 2·보호구 3벌(색 덧칠)은 넣었다. 몽둥이 무기 그림 3장은 5벌 다시 받기(24F 9절) 때 — 그때 `armor_recolor.py install`도 다시 돌린다. 허수아비·가방·보호구를 실제 탐험 화면에서 아직 보지 않았다(미리보기만).
-   - **힉스필드 15차 18개** ([HIGGSFIELD_ASSETS_15.md](HIGGSFIELD_ASSETS_15.md)) 받으면 연결: 제작 장면 컷 4(`events15/` → `art_map.json` `EVT_CRAFT_*`의 빌린 배경 `Backgrounds/bg_*`를 `Events/evt_craft_*`로), 아이콘 6(`art_map.json` Icons 빌린 줄), 단면도 허수아비 3·자동 정수기 1(`hub_section.json` `ENTRANCE`·`SCIENCE` `Built`), 효과음 4(`sound_map.json`, 허수아비 소음·쓰러짐·제작 완성에서 부르기).
    - 이벤트가 없어 보류한 컷: `evt_deep_door`·`evt_deep_oneway`·`evt_season_*`·`evt_cat_warn`, 그리고 `stand_item_*`.
    - CD 음원 8곡(8차 2.4절).
    - **잠든 좀비 소리 다시 받기** ([HIGGSFIELD_ASSETS_16.md](HIGGSFIELD_ASSETS_16.md) 7절): 받으면 `ArtInbox/sound16/` → 이음매·크기 맞춰 `Sfx/sfx_z_dormant_crowd.wav`를 바꾸고 옛 소리는 `code_temp/apogirl/backup_sound16/`.
@@ -357,6 +356,7 @@ M6·M7과 함께 기획 확장(동료·CD·깊은 곳·고양이·동아리·방
 - 2026-11-25 · 끈 주머니 가방을 장바구니로 합침 (사용자 결정): 1단계 가방 레시피 `ACT_CRAFT_BAG_SLING` → `ACT_CRAFT_BAG_TOTE` "장바구니 만들기", 결과물은 기존 전리품 `ITEM_BAG_TOTE`(4×3 12칸, 걸음·소음 같음, 무게 0.3→0.2), 그림·아이콘도 장바구니 그대로. `ITEM_BAG_SLING` 아이템·문구·빌림 표 줄을 지우고, 세이브 v15(`V14ToV15`)가 옛 세이브의 레시피·아이템·`CRAFTED_` 깃발 이름을 바꾼다(테스트 `V14Save_RenamesSlingBagToTote`). 봇·단면도 행동 목록도 새 ID로. PixelLab 요청에서 `bag_sling`을 빼 가방 2장(약 $1.0). 문구 표 옛 키는 Sync가 지우지 않아 남는다(야간 작업과 같음). EditMode 444개 통과 · 코드 a975ea04 · 생성 에셋 6d10ee02 · 기록 이 커밋
 - 2026-11-25 · 제작 장비 탐험 도트 PixelLab 생성·넣기 (요청 문서 A·B): 허수아비 서 있음(후보 16 중 4번, 32×64)·자명종(32×72, 세 번째에 시계가 또렷)·쓰러짐(64×32)·흔들림 6·자명종 울림 6, 덧댄 배낭 4번(18×20)·프레임 배낭 5번(24×30) → `ExplorationPixel/`(PPU 36, 기준점 아래 가운데·가방은 책가방·등산 배낭과 같게), `ItemLooks` 가방 토큰 `rucksack`·`frame`. 허수아비 키 `prop_decoy_*`는 P6 코드가 이미 찾고 있어 코드 변경 없음. 쓴 돈 $0.57 + generations 4(잔량 USD $4.49). 미리보기 `Docs/anim_versions/craft_props/`. EditMode 444개 통과 · 그림 c783fe8d · 생성 에셋 b33488d6 · 기록 이 커밋
 - 2026-11-25 · 제작 보호구 탐험 그림 색 덧칠 (요청 문서 5절 ②, PixelLab 없음): `code_temp/apogirl/tools/armor_recolor.py`가 빌린 옷의 옷 영역만 골라 다시 칠함 — guard 빨간 조끼 → 잡지 보호대 `magazine`(종이색·잡지 결·테이프·인쇄 얼룩), padding 올리브 → 매트 덧댄 보호구 `matpad`(매트 파랑·끈 두 줄), guard 조끼 → 철판 덧댄 조끼 `plated`(녹슨 강철·녹·리벳; riot 조끼는 검정이라 색으로 못 골라 guard 자리). 탐험 802 × 3 + 허브 160 × 3, `player_anchors.json` 줄 복사, `ItemLooks` 토큰 3개. 비교판 `Docs/anim_versions/armor_recolor/`. EditMode 444개 통과 · 그림 ccd5aa4b · 생성 에셋 c05e8c3a · 기록 이 커밋
+- 2026-11-25 · 힉스필드 15차 연결 ([HIGGSFIELD_ASSETS_15.md](HIGGSFIELD_ASSETS_15.md), 18개, 효과음은 문서대로 `ArtInbox/audio/`): 제작 장면 컷 4(`art_map.json` `EVT_CRAFT_*`가 빌린 배경 대신 `Events/evt_craft_*`), 아이콘 6(몽둥이 2·휴대/울리는 허수아비 2는 아이템·제작 카드 함께, 교문 허수아비·자동 정수기 카드), 단면도 현관 허수아비 서 있음·울림·넘어짐과 과학실 자동 정수기(`hub_section.json` `Built`, 새 칸 `BuiltDef.NotFlags`로 겹침을 막고 넘어짐 = 만든 적 있음 + 지금 안 섬), 효과음 `sfx_decoy_rattle`·`bell`·`fall`(탐험 코드가 이미 부르던 이름)·`sfx_craft_done`(허브 제작 완성 칸에서 성공 소리 대신). 도구 `code_temp/apogirl/tools/install_h15.py`. EditMode 444개 통과 · 코드·그림 467336d2 · 생성 에셋 ba8929e7 · 기록 이 커밋
 - 2026-11-25 · 배분 화면 스크롤(사용자 요청): 동료가 늘면 식단 칸이 눌려 단추·글이 겹치던 것 — `Theme.uss` 식단·머리글·안내·단추 줄·동료 줄은 `flex-shrink: 0`, 동료 목록 `give-list`만 남은 높이를 차지(`flex-basis: 0`, 최소 120px)하고 세로 스크롤(`Hub.uxml` ScrollView `mode="Vertical"`) · `133bdeaf`
 - 2026-11-25 · 힉스필드 16차 문서(사용자 요청: PixelLab 몫을 힉스필드로): [HIGGSFIELD_ASSETS_16.md](HIGGSFIELD_ASSETS_16.md) — 24F 계획 9장(나머지 5벌, 무기 겹치기 C5 ②)과 몽둥이 3종(E3 ②)을 옮김. 11차처럼 새로 그리게 하지 않고 PixelLab 하복 2배 시트를 입력으로 옷만 바꾸거나 무기만 지운다(자세·박자·크기 하복 그대로). A 시범(무기 그림 7·하복 쥔 자세 12·무기 지운 휘두르기·내려치기 2) → B 옷 5벌 맨손 10동작 + 대걸레 찌르기 55 → C 쥔 자세·무기 지운 공격 70, 모두 146. 생성 `Tools/make_higgsfield_doc16.py`가 입력 시트·옷/무기 참고·프롬프트를 `ArtInbox/sprites16/`에 만든다. 제출 안 함 · `82198b9d`
 - 2026-11-25 · 16차 문서에 잠든 좀비 소리(사용자 요청): 코 고는 것처럼 들리던 `sfx_z_dormant_crowd`(6초 반복, 잠든 좀비 14칸 안 환경음)를 낮게 목 안에서 그르렁거리는 소리로 다시 받는 프롬프트(Seed Audio, 본판·짧은 판, 코골이·콧소리 금지) — 7절, 프롬프트 파일 `ArtInbox/sprites16/prompts/sfx_z_dormant_crowd.txt`. 제출 안 함 · 이 커밋

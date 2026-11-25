@@ -1,4 +1,4 @@
-# 힉스필드 에셋 15차: 제작 장면 컷과 제작 아이콘·설비·소리 (2026-11-25)
+# 힉스필드 에셋 15차: 제작 장면 컷과 제작 아이콘·설비·소리 (2026-11-25, 18개 모두 받아 넣음)
 
 제작 P8에서 짧은 장면 4편(`Events/Craft.yarn`)을 넣었다. 지금은 네 편 모두 빈 방 배경을 빌려 쓴다. 이 문서는 그 장면의 컷 4장과, 제작 기획서([CRAFTING_PROPOSAL.md](CRAFTING_PROPOSAL.md)) 6.2절에서 "없는 것"으로 남은 아이콘·단면도 설비 그림·효과음을 한 번에 받는 문서다.
 
@@ -99,6 +99,12 @@
 ---
 
 ## 5. 연결 (받으면 내가 한다)
+
+**넣음 (2026-11-25):** 18개 모두 받았다(효과음은 문서대로 `ArtInbox/audio/`). 도구 `code_temp/apogirl/tools/install_h15.py`. 허수아비 그림은 모두 양동이에 얼굴이 없다.
+- 장면 컷 4 → `Story/Events/evt_craft_*.jpg`(1920×1080), `art_map.json` Events 네 줄.
+- 아이콘 6: 투명 여백을 잘라 아이템 128px·제작 아이콘 192px(기존과 같은 크기). 문서의 7줄에 더해 제작 카드 `act.ACT_CRAFT_CLUB`·`_CLUB_TAPED`·`act.ACT_CRAFT_DECOY`·`_DECOY_BELL`도 같은 새 아이콘으로 바꿨다(아이템과 같은 그림을 빌리던 줄).
+- 단면도 설비 4: 긴 변 384px. 울리는 허수아비를 만들어도 `SCARECROW_UP`이 남아 두 그림이 겹치므로 `BuiltDef.NotFlags`(켜져 있으면 숨김)를 더했다. 서 있음 = `SCARECROW_UP`·`BELL` 아님, 울림 = `SCARECROW_BELL`, 넘어짐 = `CRAFTED_ACT_CRAFT_SCARECROW`이 있는데 두 깃발이 없음(습격에 쓰러지면 두 깃발이 지워진다). 자동 정수기는 과학실 모래 필터 옆에 함께 선다.
+- 효과음 4 → `Resources/Audio/Sfx/`. 허수아비 셋은 탐험 코드(`ExpeditionDirector` 허수아비 보기)가 이미 이 이름으로 부르고 있어 파일만 넣었다. `sfx_craft_done`은 허브 결과 한 줄·결과 카드에서 제작이 끝난 칸(완성·잘 만듦·손질, `CraftOutcome.Finished`)이면 성공 소리 대신 낸다. `sound_map.json`은 이벤트·대사용이라 고치지 않았다.
 
 - **장면 컷**: 16:9·너비 1920 jpg로 바꿔 `Resources/Art/Story/Events/`에 넣고, `Resources/Art/art_map.json` Events에서 `EVT_CRAFT_*` 네 줄의 `Image`를 `Backgrounds/bg_*`에서 `Events/evt_craft_*`로 바꾼다. 도구는 `code_temp/apogirl/tools/install_events12.py`.
 - **아이콘**: `Resources/Art/UI/`에 같은 이름으로 넣고, `art_map.json` Icons에서 빌려 쓰던 줄(`item.ITEM_WEAPON_CLUB`·`item.ITEM_WEAPON_CLUB_TAPED`·`item.ITEM_DECOY_DUMMY`·`item.ITEM_DECOY_BELL`·`act.ACT_CRAFT_SCARECROW`·`act.ACT_CRAFT_SCARECROW_BELL`·`act.ACT_CRAFT_AUTO_PURIFIER`)의 `Image`를 새 이름으로 바꾼다.
