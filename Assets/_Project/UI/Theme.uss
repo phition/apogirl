@@ -415,6 +415,10 @@ Button.selected { border-color: var(--accent); background-color: var(--accent-so
 .plan-flow-strip { flex-direction: row; flex-grow: 1; }
 .plan-flow-graph { flex-grow: 1; margin: 0 3px; background-color: rgba(255, 255, 255, 0.03); border-radius: 6px; }
 .plan-flow-bottom { flex-direction: row; align-items: center; height: 30px; }
+/* 세로축 눈금 숫자 (낮·밤 머리 칸 자리), 아래 줄 앞 빈칸 = 머리 칸 44 + 그래프 여백 3 */
+.plan-flow-axis { position: relative; }
+.plan-flow-tick { position: absolute; right: 4px; height: 16px; font-size: 12px; -unity-text-align: middle-right; color: var(--text-dim); padding: 0; margin: 0; }
+.plan-flow-gutter { width: 47px; flex-shrink: 0; }
 .flow-legend { font-size: 13px; margin-right: 8px; }
 .flow-legend.fatigue { color: rgb(232, 176, 74); }
 .flow-legend.stress { color: rgb(204, 115, 217); }
@@ -440,9 +444,15 @@ Button.selected { border-color: var(--accent); background-color: var(--accent-so
 .slot.drop-bad { opacity: 0.45; }
 .slot.drop-target { border-color: var(--accent); border-width: 3px; }
 .slot.drag-source { opacity: 0.5; }
-.slot-drag-ghost { position: absolute; padding: 4px 10px; border-radius: 6px; background-color: rgba(231, 176, 74, 0.9); color: #1b1407; -unity-font-style: bold; font-size: 15px; }
+/* 끄는 그림: 행동 아이콘 판 (60px, HubViews PlannerView.GhostHalf), 아이콘이 없으면 짧은 이름 */
+.slot-drag-ghost { position: absolute; width: 60px; height: 60px; align-items: center; justify-content: center; border-radius: 12px; border-width: 2px; border-color: var(--accent); background-color: rgba(24, 26, 30, 0.82); opacity: 0.95; scale: 1.08 1.08; }
+.slot-drag-icon { width: 44px; height: 44px; }
+.slot-drag-ghost.text { width: auto; height: auto; padding: 4px 10px; background-color: rgba(231, 176, 74, 0.9); }
+.slot-drag-ghost.text > Label { color: #1b1407; -unity-font-style: bold; font-size: 15px; }
 .teacher-memo { margin-bottom: 6px; padding: 6px 8px; border-radius: 6px; background-color: rgba(185, 163, 122, 0.12); border-left-width: 3px; border-color: var(--accent); }
-.teacher-memo-title { -unity-font-style: bold; color: var(--accent); font-size: 15px; margin-bottom: 2px; }
+.teacher-memo-head { flex-direction: row; align-items: center; margin-bottom: 4px; }
+.teacher-memo-head > .person-badge { margin-right: 6px; flex-shrink: 0; }
+.teacher-memo-title { -unity-font-style: bold; color: var(--accent); font-size: 15px; }
 .teacher-memo-line { font-size: 14px; white-space: normal; }
 .slot-detail { font-size: 14px; white-space: normal; color: var(--text-dim); min-height: 64px; margin-bottom: 4px; }
 .slot-detail.on { color: #e8e2d4; }

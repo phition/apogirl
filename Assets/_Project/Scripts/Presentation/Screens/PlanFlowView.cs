@@ -65,16 +65,24 @@ namespace ApoGirl.Presentation.Screens
         private static readonly Color DebtColor = new Color(0.42f, 0.61f, 0.88f);
         private static readonly Color DangerColor = new Color(0.86f, 0.33f, 0.30f, 0.55f);
         private static readonly Color GridColor = new Color(1f, 1f, 1f, 0.07f);
+        private static readonly Color AxisColor = new Color(1f, 1f, 1f, 0.16f);
         private static readonly Color OldColor = new Color(0.7f, 0.7f, 0.7f, 0.45f);
 
         private readonly GameSession _session;
         private readonly VisualElement _root;
         private readonly VisualElement _graph;
+        private readonly VisualElement _axis;
+        private readonly Label[] _ticks = new Label[AxisTicks];
         private readonly VisualElement _stats;
         private readonly Label _summary;
         private WeekProjection _current;
         private WeekProjection _ghost;
         private int _focus = -1;
+
+        // 세로축 위 끝 (값에 맞춰 20·40·…·100, 눈금은 그 1/4씩)
+        private const int AxisTicks = 4;
+        private const int AxisStep = 20;
+        private int _max = AxisStep;
 
         public PlanFlowView(VisualElement root, GameSession session)
         {
@@ -84,17 +92,31 @@ namespace ApoGirl.Presentation.Screens
             // 그래프는 계획표의 요일 칸과 같은 자리에 (왼쪽은 낮·밤 머리 칸 너비만큼 비운다)
             var strip = new VisualElement();
             strip.AddToClassList("plan-flow-strip");
-            var spacer = new VisualElement();
-            spacer.AddToClassList("planner-phase");
-            strip.Add(spacer);
+            // 낮·밤 머리 칸 자리에는 세로축 눈금 숫자
+            _axis = new VisualElement();
+            _axis.AddToClassList("planner-phase");
+            _axis.AddToClassList("plan-flow-axis");
+            for (var k = 0; k < AxisTicks; k++)
+            {
+                _ticks[k] = new Label { pickingMode = PickingMode.Ignore };
+                _ticks[k].AddToClassList("plan-flow-tick");
+                _axis.Add(_ticks[k]);
+            }
+
+            strip.Add(_axis);
             _graph = new VisualElement();
             _graph.AddToClassList("plan-flow-graph");
             _graph.generateVisualContent += Draw;
+            _graph.RegisterCallback<GeometryChangedEvent>(_ => LayoutAxis());
             strip.Add(_graph);
             _root.Add(strip);
 
+            // 아래 줄도 그래프 왼쪽 끝에서 시작한다
             var bottom = new VisualElement();
             bottom.AddToClassList("plan-flow-bottom");
+            var gutter = new VisualElement();
+            gutter.AddToClassList("plan-flow-gutter");
+            bottom.Add(gutter);
             bottom.Add(Legend("flow.fatigue", "fatigue"));
             bottom.Add(Legend("flow.stress", "stress"));
             bottom.Add(Legend("flow.sleep_debt", "debt"));
@@ -146,6 +168,8 @@ namespace ApoGirl.Presentation.Screens
 
         private void Redraw()
         {
+            _max = AxisMax();
+            LayoutAxis();
             _graph.MarkDirtyRepaint();
             _stats.Clear();
             if (_current == null)
@@ -194,6 +218,50 @@ namespace ApoGirl.Presentation.Screens
                                                  || last.SleepDebt >= balance.TeacherSleepDebtLimit);
         }
 
+        /// <summary>세로축 위 끝: 지금·바뀔 계획의 피로·스트레스 가운데 가장 큰 값을 20 단위로 올림 (20~100).</summary>
+        private int AxisMax()
+        {
+            var peak = 0;
+            foreach (var projection in new[] { _current, _ghost })
+            {
+                if (projection == null)
+                {
+                    continue;
+                }
+
+                peak = Math.Max(peak, Math.Max(projection.StartFatigue, projection.StartStress));
+                foreach (var slot in projection.Slots)
+                {
+                    peak = Math.Max(peak, Math.Max(slot.Fatigue, slot.Stress));
+                }
+            }
+
+            var max = (peak + AxisStep - 1) / AxisStep * AxisStep;
+            return Mathf.Clamp(max, AxisStep, 100);
+        }
+
+        // 그래프 세로 자리 (Draw와 눈금 숫자가 같이 쓴다)
+        private const float PlotTop = 6f;
+        private const float DebtBand = 0.22f;
+
+        private float PlotBottom(float height) => height - height * DebtBand - 2f;
+
+        private float ValueY(float height, int value) => PlotBottom(height) - (PlotBottom(height) - PlotTop) * Mathf.Clamp(value, 0, _max) / _max;
+
+        /// <summary>눈금 숫자를 그래프의 같은 높이에 놓는다.</summary>
+        private void LayoutAxis()
+        {
+            var height = _graph.contentRect.height;
+            var step = _max / AxisTicks;
+            for (var k = 0; k < AxisTicks; k++)
+            {
+                var value = step * (k + 1);
+                _ticks[k].text = value.ToString();
+                _ticks[k].style.top = ValueY(height, value) - 8f;
+                _ticks[k].style.display = height < 10f ? DisplayStyle.None : DisplayStyle.Flex;
+            }
+        }
+
         private static string Signed(float value)
         {
             var text = value.ToString("0.#");
@@ -225,12 +293,19 @@ namespace ApoGirl.Presentation.Screens
 
             var paint = context.painter2D;
             var balance = _session.Definitions.Balance;
-            var debtBand = rect.height * 0.22f;
-            var top = 4f;
-            var bottom = rect.height - debtBand - 2f;
+            var debtBand = rect.height * DebtBand;
 
             float X(int slot) => (slot + 0.5f) * rect.width / WeekPlan.SlotCount;
-            float Y(int value) => bottom - (bottom - top) * Mathf.Clamp(value, 0, 100) / 100f;
+            float Y(int value) => ValueY(rect.height, value);
+
+            // 세로축 눈금선 (0 = 바닥선은 조금 진하게)
+            paint.lineWidth = 1f;
+            Line(paint, AxisColor, new Vector2(0, Y(0)), new Vector2(rect.width, Y(0)));
+            for (var k = 1; k <= AxisTicks; k++)
+            {
+                var y = Y(_max / AxisTicks * k);
+                Line(paint, GridColor, new Vector2(0, y), new Vector2(rect.width, y));
+            }
 
             // 요일 칸 구분선, 마우스가 올라간 칸
             paint.lineWidth = 1f;
@@ -253,9 +328,9 @@ namespace ApoGirl.Presentation.Screens
                 paint.Fill();
             }
 
-            // 위험선: 선생님이 다듬는 문턱
-            Dashed(paint, DangerColor, Y(balance.TeacherFatigueLimit), rect.width);
-            Dashed(paint, DangerColor, Y(balance.TeacherStressLimit), rect.width);
+            // 위험선: 선생님이 다듬는 문턱 (지금 눈금 안에 들어올 때만)
+            if (balance.TeacherFatigueLimit <= _max) Dashed(paint, DangerColor, Y(balance.TeacherFatigueLimit), rect.width);
+            if (balance.TeacherStressLimit <= _max) Dashed(paint, DangerColor, Y(balance.TeacherStressLimit), rect.width);
 
             // 수면 부채 막대 (아래 띠)
             var source = _ghost ?? _current;

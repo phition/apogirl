@@ -716,6 +716,7 @@ namespace ApoGirl.Presentation.Screens
     internal sealed class PlannerView
     {
         private const float DragThreshold = 8f;
+        private const float GhostHalf = 30f; // 끄는 아이콘 판 반지름 (Theme.uss .slot-drag-ghost 60px)
 
         private readonly GameSession _session;
         private readonly Func<DayPhase, string> _selectedAction;
@@ -731,7 +732,7 @@ namespace ApoGirl.Presentation.Screens
         private bool _dragging;
         private int _dropTarget = -1;
         private string[][] _dropIds;
-        private Label _dragGhost;
+        private VisualElement _dragGhost;
 
         /// <summary>빈손으로 찬 칸을 누르면 그 행동을 팔레트에서 고른다 (스포이트).</summary>
         public Action<string> Picked;
@@ -958,8 +959,8 @@ namespace ApoGirl.Presentation.Screens
 
             // 끄는 그림은 마우스를 따라가고, 아래 칸을 놓을 곳으로 본다
             var local = _planner.WorldToLocal(evt.position);
-            _dragGhost.style.left = local.x - 40f;
-            _dragGhost.style.top = local.y - 18f;
+            _dragGhost.style.left = local.x - GhostHalf;
+            _dragGhost.style.top = local.y - GhostHalf;
             var target = Array.FindIndex(_cells, c => c.worldBound.Contains(evt.position));
             if (target != _dropTarget)
             {
@@ -1021,8 +1022,24 @@ namespace ApoGirl.Presentation.Screens
             }
 
             _cells[_press].AddToClassList("drag-source");
-            _dragGhost = new Label(Loc.Action(actionId, "short")) { pickingMode = PickingMode.Ignore };
+
+            // 끄는 그림: 행동 아이콘 (아이콘이 없는 행동만 짧은 이름)
+            _dragGhost = new VisualElement { pickingMode = PickingMode.Ignore };
             _dragGhost.AddToClassList("slot-drag-ghost");
+            var icon = SlotIcon(_session.State.Plan.Slots[_press]);
+            if (icon != null)
+            {
+                var image = new VisualElement { pickingMode = PickingMode.Ignore };
+                image.AddToClassList("slot-drag-icon");
+                StoryArt.SetContain(image, icon);
+                _dragGhost.Add(image);
+            }
+            else
+            {
+                _dragGhost.AddToClassList("text");
+                _dragGhost.Add(new Label(Loc.Action(actionId, "short")) { pickingMode = PickingMode.Ignore });
+            }
+
             _planner.Add(_dragGhost);
         }
 
@@ -1209,8 +1226,13 @@ namespace ApoGirl.Presentation.Screens
                 return;
             }
 
-            var head = new Label(Loc.T("teacher.memo_title"));
-            head.AddToClassList("teacher-memo-title");
+            // 머리: 선생님 뱃지 + "선생님 메모"
+            var head = new VisualElement();
+            head.AddToClassList("teacher-memo-head");
+            head.Add(PeopleUi.Badge(ApoGirl.Core.Rules.GiveRules.TeacherId, 30f));
+            var title = new Label(Loc.T("teacher.memo_title"));
+            title.AddToClassList("teacher-memo-title");
+            head.Add(title);
             _memo.Add(head);
             var balance = _session.Definitions.Balance;
             foreach (var note in notes)
