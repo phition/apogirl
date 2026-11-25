@@ -116,6 +116,37 @@ namespace ApoGirl.Exploration.Runtime
             public float FxFramesPerSecond = 24f;
             public float FxHeight = 1.1f;
             public float FxScale = 1f;
+
+            /// <summary>기절한 좀비·생존자 머리 위에서 도는 별 그림 접두어 (fx_dizzy_0..n, 파일 수로 셈). 그림이 없으면 예전 노란 게이지.</summary>
+            public string DizzyFx = "fx_dizzy_";
+            public float DizzyFramesPerSecond = 12.5f;
+
+            /// <summary>별 그림 밑변의 높이 (발 기준, 유닛). 종류마다 머리 높이가 달라 DizzyHeights가 있으면 그것.</summary>
+            public float DizzyHeight = 1.35f;
+            public DizzyHeightEntry[] DizzyHeights = Array.Empty<DizzyHeightEntry>();
+        }
+
+        /// <summary>종류(zombie_{Kind}_ · survivor)별 기절 별 높이.</summary>
+        [Serializable]
+        public sealed class DizzyHeightEntry
+        {
+            public string Kind = "";
+            public float Height;
+        }
+
+        /// <summary>그 종류의 기절 별 높이 (발 기준, 유닛).</summary>
+        public static float DizzyHeight(string kind)
+        {
+            var combat = Combat;
+            foreach (var entry in combat.DizzyHeights)
+            {
+                if (entry != null && entry.Kind == kind)
+                {
+                    return entry.Height;
+                }
+            }
+
+            return combat.DizzyHeight;
         }
 
         /// <summary>타격 연출 설정 (exploration_art.json의 Combat).</summary>

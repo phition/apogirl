@@ -4059,6 +4059,7 @@ namespace ApoGirl.Exploration.Runtime
                 if (!visible)
                 {
                     view.Marker.gameObject.SetActive(false);
+                    if (view.Dizzy != null) view.Dizzy.gameObject.SetActive(false);
                     continue;
                 }
 
@@ -4143,7 +4144,14 @@ namespace ApoGirl.Exploration.Runtime
                 view.BodyRenderer.color = new Color(color.r * shade, color.g * shade, color.b * shade);
 
                 Marker:
-                var showMarker = !dormant && (unit.Awareness > 0.02f || unit.State == ZombieState.Chase);
+                // 기절하면 노란 게이지 대신 머리 위에 별이 돈다 (별 그림이 없으면 예전 게이지)
+                var dizzy = unit.State == ZombieState.Stunned && UpdateDizzy(view, origin, unit);
+                if (!dizzy && view.Dizzy != null)
+                {
+                    view.Dizzy.gameObject.SetActive(false);
+                }
+
+                var showMarker = !dizzy && !dormant && (unit.Awareness > 0.02f || unit.State == ZombieState.Chase);
                 view.Marker.gameObject.SetActive(showMarker);
                 if (showMarker)
                 {
@@ -4168,9 +4176,46 @@ namespace ApoGirl.Exploration.Runtime
             public float LastX;
             public float MoveTime;
 
+            /// <summary>기절 중 머리 위에서 도는 별 (처음 기절할 때 만든다).</summary>
+            public Transform Dizzy;
+            public SpriteRenderer DizzyRenderer;
+
             /// <summary>맞거나 밀린 반응 동작 ("hit_" / "pushed_")과 시작한 때. 비어 있으면 없음.</summary>
             public string ReactPose = "";
             public float ReactStart;
+        }
+
+        /// <summary>
+        /// 기절한 좀비·생존자 머리 위 별 (exploration_art.json Combat.DizzyFx). 별 그림이 없으면 false — 그때는 예전 노란 게이지를 쓴다.
+        /// 어두운 곳에서도 보이게 빛을 받지 않는 이펙트 재질로 그린다.
+        /// </summary>
+        private bool UpdateDizzy(ZombieView view, Vector2 origin, ZombieUnit unit)
+        {
+            var combat = ExplorationArt.Combat;
+            var key = LoopFrame(combat.DizzyFx, Time.time, combat.DizzyFramesPerSecond, unit.Id * 4);
+            if (key == null)
+            {
+                return false;
+            }
+
+            if (view.Dizzy == null)
+            {
+                var go = new GameObject("Dizzy_" + unit.Id);
+                go.transform.SetParent(view.Body.parent, false);
+                view.DizzyRenderer = go.AddComponent<SpriteRenderer>();
+                view.DizzyRenderer.sortingOrder = 13;
+                if (HitFx.Unlit != null)
+                {
+                    view.DizzyRenderer.sharedMaterial = HitFx.Unlit;
+                }
+
+                view.Dizzy = go.transform;
+            }
+
+            view.Dizzy.gameObject.SetActive(true);
+            view.DizzyRenderer.sprite = ExplorationArt.Get(key);
+            view.Dizzy.localPosition = new Vector3(origin.x + unit.X, origin.y + 0.15f + ExplorationArt.DizzyHeight(view.Kind), 0f);
+            return true;
         }
 
         /// <summary>맞거나 밀린 좀비·생존자에게 반응 동작을 건다 (그림이 없으면 기절 동작만 보인다).</summary>

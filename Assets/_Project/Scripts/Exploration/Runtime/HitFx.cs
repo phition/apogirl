@@ -108,7 +108,8 @@ namespace ApoGirl.Exploration.Runtime
             return renderer;
         }
 
-        private static Material Unlit
+        /// <summary>빛을 받지 않는 이펙트 재질 (기절 별도 같이 쓴다).</summary>
+        internal static Material Unlit
         {
             get
             {
