@@ -1323,6 +1323,8 @@ Button.base-advice-line:hover { background-color: rgba(185, 163, 122, 0.18); col
    RecordDiaryView는 그래서 KoreanFont.ApplyDeep을 쓰지 않는다. */
 #drawer-left .unity-text-element { -unity-font-definition: url("Fonts/BusanDandiHand.ttf"); }
 #drawer-left .drawer-title, #drawer-left .diary-date, #drawer-left .diary-section, #drawer-left .diary-teacher-head, #drawer-left .diary-dots-label { -unity-font-definition: url("Fonts/HakgyoansimEdge.ttf"); }
+/* 학교안심 엣지는 글자 윗부분이 높아 종이 윗가장자리에 잘려 보였다: 제목 줄을 조금 내린다 */
+#drawer-left .drawer-head { margin-top: 8px; }
 /* 인물 서랍 단추·역할 글: 자기 padding이 .with-icon의 아이콘 자리를 덮어 아이콘과 글자가 겹쳤다 — 아이콘이 있으면 왼쪽을 비워 그만큼 넓힌다 */
 .person-stay.with-icon { padding-left: 30px; padding-right: 12px; min-height: 26px; }
 .person-role.with-icon { padding-left: 26px; padding-right: 10px; min-height: 22px; }
