@@ -857,7 +857,19 @@ namespace ApoGirl.Core.Planning
                 }
 
                 var yield = model.Day.Resources.Count > 0 ? model.Day : model.Night;
-                return yield.Resources.Where(r => r.Resource == resource).Sum(r => (r.Min + r.Max) / 2f);
+                return yield.Resources.Where(r => r.Resource == resource).Sum(r => (r.Min + r.Max) / 2f) * Remaining(locationId, model);
+            }
+
+            /// <summary>상자가 고갈되는 지역(교실동)은 남은 상자 비율만큼만 기대한다 (HeadlessExpeditionRunner.ApplyDepletion과 같은 셈).</summary>
+            private float Remaining(string locationId, ExpeditionModelDef model)
+            {
+                if (model.ContainersPerRun <= 0 || !_db.TryGetLocation(locationId, out var location) || !location.DepletingContainers)
+                {
+                    return 1f;
+                }
+
+                var remaining = HostileRules.AllContainerKeys(location, includeDeepRooms: false).Count(k => !_state.Exploration.LootedContainers.Contains(k));
+                return Math.Min(1f, (float)remaining / model.ContainersPerRun);
             }
 
             private float TotalYield(string locationId)
@@ -868,7 +880,7 @@ namespace ApoGirl.Core.Planning
                 }
 
                 var yield = model.Day.Resources.Count > 0 ? model.Day : model.Night;
-                return yield.Resources.Sum(r => (r.Min + r.Max) / 2f);
+                return yield.Resources.Sum(r => (r.Min + r.Max) / 2f) * Remaining(locationId, model);
             }
         }
     }
