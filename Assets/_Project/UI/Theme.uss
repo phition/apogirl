@@ -1194,20 +1194,27 @@ Button.selected { border-color: var(--accent); background-color: var(--accent-so
 .lab-log-text { height: 260px; }
 .lab-log-text > .unity-text-field__input, .lab-log-text .unity-base-text-field__input { font-size: 13px; white-space: normal; -unity-text-align: upper-left; background-color: #0f1118; }
 
-/* 보관함: 생활기록부 서랍(왼쪽 다이어리)과 함께 열린다 (StorageView) */
-.drawer-storage {
-    position: absolute; left: 568px; bottom: 108px;
-    width: 400px; max-height: 62%;
-    padding: 10px 12px;
-    background-color: rgb(30, 32, 36);
-    border-color: var(--line);
-    border-width: 1px;
-    border-radius: 8px;
-    transition-property: translate, opacity;
-    transition-duration: 0.22s;
-    transition-timing-function: ease-out-cubic;
+/* 보관함 덧판 (StorageView): 거점 서랍 왼쪽 가장자리에 붙은 화살표 탭, 누르면 왼쪽으로 펼친다 (세력 덧판과 같은 꼴).
+   선생님 한 줄(위쪽)과 겹치지 않게 서랍 위에서 150px 아래. 서랍이 닫히면 함께 숨는다. 글꼴은 #drawer-right 절을 따른다. */
+.base-storage { position: absolute; top: 150px; right: 100%; flex-direction: row; align-items: flex-start; }
+#drawer-right.closed .base-storage { display: none; }
+.base-storage-tab {
+    margin: 0; padding: 10px 8px; min-width: 34px;
+    font-size: 15px; -unity-font-style: bold; white-space: normal; -unity-text-align: middle-center;
+    color: var(--accent); background-color: rgb(30, 32, 36);
+    border-width: 1px; border-right-width: 0; border-color: var(--line);
+    border-top-left-radius: 8px; border-bottom-left-radius: 8px; border-top-right-radius: 0; border-bottom-right-radius: 0;
 }
-.drawer-storage.closed { translate: -1000px 0; opacity: 0; }
+.base-storage-tab:hover { background-color: rgb(44, 46, 52); }
+.base-storage-sheet {
+    width: 400px; max-height: 760px; padding: 10px 12px;
+    background-color: rgb(30, 32, 36); border-width: 1px; border-right-width: 0; border-color: var(--line);
+    border-top-left-radius: 8px; border-bottom-left-radius: 0;
+}
+/* 펼치면 판이 거점 서랍에 틈 없이 붙고, 접기 탭은 판 왼쪽으로 (자식 순서: 판, 탭 → 거꾸로) */
+.base-storage.expanded { flex-direction: row-reverse; }
+.base-storage.expanded .base-storage-tab { color: var(--text-dim); }
+#drawer-right .storage-title, #drawer-right .storage-head { -unity-font-definition: url("Fonts/HakgyoansimEdge.ttf"); }
 .storage-title { -unity-font-style: bold; font-size: 20px; color: var(--accent); margin-bottom: 4px; }
 .storage-list { flex-shrink: 1; }
 .storage-head { font-size: 14px; -unity-font-style: bold; color: var(--text-dim); margin: 8px 0 3px 0; border-bottom-width: 1px; border-color: var(--line); }
@@ -1297,14 +1304,14 @@ Button.selected { border-color: var(--accent); background-color: var(--accent-so
 .person-role.clickable:hover, .hub-room-panel-note.clickable:hover { color: var(--accent); }
 .hub-room-panel-note.clickable { -unity-font-style: bold; }
 /* P1 화면 확인 손질 (BASE_TAB_PROPOSAL): 서랍 스크롤바는 가늘게 테마색, 상황판 막대 글자는 왼쪽, 오른쪽 서랍이 열리면 선생님 한 줄을 비켜 둔다 */
-.drawer-body .unity-scroller--vertical , .people-factions-list .unity-scroller--vertical { width: 8px; margin-left: 4px; }
-.drawer-body .unity-scroller--vertical .unity-scroller__low-button, .people-factions-list .unity-scroller--vertical .unity-scroller__low-button,
-.drawer-body .unity-scroller--vertical .unity-scroller__high-button , .people-factions-list .unity-scroller--vertical .unity-scroller__high-button { display: none; }
-.drawer-body .unity-scroller--vertical .unity-scroller__slider , .people-factions-list .unity-scroller--vertical .unity-scroller__slider { width: 8px; margin: 0; padding: 0; }
-.drawer-body .unity-scroller--vertical .unity-base-slider__drag-container , .people-factions-list .unity-scroller--vertical .unity-base-slider__drag-container { width: 8px; margin: 0; }
-.drawer-body .unity-scroller--vertical .unity-base-slider__tracker , .people-factions-list .unity-scroller--vertical .unity-base-slider__tracker { width: 8px; left: 0; border-width: 0; border-radius: 4px; background-color: rgba(185, 163, 122, 0.08); }
-.drawer-body .unity-scroller--vertical .unity-base-slider__dragger , .people-factions-list .unity-scroller--vertical .unity-base-slider__dragger { width: 8px; left: 0; border-width: 0; border-radius: 4px; background-color: rgba(185, 163, 122, 0.45); }
-.drawer-body .unity-scroller--vertical .unity-base-slider__dragger:hover , .people-factions-list .unity-scroller--vertical .unity-base-slider__dragger:hover { background-color: var(--accent); }
+.drawer-body .unity-scroller--vertical , .people-factions-list .unity-scroller--vertical, .storage-list .unity-scroller--vertical { width: 8px; margin-left: 4px; }
+.drawer-body .unity-scroller--vertical .unity-scroller__low-button, .people-factions-list .unity-scroller--vertical .unity-scroller__low-button, .storage-list .unity-scroller--vertical .unity-scroller__low-button,
+.drawer-body .unity-scroller--vertical .unity-scroller__high-button , .people-factions-list .unity-scroller--vertical .unity-scroller__high-button, .storage-list .unity-scroller--vertical .unity-scroller__high-button { display: none; }
+.drawer-body .unity-scroller--vertical .unity-scroller__slider , .people-factions-list .unity-scroller--vertical .unity-scroller__slider, .storage-list .unity-scroller--vertical .unity-scroller__slider { width: 8px; margin: 0; padding: 0; }
+.drawer-body .unity-scroller--vertical .unity-base-slider__drag-container , .people-factions-list .unity-scroller--vertical .unity-base-slider__drag-container, .storage-list .unity-scroller--vertical .unity-base-slider__drag-container { width: 8px; margin: 0; }
+.drawer-body .unity-scroller--vertical .unity-base-slider__tracker , .people-factions-list .unity-scroller--vertical .unity-base-slider__tracker, .storage-list .unity-scroller--vertical .unity-base-slider__tracker { width: 8px; left: 0; border-width: 0; border-radius: 4px; background-color: rgba(185, 163, 122, 0.08); }
+.drawer-body .unity-scroller--vertical .unity-base-slider__dragger , .people-factions-list .unity-scroller--vertical .unity-base-slider__dragger, .storage-list .unity-scroller--vertical .unity-base-slider__dragger { width: 8px; left: 0; border-width: 0; border-radius: 4px; background-color: rgba(185, 163, 122, 0.45); }
+.drawer-body .unity-scroller--vertical .unity-base-slider__dragger:hover , .people-factions-list .unity-scroller--vertical .unity-base-slider__dragger:hover, .storage-list .unity-scroller--vertical .unity-base-slider__dragger:hover { background-color: var(--accent); }
 .base-bar .unity-progress-bar__title-container { justify-content: flex-start; align-items: center; padding-left: 8px; }
 .base-bar .unity-progress-bar__title { -unity-text-align: middle-left; font-size: 14px; color: var(--text); }
 .teacher-box { transition-property: right, bottom; transition-duration: 0.25s; }

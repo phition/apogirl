@@ -10,8 +10,10 @@ using UnityEngine.UIElements;
 namespace ApoGirl.Presentation.Screens
 {
     /// <summary>
-    /// 보관함 (생활기록부 서랍과 함께 열린다): 거점 자원(배터리 포함)과 창고 아이템 적재 현황.
+    /// 보관함 덧판: 거점 서랍 왼쪽 가장자리의 화살표 탭을 누르면 왼쪽으로 펼쳐진다 (세력 덧판과 같은 꼴, 2026-11-25 사용자 요청 —
+    /// 예전에는 생활기록부 서랍과 함께 열렸다). 거점 자원(배터리 포함)과 창고 아이템 적재 현황.
     /// 아이템은 장비·소모품·기호품·기타로 묶고, 찬 장비는 "착용 중", 무기는 남은 내구도를 붙인다.
+    /// 글꼴은 거점 서랍(#drawer-right)의 USS를 따르니 KoreanFont.ApplyDeep을 쓰지 않는다.
     /// </summary>
     internal sealed class StorageView
     {
@@ -25,22 +27,52 @@ namespace ApoGirl.Presentation.Screens
         private static readonly string[] Groups = { "equipment", "consumable", "liked", "other" };
 
         private readonly GameSession _session;
-        private readonly VisualElement _panel;
+        private readonly VisualElement _drawer;
+        private readonly VisualElement _addon;
+        private readonly VisualElement _sheet;
+        private readonly Button _tab;
         private readonly ScrollView _list;
         private string _shownKey;
+        private bool _expanded;
 
         public StorageView(VisualElement root, GameSession session)
         {
             _session = session;
-            _panel = root.Q("drawer-storage");
+            _drawer = root.Q("drawer-right");
+            _addon = root.Q("base-storage");
+            _sheet = root.Q("base-storage-sheet");
+            _tab = root.Q<Button>("base-storage-tab");
             _list = root.Q<ScrollView>("storage-list");
             root.Q<Label>("storage-title").text = Loc.T("storage.title");
+            if (_tab != null)
+            {
+                _tab.clicked += () =>
+                {
+                    _expanded = !_expanded;
+                    Sync();
+                    Refresh();
+                };
+            }
+
+            Sync();
+        }
+
+        private void Sync()
+        {
+            _sheet?.EnableInClassList("hidden", !_expanded);
+            _addon?.EnableInClassList("expanded", _expanded);
+            if (_tab != null)
+            {
+                _tab.text = Loc.T(_expanded ? "storage.close" : "storage.open");
+                _tab.tooltip = Loc.T("storage.hint");
+            }
         }
 
         public void Refresh()
         {
             var state = _session.State;
-            if (_panel == null || state == null || _panel.ClassListContains("closed"))
+            // 거점 서랍이 닫혔거나 덧판을 접어 두었으면 그리지 않는다 (펼칠 때 다시 부른다)
+            if (_list == null || state == null || !_expanded || (_drawer != null && _drawer.ClassListContains("closed")))
             {
                 return;
             }
@@ -128,7 +160,6 @@ namespace ApoGirl.Presentation.Screens
                 _list.Add(empty);
             }
 
-            KoreanFont.ApplyDeep(_list);
         }
 
         private static string GroupOf(string itemId, IDefinitionDatabase db, HashSet<string> liked)

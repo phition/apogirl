@@ -57,18 +57,20 @@
             <ui:ScrollView name="status-panel" class="drawer-body status-panel" />
         </ui:VisualElement>
 
-        <!-- 보관함: 생활기록부 서랍과 함께 열린다 (StorageView) -->
-        <ui:VisualElement name="drawer-storage" class="drawer-storage closed">
-            <ui:Label name="storage-title" class="storage-title" />
-            <ui:ScrollView name="storage-list" class="storage-list" />
-        </ui:VisualElement>
-
         <ui:VisualElement name="drawer-right" class="drawer drawer-right closed">
             <ui:VisualElement class="drawer-head">
                 <ui:Label name="drawer-right-title" class="drawer-title" />
                 <ui:Button name="drawer-right-close" class="drawer-close" />
             </ui:VisualElement>
             <ui:ScrollView name="base-panel" class="drawer-body base-panel" />
+            <!-- 보관함 덧판: 거점 서랍 왼쪽 가장자리의 화살표 탭을 누르면 왼쪽으로 펼쳐진다 (StorageView) -->
+            <ui:VisualElement name="base-storage" class="base-storage">
+                <ui:VisualElement name="base-storage-sheet" class="base-storage-sheet hidden">
+                    <ui:Label name="storage-title" class="storage-title" />
+                    <ui:ScrollView name="storage-list" class="storage-list" />
+                </ui:VisualElement>
+                <ui:Button name="base-storage-tab" class="base-storage-tab" />
+            </ui:VisualElement>
         </ui:VisualElement>
 
         <ui:VisualElement name="drawer-people" class="drawer drawer-right drawer-people closed">
