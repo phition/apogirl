@@ -375,18 +375,18 @@ Button.selected { border-color: var(--accent); background-color: var(--accent-so
     font-size: 15px;
 }
 
-/* 칸 안: 아이콘(위) + 굵은 이름(아래). 글씨는 자식 라벨이 그린다 */
+/* 칸 안: 아이콘(위) + 이름(아래, 굵게 하지 않음 — 사용자 요청 2026-11-25). 글씨는 자식 라벨이 그린다 */
 .slot { flex-direction: column; align-items: center; justify-content: center; padding: 2px; }
 .slot-icon { width: 34px; height: 34px; flex-shrink: 0; margin-bottom: 2px; }
 .slot-label {
     font-size: 17px;
-    -unity-font-style: bold;
+    -unity-font-style: normal;
     -unity-text-align: middle-center;
     white-space: normal;
     padding: 0;
     margin: 0;
 }
-.slot.empty .slot-label { font-size: 15px; -unity-font-style: normal; }
+.slot.empty .slot-label { font-size: 15px; }
 .slot.slot-day { background-color: #c9bc9f; }
 .slot.slot-night { background-color: #222b4b; }
 .slot.slot-day .slot-label { color: #15120c; }

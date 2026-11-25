@@ -787,7 +787,7 @@ namespace ApoGirl.Presentation.Screens
                     cell.RegisterCallback<PointerEnterEvent>(_ => OnEnter(index));
                     cell.RegisterCallback<PointerLeaveEvent>(_ => OnLeave(index));
 
-                    // 칸 안: 위에 행동 아이콘, 아래에 굵은 이름, 바닥에 분필 밑줄, 오른쪽 위 고정 꼬리표
+                    // 칸 안: 위에 행동 아이콘, 아래에 이름, 바닥에 분필 밑줄, 오른쪽 위 고정 꼬리표
                     var icon = new VisualElement { pickingMode = PickingMode.Ignore };
                     icon.AddToClassList("slot-icon");
                     var label = new Label { pickingMode = PickingMode.Ignore };
