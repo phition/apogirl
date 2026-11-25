@@ -930,6 +930,16 @@ namespace ApoGirl.Core.Definitions
         /// <summary>창문 가림막 (플래그 WINDOW_COVERS): 위협 증가 배율.</summary>
         public float CoveredThreatMultiplier = 0.7f;
 
+        // ── 거점 상황판 (Docs/BASE_TAB_PROPOSAL.md, 화면에 보여 주는 단계만) ──
+
+        /// <summary>이번 주 남은 밤에 습격이 올 가능성: 이 값 이상이면 "보통", 아래 값 이상이면 "높음" (BaseForecast.Raid).</summary>
+        public float BaseBoardRaidMedium = 0.15f;
+        public float BaseBoardRaidHigh = 0.35f;
+
+        /// <summary>습격이 오면 막을 가능성: 이 값 이상이면 "든든", 아래 값 미만이면 "위험", 그 사이는 "반반".</summary>
+        public float BaseBoardRepelSafe = 0.8f;
+        public float BaseBoardRepelRisky = 0.5f;
+
         // ── M7-2 후반 압박 (M7-f, 문서 9.0 "자원 압박이 서서히 상승") ──
 
         /// <summary>겨울(40~52주) 식량 소모 배율. 무리 하루 소모를 소수점까지 누적해 나눠 쓴다 (2 × 1.3 → 주 18).</summary>

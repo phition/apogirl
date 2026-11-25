@@ -34,6 +34,7 @@ namespace ApoGirl.Presentation.Screens
         private VisualElement _root;
         private TopBarView _topBar;
         private StatusPanelView _status;
+        private BaseBoardView _baseBoard;
         private PaletteView _palette;
         private PlannerView _planner;
         private PlanSideView _planSide;
@@ -91,6 +92,7 @@ namespace ApoGirl.Presentation.Screens
             _root.Q("screen").AddToClassList(FontClasses[_fontIndex]);
 
             _topBar = new TopBarView(_root, _session);
+            _baseBoard = new BaseBoardView(_root, _session);   // 거점 상황판 (BASE_TAB_PROPOSAL P1): 서랍 맨 위
             _status = new StatusPanelView(_root, _session) { FactionClicked = ShowFactionCard };
             _diary = new RecordDiaryView(_root, _session);
             _storage = new StorageView(_root, _session);
@@ -100,6 +102,18 @@ namespace ApoGirl.Presentation.Screens
             _planner = new PlannerView(_root, _session, _palette.ActionFor, ShowToast);
             _planSide = new PlanSideView(_root, _session);
             _layers = new HubLayers(_root) { CanPlan = () => _session.IsPlanning, Opened = () => _storage.Refresh() };
+            _layers.BaseOpened = () =>
+            {
+                _baseBoard.MarkSeen();
+                _layers.SetBaseAlert(false);
+            };
+            _baseBoard.ActionPicked = id =>
+            {
+                _layers.CloseBase();
+                _palette.Select(id);
+                _layers.SetBoard(true);
+                ShowToast(Loc.T("plan.pick_slot"));
+            };
             _dock = new DockView(_root, _session, () => _layers.ToggleBoard());
             _miniVitals = new MiniVitalsView(_root, _session, () => _layers.ToggleRecord());
             _standing = new StandingView(_root.Q("standing"), () => _session.State, () => _session.Definitions.Balance);
@@ -343,6 +357,9 @@ namespace ApoGirl.Presentation.Screens
 
             _topBar.Refresh();
             _status.Refresh();
+            _baseBoard.Refresh();
+            if (_layers.BaseOpen) _baseBoard.MarkSeen();   // 열어 둔 채 생긴 알림은 이미 보고 있다
+            _layers.SetBaseAlert(_baseBoard.HasUnseenAlert);
             _diary.Refresh();
             _storage.Refresh();
             _palette.Refresh();

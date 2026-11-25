@@ -1167,3 +1167,42 @@ Button.selected { border-color: var(--accent); background-color: var(--accent-so
 .storage-name { flex-grow: 1; font-size: 15px; }
 .storage-note { font-size: 13px; color: var(--text-dim); }
 .storage-note.equipped { color: var(--accent); -unity-font-style: bold; }
+
+/* 거점 상황판 (Docs/BASE_TAB_PROPOSAL.md P1, BaseBoardView): 거점 서랍 맨 위 */
+.base-board { margin-bottom: 4px; }
+.base-alerts { background-color: rgba(201, 88, 79, 0.18); border-left-width: 3px; border-color: var(--danger); border-radius: 4px; padding: 4px 8px; margin-bottom: 6px; }
+.base-alert { color: #f3aaa3; white-space: normal; font-size: 15px; margin: 1px 0; }
+.base-card { background-color: rgb(38, 41, 46); border-width: 1px; border-color: var(--line); border-radius: 6px; margin-bottom: 6px; }
+.base-card-head { flex-direction: row; align-items: center; min-height: 36px; margin: 0; padding: 2px 8px; background-color: transparent; border-width: 0; }
+.base-card-head:hover { background-color: rgba(255, 255, 255, 0.05); }
+.base-card-title { flex-grow: 1; -unity-font-style: bold; color: var(--accent); -unity-text-align: middle-left; }
+.base-card-title.with-icon { padding-left: 32px; }
+.base-verdict { font-size: 14px; padding: 1px 9px; margin-right: 6px; border-radius: 9px; }
+.base-verdict.ok { background-color: rgba(127, 163, 122, 0.25); color: #a9cfa3; }
+.base-verdict.warn { background-color: rgba(208, 137, 79, 0.28); color: #f0b88a; }
+.base-verdict.bad { background-color: rgba(201, 88, 79, 0.32); color: #f3aaa3; }
+.base-fold { color: var(--text-dim); width: 14px; -unity-text-align: middle-center; }
+.base-card-body { padding: 0 10px 8px 10px; }
+.base-line { white-space: normal; font-size: 15px; margin: 1px 0; }
+.base-line.dim { color: var(--text-dim); }
+.base-line.ok, .base-line.good { color: #a9cfa3; }
+.base-line.warn { color: #f0b88a; }
+.base-line.bad { color: #f3aaa3; }
+.base-supply-head { -unity-font-style: bold; font-size: 16px; margin-top: 4px; }
+.base-supply-head.with-icon { padding-left: 26px; min-height: 22px; }
+.base-bar { height: 20px; margin: 2px 0; }
+.base-bar .unity-progress-bar__background { background-color: #1a1c1f; border-color: var(--line); }
+.base-bar-defense .unity-progress-bar__progress { background-color: #6f8f68; }
+.base-bar-threat .unity-progress-bar__progress { background-color: #8f5a54; }
+.base-power-row { flex-direction: row; align-items: center; margin: 3px 0; }
+.base-power-cells { flex-direction: row; margin-right: 8px; }
+.base-power-cell { width: 18px; height: 14px; margin-right: 3px; border-width: 1px; border-color: var(--line); border-radius: 2px; }
+.base-power-cell.used { background-color: var(--accent); }
+.base-power-cell.free { background-color: rgba(127, 163, 122, 0.65); }
+.base-power-cell.none { opacity: 0.35; }
+.base-power-cell.broken { background-color: var(--danger); }
+.base-actions { flex-direction: row; flex-wrap: wrap; margin-top: 5px; }
+.base-action { margin: 2px 4px 2px 0; }
+.base-action.with-icon { padding-left: 28px; }
+/* 거점 단추의 빨간 점 */
+.hud-alert-dot { position: absolute; right: 3px; top: 3px; width: 10px; height: 10px; border-radius: 5px; border-width: 1px; border-color: #1d1f22; background-color: var(--danger); }

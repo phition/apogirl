@@ -86,7 +86,30 @@ namespace ApoGirl.Presentation.Screens
             var open = !IsOpen(_right);
             if (open) _people?.EnableInClassList("closed", true);
             Set(_right, open);
+            if (open) BaseOpened?.Invoke();
         }
+
+        /// <summary>거점 서랍을 열었을 때 (상황판이 알림을 본 것으로 친다).</summary>
+        public Action BaseOpened { get; set; }
+
+        public void CloseBase() => Set(_right, false);
+
+        public bool BaseOpen => IsOpen(_right);
+
+        /// <summary>거점 단추 오른쪽 위의 빨간 점 (거점 상황판에 새 알림이 있을 때).</summary>
+        public void SetBaseAlert(bool on)
+        {
+            if (_baseDot == null && _baseButton != null)
+            {
+                _baseDot = new VisualElement { pickingMode = PickingMode.Ignore };
+                _baseDot.AddToClassList("hud-alert-dot");
+                _baseButton.Add(_baseDot);
+            }
+
+            _baseDot?.EnableInClassList("hidden", !on);
+        }
+
+        private VisualElement _baseDot;
 
         public void TogglePeople()
         {
