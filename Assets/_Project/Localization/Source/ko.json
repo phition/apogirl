@@ -1626,7 +1626,7 @@
     "base.repel.part.base": "기본 {0}",
     "base.repel.part.combat": "전투력 {0}",
     "base.repel.part.defense": "방어 몫 {0}",
-    "base.repel.part.gear": "함정·경보 {0}",
+    "base.repel.part.gear": "시설·함정·경보 {0}",
     "base.repel.part.relief": "허수아비가 세기 −{0}",
     "base.why.gap_over": "위협이 방어보다 {0} 높아 자주 온다",
     "base.why.gap_under": "방어가 위협을 {0} 앞서 덜 온다",

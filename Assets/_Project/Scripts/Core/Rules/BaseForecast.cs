@@ -376,7 +376,7 @@ namespace ApoGirl.Core.Rules
         public int Combat;
         public int Defense;
 
-        /// <summary>함정·경보·경비 특성 몫.</summary>
+        /// <summary>함정·경보·시설과 특성의 습격 막기(RaidGuard) 몫.</summary>
         public int Gear;
         public int Threat;
         public int Relief;
