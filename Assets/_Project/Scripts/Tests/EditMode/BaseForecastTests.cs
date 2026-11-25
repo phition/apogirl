@@ -130,8 +130,9 @@ namespace ApoGirl.Tests.EditMode
             var state = Quiet(db);
             Assert.AreEqual(1f, BaseForecast.RepelChance(state, db), 1e-6, "위협 0, 방어 60이면 늘 막는다");
 
-            state.Base.Threat = 100;
+            // 위협을 맨몸 방어력보다 10 높게: 흔들림이 겹쳐 가끔만 막는다
             state.Base.Defense = 0;
+            state.Base.Threat = db.Balance.RaidBasePower + DerivedStats.CombatPower(state, db.Balance) + 10;
             var weak = BaseForecast.RepelChance(state, db);
             state.Base.Traps = 1;
             var withTrap = BaseForecast.RepelChance(state, db);
