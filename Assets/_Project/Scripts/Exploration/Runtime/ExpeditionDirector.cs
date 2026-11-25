@@ -4214,7 +4214,10 @@ namespace ApoGirl.Exploration.Runtime
 
             view.Dizzy.gameObject.SetActive(true);
             view.DizzyRenderer.sprite = ExplorationArt.Get(key);
-            view.Dizzy.localPosition = new Vector3(origin.x + unit.X, origin.y + 0.15f + ExplorationArt.DizzyHeight(view.Kind), 0f);
+            // 고개를 숙인 머리 쪽으로 (그림이 왼쪽을 보면 반대로)
+            var offset = ExplorationArt.DizzyOffset(view.Kind);
+            var facing = view.Sprites && view.BodyRenderer.flipX ? -1f : 1f;
+            view.Dizzy.localPosition = new Vector3(origin.x + unit.X + offset.x * facing, origin.y + 0.15f + offset.y, 0f);
             return true;
         }
 

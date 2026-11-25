@@ -121,32 +121,37 @@ namespace ApoGirl.Exploration.Runtime
             public string DizzyFx = "fx_dizzy_";
             public float DizzyFramesPerSecond = 12.5f;
 
-            /// <summary>별 그림 밑변의 높이 (발 기준, 유닛). 종류마다 머리 높이가 달라 DizzyHeights가 있으면 그것.</summary>
-            public float DizzyHeight = 1.35f;
-            public DizzyHeightEntry[] DizzyHeights = Array.Empty<DizzyHeightEntry>();
+            /// <summary>
+            /// 별 그림 밑변의 높이 (발 기준, 유닛)와 머리 쪽으로 옮길 가로 거리 (오른쪽을 볼 때, 유닛).
+            /// 기절 동작은 고개를 앞으로 숙여 머리가 몸 가운데에서 비켜나 있고 종류마다 머리 높이도 달라, DizzyOffsets에 그 종류가 있으면 그것.
+            /// </summary>
+            public float DizzyHeight = 1.3f;
+            public float DizzyX;
+            public DizzyOffsetEntry[] DizzyOffsets = Array.Empty<DizzyOffsetEntry>();
         }
 
-        /// <summary>종류(zombie_{Kind}_ · survivor)별 기절 별 높이.</summary>
+        /// <summary>종류(zombie_{Kind}_ · survivor)별 기절 별 자리.</summary>
         [Serializable]
-        public sealed class DizzyHeightEntry
+        public sealed class DizzyOffsetEntry
         {
             public string Kind = "";
             public float Height;
+            public float X;
         }
 
-        /// <summary>그 종류의 기절 별 높이 (발 기준, 유닛).</summary>
-        public static float DizzyHeight(string kind)
+        /// <summary>그 종류의 기절 별 자리: 밑변 높이(발 기준)와 머리 쪽 가로 거리 (오른쪽을 볼 때, 유닛).</summary>
+        public static Vector2 DizzyOffset(string kind)
         {
             var combat = Combat;
-            foreach (var entry in combat.DizzyHeights)
+            foreach (var entry in combat.DizzyOffsets)
             {
                 if (entry != null && entry.Kind == kind)
                 {
-                    return entry.Height;
+                    return new Vector2(entry.X, entry.Height);
                 }
             }
 
-            return combat.DizzyHeight;
+            return new Vector2(combat.DizzyX, combat.DizzyHeight);
         }
 
         /// <summary>타격 연출 설정 (exploration_art.json의 Combat).</summary>
