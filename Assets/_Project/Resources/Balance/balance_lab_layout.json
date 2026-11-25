@@ -318,8 +318,54 @@
       "Id": "stress",
       "Title": "스트레스·수면",
       "Kind": "Fields",
-      "Hint": "쉬지 않고 몰아붙일 때의 대가와 정신 붕괴.",
+      "Hint": "행동·휴식이 오르내리는 스트레스, 쉬지 않고 몰아붙일 때의 대가와 정신 붕괴. 탐험 스트레스(10~15)는 탐험 수확 탭의 지역별 값.",
       "Rows": [
+        {
+          "Field": "ActionStressMin",
+          "Group": "행동 스트레스",
+          "Name": "행동 스트레스 최소 (1단계)",
+          "Unit": "점",
+          "When": "Now",
+          "Note": "행동 데이터 StressCost 1단계 값. 수업·청소·설비·제작"
+        },
+        {
+          "Field": "ActionStressMax",
+          "Group": "행동 스트레스",
+          "Name": "행동 스트레스 최대 (5단계)",
+          "Unit": "점",
+          "When": "Now",
+          "Note": "사이 단계는 고르게 나눔 (기본 5·6·8·9·10)"
+        },
+        {
+          "Field": "StressInjuredBonus",
+          "Group": "행동 스트레스",
+          "Name": "부상 중 보정",
+          "Unit": "비율",
+          "When": "Now",
+          "Note": "기본값에 더해 곱함"
+        },
+        {
+          "Field": "StressPerConscience",
+          "Group": "행동 스트레스",
+          "Name": "양심의 무게 1당 보정",
+          "Unit": "비율",
+          "When": "Now"
+        },
+        {
+          "Field": "NightRestStress",
+          "Group": "휴식 회복",
+          "Name": "밤 휴식 스트레스 회복",
+          "Unit": "점",
+          "When": "Now"
+        },
+        {
+          "Field": "DayRestStressRatio",
+          "Group": "휴식 회복",
+          "Name": "낮잠 회복 (밤 휴식 대비)",
+          "Unit": "비율",
+          "When": "Now",
+          "Note": "0.5 = 밤 휴식의 절반"
+        },
         {
           "Field": "ViolationFatigue",
           "Group": "강제 휴식 위반",

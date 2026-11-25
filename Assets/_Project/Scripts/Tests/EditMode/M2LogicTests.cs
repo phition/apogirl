@@ -119,7 +119,7 @@ namespace ApoGirl.Tests.EditMode
             var preview = ActionPreviewer.Preview(_state, _db, TestContent.Humanities);
 
             var action = _db.GetAction(TestContent.Humanities);
-            var expected = CheckResolver.ComputeChance(_state, action.Check, _db.Balance, action.FatigueCost, 30 + action.StressCost);
+            var expected = CheckResolver.ComputeChance(_state, action.Check, _db.Balance, action.FatigueCost, 30 + ApoGirl.Core.Rules.StressRules.HitAction(_state, _db.Balance, action.StressCost));
             Assert.AreEqual(expected, preview.SuccessChance, 1e-6f);
             Assert.AreEqual(expected * _db.Balance.GreatSuccessRatio, preview.GreatSuccessChance, 1e-6f);
         }

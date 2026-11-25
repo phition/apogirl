@@ -27,6 +27,14 @@ namespace ApoGirl.Core.Simulation.Bots
         public int Materials;
         public int Hp;
         public int Stress;
+
+        /// <summary>주 중 스트레스 (칸마다 잰 값): 주 시작, 가장 높았던 값, 칸 뒤 평균, 오른 합, 내린 합 (주간 정산 포함).</summary>
+        public int StressStart;
+        public int StressPeak;
+        public int StressMean;
+        public int StressUp;
+        public int StressDown;
+
         public int Fatigue;
         public int Infection;
         public int SleepDebt;
@@ -132,6 +140,9 @@ namespace ApoGirl.Core.Simulation.Bots
         public readonly Dictionary<string, (int Count, int LastWeek)> EventRecords = new Dictionary<string, (int Count, int LastWeek)>();
 
         public readonly List<BotWeekSample> Weeks = new List<BotWeekSample>();
+
+        /// <summary>칸 종류별 스트레스 변화 (칸 전후 차이, 그 칸 시작의 식사·저녁 허기도 들어간다): 종류 → (합, 칸 수).</summary>
+        public readonly Dictionary<string, (int Sum, int Count)> StressBySlot = new Dictionary<string, (int Sum, int Count)>();
         public readonly List<BotExpeditionSample> Expeditions = new List<BotExpeditionSample>();
         public readonly List<BotOutingSample> Outings = new List<BotOutingSample>();
 
@@ -221,6 +232,7 @@ namespace ApoGirl.Core.Simulation.Bots
                 ChooseDiet(state, db, strategy);
 
                 runner.PrepareWeek();
+                var stress = new StressTrack(state.Player.Vitals.Stress);
                 while (!runner.IsWeekComplete && !runner.IsGameOver)
                 {
                     var night = state.Calendar.Phase == DayPhase.Night;
@@ -230,7 +242,12 @@ namespace ApoGirl.Core.Simulation.Bots
                         BotCraft.ChooseCarry(state, db, night);
                     }
 
+                    var kind = SlotKind(state, db);
+                    var before = state.Player.Vitals.Stress;
                     runner.ExecuteNextSlot();
+                    stress.Step(state.Player.Vitals.Stress, true);
+                    result.StressBySlot.TryGetValue(kind, out var sum);
+                    result.StressBySlot[kind] = (sum.Sum + state.Player.Vitals.Stress - before, sum.Count + 1);
                 }
 
                 if (runner.IsGameOver)
@@ -240,7 +257,10 @@ namespace ApoGirl.Core.Simulation.Bots
 
                 var week = state.Calendar.Week;
                 runner.FinishWeek();
-                result.Weeks.Add(Sample(state, week, db));
+                stress.Step(state.Player.Vitals.Stress, false);
+                var sample = Sample(state, week, db);
+                stress.Fill(sample);
+                result.Weeks.Add(sample);
             }
 
             Finish(result, state, db);
@@ -305,6 +325,63 @@ namespace ApoGirl.Core.Simulation.Bots
                 Bitten = outcome.Bite != null,
                 Hostile = expedition.Hostile,
             });
+        }
+
+        /// <summary>지금 칸의 종류 (스트레스 칸별 집계): 탐험 낮·밤, 강제 휴식, 휴식 낮·밤, 그 밖은 행동 분류.</summary>
+        private static string SlotKind(GameState state, IDefinitionDatabase db)
+        {
+            var calendar = state.Calendar;
+            var slot = state.Plan.Slots[CalendarRules.SlotIndex(calendar.Day, calendar.Phase)];
+            if (string.IsNullOrEmpty(slot.ActionId) || !db.TryGetAction(slot.ActionId, out var action))
+            {
+                return "빈 칸";
+            }
+
+            var night = calendar.Phase == DayPhase.Night;
+            if (action.IsExpedition) return night ? "탐험 밤" : "탐험 낮";
+            if (action.IsRest) return slot.ForcedRest ? "강제 휴식" : night ? "휴식 밤" : "휴식 낮";
+            return action.Category.ToString();
+        }
+
+        /// <summary>한 주 스트레스 흐름: 칸마다 값을 받아 최고·평균·오르내림을 센다.</summary>
+        private sealed class StressTrack
+        {
+            private readonly int _start;
+            private int _last;
+            private int _peak;
+            private int _sum;
+            private int _count;
+            private int _up;
+            private int _down;
+
+            public StressTrack(int start)
+            {
+                _start = start;
+                _last = start;
+                _peak = start;
+            }
+
+            public void Step(int value, bool slot)
+            {
+                var d = value - _last;
+                if (d > 0) _up += d; else _down -= d;
+                _last = value;
+                _peak = Math.Max(_peak, value);
+                if (slot)
+                {
+                    _sum += value;
+                    _count++;
+                }
+            }
+
+            public void Fill(BotWeekSample sample)
+            {
+                sample.StressStart = _start;
+                sample.StressPeak = _peak;
+                sample.StressMean = _count == 0 ? _start : (int)Math.Round(_sum / (double)_count);
+                sample.StressUp = _up;
+                sample.StressDown = _down;
+            }
         }
 
         private static BotWeekSample Sample(GameState state, int week, IDefinitionDatabase db)

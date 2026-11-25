@@ -113,8 +113,8 @@
         ],
         "BaseDownChance": 0.07,
         "Fatigue": 15,
-        "StressMin": 7,
-        "StressMax": 7,
+        "StressMin": 11,
+        "StressMax": 11,
         "ConscienceMax": 3
       },
       "Night": {
@@ -132,8 +132,8 @@
         ],
         "BaseDownChance": 0.16,
         "Fatigue": 20,
-        "StressMin": 9,
-        "StressMax": 9,
+        "StressMin": 14,
+        "StressMax": 14,
         "DawnReturnChance": 0.2
       },
       "ContainersPerRun": 11
@@ -170,8 +170,8 @@
         ],
         "BaseDownChance": 0.09,
         "Fatigue": 17,
-        "StressMin": 8,
-        "StressMax": 8,
+        "StressMin": 13,
+        "StressMax": 13,
         "ConscienceMax": 1
       },
       "Night": {
@@ -199,8 +199,8 @@
         ],
         "BaseDownChance": 0.16,
         "Fatigue": 21,
-        "StressMin": 10,
-        "StressMax": 10,
+        "StressMin": 15,
+        "StressMax": 15,
         "DawnReturnChance": 0.25
       },
       "ContainersPerRun": 8

@@ -187,13 +187,13 @@ namespace ApoGirl.Core.Planning
             if (CraftRules.IsContinue(action, balance))
             {
                 fatigue = Clamp(fatigue + balance.CraftContinueFatigue, balance);
-                stress = Clamp(stress + StressRules.HitAt(state, balance, balance.CraftContinueStress, 0, fatigue, debt), balance);
+                stress = Clamp(stress + StressRules.HitActionAt(state, balance, balance.CraftContinueStress, 0, fatigue, debt), balance);
                 return;
             }
 
             fatigue = Clamp(fatigue + action.FatigueCost, balance);
             var favorite = EchoRules.IsFavorite(state, balance, action);
-            stress = Clamp(stress + StressRules.HitAt(state, balance, action.StressCost, favorite ? balance.FavoriteSubjectStressRelief : 0, fatigue, debt), balance);
+            stress = Clamp(stress + StressRules.HitActionAt(state, balance, action.StressCost, favorite ? balance.FavoriteSubjectStressRelief : 0, fatigue, debt), balance);
 
             var chance = 1f;
             var great = 0f;
@@ -247,6 +247,7 @@ namespace ApoGirl.Core.Planning
                                                           + VitalOf(action.OnFailure, VitalType.Fatigue, recovery) * (1f - hit)), balance);
                 stress = Clamp(stress + (int)Math.Round(VitalOf(action.OnSuccess, VitalType.Stress, recovery) * hit
                                                         + VitalOf(action.OnFailure, VitalType.Stress, recovery) * (1f - hit)), balance);
+                stress = Clamp(stress - (int)Math.Round(StressRules.RestRelief(balance, action) * recovery, MidpointRounding.AwayFromZero), balance);
             }
         }
 

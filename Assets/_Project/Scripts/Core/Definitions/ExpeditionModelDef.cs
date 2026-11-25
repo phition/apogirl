@@ -10,8 +10,8 @@ namespace ApoGirl.Core.Definitions
         public List<ResourceRange> Resources = new List<ResourceRange>();
         public float BaseDownChance = 0.05f;
         public int Fatigue = 15;
-        public int StressMin = 6;
-        public int StressMax = 6;
+        public int StressMin = 10;
+        public int StressMax = 10;
 
         /// <summary>낮 탐험 도덕 선택으로 오르는 양심의 무게 최댓값 (0이면 변화 없음).</summary>
         public int ConscienceMax;

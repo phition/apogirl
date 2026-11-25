@@ -1,9 +1,9 @@
 {
   "Actions": [
     { "Id": "ACT_REST_DAY", "Category": "Rest", "SlotTag": "DayOnly",
-      "OnSuccess": { "Vitals": [ { "Vital": "Fatigue", "Amount": -10 }, { "Vital": "Stress", "Amount": -5 }, { "Vital": "Hp", "Amount": 4 } ] } },
+      "OnSuccess": { "Vitals": [ { "Vital": "Fatigue", "Amount": -10 }, { "Vital": "Hp", "Amount": 4 } ] } },
     { "Id": "ACT_REST_NIGHT", "Category": "Rest", "SlotTag": "NightOnly",
-      "OnSuccess": { "Vitals": [ { "Vital": "Fatigue", "Amount": -15 }, { "Vital": "Stress", "Amount": -10 }, { "Vital": "Hp", "Amount": 8 } ] } },
+      "OnSuccess": { "Vitals": [ { "Vital": "Fatigue", "Amount": -15 }, { "Vital": "Hp", "Amount": 8 } ] } },
 
     { "Id": "ACT_EDU_HUMANITIES", "Category": "Education", "FatigueCost": 5, "StressCost": 2, "HasCheck": true,
       "Check": { "BaseRate": 0.6, "StatWeights": [ { "Stat": "Intellect", "Weight": 0.004 } ], "UsesProficiency": true, "Proficiency": "Humanities", "ProficiencyWeight": 0.05 },

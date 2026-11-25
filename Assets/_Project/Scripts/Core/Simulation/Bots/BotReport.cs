@@ -42,6 +42,10 @@ namespace ApoGirl.Core.Simulation.Bots
             ("materials", w => w.Materials),
             ("hp", w => w.Hp),
             ("stress", w => w.Stress),
+            ("stress_peak", w => w.StressPeak),
+            ("stress_mean", w => w.StressMean),
+            ("stress_up", w => w.StressUp),
+            ("stress_down", w => w.StressDown),
             ("fatigue", w => w.Fatigue),
             ("infection", w => w.Infection),
             ("sleep_debt", w => w.SleepDebt),
@@ -394,6 +398,7 @@ namespace ApoGirl.Core.Simulation.Bots
 
             // 막 끝 자원 (13·26·39·52주)
             AppendCraft(sb, runs);
+            AppendStress(sb, runs);
 
             sb.AppendLine("## 막 끝 자원 평균 (식량 / 물 / 약, 살아 있는 판)");
             sb.AppendLine();
@@ -413,6 +418,59 @@ namespace ApoGirl.Core.Simulation.Bots
         }
 
         // ── 도우미 ──
+
+        /// <summary>
+        /// 스트레스 (사용자 요청 2026-11-25): 막(13주)마다 주 끝·주 중 최고·칸 평균·한 주에 오른 합·내린 합 (살아 있는 판의 주 평균),
+        /// 칸 종류별 한 칸 평균 변화 (그 칸 시작의 식사·저녁 허기 몫도 들어간다).
+        /// </summary>
+        private static void AppendStress(StringBuilder sb, IReadOnlyList<BotRunResult> runs)
+        {
+            sb.AppendLine("## 스트레스 (주 중)");
+            sb.AppendLine();
+            sb.AppendLine("주 평균 — 주 끝 / 주 중 최고 / 칸 평균 / 오른 합 / 내린 합 (살아 있는 판).");
+            sb.AppendLine();
+            sb.AppendLine("| 전략 | 1~13주 | 14~26주 | 27~39주 | 40~52주 | 100 닿은 주 |");
+            sb.AppendLine("|---|---|---|---|---|---|");
+            foreach (var g in runs.GroupBy(r => r.StrategyId))
+            {
+                var cells = new[] { (1, 13), (14, 26), (27, 39), (40, 52) }.Select(range =>
+                {
+                    var samples = g.SelectMany(r => r.Weeks).Where(w => w.Week >= range.Item1 && w.Week <= range.Item2).ToList();
+                    return samples.Count == 0 ? "-"
+                        : $"{F(samples.Average(w => w.Stress))} / {F(samples.Average(w => w.StressPeak))} / {F(samples.Average(w => w.StressMean))} / {F(samples.Average(w => w.StressUp))} / {F(samples.Average(w => w.StressDown))}";
+                });
+                var all = g.SelectMany(r => r.Weeks).ToList();
+                sb.AppendLine($"| {g.Key} | " + string.Join(" | ", cells) + $" | {P(all.Count(w => w.StressPeak >= 100), all.Count)} |");
+            }
+
+            sb.AppendLine();
+            var kinds = runs.SelectMany(r => r.StressBySlot.Keys).Distinct().OrderBy(k => k, StringComparer.Ordinal).ToList();
+            sb.AppendLine("칸 종류별 한 칸 평균 변화 (칸 수):");
+            sb.AppendLine();
+            sb.AppendLine("| 전략 | " + string.Join(" | ", kinds) + " |");
+            sb.AppendLine("|---|" + string.Concat(kinds.Select(_ => "---|")));
+            foreach (var g in runs.GroupBy(r => r.StrategyId))
+            {
+                var cells = kinds.Select(k =>
+                {
+                    var sum = 0;
+                    var count = 0;
+                    foreach (var r in g)
+                    {
+                        if (r.StressBySlot.TryGetValue(k, out var v))
+                        {
+                            sum += v.Sum;
+                            count += v.Count;
+                        }
+                    }
+
+                    return count == 0 ? "-" : $"{(sum >= 0 ? "+" : "")}{F(sum / (double)count)} ({count})";
+                });
+                sb.AppendLine($"| {g.Key} | " + string.Join(" | ", cells) + " |");
+            }
+
+            sb.AppendLine();
+        }
 
         /// <summary>제작 (P7, Docs/CRAFTING_PROPOSAL.md 4.8): 판당 완성 수, 정수 설비·교문 허수아비가 있었던 주 비율, 레시피별 완성 판 비율·첫 완성 주(중앙).</summary>
         private static void AppendCraft(StringBuilder sb, IReadOnlyList<BotRunResult> runs)

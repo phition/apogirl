@@ -78,6 +78,8 @@ namespace ApoGirl.Core.Definitions
 
         public List<ResourceAmount> ResourceCosts = new List<ResourceAmount>();
         public int FatigueCost;
+
+        /// <summary>스트레스 경중 단계 1~5 (0 = 쉬는 일정). 실제 값은 밸런스 ActionStressMin~Max (StressRules.ActionBase, 기본 5~10).</summary>
         public int StressCost;
 
         /// <summary>false면 판정 없이 항상 성공.</summary>

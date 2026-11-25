@@ -238,11 +238,17 @@ namespace ApoGirl.Core.Definitions
         public float[] SleepDebtStressMultiplier = { 1f, 1f, 1f, 1.25f, 1.25f, 1.5f };
 
         // ── 행동 스트레스 보정 (StressRules, 사용자 결정 2026-11-25) ──
-        // 쉬는 일정이 아닌 행동은 기본 1~10(행동 데이터 StressCost·탐험 모델 StressMin~Max), 아래 보정을 더해 곱하고
-        // 한 번에 최대 StressHitCap. 수면 부채는 위 SleepDebtStressMultiplier − 1을 보정에 더한다. 난이도 배율은 DifficultyDef.Stress.
+        // 쉬는 일정이 아닌 행동은 기본값(행동은 경중 단계 → ActionStressMin~Max, 탐험은 탐험 모델 StressMin~Max 10~15)에
+        // 아래 보정을 더해 곱한다. 한 번에 받는 상한은 없다 (사용자 결정 2026-11-25 저녁).
+        // 수면 부채는 위 SleepDebtStressMultiplier − 1을 보정에 더한다. 난이도 배율은 DifficultyDef.Stress.
 
-        /// <summary>행동 한 번에 받는 스트레스 상한 (표준 난이도, 난이도 배율을 곱한다).</summary>
-        public int StressHitCap = 20;
+        /// <summary>
+        /// 행동(수업·청소·설비·제작 등)의 기본 스트레스: 행동 데이터 StressCost는 경중 단계 1~ActionStressLevels이고,
+        /// 1단계 = ActionStressMin, 마지막 단계 = ActionStressMax, 사이는 고르게 나눠 반올림 (기본 5·6·8·9·10).
+        /// </summary>
+        public int ActionStressMin = 5;
+        public int ActionStressMax = 10;
+        public int ActionStressLevels = 5;
 
         /// <summary>피로 문턱(이상)과 그때의 보정 — 가장 높은 단계 하나만.</summary>
         public int[] StressFatigueThresholds = { 50, 70, 90 };
@@ -587,7 +593,7 @@ namespace ApoGirl.Core.Definitions
         /// <summary>여러 칸 제작의 뒤 칸을 잠그는 공용 행동 ("제작 중").</summary>
         public string CraftContinueActionId = "ACT_CRAFT_CONTINUE";
 
-        /// <summary>"제작 중" 칸 하나의 피로·스트레스.</summary>
+        /// <summary>"제작 중" 칸 하나의 피로·스트레스 (스트레스는 행동 경중 단계, ActionStressMin~Max).</summary>
         public int CraftContinueFatigue = 7;
         public int CraftContinueStress = 1;
 
@@ -1104,6 +1110,10 @@ namespace ApoGirl.Core.Definitions
 
         /// <summary>새벽 귀환 후 다음 휴식의 회복 배율.</summary>
         public float ReducedRestMultiplier = 0.5f;
+
+        /// <summary>밤 휴식이 내리는 스트레스. 낮잠은 그 DayRestStressRatio배 (반올림, 휴식 회복 배율은 그 뒤에 곱한다).</summary>
+        public int NightRestStress = 10;
+        public float DayRestStressRatio = 0.5f;
 
         /// <summary>쓰러짐 후 강제 요양 슬롯 수 (문서 6.3.6: 2일 = 4슬롯).</summary>
         public int DownLockedRestSlots = 4;

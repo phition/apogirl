@@ -39,8 +39,8 @@ namespace ApoGirl.Core.Simulation
             EffectApplier.ChangeVital(state, VitalType.Fatigue, action.FatigueCost, balance, delta);
             // 좋아하는 과목 (프롤로그의 메아리 E): 스트레스가 덜 들고, 가장 큰 상승치 +
             var favorite = EchoRules.IsFavorite(state, balance, action);
-            // 행동 스트레스: 기본 1~10 + 피로·부상·양심·수면 부채 보정, 한 번 최대 20 (난이도 배율, StressRules)
-            var stressCost = StressRules.Hit(state, balance, action.StressCost, favorite ? balance.FavoriteSubjectStressRelief : 0);
+            // 행동 스트레스: 경중 단계 → 기본 5~10 + 피로·부상·양심·수면 부채 보정 (난이도 배율, 상한 없음, StressRules)
+            var stressCost = StressRules.HitAction(state, balance, action.StressCost, favorite ? balance.FavoriteSubjectStressRelief : 0);
 
             EffectApplier.ChangeVital(state, VitalType.Stress, stressCost, balance, delta);
 
@@ -114,6 +114,14 @@ namespace ApoGirl.Core.Simulation
 
             // 비용을 못 냈으면 아무 효과도 없다 (빗물 없이 정수해도 실패 보상을 받지 않게)
             EffectApplier.Apply(state, affordable ? PurifyRules.Adjust(state, balance, action, result, EffectFor(action, result), delta) : null, balance, delta, recovery);
+
+            // 휴식의 스트레스 회복: 밤 휴식 값, 낮잠은 그 절반 (밸런스 표 NightRestStress·DayRestStressRatio), 회복 배율은 같이
+            var relief = StressRules.RestRelief(balance, action);
+            if (affordable && relief > 0)
+            {
+                EffectApplier.ChangeVital(state, VitalType.Stress, -(int)Math.Round(relief * recovery, MidpointRounding.AwayFromZero), balance, delta);
+            }
+
             return result;
         }
 
