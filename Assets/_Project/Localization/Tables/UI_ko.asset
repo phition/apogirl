@@ -8178,6 +8178,10 @@ MonoBehaviour:
     m_Localized: "\uC8FC \uB05D: \uD53C\uB85C {0} \xB7 \uC2A4\uD2B8\uB808\uC2A4 {1} \xB7 \uC218\uBA74 \uBD80\uCC44 {2}"
     m_Metadata:
       m_Items: []
+  - m_Id: 2325182634278912
+    m_Localized: "\uBE57\uBB3C"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []
