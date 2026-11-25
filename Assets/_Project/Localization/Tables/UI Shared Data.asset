@@ -7263,6 +7263,258 @@ MonoBehaviour:
     m_Key: roomname.ROOM_WATER_LAB
     m_Metadata:
       m_Items: []
+  - m_Id: 2216471513284608
+    m_Key: base.safety
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2216471546839040
+    m_Key: base.supply
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2216471546839041
+    m_Key: base.power
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2216471546839042
+    m_Key: base.raid.level
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2216471546839043
+    m_Key: base.raid.none
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2216471546839044
+    m_Key: base.raid.not_yet
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2216471546839045
+    m_Key: base.risk.None
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2216471546839046
+    m_Key: base.risk.Low
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2216471546839047
+    m_Key: base.risk.Medium
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2216471546839048
+    m_Key: base.risk.High
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2216471546839049
+    m_Key: base.defense
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2216471546839050
+    m_Key: base.threat
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2216471546839051
+    m_Key: base.repel
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2216471546839052
+    m_Key: base.repel.Low
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2216471546839053
+    m_Key: base.repel.Medium
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2216471546839054
+    m_Key: base.repel.High
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2216471546839055
+    m_Key: base.why.gap_over
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2216471546839056
+    m_Key: base.why.gap_under
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2216471546839057
+    m_Key: base.why.rain
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2216471546839058
+    m_Key: base.why.broadcast
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2216471546839059
+    m_Key: base.why.faction_up
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2216471546839060
+    m_Key: base.why.faction_down
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2216471546839061
+    m_Key: base.why.away_nights
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2216471546839062
+    m_Key: base.traps
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2216471546839063
+    m_Key: base.alarm.on
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2216471546839064
+    m_Key: base.alarm.off
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2216471546839065
+    m_Key: base.scarecrow
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2216471546839066
+    m_Key: base.scarecrow.down
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2216471546839067
+    m_Key: base.intrusion
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2216471546839068
+    m_Key: base.supply.ok
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2216471546839069
+    m_Key: base.supply.tight
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2216471546839070
+    m_Key: base.supply.short
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2216471546839071
+    m_Key: base.food
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2216471546839072
+    m_Key: base.water
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2216471546839073
+    m_Key: base.use
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2216471546839074
+    m_Key: base.garden
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2216471546839075
+    m_Key: base.spoil
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2216471546839076
+    m_Key: base.cat
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2216471546839077
+    m_Key: base.purified
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2216471546839078
+    m_Key: base.short
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2216471546839079
+    m_Key: base.next_week
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2216471546839080
+    m_Key: base.spoil_line
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2216471546839081
+    m_Key: base.spoil_line_fridge
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2216471546839082
+    m_Key: base.raw
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2216471546839083
+    m_Key: base.power.free
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2216471546839084
+    m_Key: base.power.full
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2216471546839085
+    m_Key: base.power.broken
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2216471546839086
+    m_Key: base.power.capacity
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2216471546839087
+    m_Key: base.power.battery
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2216471546839088
+    m_Key: base.power.max
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2216471546839089
+    m_Key: base.appliance.on
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2216471546839090
+    m_Key: base.appliance.off
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2216471546839091
+    m_Key: appliance.FRIDGE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2216471546839092
+    m_Key: appliance.PURIFIER
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2216471546839093
+    m_Key: base.pick_hint
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2216471546839094
+    m_Key: base.alert.generator
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2216471546839095
+    m_Key: base.alert.purifier
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2216471546839096
+    m_Key: base.alert.scarecrow
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2216471546839097
+    m_Key: base.alert.breached
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2216471546839098
+    m_Key: base.alert.injured
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2216471546839099
+    m_Key: base.alert.food_short
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2216471546839100
+    m_Key: base.alert.water_short
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2216471546839101
+    m_Key: base.alert.raid_high
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
