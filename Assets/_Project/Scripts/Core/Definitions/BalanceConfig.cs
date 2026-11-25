@@ -236,6 +236,23 @@ namespace ApoGirl.Core.Definitions
         public float[] SleepDebtEfficiencyPenalty = { 0f, 0.1f, 0.1f, 0.1f, 0.1f, 0.1f };
         public float[] SleepDebtCheckPenalty = { 0f, 0f, 0f, 0.1f, 0.1f, 0.15f };
         public float[] SleepDebtStressMultiplier = { 1f, 1f, 1f, 1.25f, 1.25f, 1.5f };
+
+        // ── 행동 스트레스 보정 (StressRules, 사용자 결정 2026-11-25) ──
+        // 쉬는 일정이 아닌 행동은 기본 1~10(행동 데이터 StressCost·탐험 모델 StressMin~Max), 아래 보정을 더해 곱하고
+        // 한 번에 최대 StressHitCap. 수면 부채는 위 SleepDebtStressMultiplier − 1을 보정에 더한다. 난이도 배율은 DifficultyDef.Stress.
+
+        /// <summary>행동 한 번에 받는 스트레스 상한 (표준 난이도, 난이도 배율을 곱한다).</summary>
+        public int StressHitCap = 20;
+
+        /// <summary>피로 문턱(이상)과 그때의 보정 — 가장 높은 단계 하나만.</summary>
+        public int[] StressFatigueThresholds = { 50, 70, 90 };
+        public float[] StressFatigueBonus = { 0.1f, 0.25f, 0.4f };
+
+        /// <summary>부상 중 보정.</summary>
+        public float StressInjuredBonus = 0.25f;
+
+        /// <summary>양심의 무게 1당 보정 (최대 ConscienceMax 10 → +50%).</summary>
+        public float StressPerConscience = 0.05f;
         public int SleepDebtForcedRestStage = 4;
         public int NightExpeditionSleepDebt = 1;
         public int ForcedRestViolationSleepDebt = 1;
@@ -782,17 +799,17 @@ namespace ApoGirl.Core.Definitions
         {
             new DifficultyDef
             {
-                Id = "STORY", Harm = 0.6f, HumanThreat = 0.7f, Infection = 0.6f, Yield = 1.5f,
+                Id = "STORY", Stress = 0.8f, Harm = 0.6f, HumanThreat = 0.7f, Infection = 0.6f, Yield = 1.5f,
                 // 식량·물 변환 ×1.5 (통조림·생수 5 → 7.5), 수확·의약품도 넉넉하게 (2026-11-23 밸런스 표)
                 FoodYield = 1.5f, WaterYield = 1.5f, MedicineYield = 1.5f,
                 WeeklyUndo = true, Dispatch = true, DispatchYield = 0.7f,
             },
             // 표준: 식량·물·의약품 ×1 (2026-11-23 밸런스 표)
-            new DifficultyDef { Id = "STANDARD", FoodYield = 1f, WaterYield = 1f, MedicineYield = 1f },
+            new DifficultyDef { Id = "STANDARD", Stress = 1f, FoodYield = 1f, WaterYield = 1f, MedicineYield = 1f },
             // 하드: 가혹해진 세계에 맞춰 소모는 표준과 같게 (2026-11-20 결정, M7-d의 ×1.25에서 수정)
             new DifficultyDef
             {
-                Id = "HARD", Consumption = 1f, Harm = 1.4f, HumanThreat = 1.3f, Infection = 1.3f, Yield = 0.9f,
+                Id = "HARD", Stress = 1.2f, Consumption = 1f, Harm = 1.4f, HumanThreat = 1.3f, Infection = 1.3f, Yield = 0.9f,
                 // 식량·물·의약품 ×0.8 (통조림·생수 5 → 4, 2026-11-23 밸런스 표)
                 FoodYield = 0.8f, WaterYield = 0.8f, MedicineYield = 0.8f,
             },

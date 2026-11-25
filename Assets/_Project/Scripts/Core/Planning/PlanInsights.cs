@@ -49,7 +49,7 @@ namespace ApoGirl.Core.Planning
                 Category = action.Category,
                 HasCheck = action.HasCheck,
                 FatigueCost = action.FatigueCost,
-                StressCost = StatRules.ScaleStress(action.StressCost, player.SleepDebt, balance),
+                StressCost = StressRules.Hit(state, balance, action.StressCost),
                 IsExpedition = action.IsExpedition,
                 ExpeditionTime = action.ExpeditionTime,
                 LocationId = action.LocationId,

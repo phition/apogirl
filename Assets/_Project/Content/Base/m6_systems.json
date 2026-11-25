@@ -4,7 +4,7 @@
       "Id": "ACT_TREAT_INFECTION",
       "Category": "Survival",
       "FatigueCost": 4,
-      "StressCost": 2,
+      "StressCost": 4,
       "HasCheck": true,
       "Check": {
         "BaseRate": 0.45,
@@ -67,7 +67,7 @@
       "Category": "Daily",
       "SlotTag": "NightOnly",
       "FatigueCost": 3,
-      "StressCost": 3,
+      "StressCost": 4,
       "ResourceCosts": [
         {
           "Resource": "Medicine",

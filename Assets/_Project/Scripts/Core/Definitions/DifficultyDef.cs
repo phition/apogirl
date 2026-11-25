@@ -13,6 +13,9 @@ namespace ApoGirl.Core.Definitions
         /// <summary>쓰지 않는다 (2026-11-23부터 식단 소비는 난이도로 할인하지 않는다). 옛 덮어쓰기 파일 호환으로만 남긴다.</summary>
         public float Consumption = 1f;
 
+        /// <summary>행동 스트레스 배율 (기본값과 한 번 상한에 함께, 이야기 0.8·하드 1.2, StressRules).</summary>
+        public float Stress = 1f;
+
         /// <summary>탐험 피해·쓰러짐 배율 (헤드리스 쓰러짐 확률, 실시간 좀비 피해).</summary>
         public float Harm = 1f;
 

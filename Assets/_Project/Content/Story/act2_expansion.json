@@ -1,6 +1,6 @@
 {
   "Actions": [
-    { "Id": "ACT_SURV_MAKE_PROSTHETIC", "Category": "Craft", "SlotTag": "Both", "FatigueCost": 10, "StressCost": 2, "HasCheck": true,
+    { "Id": "ACT_SURV_MAKE_PROSTHETIC", "Category": "Craft", "SlotTag": "Both", "FatigueCost": 10, "StressCost": 4, "HasCheck": true,
       "ResourceCosts": [ { "Resource": "Materials", "Amount": 4 } ],
       "Check": { "BaseRate": 0.35, "StatWeights": [ { "Stat": "Craft", "Weight": 0.006 } ], "UsesProficiency": true, "Proficiency": "Engineering", "ProficiencyWeight": 0.08 },
       "StatGains": [ { "Stat": "Craft", "Amount": 2 } ], "HasProficiency": true, "Proficiency": "Engineering", "ProficiencyXp": 3,

@@ -444,7 +444,7 @@ namespace ApoGirl.Core.Rules
         private static void ChargeVitals(GameState state, BalanceConfig balance, int fatigue, int stress, StateDelta delta)
         {
             EffectApplier.ChangeVital(state, VitalType.Fatigue, fatigue, balance, delta);
-            EffectApplier.ChangeVital(state, VitalType.Stress, StatRules.ScaleStress(stress, state.Player.SleepDebt, balance), balance, delta);
+            EffectApplier.ChangeVital(state, VitalType.Stress, StressRules.Hit(state, balance, stress), balance, delta);
         }
 
         /// <summary>칸마다 능력치 성장·숙련 경험 (교육과 같은 배율 규칙, 실패면 경험 없음).</summary>

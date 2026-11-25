@@ -39,11 +39,8 @@ namespace ApoGirl.Core.Simulation
             EffectApplier.ChangeVital(state, VitalType.Fatigue, action.FatigueCost, balance, delta);
             // 좋아하는 과목 (프롤로그의 메아리 E): 스트레스가 덜 들고, 가장 큰 상승치 +
             var favorite = EchoRules.IsFavorite(state, balance, action);
-            var stressCost = StatRules.ScaleStress(action.StressCost, player.SleepDebt, balance);
-            if (favorite && stressCost > 0)
-            {
-                stressCost = Math.Max(0, stressCost - balance.FavoriteSubjectStressRelief);
-            }
+            // 행동 스트레스: 기본 1~10 + 피로·부상·양심·수면 부채 보정, 한 번 최대 20 (난이도 배율, StressRules)
+            var stressCost = StressRules.Hit(state, balance, action.StressCost, favorite ? balance.FavoriteSubjectStressRelief : 0);
 
             EffectApplier.ChangeVital(state, VitalType.Stress, stressCost, balance, delta);
 

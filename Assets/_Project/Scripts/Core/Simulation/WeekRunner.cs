@@ -746,7 +746,7 @@ namespace ApoGirl.Core.Simulation
             // 폭행 트라우마: 낮 탐험마다 스트레스가 더 오른다
             var traumaStress = action.ExpeditionTime == ExpeditionTime.Day ? AssaultTraumaRules.DayExpeditionStress(_state, Balance) : 0;
             var stress = (int)Math.Round((result.StressDelta + traumaStress) * (1f + TraitRules.Sum(_state, _db, TraitModifierKind.ExpeditionStress)));
-            EffectApplier.ChangeVital(_state, VitalType.Stress, StatRules.ScaleStress(stress, player.SleepDebt, Balance), Balance, delta);
+            EffectApplier.ChangeVital(_state, VitalType.Stress, StressRules.Hit(_state, Balance, stress), Balance, delta);
             EffectApplier.ChangeVital(_state, VitalType.Hp, result.HpDelta, Balance, delta);
             EffectApplier.ChangeSleepDebt(_state, result.SleepDebtDelta, Balance, delta);
             EffectApplier.ChangeConscience(_state, result.ConscienceDelta, Balance, delta);

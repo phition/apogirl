@@ -533,7 +533,7 @@ namespace ApoGirl.Exploration.Runtime
             else
             {
                 _baseFatigue = day ? 15 : 20;
-                _runStress = day ? 6 : 15;
+                _runStress = day ? 6 : 8;   // 모델 없는 곳: 행동 스트레스 표의 가장 가벼운 탐험 (StressRules)
             }
 
             Clock = new RunClock(day ? Location.DayRunSeconds : Location.NightRunSeconds, Request.TimeOfDay);
