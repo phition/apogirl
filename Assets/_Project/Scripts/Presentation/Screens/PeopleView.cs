@@ -406,7 +406,7 @@ namespace ApoGirl.Presentation.Screens
 
         /// <summary>
         /// 인물 카드 아래 글줄의 종류 — 색을 나눈다 (2026-11-25 사용자 요청: 전부 붉으면 다 나쁜 소식처럼 읽힌다).
-        /// Bad 몸·마음이 상함(부상·상처·감염·지침), Warn 손해가 나는 사정(정원 초과·방 없음·특기 꺼짐), Info 지금 형편(거동·고양이),
+        /// Bad 몸·마음이 상함(부상·상처·감염·지침), Warn 손해가 나는 사정(정원 초과·방 없음), Info 지금 형편(거동·고양이),
         /// Trait 그 사람다움(좋아하는 활동·켜진 특기·적성·바람).
         /// </summary>
         private enum FlagKind
@@ -518,13 +518,11 @@ namespace ApoGirl.Presentation.Screens
                 yield return new Flag(Loc.T("people.club_likes." + liked), FlagKind.Trait);
             }
 
-            // 특기 (기획 C.2 ②): 켜져 있으면 무엇을 해 주는지, 마음이 멀어져 꺼졌으면 그 사실만
-            if (SpecialRules.IsUnlocked(state, balance, id))
+            // 특기 (기획 C.2 ②): 켜져 있을 때만 무엇을 해 주는지 (꺼진 특기는 적지 않는다, 사용자 결정 2026-11-25)
+            if (SpecialRules.IsActive(state, balance, id))
             {
-                var on = SpecialRules.IsActive(state, balance, id);
-                yield return new Flag(on
-                    ? Loc.F("people.special_on", Loc.T("special." + id + ".name"), Loc.T("special." + id + ".desc"))
-                    : Loc.F("people.special_off", Loc.T("special." + id + ".name")), "special." + id, on ? FlagKind.Trait : FlagKind.Warn);
+                yield return new Flag(Loc.F("people.special_on", Loc.T("special." + id + ".name"), Loc.T("special." + id + ".desc")),
+                    "special." + id, FlagKind.Trait);
             }
 
             // 역할 재기획: 적성은 느낌 문구로만, 정원을 넘었거나 방이 아직 없으면 그 사실만
