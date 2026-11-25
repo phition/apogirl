@@ -103,6 +103,13 @@ namespace ApoGirl.Presentation.Screens
             public string Flag = "";
             public int MinDefense;
             public string Image = "";
+
+            /// <summary>이 중 하나라도 켜져 있으면 숨긴다 (울리는 허수아비가 서면 보통 허수아비를 감추는 식).</summary>
+            public string[] NotFlags = Array.Empty<string>();
+
+            public bool Shown(GameState state) =>
+                (string.IsNullOrEmpty(Flag) || state.Flags.Contains(Flag)) && state.Base.Defense >= MinDefense
+                && (NotFlags == null || !NotFlags.Any(state.Flags.Contains));
         }
 
         [Serializable]
@@ -951,8 +958,7 @@ namespace ApoGirl.Presentation.Screens
                 var state = _session.State;
                 foreach (var built in room.Def.Built)
                 {
-                    var shown = (string.IsNullOrEmpty(built.Flag) || state.Flags.Contains(built.Flag)) && state.Base.Defense >= built.MinDefense;
-                    var texture = shown ? StoryArt.Load(built.Image) : null;
+                    var texture = built.Shown(state) ? StoryArt.Load(built.Image) : null;
                     if (texture == null)
                     {
                         continue;

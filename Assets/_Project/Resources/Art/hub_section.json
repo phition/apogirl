@@ -35,6 +35,20 @@
         {
           "Flag": "ALARM_INSTALLED",
           "Image": "UI/HubObj/hub_obj_alarm_cans"
+        },
+        {
+          "Flag": "SCARECROW_UP",
+          "NotFlags": ["SCARECROW_BELL"],
+          "Image": "UI/HubObj/hub_obj_scarecrow"
+        },
+        {
+          "Flag": "SCARECROW_BELL",
+          "Image": "UI/HubObj/hub_obj_scarecrow_bell"
+        },
+        {
+          "Flag": "CRAFTED_ACT_CRAFT_SCARECROW",
+          "NotFlags": ["SCARECROW_UP", "SCARECROW_BELL"],
+          "Image": "UI/HubObj/hub_obj_scarecrow_down"
         }
       ],
       "NameKey": "hubroom.ENTRANCE",
@@ -236,6 +250,10 @@
         {
           "Flag": "SAND_FILTER",
           "Image": "UI/HubObj/hub_obj_water_filter"
+        },
+        {
+          "Flag": "AUTO_PURIFIER",
+          "Image": "UI/HubObj/hub_obj_auto_purifier"
         }
       ],
       "Art": "Story/Backgrounds/bg_science",

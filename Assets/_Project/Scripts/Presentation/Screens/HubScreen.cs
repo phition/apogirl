@@ -883,7 +883,8 @@ namespace ApoGirl.Presentation.Screens
             }
             else
             {
-                Sound.Play(outcome.Result == Core.Rules.CheckResult.Failure ? "Sfx/ui_failure" : "Sfx/ui_success", SoundCategory.Ui);
+                Sound.Play(outcome.Craft != null && outcome.Craft.Finished ? CraftDoneSfx
+                    : outcome.Result == Core.Rules.CheckResult.Failure ? "Sfx/ui_failure" : "Sfx/ui_success", SoundCategory.Ui);
             }
 
             if (outcome.Raid != null)
@@ -1122,6 +1123,9 @@ namespace ApoGirl.Presentation.Screens
             _faction.Show(factionId);
         }
 
+        /// <summary>제작 완성 소리 (힉스필드 15차): 결과 한 줄·결과 카드에서 성공 소리 대신.</summary>
+        private const string CraftDoneSfx = "Sfx/sfx_craft_done";
+
         /// <summary>
         /// 실행 중 평범한 칸: 카드로 멈추지 않고 장면 위에 결과 한 줄을 흘려보낸다 (최근 4줄, 몇 초 뒤 사라짐).
         /// 대성공이면 입상이 밝게 웃는다.
@@ -1136,6 +1140,10 @@ namespace ApoGirl.Presentation.Screens
             var deltas = UiText.DeltaLines(outcome.Delta);
             // 제작 칸은 판정 결과 대신 제작 단계(착수·제작 중·완성…)를 보인다
             var craft = CraftUi.TickerLine(outcome.Craft);
+            if (outcome.Craft != null && outcome.Craft.Finished)
+            {
+                Sound.Play(CraftDoneSfx, SoundCategory.Ui);   // 15차: 마지막 망치질 (완성·잘 만듦·손질)
+            }
             var detail = (craft.Length > 0 ? craft : UiText.Result(outcome.Result)) + (deltas.Count > 0 ? "  " + string.Join("  ", deltas.Take(3)) : "");
             var together = PeopleUi.TogetherLine(outcome.Together);
             if (together.Length > 0)

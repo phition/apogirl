@@ -76,19 +76,19 @@
   "Events": [
     {
       "Event": "EVT_CRAFT_WORKBENCH",
-      "Image": "Backgrounds/bg_storage"
+      "Image": "Events/evt_craft_workbench"
     },
     {
       "Event": "EVT_CRAFT_SCARECROW",
-      "Image": "Backgrounds/bg_school_gate"
+      "Image": "Events/evt_craft_scarecrow"
     },
     {
       "Event": "EVT_CRAFT_PURIFIER",
-      "Image": "Backgrounds/bg_science"
+      "Image": "Events/evt_craft_purifier"
     },
     {
       "Event": "EVT_CRAFT_FRAME_PACK",
-      "Image": "Backgrounds/bg_homeec"
+      "Image": "Events/evt_craft_frame_pack"
     },
     {
       "Event": "EVT_A1_TRAPPED",
@@ -1568,11 +1568,11 @@
     },
     {
       "Key": "act.ACT_CRAFT_CLUB",
-      "Image": "item_weapon_bat"
+      "Image": "item_weapon_club"
     },
     {
       "Key": "act.ACT_CRAFT_CLUB_TAPED",
-      "Image": "item_weapon_bat"
+      "Image": "item_weapon_club_taped"
     },
     {
       "Key": "act.ACT_CRAFT_MAINTAIN",
@@ -1588,11 +1588,11 @@
     },
     {
       "Key": "item.ITEM_WEAPON_CLUB",
-      "Image": "item_weapon_bat"
+      "Image": "item_weapon_club"
     },
     {
       "Key": "item.ITEM_WEAPON_CLUB_TAPED",
-      "Image": "item_weapon_bat"
+      "Image": "item_weapon_club_taped"
     },
     {
       "Key": "item.ITEM_ARMOR_MATPAD",
@@ -1652,31 +1652,31 @@
     },
     {
       "Key": "act.ACT_CRAFT_AUTO_PURIFIER",
-      "Image": "icon_craft_water_filter"
+      "Image": "icon_craft_auto_purifier"
     },
     {
       "Key": "act.ACT_CRAFT_SCARECROW",
-      "Image": "item_lure_alarm"
+      "Image": "icon_craft_scarecrow"
     },
     {
       "Key": "act.ACT_CRAFT_DECOY",
-      "Image": "item_lure_alarm"
+      "Image": "item_decoy_dummy"
     },
     {
       "Key": "act.ACT_CRAFT_DECOY_BELL",
-      "Image": "item_lure_alarm"
+      "Image": "item_decoy_bell"
     },
     {
       "Key": "act.ACT_CRAFT_SCARECROW_BELL",
-      "Image": "item_lure_alarm"
+      "Image": "icon_craft_scarecrow"
     },
     {
       "Key": "item.ITEM_DECOY_DUMMY",
-      "Image": "item_lure_alarm"
+      "Image": "item_decoy_dummy"
     },
     {
       "Key": "item.ITEM_DECOY_BELL",
-      "Image": "item_lure_alarm"
+      "Image": "item_decoy_bell"
     },
     {
       "Key": "stat.Stamina",
