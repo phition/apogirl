@@ -123,6 +123,9 @@ namespace ApoGirl.Core.Definitions
         public int NpcAffinityMax = 100;
         public int NpcAffinityMin = -100;
 
+        /// <summary>동료로 합류하는 순간의 호감 바닥 (사용자 결정 2026-11-25): 그보다 낮으면 이 값으로 올리고, 합류 장면의 호감 변화는 그 위에 더한다.</summary>
+        public int JoinAffinity = 30;
+
         // ── 달력·이벤트 (M3) ──
 
         /// <summary>1주차 1일의 실제 날짜 (문서 4.1: 3월 셋째 주 무렵). 윤년은 쓰지 않는다.</summary>
@@ -429,8 +432,8 @@ namespace ApoGirl.Core.Definitions
 
         // ── 위기 때 남느냐 떠나느냐 (기획 C.2 ③) ──
 
-        /// <summary>위기 주(결산 때 식량·식수가 바닥, 또는 그 주 습격에 뚫림)에 호감이 이 값 미만인 동료가 떠날 후보 (C.5: 0 미만).</summary>
-        public int CrisisLeaveBelowAffinity = 0;
+        /// <summary>위기 주(결산 때 식량·식수가 바닥, 또는 그 주 습격에 뚫림)에 호감이 이 값 미만인 동료가 떠날 후보 (C.5: 0 미만 → 사용자 결정 2026-11-25: 10 미만).</summary>
+        public int CrisisLeaveBelowAffinity = 10;
 
         /// <summary>한 주에 예고하는 동료 수 (호감이 낮은 사람부터).</summary>
         public int CrisisLeavePerWeek = 1;

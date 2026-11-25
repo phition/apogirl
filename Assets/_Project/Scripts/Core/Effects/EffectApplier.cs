@@ -252,7 +252,11 @@ namespace ApoGirl.Core.Effects
 
             var npc = GetNpc(state, change.NpcId);
             var affinityBefore = npc.Affinity;
-            npc.Affinity = Clamp(npc.Affinity + change.Affinity, balance.NpcAffinityMin, balance.NpcAffinityMax);
+            // 합류하는 순간 호감 바닥 JoinAffinity (사용자 결정 2026-11-25): 먼저 바닥까지 올리고 이 장면의 호감 변화를 더한다
+            var floor = change.SetStatus == NpcStatus.Joined && npc.Status != NpcStatus.Joined
+                ? Math.Max(npc.Affinity, balance.JoinAffinity)
+                : npc.Affinity;
+            npc.Affinity = Clamp(floor + change.Affinity, balance.NpcAffinityMin, balance.NpcAffinityMax);
             npc.Trust = Clamp(npc.Trust + change.Trust, balance.NpcAffinityMin, balance.NpcAffinityMax);
             delta.AddNpcAffinity(change.NpcId, npc.Affinity - affinityBefore);
             if (change.SetStatus != NpcStatus.Unknown && npc.Status != change.SetStatus)

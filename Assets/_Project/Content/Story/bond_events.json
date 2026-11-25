@@ -164,7 +164,7 @@
             "Kind": "NpcAffinity",
             "Key": "NPC_NURSE",
             "Op": "GreaterOrEqual",
-            "Value": 80
+            "Value": 60
           }
         ],
         "FlagsAll": [
@@ -378,7 +378,7 @@
             "Kind": "NpcAffinity",
             "Key": "NPC_DOHYEON",
             "Op": "GreaterOrEqual",
-            "Value": 80
+            "Value": 60
           }
         ],
         "FlagsAll": [
@@ -592,7 +592,7 @@
             "Kind": "NpcAffinity",
             "Key": "NPC_BYSTANDER",
             "Op": "GreaterOrEqual",
-            "Value": 80
+            "Value": 60
           }
         ],
         "FlagsAll": [
@@ -806,7 +806,7 @@
             "Kind": "NpcAffinity",
             "Key": "NPC_RINGLEADER",
             "Op": "GreaterOrEqual",
-            "Value": 80
+            "Value": 60
           }
         ],
         "FlagsAll": [
@@ -1020,7 +1020,7 @@
             "Kind": "NpcAffinity",
             "Key": "NPC_SURVIVOR_A",
             "Op": "GreaterOrEqual",
-            "Value": 80
+            "Value": 60
           }
         ],
         "FlagsAll": [

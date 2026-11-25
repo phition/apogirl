@@ -35,7 +35,8 @@
         "SleepDebtMax",
         "ProficiencyMaxLevel",
         "NpcAffinityMax",
-        "NpcAffinityMin"
+        "NpcAffinityMin",
+        "JoinAffinity"
       ]
     },
     {

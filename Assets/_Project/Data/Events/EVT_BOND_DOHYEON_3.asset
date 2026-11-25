@@ -36,7 +36,7 @@ MonoBehaviour:
       - Kind: 8
         Key: NPC_DOHYEON
         Op: 0
-        Value: 80
+        Value: 60
       AnyChecks: []
       NpcStatuses:
       - NpcId: NPC_DOHYEON

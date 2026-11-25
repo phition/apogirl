@@ -117,7 +117,13 @@ namespace ApoGirl.Tests.EditMode
             EffectApplier.Apply(state, effect, db.Balance, delta);
             Assert.IsTrue(ConditionEvaluator.IsMet(state, condition, DayRest(), db.Balance));
             Assert.AreEqual("guard", state.Npcs["NPC_X"].Role);
-            Assert.AreEqual((int)System.Math.Round(12 * db.Balance.CompanionAffinityGainScale), delta.NpcAffinity["NPC_X"], "이벤트로 오르는 동료 호감은 배율 (기획 C.4)");
+            var gain = (int)System.Math.Round(12 * db.Balance.CompanionAffinityGainScale);   // 이벤트로 오르는 동료 호감은 배율 (기획 C.4)
+            Assert.AreEqual(db.Balance.JoinAffinity + gain, state.Npcs["NPC_X"].Affinity, "합류하면 호감 바닥 JoinAffinity 위에 장면의 호감을 더한다");
+            Assert.AreEqual(db.Balance.JoinAffinity + gain, delta.NpcAffinity["NPC_X"]);
+
+            var again = new StateDelta();
+            EffectApplier.Apply(state, new GameEffect { Npcs = { new NpcChange { NpcId = "NPC_X", Affinity = 4, SetStatus = NpcStatus.Joined } } }, db.Balance, again);
+            Assert.AreEqual((int)System.Math.Round(4 * db.Balance.CompanionAffinityGainScale), again.NpcAffinity["NPC_X"], "이미 합류한 동료는 바닥을 다시 적용하지 않는다");
 
             EffectApplier.Apply(state, new GameEffect { Npcs = { new NpcChange { NpcId = EffectApplier.TeacherNpcId, Affinity = 5 } } }, db.Balance, delta);
             Assert.AreEqual(5, state.Teacher.Affinity, "NPC_TEACHER = 윤 선생님 호감");
