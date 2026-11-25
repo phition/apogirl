@@ -77,6 +77,14 @@
                 <ui:Button name="drawer-people-close" class="drawer-close" />
             </ui:VisualElement>
             <ui:ScrollView name="people-panel" class="drawer-body people-panel" />
+            <!-- 세력 덧판: 인물 서랍 왼쪽 가장자리의 화살표 탭을 누르면 왼쪽으로 펼쳐진다 (FactionAddonView) -->
+            <ui:VisualElement name="people-factions" class="people-factions hidden">
+                <ui:VisualElement name="people-factions-sheet" class="people-factions-sheet hidden">
+                    <ui:Label name="people-factions-title" class="section-header" />
+                    <ui:ScrollView name="people-factions-list" class="people-factions-list" />
+                </ui:VisualElement>
+                <ui:Button name="people-factions-tab" class="people-factions-tab" />
+            </ui:VisualElement>
         </ui:VisualElement>
 
         <ui:VisualElement name="board" class="board closed">

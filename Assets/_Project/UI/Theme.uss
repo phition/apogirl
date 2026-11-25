@@ -1275,3 +1275,26 @@ Button.base-advice-line:hover { background-color: rgba(185, 163, 122, 0.18); col
 #drawer-right { width: 520px; }
 #drawer-right.closed { translate: 540px 0; }
 .base-drawer-open .teacher-box { right: 538px; }
+/* 인물 서랍 단추·역할 글: 자기 padding이 .with-icon의 아이콘 자리를 덮어 아이콘과 글자가 겹쳤다 — 아이콘이 있으면 왼쪽을 비워 그만큼 넓힌다 */
+.person-stay.with-icon { padding-left: 30px; padding-right: 12px; min-height: 26px; }
+.person-role.with-icon { padding-left: 26px; padding-right: 10px; min-height: 22px; }
+/* 세력 덧판 (FactionAddonView): 인물 서랍 왼쪽 가장자리에 붙은 화살표 탭, 누르면 왼쪽으로 펼친다.
+   선생님 한 줄(위쪽)과 겹치지 않게 서랍 위에서 150px 아래. 서랍이 닫히면 함께 숨는다(닫힌 서랍은 화면 밖이라 덧판만 남지 않게). */
+.people-factions { position: absolute; top: 150px; right: 100%; flex-direction: row; align-items: flex-start; }
+.drawer-people.closed .people-factions { display: none; }
+.people-factions-tab {
+    margin: 0; padding: 10px 8px; min-width: 34px;
+    font-size: 15px; -unity-font-style: bold; white-space: normal; -unity-text-align: middle-center;
+    color: var(--accent); background-color: rgb(30, 32, 36);
+    border-width: 1px; border-right-width: 0; border-color: var(--line);
+    border-top-left-radius: 8px; border-bottom-left-radius: 8px; border-top-right-radius: 0; border-bottom-right-radius: 0;
+}
+.people-factions-tab:hover { background-color: rgb(44, 46, 52); }
+.people-factions.expanded .people-factions-tab { color: var(--text-dim); }
+.people-factions-sheet {
+    width: 320px; max-height: 560px; padding: 10px 12px;
+    background-color: rgb(30, 32, 36); border-width: 1px; border-right-width: 0; border-color: var(--line);
+    border-top-left-radius: 8px; border-bottom-left-radius: 8px;
+}
+.people-factions-list { flex-shrink: 1; }
+.people-factions-list .faction-bar { margin: 2px 0 2px 0; }

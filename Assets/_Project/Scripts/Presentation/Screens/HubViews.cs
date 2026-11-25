@@ -156,21 +156,108 @@ namespace ApoGirl.Presentation.Screens
             _baseInfo = Row(_baseSection);
             _baseInfo.style.whiteSpace = WhiteSpace.Normal;
             // 동료 역할은 위 거점 상황판의 역할 칸(역할 판)에서 바꾼다 (BASE_TAB_PROPOSAL P3)
+            // 세력은 인물 서랍 왼쪽의 접는 덧판(FactionAddonView)으로 옮겼다 (2026-11-25)
+        }
 
-            basePanel.Add(_factionSection);
-            _factionSection.Add(Header("status.factions"));
-            _factionSection.Add(_factions);
+        public void Refresh()
+        {
+            var state = _session.State;
+            var balance = _session.Definitions.Balance;
+
+            // 시설은 위 거점 상황판의 시설 칸이 보여 준다 (BASE_TAB_PROPOSAL P2)
+            var people = new List<string>();
+            if (_session.HasMetTeacher)
+            {
+                people.Add(Loc.F("status.teacher", state.Teacher.Affinity, Loc.T("mobility." + Math.Min(state.Teacher.MobilityStage, 2))));
+            }
+
+            var stage = InfectionRules.TeacherStage(state, balance);
+            if (stage > 0)
+            {
+                people.Add(Loc.T("teacher.stage." + Math.Min(stage, 4)));
+            }
+
+            _baseInfo.text = string.Join("\n", people);
+            _baseSection.EnableInClassList("hidden", people.Count == 0);
+        }
+
+        private static Label Header(string key)
+        {
+            var label = new Label(Loc.T(key));
+            label.AddToClassList("section-header");
+            return label;
+        }
+
+        private static Label Row(VisualElement parent)
+        {
+            var label = new Label();
+            label.AddToClassList("status-row");
+            parent.Add(label);
+            return label;
+        }
+    }
+
+    /// <summary>
+    /// 세력 덧판: 인물 서랍 왼쪽 가장자리에 붙은 화살표 탭 — 누르면 왼쪽으로 펼쳐 알게 된 세력(이름·평판 막대·근황)을 보인다.
+    /// 예전에는 거점 서랍 아래에 있었다 (2026-11-25 사용자 요청으로 옮김). 아는 세력이 없으면 탭도 숨긴다.
+    /// </summary>
+    internal sealed class FactionAddonView
+    {
+        private readonly GameSession _session;
+        private readonly VisualElement _root;
+        private readonly VisualElement _sheet;
+        private readonly Button _tab;
+        private readonly VisualElement _factions;
+        private bool _expanded;
+
+        public FactionAddonView(VisualElement root, GameSession session)
+        {
+            _session = session;
+            _root = root.Q("people-factions");
+            _sheet = root.Q("people-factions-sheet");
+            _tab = root.Q<Button>("people-factions-tab");
+            _factions = root.Q("people-factions-list");
+            var title = root.Q<Label>("people-factions-title");
+            if (title != null)
+            {
+                title.text = Loc.T("status.factions");
+            }
+
+            if (_tab != null)
+            {
+                _tab.clicked += () =>
+                {
+                    _expanded = !_expanded;
+                    Sync();
+                };
+            }
+
+            Sync();
         }
 
         /// <summary>세력 이름을 누르면 (허브가 세력 카드를 연다).</summary>
         public Action<string> FactionClicked { get; set; }
 
-        private readonly VisualElement _factionSection = new VisualElement();
-        private readonly VisualElement _factions = new VisualElement();
+        private void Sync()
+        {
+            _sheet?.EnableInClassList("hidden", !_expanded);
+            _root?.EnableInClassList("expanded", _expanded);
+            if (_tab != null)
+            {
+                _tab.text = Loc.T(_expanded ? "people.factions.close" : "people.factions.open");
+                _tab.tooltip = Loc.T("people.factions.hint");
+            }
+        }
 
         /// <summary>알게 된 세력: 이름 · 단계 평판, 아래 한 줄 근황.</summary>
-        private void RefreshFactions(GameState state)
+        public void Refresh()
         {
+            if (_root == null)
+            {
+                return;
+            }
+
+            var state = _session.State;
             _factions.Clear();
             var any = false;
             foreach (var def in _session.Definitions.Extras.Factions)
@@ -201,52 +288,16 @@ namespace ApoGirl.Presentation.Screens
                 bar.AddToClassList("faction-bar");
                 _factions.Add(bar);
 
-                var status = Row(_factions);
+                var status = new Label();
+                status.AddToClassList("status-row");
+                _factions.Add(status);
                 status.text = Loc.T(statusKey);
                 status.AddToClassList("dim");
                 status.style.whiteSpace = WhiteSpace.Normal;
             }
 
-            _factionSection.EnableInClassList("hidden", !any);
-        }
-
-        public void Refresh()
-        {
-            var state = _session.State;
-            var balance = _session.Definitions.Balance;
-
-            // 시설은 위 거점 상황판의 시설 칸이 보여 준다 (BASE_TAB_PROPOSAL P2)
-            var people = new List<string>();
-            if (_session.HasMetTeacher)
-            {
-                people.Add(Loc.F("status.teacher", state.Teacher.Affinity, Loc.T("mobility." + Math.Min(state.Teacher.MobilityStage, 2))));
-            }
-
-            var stage = InfectionRules.TeacherStage(state, balance);
-            if (stage > 0)
-            {
-                people.Add(Loc.T("teacher.stage." + Math.Min(stage, 4)));
-            }
-
-            _baseInfo.text = string.Join("\n", people);
-            _baseSection.EnableInClassList("hidden", people.Count == 0);
-
-            RefreshFactions(state);
-        }
-
-        private static Label Header(string key)
-        {
-            var label = new Label(Loc.T(key));
-            label.AddToClassList("section-header");
-            return label;
-        }
-
-        private static Label Row(VisualElement parent)
-        {
-            var label = new Label();
-            label.AddToClassList("status-row");
-            parent.Add(label);
-            return label;
+            _root.EnableInClassList("hidden", !any);
+            Sync();
         }
     }
 

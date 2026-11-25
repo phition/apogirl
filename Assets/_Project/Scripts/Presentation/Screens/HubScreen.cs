@@ -34,6 +34,7 @@ namespace ApoGirl.Presentation.Screens
         private VisualElement _root;
         private TopBarView _topBar;
         private StatusPanelView _status;
+        private FactionAddonView _factionAddon;
         private BaseBoardView _baseBoard;
         private PaletteView _palette;
         private PlannerView _planner;
@@ -93,7 +94,8 @@ namespace ApoGirl.Presentation.Screens
 
             _topBar = new TopBarView(_root, _session);
             _baseBoard = new BaseBoardView(_root, _session);   // 거점 상황판 (BASE_TAB_PROPOSAL P1): 서랍 맨 위
-            _status = new StatusPanelView(_root, _session) { FactionClicked = ShowFactionCard };
+            _status = new StatusPanelView(_root, _session);
+            _factionAddon = new FactionAddonView(_root, _session) { FactionClicked = ShowFactionCard };   // 세력: 인물 서랍 왼쪽 덧판
             _diary = new RecordDiaryView(_root, _session);
             _storage = new StorageView(_root, _session);
             _palette = new PaletteView(_root, _session);
@@ -388,6 +390,7 @@ namespace ApoGirl.Presentation.Screens
             _dock.Refresh(warned);
             _miniVitals.Refresh();
             _people.Refresh();
+            _factionAddon.Refresh();
             _debug.Refresh();
 
             // 입상: 계획을 고치다 경고가 늘면 잠깐 놀란 얼굴
