@@ -7883,6 +7883,62 @@ MonoBehaviour:
     m_Key: people.factions.hint
     m_Metadata:
       m_Items: []
+  - m_Id: 2254563355934720
+    m_Key: people.factions.card_hint
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2254563980886016
+    m_Key: people.factions.standing
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2254563980886017
+    m_Key: people.factions.next
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2254563980886018
+    m_Key: people.factions.top
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2254563980886019
+    m_Key: people.factions.trade_ready
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2254563980886020
+    m_Key: people.factions.trade_wait
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2254563980886021
+    m_Key: people.factions.trade_short
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2254563980886022
+    m_Key: people.factions.trade_tier
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2254563980886023
+    m_Key: people.factions.trade_planning
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2254563980886024
+    m_Key: people.factions.trade_none
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2254563980886025
+    m_Key: people.factions.trade_gone
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2254563980886026
+    m_Key: people.factions.open_trade
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2254563980886027
+    m_Key: people.factions.open_card
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2254563980886028
+    m_Key: people.factions.pending
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
