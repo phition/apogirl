@@ -5,6 +5,7 @@
   - "놓기 전 미리 보기·흐름 띠"는 맨 끝(아이디어 D)으로 옮겼다.
 - 대상: 허브 계획 보드(Tab, `board`). 팔레트 `PaletteView`, 14칸 플래너 `PlannerView`, 옆판 `PlanSideView`, 도크 `DockView`.
 - 아직 코드는 바꾸지 않았다. 고를 것은 8절 "결정 필요"에 모았다.
+- **이어진 기획:** [TEACHER_PLAN_PROPOSAL](TEACHER_PLAN_PROPOSAL.md)(선생님 추천 편성). 이 문서의 4절 보드 구성과 B를 중심으로, D의 미리 보기에 능력치 줄을 더했다.
 
 ## 0. 한눈에
 
