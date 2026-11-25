@@ -174,7 +174,7 @@ namespace ApoGirl.Presentation.Screens
                 }
             }
 
-            KoreanFont.ApplyDeep(_drawer);
+            // 글꼴은 Theme.uss #drawer-left 절 (거점 서랍과 같은 학교안심 엣지·부산단디손글씨). KoreanFont.ApplyDeep은 USS 글꼴을 덮어쓰므로 부르지 않는다
         }
 
         /// <summary>

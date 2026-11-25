@@ -137,66 +137,6 @@ namespace ApoGirl.Presentation.Screens
         }
     }
 
-    /// <summary>거점 서랍(시설·동료·세력). 생활기록부 서랍은 RecordDiaryView.</summary>
-    internal sealed class StatusPanelView
-    {
-        private readonly GameSession _session;
-        private readonly VisualElement _baseSection = new VisualElement();
-        private readonly Label _baseInfo;
-
-        public StatusPanelView(VisualElement root, GameSession session)
-        {
-            _session = session;
-            var panel = root.Q("status-panel");
-
-            // 거점·동료·세력은 오른쪽 서랍 (없으면 같은 패널 아래에)
-            var basePanel = root.Q("base-panel") ?? panel;
-            basePanel.Add(_baseSection);
-            _baseSection.Add(Header("status.base"));
-            _baseInfo = Row(_baseSection);
-            _baseInfo.style.whiteSpace = WhiteSpace.Normal;
-            // 동료 역할은 위 거점 상황판의 역할 칸(역할 판)에서 바꾼다 (BASE_TAB_PROPOSAL P3)
-            // 세력은 인물 서랍 왼쪽의 접는 덧판(FactionAddonView)으로 옮겼다 (2026-11-25)
-        }
-
-        public void Refresh()
-        {
-            var state = _session.State;
-            var balance = _session.Definitions.Balance;
-
-            // 시설은 위 거점 상황판의 시설 칸이 보여 준다 (BASE_TAB_PROPOSAL P2)
-            var people = new List<string>();
-            if (_session.HasMetTeacher)
-            {
-                people.Add(Loc.F("status.teacher", state.Teacher.Affinity, Loc.T("mobility." + Math.Min(state.Teacher.MobilityStage, 2))));
-            }
-
-            var stage = InfectionRules.TeacherStage(state, balance);
-            if (stage > 0)
-            {
-                people.Add(Loc.T("teacher.stage." + Math.Min(stage, 4)));
-            }
-
-            _baseInfo.text = string.Join("\n", people);
-            _baseSection.EnableInClassList("hidden", people.Count == 0);
-        }
-
-        private static Label Header(string key)
-        {
-            var label = new Label(Loc.T(key));
-            label.AddToClassList("section-header");
-            return label;
-        }
-
-        private static Label Row(VisualElement parent)
-        {
-            var label = new Label();
-            label.AddToClassList("status-row");
-            parent.Add(label);
-            return label;
-        }
-    }
-
     /// <summary>
     /// 세력 덧판: 인물 서랍 왼쪽 가장자리에 붙은 화살표 탭 — 누르면 왼쪽으로 펼쳐 알게 된 세력 카드(얼굴·단계·평판 띠·근황·영향·거래 상태)를 보인다.
     /// 예전에는 거점 서랍 아래에 있었다 (2026-11-25 사용자 요청으로 옮김). 아는 세력이 없으면 탭도 숨긴다.

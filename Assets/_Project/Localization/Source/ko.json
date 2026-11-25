@@ -233,7 +233,7 @@
     "hud.plan_running": "진행 중",
     "hud.close": "✕",
     "hud.record_title": "생활기록부",
-    "hud.base_title": "거점 · 사람 · 세력",
+    "hud.base_title": "거점 상황",
     "hud.board_title": "이번 주 계획",
     "hud.board_hint": "Tab 열기·닫기 · Esc 닫기 · 오른쪽 클릭 비우기",
     "hud.ticker": "{0}일 {1} · {2} — {3}",
