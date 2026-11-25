@@ -177,3 +177,13 @@ Character consistency: draw every named character exactly as in the attached cha
 - 3.4는 싸우는 장면이 아니라 '막아선 순간'이다. 무기를 들거나 다친 모습이 나오면 다시 받는다(마스터 프롬프트 13장 안전).
 - 3.11은 좌석 선택 엔딩 컷(`EndingDef.Variants`)과 따로다. 이벤트 첫머리 컷만 바꾼다.
 - 4막 컷에서 선생님이 너무 아파 보이면, 2.3처럼 `+다리③`에 `wrapped in a blanket`만 붙여 다시 받는다.
+
+---
+
+## 4. 새 컷: 하린의 겨울 방문 (2026-11-26 추가)
+
+`EVT_HR_WINTER_VISIT`(마트에서 하린을 마주하고 데려오지 않은 판, 첫눈 뒤 42~47주 낮)은 지금 `evt_farewell_harin`을 빌려 쓴다. 새 그림을 받으면 `evt_hr_winter_visit.png`로 `ArtInbox/illustrations/redo17/`에 넣고, `art_map.json`의 `EVT_HR_WINTER_VISIT` 줄을 `Events/evt_hr_winter_visit`로 바꾼다.
+
+| 번호 | 파일 · 이벤트 | 계절 | 참고 시트 | 장면 (영어) |
+|---|---|---|---|---|
+| 4.1 | `evt_hr_winter_visit.png` · `EVT_HR_WINTER_VISIT` 하린의 겨울 방문 | `[겨울]` | 하린, 서진 | `A grey, silent winter morning after a snowfall, the school's front gate closed with a chain, iron bars between the two girls. Outside the gate {HARIN} crouches in the snow, her olive hooded parka and hood dusted with snow, one glove missing, her bare hand tucked into her sleeve, chapped lips, looking up without asking for anything. A single line of footprints leads from the empty snowy road to the gate and none lead away. Inside the gate {SEOJIN_WINTER} stands still with a ring of keys in her hand, not yet deciding, her breath fogging. The school building behind her with snow on the windowsills. Only these two characters appear.` |

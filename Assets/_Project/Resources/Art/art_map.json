@@ -495,6 +495,10 @@
       "Image": "Events/evt_farewell_harin"
     },
     {
+      "Event": "EVT_HR_WINTER_VISIT",
+      "Image": "Events/evt_farewell_harin"
+    },
+    {
       "Event": "EVT_NURSE_06_FAREWELL",
       "Image": "Events/evt_farewell_nurse"
     },

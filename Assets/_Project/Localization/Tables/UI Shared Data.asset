@@ -8255,6 +8255,14 @@ MonoBehaviour:
     m_Key: exp.compass.road
     m_Metadata:
       m_Items: []
+  - m_Id: 2396539090911232
+    m_Key: line.ep_ringleader_winter_fed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2396539170603008
+    m_Key: line.ep_ringleader_winter_shut
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

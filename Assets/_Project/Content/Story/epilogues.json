@@ -50,6 +50,10 @@
       "Condition": { "FlagsAll": [ "HR_MEET_AGAIN" ], "NpcStatuses": [ { "NpcId": "NPC_RINGLEADER", "Status": "Joined" } ] } },
     { "Id": "EP_RINGLEADER_CLOSED", "Kind": "EndingEpilogue", "Group": "NPC_RINGLEADER", "Priority": 30, "TextKey": "line.ep_ringleader_closed",
       "Condition": { "FlagsAll": [ "HR_CLOSED" ], "NpcStatuses": [ { "NpcId": "NPC_RINGLEADER", "Status": "Joined" } ] } },
+    { "Id": "EP_RINGLEADER_WINTER_FED", "Kind": "EndingEpilogue", "Group": "NPC_RINGLEADER", "Priority": 20, "TextKey": "line.ep_ringleader_winter_fed",
+      "Condition": { "FlagsAll": [ "HR_WINTER_FED" ] } },
+    { "Id": "EP_RINGLEADER_WINTER_SHUT", "Kind": "EndingEpilogue", "Group": "NPC_RINGLEADER", "Priority": 20, "TextKey": "line.ep_ringleader_winter_shut",
+      "Condition": { "FlagsAll": [ "HR_WINTER_SHUT" ] } },
 
     { "Id": "EP_SENIOR", "Kind": "EndingEpilogue", "Group": "NPC_SURVIVOR_A", "Priority": 0, "TextKey": "line.ep_senior",
       "Condition": { "NpcStatuses": [ { "NpcId": "NPC_SURVIVOR_A", "Status": "Joined" } ] } },

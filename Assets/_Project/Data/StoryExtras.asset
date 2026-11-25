@@ -2920,6 +2920,54 @@ MonoBehaviour:
     Priority: 30
     TextKey: line.ep_ringleader_closed
     Group: NPC_RINGLEADER
+  - Id: EP_RINGLEADER_WINTER_FED
+    Kind: 8
+    Condition:
+      WeekMin: 0
+      WeekMax: 0
+      Days: 
+      Phase: 0
+      Seasons: 
+      Month: 0
+      DayOfMonth: 0
+      ActionCategories: 
+      ActionIds: []
+      FlagsAll:
+      - HR_WINTER_FED
+      FlagsAny: []
+      FlagsNone: []
+      CluesAll: []
+      Checks: []
+      AnyChecks: []
+      NpcStatuses: []
+      IsBirthday: 0
+    Priority: 20
+    TextKey: line.ep_ringleader_winter_fed
+    Group: NPC_RINGLEADER
+  - Id: EP_RINGLEADER_WINTER_SHUT
+    Kind: 8
+    Condition:
+      WeekMin: 0
+      WeekMax: 0
+      Days: 
+      Phase: 0
+      Seasons: 
+      Month: 0
+      DayOfMonth: 0
+      ActionCategories: 
+      ActionIds: []
+      FlagsAll:
+      - HR_WINTER_SHUT
+      FlagsAny: []
+      FlagsNone: []
+      CluesAll: []
+      Checks: []
+      AnyChecks: []
+      NpcStatuses: []
+      IsBirthday: 0
+    Priority: 20
+    TextKey: line.ep_ringleader_winter_shut
+    Group: NPC_RINGLEADER
   - Id: EP_SENIOR
     Kind: 8
     Condition:

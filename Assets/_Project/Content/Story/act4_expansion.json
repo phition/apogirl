@@ -106,6 +106,16 @@
         { "Id": "MEET_AGAIN", "Effect": { "SetFlags": [ "HR_MEET_AGAIN" ], "Hidden": [ { "Hidden": "TraumaRecovery", "Amount": 2 } ], "Npcs": [ { "NpcId": "NPC_RINGLEADER", "Affinity": 2 } ] } },
         { "Id": "CLOSE", "Effect": { "SetFlags": [ "HR_CLOSED" ], "Hidden": [ { "Hidden": "SelfAwareness", "Amount": 2 } ] } }
       ] },
+    { "Id": "EVT_HR_WINTER_VISIT", "Kind": "Story", "Priority": 58,
+      "Condition": { "WeekMin": 42, "WeekMax": 47, "Phase": "Day", "FlagsAll": [ "RINGLEADER_MET", "FIRST_SNOW" ], "FlagsNone": [ "BULLY_RESCUED", "HR_WINTER_VISIT" ] },
+      "OnShow": { "SetFlags": [ "HR_WINTER_VISIT" ], "Vitals": [ { "Vital": "Stress", "Amount": 5 } ] },
+      "Choices": [
+        { "Id": "LET_IN", "Effect": { "SetFlags": [ "HR_WINTER_JOINED", "RINGLEADER_NIGHT" ], "Npcs": [ { "NpcId": "NPC_RINGLEADER", "SetStatus": "Joined", "Affinity": -5 } ],
+            "Hidden": [ { "Hidden": "Humanity", "Amount": 3 }, { "Hidden": "TraumaRecovery", "Amount": 3 } ], "Vitals": [ { "Vital": "Stress", "Amount": 4 } ] } },
+        { "Id": "FEED", "Costs": [ { "Resource": "Food", "Amount": 3 }, { "Resource": "Water", "Amount": 2 } ],
+          "Effect": { "SetFlags": [ "HR_WINTER_FED" ], "Hidden": [ { "Hidden": "Humanity", "Amount": 2 }, { "Hidden": "SelfAwareness", "Amount": 2 } ] } },
+        { "Id": "SHUT", "Effect": { "SetFlags": [ "HR_WINTER_SHUT" ], "Hidden": [ { "Hidden": "SelfAwareness", "Amount": 3 } ], "Vitals": [ { "Vital": "Stress", "Amount": 3 } ] } }
+      ] },
 
     { "Id": "EVT_A4_FIRST_SNOW", "Kind": "Story", "Priority": 36,
       "Condition": { "WeekMin": 41, "Phase": "Day", "FlagsNone": [ "FIRST_SNOW" ] },

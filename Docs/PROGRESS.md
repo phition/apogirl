@@ -3,7 +3,7 @@
 〈마지막 학기 (가제)〉 — 마일스톤별 진행 기록, 남은 작업, 하면 좋을 작업, 하지 말아야 할 작업.
 
 - 기준: 마스터 프롬프트 12장 마일스톤(원본 `C:\Users\phiti\Desktop\MASTER_PROMPT.md`), 결정 기록 부록 C(D1~D26).
-- 작성: 2026-11-25. 커밋 811개(2026-11-18 ~ 2026-11-25), 마지막 커밋 `ec03c532` (그 뒤 이번 커밋).
+- 작성: 2026-11-25. 커밋 811개(2026-11-18 ~ 2026-11-25), 마지막 커밋 `838dcdca` (그 뒤 이번 커밋).
 - EditMode 테스트: 486개 모두 통과 (2026-11-26, 쉬는 카드 회복량 표시 뒤).
 - 자세한 내용은 각 계획 문서에 있다. 이 문서는 한눈에 보는 요약이다.
 - **새 세션은 이 문서부터 읽는다.** 작업이 하나 끝날 때마다 고친다.
@@ -184,6 +184,7 @@ M6·M7과 함께 기획 확장(동료·CD·깊은 곳·고양이·동아리·방
    - 사용자가 Unity Hub → Installs → 6000.6.8f1 → 모듈에서 Android Build Support를 지운다.
    - 그 뒤 main에 남은 메타 약 3,400개(다시 붙은 안드로이드 블록)를 `git checkout`하거나 `code_temp/apogirl/tools/strip_android_meta.py`로 지운다.
 2. **M6-5 남은 연결**
+   - **하린의 겨울 방문 컷 받으면 연결** ([HIGGSFIELD_ASSETS_17.md](HIGGSFIELD_ASSETS_17.md) 4절): `evt_hr_winter_visit` → `art_map.json` `EVT_HR_WINTER_VISIT` 줄 바꾸기 (지금은 `evt_farewell_harin`).
    - **제작 장비 탐험 도트 남은 것** ([PIXELLAB_CRAFTING_REQUEST.md](PIXELLAB_CRAFTING_REQUEST.md)): 허수아비·가방 2·보호구 3벌(색 덧칠)은 넣었다. 몽둥이 무기 그림 3장은 5벌 다시 받기(24F 9절) 때 — 그때 `armor_recolor.py install`도 다시 돌린다. 허수아비·가방·보호구를 실제 탐험 화면에서 아직 보지 않았다(미리보기만).
    - 이벤트가 없어 보류한 컷: `evt_deep_door`·`evt_deep_oneway`·`evt_season_*`·`evt_cat_warn`, 그리고 `stand_item_*`.
    - 탐험 주인공 프레임 늘리기(20~24프레임): 227묶음 모두 24프레임으로 연결 끝(2026-11-24, [HIGGSFIELD_ASSETS_11_ALL.md](HIGGSFIELD_ASSETS_11_ALL.md) 0절). 남은 일: 게임에서 옷·무기마다 걷기·달리기·공격을 보고 튀는 칸이 있으면 그 묶음만 다시.
@@ -416,3 +417,4 @@ M6·M7과 함께 기획 확장(동료·CD·깊은 곳·고양이·동아리·방
 - 2026-11-26 · 힉스필드 17차 문서([HIGGSFIELD_ASSETS_17.md](HIGGSFIELD_ASSETS_17.md), 사용자 요청): 소풍·수학여행·행사 컷 11장을 인물 초상과 비교해, 게임 인물이 아닌 사람이 나온 2차 컷 6장(`evt_outing_summer`·`_autumn`·`_winter`, `evt_trip_depart`·`_return`, `evt_cal_summer_festival`)을 13차 형식(인물 이름 문구·시트 참고·`[일관성]`)으로 다시 받는 프롬프트. 장면은 각 이벤트 첫 선택지·판마다 갈리는 대사에 맞춤. 제출은 사용자.
 - 2026-11-26 · 힉스필드 17차 3절 추가(사용자 요청: 김장 컷도 인물이 다름): 사람이 나오는 이벤트 컷 전부(2·5·12·14·15차)를 인물 초상과 대조. 12·14·15차는 맞고, 2차·5차 17장(`evt_cal_kimjang`·`_daeboreum`·`_chuseok`, `evt_a2_ration_fight`, `evt_day_intrusion`, 4막 `first_snow`·`ubc_last_show`·`cure_hint`·`fuel`·`notice`·`research_memo`·`seat_choice`·`seat_count`·`ubc_relay`·`waterworks_map`, 선배 `evt_sv_attendance`·`_recognized`)의 프롬프트를 더함. 4막 선생님은 갈래 없이 나오는 컷에만(④, 좌석 고르기는 완치 ⑤), 뒷모습뿐인 `finale_raid`·`new_year`와 `truth_link`·`mart_split`은 그대로. 제출은 사용자.
 - 2026-11-26 · 힉스필드 17차 연결: `ArtInbox/illustrations/redo17/` 23장(2절 6장 + 3절 17장)을 `Story/Events`에 덮어씀(16:9 · 너비 1920 jpg, `install_events12.py`), 옛 그림은 `code_temp/apogirl/backup_redo17/`. 비교 시트로 보니 서진·도현·송예지·박 선생님·윤 선생님·선배가 모두 시트대로 나옴. 작은 흠: `evt_a4_seat_choice` 종이에 여덟 칸 대신 그림이 그려짐(이벤트 컷이라 둠).
+- 2026-11-26 · 하린의 겨울 방문 `EVT_HR_WINTER_VISIT`(사용자 요청): 마트에서 하린을 마주하고(`RINGLEADER_MET`) 데려오지 않은 판(`BULLY_RESCUED` 없음)에, 첫눈(`FIRST_SNOW`) 뒤 42~47주 낮에 하린이 정 반장 무리에서 내쳐져 교문으로 찾아온다(`act4_expansion.json`, `Act4Expansion.yarn` — 마트에서 고른 길 `RINGLEADER_SPOKE`·`BULLY_FORGAVE`·각자 살자로 대사가 갈림). 선택: 들이기 `LET_IN`(합류·호감 −5·`RINGLEADER_NIGHT`를 켜 시키지 않은 일 → 창고 → 비밀이 이어짐, 깃발 `HR_WINTER_JOINED`) / 철창 사이로 먹을 것만 `FEED`(식량 3·물 2, `HR_WINTER_FED`) / 돌려보내기 `SHUT`(`HR_WINTER_SHUT`). 두 거절 길에 후일담 `EP_RINGLEADER_WINTER_FED`·`_SHUT`. 컷은 `evt_farewell_harin`을 빌림, 새 컷 프롬프트는 HIGGSFIELD_ASSETS_17 4절. 테스트 `HarinWinterVisitTests` 3개(EditMode 489 통과).
