@@ -61,6 +61,7 @@
       "Value": 7,
       "Grade": "Rare",
       "Slot": "Armor",
+      "MaxDurability": 20,
       "DamageReduction": 0.3
     },
     {

@@ -571,6 +571,23 @@ namespace ApoGirl.Core.Definitions
         /// <summary>헤드리스(자동) 탐험에서 그 지역의 CD(줍는 조우)를 찾아 챙기는 확률 (기획 A.3, 휴대폰에서도 모을 수 있게).</summary>
         public float HeadlessCdChance = 0.3f;
 
+        // ── 장비 내구·전력 ──
+
+        /// <summary>빛 도구를 켜 둔 동안 탐험 시계 1초마다 줄어드는 전력 (빛 도구 최대 100, 탐험 한 번 360초).</summary>
+        public float FlashlightDrainPerSecond = 0.12f;
+
+        /// <summary>건전지 하나로 채우는 전력 (최대치 대비 비율).</summary>
+        public float FlashlightBatteryRestore = 0.4f;
+
+        /// <summary>탐험 중 전력이 바닥나면 배낭에서 쓰는 건전지 아이템. 출정 때는 거점 배터리 자원을 쓴다.</summary>
+        public string FlashlightBatteryItem = "ITEM_BATTERY";
+
+        /// <summary>방어구가 피해를 한 번 받을 때 닳는 양.</summary>
+        public int ArmorWearPerHit = 1;
+
+        /// <summary>쇠지렛대로 잠긴 문·출구·큰 문을 한 번 비틀어 열 때 닳는 양 (전력으로 켜는 겸용 도구는 닳지 않는다).</summary>
+        public int CrowbarWearPerUse = 1;
+
         // ── 헤드리스 장비 (제작 C5) ──
 
         /// <summary>헤드리스 쓰러짐 확률 × (1 − 방어구 피해 감소율 × 이 값).</summary>
@@ -581,6 +598,15 @@ namespace ApoGirl.Core.Definitions
 
         /// <summary>헤드리스 밤 탐험에 손전등을 들면 쓰러짐 확률에서 빼는 값.</summary>
         public float HeadlessFlashlightNightDown = 0.02f;
+
+        /// <summary>헤드리스 탐험 한 번(쓰러지지 않고 돌아옴)에 찬 방어구가 닳는 양.</summary>
+        public int HeadlessArmorWear = 1;
+
+        /// <summary>헤드리스 탐험에서 찬 쇠지렛대로 문을 비틀어 한 번 닳을 확률.</summary>
+        public float HeadlessCrowbarWearChance = 0.4f;
+
+        /// <summary>헤드리스 밤 탐험에서 빛 도구가 쓰는 전력 (최대 100).</summary>
+        public int HeadlessFlashlightNightDrain = 30;
 
         /// <summary>헤드리스 자원 수확의 기준 가방 칸 수 (학교 가방 5×4). 가방이 없어도 이 칸 수로 본다.</summary>
         public int HeadlessBagBaseCells = 20;

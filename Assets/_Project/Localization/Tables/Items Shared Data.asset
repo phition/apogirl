@@ -583,6 +583,14 @@ MonoBehaviour:
     m_Key: ITEM_DECOY_BELL.desc
     m_Metadata:
       m_Items: []
+  - m_Id: 2331941167972352
+    m_Key: ITEM_TOOL_CROWBAR_MAKESHIFT.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2331941222498304
+    m_Key: ITEM_TOOL_CROWBAR_MAKESHIFT.desc
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

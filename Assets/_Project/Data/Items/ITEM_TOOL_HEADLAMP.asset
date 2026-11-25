@@ -21,7 +21,7 @@ MonoBehaviour:
     Noise: 0.05
     Value: 5
     Grade: 0
-    MaxDurability: 0
+    MaxDurability: 100
     ResourceYield: []
     Slot: 3
     GridWidth: 0

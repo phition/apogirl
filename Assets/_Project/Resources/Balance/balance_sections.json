@@ -114,7 +114,19 @@
       "Fields": [
         "SleepDebtEfficiencyPenalty",
         "SleepDebtCheckPenalty",
-        "SleepDebtStressMultiplier",
+        "SleepDebtStressMultiplier"
+      ]
+    },
+    {
+      "Title": "행동 스트레스 보정 (StressRules, 사용자 결정 2026-11-25)",
+      "Fields": [
+        "ActionStressMin",
+        "ActionStressMax",
+        "ActionStressLevels",
+        "StressFatigueThresholds",
+        "StressFatigueBonus",
+        "StressInjuredBonus",
+        "StressPerConscience",
         "SleepDebtForcedRestStage",
         "NightExpeditionSleepDebt",
         "ForcedRestViolationSleepDebt",
@@ -275,6 +287,69 @@
       ]
     },
     {
+      "Title": "장비 내구·전력",
+      "Fields": [
+        "FlashlightDrainPerSecond",
+        "FlashlightBatteryRestore",
+        "FlashlightBatteryItem",
+        "ArmorWearPerHit",
+        "CrowbarWearPerUse"
+      ]
+    },
+    {
+      "Title": "헤드리스 장비 (제작 C5)",
+      "Fields": [
+        "HeadlessArmorDownFactor",
+        "HeadlessWeaponDownPerPower",
+        "HeadlessFlashlightNightDown",
+        "HeadlessArmorWear",
+        "HeadlessCrowbarWearChance",
+        "HeadlessFlashlightNightDrain",
+        "HeadlessBagBaseCells",
+        "HeadlessBagYieldPerCell"
+      ]
+    },
+    {
+      "Title": "제작 (Docs/CRAFTING_PROPOSAL.md)",
+      "Fields": [
+        "CraftContinueActionId",
+        "CraftContinueFatigue",
+        "CraftContinueStress",
+        "CraftFailRefund",
+        "CraftFineDurability",
+        "CraftFineRefund",
+        "BlackoutCraftPenalty",
+        "WorkshopFlag",
+        "WorkshopCheckBonus",
+        "WeaponMaintainRestore",
+        "PurifyActionId",
+        "SandFilterWeeklyRaw",
+        "SandFilterRate",
+        "SandFilterFailRate",
+        "BoilStationPurify",
+        "BoilStationFuel",
+        "BoilStationCheckBonus",
+        "AutoPurifyDaily",
+        "AutoPurifyRate"
+      ]
+    },
+    {
+      "Title": "허수아비 (제작 P6)",
+      "Fields": [
+        "ScarecrowFlag",
+        "ScarecrowBellFlag",
+        "ScarecrowDurability",
+        "ScarecrowRaidRelief",
+        "ScarecrowBellDurability",
+        "ScarecrowBellRaidRelief",
+        "ScarecrowBellBreachFoodScale",
+        "DecoyBiteDps",
+        "DecoyCaughtSightMultiplier",
+        "DecoyLatchDistance",
+        "HeadlessDecoyNightDown"
+      ]
+    },
+    {
       "Title": "방과후 동아리 (확장 7)",
       "Fields": [
         "ClubAffinity",
@@ -321,6 +396,16 @@
         "DeepNoiseMultiplier",
         "DeepAmbient",
         "OneWayConfirmSeconds",
+        "HeavyDoorSeconds",
+        "HeavyDoorCrowbarMultiplier",
+        "HeavyDoorNoise",
+        "HeavyDoorSlamNoise",
+        "BarredDoorSeconds",
+        "BarredDoorNoise",
+        "HeadlessDeepRoomChance",
+        "HeadlessDeepRoomItems",
+        "HeadlessDeepRoomStress",
+        "HeadlessDeepRoomEncounterChance",
         "LikedItems"
       ]
     },
@@ -410,6 +495,51 @@
       ]
     },
     {
+      "Title": "거점 상황판 (Docs/BASE_TAB_PROPOSAL.md, 화면에 보여 주는 단계만)",
+      "Fields": [
+        "BaseBoardRaidMedium",
+        "BaseBoardRaidHigh",
+        "BaseBoardRepelSafe",
+        "BaseBoardRepelRisky",
+        "BaseAdviceLines"
+      ]
+    },
+    {
+      "Title": "선생님 추천 편성 (Docs/TEACHER_PLAN_PROPOSAL.md, TeacherPlanner)",
+      "Fields": [
+        "TeacherDefaultPins",
+        "TeacherMinRests",
+        "TeacherMinExpeditions",
+        "TeacherMaxExpeditions",
+        "TeacherMinDaily",
+        "TeacherMaxDevelop",
+        "TeacherMaxSameClass",
+        "TeacherCriticalShortDay",
+        "TeacherSupplyBufferWeeks",
+        "TeacherTwoWhenUnderAWeek",
+        "TeacherCookingActionId",
+        "TeacherFatigueLimit",
+        "TeacherStressLimit",
+        "TeacherSleepDebtLimit",
+        "TeacherTidyPasses",
+        "TeacherEndFatigue",
+        "TeacherEndStress",
+        "TeacherRooftopStress",
+        "TeacherTalkAffinity",
+        "TeacherDailyFallback",
+        "TeacherDevelopFallback",
+        "TeacherCleanBelow",
+        "TeacherInfectionTreat",
+        "TeacherPurifyActionId",
+        "TeacherPurifyBatch",
+        "TeacherMaxPurify",
+        "TeacherClassTeachBonus",
+        "TeacherClassLowStatBonus",
+        "TeacherClassFavoriteBonus",
+        "TeacherNoteLines"
+      ]
+    },
+    {
       "Title": "M7-2 후반 압박 (M7-f, 문서 9.0 \"자원 압박이 서서히 상승\")",
       "Fields": [
         "WinterFoodMultiplier",
@@ -482,6 +612,8 @@
         "DayRestActionId",
         "NightRestActionId",
         "ReducedRestMultiplier",
+        "NightRestStress",
+        "DayRestStressRatio",
         "DownLockedRestSlots"
       ]
     },
@@ -579,6 +711,10 @@
         "ShoveStunSeconds",
         "ShovePush",
         "ShoveCooldown",
+        "HurtReactSeconds",
+        "HurtInvulnSeconds",
+        "HurtBlinkPerSecond",
+        "SurvivorBittenSeconds",
         "DownRemainingHp",
         "ActivitySight",
         "ActivityHearing",

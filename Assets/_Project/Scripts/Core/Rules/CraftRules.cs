@@ -350,7 +350,8 @@ namespace ApoGirl.Core.Rules
                 {
                     var count = Math.Max(1, craft.Count);
                     var durability = 0;
-                    var isWeapon = db.TryGetItem(craft.Product, out var item) && item.MaxDurability > 0;
+                    // 무기만 대성공 내구 보너스 (방어구·도구는 새것 그대로)
+                    var isWeapon = db.TryGetItem(craft.Product, out var item) && item.Slot == EquipSlot.Weapon && item.MaxDurability > 0;
                     if (isWeapon)
                     {
                         durability = fine ? (int)Math.Round(item.MaxDurability * balance.CraftFineDurability) : item.MaxDurability;
@@ -437,7 +438,7 @@ namespace ApoGirl.Core.Rules
 
         private static bool IsWorn(ItemStack stack, IDefinitionDatabase db) =>
             stack.Count > 0 && stack.Durability > 0 && db.TryGetItem(stack.ItemId, out var def)
-            && def.MaxDurability > 0 && stack.Durability < def.MaxDurability;
+            && def.Slot == EquipSlot.Weapon && def.MaxDurability > 0 && stack.Durability < def.MaxDurability; // 손질은 무기만 (방어구·쇠지렛대는 못 고친다)
 
         // ───────────── 안쪽 ─────────────
 
@@ -522,7 +523,7 @@ namespace ApoGirl.Core.Rules
             }
         }
 
-        private static int Effective(ItemStack stack, int max) => max > 0 && stack.Durability <= 0 ? max : stack.Durability;
+        private static int Effective(ItemStack stack, int max) => max > 0 && stack.Durability == 0 ? max : Math.Max(0, stack.Durability);
 
         private static void ClearLoadoutIfGone(GameState state, string itemId)
         {

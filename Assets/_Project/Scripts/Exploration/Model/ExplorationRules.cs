@@ -171,8 +171,16 @@ namespace ApoGirl.Exploration.Model
                 }
                 else if (item != null && item.MaxDurability > 0 && placed.Wear > 0)
                 {
-                    // 주워 쓰다 배낭에 넣은 무기: 남은 내구도를 그대로 창고에 (한 자루씩 따로)
-                    result.Loot.Add(new ItemStack { ItemId = placed.ItemId, Count = 1, Durability = Math.Max(1, item.MaxDurability - placed.Wear) });
+                    // 주워 쓰다 배낭에 넣은 장비: 남은 내구도·전력을 그대로 창고에 (하나씩 따로). 무기 외에는 Wear = 최대치 − 남은 양
+                    var left = item.MaxDurability - placed.Wear;
+                    if (item.Slot == EquipSlot.Weapon)
+                    {
+                        result.Loot.Add(new ItemStack { ItemId = placed.ItemId, Count = 1, Durability = Math.Max(1, left) });
+                    }
+                    else if (!item.Wears || left > 0)
+                    {
+                        result.Loot.Add(new ItemStack { ItemId = placed.ItemId, Count = 1, Durability = item.StoredOf(left) });
+                    }
                 }
                 else
                 {

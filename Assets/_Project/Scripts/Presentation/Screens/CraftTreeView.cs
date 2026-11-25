@@ -20,7 +20,7 @@ namespace ApoGirl.Presentation.Screens
     /// </summary>
     internal sealed class CraftTreeView
     {
-        private static readonly string[] Lines = { "WORKBENCH", "WATER", "BAG", "WEAPON", "ARMOR", "LIGHT", "SCARECROW" };
+        private static readonly string[] Lines = { "WORKBENCH", "WATER", "BAG", "WEAPON", "ARMOR", "LIGHT", "TOOL", "SCARECROW" };
         private static readonly string[] TierMarks = { "", "Ⅰ", "Ⅱ", "Ⅲ" };
 
         private readonly GameSession _session;

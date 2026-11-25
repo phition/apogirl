@@ -841,6 +841,12 @@ namespace ApoGirl.Core.Simulation
                 return;
             }
 
+            // 출정 때 바닥난 빛 도구를 채운 거점 배터리
+            if (request.BaseBatteriesUsed > 0)
+            {
+                EffectApplier.ChangeResource(_state, ResourceType.Battery, -request.BaseBatteriesUsed, delta);
+            }
+
             if (result.Status == ExtractStatus.Down && Balance.DownLosesEquipment)
             {
                 foreach (var id in LoadoutRules.EquippedIds(loadout))
@@ -863,12 +869,17 @@ namespace ApoGirl.Core.Simulation
             }
 
             LoadoutRules.WearItem(_state, _db, loadout.MainWeapon, result.WeaponWear, delta);
+            foreach (var pair in result.OwnedDurability)
+            {
+                // 방어구·도구: 남은 내구·전력 (닳는 장비가 0이면 부서져 사라진다)
+                LoadoutRules.SetDurability(_state, _db, pair.Key, pair.Value, delta);
+            }
 
             // 탐험 중 장비 바꾸기: 버리고 온 내 장비는 빼고, 주워 찬 채 돌아온 것은 창고에 더한 뒤 찬 장비를 그대로 둔다
             foreach (var id in result.LostOwned)
             {
-                // 가지고 나간 주무기는 그 ID의 맨 앞 묶음이다 (그 묶음의 내구도를 썼다)
-                LoadoutRules.RemoveFromStorage(_state, id, 1, delta, fromFront: id == loadout.MainWeapon);
+                // 가지고 나간 장비는 그 ID의 맨 앞 묶음이다 (그 묶음의 내구도를 썼다)
+                LoadoutRules.RemoveFromStorage(_state, id, 1, delta, fromFront: LoadoutRules.EquippedIds(loadout).Contains(id));
             }
 
             foreach (var id in result.EquippedLoot)
@@ -887,6 +898,19 @@ namespace ApoGirl.Core.Simulation
                     }
 
                     _state.Storage.Insert(0, new ItemStack { ItemId = id, Count = 1, Durability = left });
+                    delta.ItemsGained.Add(new ItemStack { ItemId = id, Count = 1 });
+                    continue;
+                }
+
+                if (result.EquippedLootDurability.TryGetValue(id, out var lootLeft) && _db.TryGetItem(id, out var gear) && gear.MaxDurability > 0)
+                {
+                    // 주워 찬 채 돌아온 방어구·도구: 남은 내구·전력과 함께 맨 앞에
+                    if (gear.Wears && lootLeft <= 0)
+                    {
+                        continue;
+                    }
+
+                    _state.Storage.Insert(0, new ItemStack { ItemId = id, Count = 1, Durability = gear.StoredOf(Math.Min(lootLeft, gear.MaxDurability)) });
                     delta.ItemsGained.Add(new ItemStack { ItemId = id, Count = 1 });
                     continue;
                 }

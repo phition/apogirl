@@ -77,6 +77,16 @@ namespace ApoGirl.Core.Expedition
         /// <summary>주무기의 남은 내구도 (0 = 최대치 사용).</summary>
         public int WeaponDurability;
 
+        /// <summary>찬 방어구·도구의 출발 내구(방어구·쇠지렛대)·전력(빛 도구), 키 = 아이템 ID (출정 충전 뒤 값). 없으면 최대치.</summary>
+        public Dictionary<string, int> EquipDurability = new Dictionary<string, int>();
+
+        /// <summary>출정 때 바닥난 빛 도구를 채우려고 쓴 거점 배터리 수 (귀환 때 뺀다).</summary>
+        public int BaseBatteriesUsed;
+
+        /// <summary>찬 방어구·도구의 출발 내구·전력 (기록이 없으면 최대치).</summary>
+        public int StartDurability(ItemDef item) =>
+            item == null ? 0 : EquipDurability.TryGetValue(item.Id, out var left) ? left : item.MaxDurability;
+
         // ── 적대적 생존자·상자 고갈 ──
 
         /// <summary>이번 출정에 나오는 적대적 생존자의 성향 (0 = 없음, 1 위협 / 2 강탈 / 3 강탈+구타). HostileRules가 정한다.</summary>
@@ -154,6 +164,12 @@ namespace ApoGirl.Core.Expedition
 
         /// <summary>주워 장착한 채 돌아온 무기의 내구도 소모.</summary>
         public int EquippedLootWear;
+
+        /// <summary>가지고 나간 방어구·도구가 돌아올 때 남은 내구·전력 (키 = 아이템 ID). 부서져 잃은 것은 LostOwned에 든다.</summary>
+        public Dictionary<string, int> OwnedDurability = new Dictionary<string, int>();
+
+        /// <summary>주워 찬 채 돌아온 방어구·도구의 남은 내구·전력 (키 = 아이템 ID).</summary>
+        public Dictionary<string, int> EquippedLootDurability = new Dictionary<string, int>();
 
         /// <summary>가지고 나간 장비 중 탐험에서 버리고 온 것 (창고에서 뺀다).</summary>
         public List<string> LostOwned = new List<string>();
@@ -240,15 +256,48 @@ namespace ApoGirl.Core.Expedition
                 request.ProficiencyLevels[pair.Key] = pair.Value.Level;
             }
 
+            FillDurability(request, state, db);
             return request;
         }
 
         /// <summary>출정 준비 화면에서 로드아웃을 바꾼 뒤 요청에 다시 반영한다.</summary>
-        public static void RefreshLoadout(ExpeditionRequest request, GameState state)
+        public static void RefreshLoadout(ExpeditionRequest request, GameState state, IDefinitionDatabase db = null)
         {
             Rules.LoadoutRules.Sanitize(state);
             request.Loadout = CloneLoadout(state.Loadout);
             request.WeaponDurability = WeaponDurability(state);
+            FillDurability(request, state, db);
+        }
+
+        /// <summary>찬 방어구·도구의 출발 내구·전력. 전력이 바닥난 빛 도구는 거점 배터리 하나로 채운다 (배터리는 귀환 때 뺀다).</summary>
+        private static void FillDurability(ExpeditionRequest request, GameState state, IDefinitionDatabase db)
+        {
+            request.EquipDurability.Clear();
+            request.BaseBatteriesUsed = 0;
+            if (db == null)
+            {
+                return;
+            }
+
+            var batteries = state.Base.GetResource(ResourceType.Battery);
+            var loadout = state.Loadout;
+            foreach (var id in new[] { loadout.Armor, loadout.Tool, loadout.Tool2 })
+            {
+                if (string.IsNullOrEmpty(id) || request.EquipDurability.ContainsKey(id) || !db.TryGetItem(id, out var item) || item.MaxDurability <= 0)
+                {
+                    continue;
+                }
+
+                var stack = state.Storage.Find(s => s.ItemId == id);
+                var left = item.LeftOf(stack?.Durability ?? 0);
+                if (item.UsesPower && left <= 0 && request.BaseBatteriesUsed < batteries)
+                {
+                    left = Rules.LoadoutRules.BatteryCharge(item, db.Balance);
+                    request.BaseBatteriesUsed++;
+                }
+
+                request.EquipDurability[id] = left;
+            }
         }
 
         private static int WeaponDurability(GameState state)

@@ -1648,6 +1648,14 @@
       "Image": "item_tool_crowbar"
     },
     {
+      "Key": "item.ITEM_TOOL_CROWBAR_MAKESHIFT",
+      "Image": "item_tool_crowbar"
+    },
+    {
+      "Key": "act.ACT_CRAFT_CROWBAR",
+      "Image": "item_tool_crowbar"
+    },
+    {
       "Key": "act.ACT_CRAFT_SAND_FILTER",
       "Image": "icon_craft_water_filter"
     },

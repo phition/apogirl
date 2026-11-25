@@ -294,13 +294,31 @@ namespace ApoGirl.Presentation.Screens
                     var durability = stack != null && stack.Durability > 0 ? stack.Durability : item.MaxDurability;
                     return Loc.F("prep.info_weapon", item.WeaponPower, durability, item.MaxDurability);
                 case EquipSlot.Armor:
-                    return Loc.F("prep.info_armor", (int)Math.Round(item.DamageReduction * 100));
+                    return Join(Loc.F("prep.info_armor", (int)Math.Round(item.DamageReduction * 100)), Left(item));
                 case EquipSlot.Tool:
-                    return UiText.ToolKinds(item);
+                    var tool = Join(UiText.ToolKinds(item), Left(item));
+                    if (item.UsesPower && LeftValue(item) <= 0)
+                    {
+                        // 전력이 바닥난 빛 도구: 출정 때 거점 배터리로 채운다
+                        tool = Join(tool, Loc.T(_session.State.Base.GetResource(ResourceType.Battery) > 0 ? "prep.power_charge" : "prep.power_dead"));
+                    }
+
+                    return tool;
                 default:
                     return "";
             }
         }
+
+        /// <summary>창고의 그 장비(맨 앞 묶음)의 남은 내구·전력.</summary>
+        private int LeftValue(ItemDef item)
+        {
+            var stack = _session.State.Storage.Find(s => s.ItemId == item.Id);
+            return item.LeftOf(stack?.Durability ?? 0);
+        }
+
+        private string Left(ItemDef item) => item.MaxDurability > 0 ? UiText.Durability(item, LeftValue(item)) : "";
+
+        private static string Join(string a, string b) => string.IsNullOrEmpty(b) ? a : string.IsNullOrEmpty(a) ? b : a + " · " + b;
 
         private static Label Add(VisualElement parent, string text, string classes)
         {

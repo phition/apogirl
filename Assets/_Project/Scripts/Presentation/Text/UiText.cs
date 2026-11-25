@@ -29,6 +29,19 @@ namespace ApoGirl.Presentation.Text
         public static string Signed(int value) => value > 0 ? "+" + value : value.ToString();
 
         /// <summary>도구가 하는 일: "손전등 · 쇠지렛대" (빛이 더 멀리 닿으면 "멀리 비춤"을 붙인다).</summary>
+        /// <summary>장비의 남은 내구·전력 문구 ("내구 7/12" 또는 "전력 40%"). 내구가 없는 장비는 "".</summary>
+        public static string Durability(ItemDef item, int left)
+        {
+            if (item == null || item.MaxDurability <= 0)
+            {
+                return "";
+            }
+
+            return item.UsesPower
+                ? Loc.F("equip.power", (int)System.Math.Round(System.Math.Max(0, left) * 100.0 / item.MaxDurability))
+                : Loc.F("equip.durability", System.Math.Max(0, left), item.MaxDurability);
+        }
+
         public static string ToolKinds(ItemDef item)
         {
             if (item == null)

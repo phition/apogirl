@@ -66,6 +66,18 @@ namespace ApoGirl.Core.Definitions
         /// <summary>그 종류의 도구 일을 하는가 (Tool 또는 ExtraTools).</summary>
         public bool Does(ToolKind kind) => kind != ToolKind.None && (Tool == kind || (ExtraTools != null && ExtraTools.Contains(kind)));
 
+        /// <summary>전력으로 켜는 빛 도구 (손전등·헤드랜턴·멀티툴): MaxDurability가 전력 최대치. 켜 둔 동안 줄고, 바닥나도 사라지지 않는다 (건전지로 채운다).</summary>
+        public bool UsesPower => MaxDurability > 0 && Does(ToolKind.Flashlight);
+
+        /// <summary>쓸수록 닳아 0이 되면 부서지는 장비 (무기·방어구·쇠지렛대). 방어구·쇠지렛대는 고칠 수 없다.</summary>
+        public bool Wears => MaxDurability > 0 && !UsesPower;
+
+        /// <summary>창고 묶음의 내구 값 → 남은 양. 0 = 새것(최대치), 음수 = 전력 바닥(0).</summary>
+        public int LeftOf(int stored) => stored > 0 ? stored : stored < 0 ? 0 : MaxDurability;
+
+        /// <summary>남은 양 → 창고 묶음에 적을 값 (최대치면 0, 바닥이면 −1).</summary>
+        public int StoredOf(int left) => left <= 0 ? -1 : left == MaxDurability ? 0 : left;
+
         /// <summary>소모품: 탐험 중 사용 시 HP 회복, 스트레스 감소.</summary>
         public int UseHp;
         public int UseStress;

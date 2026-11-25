@@ -286,7 +286,7 @@ namespace ApoGirl.Systems.Session
             var request = _runner?.PendingRequest;
             if (request != null)
             {
-                ExpeditionRequestFactory.RefreshLoadout(request, State);
+                ExpeditionRequestFactory.RefreshLoadout(request, State, _db);
                 StateChanged?.Invoke();
             }
         }

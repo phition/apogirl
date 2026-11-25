@@ -84,7 +84,7 @@ namespace ApoGirl.Presentation.Screens
             var equipped = new HashSet<string>(new[] { state.Loadout.Backpack, state.Loadout.MainWeapon, state.Loadout.Tool, state.Loadout.Tool2, state.Loadout.Armor }.Where(id => !string.IsNullOrEmpty(id)));
             var items = state.Storage.Where(s => s.Count > 0)
                 .GroupBy(s => s.ItemId)
-                .Select(g => (Id: g.Key, Count: g.Sum(s => s.Count), Durability: g.Max(s => s.Durability)))
+                .Select(g => (Id: g.Key, Count: g.Sum(s => s.Count), Durability: g.First().Durability)) // 찬 장비 = 그 ID의 맨 앞 묶음
                 .ToList();
 
             foreach (var group in Groups)
@@ -168,8 +168,7 @@ namespace ApoGirl.Presentation.Screens
 
             if (db.TryGetItem(itemId, out var item) && item.MaxDurability > 0)
             {
-                var left = durability > 0 ? durability : item.MaxDurability;
-                parts.Add(Loc.F("storage.durability", left, item.MaxDurability));
+                parts.Add(UiText.Durability(item, item.LeftOf(durability)));
             }
 
             return string.Join(" · ", parts);

@@ -110,6 +110,10 @@ namespace ApoGirl.Exploration.Runtime
         private bool _bagOwned;
         private readonly bool[] _toolsOwned = new bool[ToolSlotCount];
         private bool _armorOwned;
+
+        // 방어구·도구의 남은 내구(방어구·쇠지렛대)·전력(빛 도구). 내구가 없는 장비는 0. 배낭에 든 것은 PlacedItem.Wear = 최대치 − 남은 양.
+        private float _armorLeft;
+        private readonly float[] _toolLeft = new float[ToolSlotCount];
         private int _ownedWeaponWear;
         private bool _equipChanged;
         private readonly List<string> _lostOwned = new List<string>();
@@ -332,41 +336,60 @@ namespace ApoGirl.Exploration.Runtime
             return null;
         }
 
-        /// <summary>찬 빛 도구 중 가장 멀리 비추는 것의 시야 배율 (헤드랜턴 1.33, 없으면 1).</summary>
+        /// <summary>켤 빛 도구 칸: 전력이 남은 빛 도구 중 가장 멀리 비추는 것 (없으면 −1).</summary>
+        private int ActiveLightIndex
+        {
+            get
+            {
+                var best = -1;
+                for (var i = 0; i < ToolSlotCount; i++)
+                {
+                    var tool = _tools[i];
+                    if (tool != null && tool.Does(ToolKind.Flashlight) && (!tool.UsesPower || _toolLeft[i] > 0f)
+                        && (best < 0 || tool.LightRange > _tools[best].LightRange))
+                    {
+                        best = i;
+                    }
+                }
+
+                return best;
+            }
+        }
+
+        /// <summary>켠 빛 도구의 시야 배율 (헤드랜턴 1.33, 없으면 1).</summary>
         public float LightRange
         {
             get
             {
-                var best = 0f;
-                foreach (var tool in _tools)
-                {
-                    if (tool != null && tool.Does(ToolKind.Flashlight))
-                    {
-                        best = Mathf.Max(best, tool.LightRange > 0f ? tool.LightRange : 1f);
-                    }
-                }
-
-                return best > 0f ? best : 1f;
+                var index = ActiveLightIndex;
+                return index >= 0 && _tools[index].LightRange > 0f ? _tools[index].LightRange : 1f;
             }
         }
 
-        /// <summary>켠 빛이 눈에 띄는 정도: 가장 멀리 비추는 빛 도구의 LightExposure (0이면 공통 값).</summary>
+        /// <summary>켠 빛이 눈에 띄는 정도: 켠 빛 도구의 LightExposure (0이면 공통 값).</summary>
         private float LightExposure
         {
             get
             {
-                ItemDef best = null;
-                foreach (var tool in _tools)
-                {
-                    if (tool != null && tool.Does(ToolKind.Flashlight) && (best == null || tool.LightRange > best.LightRange))
-                    {
-                        best = tool;
-                    }
-                }
-
-                return best != null && best.LightExposure > 0f ? best.LightExposure : _balance.FlashlightExposure;
+                var index = ActiveLightIndex;
+                return index >= 0 && _tools[index].LightExposure > 0f ? _tools[index].LightExposure : _balance.FlashlightExposure;
             }
         }
+
+        /// <summary>찬 방어구의 남은 내구 (내구가 없으면 0).</summary>
+        public int ArmorLeft => _armor == null || _armor.MaxDurability <= 0 ? 0 : Mathf.CeilToInt(Mathf.Max(0f, _armorLeft));
+
+        /// <summary>도구 칸의 남은 내구(쇠지렛대)·전력(빛 도구). 내구가 없으면 0.</summary>
+        public int ToolLeftAt(int index) =>
+            index < 0 || index >= ToolSlotCount || _tools[index] == null || _tools[index].MaxDurability <= 0 ? 0 : Mathf.CeilToInt(Mathf.Max(0f, _toolLeft[index]));
+
+        /// <summary>남은 양 → 배낭에 넣을 때의 Wear (최대치 − 남은 양).</summary>
+        private static int WearOf(ItemDef item, float left) =>
+            item == null || item.MaxDurability <= 0 ? 0 : Math.Max(0, item.MaxDurability - Mathf.CeilToInt(Mathf.Max(0f, left)));
+
+        /// <summary>배낭에서 꺼내 찬 방어구·도구의 남은 양.</summary>
+        private static float LeftOf(ItemDef item, PlacedItem placed) =>
+            item == null || item.MaxDurability <= 0 ? 0f : Math.Max(0, item.MaxDurability - placed.Wear);
         public ItemDef BackpackItem => _backpackItem;
 
         /// <summary>격자가 있는 가방을 메고 있다 (없으면 주머니).</summary>
@@ -376,13 +399,21 @@ namespace ApoGirl.Exploration.Runtime
         public string BagKey(string backpackKey) => HasBag ? backpackKey : backpackKey.Replace("backpack", "pocket");
         public int WeaponDurabilityLeft => _weapon == null ? 0 : Math.Max(0, _weaponDurability - _weaponWear);
 
-        /// <summary>배낭에 든 무기의 남은 내구도 (내 무기는 창고에 저장된 내구도에서, 주운 무기는 최대치에서 닳은 만큼 뺀다). 내구도가 없으면 0.</summary>
+        /// <summary>
+        /// 배낭에 든 장비의 남은 내구도·전력. 무기: 내 무기는 창고에 저장된 내구도에서, 주운 무기는 최대치에서 닳은 만큼 뺀다.
+        /// 방어구·도구: 최대치 − Wear. 내구도가 없으면 0.
+        /// </summary>
         public int DurabilityLeft(PlacedItem placed)
         {
             var item = placed == null ? null : _db.GetItemOrNull(placed.ItemId);
             if (item == null || item.MaxDurability <= 0)
             {
                 return 0;
+            }
+
+            if (item.Slot != EquipSlot.Weapon)
+            {
+                return Math.Max(0, item.MaxDurability - placed.Wear);
             }
 
             var full = placed.Owned && Request.WeaponDurability > 0 ? Request.WeaponDurability : item.MaxDurability;
@@ -625,7 +656,12 @@ namespace ApoGirl.Exploration.Runtime
 
             var dt = Time.deltaTime;
             // 숨다가 잠들면 시간이 더 빨리 흐른다
-            Clock.Tick(dt * TimeScale * (Asleep ? _balance.HideSleepClockMultiplier : 1f));
+            var clockDt = dt * TimeScale * (Asleep ? _balance.HideSleepClockMultiplier : 1f);
+            Clock.Tick(clockDt);
+            if (FlashlightOn && !Hidden)
+            {
+                DrainLight(clockDt);
+            }
             if (Clock.IsOver)
             {
                 if (Request.TimeOfDay == ExpeditionTime.Day && !DuskAwakened)
@@ -752,6 +788,7 @@ namespace ApoGirl.Exploration.Runtime
                     EmitNoise(CurrentArea, X, _balance.ShoveNoise);
                     Sfx("sfx_door_force");
                     _hud?.ShowMessage("exp.forced_open");
+                    UseCrowbar();
                     break;
                 case TargetKind.Encounter:
                     OpenEncounter = target;
@@ -794,6 +831,7 @@ namespace ApoGirl.Exploration.Runtime
                     else if (target.Locked && HasTool(ToolKind.Crowbar))
                     {
                         target.Locked = false;
+                        UseCrowbar();
                         var exitRenderer = target.View != null ? target.View.GetComponent<SpriteRenderer>() : null;
                         var openSprite = ExplorationArt.Get(ExplorationArt.Exit(Location.Id, false));
                         if (exitRenderer != null && openSprite != null)
@@ -855,11 +893,19 @@ namespace ApoGirl.Exploration.Runtime
                 return false;
             }
 
-            var item = _db.GetItem(container.Contents[contentIndex].ItemId);
-            if (Backpack.TryAutoPlace(item.Id, item.Width, item.Height, item.Weight) == null)
+            var stack = container.Contents[contentIndex];
+            var item = _db.GetItem(stack.ItemId);
+            var placed = Backpack.TryAutoPlace(item.Id, item.Width, item.Height, item.Weight);
+            if (placed == null)
             {
                 _hud?.ShowMessage(BagKey("exp.backpack_full"));
                 return false;
+            }
+
+            if (stack.Durability != 0 && item.MaxDurability > 0)
+            {
+                // 버렸다 다시 주운 장비: 남은 내구·전력 그대로
+                placed.Wear = Math.Max(0, item.MaxDurability - item.LeftOf(stack.Durability));
             }
 
             container.Contents.RemoveAt(contentIndex);
@@ -888,7 +934,15 @@ namespace ApoGirl.Exploration.Runtime
                     _lostOwned.Add(placed.ItemId);
                 }
 
-                OpenContainer?.Contents.Add(new ItemStack { ItemId = placed.ItemId, Count = 1 });
+                var dropped = new ItemStack { ItemId = placed.ItemId, Count = 1 };
+                var item = _db.GetItemOrNull(placed.ItemId);
+                if (item != null && item.MaxDurability > 0)
+                {
+                    var left = DurabilityLeft(placed);
+                    dropped.Durability = left >= item.MaxDurability ? 0 : left > 0 ? left : -1;
+                }
+
+                OpenContainer?.Contents.Add(dropped);
                 EmitNoise(CurrentArea, X, _balance.DropNoise);
             }
         }
@@ -1123,14 +1177,176 @@ namespace ApoGirl.Exploration.Runtime
         /// <summary>손전등 켜기/끄기 (F). 어둠 속 수색이 빨라지는 대신 멀리서도 눈에 띈다.</summary>
         public void ToggleFlashlight()
         {
-            if (!HasTool(ToolKind.Flashlight) && !FlashlightOn)
+            if (!FlashlightOn)
             {
-                _hud?.ShowMessage("exp.no_flashlight");
-                return;
+                if (!HasTool(ToolKind.Flashlight))
+                {
+                    _hud?.ShowMessage("exp.no_flashlight");
+                    return;
+                }
+
+                // 전력이 바닥났으면 배낭 건전지로 채운다 (없으면 켜지지 않는다)
+                if (ActiveLightIndex < 0 && !RechargeLight())
+                {
+                    _hud?.ShowMessage("exp.flashlight_dead");
+                    return;
+                }
             }
 
             FlashlightOn = !FlashlightOn;
             Sfx("sfx_flashlight");
+        }
+
+        /// <summary>켠 빛 도구의 전력이 줄어든다 (탐험 시계 기준). 바닥나면 배낭 건전지 → 다른 빛 도구 → 꺼짐.</summary>
+        private void DrainLight(float clockDt)
+        {
+            var index = ActiveLightIndex;
+            if (index < 0)
+            {
+                FlashlightOn = false;
+                return;
+            }
+
+            if (!_tools[index].UsesPower)
+            {
+                return;
+            }
+
+            _toolLeft[index] -= _balance.FlashlightDrainPerSecond * clockDt;
+            if (_toolLeft[index] > 0f)
+            {
+                return;
+            }
+
+            _toolLeft[index] = 0f;
+            if (RechargeLight())
+            {
+                return;
+            }
+
+            if (ActiveLightIndex >= 0)
+            {
+                _hud?.ShowMessage("exp.flashlight_switch");
+                return;
+            }
+
+            FlashlightOn = false;
+            Sfx("sfx_flashlight");
+            _hud?.ShowMessage("exp.flashlight_dead");
+        }
+
+        /// <summary>전력이 바닥난 빛 도구 하나를 배낭 건전지 하나로 채운다 (최대치의 FlashlightBatteryRestore). 건전지가 없으면 false.</summary>
+        private bool RechargeLight()
+        {
+            var index = -1;
+            for (var i = 0; i < ToolSlotCount; i++)
+            {
+                if (_tools[i] != null && _tools[i].UsesPower && _toolLeft[i] <= 0f)
+                {
+                    index = i;
+                    break;
+                }
+            }
+
+            PlacedItem battery = null;
+            foreach (var placed in Backpack.Items)
+            {
+                if (placed.ItemId == _balance.FlashlightBatteryItem)
+                {
+                    battery = placed;
+                    break;
+                }
+            }
+
+            if (index < 0 || battery == null || !Backpack.Remove(battery))
+            {
+                return false;
+            }
+
+            if (battery.Owned)
+            {
+                _usedItems.Add(battery.ItemId);
+            }
+
+            var tool = _tools[index];
+            _toolLeft[index] = Mathf.Min(tool.MaxDurability, Mathf.Max(0f, _toolLeft[index]) + LoadoutRules.BatteryCharge(tool, _balance));
+            _hud?.ShowText(Loc.F("exp.flashlight_battery", Loc.Item(tool.Id)));
+            return true;
+        }
+
+        /// <summary>
+        /// 쇠지렛대를 한 번 쓴다 (잠긴 방 문·잠긴 출구·큰 문). 전력으로 켜는 겸용 도구(랜턴 멀티툴)가 있으면 그것을 써 닳지 않고,
+        /// 아니면 쇠지렛대가 닳아 0이 되면 부서진다 (고칠 수 없다).
+        /// </summary>
+        private void UseCrowbar()
+        {
+            var index = -1;
+            for (var i = 0; i < ToolSlotCount; i++)
+            {
+                var tool = _tools[i];
+                if (tool == null || !tool.Does(ToolKind.Crowbar))
+                {
+                    continue;
+                }
+
+                if (!tool.Wears)
+                {
+                    return;
+                }
+
+                if (index < 0)
+                {
+                    index = i;
+                }
+            }
+
+            if (index < 0)
+            {
+                return;
+            }
+
+            _toolLeft[index] -= _balance.CrowbarWearPerUse;
+            if (_toolLeft[index] > 0f)
+            {
+                return;
+            }
+
+            _hud?.ShowMessage("exp.crowbar_broke");
+            if (_toolsOwned[index])
+            {
+                _lostOwned.Add(_tools[index].Id);
+            }
+
+            _equipChanged = true;
+            SetTool(index, null, false);
+        }
+
+        /// <summary>방어구가 피해를 한 번 받아 닳는다. 0이 되면 부서진다 (고칠 수 없다).</summary>
+        private void WearArmor()
+        {
+            if (_armor == null || _armor.MaxDurability <= 0)
+            {
+                return;
+            }
+
+            _armorLeft -= _balance.ArmorWearPerHit;
+            if (_armorLeft > 0f)
+            {
+                return;
+            }
+
+            _hud?.ShowMessage("exp.armor_broke");
+            if (_armorOwned)
+            {
+                _lostOwned.Add(_armor.Id);
+            }
+
+            _armor = null;
+            _armorOwned = false;
+            _armorLeft = 0f;
+            _equipChanged = true;
+            UpdateMultipliers();
+            RefreshLook();
         }
 
         /// <summary>
@@ -1461,21 +1677,23 @@ namespace ApoGirl.Exploration.Runtime
                     break;
                 case EquipSlot.Tool:
                     var index = ToolIndexFor(item, toolIndex);
-                    if (!SwapInto(placed, _tools[index], _toolsOwned[index], 0))
+                    if (!SwapInto(placed, _tools[index], _toolsOwned[index], WearOf(_tools[index], _toolLeft[index])))
                     {
                         return false;
                     }
 
+                    _toolLeft[index] = LeftOf(item, placed);
                     SetTool(index, item, placed.Owned);
                     break;
                 case EquipSlot.Armor:
-                    if (!SwapInto(placed, _armor, _armorOwned, 0))
+                    if (!SwapInto(placed, _armor, _armorOwned, WearOf(_armor, _armorLeft)))
                     {
                         return false;
                     }
 
                     _armor = item;
                     _armorOwned = placed.Owned;
+                    _armorLeft = LeftOf(item, placed);
                     UpdateMultipliers();
                     RefreshLook();
                     break;
@@ -1537,6 +1755,7 @@ namespace ApoGirl.Exploration.Runtime
             }
             else if (slot == EquipSlot.Armor)
             {
+                placed.Wear = WearOf(_armor, _armorLeft);
                 _armor = null;
                 _armorOwned = false;
                 UpdateMultipliers();
@@ -1544,6 +1763,7 @@ namespace ApoGirl.Exploration.Runtime
             }
             else
             {
+                placed.Wear = WearOf(_tools[toolIndex], _toolLeft[toolIndex]);
                 SetTool(toolIndex, null, false);
             }
 
@@ -1578,9 +1798,10 @@ namespace ApoGirl.Exploration.Runtime
         {
             _tools[index] = tool;
             _toolsOwned[index] = tool != null && owned;
-            if (FlashlightOn && !HasTool(ToolKind.Flashlight))
+            if (FlashlightOn && ActiveLightIndex < 0)
             {
-                ToggleFlashlight();
+                FlashlightOn = false;
+                Sfx("sfx_flashlight");
             }
         }
 
@@ -1747,6 +1968,35 @@ namespace ApoGirl.Exploration.Runtime
             OpenEncounter = null;
         }
 
+        /// <summary>
+        /// 방어구·도구의 남은 내구·전력을 결과에 적는다: 가지고 나간 것은 찬 것·배낭에 넣은 것 모두 (OwnedDurability),
+        /// 주워 찬 것은 찬 것만 (EquippedLootDurability, 배낭에 든 주운 장비는 RunResultBuilder가).
+        /// </summary>
+        private void ReportDurability()
+        {
+            if (_armor != null && _armor.MaxDurability > 0)
+            {
+                (_armorOwned ? Result.OwnedDurability : Result.EquippedLootDurability)[_armor.Id] = ArmorLeft;
+            }
+
+            for (var i = 0; i < ToolSlotCount; i++)
+            {
+                if (_tools[i] != null && _tools[i].MaxDurability > 0)
+                {
+                    (_toolsOwned[i] ? Result.OwnedDurability : Result.EquippedLootDurability)[_tools[i].Id] = ToolLeftAt(i);
+                }
+            }
+
+            foreach (var placed in Backpack.Items)
+            {
+                var item = placed.Owned ? _db.GetItemOrNull(placed.ItemId) : null;
+                if (item != null && item.MaxDurability > 0 && item.Slot != EquipSlot.Weapon)
+                {
+                    Result.OwnedDurability[item.Id] = Math.Max(0, item.MaxDurability - placed.Wear);
+                }
+            }
+        }
+
         private void SetupEquipment()
         {
             var loadout = Request.Loadout ?? new LoadoutState();
@@ -1763,6 +2013,11 @@ namespace ApoGirl.Exploration.Runtime
                 _toolsOwned[i] = _tools[i] != null;
             }
             _armorOwned = _armor != null;
+            _armorLeft = Request.StartDurability(_armor);
+            for (var i = 0; i < ToolSlotCount; i++)
+            {
+                _toolLeft[i] = Request.StartDurability(_tools[i]);
+            }
 
             UpdateMultipliers();
             RefreshLook();
@@ -2187,6 +2442,8 @@ namespace ApoGirl.Exploration.Runtime
                 if (_armor != null && !_armorOwned) Result.EquippedLoot.Add(_armor.Id);
                 Result.EquippedLootWear = _weapon != null && !_weaponOwned ? _weaponWear : 0;
             }
+
+            ReportDurability();
             Result.SearchedContainers.AddRange(_searchedKeys);
             HostileRules.Apply(Result, _hostileOutcome, _startHp, _balance);
             foreach (var flag in _runFlags)
@@ -2777,6 +3034,11 @@ namespace ApoGirl.Exploration.Runtime
         private void Unseal(ExplorationTarget target)
         {
             var heavy = target.Seal == DoorSeal.Heavy;
+            if (heavy && HasTool(ToolKind.Crowbar))
+            {
+                UseCrowbar();
+            }
+
             foreach (var door in target.Room.CorridorDoors)
             {
                 door.Forced = true;
@@ -3486,6 +3748,7 @@ namespace ApoGirl.Exploration.Runtime
             if (events.Damage > 0 && !Invincible)
             {
                 var damage = Mathf.Max(1, Mathf.RoundToInt(events.Damage * Request.HarmMultiplier * (1f - Mathf.Clamp01(_armor?.DamageReduction ?? 0f))));
+                WearArmor();
                 _log.DamageTaken += damage;
                 Hp = Math.Max(0, Hp - damage);
                 if (Asleep)
@@ -3805,6 +4068,19 @@ namespace ApoGirl.Exploration.Runtime
         }
 
         /// <summary>디버그 (F6): 무작위 아이템 하나를 배낭에.</summary>
+        /// <summary>디버그·점검: 도구 칸·방어구의 남은 내구·전력을 정한다.</summary>
+        public void DebugSetLeft(int toolIndex, float left)
+        {
+            if (toolIndex < 0)
+            {
+                _armorLeft = left;
+            }
+            else if (toolIndex < ToolSlotCount)
+            {
+                _toolLeft[toolIndex] = left;
+            }
+        }
+
         public void DebugGiveItem()
         {
             _log.DebugUsed = true;

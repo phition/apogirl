@@ -380,10 +380,30 @@ namespace ApoGirl.Core.Rules
             return removed;
         }
 
-        /// <summary>무기 내구도 소모. 0이 되면 부서져 사라진다.</summary>
+        /// <summary>장비 내구도 소모 (그 ID의 맨 앞 묶음). 닳는 장비는 0이 되면 부서져 사라지고, 빛 도구는 전력만 준다 (음수면 충전).</summary>
         public static void WearItem(GameState state, IDefinitionDatabase db, string itemId, int wear, StateDelta delta)
         {
-            if (string.IsNullOrEmpty(itemId) || wear <= 0 || !db.TryGetItem(itemId, out var def) || def.MaxDurability <= 0)
+            if (string.IsNullOrEmpty(itemId) || wear == 0 || !db.TryGetItem(itemId, out var def) || def.MaxDurability <= 0)
+            {
+                return;
+            }
+
+            var stack = state.Storage.Find(s => s.ItemId == itemId);
+            if (stack == null || (wear < 0 && !def.UsesPower))
+            {
+                return;
+            }
+
+            SetDurability(state, db, itemId, def.LeftOf(stack.Durability) - wear, delta);
+        }
+
+        /// <summary>
+        /// 장비(그 ID의 맨 앞 묶음)의 남은 내구·전력을 적는다. 닳는 장비(무기·방어구·쇠지렛대)가 0이 되면 부서져 사라지고,
+        /// 빛 도구는 0~최대치로 남는다 (바닥 = −1). 여러 개 묶음이면 하나를 떼어 앞에 둔다.
+        /// </summary>
+        public static void SetDurability(GameState state, IDefinitionDatabase db, string itemId, int left, StateDelta delta)
+        {
+            if (string.IsNullOrEmpty(itemId) || !db.TryGetItem(itemId, out var def) || def.MaxDurability <= 0)
             {
                 return;
             }
@@ -394,20 +414,48 @@ namespace ApoGirl.Core.Rules
                 return;
             }
 
-            if (stack.Durability <= 0)
+            if (def.UsesPower)
             {
-                stack.Durability = def.MaxDurability;
+                Single(state, stack).Durability = def.StoredOf(Math.Min(Math.Max(left, 0), def.MaxDurability));
+                return;
             }
 
-            stack.Durability -= wear;
-            if (stack.Durability <= 0)
+            if (left > 0)
             {
-                RemoveFromStorage(state, itemId, 1, delta);
-                if (state.Loadout.MainWeapon == itemId && CountInStorage(state, itemId) <= 0)
-                {
-                    state.Loadout.MainWeapon = "";
-                }
+                Single(state, stack).Durability = def.StoredOf(left);
+                return;
             }
+
+            // 부서짐: 맨 앞 하나를 빼고, 남은 것이 없으면 찬 칸도 비운다
+            RemoveFromStorage(state, itemId, 1, delta, fromFront: true);
+            if (CountInStorage(state, itemId) > 0)
+            {
+                return;
+            }
+
+            var loadout = state.Loadout;
+            if (loadout.MainWeapon == itemId) loadout.MainWeapon = "";
+            if (loadout.Armor == itemId) loadout.Armor = "";
+            if (loadout.Tool == itemId) loadout.Tool = "";
+            if (loadout.Tool2 == itemId) loadout.Tool2 = "";
+        }
+
+        /// <summary>건전지 하나로 채우는 전력 (BalanceConfig.FlashlightBatteryRestore × 최대치).</summary>
+        public static int BatteryCharge(ItemDef item, BalanceConfig balance) =>
+            Math.Max(1, (int)Math.Round(item.MaxDurability * balance.FlashlightBatteryRestore));
+
+        /// <summary>여러 개가 한 묶음이면 하나를 떼어 그 앞에 두고 돌려준다 (내구는 한 개에만 적는다).</summary>
+        private static ItemStack Single(GameState state, ItemStack stack)
+        {
+            if (stack.Count <= 1)
+            {
+                return stack;
+            }
+
+            stack.Count--;
+            var one = new ItemStack { ItemId = stack.ItemId, Count = 1, Durability = stack.Durability };
+            state.Storage.Insert(state.Storage.IndexOf(stack), one);
+            return one;
         }
     }
 

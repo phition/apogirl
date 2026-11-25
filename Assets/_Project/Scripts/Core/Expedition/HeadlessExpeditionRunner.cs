@@ -104,7 +104,58 @@ namespace ApoGirl.Core.Expedition
             var deep = ApplyDeep(request, result, out var deepRoom);
             ApplyCollectibles(request, result, deep, deepRoom);
             ApplyDeepRoomEncounters(request, result, deepRoom);
+            ApplyEquipmentWear(request, result);
             return result;
+        }
+
+        /// <summary>
+        /// 찬 방어구·도구의 내구·전력 (따로 뽑은 난수): 방어구는 한 번에 조금, 쇠지렛대는 확률로 닳고, 밤에는 빛 도구 하나가 전력을 쓴다.
+        /// 닳는 장비가 0이 되면 부서져 잃는다.
+        /// </summary>
+        private void ApplyEquipmentWear(ExpeditionRequest request, ExpeditionResult result)
+        {
+            var loadout = request.Loadout;
+            if (loadout == null)
+            {
+                return;
+            }
+
+            var balance = _db.Balance;
+            var random = new SeededRandom(SeededRandom.CreateState(request.Seed ^ 0x7E4A11));
+            var lightUsed = false;
+            foreach (var id in new[] { loadout.Armor, loadout.Tool, loadout.Tool2 })
+            {
+                if (string.IsNullOrEmpty(id) || result.OwnedDurability.ContainsKey(id) || !_db.TryGetItem(id, out var item) || item.MaxDurability <= 0)
+                {
+                    continue;
+                }
+
+                var left = request.StartDurability(item);
+                if (item.Slot == EquipSlot.Armor)
+                {
+                    left -= balance.HeadlessArmorWear;
+                }
+                else if (item.UsesPower)
+                {
+                    if (request.TimeOfDay == ExpeditionTime.Night && !lightUsed && left > 0)
+                    {
+                        left -= balance.HeadlessFlashlightNightDrain;
+                        lightUsed = true;
+                    }
+                }
+                else if (item.Does(ToolKind.Crowbar) && random.NextDouble() < balance.HeadlessCrowbarWearChance)
+                {
+                    left -= balance.CrowbarWearPerUse;
+                }
+
+                if (item.Wears && left <= 0)
+                {
+                    result.LostOwned.Add(id);
+                    continue;
+                }
+
+                result.OwnedDurability[id] = Math.Max(0, left);
+            }
         }
 
         /// <summary>
@@ -125,7 +176,7 @@ namespace ApoGirl.Core.Expedition
                 downChance -= weapon.WeaponPower * balance.HeadlessWeaponDownPerPower;
             }
 
-            if (request.TimeOfDay == ExpeditionTime.Night && (IsFlashlight(loadout.Tool) || IsFlashlight(loadout.Tool2)))
+            if (request.TimeOfDay == ExpeditionTime.Night && (IsLit(request, loadout.Tool) || IsLit(request, loadout.Tool2)))
             {
                 downChance -= balance.HeadlessFlashlightNightDown;
             }
@@ -271,8 +322,10 @@ namespace ApoGirl.Core.Expedition
             return true;
         }
 
-        private bool IsFlashlight(string itemId) =>
-            !string.IsNullOrEmpty(itemId) && _db.TryGetItem(itemId, out var tool) && tool.Does(ToolKind.Flashlight);
+        /// <summary>전력이 남은 빛 도구 (전력이 없는 옛 정의면 그냥 빛 도구).</summary>
+        private bool IsLit(ExpeditionRequest request, string itemId) =>
+            !string.IsNullOrEmpty(itemId) && _db.TryGetItem(itemId, out var tool) && tool.Does(ToolKind.Flashlight)
+            && (!tool.UsesPower || request.StartDurability(tool) > 0);
 
         /// <summary>깊은 곳 층에 있는 방의 템플릿 (특별한 방).</summary>
         private static IEnumerable<RoomTemplateDef> DeepRoomTemplates(BuildingLayoutDef layout) =>

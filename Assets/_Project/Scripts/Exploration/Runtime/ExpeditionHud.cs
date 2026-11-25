@@ -451,12 +451,24 @@ namespace ApoGirl.Exploration.Runtime
 
             if (item.Slot == EquipSlot.Armor)
             {
-                lines.Add(Loc.F("exp.info.reduction", Mathf.RoundToInt(item.DamageReduction * 100f)));
+                var armor = Loc.F("exp.info.reduction", Mathf.RoundToInt(item.DamageReduction * 100f));
+                if (item.MaxDurability > 0)
+                {
+                    armor += " · " + UiText.Durability(item, _director.DurabilityLeft(placed));
+                }
+
+                lines.Add(armor);
             }
 
             if (item.Slot == EquipSlot.Tool && (item.Tool != ToolKind.None || item.ExtraTools.Count > 0))
             {
-                lines.Add(UiText.ToolKinds(item));
+                var tool = UiText.ToolKinds(item);
+                if (item.MaxDurability > 0)
+                {
+                    tool += " · " + UiText.Durability(item, _director.DurabilityLeft(placed));
+                }
+
+                lines.Add(tool);
             }
 
             if (item.ResourceYield.Count > 0)
@@ -587,7 +599,13 @@ namespace ApoGirl.Exploration.Runtime
                 }
                 else if (slot == EquipSlot.Armor && item != null && item.DamageReduction > 0f)
                 {
-                    name += " (−" + Mathf.RoundToInt(item.DamageReduction * 100f) + "%)";
+                    name += " (−" + Mathf.RoundToInt(item.DamageReduction * 100f) + "%" + (item.MaxDurability > 0 ? " · " + _director.ArmorLeft : "") + ")";
+                }
+                else if (slot == EquipSlot.Tool && item != null && item.MaxDurability > 0)
+                {
+                    // 쇠지렛대는 남은 횟수, 빛 도구는 전력 %
+                    var left = _director.ToolLeftAt(tool);
+                    name += " (" + (item.UsesPower ? Mathf.RoundToInt(left * 100f / item.MaxDurability) + "%" : left.ToString()) + ")";
                 }
 
                 var droppable = _selected != null && _director.SlotOf(_selected.ItemId) == slot;

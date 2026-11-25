@@ -8179,6 +8179,46 @@ MonoBehaviour:
     m_Key: hud.raw_water
     m_Metadata:
       m_Items: []
+  - m_Id: 2344097280180224
+    m_Key: craft.line.TOOL
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2344097343094784
+    m_Key: prep.power_charge
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2344097343094785
+    m_Key: prep.power_dead
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2344097343094786
+    m_Key: equip.durability
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2344097343094787
+    m_Key: equip.power
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2344097343094788
+    m_Key: exp.flashlight_dead
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2344097343094789
+    m_Key: exp.flashlight_switch
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2344097343094790
+    m_Key: exp.flashlight_battery
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2344097343094791
+    m_Key: exp.crowbar_broke
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2344097343094792
+    m_Key: exp.armor_broke
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

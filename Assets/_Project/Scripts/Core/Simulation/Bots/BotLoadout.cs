@@ -26,10 +26,10 @@ namespace ApoGirl.Core.Simulation.Bots
             loadout.Backpack = Pick(state, db, EquipSlot.Backpack, loadout.Backpack, def => def.GridWidth * def.GridHeight - db.Balance.HeadlessBagBaseCells);
             loadout.MainWeapon = Pick(state, db, EquipSlot.Weapon, loadout.MainWeapon, def => WeaponScore(state, def));
             loadout.Armor = Pick(state, db, EquipSlot.Armor, loadout.Armor, def => def.DamageReduction);
-            loadout.Tool = Pick(state, db, EquipSlot.Tool, loadout.Tool, def => ToolScore(def, night, null));
+            loadout.Tool = Pick(state, db, EquipSlot.Tool, loadout.Tool, def => ToolScore(state, def, night, null));
             // 둘째 도구 칸: 첫 칸이 못 하는 일 중 가장 나은 것 (멀티툴이면 빛·지렛대를 이미 다 한다)
             var first = !string.IsNullOrEmpty(loadout.Tool) && db.TryGetItem(loadout.Tool, out var firstDef) ? firstDef : null;
-            loadout.Tool2 = Pick(state, db, EquipSlot.Tool, loadout.Tool2, def => ToolScore(def, night, first));
+            loadout.Tool2 = Pick(state, db, EquipSlot.Tool, loadout.Tool2, def => ToolScore(state, def, night, first));
             if (loadout.Tool2 == loadout.Tool)
             {
                 loadout.Tool2 = "";
@@ -79,11 +79,12 @@ namespace ApoGirl.Core.Simulation.Bots
             return def.WeaponPower * (float)left / def.MaxDurability;
         }
 
-        /// <summary>도구 점수: 하는 일마다 (밤엔 빛 2·지렛대 1, 낮엔 반대) + 빛이 더 멀리 닿는 만큼. covered가 이미 하는 일은 뺀다.</summary>
-        private static float ToolScore(ItemDef def, bool night, ItemDef covered)
+        /// <summary>도구 점수: 하는 일마다 (밤엔 빛 2·지렛대 1, 낮엔 반대) + 빛이 더 멀리 닿는 만큼. covered가 이미 하는 일은 뺀다.
+        /// 전력이 바닥난 빛 도구는 거점 배터리가 있을 때만 빛으로 친다.</summary>
+        private static float ToolScore(GameState state, ItemDef def, bool night, ItemDef covered)
         {
             var score = 0f;
-            if (def.Does(ToolKind.Flashlight) && (covered == null || !covered.Does(ToolKind.Flashlight)))
+            if (def.Does(ToolKind.Flashlight) && (covered == null || !covered.Does(ToolKind.Flashlight)) && HasPower(state, def))
             {
                 score += (night ? 2f : 1f) + Math.Max(0f, def.LightRange - 1f);
             }
@@ -94,6 +95,17 @@ namespace ApoGirl.Core.Simulation.Bots
             }
 
             return score;
+        }
+
+        private static bool HasPower(GameState state, ItemDef def)
+        {
+            if (!def.UsesPower)
+            {
+                return true;
+            }
+
+            var stack = state.Storage.Find(s => s.ItemId == def.Id);
+            return (stack != null && def.LeftOf(stack.Durability) > 0) || state.Base.GetResource(ResourceType.Battery) > 0;
         }
     }
 }
