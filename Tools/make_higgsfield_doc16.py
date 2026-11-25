@@ -53,6 +53,21 @@ WEAPONS = [
     ('club_rebar', '철근 덧댄 몽둥이', 'bat', 'a heavy wooden club reinforced with two short pieces of rusty rebar bound along the striking end with wire'),
 ]
 
+# 소리 다시 받기 (사용자 요청 2026-11-25): 잠든 좀비가 코 고는 것처럼 들려 → 낮게 그르렁거리는 소리로
+SOUNDS = [
+    ('sfx_z_dormant_crowd', '잠든 좀비 (가까이 있을 때 도는 환경음)', '6초, 이음매 없이 반복, 모노',
+     ' '.join([
+         'Sound effect for a 2D zombie survival game: several infected people asleep on their feet in a dark school corridor, heard from a few meters away.',
+         'A low, slow, guttural growl in the throat, deep and rumbling like a large animal breathing in its sleep: long wet rattling exhales,',
+         'a faint gravelly purr under each breath, the growls overlapping and rising and falling unevenly.',
+         'Not snoring: no nasal snore, no whistling through the nose, no snorting, no human sleep sounds, no comedy, no words, no screams, no music.',
+         'Very quiet and tense, close to silence between breaths, dark low frequencies, slight room reverb.',
+         'About 6 seconds, mono, seamlessly loopable: the end must flow back into the start with no click and no gap.',
+     ]),
+     'Low, quiet zombie growling while asleep: deep guttural throat rumble, slow menacing breaths with a rattling growl on each exhale, '
+     'several sleepers overlapping, dark corridor reverb, never snoring, no nasal sounds, no voices, no music, 6 seconds, seamless loop.'),
+]
+
 SAFETY = 'No gore, no blood, no visible wounds, no sexualized poses or revealing clothing, modest clothes, no text, no logo, no watermark.'
 KEEP = ('Keep everything else exactly the same as image 1: the grid, every cell position, every pose and limb position, the feet on the same '
         'floor line, the body size, the face and the short black bob hair, the pixel scale, the crisp 1-pixel dark outline, no anti-aliasing, '
@@ -174,6 +189,9 @@ def make_files(bs):
         im.resize((im.width * 2, im.height * 2), Image.NEAREST).save(os.path.join(REF, f'weapon_src_{tok}.png'))
         with open(os.path.join(PROMPTS, f'weapon_{tok}.txt'), 'w', encoding='utf-8') as f:
             f.write(weapon_prompt(en) + '\n')
+    for key, _, _, main, alt in SOUNDS:
+        with open(os.path.join(PROMPTS, f'{key}.txt'), 'w', encoding='utf-8') as f:
+            f.write(main + '\n\n# 안 맞으면 짧은 판\n' + alt + '\n')
 
 
 def doc(bs):
@@ -181,7 +199,7 @@ def doc(bs):
     add = L.append
     count = {s: sum(1 for b in bs if b[0] == s) for s in 'ABC'}
     total = len(bs) + len(WEAPONS)
-    add('# 힉스필드 에셋 16차: PixelLab 몫이던 탐험 주인공 그림 (2026-11-25)')
+    add('# 힉스필드 에셋 16차: PixelLab 몫이던 탐험 주인공 그림 · 잠든 좀비 소리 (2026-11-25)')
     add('')
     add('> 이 문서는 `python Tools/make_higgsfield_doc16.py`로 만든다. 고칠 때는 스크립트를 고치고 다시 돌린다.')
     add('')
@@ -189,6 +207,7 @@ def doc(bs):
     add('')
     add('- [PIXELLAB_24F_PLAN.md](PIXELLAB_24F_PLAN.md) 9장: 주인공 나머지 5벌(동복·겨울·보호대·패딩·진압복)을 **무기 겹치기 방식**(결정 C5 ②)으로 다시 받기.')
     add('- [PIXELLAB_CRAFTING_REQUEST.md](PIXELLAB_CRAFTING_REQUEST.md) 4절: 몽둥이 3종(결정 E3 ② — 무기 겹치기 때 무기 그림만).')
+    add('- **소리 1개 다시 받기** (사용자 요청 2026-11-25): 잠든 좀비 소리가 코 고는 것처럼 들려, 낮게 그르렁거리는 소리로 — 7절.')
     add('- 작업 제출은 사용자가 한다. 나(Claude)는 문서·입력 시트·프롬프트 파일만 만들었다.')
     add('')
     add('## 0. 방식 — 하복 그림의 옷만 바꾼다')
@@ -206,6 +225,7 @@ def doc(bs):
     add(f'| **B** 옷 5벌 — 겹치기와 무관 | 맨손 10동작 + 대걸레 찌르기 | {count["B"]} | 아무 때나 (A와 같이 해도 된다) |')
     add(f'| **C** 옷 5벌 — 겹치기용 | 쥔 자세 6동작 × 2 + 무기 지운 공격 2 | {count["C"]} | **A 시범이 괜찮다고 정한 뒤** (C의 입력은 A의 결과다) |')
     add(f'| 합계 | | **{total}** | |')
+    add(f'| 소리 | 잠든 좀비 그르렁 (7절) | {len(SOUNDS)} | 아무 때나 |')
     add('')
     add('## 1. 규격')
     add('')
@@ -290,6 +310,35 @@ def doc(bs):
     add('- 모든 프롬프트 끝에 붙였다: 피·상처 없음, 노출·선정적 자세 없음, 글자·상표 없음.')
     add('- 진압복은 경찰 표식·글자 없이 검은 패딩 옷으로만. 헬멧 없이 얼굴이 보이게.')
     add('')
+    add('## 7. 소리: 잠든 좀비 다시 받기')
+    add('')
+    add('지금 잠든 좀비 소리는 코 고는 소리처럼 들린다(1차 문구가 `many slow overlapping breaths`, 숨소리였다). '
+        '**낮게 목 안에서 그르렁거리는 소리**로 바꾼다. 조용하지만 무섭게 — 가까이 가면 들리고, 깨우지 않게 살금살금 지나가야 한다는 느낌이 나야 한다.')
+    add('')
+    add('| 파일 | 어디서 | 규격 | 프롬프트 |')
+    add('|---|---|---|---|')
+    for key, where, spec, _, _ in SOUNDS:
+        add(f'| `{key}.wav` | {where} | {spec} | `prompts/{key}.txt` |')
+    add('')
+    add('- 모델: Seed Audio 1.0 (`seed_audio`, 힉스필드 기본 소리 모델). 후보를 2~3개 받아 들어 보고 고른다.')
+    add('- 게임에서는 잠든 좀비가 주인공 14칸 안에 있을 때 환경음으로 반복된다(`ExpeditionDirector.UpdateSounds`, 반복 이름 `crowd`). 코드는 그대로다.')
+    add('- 저장: `ArtInbox/sound16/sfx_z_dormant_crowd.wav` (mp3·ogg로 와도 된다). 내가 이음매를 맞추고(끝과 처음을 겹쳐 이어 붙임) 크기를 지금 소리와 같게 맞춰 '
+        '`Resources/Audio/Sfx/sfx_z_dormant_crowd.wav`를 바꾼다. 옛 소리는 `code_temp/apogirl/backup_sound16/`로 옮긴다.')
+    add('- 마음에 안 들면 짧은 판으로 다시 받는다.')
+    add('')
+    for key, _, _, main, alt in SOUNDS:
+        add(f'**`{key}`**')
+        add('')
+        add('```')
+        add(main)
+        add('```')
+        add('')
+        add('짧은 판:')
+        add('')
+        add('```')
+        add(alt)
+        add('```')
+        add('')
     with open(OUT, 'w', encoding='utf-8') as f:
         f.write('\n'.join(L).rstrip() + '\n')
 

@@ -1,4 +1,4 @@
-# 힉스필드 에셋 16차: PixelLab 몫이던 탐험 주인공 그림 (2026-11-25)
+# 힉스필드 에셋 16차: PixelLab 몫이던 탐험 주인공 그림 · 잠든 좀비 소리 (2026-11-25)
 
 > 이 문서는 `python Tools/make_higgsfield_doc16.py`로 만든다. 고칠 때는 스크립트를 고치고 다시 돌린다.
 
@@ -6,6 +6,7 @@ PixelLab에 보내려고 아껴 둔 탐험 그림을 **힉스필드로 받는** 
 
 - [PIXELLAB_24F_PLAN.md](PIXELLAB_24F_PLAN.md) 9장: 주인공 나머지 5벌(동복·겨울·보호대·패딩·진압복)을 **무기 겹치기 방식**(결정 C5 ②)으로 다시 받기.
 - [PIXELLAB_CRAFTING_REQUEST.md](PIXELLAB_CRAFTING_REQUEST.md) 4절: 몽둥이 3종(결정 E3 ② — 무기 겹치기 때 무기 그림만).
+- **소리 1개 다시 받기** (사용자 요청 2026-11-25): 잠든 좀비 소리가 코 고는 것처럼 들려, 낮게 그르렁거리는 소리로 — 7절.
 - 작업 제출은 사용자가 한다. 나(Claude)는 문서·입력 시트·프롬프트 파일만 만들었다.
 
 ## 0. 방식 — 하복 그림의 옷만 바꾼다
@@ -23,6 +24,7 @@ PixelLab에 보내려고 아껴 둔 탐험 그림을 **힉스필드로 받는** 
 | **B** 옷 5벌 — 겹치기와 무관 | 맨손 10동작 + 대걸레 찌르기 | 55 | 아무 때나 (A와 같이 해도 된다) |
 | **C** 옷 5벌 — 겹치기용 | 쥔 자세 6동작 × 2 + 무기 지운 공격 2 | 70 | **A 시범이 괜찮다고 정한 뒤** (C의 입력은 A의 결과다) |
 | 합계 | | **146** | |
+| 소리 | 잠든 좀비 그르렁 (7절) | 1 | 아무 때나 |
 
 ## 1. 규격
 
@@ -263,3 +265,28 @@ PixelLab에 보내려고 아껴 둔 탐험 그림을 **힉스필드로 받는** 
 
 - 모든 프롬프트 끝에 붙였다: 피·상처 없음, 노출·선정적 자세 없음, 글자·상표 없음.
 - 진압복은 경찰 표식·글자 없이 검은 패딩 옷으로만. 헬멧 없이 얼굴이 보이게.
+
+## 7. 소리: 잠든 좀비 다시 받기
+
+지금 잠든 좀비 소리는 코 고는 소리처럼 들린다(1차 문구가 `many slow overlapping breaths`, 숨소리였다). **낮게 목 안에서 그르렁거리는 소리**로 바꾼다. 조용하지만 무섭게 — 가까이 가면 들리고, 깨우지 않게 살금살금 지나가야 한다는 느낌이 나야 한다.
+
+| 파일 | 어디서 | 규격 | 프롬프트 |
+|---|---|---|---|
+| `sfx_z_dormant_crowd.wav` | 잠든 좀비 (가까이 있을 때 도는 환경음) | 6초, 이음매 없이 반복, 모노 | `prompts/sfx_z_dormant_crowd.txt` |
+
+- 모델: Seed Audio 1.0 (`seed_audio`, 힉스필드 기본 소리 모델). 후보를 2~3개 받아 들어 보고 고른다.
+- 게임에서는 잠든 좀비가 주인공 14칸 안에 있을 때 환경음으로 반복된다(`ExpeditionDirector.UpdateSounds`, 반복 이름 `crowd`). 코드는 그대로다.
+- 저장: `ArtInbox/sound16/sfx_z_dormant_crowd.wav` (mp3·ogg로 와도 된다). 내가 이음매를 맞추고(끝과 처음을 겹쳐 이어 붙임) 크기를 지금 소리와 같게 맞춰 `Resources/Audio/Sfx/sfx_z_dormant_crowd.wav`를 바꾼다. 옛 소리는 `code_temp/apogirl/backup_sound16/`로 옮긴다.
+- 마음에 안 들면 짧은 판으로 다시 받는다.
+
+**`sfx_z_dormant_crowd`**
+
+```
+Sound effect for a 2D zombie survival game: several infected people asleep on their feet in a dark school corridor, heard from a few meters away. A low, slow, guttural growl in the throat, deep and rumbling like a large animal breathing in its sleep: long wet rattling exhales, a faint gravelly purr under each breath, the growls overlapping and rising and falling unevenly. Not snoring: no nasal snore, no whistling through the nose, no snorting, no human sleep sounds, no comedy, no words, no screams, no music. Very quiet and tense, close to silence between breaths, dark low frequencies, slight room reverb. About 6 seconds, mono, seamlessly loopable: the end must flow back into the start with no click and no gap.
+```
+
+짧은 판:
+
+```
+Low, quiet zombie growling while asleep: deep guttural throat rumble, slow menacing breaths with a rattling growl on each exhale, several sleepers overlapping, dark corridor reverb, never snoring, no nasal sounds, no voices, no music, 6 seconds, seamless loop.
+```
