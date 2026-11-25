@@ -136,6 +136,21 @@ namespace ApoGirl.Tests.EditMode
         }
 
         [Test]
+        public void Preview_RestShowsFallingFatigueAndStress_MatchingResolve()
+        {
+            _state.Player.Vitals.Fatigue = 60;
+            _state.Player.Vitals.Stress = 60;
+            _state.Player.ReducedNextRest = true; // 회복 배율도 같이 맞는지
+            var preview = ActionPreviewer.Preview(_state, _db, TestContent.RestNight);
+            Assert.Less(preview.FatigueNet, 0, "휴식 카드는 피로가 내려가는 값");
+            Assert.Less(preview.StressNet, 0, "휴식 카드는 스트레스가 내려가는 값");
+
+            ActionResolver.Resolve(_state, _db.GetAction(TestContent.RestNight), _db, new FixedRandom(0.5), new StateDelta());
+            Assert.AreEqual(60 + preview.FatigueNet, _state.Player.Vitals.Fatigue);
+            Assert.AreEqual(60 + preview.StressNet, _state.Player.Vitals.Stress);
+        }
+
+        [Test]
         public void Preview_UnaffordableHasZeroChance()
         {
             var preview = ActionPreviewer.Preview(_state, _db, TestContent.Craft);

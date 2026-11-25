@@ -24,6 +24,13 @@ namespace ApoGirl.Core.Planning
         public int FatigueCost;
         public int StressCost;
 
+        /// <summary>성공하면 내려가는 피로·스트레스 (양수, 회복 배율 반영): 휴식·일기·동아리·소풍 등. 카드는 비용 − 회복을 보여 준다.</summary>
+        public int FatigueRelief;
+        public int StressRelief;
+
+        public int FatigueNet => FatigueCost - FatigueRelief;
+        public int StressNet => StressCost - StressRelief;
+
         /// <summary>성공 시 예상 성장량 (보정·체감 반영, 반올림 후).</summary>
         public readonly List<StatAmount> ExpectedGains = new List<StatAmount>();
 
@@ -89,6 +96,31 @@ namespace ApoGirl.Core.Planning
                 preview.CraftBlock = CraftRules.CheckStart(state, db, action);
                 preview.Affordable &= preview.CraftBlock == CraftBlock.None;
             }
+
+            // 성공하면 내려가는 피로·스트레스: 성공 효과의 음수 값 × 회복 배율, 휴식은 휴식 스트레스 회복을 더한다 (ActionResolver와 같은 순서)
+            var recovery = ActionResolver.RecoveryMultiplier(state, db, action);
+            if (action.OnSuccess != null)
+            {
+                foreach (var vital in action.OnSuccess.Vitals)
+                {
+                    if (vital.Amount >= 0)
+                    {
+                        continue;
+                    }
+
+                    var relief = (int)Math.Round(-vital.Amount * recovery, MidpointRounding.AwayFromZero);
+                    if (vital.Vital == VitalType.Fatigue)
+                    {
+                        preview.FatigueRelief += relief;
+                    }
+                    else if (vital.Vital == VitalType.Stress)
+                    {
+                        preview.StressRelief += relief;
+                    }
+                }
+            }
+
+            preview.StressRelief += (int)Math.Round(StressRules.RestRelief(balance, action) * recovery, MidpointRounding.AwayFromZero);
 
             if (!preview.Affordable)
             {

@@ -630,7 +630,7 @@ namespace ApoGirl.Presentation.Screens
                 chance = Loc.T("palette.unaffordable");
             }
 
-            card.Add(Line(chance + "  ·  " + Loc.F("palette.cost", preview.FatigueCost, preview.StressCost), "action-info"));
+            card.Add(Line(chance + "  ·  " + Loc.F("palette.cost", UiText.Signed(preview.FatigueNet), UiText.Signed(preview.StressNet)), "action-info"));
 
             if (action.IsCraft)
             {

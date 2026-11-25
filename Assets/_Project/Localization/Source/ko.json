@@ -400,7 +400,7 @@
     "palette.hint": "행동을 고른 뒤 아래 칸을 클릭하세요. 우클릭은 비우기.",
     "palette.chance": "성공 {0}%",
     "palette.no_check": "판정 없음",
-    "palette.cost": "피로 +{0} · 스트레스 +{1}",
+    "palette.cost": "피로 {0} · 스트레스 {1}",
     "palette.unaffordable": "자원 부족",
     "palette.gains": "성장 {0}",
     "palette.expedition_day": "낮 탐험 · 그날 밤은 강제 휴식",

@@ -299,7 +299,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 1727283266
-    m_Localized: "\uD53C\uB85C +{0} \xB7 \uC2A4\uD2B8\uB808\uC2A4 +{1}"
+    m_Localized: "\uD53C\uB85C {0} \xB7 \uC2A4\uD2B8\uB808\uC2A4 {1}"
     m_Metadata:
       m_Items: []
   - m_Id: 1727283267

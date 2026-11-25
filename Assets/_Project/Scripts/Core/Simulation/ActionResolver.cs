@@ -94,17 +94,14 @@ namespace ApoGirl.Core.Simulation
                 }
             }
 
-            var recovery = 1f;
+            var recovery = RecoveryMultiplier(state, db, action);
             if (action.IsRest && player.ReducedNextRest)
             {
-                recovery = balance.ReducedRestMultiplier;
                 player.ReducedNextRest = false;
             }
 
             if (action.IsRest)
             {
-                recovery *= 1f + TraitRules.Sum(state, db, TraitModifierKind.RestRecovery);
-
                 // 부상 중 밤 휴식: 의약품이 있으면 반드시 써서 치유한다 (그 뒤 휴식 회복은 그대로)
                 if (action.Id == balance.NightRestActionId)
                 {
@@ -123,6 +120,18 @@ namespace ApoGirl.Core.Simulation
             }
 
             return result;
+        }
+
+        /// <summary>피로·스트레스 회복량에 곱하는 배율: 휴식이면 새벽 귀환 뒤 감소(ReducedNextRest)와 특성 휴식 회복. 그 밖은 1.</summary>
+        public static float RecoveryMultiplier(GameState state, IDefinitionDatabase db, ActionDef action)
+        {
+            if (!action.IsRest)
+            {
+                return 1f;
+            }
+
+            var recovery = state.Player.ReducedNextRest ? db.Balance.ReducedRestMultiplier : 1f;
+            return recovery * (1f + TraitRules.Sum(state, db, TraitModifierKind.RestRecovery));
         }
 
         /// <summary>능력치 상승이 가장 큰 칸 (같으면 앞의 것). 없으면 −1.</summary>
