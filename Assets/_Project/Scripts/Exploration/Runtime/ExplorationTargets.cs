@@ -119,6 +119,9 @@ namespace ApoGirl.Exploration.Runtime
 
         public bool Sealed => Seal != DoorSeal.None && !Forced;
 
+        /// <summary>문 위에 겹친 조우(잠긴 집 문 등)가 가린 방 문 그림. 조우가 사라지면 다시 보인다.</summary>
+        public GameObject CoveredDoorView;
+
         public int Floor => Area.Floor;
 
         public void MarkSearched()

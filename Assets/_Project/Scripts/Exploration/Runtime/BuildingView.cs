@@ -394,6 +394,28 @@ namespace ApoGirl.Exploration.Runtime
             }
         }
 
+        /// <summary>
+        /// 계단실(벽이 뚫린 어두운 구멍) 안에 걸친 벽·바닥 장식, 방 창문, 명패를 숨긴다 — 벽지 조각이 어둠을 가리지 않게.
+        /// well은 월드 좌표.
+        /// </summary>
+        public void ClearWell(UnityEngine.Rect well)
+        {
+            foreach (var renderer in _root.GetComponentsInChildren<SpriteRenderer>())
+            {
+                var name = renderer.gameObject.name;
+                if (!name.StartsWith("Decor_") && name != "RoomWindow" && name != "Plate")
+                {
+                    continue;
+                }
+
+                var bounds = renderer.bounds;
+                if (bounds.max.x > well.xMin && bounds.min.x < well.xMax && bounds.max.y > well.yMin && bounds.min.y < well.yMax)
+                {
+                    renderer.gameObject.SetActive(false);
+                }
+            }
+        }
+
         /// <summary>깊은 곳 장식 규칙의 Template 이름 (방 템플릿 ID와 겹치지 않는다).</summary>
         private const string DeepDecorTemplate = "DEEP";
 

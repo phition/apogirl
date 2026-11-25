@@ -1728,6 +1728,11 @@ namespace ApoGirl.Exploration.Runtime
                 {
                     target.View.SetActive(false);
                 }
+
+                if (target.CoveredDoorView != null)
+                {
+                    target.CoveredDoorView.SetActive(true);
+                }
             }
             else
             {
@@ -2280,7 +2285,7 @@ namespace ApoGirl.Exploration.Runtime
                 var down = (connector.TargetFloor > connector.Floor) == layout.IsDeep(connector.Floor);   // 깊은 곳은 번호가 클수록 아래
                 var stairsKey = StairsKey(connector.Collapsed, down);
                 var view = Prop(_corridors[connector.Floor], "Stairs", stairsKey,
-                    connector.X, new Vector2(1f, 2.7f), connector.Collapsed ? new Color(0.25f, 0.24f, 0.23f) : new Color(0.32f, 0.38f, 0.5f), -3);
+                    connector.X, new Vector2(1f, 2.7f), connector.Collapsed ? new Color(0.25f, 0.24f, 0.23f) : new Color(0.32f, 0.38f, 0.5f), -2);
                 var stairsRenderer = view.GetComponent<SpriteRenderer>();
                 if (stairsRenderer != null && ExplorationArt.Get(stairsKey) != null)
                 {
@@ -2312,12 +2317,16 @@ namespace ApoGirl.Exploration.Runtime
                 var left = Mathf.Max(0f, well.Min);
                 var right = Mathf.Min(layout.CorridorLengthOf(well.Floor), well.Max);
                 var top = layout.FloorHeight - 0.75f;
-                BuildingView.Rect(_world, "Stairwell", origin + new Vector2(left, 0.15f), new Vector2(right - left, top - 0.15f), new Color(0.05f, 0.055f, 0.07f), -5);
-                BuildingView.Rect(_world, "StairwellBack", origin + new Vector2(left + 0.25f, 0.15f), new Vector2(right - left - 0.5f, top - 0.45f), new Color(0.1f, 0.11f, 0.12f), -5);
-                BuildingView.Rect(_world, "StairwellLanding", origin + new Vector2(left, 0.15f), new Vector2(right - left, 0.12f), new Color(0.17f, 0.17f, 0.17f), -4);
-                BuildingView.Rect(_world, "StairwellFrameL", origin + new Vector2(left - 0.14f, 0.15f), new Vector2(0.14f, top - 0.15f), new Color(0.3f, 0.31f, 0.29f), -4);
-                BuildingView.Rect(_world, "StairwellFrameR", origin + new Vector2(right, 0.15f), new Vector2(0.14f, top - 0.15f), new Color(0.3f, 0.31f, 0.29f), -4);
-                BuildingView.Rect(_world, "StairwellLintel", origin + new Vector2(left - 0.14f, top), new Vector2(right - left + 0.28f, 0.16f), new Color(0.3f, 0.31f, 0.29f), -4);
+                // 어두운 구멍은 방 바깥벽(-5)·벽 장식(-4)보다 위, 계단 그림(-2)보다 아래 — 벽지가 어둠을 가리지 않게.
+                // 같은 -4끼리는 카메라 쪽으로 조금 당긴 것이 위에 그려진다
+                BuildingView.Rect(_world, "Stairwell", origin + new Vector2(left, 0.15f), new Vector2(right - left, top - 0.15f), new Color(0.05f, 0.055f, 0.07f), -4);
+                var back = BuildingView.Rect(_world, "StairwellBack", origin + new Vector2(left + 0.25f, 0.15f), new Vector2(right - left - 0.5f, top - 0.45f), new Color(0.1f, 0.11f, 0.12f), -4);
+                back.transform.position += new Vector3(0f, 0f, -0.01f);
+                BuildingView.Rect(_world, "StairwellLanding", origin + new Vector2(left, 0.15f), new Vector2(right - left, 0.12f), new Color(0.17f, 0.17f, 0.17f), -3);
+                BuildingView.Rect(_world, "StairwellFrameL", origin + new Vector2(left - 0.14f, 0.15f), new Vector2(0.14f, top - 0.15f), new Color(0.3f, 0.31f, 0.29f), -3);
+                BuildingView.Rect(_world, "StairwellFrameR", origin + new Vector2(right, 0.15f), new Vector2(0.14f, top - 0.15f), new Color(0.3f, 0.31f, 0.29f), -3);
+                BuildingView.Rect(_world, "StairwellLintel", origin + new Vector2(left - 0.14f, top), new Vector2(right - left + 0.28f, 0.16f), new Color(0.3f, 0.31f, 0.29f), -3);
+                _building.ClearWell(new UnityEngine.Rect(origin.x + left - 0.14f, origin.y + 0.15f, right - left + 0.28f, top + 0.01f));
             }
 
             for (var i = 0; i < layout.Doors.Count; i++)
@@ -2860,11 +2869,22 @@ namespace ApoGirl.Exploration.Runtime
                 ?? (encounter.Collectible && ExplorationArt.Get(encounter.SpriteKey) == null ? "prop_paper"   // CD 그림(prop_cd)이 없으면 종이 자리
                 : !string.IsNullOrEmpty(encounter.SpriteKey) ? encounter.SpriteKey
                 : encounter.Id.Contains("NOTE") || encounter.Id.Contains("NOTICE") ? "prop_paper" : "person_student_crouch");
-            var view = Prop(area, "Encounter_" + encounter.Id, key, encounter.X, new Vector2(0.6f, 1.5f), new Color(0.55f, 0.62f, 0.75f), 9);
+            // 방 문 위에 놓인 조우(잠긴 집 문 등)는 그 문 자리에 딱 맞춰 문을 대신 그린다 — 밑의 문이 삐져나오지 않게
+            var coveredDoor = _targets.Find(t => t.Kind == TargetKind.Door && t.Area == area && Math.Abs(t.X - encounter.X) < 0.6f);
+            var x = coveredDoor != null ? coveredDoor.X : encounter.X;
+            var view = Prop(area, "Encounter_" + encounter.Id, key, x, new Vector2(0.6f, 1.5f), new Color(0.55f, 0.62f, 0.75f), 9);
             ExplorationArt.Animate(view, key, 6f);   // 숨 쉬는 사람 등 (프레임이 있을 때만)
             AddFog(view, area);
-            ExplorationLook.AddCaster(view, ExplorationLook.Settings.Shadows.People);
-            AddTarget(new ExplorationTarget { Kind = TargetKind.Encounter, Area = area, X = encounter.X, Encounter = encounter, View = view });
+            if (coveredDoor != null && coveredDoor.View != null)
+            {
+                coveredDoor.View.SetActive(false);   // 벽에 붙은 문이라 그림자도 드리우지 않는다
+            }
+            else
+            {
+                ExplorationLook.AddCaster(view, ExplorationLook.Settings.Shadows.People);
+            }
+
+            AddTarget(new ExplorationTarget { Kind = TargetKind.Encounter, Area = area, X = x, Encounter = encounter, View = view, CoveredDoorView = coveredDoor?.View });
         }
 
         private ExplorationTarget CreateContainer(ExplorationArea area, ContainerDef container)
