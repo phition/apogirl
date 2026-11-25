@@ -18,6 +18,25 @@ namespace ApoGirl.Core.Rules
         /// </summary>
         public static int Hit(GameState state, BalanceConfig balance, int baseStress, int relief = 0)
         {
+            if (state?.Player == null)
+            {
+                return HitWith(state, balance, baseStress, relief, 0f);
+            }
+
+            return HitWith(state, balance, baseStress, relief, Bonus(state, balance));
+        }
+
+        /// <summary>
+        /// 앞으로의 피로·수면 부채로 계산한 값 (계획 흐름 예측 PlanForecast.ProjectWeek).
+        /// 부상·양심은 지금 상태를 쓴다.
+        /// </summary>
+        public static int HitAt(GameState state, BalanceConfig balance, int baseStress, int relief, int fatigue, int sleepDebt)
+        {
+            return HitWith(state, balance, baseStress, relief, Bonus(state, balance, fatigue, sleepDebt));
+        }
+
+        private static int HitWith(GameState state, BalanceConfig balance, int baseStress, int relief, float bonus)
+        {
             if (baseStress <= 0 || balance == null)
             {
                 return baseStress;
@@ -25,7 +44,7 @@ namespace ApoGirl.Core.Rules
 
             var amount = Math.Max(1, baseStress - Math.Max(0, relief));
             var difficulty = DifficultyRules.Get(state, balance).Stress;
-            var value = amount * (1f + Bonus(state, balance)) * difficulty;
+            var value = amount * (1f + bonus) * difficulty;
             var cap = balance.StressHitCap * difficulty;
             var rounded = (int)Math.Round(Math.Min(value, cap), MidpointRounding.AwayFromZero);
             return Math.Max(1, rounded);
@@ -39,11 +58,21 @@ namespace ApoGirl.Core.Rules
                 return 0f;
             }
 
+            return Bonus(state, balance, state.Player.Vitals.Fatigue, state.Player.SleepDebt);
+        }
+
+        /// <summary>피로·수면 부채를 따로 준 보정 합 (부상·양심은 지금 상태).</summary>
+        public static float Bonus(GameState state, BalanceConfig balance, int fatigue, int sleepDebt)
+        {
+            if (state?.Player == null)
+            {
+                return 0f;
+            }
+
             var player = state.Player;
             var bonus = 0f;
 
             // 피로: 문턱마다 단계 (가장 높은 단계 하나)
-            var fatigue = player.Vitals.Fatigue;
             for (var i = 0; i < balance.StressFatigueThresholds.Length && i < balance.StressFatigueBonus.Length; i++)
             {
                 if (fatigue >= balance.StressFatigueThresholds[i])
@@ -58,7 +87,7 @@ namespace ApoGirl.Core.Rules
             }
 
             bonus += Math.Max(0, player.Conscience) * balance.StressPerConscience;
-            bonus += StatRules.StageValue(balance.SleepDebtStressMultiplier, player.SleepDebt) - 1f;
+            bonus += StatRules.StageValue(balance.SleepDebtStressMultiplier, sleepDebt) - 1f;
             return Math.Max(0f, bonus);
         }
     }

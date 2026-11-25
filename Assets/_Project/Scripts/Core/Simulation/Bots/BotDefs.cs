@@ -90,6 +90,9 @@ namespace ApoGirl.Core.Simulation.Bots
 
         /// <summary>밤 칸에 창고의 휴대 허수아비 하나를 챙긴다 (제작 P7, BotCraft.ChooseCarry → 헤드리스 HeadlessDecoyNightDown).</summary>
         public bool UseDecoyAtNight = true;
+
+        /// <summary>선생님 추천 편성 그대로 계획한다 (TeacherPlanner, 고정 시간표 기본값). 선생님이 없는 주는 Day·Night 칸과 규칙.</summary>
+        public bool TeacherPlan;
     }
 
     /// <summary>조건부 규칙: 조건이 맞으면 지정 칸을 후보로 바꾼다 (후보가 하나도 안 되면 그대로 둔다).</summary>

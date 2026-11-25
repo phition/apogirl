@@ -209,7 +209,15 @@ namespace ApoGirl.Core.Simulation.Bots
                 // 1주차는 창고·탈출로 모두 잠겨 있다 (잠긴 칸은 전략이 건드리지 않음)
                 BotTrader.Trade(state, db);
                 BotRoles.Assign(state, db, config);
-                BotPlanner.Plan(state, db, config, strategy, botRandom);
+                if (strategy.TeacherPlan && TeacherPlanner.Available(state, db.Balance))
+                {
+                    TeacherPlanner.Recommend(state, db);
+                }
+                else
+                {
+                    BotPlanner.Plan(state, db, config, strategy, botRandom);
+                }
+
                 ChooseDiet(state, db, strategy);
 
                 runner.PrepareWeek();

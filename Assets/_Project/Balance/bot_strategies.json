@@ -759,6 +759,18 @@
         }
       ],
       "EncounterFirstChoiceWeight": 3
+    },
+    {
+      "Id": "TEACHER",
+      "Description": "선생님 추천 편성 그대로 (TeacherPlanner, 고정 시간표 기본값). 선생님이 없는 주는 MIXED와 같은 칸",
+      "TeacherPlan": true,
+      "Day": ["EDU", "EXP_DAY", "EDU", "BUILD|CRAFT|EDU", "ACT_REST_DAY", "EDU", "ACT_SURV_PURIFY_WATER|ACT_SURV_CLEAN"],
+      "Night": ["ACT_REST_NIGHT", "ACT_REST_NIGHT", "ACT_NIGHT_TALK|ACT_REST_NIGHT", "EXP_NIGHT", "CLUB|ACT_REST_NIGHT", "ACT_NIGHT_DIARY|ACT_REST_NIGHT", "BROADCAST|ACT_REST_NIGHT"],
+      "Rules": [
+        {"Note": "밤 탐험 해금 전에는 5일 낮 탐험", "When": {"FlagsNone": ["NIGHT_RUNS"]}, "Slots": ["D5"], "Use": "EXP_DAY"}
+      ],
+      "ChoiceBias": [],
+      "EncounterFirstChoiceWeight": 1
     }
   ]
 }

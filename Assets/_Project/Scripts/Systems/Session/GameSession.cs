@@ -29,6 +29,7 @@ namespace ApoGirl.Systems.Session
         private bool _useRealtimeExpeditions;
         private bool _interactiveEvents;
         private bool _forcedEvent;
+        private readonly PlanBoardMemory _board = new PlanBoardMemory();
 
         public GameSession(IDefinitionDatabase db, SaveService saves, IExpeditionRunner expeditionRunner = null, EndingGallery gallery = null)
         {
@@ -315,15 +316,159 @@ namespace ApoGirl.Systems.Session
 
         public PlanEditResult SetSlot(int slotIndex, string actionId)
         {
-            return Edit(() => PlanEditing.SetSlot(State, _db, slotIndex, actionId));
+            return PlanEdit(() => PlanEditing.SetSlot(State, _db, slotIndex, actionId));
         }
 
         public PlanEditResult ClearSlot(int slotIndex)
         {
-            return Edit(() => PlanEditing.ClearSlot(State, _db, slotIndex));
+            return PlanEdit(() => PlanEditing.ClearSlot(State, _db, slotIndex));
         }
 
-        public bool CopyLastWeek() => EditBool(() => PlanEditing.CopyLastWeek(State, _db));
+        /// <summary>칸 옮기기 (끌어 놓기): 차 있는 칸이면 서로 바꾼다.</summary>
+        public PlanEditResult MoveSlot(int from, int to)
+        {
+            return PlanEdit(() => PlanEditing.Move(State, _db, from, to));
+        }
+
+        /// <summary>잠기지 않은 칸을 모두 비운다.</summary>
+        public bool ClearPlan() => PlanEdit(() => PlanEditing.ClearAll(State, _db) ? PlanEditResult.Ok : PlanEditResult.NotPlanning) == PlanEditResult.Ok;
+
+        public bool CopyLastWeek() => PlanEdit(() => PlanEditing.CopyLastWeek(State, _db) ? PlanEditResult.Ok : PlanEditResult.NotPlanning) == PlanEditResult.Ok;
+
+        // ── 선생님 추천 · 편집 기록 (Docs/TEACHER_PLAN_PROPOSAL.md) ──
+
+        /// <summary>고정 시간표 ("D1"~"N7"=행동, 동료 동아리는 "@CLUB"). 표현 계층이 PlayerPrefs에서 넣는다. null이면 BalanceConfig 기본값.</summary>
+        public IList<string> TeacherPins { get; set; }
+
+        /// <summary>선생님이 추천해 줄 수 있는가 (합류했고 자리를 비우지 않았다).</summary>
+        public bool TeacherAvailable => HasGame && TeacherPlanner.Available(State, _db.Balance);
+
+        public bool IsTeacherSlot(int slot) => Board.Teacher[slot];
+
+        public bool IsPinnedSlot(int slot) => Board.Pinned[slot];
+
+        public TeacherNote TeacherReason(int slot) => Board.Reasons[slot];
+
+        public IReadOnlyList<TeacherNote> TeacherNotes => Board.Notes;
+
+        public bool CanUndoPlan => IsPlanning && Board.CanUndo;
+
+        public bool CanRedoPlan => IsPlanning && Board.CanRedo;
+
+        /// <summary>
+        /// 선생님 추천으로 이번 주를 채운다 (한 번의 되돌리기 단위). all이 아니면 플레이어가 넣은 칸은 둔다.
+        /// </summary>
+        public TeacherResult Recommend(bool all = false)
+        {
+            if (!IsPlanning || !TeacherAvailable)
+            {
+                return null;
+            }
+
+            var board = Board;
+            var keep = new HashSet<int>();
+            if (!all)
+            {
+                var slots = State.Plan.Slots;
+                for (var i = 0; i < slots.Count; i++)
+                {
+                    if (!slots[i].Locked && !string.IsNullOrEmpty(slots[i].ActionId) && !board.Teacher[i])
+                    {
+                        keep.Add(i);
+                    }
+                }
+            }
+
+            board.Push(State);
+            var result = TeacherPlanner.Recommend(State, _db, TeacherPins, keep);
+            board.SetTeacher(result);
+            StateChanged?.Invoke();
+            return result;
+        }
+
+        public bool UndoPlan()
+        {
+            if (!IsPlanning || !Board.Undo(State, _db))
+            {
+                return false;
+            }
+
+            StateChanged?.Invoke();
+            return true;
+        }
+
+        public bool RedoPlan()
+        {
+            if (!IsPlanning || !Board.Redo(State, _db))
+            {
+                return false;
+            }
+
+            StateChanged?.Invoke();
+            return true;
+        }
+
+        /// <summary>지금 계획 칸의 행동 ID.</summary>
+        public string[] PlanIds() => PlanEditing.Snapshot(State);
+
+        /// <summary>이번 주 흐름 예측 (피로·스트레스·수면 부채·능력치). ids를 주면 그 계획으로 (끌기 중 유령 미리 보기).</summary>
+        public WeekProjection Projection(IList<string> ids = null) => WeekForecast.Project(State, _db, ids);
+
+        /// <summary>
+        /// 놓아 보기: from 칸을 to로 옮기거나(from ≥ 0) actionId를 to에 넣으면 계획이 어떻게 되는지. 계획은 바꾸지 않는다.
+        /// 놓을 수 없으면 null.
+        /// </summary>
+        public string[] PreviewIds(int from, int to, string actionId)
+        {
+            if (!IsPlanning)
+            {
+                return null;
+            }
+
+            var before = PlanEditing.Snapshot(State);
+            var result = from >= 0 ? PlanEditing.Move(State, _db, from, to) : PlanEditing.SetSlot(State, _db, to, actionId);
+            if (result != PlanEditResult.Ok)
+            {
+                return null;
+            }
+
+            var after = PlanEditing.Snapshot(State);
+            PlanEditing.Restore(State, _db, before);
+            return after;
+        }
+
+        private PlanBoardMemory Board
+        {
+            get
+            {
+                _board.Sync(HasGame ? State.Calendar.Week : -1);
+                return _board;
+            }
+        }
+
+        /// <summary>계획 편집 하나: 되돌리기 기록을 쌓고, 바뀐 칸의 분필 자국을 지운다.</summary>
+        private PlanEditResult PlanEdit(Func<PlanEditResult> edit)
+        {
+            if (!IsPlanning)
+            {
+                return PlanEditResult.NotPlanning;
+            }
+
+            var board = Board;
+            var before = PlanEditing.Snapshot(State);
+            board.Push(State);
+            var result = edit();
+            var after = PlanEditing.Snapshot(State);
+            if (result != PlanEditResult.Ok || before.SequenceEqual(after))
+            {
+                board.Drop();
+                return result;
+            }
+
+            board.ForgetChanged(before, after);
+            StateChanged?.Invoke();
+            return result;
+        }
 
         /// <summary>M6: 합류한 동료의 역할을 바꾼다 (계획 단계에서만, 빈 문자열 = 역할 없음).</summary>
         public bool SetNpcRole(string npcId, string roleId) => EditBool(() => Core.Rules.RoleRules.Assign(State, _db, npcId, roleId));
@@ -377,7 +522,7 @@ namespace ApoGirl.Systems.Session
 
         public bool SavePreset(string name) => EditBool(() => PlanEditing.SavePreset(State, name));
 
-        public bool ApplyPreset(string name) => EditBool(() => PlanEditing.ApplyPreset(State, _db, name));
+        public bool ApplyPreset(string name) => PlanEdit(() => PlanEditing.ApplyPreset(State, _db, name) ? PlanEditResult.Ok : PlanEditResult.NotPlanning) == PlanEditResult.Ok;
 
         public bool DeletePreset(string name) => EditBool(() => PlanEditing.DeletePreset(State, name));
 
@@ -738,6 +883,7 @@ namespace ApoGirl.Systems.Session
             Ending = null;
             EndingIsNew = false;
             _executing = false;
+            _board.Clear();
             _runner = new WeekRunner(state, _db, new SeededRandom(state.Rng), _expedition)
             {
                 DeferExpeditions = _useRealtimeExpeditions,

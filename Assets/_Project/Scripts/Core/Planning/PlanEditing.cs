@@ -143,6 +143,143 @@ namespace ApoGirl.Core.Planning
             return PlanEditResult.Ok;
         }
 
+        /// <summary>
+        /// 칸 옮기기 (계획 보드 손질, Docs/TEACHER_PLAN_PROPOSAL.md 5.1): from의 행동을 to로. to가 차 있으면 두 칸을 바꾼다.
+        /// 시간대가 맞지 않으면 WrongSlot, 여러 칸 제작은 빈 자리로 옮길 때만 되고 뒤 칸이 모자라면 CraftNoRoom.
+        /// 실패하면 계획을 바꾸지 않는다.
+        /// </summary>
+        public static PlanEditResult Move(GameState state, IDefinitionDatabase db, int from, int to)
+        {
+            var check = CheckSlot(state, from);
+            if (check != PlanEditResult.Ok)
+            {
+                return check;
+            }
+
+            check = CheckSlot(state, to);
+            if (check != PlanEditResult.Ok)
+            {
+                return check;
+            }
+
+            var slots = state.Plan.Slots;
+            var a = slots[from].ActionId ?? "";
+            var b = slots[to].ActionId ?? "";
+            if (a.Length == 0 || !db.TryGetAction(a, out var moving))
+            {
+                return PlanEditResult.UnknownAction;
+            }
+
+            if (from == to)
+            {
+                return PlanEditResult.Ok;
+            }
+
+            ActionDef other = null;
+            if (b.Length > 0 && !db.TryGetAction(b, out other))
+            {
+                return PlanEditResult.UnknownAction;
+            }
+
+            if (!IsAllowedIn(moving, to) || (other != null && !IsAllowedIn(other, from)))
+            {
+                return PlanEditResult.WrongSlot;
+            }
+
+            var multi = (moving.IsCraft && moving.Craft.Work > 1) || (other != null && other.IsCraft && other.Craft.Work > 1);
+            if (multi)
+            {
+                // 여러 칸 제작은 바꾸지 않고, 뒤 칸이 비어 있는(또는 자기 "제작 중" 칸인) 자리로만 옮긴다
+                if (other != null || !moving.IsCraft || to + moving.Craft.Work > slots.Count)
+                {
+                    return PlanEditResult.CraftNoRoom;
+                }
+
+                for (var k = 1; k < moving.Craft.Work; k++)
+                {
+                    var index = to + k;
+                    var own = slots[index].CraftLocked && index > from && index < from + moving.Craft.Work;
+                    if (!own && index != from && (slots[index].Locked || !string.IsNullOrEmpty(slots[index].ActionId)))
+                    {
+                        return PlanEditResult.CraftNoRoom;
+                    }
+                }
+            }
+
+            var before = Snapshot(state);
+            slots[to].ActionId = a;
+            slots[from].ActionId = b;
+            CraftRules.Relock(state, db);
+            PlanPreparer.ApplyForcedRest(state, db);
+            if (slots[to].ActionId != a)
+            {
+                Restore(state, db, before);
+                return PlanEditResult.CraftNoRoom;
+            }
+
+            return PlanEditResult.Ok;
+        }
+
+        /// <summary>잠기지 않은 칸을 모두 비운다 (keep에 든 칸은 둔다).</summary>
+        public static bool ClearAll(GameState state, IDefinitionDatabase db, ICollection<int> keep = null)
+        {
+            if (!CanEdit(state))
+            {
+                return false;
+            }
+
+            CraftRules.ReleaseLocks(state.Plan);
+            var slots = state.Plan.Slots;
+            for (var i = 0; i < slots.Count; i++)
+            {
+                if (!slots[i].Locked && (keep == null || !keep.Contains(i)))
+                {
+                    slots[i].ActionId = "";
+                }
+            }
+
+            CraftRules.Relock(state, db);
+            PlanPreparer.ApplyForcedRest(state, db);
+            return true;
+        }
+
+        /// <summary>계획 칸의 행동 ID (편집 취소용 기록).</summary>
+        public static string[] Snapshot(GameState state)
+        {
+            var slots = state.Plan.Slots;
+            var ids = new string[slots.Count];
+            for (var i = 0; i < slots.Count; i++)
+            {
+                ids[i] = slots[i].ActionId ?? "";
+            }
+
+            return ids;
+        }
+
+        /// <summary>
+        /// 기록해 둔 행동 ID로 되돌린다 (편집 취소). 잠긴 칸은 그대로, "제작 중" 칸은 착수 칸에서 다시 잠근다.
+        /// 기록은 그 주 계획 단계에서 만든 것이라 검사 없이 넣는다.
+        /// </summary>
+        public static void Restore(GameState state, IDefinitionDatabase db, IList<string> ids)
+        {
+            CraftRules.ReleaseLocks(state.Plan);
+            var slots = state.Plan.Slots;
+            var continueId = db.Balance.CraftContinueActionId;
+            for (var i = 0; i < slots.Count; i++)
+            {
+                if (slots[i].Locked)
+                {
+                    continue;
+                }
+
+                var id = i < ids.Count ? ids[i] ?? "" : "";
+                slots[i].ActionId = id == continueId ? "" : id;
+            }
+
+            CraftRules.Relock(state, db);
+            PlanPreparer.ApplyForcedRest(state, db);
+        }
+
         /// <summary>지난주 계획을 잠기지 않은 슬롯에 복사한다. 지금 둘 수 없는 행동은 비워 둔다.</summary>
         public static bool CopyLastWeek(GameState state, IDefinitionDatabase db)
         {

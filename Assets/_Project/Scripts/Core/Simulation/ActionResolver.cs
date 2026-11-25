@@ -181,10 +181,16 @@ namespace ApoGirl.Core.Simulation
         /// <summary>성장량 배율 = 결과 × 선생님 지도 × (1 + 연속 행동) × (1 − 수면 부채 효율 페널티).</summary>
         public static float GainMultiplier(GameState state, ActionDef action, CheckResult result, float routineBonus, BalanceConfig balance)
         {
+            return GainMultiplierAt(state, action, result, routineBonus, balance, state.Player.SleepDebt);
+        }
+
+        /// <summary>수면 부채를 따로 준 성장량 배율 (계획 흐름 예측).</summary>
+        public static float GainMultiplierAt(GameState state, ActionDef action, CheckResult result, float routineBonus, BalanceConfig balance, int sleepDebt)
+        {
             return ResultMultiplier(result, balance)
                    * TeachingMultiplier(state, action, balance)
                    * (1f + routineBonus)
-                   * (1f - StatRules.StageValue(balance.SleepDebtEfficiencyPenalty, state.Player.SleepDebt));
+                   * (1f - StatRules.StageValue(balance.SleepDebtEfficiencyPenalty, sleepDebt));
         }
 
         /// <summary>지금 이 행동을 하면 받을 연속 행동 보너스 (상태를 바꾸지 않음).</summary>
@@ -227,7 +233,7 @@ namespace ApoGirl.Core.Simulation
             return RoutineBonus(player, player.RoutineStreak, balance);
         }
 
-        private static float RoutineBonus(PlayerState player, int streak, BalanceConfig balance)
+        internal static float RoutineBonus(PlayerState player, int streak, BalanceConfig balance)
         {
             var isJ = (player.Profile.PersonalityType ?? "").IndexOf('J') >= 0;
             var max = isJ ? balance.RoutineBonusMaxForJ : balance.RoutineBonusMax;

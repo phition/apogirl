@@ -943,6 +943,81 @@ namespace ApoGirl.Core.Definitions
         /// <summary>"다음 할 일" 줄 수 (base_advice.json에서 우선순위대로, BaseAdvice.Pick).</summary>
         public int BaseAdviceLines = 2;
 
+        // ── 선생님 추천 편성 (Docs/TEACHER_PLAN_PROPOSAL.md, TeacherPlanner) ──
+
+        /// <summary>
+        /// 고정 시간표 기본값 "칸=행동" (칸은 D1~D7 낮·N1~N7 밤, 1 = 월요일). "@CLUB" = 같이 할 사람이 좋아하는 동아리.
+        /// 플레이어가 압정으로 바꾼 시간표는 플레이어 설정에 따로 둔다. 이 판에서 열리지 않은 행동은 그 주만 건너뛴다.
+        /// </summary>
+        public string[] TeacherDefaultPins = { "N3=@CLUB", "N6=ACT_NIGHT_DIARY" };
+
+        /// <summary>한 주에 반드시 챙기는 휴식 칸 수 (낮·밤 휴식, 잠긴 휴식 포함).</summary>
+        public int TeacherMinRests = 3;
+
+        /// <summary>한 주 탐험 하한·상한 (이야기 지역·부족 탐험을 합쳐서).</summary>
+        public int TeacherMinExpeditions = 1;
+        public int TeacherMaxExpeditions = 3;
+
+        /// <summary>고정 칸과 별도로 넣는 일상 칸 수.</summary>
+        public int TeacherMinDaily = 1;
+
+        /// <summary>거점 개발·수리 칸 상한 (급한 순, base_advice.json 줄 + TeacherDevelopFallback).</summary>
+        public int TeacherMaxDevelop = 3;
+
+        /// <summary>같은 수업을 한 주에 넣는 상한.</summary>
+        public int TeacherMaxSameClass = 2;
+
+        /// <summary>식량·물이 이 날 안에 바닥나면 부족 탐험을 두 번 넣는다 (그 밖에는 한 번).</summary>
+        public int TeacherCriticalShortDay = 3;
+
+        /// <summary>다듬기: 흐름 예측에서 이 값 이상이 되는 칸이 있으면 앞의 무거운 칸을 쉬게 바꾼다 (최대 TeacherTidyPasses번).</summary>
+        public int TeacherFatigueLimit = 80;
+        public int TeacherStressLimit = 70;
+        public int TeacherSleepDebtLimit = 3;
+        public int TeacherTidyPasses = 6;
+
+        /// <summary>다듬기: 주 끝 예상 피로·스트레스가 이 값을 넘으면 다음 주로 넘기지 않게 더 쉰다.</summary>
+        public int TeacherEndFatigue = 40;
+        public int TeacherEndStress = 40;
+
+        /// <summary>일상 고르기: 스트레스가 이 값 이상이면 옥상, 호감이 이 값 미만인 동료가 있으면 밤 이야기.</summary>
+        public int TeacherRooftopStress = 50;
+        public int TeacherTalkAffinity = 30;
+
+        /// <summary>일상 후보 (위에서부터, 열려 있고 칸이 있으면). 선생님이 아프면 TeacherCareActionId가 맨 앞.</summary>
+        public string[] TeacherDailyFallback = { "ACT_NIGHT_TALK", "ACT_DAILY_TUTOR_DOHYEON", "ACT_DAILY_ROOFTOP" };
+
+        /// <summary>
+        /// 거점 개발 후보 (다음 할 일 줄 다음). 제작은 봇과 같은 판단(BotCraft.Wanted)일 때만,
+        /// 청소는 청결이 TeacherCleanBelow 미만일 때만, 텃밭은 식량이 다음 주를 못 버틸 때만.
+        /// </summary>
+        public string[] TeacherDevelopFallback =
+        {
+            "ACT_CRAFT_WORKBENCH", "ACT_SURV_RAIN_BARREL", "ACT_CRAFT_SAND_FILTER", "ACT_CRAFT_BOIL_STATION", "ACT_SURV_COVERS",
+            "ACT_CRAFT_WORKBENCH_2", "ACT_CRAFT_AUTO_PURIFIER", "ACT_SURV_CLEAN", "ACT_SURV_GARDEN",
+        };
+
+        public int TeacherCleanBelow = 50;
+
+        /// <summary>감염 수치가 이 이상이면 처치를 거점 일보다 먼저 넣는다 (봇 규칙과 같은 문턱).</summary>
+        public int TeacherInfectionTreat = 25;
+
+        /// <summary>정수: 빗물 TeacherPurifyBatch마다 한 번, 한 주 최대 TeacherMaxPurify번 (물이 다음 주 두 배 넘게 있으면 한 번).</summary>
+        public string TeacherPurifyActionId = "ACT_SURV_PURIFY_WATER";
+        public int TeacherPurifyBatch = 12;
+        public int TeacherMaxPurify = 2;
+
+        /// <summary>
+        /// 수업 점수 = 기대 성장 ÷ (1 + 스트레스 + 피로/5) + 보탬. 선생님이 직접 가르치면, 가장 낮은 능력치를 올리면(고르게 — 무난함),
+        /// 좋아하는 과목이면 더한다.
+        /// </summary>
+        public float TeacherClassTeachBonus = 0.5f;
+        public float TeacherClassLowStatBonus = 1f;
+        public float TeacherClassFavoriteBonus = 0.3f;
+
+        /// <summary>선생님 메모 줄 수.</summary>
+        public int TeacherNoteLines = 5;
+
         // ── M7-2 후반 압박 (M7-f, 문서 9.0 "자원 압박이 서서히 상승") ──
 
         /// <summary>겨울(40~52주) 식량 소모 배율. 무리 하루 소모를 소수점까지 누적해 나눠 쓴다 (2 × 1.3 → 주 18).</summary>
