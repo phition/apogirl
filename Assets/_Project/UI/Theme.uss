@@ -1252,7 +1252,7 @@ Button.selected { border-color: var(--accent); background-color: var(--accent-so
 .drawer-body .unity-scroller--vertical .unity-base-slider__tracker { width: 8px; left: 0; border-width: 0; border-radius: 4px; background-color: rgba(185, 163, 122, 0.08); }
 .drawer-body .unity-scroller--vertical .unity-base-slider__dragger { width: 8px; left: 0; border-width: 0; border-radius: 4px; background-color: rgba(185, 163, 122, 0.45); }
 .drawer-body .unity-scroller--vertical .unity-base-slider__dragger:hover { background-color: var(--accent); }
-.base-bar .unity-progress-bar__title-container { align-items: flex-start; justify-content: center; padding-left: 8px; }
+.base-bar .unity-progress-bar__title-container { justify-content: flex-start; align-items: center; padding-left: 8px; }
 .base-bar .unity-progress-bar__title { -unity-text-align: middle-left; font-size: 14px; color: var(--text); }
 .teacher-box { transition-property: right, bottom; transition-duration: 0.25s; }
 .right-drawer-open .teacher-box { right: 458px; }
