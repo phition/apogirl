@@ -191,6 +191,7 @@
     "dish.DISH_SOUP": "된장국",
     "dish.DISH_SET_MEAL": "따뜻한 정식",
     "res.RawWater": "빗물(정수 필요)",
+    "hud.raw_water": "빗물",
     "prof.Science": "과학·화학",
     "prof.Music": "음악",
     "status.injured": "부상: 의약품으로 치료하기 전까지 체력이 회복되지 않는다.",

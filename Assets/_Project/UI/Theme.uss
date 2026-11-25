@@ -94,7 +94,7 @@ Button.selected { border-color: var(--accent); background-color: var(--accent-so
 }
 .calendar { -unity-font-style: bold; font-size: 20px; min-width: 300px; }
 .resources { flex-direction: row; flex-grow: 1; flex-shrink: 1; align-items: center; overflow: hidden; }
-.resource { margin-right: 16px; }
+.resource { margin-right: 12px; }
 .blackout { color: var(--warn); -unity-font-style: bold; }
 .hud-button { min-width: 84px; height: 34px; background-color: rgba(51, 55, 60, 0.9); }
 .hud-button.selected { background-color: var(--accent-soft); border-color: var(--accent); }

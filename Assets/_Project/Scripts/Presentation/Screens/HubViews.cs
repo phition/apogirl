@@ -36,7 +36,7 @@ namespace ApoGirl.Presentation.Screens
         /// <summary>1~3주차엔 식량·물만 (문서 5.3 점진적 노출). UI_RESOURCES 이후 전부.</summary>
         private static bool Visible(GameState state, ResourceType type)
         {
-            // 빗물(정수 필요)은 받아 둔 게 있을 때만 식수 옆에 따로 보인다
+            // 빗물은 받아 둔 게 있을 때만 식수 옆에 따로 보인다
             if (type == ResourceType.RawWater)
             {
                 return state.Base.GetResource(ResourceType.RawWater) > 0;
@@ -104,7 +104,7 @@ namespace ApoGirl.Presentation.Screens
             {
                 pair.Value.text = pair.Key == ResourceType.Power
                     ? Loc.F("hub.power", PowerRules.Free(state, _session.Definitions.Balance), PowerRules.Capacity(state))   // 여유/용량 (전력 = 유지력)
-                    : UiText.Resource(pair.Key) + " " + state.Base.GetResource(pair.Key);
+                    : (pair.Key == ResourceType.RawWater ? Loc.T("hud.raw_water") : UiText.Resource(pair.Key)) + " " + state.Base.GetResource(pair.Key);   // 상단 줄은 짧게 "빗물" (다른 화면은 "빗물(정수 필요)")
                 pair.Value.EnableInClassList("hidden", !Visible(state, pair.Key));
             }
 
