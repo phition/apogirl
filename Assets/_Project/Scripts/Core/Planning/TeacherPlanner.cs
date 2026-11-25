@@ -316,7 +316,7 @@ namespace ApoGirl.Core.Planning
                         // 가 본 적 없는 곳부터 (같은 곳을 두 번 가면 상자가 빈다)
                         var planned = PlannedLocations();
                         var placedOne = places.OrderBy(l => planned.Contains(l) ? 1 : 0)
-                            .Any(l => PlaceExpedition(l, forecast.ShortDay, key, null, "res:" + resource, "day:" + Math.Max(1, forecast.ShortDay)));
+                            .Any(l => PlaceRun(l, forecast.ShortDay, key, null, resource, new[] { "res:" + resource, "day:" + Math.Max(1, forecast.ShortDay) }));
                         if (!placedOne)
                         {
                             break;
@@ -382,17 +382,29 @@ namespace ApoGirl.Core.Planning
             }
 
             /// <summary>지역 탐험 한 번: 낮 탐험을 먼저, 주 앞쪽부터, 다음 칸(강제 휴식)이 비어 있고 다른 탐험과 하루 띄운 자리.</summary>
-            private bool PlaceExpedition(string locationId, int beforeDay, string key, string onlyAction, params string[] args)
+            private bool PlaceExpedition(string locationId, int beforeDay, string key, string onlyAction, params string[] args) =>
+                PlaceRun(locationId, beforeDay, key, onlyAction, null, args);
+
+            /// <param name="resource">부족 탐험이면 그 자원: 낮·밤 중 그 자원을 더 많이 주는 쪽을 먼저 고르고, 낮·밤을 섞어도 된다
+            /// (식량이 모자란 주는 고강도 주간 경고를 감수한다. 수면 부채가 있으면 밤은 넣지 않는다).</param>
+            private bool PlaceRun(string locationId, int beforeDay, string key, string onlyAction, ResourceType? resource, string[] args)
             {
                 var runs = _db.Actions.Where(a => a.IsExpedition && a.LocationId == locationId && PlanEditing.IsUnlocked(_state, _db, a)
                                                   && (string.IsNullOrEmpty(onlyAction) || a.Id == onlyAction))
-                    .OrderBy(a => a.ExpeditionTime == ExpeditionTime.Day ? 0 : 1).ToList();
+                    .OrderBy(a => resource.HasValue ? -RunYield(a, resource.Value) : 0f)
+                    .ThenBy(a => a.ExpeditionTime == ExpeditionTime.Day ? 0 : 1).ToList();
                 var plannedDay = PlannedExpeditions().Any(i => CalendarRules.PhaseOf(i) == DayPhase.Day);
                 var plannedNight = PlannedExpeditions().Any(i => CalendarRules.PhaseOf(i) == DayPhase.Night);
                 foreach (var run in runs)
                 {
-                    // 낮·밤 탐험을 한 주에 섞지 않는다 (강행군 경고)
-                    if ((run.ExpeditionTime == ExpeditionTime.Day && plannedNight) || (run.ExpeditionTime == ExpeditionTime.Night && plannedDay))
+                    // 보통은 낮·밤 탐험을 한 주에 섞지 않는다 (고강도 주간 경고). 부족 탐험만 예외.
+                    var mixes = (run.ExpeditionTime == ExpeditionTime.Day && plannedNight) || (run.ExpeditionTime == ExpeditionTime.Night && plannedDay);
+                    if (mixes && !resource.HasValue)
+                    {
+                        continue;
+                    }
+
+                    if (resource.HasValue && run.ExpeditionTime == ExpeditionTime.Night && _state.Player.SleepDebt >= 2)
                     {
                         continue;
                     }
@@ -858,6 +870,18 @@ namespace ApoGirl.Core.Planning
 
                 var yield = model.Day.Resources.Count > 0 ? model.Day : model.Night;
                 return yield.Resources.Where(r => r.Resource == resource).Sum(r => (r.Min + r.Max) / 2f) * Remaining(locationId, model);
+            }
+
+            /// <summary>그 탐험(낮 또는 밤)의 자원 기대량.</summary>
+            private float RunYield(ActionDef run, ResourceType resource)
+            {
+                if (!_db.TryGetExpeditionModel(run.LocationId, out var model))
+                {
+                    return 0f;
+                }
+
+                var yield = run.ExpeditionTime == ExpeditionTime.Night ? model.Night : model.Day;
+                return yield.Resources.Where(r => r.Resource == resource).Sum(r => (r.Min + r.Max) / 2f) * Remaining(run.LocationId, model);
             }
 
             /// <summary>상자가 고갈되는 지역(교실동)은 남은 상자 비율만큼만 기대한다 (HeadlessExpeditionRunner.ApplyDepletion과 같은 셈).</summary>

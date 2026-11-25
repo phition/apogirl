@@ -150,7 +150,8 @@ namespace ApoGirl.Tests.EditMode
             Assert.GreaterOrEqual(daily, balance.TeacherMinDaily, $"{where}: 일상");
             var dayRuns = Enumerable.Range(0, slots.Count).Any(i => IsExpedition(db, slots[i].ActionId) && CalendarRules.PhaseOf(i) == DayPhase.Day);
             var nightRuns = Enumerable.Range(0, slots.Count).Any(i => IsExpedition(db, slots[i].ActionId) && CalendarRules.PhaseOf(i) == DayPhase.Night);
-            Assert.IsFalse(dayRuns && nightRuns, $"{where}: 낮·밤 탐험을 섞지 않는다");
+            var shortage = result.Reasons.Any(r => r != null && (r.Key == "teacher.why.short" || r.Key == "teacher.why.tight"));
+            Assert.IsFalse(dayRuns && nightRuns && !shortage, $"{where}: 낮·밤 탐험은 식량·물이 모자란 주에만 섞는다");
             Assert.LessOrEqual(result.Notes.Count, balance.TeacherNoteLines);
         }
 
@@ -225,6 +226,8 @@ namespace ApoGirl.Tests.EditMode
         {
             var db = ContentDb();
             var plenty = Week(db, 20);
+            plenty.Base.SetResource(ResourceType.Food, 200);
+            plenty.Base.SetResource(ResourceType.Water, 200);
             var calm = TeacherPlanner.Recommend(plenty, db);
             var calmRuns = plenty.Plan.Slots.Count(s => IsExpedition(db, s.ActionId));
 
