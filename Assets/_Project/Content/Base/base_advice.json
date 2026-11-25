@@ -1,0 +1,61 @@
+{
+  "Advice": [
+    {
+      "Id": "ADV_GENERATOR", "Priority": 90, "ActionId": "ACT_SURV_REPAIR_GENERATOR",
+      "Condition": { "FlagsAll": [ "GENERATOR_BROKEN" ] }
+    },
+    {
+      "Id": "ADV_WATER_SHORT_RAW", "Priority": 88, "ActionId": "ACT_SURV_PURIFY_WATER",
+      "Facts": [ { "Fact": "WaterShortDay", "Op": "GreaterOrEqual", "Value": 1 }, { "Fact": "RawWater", "Op": "GreaterOrEqual", "Value": 1 } ]
+    },
+    {
+      "Id": "ADV_FOOD_SHORT", "Priority": 86, "Target": "board",
+      "Facts": [ { "Fact": "FoodShortDay", "Op": "GreaterOrEqual", "Value": 1 } ]
+    },
+    {
+      "Id": "ADV_WATER_SHORT", "Priority": 85, "Target": "board",
+      "Facts": [ { "Fact": "WaterShortDay", "Op": "GreaterOrEqual", "Value": 1 } ]
+    },
+    {
+      "Id": "ADV_BARRICADE", "Priority": 78, "ActionId": "ACT_SURV_BARRICADE",
+      "Facts": [ { "Fact": "ThreatGap", "Op": "GreaterOrEqual", "Value": 20 }, { "Fact": "RaidLevel", "Op": "GreaterOrEqual", "Value": 2 } ]
+    },
+    {
+      "Id": "ADV_NIGHT_WATCH", "Priority": 76, "ActionId": "ACT_NIGHT_WATCH",
+      "Facts": [ { "Fact": "RepelRisk", "Op": "GreaterOrEqual", "Value": 3 }, { "Fact": "RaidLevel", "Op": "GreaterOrEqual", "Value": 2 } ]
+    },
+    {
+      "Id": "ADV_TRAP", "Priority": 72, "ActionId": "ACT_SURV_TRAP",
+      "Condition": { "Checks": [ { "Kind": "Traps", "Op": "Equal", "Value": 0 } ] },
+      "Facts": [ { "Fact": "RaidLevel", "Op": "GreaterOrEqual", "Value": 2 } ]
+    },
+    {
+      "Id": "ADV_SCARECROW", "Priority": 70, "ActionId": "ACT_CRAFT_SCARECROW",
+      "Facts": [ { "Fact": "ScarecrowDown", "Op": "Equal", "Value": 1 } ]
+    },
+    {
+      "Id": "ADV_FOOD_TIGHT", "Priority": 55, "Target": "board",
+      "Facts": [ { "Fact": "FoodShortDay", "Op": "Equal", "Value": 0 }, { "Fact": "FoodTight", "Op": "Equal", "Value": 1 } ]
+    },
+    {
+      "Id": "ADV_SPOIL", "Priority": 50,
+      "Facts": [ { "Fact": "FoodSpoil", "Op": "GreaterOrEqual", "Value": 1 } ]
+    },
+    {
+      "Id": "ADV_IDLE", "Priority": 45, "Target": "roles",
+      "Facts": [ { "Fact": "IdleCompanions", "Op": "GreaterOrEqual", "Value": 1 }, { "Fact": "FreeRoleSlots", "Op": "GreaterOrEqual", "Value": 1 } ]
+    },
+    {
+      "Id": "ADV_POWER_UPGRADE", "Priority": 40, "ActionId": "ACT_SURV_UPGRADE_POWER",
+      "Facts": [ { "Fact": "CanUpgradePower", "Op": "Equal", "Value": 1 } ]
+    },
+    {
+      "Id": "ADV_RAW_WATER", "Priority": 35, "ActionId": "ACT_SURV_PURIFY_WATER",
+      "Facts": [ { "Fact": "RawWater", "Op": "GreaterOrEqual", "Value": 6 }, { "Fact": "WaterShortDay", "Op": "Equal", "Value": 0 } ]
+    },
+    {
+      "Id": "ADV_ALARM", "Priority": 30, "ActionId": "ACT_SURV_ALARM",
+      "Facts": [ { "Fact": "HasAlarm", "Op": "Equal", "Value": 0 }, { "Fact": "RaidLevel", "Op": "GreaterOrEqual", "Value": 1 } ]
+    }
+  ]
+}

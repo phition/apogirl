@@ -97,6 +97,8 @@ namespace ApoGirl.Presentation.Screens
                 _host.Add(band);
             }
 
+            AdviceBand(state, showSafety ? raid : null, food, water);
+
             if (showSafety)
             {
                 Safety(state, raid);
@@ -120,6 +122,76 @@ namespace ApoGirl.Presentation.Screens
             }
 
             KoreanFont.ApplyDeep(_host);
+        }
+
+        // ── 다음 할 일 (P4) ──
+
+        /// <summary>"다음 할 일" 줄에서 계획 보드를 열 때 (행동 없이 Target "board").</summary>
+        public Action BoardRequested { get; set; }
+
+        /// <summary>
+        /// 알림 아래 선생님 한마디 한두 줄 (base_advice.json, BaseAdvice.Pick). 계획 중에만 누를 수 있고,
+        /// 누르면 그 행동을 계획 보드에서 고르거나(ActionId) 역할 칸·계획 보드로 간다(Target).
+        /// </summary>
+        private void AdviceBand(GameState state, RaidForecast raid, SupplyForecast food, SupplyForecast water)
+        {
+            var db = _session.Definitions;
+            var picks = BaseAdvice.Pick(state, db, raid, food, water, db.Balance.BaseAdviceLines);
+            if (picks.Count == 0)
+            {
+                return;
+            }
+
+            var band = new VisualElement();
+            band.AddToClassList("base-advice");
+            if (state.Teacher.Alive)
+            {
+                var face = PeopleUi.Badge(GiveRules.TeacherId, 30f);
+                face.AddToClassList("base-advice-face");
+                band.Add(face);
+            }
+
+            var lines = new VisualElement();
+            lines.AddToClassList("base-advice-lines");
+            band.Add(lines);
+            var planning = _session.IsPlanning;
+            foreach (var advice in picks)
+            {
+                var text = Loc.T("advice." + advice.Id);
+                Action go = null;
+                string hint = null;
+                if (planning && !string.IsNullOrEmpty(advice.ActionId))
+                {
+                    var actionId = advice.ActionId;
+                    go = () => ActionPicked?.Invoke(actionId);
+                    hint = Loc.T("base.advice.hint") + " — " + Loc.Action(actionId);
+                }
+                else if (advice.Target == "roles")
+                {
+                    go = ScrollToRoles;
+                    hint = Loc.T("base.advice.hint_roles");
+                }
+                else if (planning && advice.Target == "board")
+                {
+                    go = () => BoardRequested?.Invoke();
+                    hint = Loc.T("base.advice.hint_board");
+                }
+
+                if (go == null)
+                {
+                    var label = new Label(text);
+                    label.AddToClassList("base-advice-line");
+                    lines.Add(label);
+                    continue;
+                }
+
+                var button = new Button(go) { text = text, tooltip = hint };
+                button.AddToClassList("base-advice-line");
+                button.AddToClassList("clickable");
+                lines.Add(button);
+            }
+
+            _host.Add(band);
         }
 
         // ── 역할 판 (P3) ──

@@ -940,6 +940,9 @@ namespace ApoGirl.Core.Definitions
         public float BaseBoardRepelSafe = 0.8f;
         public float BaseBoardRepelRisky = 0.5f;
 
+        /// <summary>"다음 할 일" 줄 수 (base_advice.json에서 우선순위대로, BaseAdvice.Pick).</summary>
+        public int BaseAdviceLines = 2;
+
         // ── M7-2 후반 압박 (M7-f, 문서 9.0 "자원 압박이 서서히 상승") ──
 
         /// <summary>겨울(40~52주) 식량 소모 배율. 무리 하루 소모를 소수점까지 누적해 나눠 쓴다 (2 × 1.3 → 주 18).</summary>

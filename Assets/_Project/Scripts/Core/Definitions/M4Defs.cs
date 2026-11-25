@@ -283,6 +283,9 @@ namespace ApoGirl.Core.Definitions
 
         /// <summary>2~4막 보강: 외부 세력.</summary>
         public List<FactionDef> Factions = new List<FactionDef>();
+
+        /// <summary>거점 상황판 "다음 할 일" 줄 (BASE_TAB_PROPOSAL P4).</summary>
+        public List<AdviceDef> Advice = new List<AdviceDef>();
     }
 
     /// <summary>회차 시작 보너스 (문서 8.2). 이름·설명은 UI 키 "bonus.{Id}.name/desc".</summary>

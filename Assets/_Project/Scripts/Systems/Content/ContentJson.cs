@@ -33,6 +33,9 @@ namespace ApoGirl.Systems.Content
         // ── 2~4막 보강 ──
         public List<FactionDef> Factions = new List<FactionDef>();
 
+        // ── 거점 상황판 ──
+        public List<AdviceDef> Advice = new List<AdviceDef>();
+
         /// <summary>여러 파일 중 하나에만 둔다 (마지막 것이 이긴다).</summary>
         public PrologueDef Prologue;
     }
@@ -92,6 +95,7 @@ namespace ApoGirl.Systems.Content
                 merged.Roles.AddRange(content.Roles);
                 merged.StartBonuses.AddRange(content.StartBonuses);
                 merged.Factions.AddRange(content.Factions);
+                merged.Advice.AddRange(content.Advice);
                 if (content.Prologue != null)
                 {
                     merged.Prologue = content.Prologue;

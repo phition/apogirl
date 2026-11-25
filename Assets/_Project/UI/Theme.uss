@@ -1257,3 +1257,9 @@ Button.selected { border-color: var(--accent); background-color: var(--accent-so
 .teacher-box { transition-property: right, bottom; transition-duration: 0.25s; }
 .right-drawer-open .teacher-box { right: 458px; }
 .base-repel-parts { font-size: 13px; }
+/* 거점 상황판 다음 할 일 (BASE_TAB_PROPOSAL P4): 알림 아래 선생님 한마디, 누르면 계획 보드·역할 칸 */
+.base-advice { flex-direction: row; align-items: flex-start; margin: 0 0 8px 0; padding: 6px 8px; border-radius: 6px; border-left-width: 3px; border-color: var(--accent); background-color: rgba(185, 163, 122, 0.1); }
+.base-advice-face { margin: 2px 8px 0 0; flex-shrink: 0; }
+.base-advice-lines { flex-grow: 1; flex-shrink: 1; }
+.base-advice-line { font-size: 15px; color: var(--text); white-space: normal; -unity-text-align: upper-left; margin: 2px 0; padding: 2px 4px; border-width: 0; border-radius: 4px; background-color: transparent; }
+Button.base-advice-line:hover { background-color: rgba(185, 163, 122, 0.18); color: var(--accent); }

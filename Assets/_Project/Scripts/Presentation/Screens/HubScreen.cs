@@ -114,6 +114,11 @@ namespace ApoGirl.Presentation.Screens
                 _layers.SetBoard(true);
                 ShowToast(Loc.T("plan.pick_slot"));
             };
+            _baseBoard.BoardRequested = () =>
+            {
+                _layers.CloseBase();
+                _layers.SetBoard(true);
+            };
             _dock = new DockView(_root, _session, () => _layers.ToggleBoard());
             _miniVitals = new MiniVitalsView(_root, _session, () => _layers.ToggleRecord());
             _standing = new StandingView(_root.Q("standing"), () => _session.State, () => _session.Definitions.Balance);
