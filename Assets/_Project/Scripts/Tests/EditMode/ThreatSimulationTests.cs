@@ -155,6 +155,45 @@ namespace ApoGirl.Tests.EditMode
         }
 
         [Test]
+        public void Bite_HoldsDuringHurt_ThenClosesIn_AndInvulnerableIsNotBitten()
+        {
+            var zombie = _sim.AddZombie(_walker, Corridor, 12f);
+            zombie.Facing = 1;
+            zombie.State = ZombieState.Chase;
+            zombie.Awareness = 1f;
+            var player = Player(Corridor, 15f);
+
+            // 손이 닿는 거리에서 한 번 문다
+            ThreatEvents bite = null;
+            for (var i = 0; i < 100 && bite == null; i++)
+            {
+                var events = _sim.Step(0.02f, player, _neutral);
+                if (events.HitBy != null) bite = events;
+            }
+
+            Assert.IsNotNull(bite, "따라잡아 문다");
+            Assert.AreSame(zombie, bite.HitBy);
+            Assert.LessOrEqual(15f - zombie.X, _walker.AttackRange + 0.01f, "손이 닿는 거리");
+            Assert.Greater(15f - zombie.X, 0.3f, "겹치지 않고 닿는 거리에서 문다");
+
+            // 다침 동작 동안은 멈춰 있다
+            var heldAt = zombie.X;
+            var holdSteps = (int)(_balance.HurtReactSeconds / 0.02f) - 1;
+            for (var i = 0; i < holdSteps; i++) _sim.Step(0.02f, player, _neutral);
+            Assert.AreEqual(heldAt, zombie.X, 1e-4f, "움찔하는 동안 멈춤");
+
+            // 그 뒤에는 더 다가오지만, 무적이면 물지 않는다
+            player.Invulnerable = true;
+            var damage = 0;
+            for (var i = 0; i < 100; i++) damage += _sim.Step(0.02f, player, _neutral).Damage;
+            Assert.Greater(zombie.X, heldAt, "다시 다가온다");
+            Assert.AreEqual(0, damage, "무적 중엔 물지 않는다");
+
+            player.Invulnerable = false;
+            Assert.Greater(_sim.Step(0.02f, player, _neutral).Damage, 0, "무적이 끝나면 다시 문다");
+        }
+
+        [Test]
         public void BehindOrCrouchedOutOfRange_NotSeen()
         {
             var zombie = _sim.AddZombie(_walker, Corridor, 10f);

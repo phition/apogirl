@@ -132,6 +132,9 @@ namespace ApoGirl.Exploration.Model
 
         /// <summary>좀비 눈에 띄는 정도 (어둠 0.6, 손전등 1.5 등). 시야 거리에 곱한다.</summary>
         public float Visibility = 1f;
+
+        /// <summary>물린 뒤 무적 (다침 동작 + 무적 시간). 좀비는 다가오지만 물지 않는다.</summary>
+        public bool Invulnerable;
     }
 
     public enum ZombieState
@@ -164,6 +167,10 @@ namespace ApoGirl.Exploration.Model
         public float Timer;
         public float StunTimer;
         public float HitTimer;
+
+        /// <summary>물고 나서 멈춰 있는 남은 시간 (주인공 다침 동작 동안, 추격 중에만). 끝나면 다시 다가온다.</summary>
+        public float HoldTimer;
+
         public int Facing = 1;
         public int CrowdId = -1;
         public int HomeArea;
@@ -220,6 +227,9 @@ namespace ApoGirl.Exploration.Model
 
         /// <summary>적대적 생존자에게 붙잡힘 (피해 대신 런이 끝난다, 처리는 호출 측).</summary>
         public ZombieUnit CaughtBy;
+
+        /// <summary>이번 틱에 주인공을 문 좀비 (한 틱에 한 마리만 문다).</summary>
+        public ZombieUnit HitBy;
 
         public readonly List<CrowdState> WokenCrowds = new List<CrowdState>();
     }
@@ -668,6 +678,16 @@ namespace ApoGirl.Exploration.Model
                 zombie.HitTimer -= dt;
             }
 
+            // 물고 난 뒤: 주인공이 움찔하는 동안 그 자리에 멈춘다 (맞아 기절하면 기절이 먼저)
+            if (zombie.HoldTimer > 0f)
+            {
+                zombie.HoldTimer -= dt;
+                if (zombie.State == ZombieState.Chase)
+                {
+                    return;
+                }
+            }
+
             if (zombie.State == ZombieState.Stunned)
             {
                 zombie.StunTimer -= dt;
@@ -807,10 +827,14 @@ namespace ApoGirl.Exploration.Model
                 return;
             }
 
-            if (sees && Math.Abs(player.X - zombie.X) <= zombie.Def.AttackRange && zombie.HitTimer <= 0f)
+            // 손이 닿으면 문다: 한 틱에 한 마리, 무적 중엔 물지 않고 다가오기만 한다
+            if (sees && Math.Abs(player.X - zombie.X) <= zombie.Def.AttackRange && zombie.HitTimer <= 0f
+                && !player.Invulnerable && events.HitBy == null)
             {
                 events.Damage += zombie.Def.Damage;
+                events.HitBy = zombie;
                 zombie.HitTimer = zombie.Def.HitCooldown;
+                zombie.HoldTimer = _balance.HurtReactSeconds;
                 return;
             }
 

@@ -1114,6 +1114,14 @@ namespace ApoGirl.Core.Definitions
         public float ShovePush = 1.5f;
         public float ShoveCooldown = 1.5f;
 
+        /// <summary>
+        /// 좀비 손이 닿아 물린 순간: 다침 동작 시간(초) — 그동안 문 좀비는 그 자리에 멈췄다가 다시 다가온다.
+        /// 그 뒤 무적 시간(초) 동안 주인공이 깜빡이며 더 물리지 않고 다침 동작도 없다. 깜빡임은 초당 횟수.
+        /// </summary>
+        public float HurtReactSeconds = 0.4f;
+        public float HurtInvulnSeconds = 3f;
+        public float HurtBlinkPerSecond = 8f;
+
         /// <summary>쓰러졌을 때 허브로 돌아가는 HP (중상, 사망 아님).</summary>
         public int DownRemainingHp = 15;
 

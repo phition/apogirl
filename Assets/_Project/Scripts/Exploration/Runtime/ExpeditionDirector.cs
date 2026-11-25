@@ -145,8 +145,7 @@ namespace ApoGirl.Exploration.Runtime
         /// <summary>맞거나 밀린 좀비의 반응 동작 길이 (초).</summary>
         private const float ReactAnimSeconds = 0.6f;
 
-        /// <summary>다친 순간 움찔하는 동작 길이(초), 쓰러지는 좀비를 보여 주는 시간(초).</summary>
-        private const float HurtAnimSeconds = 0.4f;
+        /// <summary>쓰러지는 좀비를 보여 주는 시간(초). 다친 순간 움찔하는 길이는 BalanceConfig.HurtReactSeconds.</summary>
         private const float DownAnimSeconds = 1f;
 
         /// <summary>픽셀 아트 동작 빠르기 (초당 프레임). 코드 그림은 예전 빠르기를 쓴다.</summary>
@@ -168,6 +167,9 @@ namespace ApoGirl.Exploration.Runtime
         /// <summary>무기를 뺀 차림 그림 접두어 (수색·숨기·졸기·문 열기는 맨손 그림만 있다).</summary>
         private string _lookBarePrefix = "player_";
         private float _hurtAnim;
+
+        /// <summary>물린 뒤 남은 무적 시간 (다침 동작 + 무적). 다침 동작이 끝나면 깜빡인다.</summary>
+        private float _invulnTimer;
         private string _weaponToken = "none";
 
         /// <summary>휘두른 뒤 무기가 닿을 때까지 남은 시간 (음수 = 기다리는 타격 없음)과 그 방향.</summary>
@@ -290,7 +292,7 @@ namespace ApoGirl.Exploration.Runtime
 
         public ThreatSimulation Threat => _threat;
 
-        public PlayerSnapshot Snapshot => new PlayerSnapshot { AreaId = AreaId(CurrentArea), X = X, Crouching = _crouching, Hidden = Hidden, Visibility = Visibility };
+        public PlayerSnapshot Snapshot => new PlayerSnapshot { AreaId = AreaId(CurrentArea), X = X, Crouching = _crouching, Hidden = Hidden, Visibility = Visibility, Invulnerable = _invulnTimer > 0f };
 
         public int AreaId(ExplorationArea area) => _areasById.IndexOf(area);
 
@@ -2572,6 +2574,18 @@ namespace ApoGirl.Exploration.Runtime
             }
         }
 
+        /// <summary>물린 뒤 무적 동안 (다침 동작이 끝난 다음부터) 주인공을 깜빡인다.</summary>
+        private Color Blink(Color color)
+        {
+            if (_balance == null || _invulnTimer <= 0f || _invulnTimer > _balance.HurtInvulnSeconds)
+            {
+                return color;
+            }
+
+            var on = Mathf.Repeat(Time.time * Mathf.Max(0.1f, _balance.HurtBlinkPerSecond), 1f) < 0.5f;
+            return on ? color : new Color(color.r, color.g, color.b, color.a * 0.25f);
+        }
+
         /// <summary>플레이어 애니메이션 프레임 키 (걷기 4프레임, 달리기, 웅크리기, 공격).</summary>
         private string PlayerFrame(float dt)
         {
@@ -2600,7 +2614,7 @@ namespace ApoGirl.Exploration.Runtime
             }
 
             // 다친 순간 움찔 (그림이 없으면 넘어간다)
-            if (_hurtAnim > 0f && ProgressFrame(look + "hurt_", 1f - _hurtAnim / HurtAnimSeconds) is string hurt)
+            if (_hurtAnim > 0f && ProgressFrame(look + "hurt_", 1f - _hurtAnim / Mathf.Max(0.01f, _balance.HurtReactSeconds)) is string hurt)
             {
                 return hurt;
             }
@@ -3091,6 +3105,7 @@ namespace ApoGirl.Exploration.Runtime
                 _player.localPosition = new Vector3(worldX, origin.y + 0.15f - ExplorationArt.FootLift(_playerFrameKey), 0f);
                 _playerRenderer.sprite = ExplorationArt.Get(_playerFrameKey);
                 _playerRenderer.color = Hidden ? new Color(1f, 1f, 1f, 0.3f) : Color.white;
+                _playerRenderer.color = Blink(_playerRenderer.color);
                 if (_bagRenderer != null)
                 {
                     // 가방: 그 프레임의 등 위치에 붙인다 (자리 표에 없는 프레임에서는 숨긴다)
@@ -3109,7 +3124,7 @@ namespace ApoGirl.Exploration.Runtime
             {
                 _player.localPosition = new Vector3(worldX + (_facingRight ? -PlayerWidth / 2f : PlayerWidth / 2f), origin.y + 0.15f, 0f);
                 _player.localScale = new Vector3(_facingRight ? PlayerWidth : -PlayerWidth, height, 1f);
-                _playerRenderer.color = Hidden ? new Color(0.88f, 0.84f, 0.76f, 0.3f) : new Color(0.88f, 0.84f, 0.76f);
+                _playerRenderer.color = Blink(Hidden ? new Color(0.88f, 0.84f, 0.76f, 0.3f) : new Color(0.88f, 0.84f, 0.76f));
             }
 
             var center = new Vector3(worldX, origin.y + 1.4f, 0f);
@@ -3435,6 +3450,7 @@ namespace ApoGirl.Exploration.Runtime
         {
             Activity = ActivityModel.Evaluate(Clock.Phase, DuskAwakened, _balance);
             NoiseLevel = Mathf.Max(0f, NoiseLevel - dt * 6f);
+            _invulnTimer = Mathf.Max(0f, _invulnTimer - dt);
             var events = _threat.Step(dt, Snapshot, Activity);
             if (events.CaughtBy != null && !Invincible)
             {
@@ -3459,7 +3475,8 @@ namespace ApoGirl.Exploration.Runtime
 
                 Sfx("sfx_z_grab", 0.7f);
                 Sfx("sfx_hurt");
-                _hurtAnim = HurtAnimSeconds;
+                _hurtAnim = _balance.HurtReactSeconds;
+                _invulnTimer = _balance.HurtReactSeconds + _balance.HurtInvulnSeconds;
                 if (Hp <= 0)
                 {
                     Sfx("sfx_down");
