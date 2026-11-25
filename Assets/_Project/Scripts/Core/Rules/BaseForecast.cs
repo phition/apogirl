@@ -31,6 +31,11 @@ namespace ApoGirl.Core.Rules
                 if (db.TryGetAction(actionId, out var action) && (action.IsExpedition || action.Confined))
                 {
                     result.NightsAway++;
+                    if (action.IsExpedition)
+                    {
+                        result.NightsOut++;
+                    }
+
                     continue;
                 }
 
@@ -68,9 +73,9 @@ namespace ApoGirl.Core.Rules
                 result.Reasons.Add(new BaseReason(faction < 1f ? "faction_down" : "faction_up", 0, faction < 1f));
             }
 
-            if (result.NightsAway > 0)
+            if (result.NightsOut > 0)
             {
-                result.Reasons.Add(new BaseReason("away_nights", result.NightsAway, true));
+                result.Reasons.Add(new BaseReason("away_nights", result.NightsOut, true));
             }
 
             // 막는 힘에 보태는 것
@@ -355,7 +360,12 @@ namespace ApoGirl.Core.Rules
         public bool NotYet;
 
         public int NightsLeft;
+
+        /// <summary>습격을 굴리지 않는 밤 (밤 탐험·창고에 갇힌 칸).</summary>
         public int NightsAway;
+
+        /// <summary>그 가운데 밤 탐험 (이유 줄).</summary>
+        public int NightsOut;
         public float NightChance;
         public float WeekChance;
         public RiskLevel Level;

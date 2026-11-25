@@ -115,6 +115,8 @@ namespace ApoGirl.Tests.EditMode
             var p = RaidRules.Chance(state, db.Balance, db);
             Assert.AreEqual(6, raid.NightsLeft);
             Assert.AreEqual(1, raid.NightsAway, "밤 탐험 칸은 거점에 없다");
+            Assert.AreEqual(1, raid.NightsOut);
+            Assert.IsTrue(raid.Reasons.Exists(r => r.Key == "away_nights" && r.Value == 1));
             Assert.AreEqual(1.0 - Math.Pow(1.0 - p, 6), raid.WeekChance, 1e-5);
             Assert.AreEqual(RiskLevel.High, raid.Level, "위협이 방어보다 70 높으면 높음");
             Assert.IsTrue(raid.Reasons.Exists(r => r.Key == "gap_over" && r.Value == 70));

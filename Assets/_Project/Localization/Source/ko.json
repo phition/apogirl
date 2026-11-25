@@ -1622,7 +1622,7 @@
     "base.repel.Low": "든든하게 막는다",
     "base.repel.Medium": "막을지 반반",
     "base.repel.High": "뚫리기 쉽다",
-    "base.why.gap_over": "위협이 방어보다 {0} 높다 — 자주 온다",
+    "base.why.gap_over": "위협이 방어보다 {0} 높다",
     "base.why.gap_under": "방어가 위협을 {0} 앞선다",
     "base.why.rain": "비가 와서 덜 돌아다닌다",
     "base.why.broadcast": "방송한 주라 소리를 듣고 온다",
