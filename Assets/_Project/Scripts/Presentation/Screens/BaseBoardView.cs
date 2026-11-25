@@ -464,12 +464,27 @@ namespace ApoGirl.Presentation.Screens
             Bar(body, Loc.F("base.threat", state.Base.Threat), state.Base.Threat, balance.ThreatMax, "threat");
             if (!raid.NotYet)
             {
-                var repel = Line(body, Loc.F("base.repel", Loc.T("base.repel." + raid.Repel)));
-                repel.AddToClassList(Tone(raid.Repel));
+                // 습격이 얼마나 자주 오는가 (머리의 "밤 습격 ○○"의 까닭)
                 foreach (var reason in raid.Reasons)
                 {
                     var line = Line(body, "· " + Loc.F("base.why." + reason.Key, reason.Value));
                     line.AddToClassList(reason.Good ? "good" : "bad");
+                }
+
+                // 오면 막는가: 막는 힘 대 습격 세기 (위 까닭과 따로 — 방어보다 위협이 높아도 전투력으로 막을 수 있다)
+                var repel = Line(body, Loc.F("base.repel", Loc.T("base.repel." + raid.Repel)));
+                repel.AddToClassList(Tone(raid.Repel));
+                var p = raid.RepelParts;
+                if (p != null)
+                {
+                    var why = Line(body, "· " + Loc.F("base.repel.why", Range(p.Power, p.Power + p.PowerSpread), Range(p.StrengthMin, p.StrengthMax)));
+                    why.AddToClassList("dim");
+                    var pieces = new List<string> { Loc.F("base.repel.part.base", p.Base), Loc.F("base.repel.part.combat", p.Combat), Loc.F("base.repel.part.defense", p.Defense) };
+                    if (p.Gear > 0) pieces.Add(Loc.F("base.repel.part.gear", p.Gear));
+                    if (p.Relief > 0) pieces.Add(Loc.F("base.repel.part.relief", p.Relief));
+                    var detail = Line(body, "  " + string.Join(" · ", pieces));
+                    detail.AddToClassList("dim");
+                    detail.AddToClassList("base-repel-parts");
                 }
             }
 
@@ -528,7 +543,7 @@ namespace ApoGirl.Presentation.Screens
             var foodHead = Line(body, Loc.F("base.food", food.Now, food.End));
             foodHead.AddToClassList("base-supply-head");
             StoryArt.SetIcon(foodHead, StoryArt.Icon("res.Food"), 18f);
-            var foodParts = new List<string> { Loc.F("base.use", food.Use, Loc.T("diet." + state.FoodDiet)) };
+            var foodParts = new List<string> { Loc.F(food.Mornings > 0 ? "base.use" : "base.use_none", food.Use, Loc.T("diet." + state.FoodDiet), food.Mornings) };
             if (food.Garden > 0) foodParts.Add(Loc.F("base.garden", food.Garden));
             if (food.Spoil > 0) foodParts.Add(Loc.F("base.spoil", food.Spoil));
             if (food.Cat > 0) foodParts.Add(Loc.F("base.cat", food.Cat));
@@ -550,7 +565,7 @@ namespace ApoGirl.Presentation.Screens
             var waterHead = Line(body, Loc.F("base.water", water.Now, water.End));
             waterHead.AddToClassList("base-supply-head");
             StoryArt.SetIcon(waterHead, StoryArt.Icon("res.Water"), 18f);
-            var waterParts = new List<string> { Loc.F("base.use", water.Use, Loc.T("diet." + state.WaterDiet)) };
+            var waterParts = new List<string> { Loc.F(water.Mornings > 0 ? "base.use" : "base.use_none", water.Use, Loc.T("diet." + state.WaterDiet), water.Mornings) };
             if (water.Purified > 0) waterParts.Add(Loc.F("base.purified", water.Purified));
             Line(body, string.Join(" · ", waterParts)).AddToClassList("dim");
             if (water.ShortDay > 0)
@@ -723,6 +738,9 @@ namespace ApoGirl.Presentation.Screens
 
         private static string Tone(RiskLevel level) =>
             level == RiskLevel.High ? "bad" : level == RiskLevel.Medium ? "warn" : "ok";
+
+        /// <summary>"12" 또는 "12~15".</summary>
+        private static string Range(int min, int max) => max > min ? min + "~" + max : min.ToString();
 
         private static string Dots(int filled, int total, string on, string off)
         {

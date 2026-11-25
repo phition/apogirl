@@ -141,5 +141,32 @@ namespace ApoGirl.Tests.EditMode
             Assert.Less(weak, 0.5f);
             Assert.Greater(withTrap, weak, "함정이 있으면 더 잘 막는다");
         }
+
+        [Test]
+        public void RepelBreakdown_AddsUpToTheSameChance()
+        {
+            var db = TestContent.CreateDatabase();
+            var state = Quiet(db);
+            state.Base.Defense = 12;
+            state.Base.Threat = 40;
+            state.Base.Traps = 1;
+            var parts = BaseForecast.Repel(state, db);
+            Assert.AreEqual(BaseForecast.RepelChance(state, db), parts.Chance, 1e-6);
+            Assert.AreEqual(parts.Base + parts.Combat + parts.Defense + parts.Gear, parts.Power);
+            Assert.GreaterOrEqual(parts.Gear, db.Balance.TrapPower, "함정 몫이 보탬에 들어간다");
+            Assert.AreEqual(40, parts.StrengthMin);
+            Assert.AreEqual(40 + db.Balance.RaidStrengthVariance, parts.StrengthMax);
+        }
+
+        [Test]
+        public void Supply_CountsRemainingMornings()
+        {
+            var db = TestContent.CreateDatabase();
+            var state = Quiet(db);
+            var food = BaseForecast.Food(state, db);
+            var water = BaseForecast.Water(state, db);
+            Assert.AreEqual(CalendarState.DaysPerWeek, food.Mornings, "주 시작이면 아침 7번");
+            Assert.AreEqual(food.Mornings, water.Mornings);
+        }
     }
 }

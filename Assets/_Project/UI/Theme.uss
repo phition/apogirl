@@ -256,7 +256,7 @@ Button.selected { border-color: var(--accent); background-color: var(--accent-so
 }
 .board.closed { translate: 0 720px; opacity: 0; }
 /* 보드가 열리면 입상은 왼쪽에 그대로 두고, 선생님 한마디는 보드 위로 올린다 */
-.board-open .teacher-box { bottom: 700px; transition-property: bottom; transition-duration: 0.25s; }
+.board-open .teacher-box { bottom: 700px; transition-property: bottom, right; transition-duration: 0.25s; }
 .board-open .vitals-mini { display: none; }
 .board-hint { color: var(--text-dim); font-size: 14px; margin-right: 10px; }
 .board-body { flex-direction: row; flex-grow: 1; min-height: 0; }
@@ -1243,3 +1243,17 @@ Button.selected { border-color: var(--accent); background-color: var(--accent-so
 /* 누르면 역할 판으로 넘어가는 글 (인물 서랍 역할·방 패널 자리 줄) */
 .person-role.clickable:hover, .hub-room-panel-note.clickable:hover { color: var(--accent); }
 .hub-room-panel-note.clickable { -unity-font-style: bold; }
+/* P1 화면 확인 손질 (BASE_TAB_PROPOSAL): 서랍 스크롤바는 가늘게 테마색, 상황판 막대 글자는 왼쪽, 오른쪽 서랍이 열리면 선생님 한 줄을 비켜 둔다 */
+.drawer-body .unity-scroller--vertical { width: 8px; margin-left: 4px; }
+.drawer-body .unity-scroller--vertical .unity-scroller__low-button,
+.drawer-body .unity-scroller--vertical .unity-scroller__high-button { display: none; }
+.drawer-body .unity-scroller--vertical .unity-scroller__slider { width: 8px; margin: 0; padding: 0; }
+.drawer-body .unity-scroller--vertical .unity-base-slider__drag-container { width: 8px; margin: 0; }
+.drawer-body .unity-scroller--vertical .unity-base-slider__tracker { width: 8px; left: 0; border-width: 0; border-radius: 4px; background-color: rgba(185, 163, 122, 0.08); }
+.drawer-body .unity-scroller--vertical .unity-base-slider__dragger { width: 8px; left: 0; border-width: 0; border-radius: 4px; background-color: rgba(185, 163, 122, 0.45); }
+.drawer-body .unity-scroller--vertical .unity-base-slider__dragger:hover { background-color: var(--accent); }
+.base-bar .unity-progress-bar__title-container { align-items: flex-start; justify-content: center; padding-left: 8px; }
+.base-bar .unity-progress-bar__title { -unity-text-align: middle-left; font-size: 14px; color: var(--text); }
+.teacher-box { transition-property: right, bottom; transition-duration: 0.25s; }
+.right-drawer-open .teacher-box { right: 458px; }
+.base-repel-parts { font-size: 13px; }

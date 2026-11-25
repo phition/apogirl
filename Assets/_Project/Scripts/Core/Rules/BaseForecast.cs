@@ -49,7 +49,8 @@ namespace ApoGirl.Core.Rules
                 : result.WeekChance >= balance.BaseBoardRaidMedium ? RiskLevel.Medium
                 : RiskLevel.Low;
 
-            result.RepelChance = RepelChance(state, db);
+            result.RepelParts = Repel(state, db);
+            result.RepelChance = result.RepelParts.Chance;
             result.Repel = result.RepelChance >= balance.BaseBoardRepelSafe ? RiskLevel.Low
                 : result.RepelChance >= balance.BaseBoardRepelRisky ? RiskLevel.Medium
                 : RiskLevel.High;
@@ -101,19 +102,31 @@ namespace ApoGirl.Core.Rules
         }
 
         /// <summary>습격이 한 번 오면 막을 확률: 세기와 방어력의 흔들림(둘 다 고른 정수)을 모두 세어 본다 (RaidRules.Resolve와 같은 식).</summary>
-        public static float RepelChance(GameState state, IDefinitionDatabase db)
+        public static float RepelChance(GameState state, IDefinitionDatabase db) => Repel(state, db).Chance;
+
+        /// <summary>막는 힘과 습격 세기를 나눠 본다 (상황판의 "왜 막는가" 줄). 식은 RaidRules.Resolve와 같다.</summary>
+        public static RepelBreakdown Repel(GameState state, IDefinitionDatabase db)
         {
             var balance = db.Balance;
-            var guard = TraitRules.RoundInt(TraitRules.Sum(state, db, TraitModifierKind.RaidGuard));
-            var power = balance.RaidBasePower + DerivedStats.CombatPower(state, balance)
-                        + (int)Math.Round((state.Base.Defense + SpecialRules.DefenseBonus(state, balance)) * balance.RaidDefenseWeight)
-                        + guard
-                        + (state.Flags.Contains(DefenseRules.FlagAlarm) ? balance.AlarmPower : 0)
-                        + (state.Base.Traps > 0 ? balance.TrapPower : 0);
-            var threat = state.Base.Threat + FactionRules.RaidStrengthBonus(state, db);
-            var relief = ScarecrowRules.Relief(state, balance);
-            var strengthSpread = Math.Max(0, balance.RaidStrengthVariance);
-            var powerSpread = Math.Max(0, balance.RaidPowerVariance);
+            var r = new RepelBreakdown
+            {
+                Base = balance.RaidBasePower,
+                Combat = DerivedStats.CombatPower(state, balance),
+                Defense = (int)Math.Round((state.Base.Defense + SpecialRules.DefenseBonus(state, balance)) * balance.RaidDefenseWeight),
+                Gear = TraitRules.RoundInt(TraitRules.Sum(state, db, TraitModifierKind.RaidGuard))
+                       + (state.Flags.Contains(DefenseRules.FlagAlarm) ? balance.AlarmPower : 0)
+                       + (state.Base.Traps > 0 ? balance.TrapPower : 0),
+                Threat = state.Base.Threat + FactionRules.RaidStrengthBonus(state, db),
+                Relief = ScarecrowRules.Relief(state, balance),
+                PowerSpread = Math.Max(0, balance.RaidPowerVariance),
+                StrengthSpread = Math.Max(0, balance.RaidStrengthVariance),
+            };
+            r.Chance = Count(r.Power, r.Threat, r.Relief, r.StrengthSpread, r.PowerSpread);
+            return r;
+        }
+
+        private static float Count(int power, int threat, int relief, int strengthSpread, int powerSpread)
+        {
             long wins = 0;
             for (var s = 0; s <= strengthSpread; s++)
             {
@@ -145,6 +158,7 @@ namespace ApoGirl.Core.Rules
                 }
 
                 result.Use += need;
+                result.Mornings++;
                 if (stock < need && result.ShortDay == 0)
                 {
                     result.ShortDay = day;
@@ -196,6 +210,7 @@ namespace ApoGirl.Core.Rules
 
                 var need = UpkeepRules.DailyWaterNeed(state, balance);
                 result.Use += need;
+                result.Mornings++;
                 if (stock < need && result.ShortDay == 0)
                 {
                     result.ShortDay = day;
@@ -354,8 +369,31 @@ namespace ApoGirl.Core.Rules
         public bool Good { get; }
     }
 
+    /// <summary>습격 한 번을 막는 힘(기본·전투력·방어·함정과 경보) 대 습격 세기(위협·허수아비 덜어 냄), 둘 다 흔들림이 있다.</summary>
+    public sealed class RepelBreakdown
+    {
+        public int Base;
+        public int Combat;
+        public int Defense;
+
+        /// <summary>함정·경보·경비 특성 몫.</summary>
+        public int Gear;
+        public int Threat;
+        public int Relief;
+        public int PowerSpread;
+        public int StrengthSpread;
+        public float Chance;
+
+        public int Power => Base + Combat + Defense + Gear;
+        public int StrengthMin => Math.Max(0, Threat - Relief);
+        public int StrengthMax => Math.Max(0, Threat + StrengthSpread - Relief);
+    }
+
     public sealed class RaidForecast
     {
+        /// <summary>막는 힘과 습격 세기 (이유 줄).</summary>
+        public RepelBreakdown RepelParts;
+
         /// <summary>아직 습격이 오지 않는 주 (RaidStartWeek 전).</summary>
         public bool NotYet;
 
@@ -389,6 +427,9 @@ namespace ApoGirl.Core.Rules
     {
         public int Now;
         public int Use;
+
+        /// <summary>이번 주 남은 아침 수 (Use는 그 아침들에 드는 양을 모두 더한 것).</summary>
+        public int Mornings;
         public int End;
 
         /// <summary>처음으로 모자라는 날 (0 = 이번 주는 버틴다).</summary>
