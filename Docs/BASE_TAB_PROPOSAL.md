@@ -304,3 +304,12 @@
 - 식량·식수: "아침 −n" → "남은 아침 n번에 m개 든다"(`SupplyForecast.Mornings`).
 - 선생님 한 줄: 숨기지 않고, 오른쪽 서랍이 열리면 서랍 왼쪽으로 비킨다(`.right-drawer-open .teacher-box`).
 - 서랍 스크롤바는 가늘게 테마색, 방어·위협 막대 글자는 왼쪽.
+
+### P4 완료 (2026-11-25)
+
+- 데이터 `Content/Base/base_advice.json` (`AdviceDef`): `Id`·`Priority`·`ActionId` 또는 `Target`(`roles` 역할 칸, `board` 계획 보드)·`Condition`(이벤트와 같은 `ConditionDef`)·`Facts`(상황판 예상값 비교). 문구 `advice.{Id}`(선생님 말투). 가져오기로 `DefinitionExtras.Advice`.
+- 6절의 "조건은 ConditionEvaluator로"만으로는 습격 단계·모자란 날·부패처럼 예상에서 나오는 값을 쓸 수 없어, 예상값 `BaseFact`(14가지)를 따로 두었다 — `BaseAdvice.Facts`가 `BaseForecast`에서 센다.
+- 고르기 `BaseAdvice.Pick`: 조건과 Facts를 모두 만족하고, 행동이 있으면 해금됐고(`PlanEditing.IsUnlocked`) 이번 주 계획에 아직 없는 줄을 우선순위대로 `BalanceConfig.BaseAdviceLines`(2)줄.
+- 자리: 기획은 맨 아래였지만, 시설·역할 칸이 생겨 상황판이 길어져 **알림 띠 바로 아래**로 옮겼다. 선생님이 살아 있으면 얼굴 뱃지를 붙인다.
+- 누르면(계획 중): 행동 → 서랍을 닫고 계획 보드에서 그 행동을 고름, `board` → 계획 보드, `roles` → 역할 칸으로 내림.
+- 처음 14줄: 발전기 고장, 빗물로 물 부족 넘기기, 식량·식수 부족, 교문 보강(위협−방어 20+·습격 보통 이상), 밤 경계(뚫릴 위험), 함정(0개·습격 보통 이상), 허수아비, 다음 주 빠듯, 부패, 쉬는 동료, 발전 증설, 빗물 정수, 깡통 경보.
