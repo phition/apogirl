@@ -7775,6 +7775,34 @@ MonoBehaviour:
     m_Key: base.roles.out_tag
     m_Metadata:
       m_Items: []
+  - m_Id: 2230577511284736
+    m_Key: base.repel.why
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2230577590976512
+    m_Key: base.repel.part.base
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2230577590976513
+    m_Key: base.repel.part.combat
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2230577590976514
+    m_Key: base.repel.part.defense
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2230577590976515
+    m_Key: base.repel.part.gear
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2230577590976516
+    m_Key: base.repel.part.relief
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2230577590976517
+    m_Key: base.use_none
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
