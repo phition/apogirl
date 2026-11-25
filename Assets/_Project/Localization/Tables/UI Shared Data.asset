@@ -7803,6 +7803,74 @@ MonoBehaviour:
     m_Key: base.use_none
     m_Metadata:
       m_Items: []
+  - m_Id: 2234842116014080
+    m_Key: base.advice.hint
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2234842183122944
+    m_Key: base.advice.hint_board
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2234842183122945
+    m_Key: base.advice.hint_roles
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2234842183122946
+    m_Key: advice.ADV_GENERATOR
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2234842183122947
+    m_Key: advice.ADV_WATER_SHORT_RAW
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2234842183122948
+    m_Key: advice.ADV_FOOD_SHORT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2234842183122949
+    m_Key: advice.ADV_WATER_SHORT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2234842183122950
+    m_Key: advice.ADV_BARRICADE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2234842183122951
+    m_Key: advice.ADV_NIGHT_WATCH
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2234842183122952
+    m_Key: advice.ADV_TRAP
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2234842183122953
+    m_Key: advice.ADV_SCARECROW
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2234842183122954
+    m_Key: advice.ADV_FOOD_TIGHT
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2234842183122955
+    m_Key: advice.ADV_SPOIL
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2234842183122956
+    m_Key: advice.ADV_IDLE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2234842183122957
+    m_Key: advice.ADV_POWER_UPGRADE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2234842183122958
+    m_Key: advice.ADV_RAW_WATER
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2234842183122959
+    m_Key: advice.ADV_ALARM
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
