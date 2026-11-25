@@ -7515,6 +7515,178 @@ MonoBehaviour:
     m_Key: base.alert.raid_high
     m_Metadata:
       m_Items: []
+  - m_Id: 2222307379789824
+    m_Key: base.rooms
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2222307459481600
+    m_Key: base.rooms.count
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2222307459481601
+    m_Key: base.rooms.locked
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2222307459481602
+    m_Key: base.rooms.hint
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2222307459481603
+    m_Key: facility.mod.InfectionResist
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2222307459481604
+    m_Key: facility.mod.TeacherCare
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2222307459481605
+    m_Key: facility.mod.FoodSaving
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2222307459481606
+    m_Key: facility.mod.EducationGain
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2222307459481607
+    m_Key: facility.mod.CheckBonus
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2222307459481608
+    m_Key: facility.mod.CheckBonus.all
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2222307459481609
+    m_Key: facility.mod.RaidGuard
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2222307459481610
+    m_Key: facility.mod.GreatSuccessBonus
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2222307459481611
+    m_Key: facility.mod.RestRecovery
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2222307459481612
+    m_Key: facility.mod.ExpeditionStress
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2222307459481613
+    m_Key: hubroom.ENTRANCE.use
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2222307459481614
+    m_Key: hubroom.STORAGE.use
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2222307459481615
+    m_Key: hubroom.CAFETERIA.use
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2222307459481616
+    m_Key: hubroom.INFIRMARY.use
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2222307459481617
+    m_Key: hubroom.STAFFROOM.use
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2222307459481618
+    m_Key: hubroom.CLASSROOM.use
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2222307459481619
+    m_Key: hubroom.SCIENCE.use
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2222307459481620
+    m_Key: hubroom.LIBRARY.use
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2222307459481621
+    m_Key: hubroom.HOMEEC.use
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2222307459481622
+    m_Key: hubroom.BROADCAST.use
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2222307459481623
+    m_Key: hubroom.MUSIC.use
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2222307459481624
+    m_Key: hubroom.COMPUTER.use
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2222307459481625
+    m_Key: hubroom.GYM.use
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2222307459481626
+    m_Key: hubroom.ROOFTOP.use
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2222307459481627
+    m_Key: hubroom.CLASSROOM.hint
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2222307459481628
+    m_Key: hubroom.INFIRMARY.hint
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2222307459481629
+    m_Key: hubroom.ROOFTOP.hint
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2222307459481630
+    m_Key: hubroom.BROADCAST.hint
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2222307459481631
+    m_Key: hubroom.CAFETERIA.hint
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2222307459481632
+    m_Key: hubroom.LIBRARY.hint
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2222307459481633
+    m_Key: hubroom.GYM.hint
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2222307459481634
+    m_Key: hubroom.SCIENCE.hint
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2222307459481635
+    m_Key: hubroom.STAFFROOM.hint
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2222307459481636
+    m_Key: hubroom.HOMEEC.hint
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2222307459481637
+    m_Key: hubroom.COMPUTER.hint
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2222307459481638
+    m_Key: hubroom.MUSIC.hint
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2222307459481639
+    m_Key: hub.room_people
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2222307459481640
+    m_Key: hub.room_people_none
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2222307459481641
+    m_Key: hub.room_aptitude
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
