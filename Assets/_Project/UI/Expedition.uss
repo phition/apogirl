@@ -18,7 +18,7 @@
 .exp-compass-badge {
     flex-direction: row; align-items: center; align-self: flex-start; margin-top: 6px;
     padding: 3px 12px 3px 4px; background-color: rgba(30, 24, 16, 0.78);
-    border-width: 1px; border-color: rgba(200, 171, 131, 0.6); border-radius: 14px;
+    border-width: 1px; border-color: rgba(240, 207, 107, 0.6); border-radius: 14px;
 }
 .exp-compass-icon { width: 24px; height: 24px; margin-right: 6px; -unity-background-scale-mode: scale-to-fit; }
 .exp-compass-label { color: #e6d2a8; font-size: 15px; }
@@ -30,7 +30,7 @@
 .exp-debug { color: #9a9ae0; margin-left: 8px; }
 .exp-clock-bar { height: 16px; margin: 4px 0; }
 .exp-clock-bar .unity-progress-bar__background { background-color: rgba(0, 0, 0, 0.6); border-color: var(--line); }
-.exp-clock-bar .unity-progress-bar__progress { background-color: #b9a37a; }
+.exp-clock-bar .unity-progress-bar__progress { background-color: #f0cf6b; }
 .exp-clock-bar.late .unity-progress-bar__progress { background-color: #c9584f; }
 
 .exp-spacer { flex-grow: 1; }
@@ -66,7 +66,7 @@
 .exp-panel {
     position: absolute;
     padding: 12px;
-    background-color: rgba(30, 32, 36, 0.95);
+    background-color: rgba(28, 40, 36, 0.95);
     border-color: var(--accent);
     border-width: 1px;
     border-radius: 6px;
@@ -82,15 +82,15 @@
 .bp-grid { position: relative; }
 .bp-cell { background-color: rgba(255, 255, 255, 0.05); border-color: rgba(255, 255, 255, 0.12); border-width: 1px; }
 .bp-item {
-    background-color: #5b5242;
-    border-color: #b9a37a;
+    background-color: #55532e;
+    border-color: #f0cf6b;
     border-width: 1px;
     border-radius: 3px;
     font-size: 13px;
     -unity-text-align: middle-center;
     white-space: normal;
 }
-.bp-item.selected { background-color: #7a6a4a; border-color: #ffffff; }
+.bp-item.selected { background-color: #77733c; border-color: #ffffff; }
 
 .exp-message {
     position: absolute;
@@ -170,12 +170,12 @@
     align-items: center;
     background-color: rgba(10, 10, 12, 0.72);
     border-width: 2px;
-    border-color: rgba(185, 163, 122, 0.45);
+    border-color: rgba(240, 207, 107, 0.45);
     border-radius: 6px;
 }
-.exp-equip-slot:hover { border-color: rgba(231, 176, 74, 0.8); }
+.exp-equip-slot:hover { border-color: rgba(240, 207, 107, 0.8); }
 .exp-equip-slot.empty .exp-equip-name { color: var(--text-dim); }
-.exp-equip-slot.droppable { border-color: #e7b04a; background-color: rgba(90, 70, 30, 0.8); }
+.exp-equip-slot.droppable { border-color: #f0cf6b; background-color: rgba(90, 70, 30, 0.8); }
 .exp-equip-head { font-size: 13px; color: var(--accent); -unity-font-style: bold; }
 .exp-equip-icon { width: 54px; height: 54px; margin: 2px 0; }
 .exp-equip-name { font-size: 13px; -unity-font-style: bold; -unity-text-align: middle-center; white-space: normal; color: #ffffff; }
@@ -184,9 +184,9 @@
 /* 배낭 물건 미니창: 좌클릭한 물건의 설명·분류·효과와 사용/장착/버리기 (ExpeditionHud.ShowInfo) */
 .bp-info {
     padding: 10px 12px;
-    background-color: rgba(18, 18, 22, 0.96);
+    background-color: rgba(18, 27, 24, 0.96);
     border-width: 2px;
-    border-color: rgba(231, 176, 74, 0.75);
+    border-color: rgba(240, 207, 107, 0.75);
     border-radius: 6px;
 }
 .bp-info-head { flex-direction: row; align-items: center; margin-bottom: 4px; }
@@ -198,6 +198,39 @@
 .bp-info-effect.consumable { color: #8fe07a; }
 .bp-info-size { font-size: 12px; color: var(--text-dim); margin-bottom: 6px; }
 .bp-info-buttons { flex-direction: row; }
-.bp-info-button { flex-grow: 1; height: 32px; margin: 0 3px 0 0; font-size: 14px; -unity-font-style: bold; background-color: rgba(255, 255, 255, 0.08); border-color: rgba(185, 163, 122, 0.45); }
-.bp-info-button.primary { background-color: rgba(150, 110, 40, 0.85); color: #ffffff; border-color: #e7b04a; }
-.bp-info-button:hover { border-color: #e7b04a; }
+.bp-info-button { flex-grow: 1; height: 32px; margin: 0 3px 0 0; font-size: 14px; -unity-font-style: bold; background-color: rgba(255, 255, 255, 0.08); border-color: rgba(240, 207, 107, 0.45); }
+.bp-info-button.primary { background-color: rgba(150, 110, 40, 0.85); color: #ffffff; border-color: #f0cf6b; }
+.bp-info-button:hover { border-color: #f0cf6b; }
+
+/* ══ fablable 0.1 — 탐험 HUD: 분위기를 가리지 않는 분필 글씨와 얇은 칠판 띠 (Docs/UI_FABLABLE_DESIGN.md) ══ */
+.exp-location-label, .exp-panel-title, .exp-equip-head { -unity-font-definition: url("Fonts/HakgyoansimEdge.ttf"); }
+.exp-location-label { color: var(--text); font-size: 22px; }
+.exp-location, .exp-clock {
+    background-color: rgba(18, 27, 24, 0.72);
+    border-radius: 3px;
+    border-bottom-width: 2px;
+    border-color: rgba(155, 116, 72, 0.8);
+}
+.exp-clock-bar .unity-progress-bar__background, .exp-stir-bar .unity-progress-bar__background { border-color: var(--chalk-line); border-radius: 3px; }
+.exp-prompt-label { background-color: rgba(18, 27, 24, 0.82); border-radius: 3px; border-bottom-width: 2px; border-color: var(--chalk-line); }
+.exp-status-label { background-color: rgba(18, 27, 24, 0.62); border-radius: 3px; }
+.exp-panel {
+    background-color: rgb(22, 32, 28);
+    border-width: 3px;
+    border-color: var(--wood);
+    border-radius: 4px;
+}
+.exp-panel-title { color: var(--text); font-size: 19px; }
+.bp-cell { background-color: rgba(238, 236, 225, 0.05); border-color: rgba(238, 236, 225, 0.14); }
+.bp-item { border-radius: 2px; }
+.bp-item.selected { border-color: #ffffff; }
+.exp-equip-slot { border-radius: 4px; border-color: var(--chalk-line); background-color: rgba(18, 27, 24, 0.78); }
+.exp-equip-slot:hover { border-color: var(--accent); }
+.exp-equip-slot.droppable { border-color: var(--accent); background-color: rgba(85, 83, 46, 0.9); }
+.bp-info { border-radius: 4px; border-color: var(--accent); }
+.bp-info-button.primary { background-color: var(--accent); color: var(--ink); border-color: #fff3c4; }
+.exp-message { background-color: rgba(18, 27, 24, 0.9); border-radius: 3px; border-top-width: 3px; border-color: var(--wood); }
+/* 튜토리얼 안내는 노란 포스트잇 */
+.exp-tutorial { background-color: var(--note); color: var(--ink); border-radius: 2px; border-bottom-width: 2px; border-color: rgba(120, 100, 20, 0.4); }
+.exp-encounter-choice { background-color: rgba(238, 236, 225, 0.05); border-width: 0; border-bottom-width: 1px; border-color: var(--chalk-line); border-radius: 0; }
+.exp-encounter-choice:hover { background-color: rgba(240, 207, 107, 0.24); border-color: var(--accent); color: var(--accent); }

@@ -15,6 +15,33 @@ namespace ApoGirl.Presentation.Text
         private static FontAsset _font;
         private static bool _tried;
 
+        /// <summary>
+        /// 제목 글꼴(학교안심 엣지)을 Theme.uss가 정하는 클래스 — ApplyDeep이 글자마다 고딕을 박아 덮지 않게 건너뛴다.
+        /// Theme.uss "fablable 0.1" 절의 글꼴 목록과 같게 둔다.
+        /// </summary>
+        private static readonly string[] DisplayClasses =
+        {
+            "calendar", "drawer-title", "board-title", "card-title", "title-label", "title-button", "dialogue-speaker",
+            "section-header", "give-title", "give-diet-title", "ct-title", "ct-line", "fac-name", "fac-section",
+            "ending-title", "ending-record-title", "ending-record-section", "gallery-title",
+            "exp-kicker", "exp-location", "exp-depart", "run-button", "dock-plan", "settle-next",
+            "hub-room-panel-title", "teacher-name", "teacher-memo-title", "storage-title", "dr-head",
+            "exp-location-label", "exp-panel-title", "exp-equip-head",
+        };
+
+        private static bool IsDisplay(VisualElement element)
+        {
+            foreach (var name in DisplayClasses)
+            {
+                if (element.ClassListContains(name))
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
         public static void Apply(VisualElement root)
         {
             if (!_tried)
@@ -70,8 +97,16 @@ namespace ApoGirl.Presentation.Text
             }
 
             var definition = FontDefinition.FromSDFFont(_font);
-            element.Query<UnityEngine.UIElements.TextElement>().ForEach(t => t.style.unityFontDefinition = definition);
-            element.Query(className: "unity-text-element").ForEach(t => t.style.unityFontDefinition = definition);
+            element.Query<UnityEngine.UIElements.TextElement>().ForEach(t => Set(t, definition));
+            element.Query(className: "unity-text-element").ForEach(t => Set(t, definition));
+        }
+
+        private static void Set(VisualElement text, FontDefinition definition)
+        {
+            if (!IsDisplay(text))
+            {
+                text.style.unityFontDefinition = definition;
+            }
         }
     }
 }

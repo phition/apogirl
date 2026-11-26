@@ -10,9 +10,10 @@ namespace ApoGirl.Presentation.Screens
     /// </summary>
     internal static class FieldStyle
     {
-        private static readonly Color Background = new Color(0.2f, 0.215f, 0.235f);
-        private static readonly Color Border = new Color(0.267f, 0.286f, 0.314f);
-        private static readonly Color Text = new Color(0.894f, 0.882f, 0.855f);
+        // 칠판 색 (Theme.uss --panel-light · --line · --text)
+        private static readonly Color Background = new Color(0.180f, 0.251f, 0.220f);
+        private static readonly Color Border = new Color(0.290f, 0.373f, 0.333f);
+        private static readonly Color Text = new Color(0.933f, 0.925f, 0.882f);
 
         public static T Dark<T>(T field) where T : VisualElement
         {

@@ -100,6 +100,7 @@ namespace ApoGirl.Presentation.Dialogue
             _options.Clear();
             _text.text = "";
             _speaker.text = "";
+            _speaker.AddToClassList("hidden"); // 빈 종이 이름표가 남지 않게
             _log.AddToClassList("hidden");
             _layer.RemoveFromClassList("hidden");
             Sound.Play("Sfx/ui_page_turn", SoundCategory.Ui);
