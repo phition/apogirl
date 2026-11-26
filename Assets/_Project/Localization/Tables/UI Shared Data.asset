@@ -8379,6 +8379,22 @@ MonoBehaviour:
     m_Key: base.alert.sprinkler
     m_Metadata:
       m_Items: []
+  - m_Id: 2554474936942592
+    m_Key: dayreport.sec_done
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2554475004051456
+    m_Key: dayreport.sec_changes
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2554475004051457
+    m_Key: dayreport.sec_people
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2554475004051458
+    m_Key: dayreport.sec_base
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

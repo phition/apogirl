@@ -515,6 +515,40 @@ Button.selected { border-color: var(--accent); background-color: var(--accent-so
 .card-body { min-height: 80px; margin-bottom: 10px; }
 .card-buttons { flex-direction: row; justify-content: flex-end; flex-wrap: wrap; }
 .card-button { min-width: 110px; height: 36px; }
+
+/* 하루 보고 (실행 속도 '보통'): 본문 칸 없이 문단 — 한 일 · 달라진 것 · 사람들 · 거점 */
+.card.day-report .card-body { display: none; }
+.card.day-report .card-extra { margin-bottom: 14px; }
+.dr-head {
+    font-size: 15px;
+    -unity-font-style: bold;
+    color: var(--accent);
+    margin-top: 12px;
+    margin-bottom: 4px;
+    padding-bottom: 3px;
+    border-bottom-width: 1px;
+    border-bottom-color: var(--accent-soft);
+}
+.dr-head.first { margin-top: 0; }
+.dr-row { flex-direction: row; align-items: center; min-height: 30px; }
+.dr-phase {
+    width: 38px;
+    height: 22px;
+    margin-right: 10px;
+    border-radius: 4px;
+    font-size: 13px;
+    -unity-text-align: middle-center;
+    flex-shrink: 0;
+}
+.dr-phase.day { background-color: var(--day-card); color: var(--day-text); }
+.dr-phase.night { background-color: var(--night-card); color: var(--night-text); }
+.dr-action { flex-grow: 1; flex-shrink: 1; font-size: 17px; white-space: normal; }
+.dr-result { flex-shrink: 0; max-width: 260px; margin-left: 12px; font-size: 16px; color: var(--text-dim); -unity-text-align: middle-right; white-space: normal; }
+.dr-result.great { color: var(--accent); -unity-font-style: bold; }
+.dr-result.fail { color: #d9776b; }
+.dr-line { flex-direction: row; margin: 2px 0 2px 6px; }
+.dr-dot { width: 14px; flex-shrink: 0; font-size: 16px; color: var(--text-dim); }
+.dr-text { flex-grow: 1; flex-shrink: 1; font-size: 16px; white-space: normal; }
 .preset-row { flex-direction: row; align-items: center; }
 .preset-name { flex-grow: 1; }
 .preset-field { margin-bottom: 8px; }

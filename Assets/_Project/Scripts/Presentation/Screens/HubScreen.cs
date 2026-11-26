@@ -1275,43 +1275,171 @@ namespace ApoGirl.Presentation.Screens
 
         /// <summary>
         /// 실행 속도 '보통': 하루(낮·밤 두 칸)가 끝나면 그날 있었던 일을 확인창으로 보여 주고 확인을 받는다.
-        /// 칸마다 결과 한 줄과 같은 내용에 습격·침입·탐험 결과를 붙인다. 이벤트·결과 카드는 그대로 따로 뜬다.
+        /// 내용 종류마다 문단을 나눈다 — 한 일(칸마다 낮·밤 표 · 행동 · 결과, 줄 맞춤) / 달라진 것(하루 합계, 종류마다 한 줄)
+        /// / 사람들(함께한 시간·동아리·동료 외출) / 거점(습격·침입·정수기·방송). 이벤트·결과 카드는 그대로 따로 뜬다.
         /// </summary>
         private void ShowDayReport(int day, List<SlotOutcome> slots, System.Action onClosed)
         {
-            var lines = new List<string>();
-            foreach (var outcome in slots)
-            {
-                var detail = SlotDetail(outcome, 4);
-                if (outcome.Expedition != null && outcome.ExpeditionRequest != null)
-                {
-                    detail = Loc.T("location." + outcome.ExpeditionRequest.LocationId) + " — " + Loc.T("settle.exp_" + outcome.Expedition.Status) + "  · " + detail;
-                }
-
-                if (outcome.Raid != null)
-                {
-                    detail += "  · " + Loc.T(outcome.Raid.WhileExpedition
-                        ? (outcome.Raid.Repelled ? "settle.raid_held_out" : "settle.raid_lost_out")
-                        : (outcome.Raid.Repelled ? "settle.raid_held" : "settle.raid_lost"));
-                }
-
-                if (outcome.Intrusion != null)
-                {
-                    detail += "  · " + Loc.T(outcome.Intrusion.Held ? "dayreport.intrusion_held" : "dayreport.intrusion_lost");
-                }
-
-                lines.Add(Loc.F("dayreport.line", UiText.Phase(outcome.Phase), Loc.Action(outcome.ActionId, "short"), detail));
-            }
-
             var weekday = Loc.T("weekday." + CalendarRules.Weekday(day, _session.Definitions.Balance));
-            _card.Show(Loc.F("dayreport.title", _session.State.Calendar.Week, day, weekday), string.Join("\n", lines), true, (Loc.T("dayreport.ok"), () =>
+            _card.Show(Loc.F("dayreport.title", _session.State.Calendar.Week, day, weekday), "", false, (Loc.T("dayreport.ok"), () =>
             {
                 _card.Hide();
                 onClosed();
             }));
+            _card.SetVariant("day-report");
+
+            var box = _card.Extra;
+            var total = new Core.Effects.StateDelta();
+            var people = new List<string>();
+            var home = new List<string>();
+
+            // ── 한 일 ──
+            DayReportHead(box, "dayreport.sec_done").AddToClassList("first");
+            foreach (var outcome in slots)
+            {
+                total.Merge(outcome.Delta);
+                string what;
+                string result;
+                var tone = "";
+                if (outcome.Expedition != null && outcome.ExpeditionRequest != null)
+                {
+                    what = Loc.T("location." + outcome.ExpeditionRequest.LocationId);
+                    result = Loc.T("settle.exp_" + outcome.Expedition.Status);
+                }
+                else
+                {
+                    what = Loc.Action(outcome.ActionId, "short");
+                    var craft = CraftUi.TickerLine(outcome.Craft);
+                    result = craft.Length > 0 ? craft : UiText.Result(outcome.Result);
+                    if (craft.Length == 0)
+                    {
+                        tone = outcome.Result == CheckResult.GreatSuccess ? "great" : outcome.Result == CheckResult.Failure ? "fail" : "";
+                    }
+                }
+
+                var row = new VisualElement();
+                row.AddToClassList("dr-row");
+                var phase = new Label(UiText.Phase(outcome.Phase));
+                phase.AddToClassList("dr-phase");
+                phase.AddToClassList(outcome.Phase == DayPhase.Night ? "night" : "day");
+                row.Add(phase);
+                var name = new Label(what);
+                name.AddToClassList("dr-action");
+                row.Add(name);
+                var mark = new Label(result);
+                mark.AddToClassList("dr-result");
+                if (tone.Length > 0)
+                {
+                    mark.AddToClassList(tone);
+                }
+
+                row.Add(mark);
+                box.Add(row);
+
+                // 사람들
+                var together = PeopleUi.TogetherLine(outcome.Together);
+                if (together.Length > 0)
+                {
+                    people.Add(together);
+                }
+
+                people.AddRange(PeopleUi.ClubLines(outcome.Club));
+                people.AddRange(PeopleUi.OutingLines(outcome.OutingDepartures, outcome.OutingReturns));
+
+                // 거점
+                if (outcome.Raid != null)
+                {
+                    home.Add(Loc.T(outcome.Raid.WhileExpedition
+                        ? (outcome.Raid.Repelled ? "settle.raid_held_out" : "settle.raid_lost_out")
+                        : (outcome.Raid.Repelled ? "settle.raid_held" : "settle.raid_lost")));
+                    if (!string.IsNullOrEmpty(outcome.Raid.CoveredNpcId))
+                    {
+                        home.Add(Loc.F("settle.raid_covered", Loc.T("npc." + outcome.Raid.CoveredNpcId)));
+                    }
+                }
+
+                if (outcome.Intrusion != null)
+                {
+                    home.Add(Loc.T(outcome.Intrusion.Held ? "dayreport.intrusion_held" : "dayreport.intrusion_lost"));
+                }
+
+                if (outcome.MorningPurified > 0)
+                {
+                    home.Add(Loc.F("result.purifier", outcome.MorningPurified));
+                }
+                else if (outcome.PurifierStopped)
+                {
+                    home.Add(Loc.T("result.purifier_stopped"));
+                }
+
+                // 식량 줄: 살림 동료가 거른 물·거둔 밭 식량, 스프링클러
+                var garden = outcome.Garden;
+                if (garden != null && garden.Water > 0)
+                {
+                    home.Add(Loc.F("result.house_purify", garden.Water));
+                }
+
+                if (garden != null && garden.Food > 0)
+                {
+                    home.Add(Loc.F(garden.Sprinkled ? "result.garden_sprinkled" : "result.garden", garden.Food));
+                }
+                else if (outcome.SprinklerStopped)
+                {
+                    home.Add(Loc.T("result.sprinkler_stopped"));
+                }
+
+                if (outcome.Broadcast != null && outcome.Broadcast.Replied)
+                {
+                    home.Add(Loc.T("result.broadcast_reply"));
+                }
+
+                if (outcome.Broadcast != null && outcome.Broadcast.Risky)
+                {
+                    home.Add(Loc.T("result.broadcast_risk"));
+                }
+            }
+
+            // ── 달라진 것 (하루 합계) ──
+            var changes = UiText.DeltaLines(total);
+            DayReportSection(box, "dayreport.sec_changes", changes);
+            DayReportSection(box, "dayreport.sec_people", people);
+            DayReportSection(box, "dayreport.sec_base", home);
+            KoreanFont.ApplyDeep(box);
         }
 
-        /// <summary>결과 한 줄·하루 보고에 쓰는 칸 내용: 판정(제작이면 제작 단계)·변화 몇 개·함께한 사람·정수기·동아리·방송·동료 외출.</summary>
+        private static Label DayReportHead(VisualElement box, string key)
+        {
+            var head = new Label(Loc.T(key));
+            head.AddToClassList("dr-head");
+            box.Add(head);
+            return head;
+        }
+
+        /// <summary>문단 하나: 머리 + 한 줄씩 (비었으면 문단째 뺀다).</summary>
+        private static void DayReportSection(VisualElement box, string key, List<string> lines)
+        {
+            if (lines.Count == 0)
+            {
+                return;
+            }
+
+            DayReportHead(box, key);
+            foreach (var text in lines.Distinct())
+            {
+                // 점과 글을 나눠 둬서 줄이 넘어가도 글 머리가 맞는다
+                var line = new VisualElement();
+                line.AddToClassList("dr-line");
+                var dot = new Label("·");
+                dot.AddToClassList("dr-dot");
+                line.Add(dot);
+                var body = new Label(text);
+                body.AddToClassList("dr-text");
+                line.Add(body);
+                box.Add(line);
+            }
+        }
+
+        /// <summary>결과 한 줄(티커)에 쓰는 칸 내용: 판정(제작이면 제작 단계)·변화 몇 개·함께한 사람·정수기·동아리·방송·동료 외출.</summary>
         private static string SlotDetail(SlotOutcome outcome, int maxDeltas)
         {
             var deltas = UiText.DeltaLines(outcome.Delta);
