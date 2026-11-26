@@ -3,8 +3,8 @@
 〈마지막 학기 (가제)〉 — 마일스톤별 진행 기록, 남은 작업, 하면 좋을 작업, 하지 말아야 할 작업.
 
 - 기준: 마스터 프롬프트 12장 마일스톤(원본 `C:\Users\phiti\Desktop\MASTER_PROMPT.md`), 결정 기록 부록 C(D1~D26).
-- 작성: 2026-11-25. 커밋 811개(2026-11-18 ~ 2026-11-25), 마지막 커밋 `838dcdca` (그 뒤 이번 커밋).
-- EditMode 테스트: 486개 모두 통과 (2026-11-26, 쉬는 카드 회복량 표시 뒤).
+- 작성: 2026-11-25. 커밋 811개(2026-11-18 ~ 2026-11-25), 마지막 커밋 `79167790` (그 뒤 이번 커밋).
+- EditMode 테스트: 494개 모두 통과 (2026-11-26, 습격 조정 뒤).
 - 자세한 내용은 각 계획 문서에 있다. 이 문서는 한눈에 보는 요약이다.
 - **새 세션은 이 문서부터 읽는다.** 작업이 하나 끝날 때마다 고친다.
   - 해당 절을 고친다.
@@ -194,6 +194,7 @@ M6·M7과 함께 기획 확장(동료·CD·깊은 곳·고양이·동아리·방
    - **스트레스 균형** (#25, 배드 100%): 상한 폐기·행동 5~10·탐험 10~15로 14주 무렵부터 스트레스가 80~90에 붙는다. 회복(밤 휴식 10·낮잠 0.5배·일상)과 비용(`ActionStressMin`, 탐험 10~15), 강제 휴식·`CollapseStress`를 함께 본다. main 덮어쓰기의 `CraftContinueStress` 5는 이제 단계(=10)다.
    - 엔딩 기준을 다시 맞춘다. 특화가 모자라고(12%) 관계·서사가 조금 넘친다(14%).
    - 전략 격차를 줄인다. NIGHT_ONLY·CARE 배드가 75%이고, 밤 탐험 감염 사망이 많다.
+   - **밤 탐험 중 습격**(2026-11-26)이 새로 굴러 봇 배드·습격 횟수가 달라진다. 다음 봇 돌리기에서 습격 돌파·방어도 바닥 비율을 본다 (방어도 손실 3·10, 상한 30%).
    - 폭설 한파 `ForceChance`(0.8 → 0.6 검토)를 본다.
    - 진실 단서·CD 수집률을 본다. 깊은 곳 특별한 방 안으로 옮겨 헤드리스에서 드물어졌다(`HeadlessDeepRoomChance` 0.5·`HeadlessDeepRoomEncounterChance` 0.6).
    - 장마 침수층의 실제 수확·위험을 플레이 기록으로 확인한다.
@@ -418,3 +419,4 @@ M6·M7과 함께 기획 확장(동료·CD·깊은 곳·고양이·동아리·방
 - 2026-11-26 · 힉스필드 17차 3절 추가(사용자 요청: 김장 컷도 인물이 다름): 사람이 나오는 이벤트 컷 전부(2·5·12·14·15차)를 인물 초상과 대조. 12·14·15차는 맞고, 2차·5차 17장(`evt_cal_kimjang`·`_daeboreum`·`_chuseok`, `evt_a2_ration_fight`, `evt_day_intrusion`, 4막 `first_snow`·`ubc_last_show`·`cure_hint`·`fuel`·`notice`·`research_memo`·`seat_choice`·`seat_count`·`ubc_relay`·`waterworks_map`, 선배 `evt_sv_attendance`·`_recognized`)의 프롬프트를 더함. 4막 선생님은 갈래 없이 나오는 컷에만(④, 좌석 고르기는 완치 ⑤), 뒷모습뿐인 `finale_raid`·`new_year`와 `truth_link`·`mart_split`은 그대로. 제출은 사용자.
 - 2026-11-26 · 힉스필드 17차 연결: `ArtInbox/illustrations/redo17/` 23장(2절 6장 + 3절 17장)을 `Story/Events`에 덮어씀(16:9 · 너비 1920 jpg, `install_events12.py`), 옛 그림은 `code_temp/apogirl/backup_redo17/`. 비교 시트로 보니 서진·도현·송예지·박 선생님·윤 선생님·선배가 모두 시트대로 나옴. 작은 흠: `evt_a4_seat_choice` 종이에 여덟 칸 대신 그림이 그려짐(이벤트 컷이라 둠).
 - 2026-11-26 · 하린의 겨울 방문 `EVT_HR_WINTER_VISIT`(사용자 요청): 마트에서 하린을 마주하고(`RINGLEADER_MET`) 데려오지 않은 판(`BULLY_RESCUED` 없음)에, 첫눈(`FIRST_SNOW`) 뒤 42~47주 낮에 하린이 정 반장 무리에서 내쳐져 교문으로 찾아온다(`act4_expansion.json`, `Act4Expansion.yarn` — 마트에서 고른 길 `RINGLEADER_SPOKE`·`BULLY_FORGAVE`·각자 살자로 대사가 갈림). 선택: 들이기 `LET_IN`(합류·호감 −5·`RINGLEADER_NIGHT`를 켜 시키지 않은 일 → 창고 → 비밀이 이어짐, 깃발 `HR_WINTER_JOINED`) / 철창 사이로 먹을 것만 `FEED`(식량 3·물 2, `HR_WINTER_FED`) / 돌려보내기 `SHUT`(`HR_WINTER_SHUT`). 두 거절 길에 후일담 `EP_RINGLEADER_WINTER_FED`·`_SHUT`. 컷은 `evt_farewell_harin`을 빌림, 새 컷 프롬프트는 HIGGSFIELD_ASSETS_17 4절. 테스트 `HarinWinterVisitTests` 3개(EditMode 489 통과).
+- 2026-11-26 · 습격 조정(사용자 요청): 방어도 손실 막으면 −3(`RaidRepelDefenseLoss`, 낮 침입도 같은 값)·뚫리면 −10(`RaidBreachDefenseLoss`), 습격 확률 상한 `RaidMaxChance` 0.30(코드 기본값만으로는 위협 100·방어 0에서 약 16%라 상한은 밸런스 표 덮어쓰기에서 걸린다 — 사용자의 로컬 `balance_overrides.json` 0.7도 0.3으로, 커밋 안 함). 밤 탐험 칸도 습격을 굴린다(예전엔 탐험 칸은 건너뜀): 주인공 전투력이 빠지고 방어도는 주인공 몫만 빠진다 — `DefenseRules.AbsenceDefenseFactor` = 1 − 1/거점 인원(주인공 + 합류한 사람, 고양이·외출 중 동료 제외, 4명이면 ×0.75, 혼자면 0), 주인공은 다치지 않고 대신 다침도 없다. 수학여행은 그대로 ×0.5(`RaidAbsence.Trip`). 결과 줄 `result.raid_while_out`, 결산 `settle.raid_held_out`·`_lost_out`(탐험 줄 다음에). 테스트 `RaidAbsenceTests` 5개(EditMode 494 통과).

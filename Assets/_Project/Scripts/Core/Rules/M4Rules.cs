@@ -133,8 +133,11 @@ namespace ApoGirl.Core.Rules
         /// <summary>이벤트로 강제된 습격 (막 마무리 등).</summary>
         public bool Scripted;
 
-        /// <summary>거점을 비운 밤의 습격 (수학여행 중).</summary>
+        /// <summary>주인공이 거점에 없던 밤의 습격 (수학여행·밤 탐험 중). 주인공은 다치지 않는다.</summary>
         public bool Away;
+
+        /// <summary>주인공이 밤 탐험에 나간 사이의 습격 (돌아와서 안다, 2026-11-26).</summary>
+        public bool WhileExpedition;
 
         /// <summary>뚫렸을 때 주인공 앞을 막아서다 다친 동료 (기획 C.2 ③, 없으면 빈 문자열).</summary>
         public string CoveredNpcId = "";
@@ -182,11 +185,20 @@ namespace ApoGirl.Core.Rules
 
             // 세력 영향 (사거리 파가 적대면 더 세게 온다)
             var threat = state.Base.Threat + FactionRules.RaidStrengthBonus(state, db);
-            return Resolve(state, threat, (action?.RaidGuard ?? 0) + companionGuard, false, balance, random, delta, action?.AwayFromBase ?? false);
+            var absence = action == null ? RaidAbsence.None
+                : action.AwayFromBase ? RaidAbsence.Trip
+                : action.IsExpedition ? RaidAbsence.Expedition
+                : RaidAbsence.None;
+            return Resolve(state, threat, (action?.RaidGuard ?? 0) + companionGuard, false, balance, random, delta, absence);
         }
 
-        public static RaidResult Resolve(GameState state, int threat, int guard, bool scripted, BalanceConfig balance, IRandomService random, StateDelta delta, bool away = false)
+        public static RaidResult Resolve(GameState state, int threat, int guard, bool scripted, BalanceConfig balance, IRandomService random, StateDelta delta, bool away = false) =>
+            Resolve(state, threat, guard, scripted, balance, random, delta, away ? RaidAbsence.Trip : RaidAbsence.None);
+
+        public static RaidResult Resolve(GameState state, int threat, int guard, bool scripted, BalanceConfig balance, IRandomService random, StateDelta delta, RaidAbsence absence)
         {
+            var away = absence != RaidAbsence.None;   // 주인공이 없다: 전투력이 빠지고, 주인공은 다치지 않는다
+            var trip = absence == RaidAbsence.Trip;   // 다 같이 비웠다: 고양이도 없고, 돌아오는 장면이 갈린다
             var strength = threat + random.Range(0, Math.Max(0, balance.RaidStrengthVariance));
             // 제작 P6: 몰려든 무리 일부가 교문 앞 허수아비에 붙는다 (세기만 줄인다)
             var relief = Math.Min(ScarecrowRules.Relief(state, balance), Math.Max(0, strength));
@@ -196,13 +208,14 @@ namespace ApoGirl.Core.Rules
                 Scripted = scripted,
                 Strength = strength,
                 ScarecrowRelief = relief,
-                Power = DefenseRules.Power(state, balance, guard, random, true, away),
+                Power = DefenseRules.Power(state, balance, guard, random, true, absence),
                 Away = away,
+                WhileExpedition = absence == RaidAbsence.Expedition,
             };
             result.Repelled = result.Power >= result.Strength;
 
             state.Exploration.Raids++;
-            if (away)
+            if (trip)
             {
                 state.Flags.Add(FlagWhileAway);
             }
@@ -221,8 +234,8 @@ namespace ApoGirl.Core.Rules
                 state.Flags.Add(FlagBreached);
                 EffectApplier.ChangeVital(state, VitalType.Stress, balance.RaidBreachStress, balance, delta);
                 var scale = SpecialRules.RaidDamageScale(state, balance); // 도현 특기: 피해 −20%
-                scale *= CatRules.RaidDamageScale(state, balance, away);   // 확장 2: 고양이가 먼저 털을 세운다
-                result.CatWarned = !away && CatRules.IsHome(state);
+                scale *= CatRules.RaidDamageScale(state, balance, trip);   // 확장 2: 고양이가 먼저 털을 세운다 (밤 탐험 중이면 동료들에게)
+                result.CatWarned = !trip && CatRules.IsHome(state);
                 if (!away)
                 {
                     // 관계가 높은 동료가 대신 다치기도 한다 (기획 C.2 ③)

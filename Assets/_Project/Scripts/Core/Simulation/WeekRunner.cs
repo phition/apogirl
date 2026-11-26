@@ -344,7 +344,8 @@ namespace ApoGirl.Core.Simulation
                 EffectApplier.ChangeThreat(_state, action.ThreatGain, Balance, delta);
             }
 
-            if (calendar.Phase == DayPhase.Night && !action.IsExpedition && !action.Confined && player.Vitals.Hp > 0)
+            // 밤 탐험 중에도 습격은 온다: 주인공 전투력 없이, 방어도는 주인공 몫만 빼고 (RaidRules.RollNight → RaidAbsence.Expedition)
+            if (calendar.Phase == DayPhase.Night && !action.Confined && player.Vitals.Hp > 0)
             {
                 var companionGuard = TraitRules.RoundInt(TraitRules.Sum(_state, _db, TraitModifierKind.RaidGuard));
                 outcome.Raid = RaidRules.RollNight(_state, action, Balance, _random, delta, companionGuard, _db);

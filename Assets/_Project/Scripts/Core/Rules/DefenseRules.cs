@@ -34,16 +34,54 @@ namespace ApoGirl.Core.Rules
             return power;
         }
 
-        /// <summary>거점 방어력 (습격과 같은 계산 + 경보·함정).</summary>
-        public static int Power(GameState state, BalanceConfig balance, int guard, IRandomService random, bool consumeTrap, bool away = false)
+        /// <summary>거점 방어력 (습격과 같은 계산 + 경보·함정). away = 수학여행처럼 거점을 비운 밤.</summary>
+        public static int Power(GameState state, BalanceConfig balance, int guard, IRandomService random, bool consumeTrap, bool away = false) =>
+            Power(state, balance, guard, random, consumeTrap, away ? RaidAbsence.Trip : RaidAbsence.None);
+
+        /// <summary>거점 방어력. 주인공이 자리를 비웠으면 주인공 전투력이 빠지고, 방어도는 AbsenceDefenseFactor만큼만 든다.</summary>
+        public static int Power(GameState state, BalanceConfig balance, int guard, IRandomService random, bool consumeTrap, RaidAbsence absence)
         {
-            // 거점을 비웠으면 주인공 전투력이 빠지고 방어도도 일부만 (지키는 사람이 없다)
-            return balance.RaidBasePower + (away ? 0 : DerivedStats.CombatPower(state, balance))
-                   + (int)Math.Round((state.Base.Defense + SpecialRules.DefenseBonus(state, balance)) * balance.RaidDefenseWeight * (away ? balance.AwayDefenseFactor : 1f))
+            return balance.RaidBasePower + (absence == RaidAbsence.None ? DerivedStats.CombatPower(state, balance) : 0)
+                   + (int)Math.Round((state.Base.Defense + SpecialRules.DefenseBonus(state, balance)) * balance.RaidDefenseWeight * AbsenceDefenseFactor(state, balance, absence))
                    + guard
                    + ExtraPower(state, balance, consumeTrap)
                    + random.Range(0, Math.Max(0, balance.RaidPowerVariance));
         }
+
+        /// <summary>
+        /// 방어도가 드는 비율: 거점에 있으면 1, 수학여행은 AwayDefenseFactor,
+        /// 밤 탐험은 주인공 몫(1/거점 인원)만 빠진다 — 넷이면 3/4, 혼자면 0 (2026-11-26 사용자).
+        /// </summary>
+        public static float AbsenceDefenseFactor(GameState state, BalanceConfig balance, RaidAbsence absence)
+        {
+            switch (absence)
+            {
+                case RaidAbsence.Trip:
+                    return balance.AwayDefenseFactor;
+                case RaidAbsence.Expedition:
+                    return 1f - 1f / HeadCount(state);
+                default:
+                    return 1f;
+            }
+        }
+
+        /// <summary>거점 인원: 주인공 + 합류한 사람(선생님 포함, 고양이·낮 외출 중인 동료 제외).</summary>
+        public static int HeadCount(GameState state)
+        {
+            return 1 + state.Npcs.Count(n => n.Value.Status == NpcStatus.Joined && !CatRules.IsCat(n.Key) && !OutingRules.IsAwayNow(state, n.Value));
+        }
+    }
+
+    /// <summary>습격 때 주인공이 거점에 없었던 까닭.</summary>
+    public enum RaidAbsence
+    {
+        None,
+
+        /// <summary>수학여행처럼 다 같이 거점을 비운 밤 (RAID_WHILE_AWAY, 고양이도 함께 없다).</summary>
+        Trip,
+
+        /// <summary>주인공 혼자 밤 탐험에 나간 사이 (동료들은 거점에 있다).</summary>
+        Expedition,
     }
 
     /// <summary>낮 침입 한 번의 결과.</summary>

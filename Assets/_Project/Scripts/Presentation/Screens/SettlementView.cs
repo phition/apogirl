@@ -178,7 +178,15 @@ namespace ApoGirl.Presentation.Screens
                 var when = Loc.F("settle.when", slot.Day, UiText.Phase(slot.Phase));
                 if (slot.Raid != null)
                 {
-                    lines.Add(when + " " + Loc.T(slot.Raid.Repelled ? "settle.raid_held" : "settle.raid_lost"));
+                    if (slot.Raid.WhileExpedition && slot.Expedition != null && slot.ExpeditionRequest != null)
+                    {
+                        // 밤 탐험 줄을 먼저, 그 사이에 온 습격을 다음 줄에
+                        lines.Add(when + " " + Loc.T("location." + slot.ExpeditionRequest.LocationId) + " — " + Loc.T("settle.exp_" + slot.Expedition.Status));
+                    }
+
+                    lines.Add(when + " " + Loc.T(slot.Raid.WhileExpedition
+                        ? (slot.Raid.Repelled ? "settle.raid_held_out" : "settle.raid_lost_out")
+                        : (slot.Raid.Repelled ? "settle.raid_held" : "settle.raid_lost")));
                     if (!string.IsNullOrEmpty(slot.Raid.CoveredNpcId))
                     {
                         lines.Add(Loc.F("settle.raid_covered", Loc.T("npc." + slot.Raid.CoveredNpcId)));

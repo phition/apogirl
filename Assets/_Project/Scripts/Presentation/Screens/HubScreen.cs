@@ -975,6 +975,11 @@ namespace ApoGirl.Presentation.Screens
 
             if (outcome.Raid != null)
             {
+                if (outcome.Raid.WhileExpedition)
+                {
+                    lines.Add(Loc.T("result.raid_while_out"));   // 밤 탐험에 나간 사이에 왔다
+                }
+
                 lines.Add(Loc.F(outcome.Raid.Repelled ? "result.raid_repelled" : "result.raid_breached", outcome.Raid.Strength, outcome.Raid.Power));
                 if (!string.IsNullOrEmpty(outcome.Raid.CoveredNpcId))
                 {

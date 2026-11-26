@@ -168,7 +168,7 @@ namespace ApoGirl.Core.Definitions
         public int RaidStartWeek = 4;
         public float RaidBaseChance = 0.01f; // M7-2: 0.02 → 0.01
         public float RaidChancePerPoint = 0.0015f; // M7-2: 0.004 → 0.0015 (연 30회 → 목표 10~15회)
-        public float RaidMaxChance = 0.15f; // M7-2: 0.25 → 0.15
+        public float RaidMaxChance = 0.30f; // M7-2: 0.25 → 0.15, 2026-11-26 사용자: 0.30
 
         /// <summary>습격 세기 = 위협 + 0~분산, 방어력 = 전투력 + 방어도 × 배율 + 경계 보정 + 0~분산.</summary>
         public int RaidStrengthVariance = 20;
@@ -180,11 +180,11 @@ namespace ApoGirl.Core.Definitions
 
         /// <summary>습격 결과.</summary>
         public int RaidRepelStress = 6;
-        public int RaidRepelDefenseLoss = 1;
+        public int RaidRepelDefenseLoss = 3; // 2026-11-26 사용자: 1 → 3 (낮 침입도 같다)
         public int RaidBreachStress = 18;
         public int RaidBreachHp = 10;
         public int RaidBreachFood = 3;
-        public int RaidBreachDefenseLoss = 3;
+        public int RaidBreachDefenseLoss = 10; // 2026-11-26 사용자: 3 → 10 (낮 침입도 같다)
         public int RaidThreatRelief = 20; // M7-2: 8 → 20 (습격 빈도는 위협 증가량 ÷ 이 값으로 정해진다: 연 30회 → 약 12회)
 
         /// <summary>위협도: 탐험마다(낮/밤), 매주 자연 증가, 상한.</summary>
@@ -958,7 +958,8 @@ namespace ApoGirl.Core.Definitions
         /// <summary>함정: 습격·침입 1회에 하나를 써서 방어력 +TrapPower (최대 MaxTraps개).</summary>
         public int TrapPower = 25;
 
-        /// <summary>거점을 비운 밤(수학여행)의 습격: 방어도 반영 비율 (주인공 전투력은 빠진다).</summary>
+        /// <summary>거점을 비운 밤(수학여행)의 습격: 방어도 반영 비율 (주인공 전투력은 빠진다).
+        /// 밤 탐험 중 습격은 이 값 대신 1 − 1/거점 인원(주인공 포함)을 쓴다 (DefenseRules.AbsenceDefenseFactor, 2026-11-26 사용자).</summary>
         public float AwayDefenseFactor = 0.5f;
         public int MaxTraps = 3;
 
