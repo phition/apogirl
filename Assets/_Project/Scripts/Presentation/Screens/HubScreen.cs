@@ -658,16 +658,17 @@ namespace ApoGirl.Presentation.Screens
             _layers.CloseAll();
             _session.BeginWeek();
             ShowThanks(received);
+            var daySlots = new List<SlotOutcome>();   // 하루 보고 (보통 속도): 오늘 지난 칸들
             while (_session.IsExecuting)
             {
-                // 단면도: 이번 칸의 방으로 걸어간다 (보통 속도면 걷는 모습을 조금 보여 준다)
+                // 단면도: 이번 칸의 방으로 걸어간다 (이벤트만이 아니면 걷는 모습을 조금 보여 준다)
                 if (_session.HasMetTeacher)
                 {
                     var calendar = _session.State.Calendar;
                     var slot = _session.State.Plan.Slots[CalendarRules.SlotIndex(calendar.Day, calendar.Phase)];
                     _section.SetTime(calendar.Phase, true);
                     var travel = _section.Act(slot.ActionId);
-                    var wait = _speed == ExecutionSpeed.Normal ? Mathf.Min(travel, 3f) : _speed == ExecutionSpeed.Fast ? Mathf.Min(travel, 1.8f) : 0f;
+                    var wait = ExecutionPacer.WalkSeconds(travel, _speed);
                     if (wait > 0.05f)
                     {
                         yield return new WaitForSeconds(wait);
@@ -751,6 +752,27 @@ namespace ApoGirl.Presentation.Screens
                     {
                         yield return new WaitForSeconds(delay);
                     }
+                }
+
+                // 보통 속도: 하루(밤 칸)가 끝나면 그날 보고를 확인창으로 (갇혀 있는 날·끝난 판은 넘긴다)
+                if (!confined && !string.IsNullOrEmpty(outcome.ActionId))
+                {
+                    daySlots.Add(outcome);
+                }
+
+                if (outcome.Phase == Core.State.DayPhase.Night || !_session.IsExecuting)
+                {
+                    if (ExecutionPacer.DailyReport(_speed) && daySlots.Count > 0 && !_session.IsEnded)
+                    {
+                        var closed = false;
+                        ShowDayReport(outcome.Day, daySlots, () => closed = true);
+                        while (!closed)
+                        {
+                            yield return null;
+                        }
+                    }
+
+                    daySlots = new List<SlotOutcome>();
                 }
             }
 
@@ -1228,14 +1250,74 @@ namespace ApoGirl.Presentation.Screens
                 return;
             }
 
-            var deltas = UiText.DeltaLines(outcome.Delta);
-            // 제작 칸은 판정 결과 대신 제작 단계(착수·제작 중·완성…)를 보인다
-            var craft = CraftUi.TickerLine(outcome.Craft);
             if (outcome.Craft != null && outcome.Craft.Finished)
             {
                 Sound.Play(CraftDoneSfx, SoundCategory.Ui);   // 15차: 마지막 망치질 (완성·잘 만듦·손질)
             }
-            var detail = (craft.Length > 0 ? craft : UiText.Result(outcome.Result)) + (deltas.Count > 0 ? "  " + string.Join("  ", deltas.Take(3)) : "");
+
+            var line = new Label(Loc.F("hud.ticker", outcome.Day, UiText.Phase(outcome.Phase), Loc.Action(outcome.ActionId, "short"), SlotDetail(outcome, 3)));
+            line.AddToClassList("ticker-line");
+            line.EnableInClassList("great", outcome.Result == Core.Rules.CheckResult.GreatSuccess);
+            line.EnableInClassList("fail", outcome.Result == Core.Rules.CheckResult.Failure);
+            _ticker.Add(line);
+            while (_ticker.childCount > 4)
+            {
+                _ticker.RemoveAt(0);
+            }
+
+            line.schedule.Execute(() => line.AddToClassList("fading")).ExecuteLater(2600);
+            line.schedule.Execute(() => line.RemoveFromHierarchy()).ExecuteLater(3000);
+            if (outcome.Result == Core.Rules.CheckResult.GreatSuccess)
+            {
+                _standing.React("bright", 1.6f);
+            }
+        }
+
+        /// <summary>
+        /// 실행 속도 '보통': 하루(낮·밤 두 칸)가 끝나면 그날 있었던 일을 확인창으로 보여 주고 확인을 받는다.
+        /// 칸마다 결과 한 줄과 같은 내용에 습격·침입·탐험 결과를 붙인다. 이벤트·결과 카드는 그대로 따로 뜬다.
+        /// </summary>
+        private void ShowDayReport(int day, List<SlotOutcome> slots, System.Action onClosed)
+        {
+            var lines = new List<string>();
+            foreach (var outcome in slots)
+            {
+                var detail = SlotDetail(outcome, 4);
+                if (outcome.Expedition != null && outcome.ExpeditionRequest != null)
+                {
+                    detail = Loc.T("location." + outcome.ExpeditionRequest.LocationId) + " — " + Loc.T("settle.exp_" + outcome.Expedition.Status) + "  · " + detail;
+                }
+
+                if (outcome.Raid != null)
+                {
+                    detail += "  · " + Loc.T(outcome.Raid.WhileExpedition
+                        ? (outcome.Raid.Repelled ? "settle.raid_held_out" : "settle.raid_lost_out")
+                        : (outcome.Raid.Repelled ? "settle.raid_held" : "settle.raid_lost"));
+                }
+
+                if (outcome.Intrusion != null)
+                {
+                    detail += "  · " + Loc.T(outcome.Intrusion.Held ? "dayreport.intrusion_held" : "dayreport.intrusion_lost");
+                }
+
+                lines.Add(Loc.F("dayreport.line", UiText.Phase(outcome.Phase), Loc.Action(outcome.ActionId, "short"), detail));
+            }
+
+            var weekday = Loc.T("weekday." + CalendarRules.Weekday(day, _session.Definitions.Balance));
+            _card.Show(Loc.F("dayreport.title", _session.State.Calendar.Week, day, weekday), string.Join("\n", lines), true, (Loc.T("dayreport.ok"), () =>
+            {
+                _card.Hide();
+                onClosed();
+            }));
+        }
+
+        /// <summary>결과 한 줄·하루 보고에 쓰는 칸 내용: 판정(제작이면 제작 단계)·변화 몇 개·함께한 사람·정수기·동아리·방송·동료 외출.</summary>
+        private static string SlotDetail(SlotOutcome outcome, int maxDeltas)
+        {
+            var deltas = UiText.DeltaLines(outcome.Delta);
+            // 제작 칸은 판정 결과 대신 제작 단계(착수·제작 중·완성…)를 보인다
+            var craft = CraftUi.TickerLine(outcome.Craft);
+            var detail = (craft.Length > 0 ? craft : UiText.Result(outcome.Result)) + (deltas.Count > 0 ? "  " + string.Join("  ", deltas.Take(maxDeltas)) : "");
             var together = PeopleUi.TogetherLine(outcome.Together);
             if (together.Length > 0)
             {
@@ -1275,22 +1357,8 @@ namespace ApoGirl.Presentation.Screens
             {
                 detail += "  · " + string.Join(" · ", outings);
             }
-            var line = new Label(Loc.F("hud.ticker", outcome.Day, UiText.Phase(outcome.Phase), Loc.Action(outcome.ActionId, "short"), detail));
-            line.AddToClassList("ticker-line");
-            line.EnableInClassList("great", outcome.Result == Core.Rules.CheckResult.GreatSuccess);
-            line.EnableInClassList("fail", outcome.Result == Core.Rules.CheckResult.Failure);
-            _ticker.Add(line);
-            while (_ticker.childCount > 4)
-            {
-                _ticker.RemoveAt(0);
-            }
 
-            line.schedule.Execute(() => line.AddToClassList("fading")).ExecuteLater(2600);
-            line.schedule.Execute(() => line.RemoveFromHierarchy()).ExecuteLater(3000);
-            if (outcome.Result == Core.Rules.CheckResult.GreatSuccess)
-            {
-                _standing.React("bright", 1.6f);
-            }
+            return detail;
         }
 
         private void ShowToast(string message)

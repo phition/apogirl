@@ -272,8 +272,15 @@ namespace ApoGirl.Tests.EditMode
             var stop = new SlotOutcome { StopForPresentation = true };
             var pass = new SlotOutcome();
             Assert.AreEqual(0f, ExecutionPacer.DelayAfter(stop, ExecutionSpeed.Normal));
-            Assert.Greater(ExecutionPacer.DelayAfter(pass, ExecutionSpeed.Normal), ExecutionPacer.DelayAfter(pass, ExecutionSpeed.Fast));
+            // 2026-11-26: 빠름 = 예전 보통 빠르기, 보통은 같은 빠르기에 하루 보고 확인창
+            Assert.AreEqual(1f, ExecutionPacer.DelayAfter(pass, ExecutionSpeed.Normal));
+            Assert.AreEqual(1f, ExecutionPacer.DelayAfter(pass, ExecutionSpeed.Fast));
             Assert.AreEqual(0f, ExecutionPacer.DelayAfter(pass, ExecutionSpeed.EventsOnly));
+            Assert.AreEqual(3f, ExecutionPacer.WalkSeconds(5f, ExecutionSpeed.Fast));
+            Assert.AreEqual(0f, ExecutionPacer.WalkSeconds(5f, ExecutionSpeed.EventsOnly));
+            Assert.IsTrue(ExecutionPacer.DailyReport(ExecutionSpeed.Normal));
+            Assert.IsFalse(ExecutionPacer.DailyReport(ExecutionSpeed.Fast));
+            Assert.IsFalse(ExecutionPacer.DailyReport(ExecutionSpeed.EventsOnly));
         }
     }
 

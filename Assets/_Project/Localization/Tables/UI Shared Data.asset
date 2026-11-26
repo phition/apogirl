@@ -8299,6 +8299,26 @@ MonoBehaviour:
     m_Key: result.raid_while_out
     m_Metadata:
       m_Items: []
+  - m_Id: 2532048031203328
+    m_Key: dayreport.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2532048098312192
+    m_Key: dayreport.line
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2532048098312193
+    m_Key: dayreport.ok
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2532048098312194
+    m_Key: dayreport.intrusion_held
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2532048098312195
+    m_Key: dayreport.intrusion_lost
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

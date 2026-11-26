@@ -162,7 +162,7 @@ namespace ApoGirl.Presentation.Screens
                 _buttons.Add(undo);
             }
 
-            KoreanFont.ApplyDeep(_sheet);
+            // 글꼴은 Theme.uss #settlement 절 (거점 서랍과 같은 학교안심 엣지·부산단디손글씨). KoreanFont.ApplyDeep은 USS 글꼴을 덮어쓰므로 부르지 않는다
             _sheet.RemoveFromClassList("hidden");
             next.Focus();
         }

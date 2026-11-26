@@ -990,7 +990,10 @@ namespace ApoGirl.Systems.Session
 
     public enum ExecutionSpeed
     {
+        /// <summary>하루(낮·밤)가 끝날 때마다 그날 보고를 확인창으로 띄워 확인을 받는다 (사용자 결정 2026-11-26).</summary>
         Normal,
+
+        /// <summary>확인 없이 흘려보낸다. 2026-11-26부터 예전 '보통'의 빠르기 (걷기 3초까지·칸 사이 1초).</summary>
         Fast,
 
         /// <summary>멈출 슬롯만 보여주고 나머지는 즉시 진행.</summary>
@@ -1007,12 +1010,14 @@ namespace ApoGirl.Systems.Session
                 return 0f;
             }
 
-            switch (speed)
-            {
-                case ExecutionSpeed.Normal: return 1f;
-                case ExecutionSpeed.Fast: return 0.5f;
-                default: return 0f;
-            }
+            return speed == ExecutionSpeed.EventsOnly ? 0f : 1f;
         }
+
+        /// <summary>단면도에서 방까지 걷는 모습을 보여 줄 시간 (이벤트만이면 0).</summary>
+        public static float WalkSeconds(float travel, ExecutionSpeed speed) =>
+            speed == ExecutionSpeed.EventsOnly ? 0f : Math.Min(travel, 3f);
+
+        /// <summary>하루가 끝날 때 그날 보고를 확인창으로 띄우는가 (보통만).</summary>
+        public static bool DailyReport(ExecutionSpeed speed) => speed == ExecutionSpeed.Normal;
     }
 }
