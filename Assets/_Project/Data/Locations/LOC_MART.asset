@@ -215,6 +215,7 @@ MonoBehaviour:
           Once: 0
         DefaultLootTableId: LOOT_MART_WAREHOUSE
         WallDecor: 
+        BaseId: 
       - Id: ROOM_MART_OFFICE
         Width: 12
         DoorXs:
@@ -252,6 +253,7 @@ MonoBehaviour:
           Once: 0
         DefaultLootTableId: LOOT_STORE_OFFICE
         WallDecor: 
+        BaseId: 
       - Id: ROOM_DEEP_MART_COLD
         Width: 13
         DoorXs:
@@ -287,6 +289,7 @@ MonoBehaviour:
           Once: 0
         DefaultLootTableId: LOOT_MART_VAULT
         WallDecor: 
+        BaseId: 
       - Id: ROOM_DEEP_MART_STOCK
         Width: 13
         DoorXs:
@@ -322,6 +325,7 @@ MonoBehaviour:
           Once: 0
         DefaultLootTableId: LOOT_MART_VAULT
         WallDecor: 
+        BaseId: 
       - Id: ROOM_MART_WAREHOUSE_L1
         Width: 20
         DoorXs:
@@ -385,6 +389,7 @@ MonoBehaviour:
           Once: 0
         DefaultLootTableId: LOOT_MART_WAREHOUSE
         WallDecor: 
+        BaseId: ROOM_MART_WAREHOUSE
       Containers:
       - Id: C_MART_SHELF_1
         Kind: 4

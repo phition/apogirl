@@ -260,6 +260,7 @@ MonoBehaviour:
           Once: 0
         DefaultLootTableId: LOOT_WATER_LAB
         WallDecor: 
+        BaseId: 
       - Id: ROOM_WATER_LAB
         Width: 16
         DoorXs:
@@ -309,6 +310,7 @@ MonoBehaviour:
           Once: 0
         DefaultLootTableId: LOOT_WATER_LAB
         WallDecor: 
+        BaseId: 
       - Id: ROOM_WATER_CONTROL
         Width: 14
         DoorXs:
@@ -346,6 +348,7 @@ MonoBehaviour:
           Once: 0
         DefaultLootTableId: LOOT_SUBWAY_OFFICE
         WallDecor: 
+        BaseId: 
       - Id: ROOM_DEEP_WATER_CHEM
         Width: 13
         DoorXs:
@@ -381,6 +384,7 @@ MonoBehaviour:
           Once: 0
         DefaultLootTableId: LOOT_WATER_VAULT
         WallDecor: 
+        BaseId: 
       - Id: ROOM_DEEP_WATER_PUMP
         Width: 13
         DoorXs:
@@ -416,6 +420,7 @@ MonoBehaviour:
           Once: 0
         DefaultLootTableId: LOOT_WATER_VAULT
         WallDecor: 
+        BaseId: 
       - Id: ROOM_WATER_LAB_L1
         Width: 16
         DoorXs:
@@ -465,6 +470,7 @@ MonoBehaviour:
           Once: 0
         DefaultLootTableId: LOOT_WATER_LAB
         WallDecor: 
+        BaseId: ROOM_WATER_LAB
       Containers:
       - Id: C_WATER_TANK_1
         Kind: 4

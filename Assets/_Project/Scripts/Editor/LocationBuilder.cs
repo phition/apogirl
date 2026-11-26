@@ -172,7 +172,7 @@ namespace ApoGirl.EditorTools
             foreach (var w in weights) total += w;
             var copy = new RoomTemplateDef
             {
-                Id = source.Id + "_L" + k, Width = source.Width, DefaultLootTableId = source.DefaultLootTableId, WallDecor = source.WallDecor,
+                Id = source.Id + "_L" + k, BaseId = source.Id, Width = source.Width, DefaultLootTableId = source.DefaultLootTableId, WallDecor = source.WallDecor,
                 DoorXs = new List<float>(source.DoorXs), Windows = new List<WindowDef>(source.Windows),
             };
             var x = start;

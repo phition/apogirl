@@ -71,6 +71,7 @@ MonoBehaviour:
           Once: 0
         DefaultLootTableId: LOOT_TUTORIAL
         WallDecor: 
+        BaseId: 
       Containers:
       - Id: C_TUT_LOCKER_A
         Kind: 0

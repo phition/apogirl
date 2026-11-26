@@ -277,6 +277,15 @@ namespace ApoGirl.Core.Definitions
 
         /// <summary>뒷벽 장식 스프라이트 (비면 교실은 칠판, 나머지는 없음).</summary>
         public string WallDecor = "";
+
+        /// <summary>
+        /// 소품 배치만 바꾼 사본(LocationBuilder.Diversify의 {Id}_L1~)이면 원래 템플릿 ID. 방 이름처럼 '어떤 방인가'를 묻는 곳은
+        /// Id 대신 KindId를 쓴다 (사본 ID로 문구를 찾으면 키가 없어 영문 ID가 그대로 보인다).
+        /// </summary>
+        public string BaseId = "";
+
+        /// <summary>방의 종류: 사본이면 원래 템플릿 ID, 아니면 자기 ID.</summary>
+        public string KindId => string.IsNullOrEmpty(BaseId) ? Id : BaseId;
     }
 
     /// <summary>복도에 붙은 방 하나: X = 방 왼쪽 끝의 복도 위치(SpanX). Number는 방 이름 표기용 (예: 2-3 교실의 3).</summary>

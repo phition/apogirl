@@ -330,6 +330,7 @@ MonoBehaviour:
           Once: 0
         DefaultLootTableId: LOOT_SCHOOL_GENERAL
         WallDecor: 
+        BaseId: 
       - Id: ROOM_RESTROOM
         Width: 8
         DoorXs:
@@ -358,6 +359,7 @@ MonoBehaviour:
           Once: 0
         DefaultLootTableId: LOOT_SCHOOL_GENERAL
         WallDecor: 
+        BaseId: 
       - Id: ROOM_OFFICE
         Width: 18
         DoorXs:
@@ -425,6 +427,7 @@ MonoBehaviour:
           Once: 0
         DefaultLootTableId: LOOT_SCHOOL_TEACHER
         WallDecor: 
+        BaseId: 
       - Id: ROOM_NURSE
         Width: 14
         DoorXs:
@@ -472,6 +475,7 @@ MonoBehaviour:
           Once: 0
         DefaultLootTableId: LOOT_SCHOOL_NURSE
         WallDecor: wall_redcross
+        BaseId: 
       - Id: ROOM_SCIENCE
         Width: 14
         DoorXs:
@@ -519,6 +523,7 @@ MonoBehaviour:
           Once: 0
         DefaultLootTableId: LOOT_SCHOOL_SCIENCE
         WallDecor: wall_periodic
+        BaseId: 
       - Id: ROOM_MUSIC
         Width: 14
         DoorXs:
@@ -566,6 +571,7 @@ MonoBehaviour:
           Once: 0
         DefaultLootTableId: LOOT_SCHOOL_MUSIC
         WallDecor: wall_music
+        BaseId: 
       - Id: ROOM_HOMEEC
         Width: 14
         DoorXs:
@@ -613,6 +619,7 @@ MonoBehaviour:
           Once: 0
         DefaultLootTableId: LOOT_SCHOOL_HOMEEC
         WallDecor: wall_kitchen
+        BaseId: 
       - Id: ROOM_COMPUTER
         Width: 14
         DoorXs:
@@ -660,6 +667,7 @@ MonoBehaviour:
           Once: 0
         DefaultLootTableId: LOOT_SCHOOL_COMPUTER
         WallDecor: wall_whiteboard
+        BaseId: 
       - Id: ROOM_BROADCAST
         Width: 14
         DoorXs:
@@ -707,6 +715,7 @@ MonoBehaviour:
           Once: 0
         DefaultLootTableId: LOOT_SCHOOL_BROADCAST
         WallDecor: wall_onair
+        BaseId: 
       - Id: ROOM_CLASSROOM_L1
         Width: 14
         DoorXs:
@@ -765,6 +774,7 @@ MonoBehaviour:
           Once: 0
         DefaultLootTableId: LOOT_SCHOOL_GENERAL
         WallDecor: 
+        BaseId: ROOM_CLASSROOM
       - Id: ROOM_CLASSROOM_L2
         Width: 14
         DoorXs:
@@ -823,6 +833,7 @@ MonoBehaviour:
           Once: 0
         DefaultLootTableId: LOOT_SCHOOL_GENERAL
         WallDecor: 
+        BaseId: ROOM_CLASSROOM
       - Id: ROOM_CLASSROOM_L3
         Width: 14
         DoorXs:
@@ -881,6 +892,7 @@ MonoBehaviour:
           Once: 0
         DefaultLootTableId: LOOT_SCHOOL_GENERAL
         WallDecor: 
+        BaseId: ROOM_CLASSROOM
       - Id: ROOM_RESTROOM_L1
         Width: 8
         DoorXs:
@@ -909,6 +921,7 @@ MonoBehaviour:
           Once: 0
         DefaultLootTableId: LOOT_SCHOOL_GENERAL
         WallDecor: 
+        BaseId: ROOM_RESTROOM
       - Id: ROOM_RESTROOM_L2
         Width: 8
         DoorXs:
@@ -937,6 +950,7 @@ MonoBehaviour:
           Once: 0
         DefaultLootTableId: LOOT_SCHOOL_GENERAL
         WallDecor: 
+        BaseId: ROOM_RESTROOM
       Containers:
       - Id: C_1F_HALL_LOCKER_A
         Kind: 0

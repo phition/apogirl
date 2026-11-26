@@ -194,6 +194,7 @@ MonoBehaviour:
           Once: 0
         DefaultLootTableId: LOOT_HOUSE_ROOM
         WallDecor: 
+        BaseId: 
       - Id: ROOM_HOUSE_NURSE
         Width: 14
         DoorXs:
@@ -231,6 +232,7 @@ MonoBehaviour:
           Once: 1
         DefaultLootTableId: LOOT_HOUSE_ROOM
         WallDecor: 
+        BaseId: 
       - Id: ROOM_DEEP_RES_VAULT
         Width: 13
         DoorXs:
@@ -266,6 +268,7 @@ MonoBehaviour:
           Once: 0
         DefaultLootTableId: LOOT_RESIDENTIAL_VAULT
         WallDecor: 
+        BaseId: 
       - Id: ROOM_DEEP_RES_STORE
         Width: 13
         DoorXs:
@@ -301,6 +304,7 @@ MonoBehaviour:
           Once: 0
         DefaultLootTableId: LOOT_RESIDENTIAL_VAULT
         WallDecor: 
+        BaseId: 
       - Id: ROOM_HOUSE_L1
         Width: 14
         DoorXs:
@@ -347,6 +351,7 @@ MonoBehaviour:
           Once: 0
         DefaultLootTableId: LOOT_HOUSE_ROOM
         WallDecor: 
+        BaseId: ROOM_HOUSE
       - Id: ROOM_HOUSE_L2
         Width: 14
         DoorXs:
@@ -393,6 +398,7 @@ MonoBehaviour:
           Once: 0
         DefaultLootTableId: LOOT_HOUSE_ROOM
         WallDecor: 
+        BaseId: ROOM_HOUSE
       - Id: ROOM_HOUSE_L3
         Width: 14
         DoorXs:
@@ -439,6 +445,7 @@ MonoBehaviour:
           Once: 0
         DefaultLootTableId: LOOT_HOUSE_ROOM
         WallDecor: 
+        BaseId: ROOM_HOUSE
       Containers:
       - Id: C_RES_MAILBOX
         Kind: 4

@@ -177,6 +177,7 @@ MonoBehaviour:
           Once: 0
         DefaultLootTableId: LOOT_SUBWAY_OFFICE
         WallDecor: 
+        BaseId: 
       - Id: ROOM_SUBWAY_KIOSK
         Width: 10
         DoorXs:
@@ -212,6 +213,7 @@ MonoBehaviour:
           Once: 0
         DefaultLootTableId: LOOT_SUBWAY_KIOSK
         WallDecor: 
+        BaseId: 
       - Id: ROOM_SUBWAY_RESTROOM
         Width: 8
         DoorXs:
@@ -238,6 +240,7 @@ MonoBehaviour:
           Once: 0
         DefaultLootTableId: LOOT_SUBWAY_KIOSK
         WallDecor: 
+        BaseId: 
       - Id: ROOM_DEEP_SUB_VAULT
         Width: 13
         DoorXs:
@@ -273,6 +276,7 @@ MonoBehaviour:
           Once: 0
         DefaultLootTableId: LOOT_SUBWAY_VAULT
         WallDecor: 
+        BaseId: 
       - Id: ROOM_DEEP_SUB_SHELTER
         Width: 13
         DoorXs:
@@ -308,6 +312,7 @@ MonoBehaviour:
           Once: 0
         DefaultLootTableId: LOOT_SUBWAY_VAULT
         WallDecor: 
+        BaseId: 
       - Id: ROOM_SUBWAY_OFFICE_L1
         Width: 14
         DoorXs:
@@ -345,6 +350,7 @@ MonoBehaviour:
           Once: 0
         DefaultLootTableId: LOOT_SUBWAY_OFFICE
         WallDecor: 
+        BaseId: ROOM_SUBWAY_OFFICE
       Containers:
       - Id: C_SUB_LOCKER_1
         Kind: 0

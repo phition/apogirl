@@ -2680,7 +2680,7 @@ namespace ApoGirl.Exploration.Runtime
                     SpanX = door.X,
                     IsDeep = layout.IsDeep(door.Floor),   // 깊은 곳 특별한 방: 어둡고 소리가 울린다
                     Template = template,
-                    Label = Loc.F("roomname." + template.Id, door.Floor + 1, door.Number),
+                    Label = Loc.F("roomname." + template.KindId, door.Floor + 1, door.Number),   // 배치만 바꾼 사본도 원래 방 이름
                 };
                 _rooms.Add(room);
                 _areasById.Add(room);

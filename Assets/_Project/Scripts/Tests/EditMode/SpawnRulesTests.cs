@@ -90,6 +90,14 @@ namespace ApoGirl.Tests.EditMode
         }
 
         [Test]
+        public void RoomLayoutCopy_KeepsKindOfRoom()
+        {
+            // 소품 배치만 바꾼 사본({Id}_L1~)은 방 이름 같은 '방의 종류'를 원래 템플릿에서 찾는다 (사본 ID로 찾으면 영문 ID가 그대로 보인다)
+            Assert.AreEqual("ROOM_CLASSROOM", new RoomTemplateDef { Id = "ROOM_CLASSROOM" }.KindId);
+            Assert.AreEqual("ROOM_CLASSROOM", new RoomTemplateDef { Id = "ROOM_CLASSROOM_L2", BaseId = "ROOM_CLASSROOM" }.KindId);
+        }
+
+        [Test]
         public void Hostile_OnePerFloor_AndCountCappedByFloors()
         {
             var location = Location();

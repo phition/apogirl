@@ -88,6 +88,7 @@ MonoBehaviour:
           Once: 0
         DefaultLootTableId: LOOT_STORE_STOCK
         WallDecor: 
+        BaseId: 
       - Id: ROOM_STORE_OFFICE
         Width: 8
         DoorXs:
@@ -114,6 +115,7 @@ MonoBehaviour:
           Once: 0
         DefaultLootTableId: LOOT_STORE_OFFICE
         WallDecor: 
+        BaseId: 
       Containers:
       - Id: C_SHELF_1
         Kind: 4

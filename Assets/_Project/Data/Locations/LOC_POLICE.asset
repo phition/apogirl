@@ -200,6 +200,7 @@ MonoBehaviour:
           Once: 0
         DefaultLootTableId: LOOT_POLICE_OFFICE
         WallDecor: 
+        BaseId: 
       - Id: ROOM_POLICE_ARMORY
         Width: 10
         DoorXs:
@@ -235,6 +236,7 @@ MonoBehaviour:
           Once: 0
         DefaultLootTableId: LOOT_POLICE_ARMORY
         WallDecor: 
+        BaseId: 
       - Id: ROOM_POLICE_CELL
         Width: 10
         DoorXs:
@@ -252,6 +254,7 @@ MonoBehaviour:
           Once: 0
         DefaultLootTableId: LOOT_HOUSE_ROOM
         WallDecor: 
+        BaseId: 
       - Id: ROOM_DEEP_POLICE_EVIDENCE
         Width: 13
         DoorXs:
@@ -287,6 +290,7 @@ MonoBehaviour:
           Once: 0
         DefaultLootTableId: LOOT_POLICE_VAULT
         WallDecor: 
+        BaseId: 
       - Id: ROOM_DEEP_POLICE_HOLD
         Width: 13
         DoorXs:
@@ -322,6 +326,7 @@ MonoBehaviour:
           Once: 0
         DefaultLootTableId: LOOT_POLICE_VAULT
         WallDecor: 
+        BaseId: 
       - Id: ROOM_POLICE_OFFICE_L1
         Width: 16
         DoorXs:
@@ -370,6 +375,7 @@ MonoBehaviour:
           Once: 0
         DefaultLootTableId: LOOT_POLICE_OFFICE
         WallDecor: 
+        BaseId: ROOM_POLICE_OFFICE
       Containers:
       - Id: C_POLICE_FRONT_DESK
         Kind: 1

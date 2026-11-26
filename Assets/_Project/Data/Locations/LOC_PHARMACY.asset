@@ -107,6 +107,7 @@ MonoBehaviour:
           Once: 0
         DefaultLootTableId: LOOT_PHARMACY_SHELF
         WallDecor: 
+        BaseId: 
       - Id: ROOM_PH_CLINIC
         Width: 12
         DoorXs:
@@ -144,6 +145,7 @@ MonoBehaviour:
           Once: 0
         DefaultLootTableId: LOOT_PHARMACY_CLINIC
         WallDecor: 
+        BaseId: 
       - Id: ROOM_PH_STOCKROOM
         Width: 10
         DoorXs:
@@ -179,6 +181,7 @@ MonoBehaviour:
           Once: 0
         DefaultLootTableId: LOOT_PHARMACY_STOCK
         WallDecor: 
+        BaseId: 
       Containers:
       - Id: C_PH_SHELF_1
         Kind: 2
