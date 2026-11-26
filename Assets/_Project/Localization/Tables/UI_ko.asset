@@ -9074,14 +9074,6 @@ MonoBehaviour:
     m_Localized: "\uC804\uAE30\uAC00 \uBAA8\uC790\uB77C \uCEF4\uD4E8\uD130\uAC00 \uCF1C\uC9C0\uC9C0 \uC54A\uB294\uB2E4. (\uC5EC\uC720 \uC804\uB825 {0} \uD544\uC694)"
     m_Metadata:
       m_Items: []
-  - m_Id: 2670410113236992
-    m_Localized: "\uC5F0\uCD9C \uCF2C (F9)"
-    m_Metadata:
-      m_Items: []
-  - m_Id: 2670410188734464
-    m_Localized: "\uC5F0\uCD9C \uB054 (F9) \u2014 \uBE44\uAD50\uC6A9"
-    m_Metadata:
-      m_Items: []
   references:
     version: 2
     RefIds: []

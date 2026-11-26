@@ -126,28 +126,6 @@ namespace ApoGirl.Presentation.Screens
             public float StateChance = 0.5f;
         }
 
-        /// <summary>
-        /// 단면도 연출 (도트 그림 위에 얹는 부드러운 빛과 그늘 — 그림은 Resources/Art/UI/HubFx, 색은 Theme.uss .hub-fx 절).
-        /// 방마다 천장·모서리 그늘, 창으로 드는 빛줄기, 밤에 사람이 있는 방의 전등 빛, 떠다니는 먼지, 화면 가장자리 비네트와 입자.
-        /// 수치는 0~1 불투명도. 디버그 F9로 켜고 끈다 (HubSectionView.ToggleLook).
-        /// </summary>
-        [Serializable]
-        public sealed class LookDef
-        {
-            public bool Enabled = true;
-            public string Folder = "UI/HubFx/";
-            public float ShadeTop = 0.5f;
-            public float ShadeSide = 0.32f;
-            public float ShadeBottom = 0.3f;
-            public float Beam = 0.26f;
-            public float Lamp = 0.5f;
-            public float Vignette = 0.55f;
-            public float Grain = 0.06f;
-
-            /// <summary>빛줄기 하나에 떠다니는 먼지 수.</summary>
-            public int MotesPerBeam = 5;
-        }
-
         /// <summary>건물 왼쪽 바깥: 마당 바닥, 낮은 담, 교문. 외출하는 동료는 현관을 나와 ExitX까지 걸어가 사라진다.</summary>
         [Serializable]
         public sealed class OutsideDef
@@ -275,9 +253,6 @@ namespace ApoGirl.Presentation.Screens
 
         /// <summary>계획 중 동료의 돌아다니기·잡담.</summary>
         public ChatterDef Chatter = new ChatterDef();
-
-        /// <summary>빛·그늘·색감 연출.</summary>
-        public LookDef Look = new LookDef();
 
         /// <summary>단면도 뒤 바깥 풍경 (마을·하늘·날씨).</summary>
         public HubSkyConfig Sky = new HubSkyConfig();
@@ -641,7 +616,6 @@ namespace ApoGirl.Presentation.Screens
         {
             _building.Clear();
             _rooms.Clear();
-            _motes.Clear();
             HideRoomPanel();
             _host.style.width = Px(_config.Width);
             _host.style.height = Px(ArtHeight);
@@ -777,12 +751,10 @@ namespace ApoGirl.Presentation.Screens
                 // 옥상에는 어둡게 덮는 막을 두지 않는다 (하늘·구름·비가 가리지 않게, 밤에는 소품 색만 낮춘다)
                 if (!def.Roof)
                 {
-                    AddRoomShade(element, def, height);
                     view.Dark = Place(element, "hub-dark", 0, 0, def.Width, height);
                     view.Dark.pickingMode = PickingMode.Ignore;
                     view.Glow = Place(element, "hub-glow", 0, 0, def.Width, height);
                     view.Glow.pickingMode = PickingMode.Ignore;
-                    view.Lamp = AddRoomLamp(element, def, height);
                 }
 
                 view.Ring = Place(element, "hub-ring", 0, 0, def.Width, height);
@@ -810,7 +782,7 @@ namespace ApoGirl.Presentation.Screens
             }
 
             BuildWalls();
-            BuildFrameFx();
+
         }
 
         /// <summary>
@@ -1634,161 +1606,6 @@ namespace ApoGirl.Presentation.Screens
             return frames;
         }
 
-        // ── 연출: 도트 그림 위의 부드러운 빛과 그늘 (HubSectionConfig.LookDef) ──
-
-        private bool _lookOn = true;
-        private VisualElement _frameFx;
-        private readonly List<VisualElement> _motes = new List<VisualElement>();
-        private float _moteIn;
-
-        private Texture2D Fx(string name) => StoryArt.Load(_config.Look.Folder + name);
-
-        private VisualElement FxLayer(VisualElement parent, string texture, string cssClass, float x, float y, float width, float height, float opacity)
-        {
-            var image = Fx(texture);
-            if (image == null || opacity <= 0f)
-            {
-                return null;
-            }
-
-            var element = Place(parent, "hub-fx", x, y, width, height);
-            element.AddToClassList(cssClass);
-            element.pickingMode = PickingMode.Ignore;
-            element.style.backgroundImage = new StyleBackground(image);
-            element.style.backgroundSize = new StyleBackgroundSize(new BackgroundSize(Length.Percent(100), Length.Percent(100)));
-            element.style.opacity = opacity;
-            return element;
-        }
-
-        /// <summary>방 안 그늘(천장 아래·양쪽 모서리·바닥 가장자리)과 창으로 드는 빛줄기, 그 안의 먼지.</summary>
-        private void AddRoomShade(VisualElement room, HubSectionConfig.RoomDef def, float height)
-        {
-            var look = _config.Look;
-            if (look == null || !look.Enabled)
-            {
-                return;
-            }
-
-            FxLayer(room, "fx_shade_top", "fx-shade", 0, 5, def.Width, 38, look.ShadeTop);
-            FxLayer(room, "fx_shade_side", "fx-shade", 0, 0, 22, height, look.ShadeSide);
-            var right = FxLayer(room, "fx_shade_side", "fx-shade", def.Width - 22, 0, 22, height, look.ShadeSide);
-            if (right != null)
-            {
-                right.style.scale = new StyleScale(new Scale(new Vector2(-1f, 1f)));
-            }
-
-            FxLayer(room, "fx_shade_bottom", "fx-shade", 0, height - 34, def.Width, 26, look.ShadeBottom);
-
-            foreach (var window in def.Windows)
-            {
-                // 창 아래로 비스듬히 떨어지는 빛 (낮에는 따뜻한 햇빛, 밤에는 옅은 달빛 — 색은 USS)
-                var top = height - 8 - window.Y - 6;
-                var beam = FxLayer(room, "fx_beam", "fx-beam", window.X - 46, top, 118, height - 8 - top, look.Beam);
-                if (beam == null)
-                {
-                    continue;
-                }
-
-                for (var i = 0; i < look.MotesPerBeam; i++)
-                {
-                    var mote = Place(room, "hub-fx", window.X - 30 + UnityEngine.Random.Range(0f, 70f), top + UnityEngine.Random.Range(4f, height - 16 - top), 1, 1);
-                    mote.AddToClassList("fx-mote");
-                    mote.pickingMode = PickingMode.Ignore;
-                    _motes.Add(mote);
-                }
-            }
-        }
-
-        /// <summary>천장에서 아래로 퍼지는 전등 빛 (밤에 사람이 있는 방만 켠다).</summary>
-        private VisualElement AddRoomLamp(VisualElement room, HubSectionConfig.RoomDef def, float height)
-        {
-            var look = _config.Look;
-            if (look == null || !look.Enabled)
-            {
-                return null;
-            }
-
-            var lamp = def.Props.FirstOrDefault(p => p.Key == "prop_ceiling_lamp");
-            var x = lamp != null ? lamp.X : def.Width * 0.5f;
-            var width = Mathf.Min(def.Width * 1.1f, 190f);
-            return FxLayer(room, "fx_cone", "fx-lamp", x - width * 0.5f, 6, width, height - 10, look.Lamp);
-        }
-
-        /// <summary>화면 전체에 얹는 겹: 가장자리 비네트와 종이 같은 입자.</summary>
-        private void BuildFrameFx()
-        {
-            _frameFx?.RemoveFromHierarchy();
-            _frameFx = null;
-            var look = _config.Look;
-            var frame = _host.parent;
-            if (look == null || !look.Enabled || frame == null)
-            {
-                return;
-            }
-
-            _frameFx = new VisualElement { pickingMode = PickingMode.Ignore };
-            _frameFx.AddToClassList("hub-fx");
-            _frameFx.AddToClassList("fx-frame");
-            frame.Add(_frameFx);
-            var grain = Fx("fx_grain");
-            if (grain != null && look.Grain > 0f)
-            {
-                var layer = new VisualElement { pickingMode = PickingMode.Ignore };
-                layer.AddToClassList("fx-grain");
-                layer.style.backgroundImage = new StyleBackground(grain);
-                layer.style.backgroundRepeat = new StyleBackgroundRepeat(new BackgroundRepeat(Repeat.Repeat, Repeat.Repeat));
-                layer.style.backgroundSize = new StyleBackgroundSize(new BackgroundSize(new Length(256), new Length(256)));
-                layer.style.opacity = look.Grain;
-                _frameFx.Add(layer);
-            }
-
-            var vignette = Fx("fx_vignette");
-            if (vignette != null && look.Vignette > 0f)
-            {
-                var layer = new VisualElement { pickingMode = PickingMode.Ignore };
-                layer.AddToClassList("fx-vignette");
-                layer.style.backgroundImage = new StyleBackground(vignette);
-                layer.style.backgroundSize = new StyleBackgroundSize(new BackgroundSize(Length.Percent(100), Length.Percent(100)));
-                layer.style.opacity = look.Vignette;
-                _frameFx.Add(layer);
-            }
-
-            frame.EnableInClassList("look-off", !_lookOn);
-        }
-
-        /// <summary>디버그 F9: 연출을 켜고 끈다 (비교용). 지금 켜져 있는지 돌려준다.</summary>
-        public bool ToggleLook()
-        {
-            _lookOn = !_lookOn;
-            _host.parent?.EnableInClassList("look-off", !_lookOn);
-            return _lookOn;
-        }
-
-        /// <summary>빛줄기 속 먼지: 몇 초마다 가까운 자리로 천천히 흘러간다 (움직임은 USS transition).</summary>
-        private void TickMotes(float dt)
-        {
-            if (_motes.Count == 0)
-            {
-                return;
-            }
-
-            _moteIn -= dt;
-            if (_moteIn > 0f)
-            {
-                return;
-            }
-
-            _moteIn = 2.5f;
-            foreach (var mote in _motes)
-            {
-                if (UnityEngine.Random.value < 0.6f)
-                {
-                    mote.style.translate = new StyleTranslate(new Translate(UnityEngine.Random.Range(-14f, 14f), UnityEngine.Random.Range(-10f, 12f)));
-                    mote.style.opacity = UnityEngine.Random.Range(0.15f, 0.8f);
-                }
-            }
-        }
-
         // ── 계획 중: 동료가 돌아다니고 잡담한다 ──
 
         private readonly Dictionary<string, float> _wanderIn = new Dictionary<string, float>();
@@ -1949,7 +1766,6 @@ namespace ApoGirl.Presentation.Screens
             TickDoors(dt);
             TickBubbles(dt);
             TickIdle(dt);
-            TickMotes(dt);
 
             _lightTimer += dt;
             if (_lightTimer > 0.3f)
@@ -1983,11 +1799,6 @@ namespace ApoGirl.Presentation.Screens
                 room.Dark.EnableInClassList("dim", night && occupied);
                 room.Dark.EnableInClassList("blackout", night && blackout && !occupied);
                 room.Glow.EnableInClassList("on", night && occupied);
-                if (room.Lamp != null)
-                {
-                    room.Lamp.EnableInClassList("on", night && occupied && room.Open);
-                    room.Lamp.EnableInClassList("blackout", blackout);
-                }
             }
         }
 
@@ -2122,9 +1933,6 @@ namespace ApoGirl.Presentation.Screens
             public VisualElement Element;
             public VisualElement Dark;
             public VisualElement Glow;
-
-            /// <summary>밤에 사람이 있는 방의 전등 빛 (연출, 없을 수 있다).</summary>
-            public VisualElement Lamp;
 
             /// <summary>거점 상황판에서 가리킨 방의 빛 테두리 (BASE_TAB_PROPOSAL P2).</summary>
             public VisualElement Ring;

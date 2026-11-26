@@ -1076,17 +1076,5 @@
   },
   "BbsRoom": "COMPUTER",
   "BbsProp": "prop_computer",
-  "BbsFlag": "BBS_KNOWN",
-  "Look": {
-    "Enabled": true,
-    "Folder": "UI/HubFx/",
-    "ShadeTop": 0.55,
-    "ShadeSide": 0.34,
-    "ShadeBottom": 0.3,
-    "Beam": 0.34,
-    "Lamp": 0.5,
-    "Vignette": 0.6,
-    "Grain": 0.018,
-    "MotesPerBeam": 5
-  }
+  "BbsFlag": "BBS_KNOWN"
 }

@@ -116,8 +116,6 @@ namespace ApoGirl.Presentation.Screens
 
             _sun = Sprite(_config.Sun, _config.SunX, _config.SunY, "hub-sun");
             _moon = Sprite(_config.Moon, _config.SunX, _config.SunY, "hub-moon");
-            Halo(_sun, "fx-halo-sun");
-            Halo(_moon, "fx-halo-moon");
 
             // 먼 마을: 옥상 바닥 위로 지평선이 보인다 (밑은 건물에 가림)
             var far = Load(_config.Far);
@@ -274,23 +272,6 @@ namespace ApoGirl.Presentation.Screens
             strip.style.backgroundSize = new StyleBackgroundSize(new BackgroundSize(new Length(texture.width * _scale), new Length(texture.height * _scale)));
             strip.style.backgroundPositionY = new StyleBackgroundPosition(new BackgroundPosition(BackgroundPositionKeyword.Bottom));
             return strip;
-        }
-
-        /// <summary>해·달 둘레의 번진 빛 (연출 그림 UI/HubFx/fx_glow, 색·세기는 USS).</summary>
-        private static void Halo(VisualElement body, string cssClass)
-        {
-            var glow = StoryArt.Load("UI/HubFx/fx_glow");
-            if (body == null || glow == null)
-            {
-                return;
-            }
-
-            var halo = new VisualElement { pickingMode = PickingMode.Ignore };
-            halo.AddToClassList("hub-fx");
-            halo.AddToClassList(cssClass);
-            halo.style.backgroundImage = new StyleBackground(glow);
-            halo.style.backgroundSize = new StyleBackgroundSize(new BackgroundSize(Length.Percent(100), Length.Percent(100)));
-            body.Add(halo);
         }
 
         private VisualElement Sprite(string key, float x, float y, string cssClass)

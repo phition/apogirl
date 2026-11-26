@@ -1934,25 +1934,3 @@ Button.base-advice-line:hover { background-color: rgba(42, 38, 32, 0.12); color:
 .bbs-field:disabled { opacity: 1; }
 /* 단면도: 켜지는 컴퓨터는 누를 수 있다 */
 .hub-bbs:hover { -unity-background-image-tint-color: rgb(170, 200, 255); }
-
-/* ── 단면도 연출 (HubSectionConfig.LookDef): 도트 그림 위에 얹는 부드러운 빛과 그늘. 그림은 흰 알파(UI/HubFx), 색은 여기 틴트 ──
-   낮 = 따뜻한 햇빛 줄기 + 차가운 그늘, 밤 = 달빛 남색 + 사람 있는 방의 따뜻한 전등. 디버그 F9로 끈다(.look-off). */
-.look-off .hub-fx { display: none; }
-.fx-shade { -unity-background-image-tint-color: rgb(22, 26, 48); }
-.fx-beam { -unity-background-image-tint-color: rgb(255, 226, 170); transition-property: opacity, -unity-background-image-tint-color; transition-duration: 0.8s; }
-.section-frame.night .fx-beam { -unity-background-image-tint-color: rgb(120, 150, 230); }
-.fx-mote { background-color: rgb(255, 240, 205); border-radius: 1px; opacity: 0.5; transition-property: translate, opacity; transition-duration: 2.4s; transition-timing-function: ease-in-out-sine; }
-.section-frame.night .fx-mote { background-color: rgb(170, 190, 240); }
-.fx-lamp { -unity-background-image-tint-color: rgb(255, 196, 120); display: none; }
-.fx-lamp.on { display: flex; }
-.fx-lamp.on.blackout { -unity-background-image-tint-color: rgb(255, 150, 70); scale: 0.6 0.7; }
-.fx-frame { position: absolute; left: 0; top: 0; right: 0; bottom: 0; }
-.fx-grain, .fx-vignette { position: absolute; left: 0; top: 0; right: 0; bottom: 0; }
-.fx-vignette { -unity-background-image-tint-color: rgb(10, 12, 26); }
-.fx-halo-sun { position: absolute; left: -90%; top: -90%; right: -90%; bottom: -90%; -unity-background-image-tint-color: rgb(255, 232, 170); opacity: 0.55; }
-.fx-halo-moon { position: absolute; left: -110%; top: -110%; right: -110%; bottom: -110%; -unity-background-image-tint-color: rgb(170, 195, 255); opacity: 0.4; }
-/* 밤의 방: 중립 검정 대신 달빛 남색으로 가라앉고, 사람이 있는 방은 따뜻하게 */
-.hub-dark.night { background-color: rgba(8, 14, 40, 0.62); }
-.hub-dark.dim { background-color: rgba(24, 14, 6, 0.2); }
-.hub-dark.blackout { background-color: rgba(4, 6, 18, 0.82); }
-.hub-glow.on { background-color: rgba(255, 176, 96, 0.06); }

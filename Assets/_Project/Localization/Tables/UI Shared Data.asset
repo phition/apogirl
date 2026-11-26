@@ -9071,14 +9071,6 @@ MonoBehaviour:
     m_Key: bbs.no_power
     m_Metadata:
       m_Items: []
-  - m_Id: 2670410113236992
-    m_Key: debug.look_on
-    m_Metadata:
-      m_Items: []
-  - m_Id: 2670410188734464
-    m_Key: debug.look_off
-    m_Metadata:
-      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
