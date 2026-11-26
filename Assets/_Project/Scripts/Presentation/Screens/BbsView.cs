@@ -8,7 +8,6 @@ using ApoGirl.Presentation.Dialogue;
 using ApoGirl.Presentation.Text;
 using ApoGirl.Systems.Session;
 using UnityEngine;
-using FontAsset = UnityEngine.TextCore.Text.FontAsset;
 using UnityEngine.UIElements;
 
 namespace ApoGirl.Presentation.Screens
@@ -89,17 +88,13 @@ namespace ApoGirl.Presentation.Screens
     }
 
     /// <summary>
-    /// PC통신 '이제누리' (사용자 요청 2026-11-26): 파란 글자 화면, 명령을 타이핑해 쓴다.
+    /// PC통신 '이제누리' (사용자 요청 2026-11-26): 파란 글자 화면(둥근모꼴), 명령을 타이핑해 쓴다.
     /// 번호 = 메뉴·글, P = 앞 화면, T = 처음, N/B = 쪽 넘김, GO 이름, S 낱말(백과 찾기), W 글쓰기, H 도움말, X 끊기.
     /// 컴퓨터 전력이 불안정해 한 주에 SessionSeconds만 버틴다 — 남은 시간은 보여 주지 않고, 다 쓰면 WentDown을 부른다.
     /// 내가 쓴 게시판 글은 persistentDataPath/Bbs.json에 남는다 (모든 판 공통).
     /// </summary>
     public sealed class BbsView
     {
-        private static readonly string[] MonoFamilies = { "DotumChe", "돋움체", "GulimChe", "굴림체", "Malgun Gothic", "맑은 고딕" };
-        private static FontAsset _mono;
-        private static bool _monoTried;
-
         // 이번 주에 남은 시간 (접속을 끊었다가 다시 들어와도 이어진다)
         private static int _budgetWeek = -1;
         private static float _budget;
@@ -155,12 +150,7 @@ namespace ApoGirl.Presentation.Screens
 
             _overlay = new VisualElement { name = "bbs" };
             _overlay.AddToClassList("bbs-overlay");
-            var mono = Mono();
-            if (mono != null)
-            {
-                _overlay.style.unityFontDefinition = FontDefinition.FromSDFFont(mono);
-            }
-
+            // 글꼴은 Theme.uss(.bbs-overlay)가 둥근모꼴(UI/Fonts/DungGeunMo.ttf, 고정폭)로 정한다
             var frame = new VisualElement();
             frame.AddToClassList("bbs-frame");
             _screen = new Label { enableRichText = false };
@@ -178,12 +168,6 @@ namespace ApoGirl.Presentation.Screens
             frame.Add(line);
             _overlay.Add(frame);
             _host.Add(_overlay);
-            if (mono != null)
-            {
-                // 입력 칸은 테마가 글꼴을 따로 정해서 안쪽 글자까지 직접 넣는다
-                _field.Query<TextElement>().ForEach(t => t.style.unityFontDefinition = FontDefinition.FromSDFFont(mono));
-            }
-
             _back.Clear();
             _raw = null;
             _lastTick = Time.unscaledTime;
@@ -768,34 +752,6 @@ namespace ApoGirl.Presentation.Screens
             }
 
             return result;
-        }
-
-        private static FontAsset Mono()
-        {
-            if (_monoTried)
-            {
-                return _mono;
-            }
-
-            _monoTried = true;
-            foreach (var family in MonoFamilies)
-            {
-                try
-                {
-                    _mono = FontAsset.CreateFontAsset(family, "Regular");
-                }
-                catch (Exception)
-                {
-                    _mono = null;
-                }
-
-                if (_mono != null)
-                {
-                    break;
-                }
-            }
-
-            return _mono;
         }
     }
 
