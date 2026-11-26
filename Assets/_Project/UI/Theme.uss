@@ -455,9 +455,17 @@ Button.selected { border-color: var(--accent); background-color: var(--accent-so
 .slot.slot-night .slot-chalk { background-color: rgba(240, 236, 222, 0.85); }
 .slot.teacher .slot-chalk { opacity: 1; }
 .slot.chalk-pre { opacity: 0.25; scale: 0.92 0.92; }
-.slot-pin { position: absolute; top: 2px; right: 3px; font-size: 11px; padding: 0 4px; border-radius: 6px; color: var(--text-dim); background-color: rgba(0, 0, 0, 0.25); opacity: 0; }
-.slot:hover .slot-pin { opacity: 0.7; }
-.slot-pin.on { opacity: 1; color: #1b1407; background-color: var(--accent); }
+/* 고정 꼬리표 = 압정 (ui_paper_pin, 사용자 요청 2026-11-26): 고정한 칸에는 또렷하게, 아닌 칸은 마우스를 올렸을 때만 흐리게 */
+.slot-pin {
+    position: absolute; top: 2px; right: 2px; width: 24px; height: 24px; padding: 0; margin: 0; font-size: 0;
+    background-color: rgba(0, 0, 0, 0);
+    background-image: url("../Resources/Art/UI/Paper/ui_paper_pin.png");
+    -unity-background-scale-mode: scale-to-fit;
+    -unity-background-image-tint-color: rgb(150, 150, 150);
+    opacity: 0;
+}
+.slot:hover .slot-pin { opacity: 0.55; }
+.slot-pin.on { opacity: 1; -unity-background-image-tint-color: rgb(255, 255, 255); }
 .slot-pin:hover { opacity: 1; }
 .slot.drop-ok { border-color: rgba(120, 200, 120, 0.7); border-width: 2px; }
 .slot.drop-bad { opacity: 0.45; }

@@ -893,7 +893,7 @@ namespace ApoGirl.Presentation.Screens
                     label.AddToClassList("slot-label");
                     var chalk = new VisualElement { pickingMode = PickingMode.Ignore };
                     chalk.AddToClassList("slot-chalk");
-                    var pin = new Label(Loc.T("teacher.pin_tag"));
+                    var pin = new Label { tooltip = Loc.T("teacher.pin_tag") };   // 글 대신 압정 그림 (Theme.uss .slot-pin)
                     pin.AddToClassList("slot-pin");
                     pin.RegisterCallback<PointerDownEvent>(evt =>
                     {
