@@ -4,7 +4,7 @@
   "FloorHeight": 120,
   "RoofHeight": 96,
   "Ground": 10,
-  "StairsX": 732,
+  "StairsX": 366,
   "StairsWidth": 48,
   "WalkSpeed": 170,
   "ShelterFlag": "CLASSROOM_MOVED_IN",
@@ -59,7 +59,7 @@
       "NameKey": "hubroom.ENTRANCE",
       "Floor": 0,
       "X": 0,
-      "Width": 90,
+      "Width": 96,
       "Wall": "wall_corridor",
       "FloorTex": "wall_floor_corridor",
       "Always": true,
@@ -75,7 +75,7 @@
         },
         {
           "Key": "decor_shoerack",
-          "X": 72
+          "X": 66
         }
       ],
       "Actions": [
@@ -87,14 +87,42 @@
         "ACT_INTRUSION",
         "ACT_SURV_TRAP",
         "ACT_SURV_ALARM"
+      ],
+      "Windows": [],
+      "LockedProps": [],
+      "BuiltProps": [
+        {
+          "MinDefense": 1,
+          "NotFlags": [
+            "ENTRANCE_REINFORCED"
+          ],
+          "Key": "hub_built_barricade",
+          "X": 34
+        },
+        {
+          "Flag": "ENTRANCE_REINFORCED",
+          "Key": "hub_built_barricade2",
+          "X": 36
+        },
+        {
+          "Flag": "ALARM_INSTALLED",
+          "Key": "hub_built_alarm",
+          "X": 66,
+          "Y": 68
+        },
+        {
+          "Disaster": "MONSOON",
+          "Key": "decor_bucket",
+          "X": 86
+        }
       ]
     },
     {
       "Id": "STORAGE",
       "Art": "Story/Backgrounds/bg_storage",
       "Floor": 0,
-      "X": 90,
-      "Width": 160,
+      "X": 96,
+      "Width": 130,
       "Wall": "wall_storage",
       "FloorTex": "wall_floor_storage",
       "Facility": "STORAGE",
@@ -102,34 +130,26 @@
       "Props": [
         {
           "Key": "prop_ceiling_lamp",
-          "X": 80,
+          "X": 66,
           "Y": 106
         },
         {
           "Key": "decor_elecbox",
-          "X": 76,
-          "Y": 60
+          "X": 22,
+          "Y": 62
         },
         {
           "Key": "decor_cobweb",
-          "X": 143,
-          "Y": 79
-        },
-        {
-          "Key": "prop_shelf",
-          "X": 128
+          "X": 114,
+          "Y": 80
         },
         {
           "Key": "prop_box",
-          "X": 96
+          "X": 54
         },
         {
-          "Key": "prop_supplybox",
-          "X": 76
-        },
-        {
-          "Key": "decor_broom",
-          "X": 152
+          "Key": "prop_shelf",
+          "X": 97
         }
       ],
       "Built": [
@@ -141,8 +161,16 @@
       "BuiltProps": [
         {
           "Flag": "WORKBENCH",
-          "Key": "prop_mart_toolrack",
-          "X": 40
+          "NotFlags": [
+            "WORKBENCH_2"
+          ],
+          "Key": "hub_built_workbench",
+          "X": 34
+        },
+        {
+          "Flag": "WORKBENCH_2",
+          "Key": "hub_built_workbench2",
+          "X": 39
         }
       ],
       "Actions": [
@@ -159,47 +187,62 @@
         "ACT_CRAFT_DECOY",
         "ACT_CRAFT_CLUB_REBAR",
         "ACT_CRAFT_CROWBAR"
-      ]
+      ],
+      "Windows": [],
+      "LockedProps": []
     },
     {
       "Id": "CAFETERIA",
       "Art": "Story/Backgrounds/bg_cafeteria",
       "Floor": 0,
-      "X": 250,
-      "Width": 170,
+      "X": 226,
+      "Width": 140,
       "Wall": "wall_homeec",
       "FloorTex": "wall_floor_homeec",
       "Facility": "CAFETERIA",
       "Props": [
         {
-          "Key": "prop_ceiling_lamp",
-          "X": 60,
-          "Y": 106
-        },
-        {
-          "Key": "decor_clock",
-          "X": 96,
-          "Y": 76
-        },
-        {
-          "Key": "decor_calendar",
-          "X": 132,
-          "Y": 70
-        },
-        {
           "Key": "prop_kitchen",
-          "X": 40
+          "X": 32
         },
         {
           "Key": "decor_diningtable",
-          "X": 118
+          "X": 96
         },
         {
           "Key": "decor_watercooler",
-          "X": 158
+          "X": 130
         }
       ],
-      "Actions": []
+      "Actions": [],
+      "Windows": [
+        {
+          "X": 86,
+          "Y": 50
+        }
+      ],
+      "LockedProps": [
+        {
+          "Key": "decor_chair_fallen",
+          "X": 80
+        },
+        {
+          "Key": "decor_debris",
+          "X": 112
+        }
+      ],
+      "BuiltProps": [
+        {
+          "MinCompanions": 3,
+          "Key": "hub_dining_extra",
+          "X": 92
+        },
+        {
+          "Disaster": "MONSOON",
+          "Key": "decor_bucket",
+          "X": 60
+        }
+      ]
     },
     {
       "Id": "INFIRMARY",
@@ -210,33 +253,38 @@
       ],
       "Art": "Story/Backgrounds/bg_infirmary",
       "Floor": 0,
-      "X": 420,
-      "Width": 156,
+      "X": 414,
+      "Width": 170,
       "Wall": "wall_nurse",
       "FloorTex": "wall_floor_nurse",
       "Facility": "INFIRMARY",
       "Props": [
         {
           "Key": "prop_ceiling_lamp",
-          "X": 112,
+          "X": 100,
           "Y": 106
         },
         {
           "Key": "decor_eyechart",
-          "X": 46,
-          "Y": 48
+          "X": 44,
+          "Y": 50
+        },
+        {
+          "Key": "decor_firstaid",
+          "X": 96,
+          "Y": 70
         },
         {
           "Key": "prop_bed",
-          "X": 46
+          "X": 44
+        },
+        {
+          "Key": "hub_built_firstaid",
+          "X": 96
         },
         {
           "Key": "prop_medcabinet",
-          "X": 128
-        },
-        {
-          "Key": "decor_sanitizer",
-          "X": 90
+          "X": 138
         }
       ],
       "Actions": [
@@ -244,48 +292,75 @@
         "ACT_TREAT_WOUND",
         "ACT_TREAT_INFECTION",
         "ACT_CARE_TEACHER"
-      ]
+      ],
+      "Windows": [],
+      "LockedProps": [
+        {
+          "Key": "decor_debris",
+          "X": 70
+        },
+        {
+          "Key": "decor_cobweb",
+          "X": 150,
+          "Y": 80
+        }
+      ],
+      "BuiltProps": []
     },
     {
       "Id": "STAFFROOM",
       "Art": "Story/Backgrounds/bg_staffroom",
       "Floor": 0,
-      "X": 576,
-      "Width": 156,
+      "X": 584,
+      "Width": 196,
       "Wall": "wall_office",
       "FloorTex": "wall_floor_office",
       "Facility": "STAFFROOM",
       "Props": [
         {
-          "Key": "decor_staffboard",
-          "X": 52,
-          "Y": 56
-        },
-        {
-          "Key": "decor_clock",
-          "X": 104,
-          "Y": 76
-        },
-        {
-          "Key": "prop_ceiling_lamp",
-          "X": 128,
-          "Y": 106
+          "Key": "decor_calendar",
+          "X": 46,
+          "Y": 66
         },
         {
           "Key": "office_desk",
-          "X": 52
-        },
-        {
-          "Key": "prop_filecabinet",
-          "X": 128
+          "X": 44
         },
         {
           "Key": "decor_plant",
           "X": 92
+        },
+        {
+          "Key": "prop_filecabinet",
+          "X": 168
         }
       ],
       "Actions": [
         "ACT_SURV_COVERS"
+      ],
+      "Windows": [
+        {
+          "X": 122,
+          "Y": 48
+        }
+      ],
+      "LockedProps": [
+        {
+          "Key": "decor_papers",
+          "X": 110
+        },
+        {
+          "Key": "decor_chair_fallen",
+          "X": 132
+        }
+      ],
+      "BuiltProps": [
+        {
+          "MinCompanions": 1,
+          "Key": "hub_duty_board",
+          "X": 46,
+          "Y": 58
+        }
       ]
     },
     {
@@ -328,6 +403,29 @@
         "ACT_NIGHT_STUDY",
         "ACT_DAILY_TUTOR_DOHYEON",
         "ACT_CLUB_STUDY"
+      ],
+      "Windows": [],
+      "LockedProps": [
+        {
+          "Key": "decor_chair_fallen",
+          "X": 90
+        },
+        {
+          "Key": "decor_debris",
+          "X": 150
+        }
+      ],
+      "BuiltProps": [
+        {
+          "MinCompanions": 2,
+          "Key": "hub_bedrolls",
+          "X": 150
+        },
+        {
+          "Npc": "NPC_CAT",
+          "Key": "hub_cat_bed",
+          "X": 84
+        }
       ]
     },
     {
@@ -345,32 +443,28 @@
       "Art": "Story/Backgrounds/bg_science",
       "Floor": 1,
       "X": 200,
-      "Width": 172,
+      "Width": 166,
       "Wall": "wall_science",
       "FloorTex": "wall_floor_science",
       "Facility": "SCIENCE",
       "Props": [
         {
           "Key": "decor_safetyboard",
-          "X": 62,
+          "X": 52,
           "Y": 56
         },
         {
           "Key": "prop_ceiling_lamp",
-          "X": 138,
+          "X": 132,
           "Y": 106
         },
         {
           "Key": "prop_labbench",
-          "X": 60
+          "X": 50
         },
         {
           "Key": "prop_chemshelf",
-          "X": 138
-        },
-        {
-          "Key": "decor_extinguisher",
-          "X": 100
+          "X": 132
         }
       ],
       "Actions": [
@@ -378,13 +472,40 @@
         "ACT_EDU_ENGINEERING",
         "ACT_SURV_PURIFY_WATER",
         "ACT_CRAFT_AUTO_PURIFIER"
+      ],
+      "Windows": [],
+      "LockedProps": [
+        {
+          "Key": "decor_debris",
+          "X": 64
+        },
+        {
+          "Key": "decor_cobweb",
+          "X": 148,
+          "Y": 80
+        }
+      ],
+      "BuiltProps": [
+        {
+          "Flag": "SAND_FILTER",
+          "NotFlags": [
+            "AUTO_PURIFIER"
+          ],
+          "Key": "hub_built_sandfilter",
+          "X": 92
+        },
+        {
+          "Flag": "AUTO_PURIFIER",
+          "Key": "hub_built_purifier",
+          "X": 92
+        }
       ]
     },
     {
       "Id": "LIBRARY",
       "Art": "Story/Backgrounds/bg_library",
       "Floor": 1,
-      "X": 372,
+      "X": 414,
       "Width": 180,
       "Wall": "wall_office",
       "FloorTex": "wall_floor_office",
@@ -392,35 +513,43 @@
       "Props": [
         {
           "Key": "decor_clock",
-          "X": 68,
+          "X": 62,
           "Y": 76
         },
         {
           "Key": "decor_worldmap",
-          "X": 140,
+          "X": 136,
           "Y": 54
         },
         {
           "Key": "decor_bookshelf",
-          "X": 44
+          "X": 38
         },
         {
           "Key": "decor_bookshelf",
-          "X": 92
+          "X": 100
         },
         {
-          "Key": "decor_smalltable",
-          "X": 146
-        },
-        {
-          "Key": "decor_stool",
-          "X": 166
+          "Key": "hub_built_study",
+          "X": 148
         }
       ],
       "Actions": [
         "ACT_EDU_MIND",
         "ACT_CLUB_BOARDGAME"
-      ]
+      ],
+      "Windows": [],
+      "LockedProps": [
+        {
+          "Key": "decor_books",
+          "X": 84
+        },
+        {
+          "Key": "decor_papers",
+          "X": 128
+        }
+      ],
+      "BuiltProps": []
     },
     {
       "Id": "HOMEEC",
@@ -436,33 +565,28 @@
       ],
       "NameKey": "hubroom.HOMEEC",
       "Floor": 1,
-      "X": 552,
-      "Width": 180,
+      "X": 594,
+      "Width": 186,
       "Wall": "wall_homeec",
       "FloorTex": "wall_floor_homeec",
       "Flag": "SEARCHED_HOMEEC",
       "Props": [
         {
           "Key": "decor_utensilrack",
-          "X": 80,
+          "X": 60,
           "Y": 46
         },
         {
-          "Key": "decor_clock",
-          "X": 150,
-          "Y": 78
-        },
-        {
           "Key": "prop_stove",
-          "X": 40
+          "X": 30
         },
         {
           "Key": "prop_sink",
-          "X": 96
+          "X": 82
         },
         {
           "Key": "prop_fridge",
-          "X": 150
+          "X": 162
         }
       ],
       "Actions": [
@@ -471,7 +595,30 @@
         "ACT_CRAFT_BAG_FRAME",
         "ACT_CRAFT_BOIL_STATION"
       ],
-      "Art": "Story/Backgrounds/bg_homeec"
+      "Art": "Story/Backgrounds/bg_homeec",
+      "Windows": [
+        {
+          "X": 136,
+          "Y": 50
+        }
+      ],
+      "LockedProps": [
+        {
+          "Key": "decor_chair_fallen",
+          "X": 120
+        },
+        {
+          "Key": "decor_debris",
+          "X": 60
+        }
+      ],
+      "BuiltProps": [
+        {
+          "Flag": "BOIL_STATION",
+          "Key": "hub_built_boil",
+          "X": 132
+        }
+      ]
     },
     {
       "Id": "BROADCAST",
@@ -487,7 +634,7 @@
       "Art": "Story/Backgrounds/bg_broadcast",
       "Floor": 2,
       "X": 0,
-      "Width": 150,
+      "Width": 166,
       "Wall": "wall_broadcast",
       "FloorTex": "wall_floor_broadcast",
       "Facility": "BROADCAST",
@@ -499,20 +646,12 @@
       "Props": [
         {
           "Key": "decor_speaker",
-          "X": 134,
-          "Y": 80
+          "X": 148,
+          "Y": 82
         },
         {
           "Key": "prop_console",
-          "X": 56
-        },
-        {
-          "Key": "decor_radio",
-          "X": 118
-        },
-        {
-          "Key": "decor_stool",
-          "X": 96
+          "X": 50
         }
       ],
       "Actions": [
@@ -523,52 +662,79 @@
         "ACT_BROADCAST_SONG",
         "ACT_BROADCAST_INFO",
         "ACT_BROADCAST_LETTER"
+      ],
+      "Windows": [],
+      "LockedProps": [
+        {
+          "Key": "decor_cobweb",
+          "X": 150,
+          "Y": 80
+        },
+        {
+          "Key": "decor_debris",
+          "X": 110
+        }
+      ],
+      "BuiltProps": [
+        {
+          "Flag": "POWER_RESTORED",
+          "Key": "hub_built_generator",
+          "X": 126
+        }
       ]
     },
     {
       "Id": "MUSIC",
       "NameKey": "hubroom.MUSIC",
       "Floor": 2,
-      "X": 150,
-      "Width": 170,
+      "X": 166,
+      "Width": 200,
       "Wall": "wall_musicroom",
       "FloorTex": "wall_floor_musicroom",
       "Flag": "SEARCHED_MUSIC",
       "Props": [
         {
           "Key": "decor_composers",
-          "X": 62,
+          "X": 52,
           "Y": 66
         },
         {
-          "Key": "prop_ceiling_lamp",
-          "X": 128,
-          "Y": 106
-        },
-        {
           "Key": "prop_piano",
-          "X": 52
-        },
-        {
-          "Key": "prop_musicstand",
-          "X": 128
+          "X": 46
         },
         {
           "Key": "decor_guitar",
-          "X": 92
+          "X": 96
+        },
+        {
+          "Key": "prop_musicstand",
+          "X": 150
         }
       ],
       "Actions": [
         "ACT_EDU_MUSIC",
         "ACT_CLUB_SINGING"
       ],
-      "Art": "Story/Backgrounds/bg_music"
+      "Art": "Story/Backgrounds/bg_music",
+      "Windows": [
+        {
+          "X": 142,
+          "Y": 46
+        }
+      ],
+      "LockedProps": [
+        {
+          "Key": "decor_chair_fallen",
+          "X": 104
+        }
+      ],
+      "BuiltProps": []
     },
     {
       "Id": "COMPUTER",
       "NameKey": "hubroom.COMPUTER",
       "Floor": 2,
-      "X": 320,
+      "X": 414,
       "Width": 150,
       "Wall": "wall_computer",
       "FloorTex": "wall_floor_computer",
@@ -581,16 +747,16 @@
         },
         {
           "Key": "decor_poster_b",
-          "X": 76,
+          "X": 72,
           "Y": 66
         },
         {
           "Key": "prop_computer",
-          "X": 44
+          "X": 40
         },
         {
           "Key": "prop_computer",
-          "X": 108
+          "X": 104
         }
       ],
       "Actions": [
@@ -599,48 +765,47 @@
         "ACT_CRAFT_MULTITOOL",
         "ACT_CRAFT_DECOY_BELL"
       ],
-      "Art": "Story/Backgrounds/bg_computer"
+      "Art": "Story/Backgrounds/bg_computer",
+      "Windows": [],
+      "LockedProps": [
+        {
+          "Key": "decor_debris",
+          "X": 76
+        }
+      ],
+      "BuiltProps": []
     },
     {
       "Id": "GYM",
       "Art": "Story/Backgrounds/bg_gym",
       "Floor": 2,
-      "X": 470,
-      "Width": 262,
+      "X": 564,
+      "Width": 216,
       "Wall": "wall_storage",
       "FloorTex": "wall_floor_classroom",
       "Facility": "GYM",
       "Props": [
         {
-          "Key": "decor_clock",
-          "X": 62,
-          "Y": 76
-        },
-        {
           "Key": "decor_hooks_pe",
-          "X": 108,
+          "X": 50,
           "Y": 46
         },
         {
-          "Key": "prop_window",
-          "X": 206,
-          "Y": 48
+          "Key": "decor_clock",
+          "X": 94,
+          "Y": 78
         },
         {
           "Key": "prop_matpile",
-          "X": 60
+          "X": 40
         },
         {
           "Key": "prop_ballcart",
-          "X": 150
-        },
-        {
-          "Key": "decor_basketball",
-          "X": 188
+          "X": 110
         },
         {
           "Key": "decor_cones",
-          "X": 226
+          "X": 180
         }
       ],
       "Actions": [
@@ -648,7 +813,20 @@
         "ACT_CLUB_SPORTS",
         "ACT_CRAFT_ARMOR_MATPAD",
         "ACT_CRAFT_ARMOR_PLATED"
-      ]
+      ],
+      "Windows": [
+        {
+          "X": 160,
+          "Y": 48
+        }
+      ],
+      "LockedProps": [
+        {
+          "Key": "decor_ball",
+          "X": 150
+        }
+      ],
+      "BuiltProps": []
     },
     {
       "Id": "ROOFTOP",
@@ -671,11 +849,7 @@
       "Props": [
         {
           "Key": "decor_tank",
-          "X": 120
-        },
-        {
-          "Key": "decor_laundry",
-          "X": 600
+          "X": 110
         },
         {
           "Key": "decor_bench",
@@ -683,11 +857,19 @@
         },
         {
           "Key": "decor_vent",
-          "X": 352
+          "X": 344
+        },
+        {
+          "Key": "hub_stair_tower",
+          "X": 390
+        },
+        {
+          "Key": "decor_laundry",
+          "X": 620
         },
         {
           "Key": "decor_acunits",
-          "X": 528
+          "X": 744
         }
       ],
       "Actions": [
@@ -701,7 +883,7 @@
         {
           "Flag": "RAIN_BARRELS",
           "Key": "hub_roof_rain",
-          "X": 220
+          "X": 200
         },
         {
           "Flag": "ROOF_GARDEN",
@@ -709,7 +891,7 @@
             "GREENHOUSE"
           ],
           "Key": "hub_roof_garden",
-          "X": 430
+          "X": 500
         },
         {
           "Flag": "GREENHOUSE",
@@ -717,17 +899,17 @@
             "SPRINKLER"
           ],
           "Key": "hub_roof_greenhouse",
-          "X": 434
+          "X": 504
         },
         {
           "Flag": "SPRINKLER",
           "Key": "hub_roof_greenhouse_sprinkler",
-          "X": 434
+          "X": 504
         },
         {
           "Flag": "POWER_RESTORED",
           "Key": "hub_roof_antenna",
-          "X": 690
+          "X": 694
         }
       ]
     }
@@ -848,5 +1030,48 @@
     "DoorPanel": 14,
     "OpenDistance": 26,
     "CloseDelay": 0.35
+  },
+  "WindowKey": "prop_window",
+  "WindowPlanks": "hub_window_planks",
+  "PlankFlag": "ENTRANCE_REINFORCED",
+  "SnowCap": "hub_snow_cap",
+  "SnowDisaster": "SNOWSTORM",
+  "Outside": {
+    "From": -420,
+    "Wall": "out_wall_street_low",
+    "WallFrom": -420,
+    "WallTo": -186,
+    "ExitX": -210,
+    "Props": [
+      {
+        "Key": "hub_gate",
+        "X": -100
+      }
+    ],
+    "BuiltProps": [
+      {
+        "MinDefense": 20,
+        "Key": "decor_sandbags",
+        "X": -52
+      },
+      {
+        "MinTraps": 1,
+        "Key": "hub_built_trap",
+        "X": -34
+      },
+      {
+        "Flag": "SCARECROW_UP",
+        "NotFlags": [
+          "SCARECROW_BELL"
+        ],
+        "Key": "prop_decoy_stand",
+        "X": -150
+      },
+      {
+        "Flag": "SCARECROW_BELL",
+        "Key": "prop_decoy_bell_stand",
+        "X": -150
+      }
+    ]
   }
 }

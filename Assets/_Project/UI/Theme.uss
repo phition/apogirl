@@ -1811,3 +1811,11 @@ Button.base-advice-line:hover { background-color: rgba(42, 38, 32, 0.12); color:
 .gallery-title { font-size: 21px; }
 /* 음악실 CD 표지(40px)가 제목 글자를 덮지 않게 */
 .gallery-title.with-icon { padding-left: 52px; min-height: 44px; -unity-text-align: middle-left; }
+
+/* ── 단면도 A안 (Docs/HUB_SECTION_REDRAW_PROPOSAL.md): 천장 그늘, 바깥 마당·담, 잠긴 방은 방치 흔적이 비쳐 보이게 ── */
+.hub-ceil-shade { background-color: rgba(0, 0, 0, 0.2); }
+.hub-yard { background-color: rgb(74, 70, 62); border-top-width: 2px; border-color: rgb(104, 98, 86); }
+.hub-yard-wall { -unity-background-image-tint-color: rgb(200, 200, 200); }
+.hub-room.locked > .hub-dark { background-color: rgba(6, 7, 10, 0.92); }
+.section-frame.night .hub-yard, .section-frame.night .hub-yard-wall { -unity-background-image-tint-color: rgb(96, 104, 132); }
+.section-frame.night .hub-yard { background-color: rgb(30, 31, 38); border-color: rgb(44, 46, 56); }

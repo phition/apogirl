@@ -49,6 +49,12 @@ namespace ApoGirl.Presentation.Screens
             /// <summary>옥상 (벽 없이 하늘 아래).</summary>
             public bool Roof;
             public PropDef[] Props = Array.Empty<PropDef>();
+
+            /// <summary>뒷벽 창 (X = 가운데, Y = 바닥에서 띄울 높이). 그림은 HubSectionConfig.WindowKey.</summary>
+            public PropDef[] Windows = Array.Empty<PropDef>();
+
+            /// <summary>잠긴 방에만 보이는 방치 흔적 (넘어진 의자·잔해·거미줄). 방을 열면 사라진다.</summary>
+            public PropDef[] LockedProps = Array.Empty<PropDef>();
             public string[] Actions = Array.Empty<string>();
 
             /// <summary>이 방에 지어 놓은 설비 그림 (조건이 맞으면 방 패널의 방 그림 위에 겹친다).</summary>
@@ -75,9 +81,39 @@ namespace ApoGirl.Presentation.Screens
             public string[] NotFlags = Array.Empty<string>();
 
             public int MinDefense;
+
+            /// <summary>합류한 동료가 이만큼 있어야 보인다 (고양이 제외) — 사람이 늘면 늘어나는 살림.</summary>
+            public int MinCompanions;
+
+            /// <summary>함정이 이만큼 깔려 있어야 보인다.</summary>
+            public int MinTraps;
+
+            /// <summary>이 사람이 합류해 있어야 보인다 (고양이 잠자리 등).</summary>
+            public string Npc = "";
+
+            /// <summary>이 계절 재해 중에만 보인다 (MONSOON·SNOWSTORM).</summary>
+            public string Disaster = "";
             public string Key = "";
             public float X;
             public float Y;
+        }
+
+        /// <summary>건물 왼쪽 바깥: 마당 바닥, 낮은 담, 교문. 외출하는 동료는 현관을 나와 ExitX까지 걸어가 사라진다.</summary>
+        [Serializable]
+        public sealed class OutsideDef
+        {
+            /// <summary>마당 왼쪽 끝 (건물 왼쪽 벽 = 0, 음수).</summary>
+            public float From = -420;
+
+            /// <summary>낮은 담 그림 (가로로 이어 붙인다, 비우면 없음).</summary>
+            public string Wall = "";
+            public float WallFrom = -420;
+            public float WallTo = -8;
+
+            /// <summary>나가는 사람이 사라지는 자리 (0이면 현관에서 사라진다).</summary>
+            public float ExitX;
+            public PropDef[] Props = Array.Empty<PropDef>();
+            public BuiltPropDef[] BuiltProps = Array.Empty<BuiltPropDef>();
         }
 
         /// <summary>방 사이 벽과 문, 건물 바깥 벽.</summary>
@@ -171,6 +207,16 @@ namespace ApoGirl.Presentation.Screens
 
         /// <summary>옥상 난간 위 철조망 (가로로 이어 붙인다).</summary>
         public string RoofFence = "";
+
+        /// <summary>방 창 그림, 1층 창에 덧대는 판자(PlankFlag가 켜지면), 폭설 때 옥상 난간·담 위에 얹는 눈 띠.</summary>
+        public string WindowKey = "prop_window";
+        public string WindowPlanks = "";
+        public string PlankFlag = "";
+        public string SnowCap = "";
+        public string SnowDisaster = "SNOWSTORM";
+
+        /// <summary>건물 바깥 마당 (Docs/HUB_SECTION_REDRAW_PROPOSAL.md 4절).</summary>
+        public OutsideDef Outside = new OutsideDef();
 
         /// <summary>단면도 뒤 바깥 풍경 (마을·하늘·날씨).</summary>
         public HubSkyConfig Sky = new HubSkyConfig();
@@ -346,6 +392,12 @@ namespace ApoGirl.Presentation.Screens
                     if (_outToday.Contains(actor.Id) && door.HasValue)
                     {
                         actor.WalkTo(door.Value.Floor, door.Value.X, this);
+                        if (HasYard)
+                        {
+                            // 현관을 나와 교문 쪽으로 걸어가 사라진다
+                            actor.Then(0, _config.Outside.ExitX);
+                        }
+
                         actor.HideOnArrive = true;
                         continue;
                     }
@@ -353,7 +405,14 @@ namespace ApoGirl.Presentation.Screens
                     if (returning.Contains(actor.Id) && door.HasValue)
                     {
                         actor.SetAway(false);
-                        actor.Place(door.Value.Floor, door.Value.X);
+                        if (HasYard)
+                        {
+                            actor.Place(0, _config.Outside.ExitX);   // 교문 쪽에서 걸어 들어온다
+                        }
+                        else
+                        {
+                            actor.Place(door.Value.Floor, door.Value.X);
+                        }
                     }
 
                     if (Core.Rules.CatRules.IsCat(actor.Id) && state != null)
@@ -414,6 +473,9 @@ namespace ApoGirl.Presentation.Screens
             return seconds;
         }
 
+        /// <summary>바깥 마당과 나가는 자리가 정해져 있는가.</summary>
+        private bool HasYard => _config.Outside != null && _config.Outside.ExitX < 0;
+
         /// <summary>현관 안쪽, 바깥문 가까운 자리 (현관 방이 없으면 null).</summary>
         private (int Floor, float X)? EntranceSpot()
         {
@@ -455,7 +517,14 @@ namespace ApoGirl.Presentation.Screens
                 }
             }
 
+            foreach (var built in _config.Outside.BuiltProps)
+            {
+                parts.Add(BuiltShown(state, built) ? "b" : "-");
+            }
+
             parts.Add("cd" + CdRules.Count(state));
+            parts.Add(DisasterId(state));
+            parts.Add(!string.IsNullOrEmpty(_config.PlankFlag) && state.Flags.Contains(_config.PlankFlag) ? "p" : "-");
 
             return string.Join(",", parts);
         }
@@ -506,8 +575,9 @@ namespace ApoGirl.Presentation.Screens
             Tile(shell, "wall_brick");
             Place(_building, "hub-ground", -400, ArtHeight - _config.Ground, _config.Width + 800, _config.Ground + 40);
             _skyView.Build(_config.Width, shellTop - 6, ArtHeight - _config.Ground);
+            BuildOutside(state);
 
-            // 계단실 (오른쪽 끝, 층마다): 아래층은 오르는 계단, 맨 위층은 옥상 문. 그림이 층 높이면 칸을 채운다
+            // 계단실 (StairsX — 가운데나 끝, 층마다): 아래층은 오르는 계단, 맨 위층은 옥상 문. 그림이 층 높이면 칸을 채운다
             for (var floor = 0; floor < 3; floor++)
             {
                 var stairs = Place(_building, "hub-stairs", _config.StairsX, FloorBottom(floor) - _config.FloorHeight, _config.StairsWidth, _config.FloorHeight);
@@ -543,10 +613,22 @@ namespace ApoGirl.Presentation.Screens
 
                 if (!def.Roof)
                 {
-                    Tile(element, def.Wall, bottomAligned: true);
+                    // 겹: 뒷벽(타일을 방 가운데에 맞춰 양끝이 대칭으로 잘리게) → 창 → 바닥 띠 → 슬래브와 천장 그늘
+                    Tile(element, def.Wall, bottomAligned: true, centered: true);
+                    foreach (var window in def.Windows)
+                    {
+                        AddProp(element, new HubSectionConfig.PropDef { Key = _config.WindowKey, X = window.X, Y = window.Y }, height - 8);
+                        if (def.Floor == 0 && !string.IsNullOrEmpty(_config.PlankFlag) && state.Flags.Contains(_config.PlankFlag))
+                        {
+                            // 방어를 강화하면 1층 창에 판자를 덧댄다
+                            AddProp(element, new HubSectionConfig.PropDef { Key = _config.WindowPlanks, X = window.X, Y = window.Y - 2 }, height - 8);
+                        }
+                    }
+
                     var floorStrip = Place(element, "hub-floor", 0, height - 10, def.Width, 10);
                     Tile(floorStrip, def.FloorTex, bottomAligned: true);
                     Place(element, "hub-slab", 0, 0, def.Width, 5);
+                    Place(element, "hub-ceil-shade", 0, 5, def.Width, 7).pickingMode = PickingMode.Ignore;
                 }
                 else
                 {
@@ -561,6 +643,7 @@ namespace ApoGirl.Presentation.Screens
 
                     // 옥상 바닥(슬래브): 벽돌 윗면(height - 6)까지 채워 하늘이 비치는 틈이 없게
                     Place(element, "hub-parapet", 0, height - 18, def.Width, 13);
+                    AddSnow(state, element, 0, height - 18, def.Width);
                 }
 
                 // 소품 바닥선: 방은 바닥 띠 위, 옥상은 슬래브 윗면에서 조금 들어간 곳 (닿아 보이게)
@@ -568,6 +651,15 @@ namespace ApoGirl.Presentation.Screens
                 foreach (var prop in def.Props)
                 {
                     AddProp(element, prop, propFloor);
+                }
+
+                // 잠긴 방의 방치 흔적: 열면 치워진다
+                if (!open)
+                {
+                    foreach (var prop in def.LockedProps)
+                    {
+                        AddProp(element, prop, propFloor);
+                    }
                 }
 
                 // 지어 놓은 구조물 (빗물받이·텃밭·안테나 등): 조건이 맞으면 그 자리에 실제로 놓인다
@@ -639,11 +731,22 @@ namespace ApoGirl.Presentation.Screens
             for (var floor = 0; floor < 3; floor++)
             {
                 var top = FloorBottom(floor) - _config.FloorHeight;
-                var edges = new SortedSet<float> { _config.StairsX };
+                // 벽이 서는 자리: 방과 방 사이, 계단실 양쪽 (건물 양끝은 바깥 벽이 맡는다)
+                var edges = new SortedSet<float>();
+                void Edge(float x)
+                {
+                    if (x > 0.5f && x < _config.Width - 0.5f)
+                    {
+                        edges.Add(Mathf.Round(x));
+                    }
+                }
+
+                Edge(_config.StairsX);
+                Edge(_config.StairsX + _config.StairsWidth);
                 foreach (var room in _config.Rooms.Where(r => !r.Roof && r.Floor == floor))
                 {
-                    if (room.X > 0.5f) edges.Add(room.X);
-                    if (room.X + room.Width < _config.StairsX - 0.5f) edges.Add(room.X + room.Width);
+                    Edge(room.X);
+                    Edge(room.X + room.Width);
                 }
 
                 // 바깥 벽 (벽돌)
@@ -717,9 +820,70 @@ namespace ApoGirl.Presentation.Screens
             }
         }
 
-        private static bool BuiltShown(GameState state, HubSectionConfig.BuiltPropDef built) =>
+        private bool BuiltShown(GameState state, HubSectionConfig.BuiltPropDef built) =>
             (string.IsNullOrEmpty(built.Flag) || state.Flags.Contains(built.Flag)) && state.Base.Defense >= built.MinDefense
-            && (built.NotFlags == null || !built.NotFlags.Any(state.Flags.Contains));
+            && (built.NotFlags == null || !built.NotFlags.Any(state.Flags.Contains))
+            && state.Base.Traps >= built.MinTraps
+            && (built.MinCompanions <= 0 || Companions(state) >= built.MinCompanions)
+            && (string.IsNullOrEmpty(built.Npc) || (state.Npcs.TryGetValue(built.Npc, out var npc) && npc.Status == NpcStatus.Joined))
+            && (string.IsNullOrEmpty(built.Disaster) || built.Disaster == DisasterId(state));
+
+        /// <summary>합류한 동료 수 (고양이 제외).</summary>
+        private static int Companions(GameState state) =>
+            state.Npcs.Count(n => n.Value.Status == NpcStatus.Joined && !Core.Rules.CatRules.IsCat(n.Key));
+
+        /// <summary>지금 계절 재해 ID (없으면 "").</summary>
+        private string DisasterId(GameState state) =>
+            Core.Rules.DisasterRules.Active(state, _session.Definitions.Balance)?.Id ?? "";
+
+        /// <summary>건물 왼쪽 바깥: 마당 바닥(실내 바닥 높이에 맞춘 포장), 낮은 담, 교문과 소품. 건물보다 먼저 그려 벽 뒤에 깔린다.</summary>
+        private void BuildOutside(GameState state)
+        {
+            var outside = _config.Outside;
+            if (outside == null || outside.From >= 0)
+            {
+                return;
+            }
+
+            var floorY = FloorBottom(0) - 8;
+            var wall = Tex(outside.Wall);
+            if (wall != null && outside.WallTo > outside.WallFrom)
+            {
+                var strip = Place(_building, "hub-yard-wall", outside.WallFrom, floorY - wall.height, outside.WallTo - outside.WallFrom, wall.height);
+                strip.pickingMode = PickingMode.Ignore;
+                Tile(strip, outside.Wall, bottomAligned: true);
+                AddSnow(state, _building, outside.WallFrom, floorY - wall.height, outside.WallTo - outside.WallFrom);
+            }
+
+            var yard = Place(_building, "hub-yard", outside.From, floorY, -outside.From, 8 + _config.Ground);
+            yard.pickingMode = PickingMode.Ignore;
+            foreach (var prop in outside.Props)
+            {
+                AddProp(_building, prop, floorY);
+            }
+
+            foreach (var built in outside.BuiltProps)
+            {
+                if (BuiltShown(state, built))
+                {
+                    AddProp(_building, new HubSectionConfig.PropDef { Key = built.Key, X = built.X, Y = built.Y }, floorY);
+                }
+            }
+        }
+
+        /// <summary>폭설 중이면 그 윗선에 눈 띠를 얹는다.</summary>
+        private void AddSnow(GameState state, VisualElement parent, float x, float topY, float width)
+        {
+            var snow = Tex(_config.SnowCap);
+            if (snow == null || DisasterId(state) != _config.SnowDisaster)
+            {
+                return;
+            }
+
+            var strip = Place(parent, "hub-snow-cap", x, topY - snow.height * 0.5f, width, snow.height);
+            strip.pickingMode = PickingMode.Ignore;
+            Tile(strip, _config.SnowCap, bottomAligned: true);
+        }
 
         /// <summary>
         /// CD 벽 전시 (기획 A): 방송반 벽 가운데쯤에 자켓 자리 8개가 한 줄로 있고, 주운 CD는 그 자리에 표지(`cd.{ID}`)가 걸린다.
@@ -1503,7 +1667,7 @@ namespace ApoGirl.Presentation.Screens
             return element;
         }
 
-        private void Tile(VisualElement element, string key, bool bottomAligned = false)
+        private void Tile(VisualElement element, string key, bool bottomAligned = false, bool centered = false)
         {
             var texture = Tex(key);
             if (texture == null)
@@ -1514,7 +1678,7 @@ namespace ApoGirl.Presentation.Screens
             element.style.backgroundImage = new StyleBackground(texture);
             element.style.backgroundRepeat = new StyleBackgroundRepeat(new BackgroundRepeat(Repeat.Repeat, Repeat.NoRepeat));
             element.style.backgroundSize = new StyleBackgroundSize(new BackgroundSize(new Length(Px(texture.width)), new Length(Px(texture.height))));
-            element.style.backgroundPositionX = new StyleBackgroundPosition(new BackgroundPosition(BackgroundPositionKeyword.Left));
+            element.style.backgroundPositionX = new StyleBackgroundPosition(new BackgroundPosition(centered ? BackgroundPositionKeyword.Center : BackgroundPositionKeyword.Left));
             element.style.backgroundPositionY = new StyleBackgroundPosition(new BackgroundPosition(bottomAligned ? BackgroundPositionKeyword.Bottom : BackgroundPositionKeyword.Top));
         }
 
@@ -1607,6 +1771,12 @@ namespace ApoGirl.Presentation.Screens
                 _path.Clear();
                 Floor = floor;
                 X = x;
+            }
+
+            /// <summary>가던 길 끝에 한 곳을 더 잇는다 (현관을 나와 교문까지).</summary>
+            public void Then(int floor, float x)
+            {
+                _path.Enqueue((floor, x, false));
             }
 
             /// <summary>그곳까지 걸어간다 (층이 다르면 계단으로). 걸리는 시간(초).</summary>
