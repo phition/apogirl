@@ -77,6 +77,7 @@ namespace ApoGirl.Presentation.Screens
         private HubSectionView _section;
         private VisualElement _sectionFrame;
         private VisualElement _teacherBox;
+        private BbsView _bbs;
 
         // 선생님 한마디는 내용이 바뀌면 잠깐 펼쳐졌다가 뱃지만 남는다 (사용자 요청 2026-11-26). 뱃지를 누르면 마지막 말이 다시 펼쳐진다.
         private const long TeacherNoteMs = 5000;
@@ -202,6 +203,12 @@ namespace ApoGirl.Presentation.Screens
             };
             _people = new PeopleDrawerView(_root, _session) { Changed = Refresh, RolesRequested = ShowRoles };
             _section.RolesRequested = ShowRoles;
+            _bbs = new BbsView(_root.Q("screen") ?? _root, _session)
+            {
+                // 컴퓨터가 멎었다: 남은 시간은 알려 주지 않고 이 말만 남긴다
+                WentDown = () => _card.ShowMessage(Loc.T("bbs.title"), Loc.T("bbs.down")),
+            };
+            _section.BbsRequested = OpenBbs;
             _give = new GiveSheetView(_root, _session);
             _teacherBox.RegisterCallback<ClickEvent>(_ =>
             {
@@ -299,6 +306,12 @@ namespace ApoGirl.Presentation.Screens
             if (keyboard.f1Key.wasPressedThisFrame && DebugAccess.Enabled)
             {
                 _debug.Toggle();
+            }
+
+            // PC통신 화면에서는 글자를 치고 있으니 허브 단축키를 모두 쉰다 (Esc·명령은 그 화면이 받는다)
+            if (_bbs != null && _bbs.IsOpen)
+            {
+                return;
             }
 
             // 밸런스 표가 열려 있으면 허브 단축키는 쉬고, Esc는 표를 닫는다
@@ -525,6 +538,25 @@ namespace ApoGirl.Presentation.Screens
             }
 
             Debug.LogWarning("[Yarn] 처리하지 않는 명령: " + command.Text);
+        }
+
+        /// <summary>컴퓨터실 컴퓨터로 PC통신 '이제누리'에 접속한다 (계획 중에만, 이번 주에 멎었으면 못 켠다).</summary>
+        private void OpenBbs()
+        {
+            if (!_session.IsPlanning || _card.IsOpen || _dialogueView.IsOpen)
+            {
+                ShowToast(Loc.T("bbs.busy"));
+                return;
+            }
+
+            if (Core.Rules.BbsRules.IsDown(_session.State))
+            {
+                ShowToast(Loc.T("bbs.down_again"));
+                return;
+            }
+
+            _layers.CloseAll();
+            _bbs.Open();
         }
 
         /// <summary>한마디 쪽지를 펼치고, 잠시 뒤 뱃지만 남기고 접는다.</summary>

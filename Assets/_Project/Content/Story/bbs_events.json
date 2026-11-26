@@ -1,0 +1,26 @@
+{
+  "Events": [
+    {
+      "Id": "EVT_BBS_MODEM",
+      "Kind": "Night",
+      "Priority": 34,
+      "Condition": {
+        "Phase": "Night",
+        "FlagsAll": [
+          "SEARCHED_COMPUTER"
+        ],
+        "FlagsNone": [
+          "BBS_KNOWN",
+          "TEACHER_BEDRIDDEN",
+          "TEACHER_ISOLATED",
+          "TEACHER_LEFT_BEHIND"
+        ]
+      },
+      "OnShow": {
+        "SetFlags": [
+          "BBS_KNOWN"
+        ]
+      }
+    }
+  ]
+}

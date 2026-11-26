@@ -1073,5 +1073,8 @@
         "X": -150
       }
     ]
-  }
+  },
+  "BbsRoom": "COMPUTER",
+  "BbsProp": "prop_computer",
+  "BbsFlag": "BBS_KNOWN"
 }

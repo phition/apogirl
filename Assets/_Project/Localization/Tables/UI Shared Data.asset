@@ -8487,6 +8487,166 @@ MonoBehaviour:
     m_Key: exam.close
     m_Metadata:
       m_Items: []
+  - m_Id: 2637499594981376
+    m_Key: bbs.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2637499662090240
+    m_Key: bbs.connect
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2637499662090241
+    m_Key: bbs.down
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2637499662090242
+    m_Key: bbs.down_again
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2637499662090243
+    m_Key: bbs.busy
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2637499662090244
+    m_Key: bbs.prompt
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2637499662090245
+    m_Key: bbs.dialing
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2637499662090246
+    m_Key: bbs.main
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2637499662090247
+    m_Key: bbs.menu_quit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2637499662090248
+    m_Key: bbs.welcome
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2637499662090249
+    m_Key: bbs.unknown
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2637499662090250
+    m_Key: bbs.page
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2637499662090251
+    m_Key: bbs.hint.main
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2637499662090252
+    m_Key: bbs.hint.list
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2637499662090253
+    m_Key: bbs.hint.board
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2637499662090254
+    m_Key: bbs.hint.read
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2637499662090255
+    m_Key: bbs.hint.wiki
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2637499662090256
+    m_Key: bbs.hint.write
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2637499662090257
+    m_Key: bbs.hint.chat
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2637499662090258
+    m_Key: bbs.notice
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2637499662090259
+    m_Key: bbs.board
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2637499662090260
+    m_Key: bbs.chat
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2637499662090261
+    m_Key: bbs.help
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2637499662090262
+    m_Key: bbs.wiki
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2637499662090263
+    m_Key: bbs.wiki_intro
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2637499662090264
+    m_Key: bbs.wiki_count
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2637499662090265
+    m_Key: bbs.wiki_spoiler
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2637499662090266
+    m_Key: bbs.search_title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2637499662090267
+    m_Key: bbs.search_none
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2637499662090268
+    m_Key: bbs.empty
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2637499662090269
+    m_Key: bbs.post_head
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2637499662090270
+    m_Key: bbs.post_by
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2637499662090271
+    m_Key: bbs.write
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2637499662090272
+    m_Key: bbs.write_guide
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2637499662090273
+    m_Key: bbs.write_title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2637499662090274
+    m_Key: bbs.write_body
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2637499662090275
+    m_Key: bbs.write_done
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2637499662090276
+    m_Key: bbs.week_date
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2637499662090277
+    m_Key: bbs.chat_prompt
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2637499662090278
+    m_Key: bbs.chat_line
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

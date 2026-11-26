@@ -215,6 +215,11 @@ namespace ApoGirl.Presentation.Screens
         public string SnowCap = "";
         public string SnowDisaster = "SNOWSTORM";
 
+        /// <summary>PC통신: 이 방의 이 소품(컴퓨터)을 누르면 접속한다. BbsFlag가 켜진 뒤에만.</summary>
+        public string BbsRoom = "";
+        public string BbsProp = "";
+        public string BbsFlag = "";
+
         /// <summary>건물 바깥 마당 (Docs/HUB_SECTION_REDRAW_PROPOSAL.md 4절).</summary>
         public OutsideDef Outside = new OutsideDef();
 
@@ -324,6 +329,14 @@ namespace ApoGirl.Presentation.Screens
 
         /// <summary>방 패널의 "○○ 자리" 줄을 눌렀을 때 (허브가 거점 서랍의 역할 판을 연다).</summary>
         public Action RolesRequested { get; set; }
+
+        /// <summary>컴퓨터실 컴퓨터를 눌렀다 (PC통신 접속).</summary>
+        public Action BbsRequested { get; set; }
+
+        /// <summary>그 방에서 PC통신을 쓸 수 있는가 (방이 열렸고 선생님에게 모뎀 이야기를 들었다).</summary>
+        private bool BbsReady(GameState state, HubSectionConfig.RoomDef def) =>
+            !string.IsNullOrEmpty(_config.BbsRoom) && def.Id == _config.BbsRoom && IsOpen(state, def)
+            && !string.IsNullOrEmpty(_config.BbsFlag) && state.Flags.Contains(_config.BbsFlag);
 
         private float Px(float art) => art * _config.Scale;
 
@@ -523,6 +536,7 @@ namespace ApoGirl.Presentation.Screens
             }
 
             parts.Add("cd" + CdRules.Count(state));
+            parts.Add(!string.IsNullOrEmpty(_config.BbsFlag) && state.Flags.Contains(_config.BbsFlag) ? "bbs" : "-");
             parts.Add(DisasterId(state));
             parts.Add(!string.IsNullOrEmpty(_config.PlankFlag) && state.Flags.Contains(_config.PlankFlag) ? "p" : "-");
 
@@ -648,9 +662,22 @@ namespace ApoGirl.Presentation.Screens
 
                 // 소품 바닥선: 방은 바닥 띠 위, 옥상은 슬래브 윗면에서 조금 들어간 곳 (닿아 보이게)
                 var propFloor = def.Roof ? height - 15 : height - 8;
+                var bbs = BbsReady(state, def);
                 foreach (var prop in def.Props)
                 {
-                    AddProp(element, prop, propFloor);
+                    var placed = AddProp(element, prop, propFloor);
+                    if (bbs && placed != null && prop.Key == _config.BbsProp)
+                    {
+                        // 켜지는 컴퓨터: 누르면 방 패널 대신 바로 PC통신
+                        placed.pickingMode = PickingMode.Position;
+                        placed.AddToClassList("hub-bbs");
+                        placed.RegisterCallback<ClickEvent>(evt =>
+                        {
+                            HideRoomPanel();
+                            BbsRequested?.Invoke();
+                            evt.StopPropagation();
+                        });
+                    }
                 }
 
                 // 잠긴 방의 방치 흔적: 열면 치워진다
@@ -1092,17 +1119,18 @@ namespace ApoGirl.Presentation.Screens
 
         public void HideCdDetail() => _cdDetail.AddToClassList("hidden");
 
-        private void AddProp(VisualElement room, HubSectionConfig.PropDef prop, float floorY)
+        private VisualElement AddProp(VisualElement room, HubSectionConfig.PropDef prop, float floorY)
         {
             var texture = Tex(prop.Key);
             if (texture == null)
             {
-                return;
+                return null;
             }
 
             var element = Place(room, "hub-prop", prop.X - texture.width * 0.5f, floorY - prop.Y - texture.height, texture.width, texture.height);
             element.pickingMode = PickingMode.Ignore;
             Image(element, texture);
+            return element;
         }
 
         private static string RoomName(HubSectionConfig.RoomDef def) => HubSectionConfig.RoomName(def);
@@ -1202,6 +1230,18 @@ namespace ApoGirl.Presentation.Screens
                         StoryArt.SetIcon(button, actionIcon, 26f);
                     }
                     _roomPanel.Add(button);
+                }
+
+                if (BbsReady(state, room.Def))
+                {
+                    any = true;
+                    var connect = new Button(() =>
+                    {
+                        HideRoomPanel();
+                        BbsRequested?.Invoke();
+                    }) { text = Loc.T("bbs.connect") };
+                    connect.AddToClassList("hub-room-action");
+                    _roomPanel.Add(connect);
                 }
 
                 if (!any && !room.Def.CdShelf)

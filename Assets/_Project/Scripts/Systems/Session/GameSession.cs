@@ -747,6 +747,15 @@ namespace ApoGirl.Systems.Session
         /// 지역은 데이터에서 읽는다: 탐험 행동(LocationId 있음)의 해금 조건 FlagsAll을 전부 켠다. 막이 늘어나도 따로 고칠 필요가 없다.
         /// 시설은 정의된 것 전부를 최소 1레벨로 만든다(이미 높으면 그대로).
         /// </summary>
+        /// <summary>PC통신 중에 컴퓨터가 멎었다: 이번 주에는 다시 접속할 수 없다 (BbsRules).</summary>
+        public void BbsWentDown()
+        {
+            if (State != null)
+            {
+                BbsRules.MarkDown(State);
+            }
+        }
+
         public void DebugUnlockAll()
         {
             foreach (var flag in DebugUnlockExtraFlags)

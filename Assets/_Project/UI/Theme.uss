@@ -1908,3 +1908,27 @@ Button.base-advice-line:hover { background-color: rgba(42, 38, 32, 0.12); color:
 .exam-paper .exam-total { font-size: 64px; margin-left: 24px; color: var(--ink-red); -unity-font-definition: url("Fonts/BusanDandiHand.ttf"); }
 .exam-paper .exam-result-note { font-size: 14px; color: var(--ink-dim); margin-top: 4px; }
 .exam-stamp { position: absolute; left: 60px; bottom: 96px; width: 210px; height: 210px; rotate: -14deg; opacity: 0.85; }
+
+/* ── PC통신 '이제누리' (BbsView): 90년대 파란 글자 화면. 글꼴은 코드가 고정폭(돋움체)으로 넣는다 ── */
+.bbs-overlay { position: absolute; left: 0; top: 0; right: 0; bottom: 0; align-items: center; justify-content: center; background-color: rgb(4, 6, 40); }
+.bbs-frame {
+    width: 1160px; height: 900px;
+    padding: 26px 34px 20px 34px;
+    background-color: rgb(0, 0, 168);
+    border-width: 10px; border-color: rgb(28, 28, 36); border-radius: 18px;
+}
+.bbs-screen { flex-grow: 1; font-size: 26px; color: rgb(236, 236, 236); white-space: pre; -unity-text-align: upper-left; padding: 0; margin: 0; overflow: hidden; }
+.bbs-input-row { flex-direction: row; align-items: center; flex-shrink: 0; height: 40px; }
+.bbs-prompt { font-size: 26px; color: rgb(255, 255, 85); padding: 0; margin: 0 4px 0 12px; }
+.bbs-field { flex-grow: 1; margin: 0; }
+.bbs-field > .unity-base-text-field__input, .bbs-field .unity-text-field__input {
+    font-size: 26px; padding: 0 4px;
+    background-color: rgb(0, 0, 168); border-width: 0; border-radius: 0;
+    color: rgb(255, 255, 255);
+    --unity-cursor-color: rgb(255, 255, 85);
+    --unity-selection-color: rgba(255, 255, 85, 0.4);
+}
+.bbs-field .unity-text-element { color: rgb(255, 255, 255); }
+.bbs-field:disabled { opacity: 1; }
+/* 단면도: 켜지는 컴퓨터는 누를 수 있다 */
+.hub-bbs:hover { -unity-background-image-tint-color: rgb(170, 200, 255); }
