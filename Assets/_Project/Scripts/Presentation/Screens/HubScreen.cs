@@ -77,6 +77,11 @@ namespace ApoGirl.Presentation.Screens
         private HubSectionView _section;
         private VisualElement _sectionFrame;
         private VisualElement _teacherBox;
+
+        // 선생님 한마디는 내용이 바뀌면 잠깐 펼쳐졌다가 뱃지만 남는다 (사용자 요청 2026-11-26). 뱃지를 누르면 마지막 말이 다시 펼쳐진다.
+        private const long TeacherNoteMs = 5000;
+        private string _teacherShown;
+        private IVisualElementScheduledItem _teacherFold;
         private int _lastWarningCount = -1;
         private PeopleDrawerView _people;
         private GiveSheetView _give;
@@ -200,8 +205,17 @@ namespace ApoGirl.Presentation.Screens
             _give = new GiveSheetView(_root, _session);
             _teacherBox.RegisterCallback<ClickEvent>(_ =>
             {
+                if (_teacherBox.ClassListContains("collapsed"))
+                {
+                    // 뱃지를 누르면 마지막 말을 다시 보여 준다
+                    ShowTeacherNote();
+                    return;
+                }
+
+                // 펼쳐진 쪽지를 누르면 다음 말
                 _lineOffset++;
                 Refresh();
+                ShowTeacherNote();
             });
             var yarnProject = Resources.Load<Yarn.Unity.YarnProject>(YarnProjectResource);
             if (yarnProject != null && yarnProject.Program != null)
@@ -489,6 +503,23 @@ namespace ApoGirl.Presentation.Screens
             _root.Q<Label>("teacher-name").text = !_session.HasMetTeacher ? Loc.T("hub.alone_name") : speaker != null ? Loc.T("npc." + speaker) : Loc.T("hub.teacher_name");
             _teacherLine.text = !_session.HasMetTeacher ? Loc.T(_session.IsExecuting ? "hub.alone_running" : "hub.alone_line")
                 : speaker != null ? CompanionLine(speaker) : TeacherLine(warned.Count > 0);
+            _teacherBox.EnableInClassList("no-avatar", avatar == null);
+
+            // 말이 바뀌었을 때만 펼친다
+            var shown = _root.Q<Label>("teacher-name").text + "|" + _teacherLine.text;
+            if (shown != _teacherShown)
+            {
+                _teacherShown = shown;
+                ShowTeacherNote();
+            }
+        }
+
+        /// <summary>한마디 쪽지를 펼치고, 잠시 뒤 뱃지만 남기고 접는다.</summary>
+        private void ShowTeacherNote()
+        {
+            _teacherBox.RemoveFromClassList("collapsed");
+            _teacherFold?.Pause();
+            _teacherFold = _teacherBox.schedule.Execute(() => _teacherBox.AddToClassList("collapsed")).StartingIn(TeacherNoteMs);
         }
 
         /// <summary>

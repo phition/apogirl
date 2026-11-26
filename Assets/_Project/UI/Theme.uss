@@ -1819,3 +1819,24 @@ Button.base-advice-line:hover { background-color: rgba(42, 38, 32, 0.12); color:
 .hub-room.locked > .hub-dark { background-color: rgba(6, 7, 10, 0.92); }
 .section-frame.night .hub-yard, .section-frame.night .hub-yard-wall { -unity-background-image-tint-color: rgb(96, 104, 132); }
 .section-frame.night .hub-yard { background-color: rgb(30, 31, 38); border-color: rgb(44, 46, 56); }
+
+/* ── 선생님 한마디: 5초 뒤 접혀 뱃지만 남는다 (HubScreen.ShowTeacherNote). 누르면 마지막 말이 다시 펼쳐진다 ── */
+.teacher-box.collapsed {
+    width: 86px;
+    min-height: 86px;
+    padding: 0;
+    background-color: rgba(0, 0, 0, 0);
+    border-bottom-width: 0;
+    rotate: 0deg;
+}
+.teacher-box.collapsed .teacher-name, .teacher-box.collapsed .teacher-line { display: none; }
+.teacher-box.collapsed .teacher-avatar {
+    right: 8px; top: 8px;
+    border-width: 3px;
+    border-color: var(--note);
+    background-color: rgb(22, 32, 28);
+}
+.teacher-box.collapsed:hover .teacher-avatar { border-color: #ffffff; }
+/* 얼굴 그림이 없을 때(선생님을 만나기 전 혼잣말): 접히면 이름표만 한 작은 쪽지 */
+.teacher-box.collapsed.no-avatar { width: auto; min-height: 0; padding: 6px 14px; background-color: var(--note); border-bottom-width: 3px; }
+.teacher-box.collapsed.no-avatar .teacher-name { display: flex; }
