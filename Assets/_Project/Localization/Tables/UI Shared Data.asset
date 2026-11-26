@@ -9095,6 +9095,14 @@ MonoBehaviour:
     m_Key: trade.FAC_SAGEORI.MATERIALS_FOOD.log
     m_Metadata:
       m_Items: []
+  - m_Id: 2696120508891136
+    m_Key: plan.slot_locked
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2696120576000000
+    m_Key: plan.slot_forced
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

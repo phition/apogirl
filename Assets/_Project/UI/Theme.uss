@@ -274,9 +274,9 @@ Button.selected { border-color: var(--accent); background-color: var(--accent-so
 .board-open .teacher-box { bottom: 700px; transition-property: bottom, right; transition-duration: 0.25s; }
 .board-hint { color: var(--text-dim); font-size: 14px; margin-right: 10px; }
 .board-body { flex-direction: row; flex-grow: 1; min-height: 0; }
-.palette { width: 420px; margin-right: 12px; }
+.palette { width: 420px; margin-right: 12px; flex-shrink: 0; }
 .planner { flex-grow: 1; margin-right: 12px; }
-.plan-side { width: 360px; }
+.plan-side { width: 360px; flex-shrink: 0; }
 
 .section-header {
     -unity-font-style: bold;
@@ -370,7 +370,8 @@ Button.selected { border-color: var(--accent); background-color: var(--accent-so
 .weekday-sat { color: var(--weekday-sat); }
 .weekday-sun { color: var(--weekday-sun); }
 
-.planner-row { flex-direction: row; flex-grow: 1; }
+/* 칸 크기는 보드가 정한다: 줄은 높이를, 칸은 폭을 똑같이 나눠 갖고 내용(긴 이름)이 밀어내지 못한다 (2026-11-26) */
+.planner-row { flex-direction: row; flex-grow: 1; flex-shrink: 1; flex-basis: 0; min-height: 0; }
 .planner-header { flex-grow: 0; }
 .planner-day, .planner-phase {
     -unity-text-align: middle-center;
@@ -390,7 +391,7 @@ Button.selected { border-color: var(--accent); background-color: var(--accent-so
 }
 
 /* 칸 안: 아이콘(위) + 이름(아래, 굵게 하지 않음 — 사용자 요청 2026-11-25). 글씨는 자식 라벨이 그린다 */
-.slot { flex-direction: column; align-items: center; justify-content: center; padding: 2px; }
+.slot { flex-direction: column; align-items: center; justify-content: center; padding: 5px; flex-shrink: 1; min-width: 0; min-height: 0; overflow: hidden; }
 .slot-icon { width: 34px; height: 34px; flex-shrink: 0; margin-bottom: 2px; }
 .slot-label {
     font-size: 17px;
@@ -399,6 +400,9 @@ Button.selected { border-color: var(--accent); background-color: var(--accent-so
     white-space: normal;
     padding: 0;
     margin: 0;
+    max-width: 100%;
+    flex-shrink: 1;
+    overflow: hidden;
 }
 .slot.empty .slot-label { font-size: 15px; }
 .slot.slot-day { background-color: #c9bc9f; }
@@ -423,7 +427,8 @@ Button.selected { border-color: var(--accent); background-color: var(--accent-so
 .board-tool.teacher { background-color: #4a4a2c; border-color: var(--accent); color: #f1e6c8; -unity-font-style: bold; }
 .board-tool:disabled { opacity: 0.35; }
 .board-tool.teacher.dim { opacity: 0.45; border-color: #6b6658; }
-.planner-col { flex-grow: 1; margin-right: 12px; min-width: 0; }
+/* 가운데 칼럼은 양옆(카드 목록·설명란)이 차지하고 남은 폭을 그대로 쓴다: 칸 내용이 길어져도 양옆을 밀지 않는다 */
+.planner-col { flex-grow: 1; flex-shrink: 1; flex-basis: 0; margin-right: 12px; min-width: 0; }
 .planner-col > .planner { margin-right: 0; position: relative; }
 .plan-flow { height: 128px; flex-shrink: 0; margin-top: 4px; }
 .plan-flow-strip { flex-direction: row; flex-grow: 1; }
@@ -457,6 +462,13 @@ Button.selected { border-color: var(--accent); background-color: var(--accent-so
 .slot.drop-ok { border-color: rgba(120, 200, 120, 0.7); border-width: 2px; }
 .slot.drop-bad { opacity: 0.45; }
 .slot.drop-target { border-color: var(--accent); border-width: 3px; }
+/* 테두리가 두꺼워지는 상태는 안쪽 여백을 그만큼 줄여 칸 크기를 그대로 둔다 (테두리 + 여백 = 5px, 위 테두리 규칙과 같은 차례) */
+.slot:hover { padding: 3px; }
+.slot.forced { padding: 3px; }
+.slot.warned { padding: 3px; }
+.slot.current { padding: 2px; }
+.slot.drop-ok { padding: 3px; }
+.slot.drop-target { padding: 2px; }
 .slot.drag-source { opacity: 0.5; }
 /* 끄는 그림: 행동 아이콘 판 (60px, HubViews PlannerView.GhostHalf), 아이콘이 없으면 짧은 이름 */
 .slot-drag-ghost { position: absolute; width: 60px; height: 60px; align-items: center; justify-content: center; border-radius: 12px; border-width: 2px; border-color: var(--accent); background-color: rgba(22, 32, 28, 0.82); opacity: 0.95; scale: 1.08 1.08; }

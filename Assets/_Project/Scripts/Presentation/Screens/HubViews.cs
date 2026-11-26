@@ -907,6 +907,7 @@ namespace ApoGirl.Presentation.Screens
                     cell.Add(label);
                     cell.Add(chalk);
                     cell.Add(pin);
+                    cell.RegisterCallback<GeometryChangedEvent>(_ => FitLabel(label, cell));   // 칸 크기가 정해지면 글꼴을 다시 맞춘다
                     _cells[index] = cell;
                     _icons[index] = icon;
                     _labels[index] = label;
@@ -940,16 +941,19 @@ namespace ApoGirl.Presentation.Screens
                     text = Loc.F("teacher.pin_empty", PinName(pins[i]));
                 }
 
-                if (slot.Locked)
+                // 칸에는 아이콘과 이름만 (잠김·강제 휴식·설명은 오른쪽 칸 설명에 — 칸 크기가 흔들리지 않게)
+                if (empty && slot.Locked)
                 {
-                    text += "\n" + Loc.T("planner.locked");
+                    text = Loc.T("planner.locked");
                 }
-                else if (slot.ForcedRest)
+                else if (empty && slot.ForcedRest)
                 {
-                    text += "\n" + Loc.T("planner.forced");
+                    text = Loc.T("planner.forced");
                 }
 
-                _labels[i].text = text;
+                _labels[i].userData = text;
+                cell.EnableInClassList("empty", empty);
+                FitLabel(_labels[i], cell);
                 var iconTexture = empty ? null : SlotIcon(slot);
                 StoryArt.SetContain(_icons[i], iconTexture);
                 _icons[i].style.display = iconTexture == null ? DisplayStyle.None : DisplayStyle.Flex;
@@ -965,6 +969,90 @@ namespace ApoGirl.Presentation.Screens
                 _pins[i].style.display = planning && !slot.Locked ? DisplayStyle.Flex : DisplayStyle.None;
                 cell.SetEnabled(planning);
             }
+        }
+
+        /// <summary>칸 이름 글꼴 크기 후보 (큰 것부터). 이름이 길면 칸 크기는 그대로 두고 글꼴을 줄인다.</summary>
+        private static readonly int[] LabelSizes = { 17, 15, 13, 12, 11 };
+
+        /// <summary>글자 폭 어림: 한글 한 자 = 글꼴 크기 1, 그 밖의 글자·빈칸 = 0.55.</summary>
+        private static float TextUnits(string text)
+        {
+            var units = 0f;
+            foreach (var c in text)
+            {
+                units += c >= 0x1100 ? 1f : 0.55f;
+            }
+
+            return units;
+        }
+
+        /// <summary>
+        /// 이름(label.userData)이 칸 안에 들어가게 글꼴을 고른다. 칸 크기는 바꾸지 않는다.
+        /// ① 한 줄에 들어가면 그대로(15px까지), ② 낱말이 둘 이상이면 가운데 빈칸에서 두 줄로 나누고 들어가는 가장 큰 글꼴,
+        /// ③ 그래도 안 되면 한 줄에 들어가는 가장 큰 글꼴. 칸 크기를 아직 모르면(첫 배치 전) 기본 크기로 두고 배치 뒤 다시 맞춘다.
+        /// </summary>
+        private static void FitLabel(Label label, VisualElement cell)
+        {
+            var text = label.userData as string ?? label.text ?? "";
+            var width = cell.resolvedStyle.width;
+            if (float.IsNaN(width) || width <= 20f)
+            {
+                label.text = text;
+                label.style.fontSize = LabelSizes[0];
+                return;
+            }
+
+            var room = Math.Max(20f, width - 12f);
+            var units = TextUnits(text);
+            foreach (var size in LabelSizes)
+            {
+                if (size >= 15 && units * size <= room)
+                {
+                    label.text = text;
+                    label.style.fontSize = size;
+                    return;
+                }
+            }
+
+            // 두 줄: 가운데에 가장 가까운 빈칸에서 나눈다 (한글은 아무 데서나 꺾여 낱말이 쪼개지므로 직접 줄을 바꾼다)
+            var cut = -1;
+            for (var i = 1; i < text.Length - 1; i++)
+            {
+                if (text[i] == ' ' && (cut < 0 || Math.Abs(i - text.Length / 2f) < Math.Abs(cut - text.Length / 2f)))
+                {
+                    cut = i;
+                }
+            }
+
+            if (cut > 0)
+            {
+                var first = text.Substring(0, cut);
+                var second = text.Substring(cut + 1);
+                var longest = Math.Max(TextUnits(first), TextUnits(second));
+                foreach (var size in LabelSizes)
+                {
+                    if (longest * size <= room)
+                    {
+                        label.text = first + (char)10 + second;
+                        label.style.fontSize = size;
+                        return;
+                    }
+                }
+            }
+
+            foreach (var size in LabelSizes)
+            {
+                if (units * size <= room)
+                {
+                    label.text = text;
+                    label.style.fontSize = size;
+                    return;
+                }
+            }
+
+            // 가장 작은 글꼴로도 한 줄에 안 들어가면 두 줄로 흘린다 (칸은 넘치는 글을 잘라 낸다)
+            label.text = text;
+            label.style.fontSize = LabelSizes[LabelSizes.Length - 1];
         }
 
         /// <summary>선생님 추천 직후: 선생님 칸을 앞에서부터 한 칸씩 분필로 채운다 (칸마다 40ms, 전부 0.6초 안).</summary>
@@ -1407,6 +1495,22 @@ namespace ApoGirl.Presentation.Screens
                 Loc.F("plan.slot_title", Loc.T("weekday." + CalendarRules.Weekday(CalendarRules.DayOf(slot), balance)), UiText.Phase(CalendarRules.PhaseOf(slot)),
                     string.IsNullOrEmpty(planned.ActionId) ? Loc.T("plan.slot_empty_rest") : Loc.Action(planned.ActionId)),
             };
+            if (planned.Locked)
+            {
+                lines.Add(Loc.T("plan.slot_locked"));
+            }
+            else if (planned.ForcedRest)
+            {
+                lines.Add(Loc.T("plan.slot_forced"));
+            }
+
+            // 행동 설명 (있을 때만): 칸에는 이름만 쓰고 설명은 여기에
+            var about = string.IsNullOrEmpty(planned.ActionId) ? null : Loc.Lookup(Loc.ActionTable, planned.ActionId + ".desc");
+            if (!string.IsNullOrEmpty(about))
+            {
+                lines.Add(about);
+            }
+
             var reason = _session.IsTeacherSlot(slot) ? _session.TeacherReason(slot) : null;
             if (reason != null)
             {

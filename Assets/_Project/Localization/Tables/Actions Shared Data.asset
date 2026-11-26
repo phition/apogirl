@@ -875,6 +875,58 @@ MonoBehaviour:
     m_Key: ACT_CRAFT_SPRINKLER.short
     m_Metadata:
       m_Items: []
+  - m_Id: 2696118852141056
+    m_Key: ACT_TREAT_INFECTION.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2696118910861312
+    m_Key: ACT_CARE_TEACHER.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2696118910861313
+    m_Key: ACT_SCOUT_RADIO.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2696118910861314
+    m_Key: ACT_EXP_DAY_RESIDENTIAL.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2696118910861315
+    m_Key: ACT_EXP_DAY_SUBWAY.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2696118910861316
+    m_Key: ACT_EXP_NIGHT_SUBWAY.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2696118910861317
+    m_Key: ACT_DAILY_TUTOR_DOHYEON.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2696118910861318
+    m_Key: ACT_EXP_DAY_MART.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2696118910861319
+    m_Key: ACT_EXP_NIGHT_MART.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2696118910861320
+    m_Key: ACT_EXP_DAY_POLICE.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2696118910861321
+    m_Key: ACT_EXP_NIGHT_POLICE.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2696118910861322
+    m_Key: ACT_EXP_DAY_WATERWORKS.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2696118910861323
+    m_Key: ACT_EXP_NIGHT_WATERWORKS.desc
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

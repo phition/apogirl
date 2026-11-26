@@ -9098,6 +9098,14 @@ MonoBehaviour:
     m_Localized: "\uC790\uC7AC\uB97C \uB118\uAE30\uACE0 \uC2DD\uB7C9\uC744 \uBC1B\uC558\uB2E4"
     m_Metadata:
       m_Items: []
+  - m_Id: 2696120508891136
+    m_Localized: "\uC7A0\uAE34 \uCE78\uC774\uB77C \uBC14\uAFC0 \uC218 \uC5C6\uB2E4."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2696120576000000
+    m_Localized: "\uAC15\uC81C \uD734\uC2DD: \uC4F0\uB7EC\uC9C4 \uB4A4\uB77C \uC26C\uC5B4\uC57C \uD55C\uB2E4."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []
