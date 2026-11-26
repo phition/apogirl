@@ -2235,7 +2235,9 @@
     "chatter.NPC_CAT.hungry.1": "냐아아.",
     "chatter.NPC_CAT.thirsty.0": "(물그릇 앞에 앉아 있다)",
     "chatter.NPC_CAT.thirsty.1": "(혀를 내밀고 있다)",
-    "bbs.no_power": "전기가 모자라 컴퓨터가 켜지지 않는다. (여유 전력 {0} 필요)"
+    "bbs.no_power": "전기가 모자라 컴퓨터가 켜지지 않는다. (여유 전력 {0} 필요)",
+    "debug.look_on": "연출 켬 (F9)",
+    "debug.look_off": "연출 끔 (F9) — 비교용"
   },
   "Actions": {
     "ACT_REST_DAY.name": "낮잠",

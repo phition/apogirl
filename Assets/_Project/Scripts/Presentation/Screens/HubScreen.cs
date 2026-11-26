@@ -308,6 +308,12 @@ namespace ApoGirl.Presentation.Screens
                 _debug.Toggle();
             }
 
+            // F9 (디버그): 단면도 빛·그늘 연출을 켜고 끈다 — 탐험 화면의 F9와 같은 뜻
+            if (keyboard.f9Key.wasPressedThisFrame && DebugAccess.Enabled && (_bbs == null || !_bbs.IsOpen))
+            {
+                ShowToast(Loc.T(_section.ToggleLook() ? "debug.look_on" : "debug.look_off"));
+            }
+
             // PC통신 화면에서는 글자를 치고 있으니 허브 단축키를 모두 쉰다 (Esc·명령은 그 화면이 받는다)
             if (_bbs != null && _bbs.IsOpen)
             {

@@ -69,6 +69,72 @@ namespace ApoGirl.Exploration.Runtime
 
         /// <summary>햇빛 줄기의 빛 기둥(볼류메트릭) 세기 (ExplorationLook, 0이면 끈다): 먼지 낀 공기에 빛줄기가 보인다.</summary>
         public float BeamVolume { get; set; }
+
+        /// <summary>햇빛 줄기 세기 배율 (ExplorationLook, 1 = 밸런스 값 그대로).</summary>
+        public float BeamScale { get; set; } = 1f;
+
+        /// <summary>천장 아래 그늘 띠의 세기 (ExplorationLook, 0 = 숨김)와 높이(유닛). 공간에 깊이를 준다.</summary>
+        public float CeilingShade
+        {
+            get => _ceilingShade;
+            set
+            {
+                _ceilingShade = Mathf.Clamp01(value);
+                foreach (var shade in _shades)
+                {
+                    if (shade != null)
+                    {
+                        shade.color = new Color(0.03f, 0.04f, 0.09f, _ceilingShade);
+                    }
+                }
+            }
+        }
+
+        public float CeilingShadeHeight { get; set; } = 1.4f;
+        private float _ceilingShade;
+        private readonly List<SpriteRenderer> _shades = new List<SpriteRenderer>();
+        private static Sprite _shadeSprite;
+        private static Material _shadeMaterial;
+
+        /// <summary>천장 아래로 깔리는 그늘 띠 (빛을 받지 않는 그림, 위가 짙고 아래로 옅어진다).</summary>
+        private void AddCeilingShade(ExplorationArea area)
+        {
+            if (_shadeSprite == null)
+            {
+                const int height = 32;
+                var texture = new Texture2D(1, height, TextureFormat.RGBA32, false) { filterMode = FilterMode.Bilinear, wrapMode = TextureWrapMode.Clamp, hideFlags = HideFlags.HideAndDontSave };
+                for (var y = 0; y < height; y++)
+                {
+                    var t = y / (height - 1f);            // 0 = 아래, 1 = 위(천장)
+                    texture.SetPixel(0, y, new Color(1f, 1f, 1f, t * t));
+                }
+
+                texture.Apply();
+                _shadeSprite = Sprite.Create(texture, new Rect(0, 0, 1, height), new Vector2(0f, 1f), 1f);
+                _shadeSprite.hideFlags = HideFlags.HideAndDontSave;
+            }
+
+            if (_shadeMaterial == null)
+            {
+                _shadeMaterial = Resources.Load<Material>("Art/exploration_fx_unlit");
+            }
+
+            var go = new GameObject("CeilingShade");
+            go.transform.SetParent(_world, false);
+            go.transform.localPosition = new Vector3(area.Origin.x, area.Origin.y + _floorHeight - CeilingInset, 0f);
+            // 그림은 1x32 화소 = 1x32 유닛(PPU 1): 폭은 공간 길이, 높이는 그늘 높이로 늘린다
+            go.transform.localScale = new Vector3(area.Width, CeilingShadeHeight / 32f, 1f);
+            var renderer = go.AddComponent<SpriteRenderer>();
+            renderer.sprite = _shadeSprite;
+            if (_shadeMaterial != null)
+            {
+                renderer.sharedMaterial = _shadeMaterial;
+            }
+
+            renderer.sortingOrder = 3;
+            renderer.color = new Color(0.03f, 0.04f, 0.09f, _ceilingShade);
+            _shades.Add(renderer);
+        }
         private Color _color;
         private bool _snapped;
 
@@ -88,6 +154,7 @@ namespace ApoGirl.Exploration.Runtime
         /// <summary>복도 한 층: 일정 간격으로 햇빛 줄기 + 줄기가 닿는 바닥의 번진 빛.</summary>
         public void AddCorridor(ExplorationArea corridor)
         {
+            AddCeilingShade(corridor);
             if (corridor.IsDeep)
             {
                 // 깊은 곳에는 햇빛이 들지 않는다: 먼지만 (손전등 빛 안에서만 보인다)
@@ -179,6 +246,7 @@ namespace ApoGirl.Exploration.Runtime
         /// <summary>방 (처음 들어갈 때 만든다): 복도 쪽 창마다 창 아래로 번지는 희미한 빛.</summary>
         public void AddRoom(ExplorationArea room)
         {
+            AddCeilingShade(room);
             if (room.Template == null)
             {
                 return;
@@ -241,7 +309,7 @@ namespace ApoGirl.Exploration.Runtime
             var cookie = BeamCookie(bucket);
             var scale = new Vector3(BeamWidth + Mathf.Abs(reach), height, 1f);
             var left = -BeamWidth * 0.5f + Mathf.Min(0f, reach);
-            var beamIntensity = _balance.SunbeamIntensity * _intensity * drift;
+            var beamIntensity = _balance.SunbeamIntensity * BeamScale * _intensity * drift;
             for (var i = 0; i < _beams.Count; i++)
             {
                 var beam = _beams[i];

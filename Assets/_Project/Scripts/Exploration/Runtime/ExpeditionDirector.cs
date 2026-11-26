@@ -3359,6 +3359,9 @@ namespace ApoGirl.Exploration.Runtime
             if (_lighting != null)
             {
                 _lighting.BeamVolume = _look.SunbeamVolume;
+                _lighting.BeamScale = _look.SunbeamScale;
+                _lighting.CeilingShade = _look.CeilingShade;
+                _lighting.CeilingShadeHeight = _look.CeilingShadeHeight;
             }
 
             // 2단계 그림자: 손전등 빛만 그림자를 만든다
@@ -3423,7 +3426,7 @@ namespace ApoGirl.Exploration.Runtime
                 }
             }
 
-            _areaFactor = _lighting.AmbientFactor(CurrentArea);
+            _areaFactor = _lighting.AmbientFactor(CurrentArea) * _look.AmbientScale;
             ApplyVolumes();
             SetAmbient(_ambientIntensity, _light.color);
         }
@@ -3608,7 +3611,7 @@ namespace ApoGirl.Exploration.Runtime
             // 보이는 공간의 밝기 (낮: 복도는 햇빛, 문 안 방은 어둡게). 문을 지나면 잠깐 동안 눈이 적응하듯 바뀐다.
             if (_lighting != null)
             {
-                var wanted = _lighting.AmbientFactor(_shownArea ?? CurrentArea);
+                var wanted = _lighting.AmbientFactor(_shownArea ?? CurrentArea) * _look.AmbientScale;
                 _areaFactor = cut || dt >= 1000f ? wanted : Mathf.MoveTowards(_areaFactor, wanted, dt * 2.5f);
                 _lighting.Tick(dt, Clock != null ? Clock.Normalized : 0f, _shownArea ?? CurrentArea);
                 if (_light != null && !FullVision)

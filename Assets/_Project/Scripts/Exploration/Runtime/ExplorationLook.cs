@@ -36,6 +36,29 @@ namespace ApoGirl.Exploration.Runtime
             /// <summary>빛 기둥(볼류메트릭) 세기: 손전등 원뿔·햇빛 줄기. 0이면 끈다.</summary>
             public float FlashlightVolume;
             public float SunbeamVolume;
+
+            // ── 현대적인 도트 연출 (2026-11-26): 그림자는 차갑게·밝은 곳은 따뜻하게, 필름 입자, 옅은 색수차 ──
+
+            /// <summary>색온도·색조 (−100~100, 0 = 그대로). 양수 = 따뜻하게 / 자홍 쪽.</summary>
+            public float Temperature;
+            public float Tint;
+
+            /// <summary>어두운 곳·중간·밝은 곳에 곱하는 색 (흰색 = 그대로). 그림자에 남색, 밝은 곳에 살구색을 넣으면 색이 깊어진다.</summary>
+            public string ShadowsColor = "#FFFFFF";
+            public string MidtonesColor = "#FFFFFF";
+            public string HighlightsColor = "#FFFFFF";
+
+            /// <summary>필름 입자 (0~1)와 화면 가장자리 색수차 (0~1). 0이면 끈다.</summary>
+            public float FilmGrain;
+            public float ChromaticAberration;
+
+            /// <summary>공간 전체 밝기·햇빛 줄기 세기에 곱하는 값 (1 = 그대로). 밝기를 낮추고 줄기를 올리면 명암이 깊어진다.</summary>
+            public float AmbientScale = 1f;
+            public float SunbeamScale = 1f;
+
+            /// <summary>천장 아래로 깔리는 그늘 띠의 세기 (0 = 없음)와 높이(유닛).</summary>
+            public float CeilingShade;
+            public float CeilingShadeHeight = 1.4f;
         }
 
         /// <summary>
@@ -203,6 +226,12 @@ namespace ApoGirl.Exploration.Runtime
         public float FlashlightVolume => On ? _profile.FlashlightVolume : 0f;
         public float SunbeamVolume => On ? _profile.SunbeamVolume : 0f;
 
+        /// <summary>전체 밝기·햇빛 줄기 배율, 천장 그늘 (F9로 끄면 예전 그대로).</summary>
+        public float AmbientScale => On ? Mathf.Max(0f, _profile.AmbientScale) : 1f;
+        public float SunbeamScale => On ? Mathf.Max(0f, _profile.SunbeamScale) : 1f;
+        public float CeilingShade => On ? Mathf.Clamp01(_profile.CeilingShade) : 0f;
+        public float CeilingShadeHeight => Mathf.Max(0.2f, _profile.CeilingShadeHeight);
+
         public void Setup(Camera camera, Transform parent, bool day)
         {
             On = Settings.Enabled;
@@ -332,6 +361,39 @@ namespace ApoGirl.Exploration.Runtime
                 vignette.intensity.Override(p.VignetteIntensity);
                 vignette.smoothness.Override(p.VignetteSmoothness);
                 vignette.color.Override(Hex(p.VignetteColor, Color.black));
+            }
+
+            if (!Mathf.Approximately(p.Temperature, 0f) || !Mathf.Approximately(p.Tint, 0f))
+            {
+                var balance = profile.Add<WhiteBalance>(true);
+                balance.temperature.Override(Mathf.Clamp(p.Temperature, -100f, 100f));
+                balance.tint.Override(Mathf.Clamp(p.Tint, -100f, 100f));
+            }
+
+            var shadows = Hex(p.ShadowsColor, Color.white);
+            var midtones = Hex(p.MidtonesColor, Color.white);
+            var highlights = Hex(p.HighlightsColor, Color.white);
+            if (shadows != Color.white || midtones != Color.white || highlights != Color.white)
+            {
+                // 값 = (색 배율 rgb, 밝기 보탬 w): 흰색·0이 그대로
+                var tones = profile.Add<ShadowsMidtonesHighlights>(true);
+                tones.shadows.Override(new Vector4(shadows.r, shadows.g, shadows.b, 0f));
+                tones.midtones.Override(new Vector4(midtones.r, midtones.g, midtones.b, 0f));
+                tones.highlights.Override(new Vector4(highlights.r, highlights.g, highlights.b, 0f));
+            }
+
+            if (p.FilmGrain > 0f)
+            {
+                var grain = profile.Add<FilmGrain>(true);
+                grain.type.Override(FilmGrainLookup.Thin1);
+                grain.intensity.Override(Mathf.Clamp01(p.FilmGrain));
+                grain.response.Override(0.8f);
+            }
+
+            if (p.ChromaticAberration > 0f)
+            {
+                var aberration = profile.Add<ChromaticAberration>(true);
+                aberration.intensity.Override(Mathf.Clamp01(p.ChromaticAberration));
             }
 
             return profile;
