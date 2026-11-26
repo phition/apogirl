@@ -8647,6 +8647,10 @@ MonoBehaviour:
     m_Key: bbs.chat_line
     m_Metadata:
       m_Items: []
+  - m_Id: 2651567055716352
+    m_Key: bbs.post_date
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

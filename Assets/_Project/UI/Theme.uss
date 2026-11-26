@@ -1911,7 +1911,8 @@ Button.base-advice-line:hover { background-color: rgba(42, 38, 32, 0.12); color:
 
 /* ── PC통신 '이제누리' (BbsView): 90년대 파란 글자 화면. 글꼴은 둥근모꼴 (UI/Fonts/DungGeunMo.ttf, 고정폭 — 사용자가 ArtInbox에 넣음) ── */
 .bbs-overlay .unity-text-element { -unity-font-definition: url("Fonts/DungGeunMo.ttf"); }
-.bbs-overlay { position: absolute; left: 0; top: 0; right: 0; bottom: 0; align-items: center; justify-content: center; background-color: rgb(4, 6, 40); }
+/* 뒤로 허브가 흐릿하게 비친다 (사용자 요청) */
+.bbs-overlay { position: absolute; left: 0; top: 0; right: 0; bottom: 0; align-items: center; justify-content: center; background-color: rgba(4, 6, 40, 0.85); }
 .bbs-frame {
     width: 1160px; height: 900px;
     padding: 26px 34px 20px 34px;

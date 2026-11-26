@@ -2128,9 +2128,9 @@
     "bbs.write_title": "제목> ",
     "bbs.write_body": "내용> ",
     "bbs.write_done": "글을 올렸습니다. 누군가 읽기를.",
-    "bbs.week_date": "{0}주",
     "bbs.chat_prompt": "말> ",
-    "bbs.chat_line": "{0}> {1}"
+    "bbs.chat_line": "{0}> {1}",
+    "bbs.post_date": "{0:00}.{1:00}"
   },
   "Actions": {
     "ACT_REST_DAY.name": "낮잠",

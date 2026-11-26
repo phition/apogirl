@@ -46,7 +46,20 @@ namespace ApoGirl.Presentation.Screens
         public float SessionSeconds = 180f;
         public int PageRows = 17;
         public int Columns = 76;
-        public string[] Dial = Array.Empty<string>();
+        /// <summary>전화 거는 글줄: 연결음(DialSound)에 맞춰 At초에 한 줄씩. Append면 바로 윗줄 끝에 이어 붙인다 (번호·점).</summary>
+        [Serializable]
+        public sealed class DialLine
+        {
+            public float At;
+            public string Text = "";
+            public bool Append;
+        }
+
+        public DialLine[] Dial = Array.Empty<DialLine>();
+
+        /// <summary>연결음 (Resources/Audio 아래 경로)과 전화 거는 데 걸리는 시간(초). 이 시간이 지나야 초기 화면이 뜬다.</summary>
+        public string DialSound = "";
+        public float DialSeconds = 20f;
         public string[] Banner = Array.Empty<string>();
         public MenuItem[] Menu = Array.Empty<MenuItem>();
         public string[] Help = Array.Empty<string>();
@@ -107,8 +120,10 @@ namespace ApoGirl.Presentation.Screens
         private Label _screen;
         private Label _prompt;
         private TextField _field;
+        private const string DialChannel = "bbs_dial";
         private IVisualElementScheduledItem _clock;
         private float _lastTick;
+        private bool _connected;   // 전화가 이어진 뒤부터 컴퓨터가 버티는 시간을 센다
 
         // 지금 화면
         private string _title = "";
@@ -183,6 +198,7 @@ namespace ApoGirl.Presentation.Screens
             }
 
             _clock?.Pause();
+            Audio.Sound.StopLoop(DialChannel);
             _overlay.RemoveFromHierarchy();
             _overlay = null;
         }
@@ -192,7 +208,11 @@ namespace ApoGirl.Presentation.Screens
         private void Tick()
         {
             var now = Time.unscaledTime;
-            _budget -= now - _lastTick;
+            if (_connected)
+            {
+                _budget -= now - _lastTick;
+            }
+
             _lastTick = now;
             if (_budget <= 0f)
             {
@@ -387,15 +407,29 @@ namespace ApoGirl.Presentation.Screens
             _hint = "";
             _handler = null;
             Render();
-            var lines = _config.Dial;
-            for (var i = 0; i < lines.Length; i++)
+            // 연결음을 틀고, 그 소리에 맞춰 글줄을 한 줄씩 찍는다
+            _connected = false;
+            if (!string.IsNullOrEmpty(_config.DialSound))
             {
-                var line = lines[i];
+                Audio.Sound.Loop(DialChannel, _config.DialSound, Audio.SoundCategory.Sfx);
+            }
+
+            foreach (var line in _config.Dial)
+            {
+                var entry = line;
                 _overlay.schedule.Execute(() =>
                 {
-                    _rows.Add(line);
+                    if (entry.Append && _rows.Count > 0)
+                    {
+                        _rows[_rows.Count - 1] += entry.Text;
+                    }
+                    else
+                    {
+                        _rows.Add(entry.Text);
+                    }
+
                     Render();
-                }).StartingIn(350 * (i + 1));
+                }).StartingIn((long)(Mathf.Max(0f, entry.At) * 1000f));
             }
 
             _overlay.schedule.Execute(() =>
@@ -405,10 +439,13 @@ namespace ApoGirl.Presentation.Screens
                     return;
                 }
 
+                Audio.Sound.StopLoop(DialChannel);
+                _connected = true;
+                _lastTick = Time.unscaledTime;
                 _field.SetEnabled(true);
                 ShowMain();
                 Focus();
-            }).StartingIn(350 * (lines.Length + 2));
+            }).StartingIn((long)(Mathf.Max(0.5f, _config.DialSeconds) * 1000f));
         }
 
         private void ShowMain()
@@ -536,12 +573,16 @@ namespace ApoGirl.Presentation.Screens
                     return false;
                 }
 
+                // 올린 날짜 = 게임 안 오늘 (월.일)
                 var state = _session.State;
+                var date = state != null
+                    ? CalendarRules.DateOf(state.Calendar.Week, state.Calendar.Day, _session.Definitions.Balance)
+                    : (Month: 1, Day: 1);
                 BbsStore.Add(new BbsConfig.Post
                 {
                     Title = title,
                     Author = YarnFunctions.Name(),
-                    Date = Loc.F("bbs.week_date", state != null ? state.Calendar.Week : 0),
+                    Date = Loc.F("bbs.post_date", date.Month, date.Day),
                     Body = new[] { text },
                 });
                 EndRaw();

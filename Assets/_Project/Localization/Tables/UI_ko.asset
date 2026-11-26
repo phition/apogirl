@@ -8650,6 +8650,10 @@ MonoBehaviour:
     m_Localized: '{0}> {1}'
     m_Metadata:
       m_Items: []
+  - m_Id: 2651567055716352
+    m_Localized: '{0:00}.{1:00}'
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []
