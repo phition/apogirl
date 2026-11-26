@@ -84,7 +84,7 @@ MonoBehaviour:
         SearchFlag: 
         Seal: 0
       - RoomId: ROOM_HOUSE_102
-        TemplateId: ROOM_HOUSE
+        TemplateId: ROOM_HOUSE_NURSE
         Floor: 0
         X: 46
         Number: 102
@@ -164,6 +164,7 @@ MonoBehaviour:
           LootTableId: LOOT_HOUSE_KITCHEN
           SpriteKey: 
           Guaranteed: 0
+          Once: 0
         - Id: FRIDGE
           Kind: 3
           Floor: 0
@@ -172,6 +173,7 @@ MonoBehaviour:
           LootTableId: LOOT_HOUSE_KITCHEN
           SpriteKey: 
           Guaranteed: 0
+          Once: 0
         - Id: DRAWER
           Kind: 1
           Floor: 0
@@ -180,6 +182,7 @@ MonoBehaviour:
           LootTableId: 
           SpriteKey: 
           Guaranteed: 0
+          Once: 0
         - Id: CLOSET
           Kind: 0
           Floor: 0
@@ -188,6 +191,44 @@ MonoBehaviour:
           LootTableId: 
           SpriteKey: 
           Guaranteed: 0
+          Once: 0
+        DefaultLootTableId: LOOT_HOUSE_ROOM
+        WallDecor: 
+      - Id: ROOM_HOUSE_NURSE
+        Width: 14
+        DoorXs:
+        - 1.2
+        Windows:
+        - X: 3
+          Width: 3
+        Containers:
+        - Id: KITCHEN
+          Kind: 2
+          Floor: 0
+          X: 4
+          SearchSeconds: 3.5
+          LootTableId: LOOT_HOUSE_KITCHEN
+          SpriteKey: 
+          Guaranteed: 0
+          Once: 0
+        - Id: FRIDGE
+          Kind: 3
+          Floor: 0
+          X: 6.4
+          SearchSeconds: 4
+          LootTableId: LOOT_HOUSE_KITCHEN
+          SpriteKey: 
+          Guaranteed: 0
+          Once: 0
+        - Id: PAPERS
+          Kind: 1
+          Floor: 0
+          X: 8.4
+          SearchSeconds: 2
+          LootTableId: LOOT_HOUSE_NURSE
+          SpriteKey: 
+          Guaranteed: 1
+          Once: 1
         DefaultLootTableId: LOOT_HOUSE_ROOM
         WallDecor: 
       - Id: ROOM_DEEP_RES_VAULT
@@ -204,6 +245,7 @@ MonoBehaviour:
           LootTableId: 
           SpriteKey: prop_mart_safe
           Guaranteed: 1
+          Once: 0
         - Id: LOCKER
           Kind: 0
           Floor: 0
@@ -212,6 +254,7 @@ MonoBehaviour:
           LootTableId: 
           SpriteKey: 
           Guaranteed: 1
+          Once: 0
         - Id: TRUNK
           Kind: 4
           Floor: 0
@@ -220,6 +263,7 @@ MonoBehaviour:
           LootTableId: LOOT_RESIDENTIAL_DEEP
           SpriteKey: 
           Guaranteed: 1
+          Once: 0
         DefaultLootTableId: LOOT_RESIDENTIAL_VAULT
         WallDecor: 
       - Id: ROOM_DEEP_RES_STORE
@@ -236,6 +280,7 @@ MonoBehaviour:
           LootTableId: LOOT_RESIDENTIAL_DEEP
           SpriteKey: 
           Guaranteed: 1
+          Once: 0
         - Id: BOX
           Kind: 4
           Floor: 0
@@ -244,6 +289,7 @@ MonoBehaviour:
           LootTableId: LOOT_HOUSE_KITCHEN
           SpriteKey: 
           Guaranteed: 1
+          Once: 0
         - Id: CRATE
           Kind: 4
           Floor: 0
@@ -252,6 +298,7 @@ MonoBehaviour:
           LootTableId: 
           SpriteKey: 
           Guaranteed: 1
+          Once: 0
         DefaultLootTableId: LOOT_RESIDENTIAL_VAULT
         WallDecor: 
       Containers:
@@ -263,6 +310,7 @@ MonoBehaviour:
         LootTableId: LOOT_HOUSE_ROOM
         SpriteKey: 
         Guaranteed: 0
+        Once: 0
       - Id: C_RES_RECYCLE
         Kind: 4
         Floor: 0
@@ -271,6 +319,7 @@ MonoBehaviour:
         LootTableId: LOOT_HOUSE_KITCHEN
         SpriteKey: 
         Guaranteed: 0
+        Once: 0
       - Id: C_RES_DEEP_TRUNK
         Kind: 4
         Floor: 2
@@ -279,6 +328,7 @@ MonoBehaviour:
         LootTableId: LOOT_RESIDENTIAL_DEEP
         SpriteKey: 
         Guaranteed: 0
+        Once: 0
       - Id: C_RES_DEEP_LOCKER
         Kind: 0
         Floor: 2
@@ -287,6 +337,7 @@ MonoBehaviour:
         LootTableId: LOOT_RESIDENTIAL_DEEP
         SpriteKey: 
         Guaranteed: 0
+        Once: 0
       - Id: C_RES_DEEP_STORAGE
         Kind: 2
         Floor: 3
@@ -295,6 +346,7 @@ MonoBehaviour:
         LootTableId: LOOT_RESIDENTIAL_DEEP
         SpriteKey: 
         Guaranteed: 0
+        Once: 0
       - Id: C_RES_DEEP_BOX
         Kind: 4
         Floor: 3
@@ -303,6 +355,7 @@ MonoBehaviour:
         LootTableId: LOOT_HOUSE_KITCHEN
         SpriteKey: 
         Guaranteed: 0
+        Once: 0
       Exits:
       - Kind: 0
         Floor: 0
@@ -392,6 +445,7 @@ MonoBehaviour:
         FlagsAll: []
         FlagsNone:
         - LEFT_SUPPLIES_LOCKED_HOUSE
+        - NURSE_FOUND
         PromptKey: enc.LOCKED_HOUSE.prompt
         Choices:
         - Id: SUPPLIES
@@ -420,9 +474,9 @@ MonoBehaviour:
         PlayEventInField: 0
         Collectible: 0
       - Id: NURSE
-        Floor: 1
-        RoomId: ROOM_HOUSE_203
-        X: 10.6
+        Floor: 0
+        RoomId: ROOM_HOUSE_102
+        X: 11.6
         FlagsAll:
         - A2_STARTED
         FlagsNone:
@@ -529,11 +583,40 @@ MonoBehaviour:
         Count: 1
         Spread: 0
         Dormant: 0
-      LockedRooms:
-      - ROOM_HOUSE_102
+      LockedRooms: []
       ForceableRooms:
       - ROOM_HOUSE_201
       Encounters:
+      - Id: NURSE
+        Floor: 0
+        RoomId: ROOM_HOUSE_102
+        X: 11.6
+        FlagsAll:
+        - A2_STARTED
+        FlagsNone:
+        - NURSE_FOUND
+        - NURSE_DECLINED
+        PromptKey: enc.NURSE.prompt
+        Choices:
+        - Id: INVITE
+          TextKey: enc.NURSE.invite
+          SetFlags:
+          - NURSE_FOUND
+          AddClues: []
+          StressDelta: -4
+          Removes: 1
+        - Id: LATER
+          TextKey: enc.NURSE.later
+          SetFlags:
+          - NURSE_DECLINED
+          AddClues: []
+          StressDelta: 0
+          Removes: 1
+        SpriteKey: npc_nurse_hiding
+        DialogueNode: ENC_NURSE
+        SceneEventId: EVT_A2_NURSE_JOIN
+        PlayEventInField: 0
+        Collectible: 0
       - Id: CD_04
         Floor: 3
         RoomId: ROOM_DEEP_RES_2_V

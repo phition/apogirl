@@ -291,6 +291,7 @@ MonoBehaviour:
           LootTableId: LOOT_SCHOOL_TEACHER
           SpriteKey: 
           Guaranteed: 0
+          Once: 0
         - Id: DESKS_FRONT
           Kind: 1
           Floor: 0
@@ -299,6 +300,7 @@ MonoBehaviour:
           LootTableId: 
           SpriteKey: 
           Guaranteed: 0
+          Once: 0
         - Id: DESKS_BACK
           Kind: 1
           Floor: 0
@@ -307,6 +309,7 @@ MonoBehaviour:
           LootTableId: 
           SpriteKey: 
           Guaranteed: 0
+          Once: 0
         - Id: CLEANING
           Kind: 2
           Floor: 0
@@ -315,6 +318,7 @@ MonoBehaviour:
           LootTableId: LOOT_SCHOOL_CLEANING
           SpriteKey: 
           Guaranteed: 0
+          Once: 0
         - Id: LOCKERS
           Kind: 0
           Floor: 0
@@ -323,6 +327,7 @@ MonoBehaviour:
           LootTableId: LOOT_SCHOOL_LOCKER
           SpriteKey: 
           Guaranteed: 0
+          Once: 0
         DefaultLootTableId: LOOT_SCHOOL_GENERAL
         WallDecor: 
       - Id: ROOM_RESTROOM
@@ -341,6 +346,7 @@ MonoBehaviour:
           LootTableId: LOOT_SCHOOL_SINK
           SpriteKey: 
           Guaranteed: 0
+          Once: 0
         - Id: SUPPLY
           Kind: 4
           Floor: 0
@@ -349,6 +355,7 @@ MonoBehaviour:
           LootTableId: 
           SpriteKey: 
           Guaranteed: 0
+          Once: 0
         DefaultLootTableId: LOOT_SCHOOL_GENERAL
         WallDecor: 
       - Id: ROOM_OFFICE
@@ -370,6 +377,7 @@ MonoBehaviour:
           LootTableId: 
           SpriteKey: 
           Guaranteed: 0
+          Once: 0
         - Id: DESK_2
           Kind: 1
           Floor: 0
@@ -378,6 +386,7 @@ MonoBehaviour:
           LootTableId: 
           SpriteKey: 
           Guaranteed: 0
+          Once: 0
         - Id: DESK_3
           Kind: 1
           Floor: 0
@@ -386,6 +395,7 @@ MonoBehaviour:
           LootTableId: 
           SpriteKey: 
           Guaranteed: 0
+          Once: 0
         - Id: DESK_4
           Kind: 1
           Floor: 0
@@ -394,6 +404,7 @@ MonoBehaviour:
           LootTableId: 
           SpriteKey: 
           Guaranteed: 0
+          Once: 0
         - Id: FILES
           Kind: 2
           Floor: 0
@@ -402,6 +413,7 @@ MonoBehaviour:
           LootTableId: 
           SpriteKey: 
           Guaranteed: 0
+          Once: 0
         - Id: FRIDGE
           Kind: 3
           Floor: 0
@@ -410,6 +422,7 @@ MonoBehaviour:
           LootTableId: LOOT_SCHOOL_LOCKER
           SpriteKey: 
           Guaranteed: 0
+          Once: 0
         DefaultLootTableId: LOOT_SCHOOL_TEACHER
         WallDecor: 
       - Id: ROOM_NURSE
@@ -429,6 +442,7 @@ MonoBehaviour:
           LootTableId: 
           SpriteKey: prop_bed
           Guaranteed: 0
+          Once: 0
         - Id: BED_2
           Kind: 1
           Floor: 0
@@ -437,6 +451,7 @@ MonoBehaviour:
           LootTableId: 
           SpriteKey: prop_bed
           Guaranteed: 0
+          Once: 0
         - Id: MEDCAB
           Kind: 2
           Floor: 0
@@ -445,6 +460,7 @@ MonoBehaviour:
           LootTableId: 
           SpriteKey: prop_medcabinet
           Guaranteed: 0
+          Once: 0
         - Id: FRIDGE
           Kind: 3
           Floor: 0
@@ -453,6 +469,7 @@ MonoBehaviour:
           LootTableId: 
           SpriteKey: prop_fridge
           Guaranteed: 0
+          Once: 0
         DefaultLootTableId: LOOT_SCHOOL_NURSE
         WallDecor: wall_redcross
       - Id: ROOM_SCIENCE
@@ -472,6 +489,7 @@ MonoBehaviour:
           LootTableId: 
           SpriteKey: prop_labbench
           Guaranteed: 0
+          Once: 0
         - Id: BENCH_2
           Kind: 1
           Floor: 0
@@ -480,6 +498,7 @@ MonoBehaviour:
           LootTableId: 
           SpriteKey: prop_labbench
           Guaranteed: 0
+          Once: 0
         - Id: CHEM
           Kind: 2
           Floor: 0
@@ -488,6 +507,7 @@ MonoBehaviour:
           LootTableId: 
           SpriteKey: prop_chemshelf
           Guaranteed: 0
+          Once: 0
         - Id: PREP
           Kind: 2
           Floor: 0
@@ -496,6 +516,7 @@ MonoBehaviour:
           LootTableId: 
           SpriteKey: prop_cabinet
           Guaranteed: 0
+          Once: 0
         DefaultLootTableId: LOOT_SCHOOL_SCIENCE
         WallDecor: wall_periodic
       - Id: ROOM_MUSIC
@@ -515,6 +536,7 @@ MonoBehaviour:
           LootTableId: 
           SpriteKey: prop_piano
           Guaranteed: 0
+          Once: 0
         - Id: INSTRUMENTS
           Kind: 2
           Floor: 0
@@ -523,6 +545,7 @@ MonoBehaviour:
           LootTableId: 
           SpriteKey: prop_instrument
           Guaranteed: 0
+          Once: 0
         - Id: LOCKERS
           Kind: 0
           Floor: 0
@@ -531,6 +554,7 @@ MonoBehaviour:
           LootTableId: LOOT_SCHOOL_LOCKER
           SpriteKey: prop_locker
           Guaranteed: 0
+          Once: 0
         - Id: STANDS
           Kind: 4
           Floor: 0
@@ -539,6 +563,7 @@ MonoBehaviour:
           LootTableId: 
           SpriteKey: prop_box
           Guaranteed: 0
+          Once: 0
         DefaultLootTableId: LOOT_SCHOOL_MUSIC
         WallDecor: wall_music
       - Id: ROOM_HOMEEC
@@ -558,6 +583,7 @@ MonoBehaviour:
           LootTableId: 
           SpriteKey: prop_kitchen
           Guaranteed: 0
+          Once: 0
         - Id: STOVE
           Kind: 1
           Floor: 0
@@ -566,6 +592,7 @@ MonoBehaviour:
           LootTableId: 
           SpriteKey: prop_stove
           Guaranteed: 0
+          Once: 0
         - Id: FRIDGE
           Kind: 3
           Floor: 0
@@ -574,6 +601,7 @@ MonoBehaviour:
           LootTableId: 
           SpriteKey: prop_fridge
           Guaranteed: 0
+          Once: 0
         - Id: PANTRY
           Kind: 2
           Floor: 0
@@ -582,6 +610,7 @@ MonoBehaviour:
           LootTableId: 
           SpriteKey: prop_cabinet
           Guaranteed: 0
+          Once: 0
         DefaultLootTableId: LOOT_SCHOOL_HOMEEC
         WallDecor: wall_kitchen
       - Id: ROOM_COMPUTER
@@ -601,6 +630,7 @@ MonoBehaviour:
           LootTableId: 
           SpriteKey: prop_computer
           Guaranteed: 0
+          Once: 0
         - Id: PC_2
           Kind: 1
           Floor: 0
@@ -609,6 +639,7 @@ MonoBehaviour:
           LootTableId: 
           SpriteKey: prop_computer
           Guaranteed: 0
+          Once: 0
         - Id: PC_3
           Kind: 1
           Floor: 0
@@ -617,6 +648,7 @@ MonoBehaviour:
           LootTableId: 
           SpriteKey: prop_computer
           Guaranteed: 0
+          Once: 0
         - Id: RACK
           Kind: 2
           Floor: 0
@@ -625,6 +657,7 @@ MonoBehaviour:
           LootTableId: 
           SpriteKey: prop_rack
           Guaranteed: 0
+          Once: 0
         DefaultLootTableId: LOOT_SCHOOL_COMPUTER
         WallDecor: wall_whiteboard
       - Id: ROOM_BROADCAST
@@ -644,6 +677,7 @@ MonoBehaviour:
           LootTableId: 
           SpriteKey: prop_console
           Guaranteed: 0
+          Once: 0
         - Id: RACK
           Kind: 2
           Floor: 0
@@ -652,6 +686,7 @@ MonoBehaviour:
           LootTableId: 
           SpriteKey: prop_rack
           Guaranteed: 0
+          Once: 0
         - Id: FUEL
           Kind: 4
           Floor: 0
@@ -660,6 +695,7 @@ MonoBehaviour:
           LootTableId: 
           SpriteKey: prop_box
           Guaranteed: 0
+          Once: 0
         - Id: LOCKER
           Kind: 0
           Floor: 0
@@ -668,6 +704,7 @@ MonoBehaviour:
           LootTableId: LOOT_SCHOOL_LOCKER
           SpriteKey: prop_locker
           Guaranteed: 0
+          Once: 0
         DefaultLootTableId: LOOT_SCHOOL_BROADCAST
         WallDecor: wall_onair
       Containers:
@@ -679,6 +716,7 @@ MonoBehaviour:
         LootTableId: LOOT_SCHOOL_LOCKER
         SpriteKey: 
         Guaranteed: 0
+        Once: 0
       - Id: C_1F_HALL_LOCKER_B
         Kind: 0
         Floor: 0
@@ -687,6 +725,7 @@ MonoBehaviour:
         LootTableId: LOOT_SCHOOL_LOCKER
         SpriteKey: 
         Guaranteed: 0
+        Once: 0
       - Id: C_2F_HALL_LOCKER_A
         Kind: 0
         Floor: 1
@@ -695,6 +734,7 @@ MonoBehaviour:
         LootTableId: LOOT_SCHOOL_LOCKER
         SpriteKey: 
         Guaranteed: 0
+        Once: 0
       - Id: C_2F_HALL_LOCKER_B
         Kind: 0
         Floor: 1
@@ -703,6 +743,7 @@ MonoBehaviour:
         LootTableId: LOOT_SCHOOL_LOCKER
         SpriteKey: 
         Guaranteed: 0
+        Once: 0
       - Id: C_3F_HALL_LOCKER_A
         Kind: 0
         Floor: 2
@@ -711,6 +752,7 @@ MonoBehaviour:
         LootTableId: LOOT_SCHOOL_LOCKER
         SpriteKey: 
         Guaranteed: 0
+        Once: 0
       - Id: C_3F_HALL_LOCKER_B
         Kind: 0
         Floor: 2
@@ -719,6 +761,7 @@ MonoBehaviour:
         LootTableId: LOOT_SCHOOL_LOCKER
         SpriteKey: 
         Guaranteed: 0
+        Once: 0
       - Id: C_4F_HALL_LOCKER_A
         Kind: 0
         Floor: 3
@@ -727,6 +770,7 @@ MonoBehaviour:
         LootTableId: LOOT_SCHOOL_LOCKER
         SpriteKey: prop_roof_locker
         Guaranteed: 0
+        Once: 0
       - Id: C_4F_HALL_LOCKER_B
         Kind: 0
         Floor: 3
@@ -735,6 +779,7 @@ MonoBehaviour:
         LootTableId: LOOT_SCHOOL_LOCKER
         SpriteKey: prop_roof_locker
         Guaranteed: 0
+        Once: 0
       - Id: C_1F_LOST_FOUND
         Kind: 4
         Floor: 0
@@ -743,6 +788,7 @@ MonoBehaviour:
         LootTableId: LOOT_SCHOOL_BAG
         SpriteKey: 
         Guaranteed: 1
+        Once: 0
       - Id: C_2F_LOST_FOUND
         Kind: 4
         Floor: 1
@@ -751,6 +797,7 @@ MonoBehaviour:
         LootTableId: LOOT_SCHOOL_BAG
         SpriteKey: 
         Guaranteed: 1
+        Once: 0
       - Id: C_3F_LOST_FOUND
         Kind: 4
         Floor: 2
@@ -759,6 +806,7 @@ MonoBehaviour:
         LootTableId: LOOT_SCHOOL_BAG
         SpriteKey: 
         Guaranteed: 1
+        Once: 0
       - Id: C_4F_LOST_FOUND
         Kind: 4
         Floor: 3
@@ -767,6 +815,7 @@ MonoBehaviour:
         LootTableId: LOOT_SCHOOL_BAG
         SpriteKey: 
         Guaranteed: 1
+        Once: 0
       Exits:
       - Kind: 0
         Floor: 0

@@ -32,6 +32,9 @@ namespace ApoGirl.Core.Simulation
         /// <summary>제작 칸의 결과 (착수·제작 중·완성·실패). 제작 칸이 아니면 null.</summary>
         public CraftOutcome Craft;
 
+        /// <summary>이 탐험에서 들고 와 읽은 논문 (아이템 ID, 창고에는 넣지 않았다, PaperRules).</summary>
+        public List<string> PapersRead = new List<string>();
+
         /// <summary>동료 탐험: 이 낮 칸에 나간 동료, 이 밤 칸에 돌아온 동료와 구해 온 것.</summary>
         public List<string> OutingDepartures = new List<string>();
         public List<OutingReturn> OutingReturns = new List<OutingReturn>();
@@ -785,6 +788,20 @@ namespace ApoGirl.Core.Simulation
 
             foreach (var item in result.Loot)
             {
+                // 논문: 창고에 넣지 않고 읽는다 (그 과목 수업 PaperClassCount번만큼)
+                if (_db.TryGetItem(item.ItemId, out var lootDef) && lootDef.IsPaper)
+                {
+                    for (var i = 0; i < Math.Max(1, item.Count); i++)
+                    {
+                        if (PaperRules.Read(_state, _db, item.ItemId, delta))
+                        {
+                            outcome.PapersRead.Add(item.ItemId);
+                        }
+                    }
+
+                    continue;
+                }
+
                 _state.Storage.Add(item);
             }
 

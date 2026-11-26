@@ -100,6 +100,8 @@ namespace ApoGirl.Core.Expedition
             ApplyDepletion(request, model, result);
             ApplyHostile(request, result);
             ApplyLikedItem(request, result);
+            ApplyPaper(request, result);
+            ApplyLockedRooms(request, timeYield, result);
             ApplyRooftop(request, result);
             var deep = ApplyDeep(request, result, out var deepRoom);
             ApplyCollectibles(request, result, deep, deepRoom);
@@ -403,6 +405,144 @@ namespace ApoGirl.Core.Expedition
             }
         }
 
+        /// <summary>이 시간대 변형에서 잠긴 방 (그 안의 조우는 보통 굴림에서 뺀다).</summary>
+        private static HashSet<string> LockedThisRun(LocationDef location, ExpeditionTime time)
+        {
+            var variant = time == ExpeditionTime.Day ? location.DayVariant : location.NightVariant;
+            return new HashSet<string>(variant?.LockedRooms ?? new List<string>());
+        }
+
+        /// <summary>
+        /// 낮에 잠겼다 밤에 열리는 방 (PaperRules.DuskRooms, 주택가 102호 등)과 한 번뿐인 상자 (ContainerDef.Once).
+        /// 낮 탐험은 HeadlessDuskRoomChance로 시계를 넘겨 황혼까지 버틴 판만 그 방에 닿고 (시간 초과 피로·스트레스),
+        /// 닿으면 방 안 조우를 치르고 한 번뿐인 상자를 뒤진다. 밤 탐험은 그 방이 열려 있어 조우는 보통 굴림으로,
+        /// 한 번뿐인 상자는 조우 확률로 뒤진다. 따로 뽑은 난수로 (다른 결과를 흔들지 않는다).
+        /// </summary>
+        private void ApplyLockedRooms(ExpeditionRequest request, ExpeditionYield timeYield, ExpeditionResult result)
+        {
+            if (result.Status != ExtractStatus.Extracted || !_db.TryGetLocation(request.LocationId, out var location) || location.Layout == null)
+            {
+                return;
+            }
+
+            var balance = _db.Balance;
+            var random = new SeededRandom(SeededRandom.CreateState(request.Seed ^ 0x0D05C7));
+            var duskRooms = new HashSet<string>(Rules.PaperRules.DuskRooms(location));
+            var day = request.TimeOfDay == ExpeditionTime.Day;
+            var dusk = day && duskRooms.Count > 0 && random.NextDouble() < balance.HeadlessDuskRoomChance;
+            if (dusk)
+            {
+                result.FatigueDelta += balance.StrandedFatigue;
+                result.StressDelta += balance.StrandedStress;
+                foreach (var encounter in EncounterRules.Active(location, request.TimeOfDay, request.Flags)
+                             .Where(e => !e.Collectible && e.Choices.Count > 0 && duskRooms.Contains(e.RoomId)).ToList())
+                {
+                    var index = _encounterChooser.Choose(encounter, request, random);
+                    index = Math.Min(Math.Max(index, 0), encounter.Choices.Count - 1);
+                    EncounterRules.Apply(result, encounter, encounter.Choices[index]);
+                }
+            }
+
+            var locked = LockedThisRun(location, request.TimeOfDay);
+            var layout = location.Layout;
+            for (var d = 0; d < layout.Doors.Count; d++)
+            {
+                var door = layout.Doors[d];
+                var template = layout.FindTemplate(door.TemplateId);
+                if (template == null || layout.IsDeep(door.Floor))
+                {
+                    continue;
+                }
+
+                // 잠긴 방이면 황혼에 열린 방만, 열린 방이면 조우 확률로
+                var lockedRoom = locked.Contains(door.RoomId);
+                for (var i = 0; i < template.Containers.Count; i++)
+                {
+                    var container = template.Containers[i];
+                    var key = HostileRules.RoomKey(location.Id, d, i);
+                    if (!container.Once || request.LootedContainers.Contains(key) || result.SearchedContainers.Contains(key))
+                    {
+                        continue;
+                    }
+
+                    var reached = lockedRoom ? dusk && duskRooms.Contains(door.RoomId) : random.NextDouble() < timeYield.EncounterChance;
+                    if (!reached)
+                    {
+                        continue;
+                    }
+
+                    var tableId = string.IsNullOrEmpty(container.LootTableId) ? template.DefaultLootTableId : container.LootTableId;
+                    if (_db.TryGetLootTable(tableId, out var table) && table.Entries.Count > 0)
+                    {
+                        AddWeightedItem(table, random, result);
+                    }
+
+                    result.SearchedContainers.Add(key);
+                }
+            }
+        }
+
+        /// <summary>
+        /// 논문 (PaperRules): 그 지역 전리품 표에 있는 논문 하나를 HeadlessPaperChance로 줍는다.
+        /// 한 번뿐인 상자만 쓰는 표는 빼고 (ApplyLockedRooms가 따로). 따로 뽑은 난수로.
+        /// </summary>
+        private void ApplyPaper(ExpeditionRequest request, ExpeditionResult result)
+        {
+            var balance = _db.Balance;
+            if (result.Status != ExtractStatus.Extracted || balance.HeadlessPaperChance <= 0f || !_db.TryGetLocation(request.LocationId, out var location))
+            {
+                return;
+            }
+
+            var random = new SeededRandom(SeededRandom.CreateState(request.Seed ^ 0x9A9E25));
+            if (random.NextDouble() >= balance.HeadlessPaperChance)
+            {
+                return;
+            }
+
+            var onceTables = OnceTableIds(location);
+            var candidates = LootTableIds(location).Where(id => !onceTables.Contains(id))
+                .SelectMany(id => _db.TryGetLootTable(id, out var table) ? table.Entries.Select(e => e.ItemId) : Enumerable.Empty<string>())
+                .Where(id => _db.TryGetItem(id, out var item) && item.IsPaper && Rules.PaperRules.CanLoot(_db, id, request.Flags))
+                .Distinct()
+                .OrderBy(id => id, StringComparer.Ordinal)
+                .ToList();
+            if (candidates.Count > 0)
+            {
+                result.Loot.Add(new ItemStack { ItemId = candidates[random.Range(0, candidates.Count - 1)], Count = 1 });
+            }
+        }
+
+        /// <summary>한 번뿐인 상자만 쓰는 전리품 표 (다른 상자·방 기본 표로도 쓰이면 빼지 않는다).</summary>
+        private static HashSet<string> OnceTableIds(LocationDef location)
+        {
+            var once = new HashSet<string>();
+            var layout = location.Layout;
+            if (layout == null)
+            {
+                return once;
+            }
+
+            var shared = new HashSet<string> { location.DefaultLootTableId ?? "" };
+            foreach (var container in layout.Containers)
+            {
+                shared.Add(container.LootTableId ?? "");
+            }
+
+            foreach (var template in layout.RoomTemplates)
+            {
+                shared.Add(template.DefaultLootTableId ?? "");
+                foreach (var container in template.Containers)
+                {
+                    (container.Once ? once : shared).Add(container.LootTableId ?? "");
+                }
+            }
+
+            once.ExceptWith(shared);
+            once.Remove("");
+            return once;
+        }
+
         private void ApplyRooftop(ExpeditionRequest request, ExpeditionResult result)
         {
             if (result.Status != ExtractStatus.Extracted || !_db.TryGetLocation(request.LocationId, out var location)
@@ -444,7 +584,9 @@ namespace ApoGirl.Core.Expedition
                 return;
             }
 
-            var available = HostileRules.AllContainerKeys(location, includeDeepRooms: false).Where(k => !request.LootedContainers.Contains(k)).ToList();
+            // 한 번뿐인 상자(102호 논문 등)는 ApplyLockedRooms에서 따로 (아무 상자 고르기에 섞이면 물건 없이 비어 버린다)
+            var available = HostileRules.AllContainerKeys(location, includeDeepRooms: false)
+                .Where(k => !request.LootedContainers.Contains(k) && !ContainerRules.IsOnce(location, k)).ToList();
             var random = new SeededRandom(SeededRandom.CreateState(request.Seed ^ 0xDE91E7));
             var picked = Math.Min(model.ContainersPerRun, available.Count);
             var rate = location.Tutorial ? 0f : _db.Balance.BaseEmptyContainerRate;
@@ -502,10 +644,14 @@ namespace ApoGirl.Core.Expedition
                 return;
             }
 
+            var locked = LockedThisRun(location, request.TimeOfDay);
             foreach (var encounter in EncounterRules.Active(location, request.TimeOfDay, request.Flags).ToList())
             {
-                // 깊은 곳 특별한 방 안의 조우는 ApplyDeepRoomEncounters에서 (방을 연 판만)
-                if (encounter.Collectible || encounter.Choices.Count == 0 || InDeepRoom(location, encounter) || random.NextDouble() >= timeYield.EncounterChance)
+                // 깊은 곳 특별한 방 안의 조우는 ApplyDeepRoomEncounters에서 (방을 연 판만),
+                // 이 시간대에 잠긴 방 안의 조우는 ApplyLockedRooms에서 (낮이면 황혼까지 버틴 판만)
+                if (encounter.Collectible || encounter.Choices.Count == 0 || InDeepRoom(location, encounter)
+                    || (!string.IsNullOrEmpty(encounter.RoomId) && locked.Contains(encounter.RoomId))
+                    || random.NextDouble() >= timeYield.EncounterChance)
                 {
                     continue;
                 }

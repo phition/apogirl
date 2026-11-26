@@ -156,6 +156,7 @@ MonoBehaviour:
           LootTableId: 
           SpriteKey: 
           Guaranteed: 0
+          Once: 0
         - Id: OFFICE_CABINET
           Kind: 2
           Floor: 0
@@ -164,6 +165,7 @@ MonoBehaviour:
           LootTableId: 
           SpriteKey: 
           Guaranteed: 0
+          Once: 0
         - Id: OFFICE_LOCKER
           Kind: 0
           Floor: 0
@@ -172,6 +174,7 @@ MonoBehaviour:
           LootTableId: 
           SpriteKey: 
           Guaranteed: 0
+          Once: 0
         DefaultLootTableId: LOOT_SUBWAY_OFFICE
         WallDecor: 
       - Id: ROOM_SUBWAY_KIOSK
@@ -188,6 +191,7 @@ MonoBehaviour:
           LootTableId: 
           SpriteKey: 
           Guaranteed: 0
+          Once: 0
         - Id: KIOSK_FRIDGE
           Kind: 3
           Floor: 0
@@ -196,6 +200,7 @@ MonoBehaviour:
           LootTableId: LOOT_STORE_FRIDGE
           SpriteKey: 
           Guaranteed: 0
+          Once: 0
         - Id: KIOSK_BOX
           Kind: 4
           Floor: 0
@@ -204,6 +209,7 @@ MonoBehaviour:
           LootTableId: 
           SpriteKey: 
           Guaranteed: 0
+          Once: 0
         DefaultLootTableId: LOOT_SUBWAY_KIOSK
         WallDecor: 
       - Id: ROOM_SUBWAY_RESTROOM
@@ -220,6 +226,7 @@ MonoBehaviour:
           LootTableId: 
           SpriteKey: 
           Guaranteed: 0
+          Once: 0
         - Id: SUPPLY
           Kind: 4
           Floor: 0
@@ -228,6 +235,7 @@ MonoBehaviour:
           LootTableId: 
           SpriteKey: 
           Guaranteed: 0
+          Once: 0
         DefaultLootTableId: LOOT_SUBWAY_KIOSK
         WallDecor: 
       - Id: ROOM_DEEP_SUB_VAULT
@@ -244,6 +252,7 @@ MonoBehaviour:
           LootTableId: 
           SpriteKey: prop_mart_safe
           Guaranteed: 1
+          Once: 0
         - Id: LOCKER
           Kind: 0
           Floor: 0
@@ -252,6 +261,7 @@ MonoBehaviour:
           LootTableId: 
           SpriteKey: prop_sub_coinlocker
           Guaranteed: 1
+          Once: 0
         - Id: CABINET
           Kind: 2
           Floor: 0
@@ -260,6 +270,7 @@ MonoBehaviour:
           LootTableId: LOOT_SUBWAY_DEEP
           SpriteKey: 
           Guaranteed: 1
+          Once: 0
         DefaultLootTableId: LOOT_SUBWAY_VAULT
         WallDecor: 
       - Id: ROOM_DEEP_SUB_SHELTER
@@ -276,6 +287,7 @@ MonoBehaviour:
           LootTableId: LOOT_SUBWAY_DEEP
           SpriteKey: 
           Guaranteed: 1
+          Once: 0
         - Id: BOX_B
           Kind: 4
           Floor: 0
@@ -284,6 +296,7 @@ MonoBehaviour:
           LootTableId: 
           SpriteKey: 
           Guaranteed: 1
+          Once: 0
         - Id: CABINET
           Kind: 2
           Floor: 0
@@ -292,6 +305,7 @@ MonoBehaviour:
           LootTableId: LOOT_SUBWAY_DEEP
           SpriteKey: 
           Guaranteed: 1
+          Once: 0
         DefaultLootTableId: LOOT_SUBWAY_VAULT
         WallDecor: 
       Containers:
@@ -303,6 +317,7 @@ MonoBehaviour:
         LootTableId: LOOT_SUBWAY_KIOSK
         SpriteKey: 
         Guaranteed: 0
+        Once: 0
       - Id: C_SUB_LOCKER_2
         Kind: 0
         Floor: 1
@@ -311,6 +326,7 @@ MonoBehaviour:
         LootTableId: LOOT_SUBWAY_KIOSK
         SpriteKey: 
         Guaranteed: 0
+        Once: 0
       - Id: C_SUB_LOCKER_3
         Kind: 0
         Floor: 1
@@ -319,6 +335,7 @@ MonoBehaviour:
         LootTableId: LOOT_SUBWAY_KIOSK
         SpriteKey: 
         Guaranteed: 0
+        Once: 0
       - Id: C_SUB_LOCKER_4
         Kind: 0
         Floor: 1
@@ -327,6 +344,7 @@ MonoBehaviour:
         LootTableId: LOOT_SUBWAY_KIOSK
         SpriteKey: 
         Guaranteed: 0
+        Once: 0
       - Id: C_SUB_BENCH_A
         Kind: 4
         Floor: 0
@@ -335,6 +353,7 @@ MonoBehaviour:
         LootTableId: LOOT_SUBWAY_KIOSK
         SpriteKey: 
         Guaranteed: 0
+        Once: 0
       - Id: C_SUB_BENCH_B
         Kind: 4
         Floor: 0
@@ -343,6 +362,7 @@ MonoBehaviour:
         LootTableId: LOOT_SUBWAY_OFFICE
         SpriteKey: 
         Guaranteed: 0
+        Once: 0
       - Id: C_SUB_DEEP_CABINET
         Kind: 2
         Floor: 2
@@ -351,6 +371,7 @@ MonoBehaviour:
         LootTableId: LOOT_SUBWAY_DEEP
         SpriteKey: 
         Guaranteed: 0
+        Once: 0
       - Id: C_SUB_DEEP_LOCKER
         Kind: 0
         Floor: 2
@@ -359,6 +380,7 @@ MonoBehaviour:
         LootTableId: LOOT_SUBWAY_DEEP
         SpriteKey: 
         Guaranteed: 0
+        Once: 0
       - Id: C_SUB_DEEP_DESK
         Kind: 1
         Floor: 3
@@ -367,6 +389,7 @@ MonoBehaviour:
         LootTableId: LOOT_SUBWAY_DEEP
         SpriteKey: 
         Guaranteed: 0
+        Once: 0
       - Id: C_SUB_DEEP_BOX
         Kind: 4
         Floor: 3
@@ -375,6 +398,7 @@ MonoBehaviour:
         LootTableId: LOOT_SUBWAY_OFFICE
         SpriteKey: 
         Guaranteed: 0
+        Once: 0
       Exits:
       - Kind: 0
         Floor: 1

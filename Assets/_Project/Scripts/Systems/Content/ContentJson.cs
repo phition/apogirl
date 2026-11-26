@@ -36,8 +36,23 @@ namespace ApoGirl.Systems.Content
         // ── 거점 상황판 ──
         public List<AdviceDef> Advice = new List<AdviceDef>();
 
+        /// <summary>
+        /// 다른 파일의 전리품 표에 칸을 덧붙인다 (예: papers.json의 지역 논문). 모든 파일을 합친 뒤 표 ID로 찾아 넣는다.
+        /// </summary>
+        public List<LootAddDef> LootAdds = new List<LootAddDef>();
+
         /// <summary>여러 파일 중 하나에만 둔다 (마지막 것이 이긴다).</summary>
         public PrologueDef Prologue;
+    }
+
+    /// <summary>전리품 표 하나에 덧붙일 칸.</summary>
+    public sealed class LootAddDef
+    {
+        public string Table = "";
+        public string ItemId = "";
+        public int Weight = 1;
+        public int MinCount = 1;
+        public int MaxCount = 1;
     }
 
     /// <summary>
@@ -96,13 +111,30 @@ namespace ApoGirl.Systems.Content
                 merged.StartBonuses.AddRange(content.StartBonuses);
                 merged.Factions.AddRange(content.Factions);
                 merged.Advice.AddRange(content.Advice);
+                merged.LootAdds.AddRange(content.LootAdds);
                 if (content.Prologue != null)
                 {
                     merged.Prologue = content.Prologue;
                 }
             }
 
+            ApplyLootAdds(merged);
             return merged;
+        }
+
+        /// <summary>LootAdds를 표에 넣는다. 없는 표면 오류 (오타).</summary>
+        public static void ApplyLootAdds(ContentFile content)
+        {
+            foreach (var add in content.LootAdds)
+            {
+                var table = content.LootTables.Find(t => t.Id == add.Table);
+                if (table == null)
+                {
+                    throw new FormatException($"LootAdds: 전리품 표 없음 '{add.Table}' ({add.ItemId})");
+                }
+
+                table.Entries.Add(new LootEntry(add.ItemId, add.Weight, add.MinCount, add.MaxCount));
+            }
         }
 
         public static string Serialize(ContentFile content)

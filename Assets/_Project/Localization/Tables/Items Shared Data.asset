@@ -591,6 +591,86 @@ MonoBehaviour:
     m_Key: ITEM_TOOL_CROWBAR_MAKESHIFT.desc
     m_Metadata:
       m_Items: []
+  - m_Id: 2566628394156032
+    m_Key: ITEM_PAPER_NURSE.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2566628452876288
+    m_Key: ITEM_PAPER_NURSE.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2566628452876289
+    m_Key: ITEM_PAPER_HUMANITIES.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2566628452876290
+    m_Key: ITEM_PAPER_HUMANITIES.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2566628452876291
+    m_Key: ITEM_PAPER_MUSIC.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2566628452876292
+    m_Key: ITEM_PAPER_MUSIC.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2566628452876293
+    m_Key: ITEM_PAPER_COOKING.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2566628452876294
+    m_Key: ITEM_PAPER_COOKING.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2566628452876295
+    m_Key: ITEM_PAPER_MEDICINE.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2566628452876296
+    m_Key: ITEM_PAPER_MEDICINE.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2566628452876297
+    m_Key: ITEM_PAPER_MIND.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2566628452876298
+    m_Key: ITEM_PAPER_MIND.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2566628452876299
+    m_Key: ITEM_PAPER_ENGINEERING.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2566628452876300
+    m_Key: ITEM_PAPER_ENGINEERING.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2566628452876301
+    m_Key: ITEM_PAPER_SURVIVAL.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2566628452876302
+    m_Key: ITEM_PAPER_SURVIVAL.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2566628452876303
+    m_Key: ITEM_PAPER_SELFDEFENSE.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2566628452876304
+    m_Key: ITEM_PAPER_SELFDEFENSE.desc
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2566628452876305
+    m_Key: ITEM_PAPER_SCIENCE.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2566628452876306
+    m_Key: ITEM_PAPER_SCIENCE.desc
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

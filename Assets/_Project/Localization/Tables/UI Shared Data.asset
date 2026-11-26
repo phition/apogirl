@@ -8395,6 +8395,18 @@ MonoBehaviour:
     m_Key: dayreport.sec_base
     m_Metadata:
       m_Items: []
+  - m_Id: 2578784573472768
+    m_Key: result.paper
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2578784632193024
+    m_Key: exp.info.study
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2578784632193025
+    m_Key: roomname.ROOM_HOUSE_NURSE
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

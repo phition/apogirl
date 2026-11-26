@@ -63,3 +63,7 @@ MonoBehaviour:
       Weight: 1
       MinCount: 1
       MaxCount: 1
+    - ItemId: ITEM_PAPER_SURVIVAL
+      Weight: 1
+      MinCount: 1
+      MaxCount: 1

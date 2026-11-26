@@ -2710,7 +2710,7 @@ namespace ApoGirl.Exploration.Runtime
                 var target = CreateContainer(_corridors[container.Floor], container);
                 if (!Deplete(target, HostileRules.CorridorKey(Location.Id, i)))
                 {
-                    target.Contents.AddRange(RoomLoot.RollCorridorContainer(_db, Location, i, Request.Seed));
+                    target.Contents.AddRange(Lootable(RoomLoot.RollCorridorContainer(_db, Location, i, Request.Seed), HostileRules.CorridorKey(Location.Id, i)));
                 }
             }
 
@@ -2912,9 +2912,28 @@ namespace ApoGirl.Exploration.Runtime
                 var target = CreateContainer(room, room.Template.Containers[i]);
                 if (!Deplete(target, HostileRules.RoomKey(Location.Id, room.DoorIndex, i)) && i < contents.Count)
                 {
-                    target.Contents.AddRange(contents[i]);
+                    target.Contents.AddRange(Lootable(contents[i], HostileRules.RoomKey(Location.Id, room.DoorIndex, i)));
                 }
             }
+        }
+
+        /// <summary>
+        /// 아직 나올 수 없는 물건(ItemDef.LootFlag가 꺼진 지역 논문)을 빼고, 지역 논문은 PaperLootKeepChance로 거른다.
+        /// 굴림 자체는 그대로라 다른 내용물은 같다.
+        /// </summary>
+        private List<ItemStack> Lootable(IEnumerable<ItemStack> items, string key)
+        {
+            var kept = new List<ItemStack>();
+            var n = 0;
+            foreach (var stack in items)
+            {
+                if (PaperRules.KeepRolled(_db, stack.ItemId, Request.Flags, Request.Seed ^ PaperRules.KeyHash(key) ^ (++n * 7919)))
+                {
+                    kept.Add(stack);
+                }
+            }
+
+            return kept;
         }
 
         /// <summary>물린 뒤 무적 동안 (다침 동작이 끝난 다음부터) 주인공을 깜빡인다.</summary>
@@ -3883,6 +3902,41 @@ namespace ApoGirl.Exploration.Runtime
             Sfx("sfx_timer_warning");
             Presentation.Audio.Sound.Play("Sfx/sfx_z_horde_far", Presentation.Audio.SoundCategory.Ambience);
             _hud?.ShowMessage("exp.dusk");
+            ApplyNightDoors();
+        }
+
+        /// <summary>
+        /// 황혼: 낮 탐험이 그대로 밤이 되면 방 문은 밤 변형을 따른다 — 낮에만 잠긴 방(셔터·주택가 102호)은 열리고,
+        /// 밤에 쇠지렛대로 여는 방은 쇠지렛대 문이 된다. 그 문을 덮어 그린 조우(잠긴 집 문)는 말을 걸 수 없게 되고 문으로 들어간다.
+        /// </summary>
+        private void ApplyNightDoors()
+        {
+            var night = Location.NightVariant ?? new LocationVariantDef();
+            foreach (var door in _targets.Where(t => t.Kind == TargetKind.Door && t.Room != null && t.Seal == DoorSeal.None).ToList())
+            {
+                var roomId = door.Room.Door.RoomId;
+                var wasLocked = door.RoomLocked;
+                door.RoomLocked = night.LockedRooms.Contains(roomId);
+                door.Forceable = night.ForceableRooms.Contains(roomId);
+                if (!wasLocked || door.RoomLocked)
+                {
+                    continue;
+                }
+
+                var plain = ExplorationArt.Get(ExplorationArt.Door(Location.Id, door.Room.Template?.Id, false)) != null ? Color.white : BuildingView.DoorColor;
+                door.Tint(door.Room.Visited ? BuildingView.VisitedDoorColor : door.Forceable && !door.Forced ? new Color(0.88f, 0.62f, 0.56f) : plain);
+                foreach (var cover in _targets.Where(t => t.Kind == TargetKind.Encounter && t.Area == door.Area && t.CoveredDoorView != null && t.CoveredDoorView == door.View).ToList())
+                {
+                    if (OpenEncounter == cover)
+                    {
+                        OpenEncounter = null;
+                    }
+
+                    cover.Encounter = null;
+                    cover.Area.Targets.Remove(cover);
+                    _targets.Remove(cover);
+                }
+            }
         }
 
         /// <summary>

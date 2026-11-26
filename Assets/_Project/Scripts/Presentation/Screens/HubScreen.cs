@@ -1068,6 +1068,16 @@ namespace ApoGirl.Presentation.Screens
                 {
                     lines.Add(Loc.F("result.items", string.Join("  ", outcome.Expedition.Loot.Select(i => Loc.Item(i.ItemId) + " ×" + i.Count))));
                 }
+
+                // 논문: 창고 대신 읽어서 그 과목 수업 몇 번만큼 (능력치·숙련 변화는 아래 변화 줄에)
+                foreach (var paper in outcome.PapersRead)
+                {
+                    var study = Core.Rules.PaperRules.StudyAction(_session.Definitions, paper);
+                    if (study != null)
+                    {
+                        lines.Add(Loc.F("result.paper", Loc.Item(paper), Loc.T("prof." + study.Proficiency), _session.Definitions.Balance.PaperClassCount));
+                    }
+                }
             }
 
             var deltas = UiText.DeltaLines(outcome.Delta);

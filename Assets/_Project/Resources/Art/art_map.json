@@ -343,6 +343,10 @@
       "Image": "Events/evt_a2_nurse_join"
     },
     {
+      "Event": "EVT_A2_NURSE_PAPER",
+      "Image": "Events/evt_nurse_lesson"
+    },
+    {
       "Event": "EVT_A2_PROSTHETIC_DONE",
       "Image": "Events/evt_a2_prosthetic"
     },

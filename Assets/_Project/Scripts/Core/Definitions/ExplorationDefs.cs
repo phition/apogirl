@@ -86,6 +86,20 @@ namespace ApoGirl.Core.Definitions
         public DecoyDef Decoy = new DecoyDef();
 
         public bool IsDecoy => Decoy != null && Decoy.Seconds > 0f;
+
+        /// <summary>
+        /// 논문: 들고 귀환하면 창고에 넣지 않고 읽어, 이 교육 행동(수업)을 BalanceConfig.PaperClassCount번 성공한 만큼
+        /// 능력치·숙련 경험치가 오른다 (PaperRules). 비면 논문이 아니다.
+        /// </summary>
+        public string StudyActionId = "";
+
+        public bool IsPaper => !string.IsNullOrEmpty(StudyActionId);
+
+        /// <summary>논문을 읽으면 켜는 깃발 (예: 102호 의학 논문 → PAPER_NURSE_READ → 박 선생님 장면). 비면 없음.</summary>
+        public string ReadFlag = "";
+
+        /// <summary>비어 있지 않으면 이 깃발이 켜진 뒤에만 상자에서 나온다 (지역 논문: 102호 장면 뒤 PAPERS_KNOWN). 실시간·헤드리스 같이.</summary>
+        public string LootFlag = "";
     }
 
     /// <summary>세운 허수아비: 지연 뒤 간격마다 소음을 내고, 붙은 좀비가 체력을 깎거나 지속이 끝나면 넘어진다.</summary>
@@ -209,6 +223,9 @@ namespace ApoGirl.Core.Definitions
 
         /// <summary>반드시 들어 있는 상자: 판마다 정해지는 '처음부터 빈 상자' 판정에서 빠진다 (예: 교실동 분실물 상자의 책가방).</summary>
         public bool Guaranteed;
+
+        /// <summary>한 번뿐인 상자: 뒤지고 나면 매달 복구에서도 다시 채워지지 않는다 (예: 주택가 102호 박 선생님의 의학 논문).</summary>
+        public bool Once;
     }
 
     [Serializable]

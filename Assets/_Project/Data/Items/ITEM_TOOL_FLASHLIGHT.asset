@@ -45,3 +45,6 @@ MonoBehaviour:
       Radius: 6
       Seconds: 0
       Hp: 10
+    StudyActionId: 
+    ReadFlag: 
+    LootFlag: 

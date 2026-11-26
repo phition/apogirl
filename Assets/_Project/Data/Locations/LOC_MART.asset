@@ -167,6 +167,7 @@ MonoBehaviour:
           LootTableId: 
           SpriteKey: 
           Guaranteed: 0
+          Once: 0
         - Id: PALLET_2
           Kind: 4
           Floor: 0
@@ -175,6 +176,7 @@ MonoBehaviour:
           LootTableId: 
           SpriteKey: 
           Guaranteed: 0
+          Once: 0
         - Id: PALLET_3
           Kind: 4
           Floor: 0
@@ -183,6 +185,7 @@ MonoBehaviour:
           LootTableId: 
           SpriteKey: 
           Guaranteed: 0
+          Once: 0
         - Id: PALLET_4
           Kind: 4
           Floor: 0
@@ -191,6 +194,7 @@ MonoBehaviour:
           LootTableId: 
           SpriteKey: 
           Guaranteed: 0
+          Once: 0
         - Id: COLD_STORE
           Kind: 3
           Floor: 0
@@ -199,6 +203,7 @@ MonoBehaviour:
           LootTableId: LOOT_STORE_FRIDGE
           SpriteKey: 
           Guaranteed: 0
+          Once: 0
         - Id: TOOL_RACK
           Kind: 2
           Floor: 0
@@ -207,6 +212,7 @@ MonoBehaviour:
           LootTableId: LOOT_SUBWAY_OFFICE
           SpriteKey: 
           Guaranteed: 0
+          Once: 0
         DefaultLootTableId: LOOT_MART_WAREHOUSE
         WallDecor: 
       - Id: ROOM_MART_OFFICE
@@ -225,6 +231,7 @@ MonoBehaviour:
           LootTableId: 
           SpriteKey: 
           Guaranteed: 0
+          Once: 0
         - Id: OFFICE_SAFE
           Kind: 2
           Floor: 0
@@ -233,6 +240,7 @@ MonoBehaviour:
           LootTableId: 
           SpriteKey: 
           Guaranteed: 0
+          Once: 0
         - Id: OFFICE_LOCKER
           Kind: 0
           Floor: 0
@@ -241,6 +249,7 @@ MonoBehaviour:
           LootTableId: 
           SpriteKey: 
           Guaranteed: 0
+          Once: 0
         DefaultLootTableId: LOOT_STORE_OFFICE
         WallDecor: 
       - Id: ROOM_DEEP_MART_COLD
@@ -257,6 +266,7 @@ MonoBehaviour:
           LootTableId: 
           SpriteKey: 
           Guaranteed: 1
+          Once: 0
         - Id: FREEZER_B
           Kind: 3
           Floor: 0
@@ -265,6 +275,7 @@ MonoBehaviour:
           LootTableId: 
           SpriteKey: 
           Guaranteed: 1
+          Once: 0
         - Id: PALLET
           Kind: 4
           Floor: 0
@@ -273,6 +284,7 @@ MonoBehaviour:
           LootTableId: LOOT_MART_DEEP
           SpriteKey: 
           Guaranteed: 1
+          Once: 0
         DefaultLootTableId: LOOT_MART_VAULT
         WallDecor: 
       - Id: ROOM_DEEP_MART_STOCK
@@ -289,6 +301,7 @@ MonoBehaviour:
           LootTableId: LOOT_MART_DEEP
           SpriteKey: 
           Guaranteed: 1
+          Once: 0
         - Id: PALLET_B
           Kind: 4
           Floor: 0
@@ -297,6 +310,7 @@ MonoBehaviour:
           LootTableId: 
           SpriteKey: 
           Guaranteed: 1
+          Once: 0
         - Id: CAGE
           Kind: 2
           Floor: 0
@@ -305,6 +319,7 @@ MonoBehaviour:
           LootTableId: LOOT_MART_DEEP
           SpriteKey: 
           Guaranteed: 1
+          Once: 0
         DefaultLootTableId: LOOT_MART_VAULT
         WallDecor: 
       Containers:
@@ -316,6 +331,7 @@ MonoBehaviour:
         LootTableId: LOOT_MART_SHELF
         SpriteKey: 
         Guaranteed: 0
+        Once: 0
       - Id: C_MART_SHELF_2
         Kind: 4
         Floor: 0
@@ -324,6 +340,7 @@ MonoBehaviour:
         LootTableId: LOOT_STORE_SHELF
         SpriteKey: 
         Guaranteed: 0
+        Once: 0
       - Id: C_MART_SHELF_3
         Kind: 4
         Floor: 0
@@ -332,6 +349,7 @@ MonoBehaviour:
         LootTableId: LOOT_STORE_SHELF
         SpriteKey: 
         Guaranteed: 0
+        Once: 0
       - Id: C_MART_SHELF_4
         Kind: 4
         Floor: 0
@@ -340,6 +358,7 @@ MonoBehaviour:
         LootTableId: LOOT_MART_SHELF
         SpriteKey: 
         Guaranteed: 0
+        Once: 0
       - Id: C_MART_SHELF_5
         Kind: 4
         Floor: 0
@@ -348,6 +367,7 @@ MonoBehaviour:
         LootTableId: LOOT_STORE_SHELF
         SpriteKey: 
         Guaranteed: 0
+        Once: 0
       - Id: C_MART_SHELF_6
         Kind: 4
         Floor: 0
@@ -356,6 +376,7 @@ MonoBehaviour:
         LootTableId: LOOT_STORE_SHELF
         SpriteKey: 
         Guaranteed: 0
+        Once: 0
       - Id: C_MART_SHELF_7
         Kind: 4
         Floor: 0
@@ -364,6 +385,7 @@ MonoBehaviour:
         LootTableId: LOOT_MART_SHELF
         SpriteKey: 
         Guaranteed: 0
+        Once: 0
       - Id: C_MART_SHELF_8
         Kind: 4
         Floor: 0
@@ -372,6 +394,7 @@ MonoBehaviour:
         LootTableId: LOOT_STORE_SHELF
         SpriteKey: 
         Guaranteed: 0
+        Once: 0
       - Id: C_MART_SHELF_9
         Kind: 4
         Floor: 0
@@ -380,6 +403,7 @@ MonoBehaviour:
         LootTableId: LOOT_STORE_SHELF
         SpriteKey: 
         Guaranteed: 0
+        Once: 0
       - Id: C_MART_SHELF_10
         Kind: 4
         Floor: 0
@@ -388,6 +412,7 @@ MonoBehaviour:
         LootTableId: LOOT_MART_SHELF
         SpriteKey: 
         Guaranteed: 0
+        Once: 0
       - Id: C_MART_FOODCOURT_A
         Kind: 3
         Floor: 0
@@ -396,6 +421,7 @@ MonoBehaviour:
         LootTableId: LOOT_STORE_FRIDGE
         SpriteKey: 
         Guaranteed: 0
+        Once: 0
       - Id: C_MART_FOODCOURT_B
         Kind: 4
         Floor: 0
@@ -404,6 +430,7 @@ MonoBehaviour:
         LootTableId: LOOT_MART_SHELF
         SpriteKey: 
         Guaranteed: 0
+        Once: 0
       - Id: C_MART_CHECKOUT
         Kind: 1
         Floor: 0
@@ -412,6 +439,7 @@ MonoBehaviour:
         LootTableId: LOOT_STORE_COUNTER
         SpriteKey: 
         Guaranteed: 0
+        Once: 0
       - Id: C_MART_DEEP_FREEZER_A
         Kind: 3
         Floor: 2
@@ -420,6 +448,7 @@ MonoBehaviour:
         LootTableId: LOOT_MART_DEEP
         SpriteKey: 
         Guaranteed: 0
+        Once: 0
       - Id: C_MART_DEEP_PALLET_A
         Kind: 4
         Floor: 2
@@ -428,6 +457,7 @@ MonoBehaviour:
         LootTableId: LOOT_MART_DEEP
         SpriteKey: 
         Guaranteed: 0
+        Once: 0
       - Id: C_MART_DEEP_PALLET_B
         Kind: 4
         Floor: 3
@@ -436,6 +466,7 @@ MonoBehaviour:
         LootTableId: LOOT_MART_DEEP
         SpriteKey: 
         Guaranteed: 0
+        Once: 0
       - Id: C_MART_DEEP_FREEZER_B
         Kind: 3
         Floor: 3
@@ -444,6 +475,7 @@ MonoBehaviour:
         LootTableId: LOOT_MART_WAREHOUSE
         SpriteKey: 
         Guaranteed: 0
+        Once: 0
       Exits:
       - Kind: 0
         Floor: 0

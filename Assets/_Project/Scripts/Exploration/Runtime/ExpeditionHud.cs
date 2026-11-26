@@ -496,6 +496,12 @@ namespace ApoGirl.Exploration.Runtime
                 lines.Add(Loc.T("exp.info.liked"));
             }
 
+            var study = Core.Rules.PaperRules.StudyAction(_director.Definitions, item.Id);
+            if (study != null)
+            {
+                lines.Add(Loc.F("exp.info.study", Loc.T("prof." + study.Proficiency), _director.Definitions.Balance.PaperClassCount));
+            }
+
             return string.Join("\n", lines);
         }
 

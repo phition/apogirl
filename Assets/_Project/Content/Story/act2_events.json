@@ -710,6 +710,36 @@
       ]
     },
     {
+      "Id": "EVT_A2_NURSE_PAPER",
+      "Kind": "Story",
+      "Priority": 86,
+      "Condition": {
+        "FlagsAll": [
+          "PAPER_NURSE_READ"
+        ],
+        "FlagsNone": [
+          "PAPERS_KNOWN"
+        ],
+        "NpcStatuses": [
+          {
+            "NpcId": "NPC_NURSE",
+            "Status": "Joined"
+          }
+        ]
+      },
+      "OnShow": {
+        "SetFlags": [
+          "PAPERS_KNOWN"
+        ],
+        "Npcs": [
+          {
+            "NpcId": "NPC_NURSE",
+            "Affinity": 2
+          }
+        ]
+      }
+    },
+    {
       "Id": "EVT_A2_NURSE_EXAM",
       "Kind": "Night",
       "Priority": 50,

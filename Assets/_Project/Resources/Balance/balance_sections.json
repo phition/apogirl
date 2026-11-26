@@ -97,7 +97,9 @@
         "RoutineBonusMax",
         "RoutineBonusMaxForJ",
         "ProficiencyXpThresholds",
-        "GreatSuccessBonusXp"
+        "GreatSuccessBonusXp",
+        "PaperClassCount",
+        "PaperLootKeepChance"
       ]
     },
     {
@@ -285,7 +287,9 @@
         "HeadlessLikedItemDayChance",
         "HeadlessLikedItemNightChance",
         "HeadlessRooftopChance",
-        "HeadlessCdChance"
+        "HeadlessCdChance",
+        "HeadlessPaperChance",
+        "HeadlessDuskRoomChance"
       ]
     },
     {
@@ -482,8 +486,21 @@
       "Fields": [
         "RainBarrelWater",
         "RainCollectWater",
-        "WeeklyRawWater",
-        "RoofGardenFood"
+        "WeeklyRawWater"
+      ]
+    },
+    {
+      "Title": "식량 줄 (제작: 옥상 텃밭 → 비닐하우스 → 스프링클러, 사용자 결정 2026-11-26)",
+      "Fields": [
+        "RoofGardenFood",
+        "GreenhouseFood",
+        "GreenhouseWinterRatio",
+        "GardenUnpickedRate",
+        "GardenHarvestCap",
+        "SprinklerYieldMultiplier",
+        "SprinklerRawWaterDaily",
+        "HouseRainPurifyDaily",
+        "HouseRainPurifyRate"
       ]
     },
     {

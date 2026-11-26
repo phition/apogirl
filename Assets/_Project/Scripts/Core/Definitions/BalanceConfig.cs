@@ -225,6 +225,12 @@ namespace ApoGirl.Core.Definitions
 
         public int GreatSuccessBonusXp = 1;
 
+        /// <summary>논문(ItemDef.StudyActionId)을 들고 귀환하면 그 수업을 이 횟수만큼 성공한 만큼 능력치·숙련 경험치가 오른다 (PaperRules).</summary>
+        public int PaperClassCount = 2;
+
+        /// <summary>실시간 탐험: 상자에서 논문이 굴려졌을 때 실제로 남기는 확률 (표 가중치 1로도 잦아서 한 번 더 거른다, 지역 논문만).</summary>
+        public float PaperLootKeepChance = 0.25f;
+
         // ── 판정 ──
         public float CheckMinChance = 0.05f;
         public float CheckMaxChance = 0.95f;
@@ -576,6 +582,15 @@ namespace ApoGirl.Core.Definitions
 
         /// <summary>헤드리스(자동) 탐험에서 그 지역의 CD(줍는 조우)를 찾아 챙기는 확률 (기획 A.3, 휴대폰에서도 모을 수 있게).</summary>
         public float HeadlessCdChance = 0.3f;
+
+        /// <summary>헤드리스(자동) 탐험에서 그 지역 전리품 표에 있는 논문 하나를 줍는 확률 (실시간은 표의 낮은 가중치, PaperRules).</summary>
+        public float HeadlessPaperChance = 0.05f;
+
+        /// <summary>
+        /// 헤드리스(자동) 낮 탐험에서 시계를 넘겨 황혼까지 버티는 확률: 낮에 잠겼다 밤에 열리는 방(주택가 102호 등)의
+        /// 조우·한 번뿐인 상자에 닿고, 시간 초과 귀환 피로·스트레스(StrandedFatigue·StrandedStress)를 받는다.
+        /// </summary>
+        public float HeadlessDuskRoomChance = 0.3f;
 
         // ── 장비 내구·전력 ──
 

@@ -353,6 +353,14 @@ namespace ApoGirl.EditorTools
             return new ContainerDef { Id = id, Kind = kind, Floor = floor, X = x, SearchSeconds = seconds, LootTableId = loot };
         }
 
+        /// <summary>반드시 차 있고 한 번 뒤지면 다시 채워지지 않는 상자 (이야기 물건).</summary>
+        private static ContainerDef Once(ContainerDef container)
+        {
+            container.Guaranteed = true;
+            container.Once = true;
+            return container;
+        }
+
         private static SpawnDef Crowd(string enemy, int floor, string room, float x, int count, float spread)
         {
             return new SpawnDef { EnemyId = enemy, Floor = floor, RoomId = room, X = x, Count = count, Spread = spread, Dormant = true };
@@ -695,7 +703,7 @@ namespace ApoGirl.EditorTools
             },
         };
 
-        // ── 주택가 (낮 전용 성격, 문서 6.3.8): 빌라 골목 2층. 잠긴 집(접촉 불가), 박 간호사 ──
+        // ── 주택가 (낮 전용 성격, 문서 6.3.8): 빌라 골목 2층. 잠긴 102호(낮 셔터, 황혼에 열림)에 박 간호사 ──
 
         private static LocationDef Residential()
         {
@@ -714,9 +722,23 @@ namespace ApoGirl.EditorTools
                 },
             });
 
+            // 102호: 박 선생님이 숨어 있는 집. 서랍 자리에 한 번뿐인 상자(의학 논문, 매달 복구 없음)
+            layout.RoomTemplates.Add(new RoomTemplateDef
+            {
+                Id = "ROOM_HOUSE_NURSE", Width = 14f, DefaultLootTableId = "LOOT_HOUSE_ROOM",
+                DoorXs = new List<float> { 1.2f },
+                Windows = new List<WindowDef> { new WindowDef(3f, 3f) },
+                Containers =
+                {
+                    C("KITCHEN", ContainerKind.Cabinet, 0, 4f, "LOOT_HOUSE_KITCHEN"),
+                    C("FRIDGE", ContainerKind.Fridge, 0, 6.4f, "LOOT_HOUSE_KITCHEN"),
+                    Once(C("PAPERS", ContainerKind.Desk, 0, 8.4f, "LOOT_HOUSE_NURSE")),
+                },
+            });
+
             Stairs(layout, 4f);
             Room(layout, "ROOM_HOUSE_101", "ROOM_HOUSE", 0, 12f, 101);
-            Room(layout, "ROOM_HOUSE_102", "ROOM_HOUSE", 0, 46f, 102);
+            Room(layout, "ROOM_HOUSE_102", "ROOM_HOUSE_NURSE", 0, 46f, 102);
             Room(layout, "ROOM_HOUSE_201", "ROOM_HOUSE", 1, 12f, 201);
             Room(layout, "ROOM_HOUSE_202", "ROOM_HOUSE", 1, 30f, 202);
             Room(layout, "ROOM_HOUSE_203", "ROOM_HOUSE", 1, 52f, 203);
@@ -725,11 +747,11 @@ namespace ApoGirl.EditorTools
             layout.Exits.Add(new ExitDef { Kind = ExitKind.Main, Floor = 0, X = 69f });
             layout.Exits.Add(new ExitDef { Kind = ExitKind.Alternate, Floor = 1, X = 70f, StartsLocked = true });
 
-            // 잠긴 집: 안에서 인기척. 들어갈 수 없고, 문 앞에 물자를 두고 갈 수 있다 (7.3 복선)
+            // 잠긴 집: 안에서 인기척. 낮에는 들어갈 수 없고, 문 앞에 물자를 두고 갈 수 있다 (7.3 복선). 박 선생님을 찾은 뒤에는 없다
             var lockedHouse = new EncounterDef
             {
                 Id = "LOCKED_HOUSE", Floor = 0, X = 47f,
-                FlagsNone = { "LEFT_SUPPLIES_LOCKED_HOUSE" },
+                FlagsNone = { "LEFT_SUPPLIES_LOCKED_HOUSE", "NURSE_FOUND" },
                 PromptKey = "enc.LOCKED_HOUSE.prompt",
                 Choices =
                 {
@@ -739,10 +761,10 @@ namespace ApoGirl.EditorTools
                 },
             };
 
-            // 박 간호사 (보건 교사): 2층 203호에 숨어 있다
+            // 박 간호사 (보건 교사): 1층 102호 옷장에 숨어 있다 (낮에는 잠김 — 낮 탐험 시계를 넘겨 황혼이 되면 열린다)
             var nurse = new EncounterDef
             {
-                Id = "NURSE", Floor = 1, RoomId = "ROOM_HOUSE_203", X = 10.6f, SpriteKey = "npc_nurse_hiding",
+                Id = "NURSE", Floor = 0, RoomId = "ROOM_HOUSE_102", X = 11.6f, SpriteKey = "npc_nurse_hiding",
                 FlagsAll = { "A2_STARTED" }, FlagsNone = { "NURSE_FOUND", "NURSE_DECLINED" },
                 PromptKey = "enc.NURSE.prompt",
                 DialogueNode = "ENC_NURSE", SceneEventId = "EVT_A2_NURSE_JOIN",
@@ -773,8 +795,8 @@ namespace ApoGirl.EditorTools
                 NightVariant = new LocationVariantDef
                 {
                     Spawns = { Walk("ENEMY_WANDERER", 0, "", 20f, 3, 8f), Walk("ENEMY_WANDERER", 1, "", 40f, 3, 8f), Walk("ENEMY_WATCHER", 0, "", 55f, 1, 0f) },
-                    LockedRooms = { "ROOM_HOUSE_102" },
                     ForceableRooms = { "ROOM_HOUSE_201" },
+                    Encounters = { nurse },
                 },
             };
         }

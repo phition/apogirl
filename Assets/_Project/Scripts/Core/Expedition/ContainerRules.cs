@@ -76,6 +76,39 @@ namespace ApoGirl.Core.Expedition
             }
         }
 
+        /// <summary>상자 키(HostileRules.CorridorKey·RoomKey)가 한 번뿐인 상자(ContainerDef.Once)를 가리키는가.</summary>
+        public static bool IsOnce(LocationDef location, string key)
+        {
+            return Find(location, key)?.Once == true;
+        }
+
+        /// <summary>상자 키 → 상자 정의 ("지역/C{i}" 복도, "지역/R{문}.{i}" 방). 모르는 키면 null.</summary>
+        public static ContainerDef Find(LocationDef location, string key)
+        {
+            var layout = location?.Layout;
+            var slash = key?.IndexOf('/') ?? -1;
+            if (layout == null || slash < 0 || slash + 2 > key.Length)
+            {
+                return null;
+            }
+
+            var rest = key.Substring(slash + 1);
+            if (rest[0] == 'C' && int.TryParse(rest.Substring(1), out var corridor))
+            {
+                return corridor >= 0 && corridor < layout.Containers.Count ? layout.Containers[corridor] : null;
+            }
+
+            var dot = rest.IndexOf('.');
+            if (rest[0] != 'R' || dot < 0 || !int.TryParse(rest.Substring(1, dot - 1), out var door) || !int.TryParse(rest.Substring(dot + 1), out var index)
+                || door < 0 || door >= layout.Doors.Count)
+            {
+                return null;
+            }
+
+            var template = layout.FindTemplate(layout.Doors[door].TemplateId);
+            return template != null && index >= 0 && index < template.Containers.Count ? template.Containers[index] : null;
+        }
+
         /// <summary>weekBefore 주의 1일과 weekAfter 주의 1일 사이에 달이 바뀌었는가.</summary>
         public static bool MonthStarted(int weekBefore, int weekAfter, BalanceConfig balance)
         {
@@ -99,7 +132,8 @@ namespace ApoGirl.Core.Expedition
                     continue;
                 }
 
-                var keys = group.OrderBy(k => k, StringComparer.Ordinal).ToList();
+                // 한 번뿐인 상자(ContainerDef.Once)는 다시 채우지 않는다
+                var keys = group.Where(k => !IsOnce(location, k)).OrderBy(k => k, StringComparer.Ordinal).ToList();
                 var count = (int)Math.Round(keys.Count * balance.RestockFraction, MidpointRounding.AwayFromZero);
                 if (count <= 0)
                 {

@@ -86,6 +86,7 @@ MonoBehaviour:
           LootTableId: 
           SpriteKey: 
           Guaranteed: 0
+          Once: 0
         - Id: DISP_DESK
           Kind: 1
           Floor: 0
@@ -94,6 +95,7 @@ MonoBehaviour:
           LootTableId: 
           SpriteKey: 
           Guaranteed: 0
+          Once: 0
         - Id: DISP_FRIDGE
           Kind: 3
           Floor: 0
@@ -102,6 +104,7 @@ MonoBehaviour:
           LootTableId: LOOT_PHARMACY_STOCK
           SpriteKey: 
           Guaranteed: 0
+          Once: 0
         DefaultLootTableId: LOOT_PHARMACY_SHELF
         WallDecor: 
       - Id: ROOM_PH_CLINIC
@@ -120,6 +123,7 @@ MonoBehaviour:
           LootTableId: 
           SpriteKey: 
           Guaranteed: 0
+          Once: 0
         - Id: CLINIC_CABINET
           Kind: 2
           Floor: 0
@@ -128,6 +132,7 @@ MonoBehaviour:
           LootTableId: 
           SpriteKey: 
           Guaranteed: 0
+          Once: 0
         - Id: CLINIC_LOCKER
           Kind: 0
           Floor: 0
@@ -136,6 +141,7 @@ MonoBehaviour:
           LootTableId: 
           SpriteKey: 
           Guaranteed: 0
+          Once: 0
         DefaultLootTableId: LOOT_PHARMACY_CLINIC
         WallDecor: 
       - Id: ROOM_PH_STOCKROOM
@@ -152,6 +158,7 @@ MonoBehaviour:
           LootTableId: 
           SpriteKey: 
           Guaranteed: 0
+          Once: 0
         - Id: STOCK_B
           Kind: 2
           Floor: 0
@@ -160,6 +167,7 @@ MonoBehaviour:
           LootTableId: 
           SpriteKey: 
           Guaranteed: 0
+          Once: 0
         - Id: STOCK_C
           Kind: 4
           Floor: 0
@@ -168,6 +176,7 @@ MonoBehaviour:
           LootTableId: 
           SpriteKey: 
           Guaranteed: 0
+          Once: 0
         DefaultLootTableId: LOOT_PHARMACY_STOCK
         WallDecor: 
       Containers:
@@ -179,6 +188,7 @@ MonoBehaviour:
         LootTableId: LOOT_PHARMACY_SHELF
         SpriteKey: 
         Guaranteed: 0
+        Once: 0
       - Id: C_PH_SHELF_2
         Kind: 2
         Floor: 0
@@ -187,6 +197,7 @@ MonoBehaviour:
         LootTableId: LOOT_PHARMACY_SHELF
         SpriteKey: 
         Guaranteed: 0
+        Once: 0
       - Id: C_PH_SHELF_3
         Kind: 2
         Floor: 0
@@ -195,6 +206,7 @@ MonoBehaviour:
         LootTableId: LOOT_PHARMACY_SHELF
         SpriteKey: 
         Guaranteed: 0
+        Once: 0
       - Id: C_PH_SHELF_4
         Kind: 2
         Floor: 0
@@ -203,6 +215,7 @@ MonoBehaviour:
         LootTableId: LOOT_PHARMACY_SHELF
         SpriteKey: 
         Guaranteed: 0
+        Once: 0
       - Id: C_PH_SHELF_5
         Kind: 2
         Floor: 0
@@ -211,6 +224,7 @@ MonoBehaviour:
         LootTableId: LOOT_PHARMACY_SHELF
         SpriteKey: 
         Guaranteed: 0
+        Once: 0
       - Id: C_PH_COUNTER
         Kind: 1
         Floor: 0
@@ -219,6 +233,7 @@ MonoBehaviour:
         LootTableId: LOOT_PHARMACY_SHELF
         SpriteKey: 
         Guaranteed: 0
+        Once: 0
       - Id: C_PH_WAITING_DESK
         Kind: 1
         Floor: 1
@@ -227,6 +242,7 @@ MonoBehaviour:
         LootTableId: LOOT_PHARMACY_CLINIC
         SpriteKey: 
         Guaranteed: 0
+        Once: 0
       Exits:
       - Kind: 0
         Floor: 0

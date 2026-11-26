@@ -230,6 +230,7 @@ MonoBehaviour:
           LootTableId: 
           SpriteKey: 
           Guaranteed: 0
+          Once: 0
         - Id: ARCHIVE_B
           Kind: 2
           Floor: 0
@@ -238,6 +239,7 @@ MonoBehaviour:
           LootTableId: 
           SpriteKey: 
           Guaranteed: 0
+          Once: 0
         - Id: ARCHIVE_DESK
           Kind: 1
           Floor: 0
@@ -246,6 +248,7 @@ MonoBehaviour:
           LootTableId: 
           SpriteKey: 
           Guaranteed: 0
+          Once: 0
         - Id: SAMPLE_FRIDGE
           Kind: 3
           Floor: 0
@@ -254,6 +257,7 @@ MonoBehaviour:
           LootTableId: LOOT_PHARMACY_STOCK
           SpriteKey: 
           Guaranteed: 0
+          Once: 0
         DefaultLootTableId: LOOT_WATER_LAB
         WallDecor: 
       - Id: ROOM_WATER_LAB
@@ -275,6 +279,7 @@ MonoBehaviour:
           LootTableId: 
           SpriteKey: 
           Guaranteed: 0
+          Once: 0
         - Id: BENCH_B
           Kind: 1
           Floor: 0
@@ -283,6 +288,7 @@ MonoBehaviour:
           LootTableId: 
           SpriteKey: 
           Guaranteed: 0
+          Once: 0
         - Id: REAGENT
           Kind: 2
           Floor: 0
@@ -291,6 +297,7 @@ MonoBehaviour:
           LootTableId: 
           SpriteKey: 
           Guaranteed: 0
+          Once: 0
         - Id: LOCKER
           Kind: 0
           Floor: 0
@@ -299,6 +306,7 @@ MonoBehaviour:
           LootTableId: 
           SpriteKey: 
           Guaranteed: 0
+          Once: 0
         DefaultLootTableId: LOOT_WATER_LAB
         WallDecor: 
       - Id: ROOM_WATER_CONTROL
@@ -317,6 +325,7 @@ MonoBehaviour:
           LootTableId: 
           SpriteKey: 
           Guaranteed: 0
+          Once: 0
         - Id: PARTS
           Kind: 4
           Floor: 0
@@ -325,6 +334,7 @@ MonoBehaviour:
           LootTableId: 
           SpriteKey: 
           Guaranteed: 0
+          Once: 0
         - Id: SUPPLY
           Kind: 2
           Floor: 0
@@ -333,6 +343,7 @@ MonoBehaviour:
           LootTableId: 
           SpriteKey: 
           Guaranteed: 0
+          Once: 0
         DefaultLootTableId: LOOT_SUBWAY_OFFICE
         WallDecor: 
       - Id: ROOM_DEEP_WATER_CHEM
@@ -349,6 +360,7 @@ MonoBehaviour:
           LootTableId: 
           SpriteKey: 
           Guaranteed: 1
+          Once: 0
         - Id: CHEM_B
           Kind: 2
           Floor: 0
@@ -357,6 +369,7 @@ MonoBehaviour:
           LootTableId: 
           SpriteKey: 
           Guaranteed: 1
+          Once: 0
         - Id: CRATE
           Kind: 4
           Floor: 0
@@ -365,6 +378,7 @@ MonoBehaviour:
           LootTableId: LOOT_WATER_DEEP
           SpriteKey: 
           Guaranteed: 1
+          Once: 0
         DefaultLootTableId: LOOT_WATER_VAULT
         WallDecor: 
       - Id: ROOM_DEEP_WATER_PUMP
@@ -381,6 +395,7 @@ MonoBehaviour:
           LootTableId: LOOT_SUBWAY_OFFICE
           SpriteKey: 
           Guaranteed: 1
+          Once: 0
         - Id: CRATE
           Kind: 4
           Floor: 0
@@ -389,6 +404,7 @@ MonoBehaviour:
           LootTableId: 
           SpriteKey: 
           Guaranteed: 1
+          Once: 0
         - Id: CABINET
           Kind: 2
           Floor: 0
@@ -397,6 +413,7 @@ MonoBehaviour:
           LootTableId: LOOT_WATER_DEEP
           SpriteKey: 
           Guaranteed: 1
+          Once: 0
         DefaultLootTableId: LOOT_WATER_VAULT
         WallDecor: 
       Containers:
@@ -408,6 +425,7 @@ MonoBehaviour:
         LootTableId: LOOT_SUBWAY_OFFICE
         SpriteKey: 
         Guaranteed: 0
+        Once: 0
       - Id: C_WATER_TANK_2
         Kind: 4
         Floor: 1
@@ -416,6 +434,7 @@ MonoBehaviour:
         LootTableId: LOOT_SUBWAY_OFFICE
         SpriteKey: 
         Guaranteed: 0
+        Once: 0
       - Id: C_WATER_TANK_3
         Kind: 4
         Floor: 1
@@ -424,6 +443,7 @@ MonoBehaviour:
         LootTableId: LOOT_SUBWAY_OFFICE
         SpriteKey: 
         Guaranteed: 0
+        Once: 0
       - Id: C_WATER_TANK_4
         Kind: 4
         Floor: 1
@@ -432,6 +452,7 @@ MonoBehaviour:
         LootTableId: LOOT_SUBWAY_OFFICE
         SpriteKey: 
         Guaranteed: 0
+        Once: 0
       - Id: C_WATER_DEEP_VALVE
         Kind: 4
         Floor: 3
@@ -440,6 +461,7 @@ MonoBehaviour:
         LootTableId: LOOT_SUBWAY_OFFICE
         SpriteKey: 
         Guaranteed: 0
+        Once: 0
       - Id: C_WATER_DEEP_CHEM_A
         Kind: 2
         Floor: 4
@@ -448,6 +470,7 @@ MonoBehaviour:
         LootTableId: LOOT_WATER_DEEP
         SpriteKey: 
         Guaranteed: 0
+        Once: 0
       - Id: C_WATER_DEEP_CHEM_B
         Kind: 2
         Floor: 5
@@ -456,6 +479,7 @@ MonoBehaviour:
         LootTableId: LOOT_WATER_DEEP
         SpriteKey: 
         Guaranteed: 0
+        Once: 0
       - Id: C_WATER_DEEP_CRATE
         Kind: 4
         Floor: 5
@@ -464,6 +488,7 @@ MonoBehaviour:
         LootTableId: LOOT_WATER_DEEP
         SpriteKey: 
         Guaranteed: 0
+        Once: 0
       Exits:
       - Kind: 0
         Floor: 1

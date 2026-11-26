@@ -8398,6 +8398,18 @@ MonoBehaviour:
     m_Localized: "\uAC70\uC810"
     m_Metadata:
       m_Items: []
+  - m_Id: 2578784573472768
+    m_Localized: "\uB17C\uBB38\uC744 \uC77D\uC5C8\uB2E4: {0} \u2014 {1} \uC218\uC5C5 {2}\uBC88\uB9CC\uD07C \uC775\uD614\uB2E4."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2578784632193024
+    m_Localized: "\uB17C\uBB38: \uB4E4\uACE0 \uB3CC\uC544\uAC00 \uC77D\uC73C\uBA74 {0} \uC218\uC5C5 {1}\uBC88\uB9CC\uD07C \uC775\uD78C\uB2E4."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2578784632193025
+    m_Localized: "{1}\uD638"
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []
