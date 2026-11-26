@@ -103,6 +103,11 @@ namespace ApoGirl.Exploration.Runtime
             _worldLabels = root.Q("world-labels");
             _root = root;
             BuildStaminaBar(root);
+            // 상태판: 체력·스태미너·무게 게이지, 소음 계기, 손전등, 시계 아이콘, 활동성 눈금 (예전 글줄은 숨긴다)
+            _vitalsView = new ExpeditionVitalsView(_director, _vitals.parent, root.Q(className: "exp-clock-row"), _activity);
+            _vitals.AddToClassList("hidden");
+            _weight.AddToClassList("hidden");
+            _noise.AddToClassList("hidden");
             Presentation.Audio.Sound.AttachUiClicks(root);
             _equip = root.Q<Label>("equip-label");
             _equip.AddToClassList("hidden"); // 장비는 아래 장비 칸이 보여 준다
@@ -207,6 +212,7 @@ namespace ApoGirl.Exploration.Runtime
             _vitals.text = Loc.F("exp.vitals", _director.Hp);
             _vitals.EnableInClassList("danger", _director.Hp <= 30);
             RefreshStamina();
+            _vitalsView.Refresh();
             _sleepOverlay.EnableInClassList("hidden", !_director.Asleep);
             _activity.text = Loc.F("exp.activity", Loc.T("activity." + _director.Activity.Level));
             _activity.EnableInClassList("danger", _director.Activity.Level >= ActivityLevel.Alert);
@@ -511,10 +517,13 @@ namespace ApoGirl.Exploration.Runtime
         private VisualElement _staminaTrack;
         private VisualElement _sleepOverlay;
 
+        private ExpeditionVitalsView _vitalsView;
+
         private void BuildStaminaBar(VisualElement root)
         {
             var row = new VisualElement { pickingMode = PickingMode.Ignore };
             row.AddToClassList("exp-stamina");
+            row.AddToClassList("hidden");   // 새 상태판(ExpeditionVitalsView)의 스태미너 게이지가 대신한다
             var label = new Label(Loc.T("exp.stamina")) { pickingMode = PickingMode.Ignore };
             label.AddToClassList("exp-stamina-label");
             _staminaTrack = new VisualElement { pickingMode = PickingMode.Ignore };

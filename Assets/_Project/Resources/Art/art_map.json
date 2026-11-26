@@ -1420,6 +1420,26 @@
       "Image": "item_tool_compass"
     },
     {
+      "Key": "exp.bag",
+      "Image": "item_bag_school"
+    },
+    {
+      "Key": "exp.light",
+      "Image": "item_tool_flashlight"
+    },
+    {
+      "Key": "exp.threat",
+      "Image": "icon_threat"
+    },
+    {
+      "Key": "exp.day",
+      "Image": "icon_weather_clear"
+    },
+    {
+      "Key": "exp.night",
+      "Image": "HubSky/moon"
+    },
+    {
       "Key": "act.ACT_SURV_BARRICADE",
       "Image": "icon_craft_barricade_desks"
     },

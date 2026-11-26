@@ -234,3 +234,62 @@
 .exp-tutorial { background-color: var(--note); color: var(--ink); border-radius: 2px; border-bottom-width: 2px; border-color: rgba(120, 100, 20, 0.4); }
 .exp-encounter-choice { background-color: rgba(238, 236, 225, 0.05); border-width: 0; border-bottom-width: 1px; border-color: var(--chalk-line); border-radius: 0; }
 .exp-encounter-choice:hover { background-color: rgba(240, 207, 107, 0.24); border-color: var(--accent); color: var(--accent); }
+
+/* ── 상태판 (ExpeditionVitalsView, 2026-11-26): 글자·숫자 대신 아이콘과 막대로. 칠판 바탕에 분필 선 ── */
+.exp-vitals {
+    flex-direction: row; align-items: center;
+    padding: 8px 12px 8px 8px; margin-top: 2px;
+    background-color: rgba(18, 27, 24, 0.84);
+    border-radius: 6px; border-width: 1px; border-color: var(--chalk-line); border-bottom-width: 3px; border-bottom-color: var(--wood);
+}
+.exp-gauges { flex-direction: column; }
+.exp-gauge { flex-direction: row; align-items: center; height: 26px; margin: 2px 0; }
+.exp-gauge-icon { width: 26px; height: 26px; margin-right: 8px; flex-shrink: 0; }
+.exp-gauge-track {
+    width: 170px; height: 14px; flex-shrink: 0; overflow: hidden;
+    background-color: rgba(8, 10, 10, 0.9);
+    border-width: 1px; border-color: rgba(238, 236, 225, 0.42); border-radius: 7px;
+}
+.exp-gauge-fill {
+    position: absolute; left: 0; top: 0; bottom: 0; border-radius: 6px;
+    transition-property: width, background-color; transition-duration: 0.18s;
+}
+.exp-gauge-lost { position: absolute; right: 0; top: 0; bottom: 0; background-color: rgba(150, 44, 40, 0.9); }
+.exp-gauge-tick { position: absolute; top: 0; bottom: 0; width: 1px; background-color: rgba(8, 10, 10, 0.55); }
+.exp-gauge-value { min-width: 34px; margin-left: 8px; font-size: 15px; color: var(--text); -unity-text-align: middle-left; -unity-font-style: bold; }
+.exp-gauge-weight .exp-gauge-value { font-size: 13px; -unity-font-style: normal; color: var(--text-dim); min-width: 54px; }
+/* 체력: 넉넉하면 붉은 살구색, 절반 아래 주황, 30 아래는 진한 빨강으로 깜박인다 */
+.exp-gauge-hp .exp-gauge-fill { background-color: rgb(214, 96, 88); }
+.exp-gauge-hp.warn .exp-gauge-fill { background-color: rgb(226, 150, 60); }
+.exp-gauge-hp.danger .exp-gauge-fill { background-color: rgb(200, 48, 44); }
+.exp-gauge-hp.danger .exp-gauge-track { border-color: rgb(230, 90, 80); }
+.exp-gauge-hp.danger .exp-gauge-value { color: var(--danger); }
+/* 스태미너: 초록, 지치면 주황 */
+.exp-gauge-stamina .exp-gauge-fill { background-color: rgb(118, 196, 112); }
+.exp-gauge-stamina.warn .exp-gauge-fill { background-color: rgb(226, 150, 60); }
+/* 무게: 분필 흰색, 넘치면 빨강 */
+.exp-gauge-weight .exp-gauge-fill { background-color: rgb(205, 196, 170); }
+.exp-gauge-weight.danger .exp-gauge-fill { background-color: rgb(200, 48, 44); }
+.exp-gauge-weight.danger .exp-gauge-value { color: var(--danger); }
+/* 소음 계기와 손전등 */
+.exp-senses { margin-left: 14px; padding-left: 12px; border-left-width: 1px; border-color: var(--chalk-line); align-items: center; justify-content: center; align-self: stretch; }
+.exp-noise-meter { width: 66px; height: 60px; }
+.exp-noise-word { font-size: 12px; color: var(--text-dim); -unity-text-align: middle-center; margin-top: -2px; }
+.exp-noise-word.loud { color: var(--danger); -unity-font-style: bold; }
+.exp-light { flex-direction: row; align-items: center; margin-top: 4px; padding: 1px 6px 1px 2px; border-radius: 9px; background-color: rgba(0, 0, 0, 0.35); }
+.exp-light-icon { width: 18px; height: 18px; margin-right: 4px; -unity-background-image-tint-color: rgb(120, 120, 120); }
+.exp-light-word { font-size: 11px; color: var(--text-dim); }
+.exp-light.on { background-color: rgba(240, 207, 107, 0.22); }
+.exp-light.on .exp-light-icon { -unity-background-image-tint-color: rgb(255, 255, 255); }
+.exp-light.on .exp-light-word { color: var(--accent); }
+/* 시계: 해·달 아이콘, 활동성 눈금 */
+.exp-clock-icon { width: 26px; height: 26px; margin-right: auto; }
+.exp-activity-row { flex-direction: row; align-items: center; justify-content: flex-end; margin-top: 2px; }
+.exp-activity-icon { width: 22px; height: 22px; margin-right: 6px; }
+.exp-activity-pip { width: 16px; height: 8px; margin-right: 3px; border-radius: 2px; background-color: rgba(255, 255, 255, 0.14); }
+.exp-activity-pip.on { background-color: rgb(150, 190, 150); }
+.exp-activity-row.alert .exp-activity-pip.on { background-color: rgb(226, 150, 60); }
+.exp-activity-row.hunting .exp-activity-pip.on { background-color: rgb(210, 60, 54); }
+.exp-activity-word { font-size: 14px; color: var(--text-dim); margin-left: 5px; min-width: 34px; -unity-text-align: middle-right; }
+.exp-activity-row.alert .exp-activity-word { color: rgb(226, 150, 60); }
+.exp-activity-row.hunting .exp-activity-word { color: var(--danger); -unity-font-style: bold; }
