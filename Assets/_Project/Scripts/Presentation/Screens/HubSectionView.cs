@@ -98,6 +98,34 @@ namespace ApoGirl.Presentation.Screens
             public float Y;
         }
 
+        /// <summary>
+        /// 허브 잡담 (사용자 요청 2026-11-26): 계획 중에 동료가 학교를 돌아다니고, 같은 방에 누가 있으면 머리 위에 한마디.
+        /// 문구는 chatter.{NPC}.{general|stress|close|hungry|thirsty}.{n} — 몸 상태·호감이 문턱을 넘으면 그 갈래가 섞인다.
+        /// </summary>
+        [Serializable]
+        public sealed class ChatterDef
+        {
+            public bool Enabled = true;
+
+            /// <summary>한 사람이 다음 방으로 옮길 때까지 머무는 시간(초) 범위.</summary>
+            public float WanderMin = 8f;
+            public float WanderMax = 22f;
+
+            /// <summary>말풍선 사이 간격(초) 범위와 말풍선이 떠 있는 시간.</summary>
+            public float TalkMin = 5f;
+            public float TalkMax = 11f;
+            public float BubbleSeconds = 3.4f;
+
+            /// <summary>이 문턱을 넘으면 그 갈래의 말이 나올 수 있다: 스트레스 이상, 포만·수분 이하, 호감 이상.</summary>
+            public int StressAt = 60;
+            public int HungryAt = -30;
+            public int ThirstyAt = -30;
+            public int CloseAt = 60;
+
+            /// <summary>갈래가 열려 있을 때 평소 말 대신 그 갈래를 고를 확률.</summary>
+            public float StateChance = 0.5f;
+        }
+
         /// <summary>건물 왼쪽 바깥: 마당 바닥, 낮은 담, 교문. 외출하는 동료는 현관을 나와 ExitX까지 걸어가 사라진다.</summary>
         [Serializable]
         public sealed class OutsideDef
@@ -222,6 +250,9 @@ namespace ApoGirl.Presentation.Screens
 
         /// <summary>건물 바깥 마당 (Docs/HUB_SECTION_REDRAW_PROPOSAL.md 4절).</summary>
         public OutsideDef Outside = new OutsideDef();
+
+        /// <summary>계획 중 동료의 돌아다니기·잡담.</summary>
+        public ChatterDef Chatter = new ChatterDef();
 
         /// <summary>단면도 뒤 바깥 풍경 (마을·하늘·날씨).</summary>
         public HubSkyConfig Sky = new HubSkyConfig();
@@ -370,6 +401,12 @@ namespace ApoGirl.Presentation.Screens
         public void SetTime(DayPhase phase, bool executing)
         {
             var changed = executing && (phase != _phase || !_executing);
+            if (executing && !_executing)
+            {
+                // 한 주 실행이 시작되면 맡은 자리에서 시작한다
+                _idleSpots.Clear();
+                _wanderIn.Clear();
+            }
             _phase = phase;
             _executing = executing;
             if (!executing)
@@ -1420,6 +1457,10 @@ namespace ApoGirl.Presentation.Screens
                 actor.PostRoom = room.Def.Id;
                 var atNight = _executing && _phase == DayPhase.Night && !actor.Guard;
                 actor.Place(atNight ? actor.HomeFloor : actor.PostFloor, atNight ? actor.HomeX : actor.PostX);
+                if (!_executing && _idleSpots.TryGetValue(pair.Key, out var spot) && RoomAt(spot.Floor, spot.X)?.Open == true)
+                {
+                    actor.Place(spot.Floor, spot.X);   // 계획 중에 돌아다니던 자리
+                }
 
                 // 밖에 나가 있는 낮: 현관에 숨겨 둔다 (밤 칸이 시작되면 거기서 걸어 들어온다)
                 var door = EntranceSpot();
@@ -1565,6 +1606,150 @@ namespace ApoGirl.Presentation.Screens
             return frames;
         }
 
+        // ── 계획 중: 동료가 돌아다니고 잡담한다 ──
+
+        private readonly Dictionary<string, float> _wanderIn = new Dictionary<string, float>();
+        private readonly Dictionary<string, (int Floor, float X)> _idleSpots = new Dictionary<string, (int, float)>();
+        private float _talkIn = 4f;
+        private string _lastTalker;
+
+        private void TickIdle(float dt)
+        {
+            var chatter = _config.Chatter;
+            var state = _session.State;
+            if (_executing || chatter == null || !chatter.Enabled || state == null || !_session.IsPlanning)
+            {
+                return;
+            }
+
+            foreach (var actor in _actors)
+            {
+                if (actor.Kind != "npc" || actor.Away || string.IsNullOrEmpty(actor.Id))
+                {
+                    continue;
+                }
+
+                // 화면이 다시 그려져도(Refresh가 배우를 새로 만든다) 있던 자리에서 이어 가게 적어 둔다
+                _idleSpots[actor.Id] = (actor.Floor, actor.X);
+                if (actor.Walking || !actor.CanWalk)
+                {
+                    continue;
+                }
+
+                if (!_wanderIn.TryGetValue(actor.Id, out var left))
+                {
+                    left = UnityEngine.Random.Range(1f, chatter.WanderMax);
+                }
+
+                left -= dt;
+                if (left <= 0f)
+                {
+                    var open = _rooms.Values.Where(r => r.Open && !r.Def.Roof).ToList();
+                    if (open.Count > 0)
+                    {
+                        var room = open[UnityEngine.Random.Range(0, open.Count)];
+                        actor.WalkTo(room.Def.Floor, room.Def.X + room.Def.Width * UnityEngine.Random.Range(0.18f, 0.82f), this);
+                    }
+
+                    left = UnityEngine.Random.Range(chatter.WanderMin, chatter.WanderMax);
+                }
+
+                _wanderIn[actor.Id] = left;
+            }
+
+            _talkIn -= dt;
+            if (_talkIn <= 0f)
+            {
+                _talkIn = UnityEngine.Random.Range(chatter.TalkMin, chatter.TalkMax);
+                Chat(state, chatter);
+            }
+        }
+
+        /// <summary>같은 방에 누가 있는 사람 하나가 한마디 한다 (직전에 말한 사람은 쉰다).</summary>
+        private void Chat(GameState state, HubSectionConfig.ChatterDef chatter)
+        {
+            var visible = _actors.Where(a => !a.Away && !a.Element.ClassListContains("hidden")).ToList();
+            var ready = visible.Where(a => (a.Kind == "npc" || a.Kind == "teacher") && !a.Walking && !string.IsNullOrEmpty(a.Id)
+                                           && a.Id != _lastTalker && _bubbles.All(b => b.Id != a.Id)
+                                           && visible.Any(o => o != a && !o.Walking && SameRoom(a, o))).ToList();
+            if (ready.Count == 0)
+            {
+                _lastTalker = null;
+                return;
+            }
+
+            var talker = ready[UnityEngine.Random.Range(0, ready.Count)];
+            var line = ChatterLine(state, chatter, talker.Id);
+            if (line != null && ShowBubble(talker.Id, line, 0f, chatter.BubbleSeconds))
+            {
+                _lastTalker = talker.Id;
+            }
+        }
+
+        private bool SameRoom(Actor a, Actor b)
+        {
+            var roomA = RoomAt(a.Floor, a.X);
+            return roomA != null && roomA == RoomAt(b.Floor, b.X);
+        }
+
+        private RoomView RoomAt(int floor, float x) =>
+            _rooms.Values.FirstOrDefault(r => !r.Def.Roof && r.Def.Floor == floor && x >= r.Def.X && x < r.Def.X + r.Def.Width);
+
+        /// <summary>그 사람이 지금 할 만한 말 하나: 지쳤거나 배고프거나 목마르거나 가까우면 그 갈래가 섞이고, 아니면 평소 말.</summary>
+        private static string ChatterLine(GameState state, HubSectionConfig.ChatterDef chatter, string id)
+        {
+            BodyState body = null;
+            var affinity = 0;
+            if (id == ApoGirl.Core.Rules.GiveRules.TeacherId)
+            {
+                body = state.Teacher.Body;
+                affinity = state.Teacher.Affinity;
+            }
+            else if (state.Npcs.TryGetValue(id, out var npc))
+            {
+                body = npc.Body;
+                affinity = npc.Affinity;
+            }
+
+            var topics = new List<string>();
+            if (body != null)
+            {
+                if (body.Stress >= chatter.StressAt) topics.Add("stress");
+                if (body.Satiety <= chatter.HungryAt) topics.Add("hungry");
+                if (body.Hydration <= chatter.ThirstyAt) topics.Add("thirsty");
+            }
+
+            if (affinity >= chatter.CloseAt) topics.Add("close");
+            var topic = topics.Count > 0 && UnityEngine.Random.value < chatter.StateChance
+                ? topics[UnityEngine.Random.Range(0, topics.Count)]
+                : "general";
+            var lines = ChatterLines(id, topic);
+            if (lines.Count == 0 && topic != "general")
+            {
+                lines = ChatterLines(id, "general");
+            }
+
+            return lines.Count > 0 ? lines[UnityEngine.Random.Range(0, lines.Count)] : null;
+        }
+
+        private static List<string> ChatterLines(string id, string topic)
+        {
+            var lines = new List<string>();
+            for (var i = 0; i < 20; i++)
+            {
+                var key = "chatter." + id + "." + topic + "." + i;
+                var text = Loc.T(key);
+                if (text == key)
+                {
+                    break;
+                }
+
+                lines.Add(text);
+            }
+
+            return lines;
+        }
+
         // ── 매 틱: 걷기·동작·불빛 ──
 
         private float _lightTimer;
@@ -1580,6 +1765,7 @@ namespace ApoGirl.Presentation.Screens
             _skyView.Tick(dt);
             TickDoors(dt);
             TickBubbles(dt);
+            TickIdle(dt);
 
             _lightTimer += dt;
             if (_lightTimer > 0.3f)

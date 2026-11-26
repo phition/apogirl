@@ -754,6 +754,9 @@ namespace ApoGirl.Core.Definitions
             new ApplianceDef { Id = "SPRINKLER", Power = 2, Flag = "SPRINKLER" },      // 스프링클러 (식량 줄 3단계): 자동 정수기 다음 차례
         };
 
+        /// <summary>PC통신: 컴퓨터실 컴퓨터를 켜는 데 필요한 여유 전력 (전화선·모뎀은 전력 없이도 돌지만 컴퓨터는 아니다).</summary>
+        public int BbsMinFreePower = 2;
+
         // ── 방송반 송출 (확장 5) ──
 
         /// <summary>방송 한 번에 누군가 응답할 확률 (응답 장면 EVT_BROADCAST_REPLY_*).</summary>

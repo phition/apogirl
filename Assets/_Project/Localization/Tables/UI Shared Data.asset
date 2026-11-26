@@ -8651,6 +8651,426 @@ MonoBehaviour:
     m_Key: bbs.post_date
     m_Metadata:
       m_Items: []
+  - m_Id: 2658166222635008
+    m_Key: chatter.NPC_TEACHER.general.0
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2658166298132480
+    m_Key: chatter.NPC_TEACHER.general.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2658166298132481
+    m_Key: chatter.NPC_TEACHER.general.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2658166298132482
+    m_Key: chatter.NPC_TEACHER.general.3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2658166298132483
+    m_Key: chatter.NPC_TEACHER.general.4
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2658166298132484
+    m_Key: chatter.NPC_TEACHER.stress.0
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2658166298132485
+    m_Key: chatter.NPC_TEACHER.stress.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2658166298132486
+    m_Key: chatter.NPC_TEACHER.close.0
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2658166298132487
+    m_Key: chatter.NPC_TEACHER.close.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2658166298132488
+    m_Key: chatter.NPC_TEACHER.hungry.0
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2658166298132489
+    m_Key: chatter.NPC_TEACHER.hungry.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2658166298132490
+    m_Key: chatter.NPC_TEACHER.thirsty.0
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2658166298132491
+    m_Key: chatter.NPC_TEACHER.thirsty.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2658166298132492
+    m_Key: chatter.NPC_DOHYEON.general.0
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2658166298132493
+    m_Key: chatter.NPC_DOHYEON.general.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2658166298132494
+    m_Key: chatter.NPC_DOHYEON.general.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2658166298132495
+    m_Key: chatter.NPC_DOHYEON.general.3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2658166298132496
+    m_Key: chatter.NPC_DOHYEON.general.4
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2658166298132497
+    m_Key: chatter.NPC_DOHYEON.stress.0
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2658166298132498
+    m_Key: chatter.NPC_DOHYEON.stress.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2658166298132499
+    m_Key: chatter.NPC_DOHYEON.close.0
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2658166298132500
+    m_Key: chatter.NPC_DOHYEON.close.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2658166298132501
+    m_Key: chatter.NPC_DOHYEON.hungry.0
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2658166298132502
+    m_Key: chatter.NPC_DOHYEON.hungry.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2658166298132503
+    m_Key: chatter.NPC_DOHYEON.thirsty.0
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2658166298132504
+    m_Key: chatter.NPC_DOHYEON.thirsty.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2658166298132505
+    m_Key: chatter.NPC_NURSE.general.0
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2658166298132506
+    m_Key: chatter.NPC_NURSE.general.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2658166298132507
+    m_Key: chatter.NPC_NURSE.general.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2658166298132508
+    m_Key: chatter.NPC_NURSE.general.3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2658166298132509
+    m_Key: chatter.NPC_NURSE.general.4
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2658166298132510
+    m_Key: chatter.NPC_NURSE.stress.0
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2658166298132511
+    m_Key: chatter.NPC_NURSE.stress.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2658166298132512
+    m_Key: chatter.NPC_NURSE.close.0
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2658166298132513
+    m_Key: chatter.NPC_NURSE.close.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2658166298132514
+    m_Key: chatter.NPC_NURSE.hungry.0
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2658166298132515
+    m_Key: chatter.NPC_NURSE.hungry.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2658166298132516
+    m_Key: chatter.NPC_NURSE.thirsty.0
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2658166298132517
+    m_Key: chatter.NPC_NURSE.thirsty.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2658166298132518
+    m_Key: chatter.NPC_BYSTANDER.general.0
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2658166298132519
+    m_Key: chatter.NPC_BYSTANDER.general.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2658166298132520
+    m_Key: chatter.NPC_BYSTANDER.general.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2658166298132521
+    m_Key: chatter.NPC_BYSTANDER.general.3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2658166298132522
+    m_Key: chatter.NPC_BYSTANDER.general.4
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2658166298132523
+    m_Key: chatter.NPC_BYSTANDER.stress.0
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2658166298132524
+    m_Key: chatter.NPC_BYSTANDER.stress.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2658166298132525
+    m_Key: chatter.NPC_BYSTANDER.close.0
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2658166298132526
+    m_Key: chatter.NPC_BYSTANDER.close.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2658166298132527
+    m_Key: chatter.NPC_BYSTANDER.hungry.0
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2658166298132528
+    m_Key: chatter.NPC_BYSTANDER.hungry.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2658166298132529
+    m_Key: chatter.NPC_BYSTANDER.thirsty.0
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2658166298132530
+    m_Key: chatter.NPC_BYSTANDER.thirsty.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2658166298132531
+    m_Key: chatter.NPC_RINGLEADER.general.0
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2658166298132532
+    m_Key: chatter.NPC_RINGLEADER.general.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2658166298132533
+    m_Key: chatter.NPC_RINGLEADER.general.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2658166298132534
+    m_Key: chatter.NPC_RINGLEADER.general.3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2658166298132535
+    m_Key: chatter.NPC_RINGLEADER.general.4
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2658166298132536
+    m_Key: chatter.NPC_RINGLEADER.stress.0
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2658166298132537
+    m_Key: chatter.NPC_RINGLEADER.stress.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2658166298132538
+    m_Key: chatter.NPC_RINGLEADER.close.0
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2658166298132539
+    m_Key: chatter.NPC_RINGLEADER.close.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2658166298132540
+    m_Key: chatter.NPC_RINGLEADER.hungry.0
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2658166298132541
+    m_Key: chatter.NPC_RINGLEADER.hungry.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2658166298132542
+    m_Key: chatter.NPC_RINGLEADER.thirsty.0
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2658166298132543
+    m_Key: chatter.NPC_RINGLEADER.thirsty.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2658166298132544
+    m_Key: chatter.NPC_SURVIVOR_A.general.0
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2658166298132545
+    m_Key: chatter.NPC_SURVIVOR_A.general.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2658166298132546
+    m_Key: chatter.NPC_SURVIVOR_A.general.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2658166298132547
+    m_Key: chatter.NPC_SURVIVOR_A.general.3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2658166298132548
+    m_Key: chatter.NPC_SURVIVOR_A.general.4
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2658166298132549
+    m_Key: chatter.NPC_SURVIVOR_A.stress.0
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2658166298132550
+    m_Key: chatter.NPC_SURVIVOR_A.stress.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2658166298132551
+    m_Key: chatter.NPC_SURVIVOR_A.close.0
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2658166298132552
+    m_Key: chatter.NPC_SURVIVOR_A.close.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2658166298132553
+    m_Key: chatter.NPC_SURVIVOR_A.hungry.0
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2658166298132554
+    m_Key: chatter.NPC_SURVIVOR_A.hungry.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2658166298132555
+    m_Key: chatter.NPC_SURVIVOR_A.thirsty.0
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2658166298132556
+    m_Key: chatter.NPC_SURVIVOR_A.thirsty.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2658166298132557
+    m_Key: chatter.NPC_WANDERER.general.0
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2658166298132558
+    m_Key: chatter.NPC_WANDERER.general.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2658166298132559
+    m_Key: chatter.NPC_WANDERER.general.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2658166298132560
+    m_Key: chatter.NPC_WANDERER.general.3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2658166298132561
+    m_Key: chatter.NPC_WANDERER.general.4
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2658166298132562
+    m_Key: chatter.NPC_WANDERER.stress.0
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2658166298132563
+    m_Key: chatter.NPC_WANDERER.stress.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2658166298132564
+    m_Key: chatter.NPC_WANDERER.close.0
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2658166298132565
+    m_Key: chatter.NPC_WANDERER.close.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2658166298132566
+    m_Key: chatter.NPC_WANDERER.hungry.0
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2658166298132567
+    m_Key: chatter.NPC_WANDERER.hungry.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2658166298132568
+    m_Key: chatter.NPC_WANDERER.thirsty.0
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2658166298132569
+    m_Key: chatter.NPC_WANDERER.thirsty.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2658166298132570
+    m_Key: chatter.NPC_CAT.general.0
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2658166298132571
+    m_Key: chatter.NPC_CAT.general.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2658166298132572
+    m_Key: chatter.NPC_CAT.general.2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2658166298132573
+    m_Key: chatter.NPC_CAT.general.3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2658166298132574
+    m_Key: chatter.NPC_CAT.general.4
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2658166298132575
+    m_Key: chatter.NPC_CAT.stress.0
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2658166298132576
+    m_Key: chatter.NPC_CAT.stress.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2658166298132577
+    m_Key: chatter.NPC_CAT.close.0
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2658166298132578
+    m_Key: chatter.NPC_CAT.close.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2658166298132579
+    m_Key: chatter.NPC_CAT.hungry.0
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2658166298132580
+    m_Key: chatter.NPC_CAT.hungry.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2658166298132581
+    m_Key: chatter.NPC_CAT.thirsty.0
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2658166298132582
+    m_Key: chatter.NPC_CAT.thirsty.1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2658166298132583
+    m_Key: bbs.no_power
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

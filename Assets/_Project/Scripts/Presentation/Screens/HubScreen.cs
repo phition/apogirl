@@ -555,6 +555,13 @@ namespace ApoGirl.Presentation.Screens
                 return;
             }
 
+            // 전화선은 전력 없이도 살아 있지만, 컴퓨터를 켜려면 여유 전력이 있어야 한다
+            if (!Core.Rules.BbsRules.HasPower(_session.State, _session.Definitions.Balance))
+            {
+                ShowToast(Loc.F("bbs.no_power", _session.Definitions.Balance.BbsMinFreePower));
+                return;
+            }
+
             _layers.CloseAll();
             _bbs.Open();
         }

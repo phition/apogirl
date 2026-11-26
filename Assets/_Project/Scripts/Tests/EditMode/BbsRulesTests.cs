@@ -17,6 +17,19 @@ namespace ApoGirl.Tests.EditMode
         }
 
         [Test]
+        public void HasPower_NeedsFreePowerForTheComputer()
+        {
+            var balance = new ApoGirl.Core.Definitions.BalanceConfig();
+            var state = new GameState();
+            Assert.IsFalse(BbsRules.HasPower(state, balance), "발전기가 없으면 컴퓨터가 안 켜진다");
+            state.Base.PowerRestored = true;
+            state.Base.SetResource(ResourceType.Power, balance.BbsMinFreePower);
+            Assert.IsTrue(BbsRules.HasPower(state, balance), "여유 전력이 필요한 만큼 있으면 켜진다");
+            state.Base.SetResource(ResourceType.Power, balance.BbsMinFreePower - 1);
+            Assert.IsFalse(BbsRules.HasPower(state, balance));
+        }
+
+        [Test]
         public void MarkDown_BlocksThisWeek_AndOpensNextWeek()
         {
             var state = new GameState();

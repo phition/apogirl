@@ -1,3 +1,4 @@
+using ApoGirl.Core.Definitions;
 using ApoGirl.Core.State;
 
 namespace ApoGirl.Core.Rules
@@ -21,6 +22,10 @@ namespace ApoGirl.Core.Rules
         public static bool IsDown(GameState state) => state != null && state.Flags.Contains(DownFlag(state.Calendar.Week));
 
         public static bool CanConnect(GameState state) => IsKnown(state) && !IsDown(state);
+
+        /// <summary>컴퓨터를 켤 전기가 있는가: 여유 전력이 BbsMinFreePower 이상 (전화선과 별개로 컴퓨터는 전기를 먹는다).</summary>
+        public static bool HasPower(GameState state, BalanceConfig balance) =>
+            state != null && PowerRules.Free(state, balance) >= balance.BbsMinFreePower;
 
         /// <summary>컴퓨터가 멎었다: 다음 주까지 접속할 수 없다. 지난 주들의 깃발은 지운다 (깃발이 쌓이지 않게).</summary>
         public static void MarkDown(GameState state)
