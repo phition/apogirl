@@ -92,7 +92,7 @@ MonoBehaviour:
         SearchFlag: 
         Seal: 0
       - RoomId: ROOM_HOUSE_201
-        TemplateId: ROOM_HOUSE
+        TemplateId: ROOM_HOUSE_L1
         Floor: 1
         X: 12
         Number: 201
@@ -100,7 +100,7 @@ MonoBehaviour:
         SearchFlag: 
         Seal: 0
       - RoomId: ROOM_HOUSE_202
-        TemplateId: ROOM_HOUSE
+        TemplateId: ROOM_HOUSE_L2
         Floor: 1
         X: 30
         Number: 202
@@ -108,7 +108,7 @@ MonoBehaviour:
         SearchFlag: 
         Seal: 0
       - RoomId: ROOM_HOUSE_203
-        TemplateId: ROOM_HOUSE
+        TemplateId: ROOM_HOUSE_L3
         Floor: 1
         X: 52
         Number: 203
@@ -301,6 +301,144 @@ MonoBehaviour:
           Once: 0
         DefaultLootTableId: LOOT_RESIDENTIAL_VAULT
         WallDecor: 
+      - Id: ROOM_HOUSE_L1
+        Width: 14
+        DoorXs:
+        - 1.2
+        Windows:
+        - X: 3
+          Width: 3
+        Containers:
+        - Id: CLOSET
+          Kind: 0
+          Floor: 0
+          X: 4.3
+          SearchSeconds: 3
+          LootTableId: 
+          SpriteKey: 
+          Guaranteed: 0
+          Once: 0
+        - Id: DRAWER
+          Kind: 1
+          Floor: 0
+          X: 7.1
+          SearchSeconds: 2
+          LootTableId: 
+          SpriteKey: 
+          Guaranteed: 0
+          Once: 0
+        - Id: FRIDGE
+          Kind: 3
+          Floor: 0
+          X: 9.8
+          SearchSeconds: 4
+          LootTableId: LOOT_HOUSE_KITCHEN
+          SpriteKey: 
+          Guaranteed: 0
+          Once: 0
+        - Id: KITCHEN
+          Kind: 2
+          Floor: 0
+          X: 12.2
+          SearchSeconds: 3.5
+          LootTableId: LOOT_HOUSE_KITCHEN
+          SpriteKey: 
+          Guaranteed: 0
+          Once: 0
+        DefaultLootTableId: LOOT_HOUSE_ROOM
+        WallDecor: 
+      - Id: ROOM_HOUSE_L2
+        Width: 14
+        DoorXs:
+        - 1.2
+        Windows:
+        - X: 3
+          Width: 3
+        Containers:
+        - Id: KITCHEN
+          Kind: 2
+          Floor: 0
+          X: 4
+          SearchSeconds: 3.5
+          LootTableId: LOOT_HOUSE_KITCHEN
+          SpriteKey: 
+          Guaranteed: 0
+          Once: 0
+        - Id: DRAWER
+          Kind: 1
+          Floor: 0
+          X: 6.6
+          SearchSeconds: 2
+          LootTableId: 
+          SpriteKey: 
+          Guaranteed: 0
+          Once: 0
+        - Id: CLOSET
+          Kind: 0
+          Floor: 0
+          X: 9.6
+          SearchSeconds: 3
+          LootTableId: 
+          SpriteKey: 
+          Guaranteed: 0
+          Once: 0
+        - Id: FRIDGE
+          Kind: 3
+          Floor: 0
+          X: 12.2
+          SearchSeconds: 4
+          LootTableId: LOOT_HOUSE_KITCHEN
+          SpriteKey: 
+          Guaranteed: 0
+          Once: 0
+        DefaultLootTableId: LOOT_HOUSE_ROOM
+        WallDecor: 
+      - Id: ROOM_HOUSE_L3
+        Width: 14
+        DoorXs:
+        - 1.2
+        Windows:
+        - X: 3
+          Width: 3
+        Containers:
+        - Id: DRAWER
+          Kind: 1
+          Floor: 0
+          X: 4.2
+          SearchSeconds: 2
+          LootTableId: 
+          SpriteKey: 
+          Guaranteed: 0
+          Once: 0
+        - Id: CLOSET
+          Kind: 0
+          Floor: 0
+          X: 7
+          SearchSeconds: 3
+          LootTableId: 
+          SpriteKey: 
+          Guaranteed: 0
+          Once: 0
+        - Id: KITCHEN
+          Kind: 2
+          Floor: 0
+          X: 9.7
+          SearchSeconds: 3.5
+          LootTableId: LOOT_HOUSE_KITCHEN
+          SpriteKey: 
+          Guaranteed: 0
+          Once: 0
+        - Id: FRIDGE
+          Kind: 3
+          Floor: 0
+          X: 12.1
+          SearchSeconds: 4
+          LootTableId: LOOT_HOUSE_KITCHEN
+          SpriteKey: 
+          Guaranteed: 0
+          Once: 0
+        DefaultLootTableId: LOOT_HOUSE_ROOM
+        WallDecor: 
       Containers:
       - Id: C_RES_MAILBOX
         Kind: 4
@@ -377,6 +515,7 @@ MonoBehaviour:
         Count: 3
         Spread: 2
         Dormant: 1
+        Fixed: 0
       - EnemyId: ENEMY_WANDERER
         Floor: 1
         RoomId: 
@@ -384,6 +523,7 @@ MonoBehaviour:
         Count: 2
         Spread: 1.5
         Dormant: 1
+        Fixed: 0
       - EnemyId: ENEMY_WANDERER
         Floor: 0
         RoomId: ROOM_HOUSE_101
@@ -391,6 +531,7 @@ MonoBehaviour:
         Count: 2
         Spread: 1
         Dormant: 1
+        Fixed: 0
       - EnemyId: ENEMY_LISTENER
         Floor: 1
         RoomId: ROOM_HOUSE_202
@@ -398,6 +539,7 @@ MonoBehaviour:
         Count: 1
         Spread: 0
         Dormant: 1
+        Fixed: 0
       - EnemyId: ENEMY_WANDERER
         Floor: 0
         RoomId: 
@@ -405,6 +547,7 @@ MonoBehaviour:
         Count: 1
         Spread: 0
         Dormant: 0
+        Fixed: 0
       - EnemyId: ENEMY_WANDERER
         Floor: 2
         RoomId: 
@@ -412,6 +555,7 @@ MonoBehaviour:
         Count: 2
         Spread: 1.5
         Dormant: 1
+        Fixed: 0
       - EnemyId: ENEMY_LISTENER
         Floor: 3
         RoomId: 
@@ -419,6 +563,7 @@ MonoBehaviour:
         Count: 1
         Spread: 0
         Dormant: 0
+        Fixed: 0
       - EnemyId: ENEMY_WANDERER
         Floor: 2
         RoomId: ROOM_DEEP_RES_1_B
@@ -426,6 +571,7 @@ MonoBehaviour:
         Count: 2
         Spread: 1
         Dormant: 1
+        Fixed: 0
       - EnemyId: ENEMY_WANDERER
         Floor: 3
         RoomId: ROOM_DEEP_RES_2_B
@@ -433,6 +579,7 @@ MonoBehaviour:
         Count: 2
         Spread: 1
         Dormant: 1
+        Fixed: 0
       LockedRooms:
       - ROOM_HOUSE_102
       ForceableRooms:
@@ -541,6 +688,7 @@ MonoBehaviour:
         Count: 3
         Spread: 8
         Dormant: 0
+        Fixed: 0
       - EnemyId: ENEMY_WANDERER
         Floor: 1
         RoomId: 
@@ -548,6 +696,7 @@ MonoBehaviour:
         Count: 3
         Spread: 8
         Dormant: 0
+        Fixed: 0
       - EnemyId: ENEMY_WATCHER
         Floor: 0
         RoomId: 
@@ -555,6 +704,7 @@ MonoBehaviour:
         Count: 1
         Spread: 0
         Dormant: 0
+        Fixed: 0
       - EnemyId: ENEMY_WANDERER
         Floor: 2
         RoomId: 
@@ -562,6 +712,7 @@ MonoBehaviour:
         Count: 2
         Spread: 6
         Dormant: 0
+        Fixed: 0
       - EnemyId: ENEMY_WANDERER
         Floor: 3
         RoomId: 
@@ -569,6 +720,7 @@ MonoBehaviour:
         Count: 2
         Spread: 6
         Dormant: 0
+        Fixed: 0
       - EnemyId: ENEMY_WANDERER
         Floor: 2
         RoomId: ROOM_DEEP_RES_1_B
@@ -576,6 +728,7 @@ MonoBehaviour:
         Count: 1
         Spread: 0
         Dormant: 0
+        Fixed: 0
       - EnemyId: ENEMY_WANDERER
         Floor: 3
         RoomId: ROOM_DEEP_RES_2_B
@@ -583,6 +736,7 @@ MonoBehaviour:
         Count: 1
         Spread: 0
         Dormant: 0
+        Fixed: 0
       LockedRooms: []
       ForceableRooms:
       - ROOM_HOUSE_201

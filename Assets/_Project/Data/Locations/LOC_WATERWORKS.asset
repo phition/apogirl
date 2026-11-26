@@ -152,7 +152,7 @@ MonoBehaviour:
         SearchFlag: 
         Seal: 0
       - RoomId: ROOM_WATER_LAB_1
-        TemplateId: ROOM_WATER_LAB
+        TemplateId: ROOM_WATER_LAB_L1
         Floor: 2
         X: 20
         Number: 1
@@ -416,6 +416,55 @@ MonoBehaviour:
           Once: 0
         DefaultLootTableId: LOOT_WATER_VAULT
         WallDecor: 
+      - Id: ROOM_WATER_LAB_L1
+        Width: 16
+        DoorXs:
+        - 1.2
+        - 14.8
+        Windows:
+        - X: 3
+          Width: 3.4
+        - X: 9
+          Width: 3.4
+        Containers:
+        - Id: LOCKER
+          Kind: 0
+          Floor: 0
+          X: 4.2
+          SearchSeconds: 3
+          LootTableId: 
+          SpriteKey: 
+          Guaranteed: 0
+          Once: 0
+        - Id: REAGENT
+          Kind: 2
+          Floor: 0
+          X: 7
+          SearchSeconds: 3.5
+          LootTableId: 
+          SpriteKey: 
+          Guaranteed: 0
+          Once: 0
+        - Id: BENCH_B
+          Kind: 1
+          Floor: 0
+          X: 10
+          SearchSeconds: 2
+          LootTableId: 
+          SpriteKey: 
+          Guaranteed: 0
+          Once: 0
+        - Id: BENCH_A
+          Kind: 1
+          Floor: 0
+          X: 13.1
+          SearchSeconds: 2
+          LootTableId: 
+          SpriteKey: 
+          Guaranteed: 0
+          Once: 0
+        DefaultLootTableId: LOOT_WATER_LAB
+        WallDecor: 
       Containers:
       - Id: C_WATER_TANK_1
         Kind: 4
@@ -510,6 +559,7 @@ MonoBehaviour:
         Count: 12
         Spread: 7
         Dormant: 1
+        Fixed: 0
       - EnemyId: ENEMY_WANDERER
         Floor: 0
         RoomId: 
@@ -517,6 +567,7 @@ MonoBehaviour:
         Count: 8
         Spread: 5
         Dormant: 1
+        Fixed: 0
       - EnemyId: ENEMY_LISTENER
         Floor: 0
         RoomId: 
@@ -524,6 +575,7 @@ MonoBehaviour:
         Count: 3
         Spread: 2
         Dormant: 1
+        Fixed: 0
       - EnemyId: ENEMY_WANDERER
         Floor: 2
         RoomId: 
@@ -531,6 +583,7 @@ MonoBehaviour:
         Count: 5
         Spread: 4
         Dormant: 1
+        Fixed: 0
       - EnemyId: ENEMY_WATCHER
         Floor: 2
         RoomId: 
@@ -538,6 +591,7 @@ MonoBehaviour:
         Count: 1
         Spread: 0
         Dormant: 0
+        Fixed: 0
       - EnemyId: ENEMY_WANDERER
         Floor: 3
         RoomId: 
@@ -545,6 +599,7 @@ MonoBehaviour:
         Count: 2
         Spread: 1.5
         Dormant: 1
+        Fixed: 0
       - EnemyId: ENEMY_WANDERER
         Floor: 5
         RoomId: 
@@ -552,6 +607,7 @@ MonoBehaviour:
         Count: 3
         Spread: 2
         Dormant: 1
+        Fixed: 0
       - EnemyId: ENEMY_WANDERER
         Floor: 3
         RoomId: ROOM_DEEP_WATER_1_B
@@ -559,6 +615,7 @@ MonoBehaviour:
         Count: 2
         Spread: 1
         Dormant: 1
+        Fixed: 0
       - EnemyId: ENEMY_WANDERER
         Floor: 4
         RoomId: ROOM_DEEP_WATER_2_B
@@ -566,6 +623,7 @@ MonoBehaviour:
         Count: 2
         Spread: 1
         Dormant: 1
+        Fixed: 0
       - EnemyId: ENEMY_WANDERER
         Floor: 5
         RoomId: ROOM_DEEP_WATER_3_B
@@ -573,6 +631,7 @@ MonoBehaviour:
         Count: 2
         Spread: 1
         Dormant: 1
+        Fixed: 0
       LockedRooms:
       - ROOM_WATER_ARCHIVE_1
       ForceableRooms: []
@@ -644,6 +703,7 @@ MonoBehaviour:
         Count: 4
         Spread: 14
         Dormant: 0
+        Fixed: 0
       - EnemyId: ENEMY_WATCHER
         Floor: 1
         RoomId: 
@@ -651,6 +711,7 @@ MonoBehaviour:
         Count: 1
         Spread: 0
         Dormant: 0
+        Fixed: 0
       - EnemyId: ENEMY_WANDERER
         Floor: 0
         RoomId: 
@@ -658,6 +719,7 @@ MonoBehaviour:
         Count: 2
         Spread: 6
         Dormant: 0
+        Fixed: 0
       - EnemyId: ENEMY_LISTENER
         Floor: 0
         RoomId: 
@@ -665,6 +727,7 @@ MonoBehaviour:
         Count: 2
         Spread: 6
         Dormant: 0
+        Fixed: 0
       - EnemyId: ENEMY_WANDERER
         Floor: 2
         RoomId: 
@@ -672,6 +735,7 @@ MonoBehaviour:
         Count: 3
         Spread: 10
         Dormant: 0
+        Fixed: 0
       - EnemyId: ENEMY_WANDERER
         Floor: 3
         RoomId: 
@@ -679,6 +743,7 @@ MonoBehaviour:
         Count: 2
         Spread: 8
         Dormant: 0
+        Fixed: 0
       - EnemyId: ENEMY_LISTENER
         Floor: 4
         RoomId: 
@@ -686,6 +751,7 @@ MonoBehaviour:
         Count: 1
         Spread: 0
         Dormant: 0
+        Fixed: 0
       - EnemyId: ENEMY_WANDERER
         Floor: 5
         RoomId: 
@@ -693,6 +759,7 @@ MonoBehaviour:
         Count: 2
         Spread: 6
         Dormant: 0
+        Fixed: 0
       - EnemyId: ENEMY_WANDERER
         Floor: 3
         RoomId: ROOM_DEEP_WATER_1_B
@@ -700,6 +767,7 @@ MonoBehaviour:
         Count: 1
         Spread: 0
         Dormant: 0
+        Fixed: 0
       - EnemyId: ENEMY_WANDERER
         Floor: 4
         RoomId: ROOM_DEEP_WATER_2_B
@@ -707,6 +775,7 @@ MonoBehaviour:
         Count: 1
         Spread: 0
         Dormant: 0
+        Fixed: 0
       - EnemyId: ENEMY_WANDERER
         Floor: 5
         RoomId: ROOM_DEEP_WATER_3_B
@@ -714,6 +783,7 @@ MonoBehaviour:
         Count: 1
         Spread: 0
         Dormant: 0
+        Fixed: 0
       LockedRooms: []
       ForceableRooms:
       - ROOM_WATER_ARCHIVE_1

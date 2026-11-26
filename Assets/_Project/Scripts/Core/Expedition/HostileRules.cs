@@ -18,7 +18,8 @@ namespace ApoGirl.Core.Expedition
         public static void Assign(ExpeditionRequest request, LocationDef location, BalanceConfig balance)
         {
             request.HostileTemperament = Roll(request, location, balance, out var count);
-            request.HostileCount = count;
+            // 한 층에 한 명만 선다: 층 수보다 많이 나오지 않는다 (SpawnRules.HostilePlaces)
+            request.HostileCount = Math.Min(count, SpawnRules.HostileFloors(location));
         }
 
         /// <summary>이번 출정의 생존자 성향 (0 = 없음, 1~3). 밤 탐험·시작 주 이전·배율 0이면 0.</summary>

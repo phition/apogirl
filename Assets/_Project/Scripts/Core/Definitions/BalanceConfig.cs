@@ -875,6 +875,20 @@ namespace ApoGirl.Core.Definitions
             },
         };
 
+        // ── 탐험마다 다른 적 배치 (SpawnRules) ──
+
+        /// <summary>켜면 좀비 무리의 자리를 출정마다 다시 고른다 (수·종류·층은 그대로). 끄면 지역 정의의 자리 그대로.</summary>
+        public bool SpawnShuffle = true;
+
+        /// <summary>복도 무리가 출구(들어서는 곳)에서 떨어져 있어야 하는 거리 (유닛, 무리 퍼짐은 따로 더한다).</summary>
+        public float SpawnSafeDistance = 12f;
+
+        /// <summary>계단·깊은 문·복도의 만남 자리에서 떨어져 있어야 하는 거리.</summary>
+        public float SpawnStairsDistance = 4f;
+
+        /// <summary>방 안 무리가 같은 층의 다른 방으로 옮겨 갈 확률 (잠긴 방·사람이 있는 방·깊은 곳 특별한 방은 빼고).</summary>
+        public float SpawnRoomMoveChance = 0.6f;
+
         // ── 적대적 생존자 (낮 탐험, M7 추가 요청) ──
 
         public string HostileEnemyId = "ENEMY_SURVIVOR";

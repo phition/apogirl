@@ -42,6 +42,7 @@ namespace ApoGirl.EditorTools
         private static LocationAsset Save(string id, LocationDef definition)
         {
             definition.Id = id;
+            Diversify(definition);
             foreach (var issue in ApoGirl.Core.Expedition.DeepRules.Issues(definition.Layout))
             {
                 Debug.LogError($"[Locations] {id} 깊은 곳 배치: {issue}");
@@ -62,6 +63,134 @@ namespace ApoGirl.EditorTools
         }
 
         // ── 공통 도우미 ──
+
+        /// <summary>한 템플릿에서 만드는 배치 수 (원래 배치 포함).</summary>
+        private const int LayoutVariants = 4;
+
+        /// <summary>
+        /// 방 소품 배치 다양화 (사용자 요청 2026-11-26): 같은 템플릿을 쓰는 방이 둘 이상이면 소품 차례와 간격을 바꾼 배치를
+        /// 더 만들어(템플릿 ID 뒤에 _L1~) 방마다 돌려 쓴다. 상자 ID·종류·전리품은 그대로라 수확과 고갈 기록은 같다.
+        /// 사람·CD 등 만남이 놓인 방은 자리가 어긋나지 않게 원래 배치를 쓴다. 깊은 곳 특별한 방은 손대지 않는다.
+        /// </summary>
+        private static void Diversify(LocationDef location)
+        {
+            var layout = location.Layout;
+            var hosts = new HashSet<string>();
+            foreach (var variant in new[] { location.DayVariant, location.NightVariant })
+            {
+                foreach (var encounter in variant.Encounters)
+                {
+                    if (!string.IsNullOrEmpty(encounter.RoomId))
+                    {
+                        hosts.Add(encounter.RoomId);
+                    }
+                }
+            }
+
+            foreach (var template in layout.RoomTemplates.ToArray())
+            {
+                if (template.Id.Contains("DEEP") || template.Containers.Count < 2)
+                {
+                    continue;
+                }
+
+                var doors = layout.Doors.FindAll(d => d.TemplateId == template.Id && d.Seal == DoorSeal.None && !hosts.Contains(d.RoomId));
+                if (layout.Doors.FindAll(d => d.TemplateId == template.Id).Count < 2 || doors.Count == 0)
+                {
+                    continue;
+                }
+
+                var count = Mathf.Min(LayoutVariants, doors.Count + (doors.Count < layout.Doors.FindAll(d => d.TemplateId == template.Id).Count ? 1 : 0));
+                var made = new List<RoomTemplateDef> { template };
+                for (var k = 1; k < count; k++)
+                {
+                    var alternate = Rearranged(template, k);
+                    layout.RoomTemplates.Add(alternate);
+                    made.Add(alternate);
+                }
+
+                // 원래 배치는 만남이 있는 방이 이미 쓰고 있으면 나머지 방은 새 배치부터 돌려 쓴다
+                var first = doors.Count < layout.Doors.FindAll(d => d.TemplateId == template.Id).Count ? 1 : 0;
+                for (var i = 0; i < doors.Count; i++)
+                {
+                    doors[i].TemplateId = made[(first + i) % made.Count].Id;
+                }
+            }
+        }
+
+        /// <summary>소품 차례와 간격을 바꾼 템플릿 사본. k = 1 뒤집기 · 2 번갈아 · 3 반 돌리기, 남는 자리도 k마다 다르게 나눈다.</summary>
+        private static RoomTemplateDef Rearranged(RoomTemplateDef source, int k)
+        {
+            var sorted = new List<ContainerDef>(source.Containers);
+            sorted.Sort((a, b) => a.X.CompareTo(b.X));
+            var n = sorted.Count;
+
+            // 소품 반폭: 원래 배치에서 이웃과의 간격 절반 (그림 폭을 몰라도 겹치지 않게)
+            var half = new float[n];
+            for (var i = 0; i < n; i++)
+            {
+                var left = i > 0 ? sorted[i].X - sorted[i - 1].X : float.MaxValue;
+                var right = i < n - 1 ? sorted[i + 1].X - sorted[i].X : float.MaxValue;
+                half[i] = Mathf.Clamp(Mathf.Min(left, right) * 0.5f, 0.6f, 1.6f);
+            }
+
+            var order = new List<int>();
+            switch (k % 3)
+            {
+                case 1:
+                    for (var i = n - 1; i >= 0; i--) order.Add(i);
+                    break;
+                case 2:
+                    for (var i = 0; i < n; i += 2) order.Add(i);
+                    for (var i = n - 1 - (n % 2 == 0 ? 0 : 1); i >= 1; i -= 2) order.Add(i);
+                    break;
+                default:
+                    for (var i = 0; i < n; i++) order.Add((i + (n + 1) / 2) % n);
+                    break;
+            }
+
+            var twoDoors = source.DoorXs.Count > 1;
+            var start = sorted[0].X - half[0];
+            var end = twoDoors ? sorted[n - 1].X + half[n - 1] : Mathf.Max(sorted[n - 1].X + half[n - 1], source.Width - 0.9f);
+            var used = 0f;
+            foreach (var h in half) used += h * 2f;
+            var free = Mathf.Max(0f, end - start - used);
+
+            // 남는 자리 나누기: 틈 n+1개 (맨 앞, 사이, 맨 뒤)
+            var weights = new float[n + 1];
+            for (var i = 0; i <= n; i++)
+            {
+                switch (k % 3)
+                {
+                    case 1: weights[i] = i == 0 ? 3f : i == n ? 0f : 1f; break;                  // 뒤쪽으로 몰기
+                    case 2: weights[i] = i == n / 2 ? 4f : i == 0 || i == n ? 0.3f : 0.6f; break;   // 두 무리로 가르기
+                    default: weights[i] = i == n ? 3f : i == 0 ? 0.2f : 1f; break;               // 앞쪽으로 몰기
+                }
+            }
+
+            var total = 0f;
+            foreach (var w in weights) total += w;
+            var copy = new RoomTemplateDef
+            {
+                Id = source.Id + "_L" + k, Width = source.Width, DefaultLootTableId = source.DefaultLootTableId, WallDecor = source.WallDecor,
+                DoorXs = new List<float>(source.DoorXs), Windows = new List<WindowDef>(source.Windows),
+            };
+            var x = start;
+            for (var slot = 0; slot < n; slot++)
+            {
+                var index = order[slot];
+                var original = sorted[index];
+                x += free * weights[slot] / total + half[index];
+                copy.Containers.Add(new ContainerDef
+                {
+                    Id = original.Id, Kind = original.Kind, Floor = original.Floor, X = Mathf.Round(x * 10f) / 10f, SearchSeconds = original.SearchSeconds,
+                    LootTableId = original.LootTableId, SpriteKey = original.SpriteKey, Guaranteed = original.Guaranteed, Once = original.Once,
+                });
+                x += half[index];
+            }
+
+            return copy;
+        }
 
         // ── 탐험의 깊이 (기획 B): 깊은 문·깊은 복도·일방 출구 ──
         // 깊은 곳 층 번호 = 겉 층 수 + (지하 단계 - 1). 문 자리는 모든 시드에서 같다.
@@ -366,6 +495,13 @@ namespace ApoGirl.EditorTools
             return new SpawnDef { EnemyId = enemy, Floor = floor, RoomId = room, X = x, Count = count, Spread = spread, Dormant = true };
         }
 
+        /// <summary>자리를 바꾸지 않는 배치 (연출용: 튜토리얼). 기본은 탐험마다 자리를 다시 고른다.</summary>
+        private static SpawnDef Fix(SpawnDef spawn)
+        {
+            spawn.Fixed = true;
+            return spawn;
+        }
+
         private static SpawnDef Walk(string enemy, int floor, string room, float x, int count, float spread)
         {
             return new SpawnDef { EnemyId = enemy, Floor = floor, RoomId = room, X = x, Count = count, Spread = spread, Dormant = false };
@@ -413,8 +549,8 @@ namespace ApoGirl.EditorTools
             return new LocationDef
             {
                 Layout = layout, DayRunSeconds = 420f, NightRunSeconds = 420f, DefaultLootTableId = "LOOT_TUTORIAL", Tutorial = true,
-                DayVariant = new LocationVariantDef { Spawns = { Crowd("ENEMY_WANDERER", 0, "", 30f, 2, 1.2f) }, HostileChanceMultiplier = 0f },
-                NightVariant = new LocationVariantDef { Spawns = { Crowd("ENEMY_WANDERER", 0, "", 30f, 2, 1.2f) } },
+                DayVariant = new LocationVariantDef { Spawns = { Fix(Crowd("ENEMY_WANDERER", 0, "", 30f, 2, 1.2f)) }, HostileChanceMultiplier = 0f },
+                NightVariant = new LocationVariantDef { Spawns = { Fix(Crowd("ENEMY_WANDERER", 0, "", 30f, 2, 1.2f)) } },
             };
         }
 

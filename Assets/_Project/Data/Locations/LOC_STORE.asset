@@ -208,6 +208,7 @@ MonoBehaviour:
         Count: 3
         Spread: 1.5
         Dormant: 1
+        Fixed: 0
       - EnemyId: ENEMY_WANDERER
         Floor: 0
         RoomId: 
@@ -215,6 +216,7 @@ MonoBehaviour:
         Count: 1
         Spread: 0
         Dormant: 0
+        Fixed: 0
       - EnemyId: ENEMY_WANDERER
         Floor: 0
         RoomId: ROOM_STORE_STOCK_1
@@ -222,6 +224,7 @@ MonoBehaviour:
         Count: 2
         Spread: 1
         Dormant: 1
+        Fixed: 0
       LockedRooms: []
       ForceableRooms:
       - ROOM_STORE_OFFICE_1
@@ -294,6 +297,7 @@ MonoBehaviour:
         Count: 2
         Spread: 5
         Dormant: 0
+        Fixed: 0
       - EnemyId: ENEMY_WANDERER
         Floor: 0
         RoomId: 
@@ -301,6 +305,7 @@ MonoBehaviour:
         Count: 2
         Spread: 5
         Dormant: 0
+        Fixed: 0
       - EnemyId: ENEMY_LISTENER
         Floor: 0
         RoomId: 
@@ -308,6 +313,7 @@ MonoBehaviour:
         Count: 1
         Spread: 0
         Dormant: 0
+        Fixed: 0
       LockedRooms: []
       ForceableRooms:
       - ROOM_STORE_OFFICE_1

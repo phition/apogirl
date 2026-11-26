@@ -120,6 +120,7 @@ MonoBehaviour:
         Count: 2
         Spread: 1.2
         Dormant: 1
+        Fixed: 1
       LockedRooms: []
       ForceableRooms: []
       Encounters: []
@@ -134,6 +135,7 @@ MonoBehaviour:
         Count: 2
         Spread: 1.2
         Dormant: 1
+        Fixed: 1
       LockedRooms: []
       ForceableRooms: []
       Encounters: []

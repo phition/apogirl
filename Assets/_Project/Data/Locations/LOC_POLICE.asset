@@ -112,7 +112,7 @@ MonoBehaviour:
         SearchFlag: 
         Seal: 0
       - RoomId: ROOM_POLICE_OFFICE_2
-        TemplateId: ROOM_POLICE_OFFICE
+        TemplateId: ROOM_POLICE_OFFICE_L1
         Floor: 1
         X: 30
         Number: 2
@@ -322,6 +322,54 @@ MonoBehaviour:
           Once: 0
         DefaultLootTableId: LOOT_POLICE_VAULT
         WallDecor: 
+      - Id: ROOM_POLICE_OFFICE_L1
+        Width: 16
+        DoorXs:
+        - 1.2
+        Windows:
+        - X: 3
+          Width: 3.4
+        - X: 9
+          Width: 3.4
+        Containers:
+        - Id: LOCKER
+          Kind: 0
+          Floor: 0
+          X: 4.5
+          SearchSeconds: 3
+          LootTableId: 
+          SpriteKey: 
+          Guaranteed: 0
+          Once: 0
+        - Id: FILES
+          Kind: 2
+          Floor: 0
+          X: 7.7
+          SearchSeconds: 3.5
+          LootTableId: 
+          SpriteKey: 
+          Guaranteed: 0
+          Once: 0
+        - Id: DESK_B
+          Kind: 1
+          Floor: 0
+          X: 10.8
+          SearchSeconds: 2
+          LootTableId: 
+          SpriteKey: 
+          Guaranteed: 0
+          Once: 0
+        - Id: DESK_A
+          Kind: 1
+          Floor: 0
+          X: 14
+          SearchSeconds: 2
+          LootTableId: 
+          SpriteKey: 
+          Guaranteed: 0
+          Once: 0
+        DefaultLootTableId: LOOT_POLICE_OFFICE
+        WallDecor: 
       Containers:
       - Id: C_POLICE_FRONT_DESK
         Kind: 1
@@ -389,6 +437,7 @@ MonoBehaviour:
         Count: 4
         Spread: 2.5
         Dormant: 1
+        Fixed: 0
       - EnemyId: ENEMY_WANDERER
         Floor: 1
         RoomId: ROOM_POLICE_OFFICE_2
@@ -396,6 +445,7 @@ MonoBehaviour:
         Count: 3
         Spread: 2
         Dormant: 1
+        Fixed: 0
       - EnemyId: ENEMY_LISTENER
         Floor: 0
         RoomId: ROOM_POLICE_CELL_1
@@ -403,6 +453,7 @@ MonoBehaviour:
         Count: 1
         Spread: 0
         Dormant: 1
+        Fixed: 0
       - EnemyId: ENEMY_WANDERER
         Floor: 1
         RoomId: 
@@ -410,6 +461,7 @@ MonoBehaviour:
         Count: 1
         Spread: 0
         Dormant: 0
+        Fixed: 0
       - EnemyId: ENEMY_WANDERER
         Floor: 2
         RoomId: 
@@ -417,6 +469,7 @@ MonoBehaviour:
         Count: 2
         Spread: 1.5
         Dormant: 1
+        Fixed: 0
       - EnemyId: ENEMY_WANDERER
         Floor: 2
         RoomId: ROOM_DEEP_POLICE_1_B
@@ -424,6 +477,7 @@ MonoBehaviour:
         Count: 2
         Spread: 1
         Dormant: 1
+        Fixed: 0
       - EnemyId: ENEMY_WANDERER
         Floor: 3
         RoomId: ROOM_DEEP_POLICE_2_B
@@ -431,6 +485,7 @@ MonoBehaviour:
         Count: 2
         Spread: 1
         Dormant: 1
+        Fixed: 0
       LockedRooms:
       - ROOM_POLICE_ARMORY_1
       ForceableRooms: []
@@ -501,6 +556,7 @@ MonoBehaviour:
         Count: 3
         Spread: 8
         Dormant: 0
+        Fixed: 0
       - EnemyId: ENEMY_WATCHER
         Floor: 1
         RoomId: 
@@ -508,6 +564,7 @@ MonoBehaviour:
         Count: 1
         Spread: 0
         Dormant: 0
+        Fixed: 0
       - EnemyId: ENEMY_WANDERER
         Floor: 1
         RoomId: 
@@ -515,6 +572,7 @@ MonoBehaviour:
         Count: 2
         Spread: 5
         Dormant: 0
+        Fixed: 0
       - EnemyId: ENEMY_WANDERER
         Floor: 2
         RoomId: 
@@ -522,6 +580,7 @@ MonoBehaviour:
         Count: 2
         Spread: 6
         Dormant: 0
+        Fixed: 0
       - EnemyId: ENEMY_LISTENER
         Floor: 3
         RoomId: 
@@ -529,6 +588,7 @@ MonoBehaviour:
         Count: 1
         Spread: 0
         Dormant: 0
+        Fixed: 0
       - EnemyId: ENEMY_WANDERER
         Floor: 2
         RoomId: ROOM_DEEP_POLICE_1_B
@@ -536,6 +596,7 @@ MonoBehaviour:
         Count: 1
         Spread: 0
         Dormant: 0
+        Fixed: 0
       - EnemyId: ENEMY_WANDERER
         Floor: 3
         RoomId: ROOM_DEEP_POLICE_2_B
@@ -543,6 +604,7 @@ MonoBehaviour:
         Count: 1
         Spread: 0
         Dormant: 0
+        Fixed: 0
       LockedRooms: []
       ForceableRooms:
       - ROOM_POLICE_ARMORY_1

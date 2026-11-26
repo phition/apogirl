@@ -431,6 +431,9 @@ namespace ApoGirl.Core.Definitions
         public int Count = 1;
         public float Spread = 1.5f;
         public bool Dormant;
+
+        /// <summary>자리를 바꾸지 않는다 (연출용 배치: 튜토리얼 등). 기본은 탐험마다 자리를 다시 고른다 (SpawnRules).</summary>
+        public bool Fixed;
     }
 
     /// <summary>시간대별 변형 (문서 6.3.8 DayVariant / NightVariant). M2b-2는 좀비 배치만.</summary>

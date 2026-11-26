@@ -1,16 +1,80 @@
 {
-  "Outdoor": [
-    { "Location": "RESIDENTIAL,PHARMACY,STORE", "Route": "ENTRY", "Sky": "#9DB0C0", "Wall": "out_wall_street_low", "Layers": [
-      { "Key": "roof_town", "Y": 1.7, "Parallax": 0.6, "Tint": "#C9D2DA", "Order": -9 },
-      { "Key": "out_town_near", "Y": 1.0, "Parallax": 0.3, "Tint": "#E6E6E6", "Order": -7 } ] },
-    { "Location": "RESIDENTIAL,PHARMACY,STORE", "Route": "ESCAPE", "Sky": "#9DB0C0", "Wall": "out_wall_alley_low", "Layers": [
-      { "Key": "roof_town", "Y": 1.0, "Parallax": 0.45, "Tint": "#E0E4E8", "Order": -8 } ] },
-    { "Location": "", "Route": "ENTRY", "Sky": "#93A4B4", "Wall": "out_wall_street_low", "Layers": [
-      { "Key": "out_city_far", "Y": 2.1, "Parallax": 0.7, "Tint": "#B4C0CB", "Order": -9 },
-      { "Key": "out_town_near", "Y": 1.0, "Parallax": 0.3, "Tint": "#E0E0E0", "Order": -7 } ] },
-    { "Location": "", "Route": "ESCAPE", "Sky": "#93A4B4", "Wall": "out_wall_alley_low", "Layers": [
-      { "Key": "out_city_far", "Y": 1.2, "Parallax": 0.6, "Tint": "#C2CCD6", "Order": -9 } ] }
-  ],
+ "Outdoor": [
+  {
+   "Location": "RESIDENTIAL,PHARMACY,STORE",
+   "Route": "ENTRY",
+   "Sky": "#9DB0C0",
+   "Wall": "out_wall_street_low",
+   "Layers": [
+    {
+     "Key": "roof_town",
+     "Y": 1.7,
+     "Parallax": 0.6,
+     "Tint": "#C9D2DA",
+     "Order": -9
+    },
+    {
+     "Key": "out_town_near",
+     "Y": 1.0,
+     "Parallax": 0.3,
+     "Tint": "#E6E6E6",
+     "Order": -7
+    }
+   ]
+  },
+  {
+   "Location": "RESIDENTIAL,PHARMACY,STORE",
+   "Route": "ESCAPE",
+   "Sky": "#9DB0C0",
+   "Wall": "out_wall_alley_low",
+   "Layers": [
+    {
+     "Key": "roof_town",
+     "Y": 1.0,
+     "Parallax": 0.45,
+     "Tint": "#E0E4E8",
+     "Order": -8
+    }
+   ]
+  },
+  {
+   "Location": "",
+   "Route": "ENTRY",
+   "Sky": "#93A4B4",
+   "Wall": "out_wall_street_low",
+   "Layers": [
+    {
+     "Key": "out_city_far",
+     "Y": 2.1,
+     "Parallax": 0.7,
+     "Tint": "#B4C0CB",
+     "Order": -9
+    },
+    {
+     "Key": "out_town_near",
+     "Y": 1.0,
+     "Parallax": 0.3,
+     "Tint": "#E0E0E0",
+     "Order": -7
+    }
+   ]
+  },
+  {
+   "Location": "",
+   "Route": "ESCAPE",
+   "Sky": "#93A4B4",
+   "Wall": "out_wall_alley_low",
+   "Layers": [
+    {
+     "Key": "out_city_far",
+     "Y": 1.2,
+     "Parallax": 0.6,
+     "Tint": "#C2CCD6",
+     "Order": -9
+    }
+   ]
+  }
+ ],
  "Interior": [
   {
    "Location": "LOC_RESIDENTIAL",
@@ -80,7 +144,14 @@
   {
    "Location": "",
    "Template": "ROOM_HOUSE",
-   "Key": "wall_house"
+   "Key": "wall_house",
+   "Tints": [
+    "#FFFFFF",
+    "#CFE4CC",
+    "#F2D2C6",
+    "#C8D6EC",
+    "#E8DCA8"
+   ]
   },
   {
    "Location": "",
@@ -90,17 +161,30 @@
   {
    "Location": "",
    "Template": "ROOM_SUBWAY",
-   "Key": "wall_subway"
+   "Key": "wall_subway",
+   "Tints": [
+    "#FFFFFF",
+    "#DEE2C8",
+    "#CCD8E4"
+   ]
   },
   {
    "Location": "",
    "Template": "ROOM_MART_WAREHOUSE",
-   "Key": "wall_warehouse"
+   "Key": "wall_warehouse",
+   "Tints": [
+    "#FFFFFF",
+    "#DCD6C8"
+   ]
   },
   {
    "Location": "",
    "Template": "ROOM_MART_OFFICE",
-   "Key": "wall_office"
+   "Key": "wall_office",
+   "Tints": [
+    "#FFFFFF",
+    "#DCE4C8"
+   ]
   },
   {
    "Location": "",
@@ -110,12 +194,44 @@
   {
    "Location": "",
    "Template": "ROOM_POLICE",
-   "Key": "wall_police"
+   "Key": "wall_police",
+   "Tints": [
+    "#FFFFFF",
+    "#D0DCE6",
+    "#E6DCC4"
+   ]
   },
   {
    "Location": "",
    "Template": "ROOM_WATER",
-   "Key": "wall_water"
+   "Key": "wall_water",
+   "Tints": [
+    "#FFFFFF",
+    "#CCE2DE",
+    "#E6E0C8"
+   ]
+  },
+  {
+   "Location": "LOC_SCHOOL",
+   "Template": "CLASSROOM",
+   "Key": "wall_classroom",
+   "Tints": [
+    "#FFFFFF",
+    "#DCE6CC",
+    "#F0D8C8",
+    "#D0DCE8",
+    "#ECE2B4"
+   ]
+  },
+  {
+   "Location": "LOC_PHARMACY",
+   "Template": "ROOM_PH_",
+   "Key": "wall_pharmacy",
+   "Tints": [
+    "#FFFFFF",
+    "#CEE4DA",
+    "#EADFC8"
+   ]
   }
  ],
  "Corridor": [
@@ -851,11 +967,9 @@
    "Location": "LOC_SCHOOL",
    "Template": "CLASSROOM",
    "Floor": [
-    "decor_bookshelf",
     "decor_books",
     "decor_bag",
     "decor_chair_fallen",
-    "decor_ball",
     "decor_papers",
     "decor_bucket"
    ],
@@ -867,8 +981,278 @@
     "decor_speaker",
     "decor_calendar"
    ],
-   "FloorDensity": 0.12,
-   "WallDensity": 0.13
+   "FloorDensity": 0.2,
+   "WallDensity": 0.16,
+   "Themes": [
+    {
+     "Name": "수업하던 교실",
+     "Floor": [
+      "decor_books",
+      "decor_bag",
+      "decor_pencilcase",
+      "decor_notebook",
+      "decor_chalk",
+      "decor_papers",
+      "decor_chair_fallen",
+      "decor_bookshelf"
+     ],
+     "Wall": [
+      "decor_timetable",
+      "decor_motto",
+      "decor_classboard",
+      "decor_clock"
+     ]
+    },
+    {
+     "Name": "체육 시간 뒤",
+     "Floor": [
+      "decor_ball",
+      "decor_basketball",
+      "decor_shuttle",
+      "decor_bag",
+      "decor_slippers",
+      "decor_whistle",
+      "decor_bucket"
+     ],
+     "Wall": [
+      "decor_clock",
+      "decor_speaker",
+      "decor_calendar",
+      "decor_poster_event"
+     ]
+    },
+    {
+     "Name": "며칠 버틴 교실",
+     "Floor": [
+      "decor_sleepingbag",
+      "decor_blanket",
+      "decor_candle",
+      "decor_canned",
+      "decor_bottle",
+      "decor_lantern",
+      "decor_suitcase"
+     ],
+     "Wall": [
+      "decor_calendar",
+      "decor_clock",
+      "decor_poster_safety",
+      "decor_cobweb"
+     ]
+    },
+    {
+     "Name": "청소하다 만 교실",
+     "Floor": [
+      "decor_broom",
+      "decor_bucket",
+      "decor_pail",
+      "decor_trashbin",
+      "decor_wetfloor",
+      "decor_chair_fallen"
+     ],
+     "Wall": [
+      "decor_timetable",
+      "decor_worldmap",
+      "decor_speaker",
+      "decor_classboard"
+     ]
+    },
+    {
+     "Name": "오래 비운 교실",
+     "Floor": [
+      "decor_debris",
+      "decor_papers",
+      "decor_plant_dead",
+      "decor_glass",
+      "decor_bookshelf",
+      "decor_books",
+      "decor_chair_fallen"
+     ],
+     "Wall": [
+      "decor_cobweb",
+      "decor_worldmap",
+      "decor_motto",
+      "decor_classboard"
+     ],
+     "FloorDensity": 0.24
+    }
+   ]
+  },
+  {
+   "Location": "LOC_SCHOOL",
+   "Template": "ROOM_OFFICE",
+   "Floor": [
+    "decor_papers",
+    "decor_plant",
+    "decor_trashbin",
+    "decor_stool",
+    "decor_watercooler",
+    "decor_newspapers",
+    "decor_fan"
+   ],
+   "Wall": [
+    "decor_staffboard",
+    "decor_keycabinet",
+    "decor_calendar",
+    "decor_clock",
+    "decor_frame"
+   ],
+   "FloorDensity": 0.2,
+   "WallDensity": 0.16,
+   "Themes": [
+    {
+     "Name": "일하던 교무실",
+     "Floor": [
+      "decor_papers",
+      "decor_plant",
+      "decor_stool",
+      "decor_watercooler",
+      "decor_laptop",
+      "decor_fan",
+      "decor_newspapers"
+     ],
+     "Wall": [
+      "decor_staffboard",
+      "decor_keycabinet",
+      "decor_calendar",
+      "decor_clock"
+     ]
+    },
+    {
+     "Name": "급히 떠난 교무실",
+     "Floor": [
+      "decor_papers",
+      "decor_chair_fallen",
+      "decor_handbag",
+      "decor_umbrella",
+      "decor_trashbin",
+      "decor_debris",
+      "decor_keys"
+     ],
+     "Wall": [
+      "decor_staffboard",
+      "decor_frame",
+      "decor_clock",
+      "decor_cobweb"
+     ]
+    }
+   ]
+  },
+  {
+   "Location": "LOC_SCHOOL",
+   "Template": "ROOM_NURSE",
+   "Floor": [
+    "decor_stool",
+    "decor_firstaid_floor",
+    "decor_bandage",
+    "decor_pillbottle",
+    "decor_mask",
+    "decor_trashbin",
+    "decor_tissue"
+   ],
+   "Wall": [
+    "decor_eyechart",
+    "decor_healthboard",
+    "decor_medposter",
+    "decor_clock"
+   ],
+   "FloorDensity": 0.2,
+   "WallDensity": 0.18
+  },
+  {
+   "Location": "LOC_SCHOOL",
+   "Template": "ROOM_SCIENCE",
+   "Floor": [
+    "decor_stool",
+    "decor_bucket",
+    "decor_extinguisher",
+    "decor_papers",
+    "decor_glass",
+    "decor_glove"
+   ],
+   "Wall": [
+    "decor_safetyboard",
+    "decor_schematic",
+    "decor_clock",
+    "decor_warning"
+   ],
+   "FloorDensity": 0.18,
+   "WallDensity": 0.16
+  },
+  {
+   "Location": "LOC_SCHOOL",
+   "Template": "ROOM_MUSIC",
+   "Floor": [
+    "decor_guitar",
+    "decor_stool",
+    "decor_papers",
+    "decor_books"
+   ],
+   "Wall": [
+    "decor_composers",
+    "decor_clock",
+    "decor_speaker"
+   ],
+   "FloorDensity": 0.18,
+   "WallDensity": 0.16
+  },
+  {
+   "Location": "LOC_SCHOOL",
+   "Template": "ROOM_HOMEEC",
+   "Floor": [
+    "decor_pot",
+    "decor_kettle",
+    "decor_ricecooker",
+    "decor_bowl",
+    "decor_trays",
+    "decor_stool",
+    "decor_bucket"
+   ],
+   "Wall": [
+    "decor_utensilrack",
+    "decor_wallshelf",
+    "decor_clock",
+    "decor_calendar"
+   ],
+   "FloorDensity": 0.2,
+   "WallDensity": 0.16
+  },
+  {
+   "Location": "LOC_SCHOOL",
+   "Template": "ROOM_COMPUTER",
+   "Floor": [
+    "decor_laptop",
+    "decor_stool",
+    "decor_papers",
+    "decor_trashbin",
+    "decor_fan"
+   ],
+   "Wall": [
+    "decor_netcabinet",
+    "decor_socket",
+    "decor_aircon",
+    "decor_clock"
+   ],
+   "FloorDensity": 0.18,
+   "WallDensity": 0.16
+  },
+  {
+   "Location": "LOC_SCHOOL",
+   "Template": "ROOM_BROADCAST",
+   "Floor": [
+    "decor_radio",
+    "decor_stool",
+    "decor_papers",
+    "decor_battery",
+    "decor_tape"
+   ],
+   "Wall": [
+    "decor_speaker",
+    "decor_clock",
+    "decor_socket",
+    "decor_poster_event"
+   ],
+   "FloorDensity": 0.18,
+   "WallDensity": 0.16
   },
   {
    "Location": "LOC_SCHOOL",
@@ -876,14 +1260,17 @@
    "Floor": [
     "decor_bucket",
     "decor_wetfloor",
-    "decor_trashbin"
+    "decor_trashbin",
+    "decor_tissue",
+    "decor_pail",
+    "decor_broom"
    ],
    "Wall": [
     "decor_mirror",
     "decor_vent",
     "decor_switch"
    ],
-   "FloorDensity": 0.15,
+   "FloorDensity": 0.18,
    "WallDensity": 0.18
   },
   {
@@ -907,43 +1294,8 @@
     "decor_switch",
     "decor_poster_safety"
    ],
-   "FloorDensity": 0.12,
-   "WallDensity": 0.13
-  },
-  {
-   "Location": "LOC_SCHOOL",
-   "Template": "",
-   "Floor": [
-    "decor_shoerack",
-    "decor_extinguisher",
-    "decor_trashbin",
-    "decor_plant_dead",
-    "decor_bucket",
-    "decor_chair_fallen",
-    "decor_books",
-    "decor_bag",
-    "decor_papers",
-    "decor_debris",
-    "decor_umbrella",
-    "decor_watercooler",
-    "decor_shoes",
-    "decor_barricade",
-    "decor_candle"
-   ],
-   "Wall": [
-    "decor_noticeboard",
-    "decor_evacmap",
-    "decor_poster_safety",
-    "decor_poster_event",
-    "decor_clock",
-    "decor_speaker",
-    "decor_poster_a",
-    "decor_poster_b",
-    "decor_switch",
-    "decor_exitsign"
-   ],
-   "FloorDensity": 0.12,
-   "WallDensity": 0.13
+   "FloorDensity": 0.16,
+   "WallDensity": 0.14
   },
   {
    "Location": "LOC_TUTORIAL",
@@ -952,32 +1304,17 @@
     "decor_vaultbox",
     "decor_ball",
     "decor_cone",
-    "decor_bucket"
-   ],
-   "Wall": [
-    "decor_clock",
-    "decor_poster_event"
-   ],
-   "FloorDensity": 0.15,
-   "WallDensity": 0.1
-  },
-  {
-   "Location": "LOC_TUTORIAL",
-   "Template": "",
-   "Floor": [
-    "decor_vaultbox",
-    "decor_ball",
-    "decor_cone",
-    "decor_shoerack",
-    "decor_extinguisher"
+    "decor_bucket",
+    "decor_basketball",
+    "decor_shuttle"
    ],
    "Wall": [
     "decor_clock",
     "decor_poster_event",
-    "decor_evacmap"
+    "decor_hooks_pe"
    ],
-   "FloorDensity": 0.12,
-   "WallDensity": 0.1
+   "FloorDensity": 0.16,
+   "WallDensity": 0.12
   },
   {
    "Location": "LOC_STORE",
@@ -994,34 +1331,45 @@
     "decor_elecbox",
     "decor_switch"
    ],
-   "FloorDensity": 0.12,
-   "WallDensity": 0.13
-  },
-  {
-   "Location": "LOC_STORE",
-   "Template": "",
-   "Floor": [
-    "decor_baskets",
-    "decor_crates",
-    "decor_bottlecrate",
-    "decor_wetfloor",
-    "decor_trashbin",
-    "decor_water",
-    "decor_papers",
-    "decor_glass",
-    "decor_newspapers",
-    "decor_vending",
-    "decor_displayfreezer"
-   ],
-   "Wall": [
-    "decor_store_sign",
-    "decor_poster_a",
-    "decor_cctv",
-    "decor_clock",
-    "decor_aircon"
-   ],
-   "FloorDensity": 0.14,
-   "WallDensity": 0.14
+   "FloorDensity": 0.18,
+   "WallDensity": 0.14,
+   "Themes": [
+    {
+     "Name": "점장 사무실",
+     "Floor": [
+      "decor_stool",
+      "decor_papers",
+      "decor_fan",
+      "decor_register",
+      "decor_trashbin",
+      "decor_newspapers"
+     ],
+     "Wall": [
+      "decor_calendar",
+      "decor_staffboard",
+      "decor_keycabinet",
+      "decor_clock"
+     ]
+    },
+    {
+     "Name": "뒤 창고",
+     "Floor": [
+      "decor_crates",
+      "decor_bottlecrate",
+      "decor_ramenbox",
+      "decor_canned",
+      "decor_water",
+      "decor_broom",
+      "decor_pail"
+     ],
+     "Wall": [
+      "decor_elecbox",
+      "decor_switch",
+      "decor_calendar",
+      "decor_cobweb"
+     ]
+    }
+   ]
   },
   {
    "Location": "LOC_PHARMACY",
@@ -1039,30 +1387,60 @@
     "decor_calendar",
     "decor_frame"
    ],
-   "FloorDensity": 0.12,
-   "WallDensity": 0.13
-  },
-  {
-   "Location": "LOC_PHARMACY",
-   "Template": "",
-   "Floor": [
-    "decor_plant",
-    "decor_sanitizer",
-    "decor_bench",
-    "decor_trashbin",
-    "decor_papers",
-    "decor_watercooler",
-    "decor_glass"
-   ],
-   "Wall": [
-    "decor_poster_safety",
-    "decor_firstaid",
-    "decor_clock",
-    "decor_calendar",
-    "decor_cctv"
-   ],
-   "FloorDensity": 0.12,
-   "WallDensity": 0.13
+   "FloorDensity": 0.18,
+   "WallDensity": 0.15,
+   "Themes": [
+    {
+     "Name": "진료실",
+     "Floor": [
+      "decor_exambed",
+      "decor_stool",
+      "decor_plant",
+      "decor_tissue",
+      "decor_mask",
+      "decor_trashbin"
+     ],
+     "Wall": [
+      "decor_eyechart",
+      "decor_medposter",
+      "decor_firstaid",
+      "decor_clock"
+     ]
+    },
+    {
+     "Name": "조제실",
+     "Floor": [
+      "decor_pillbottle",
+      "decor_bandage",
+      "decor_firstaid_floor",
+      "decor_trashbin",
+      "decor_papers",
+      "decor_stool"
+     ],
+     "Wall": [
+      "decor_healthboard",
+      "decor_calendar",
+      "decor_frame",
+      "decor_firstaid"
+     ]
+    },
+    {
+     "Name": "뒤 창고",
+     "Floor": [
+      "decor_crates",
+      "decor_pillbottle",
+      "decor_papers",
+      "decor_bucket",
+      "decor_broom"
+     ],
+     "Wall": [
+      "decor_safetyboard",
+      "decor_calendar",
+      "decor_switch",
+      "decor_cobweb"
+     ]
+    }
+   ]
   },
   {
    "Location": "LOC_RESIDENTIAL",
@@ -1084,30 +1462,103 @@
     "decor_mirror",
     "decor_aircon"
    ],
-   "FloorDensity": 0.16,
-   "WallDensity": 0.14
-  },
-  {
-   "Location": "LOC_RESIDENTIAL",
-   "Template": "",
-   "Floor": [
-    "decor_shoes",
-    "decor_umbrella",
-    "decor_plant_dead",
-    "decor_bag",
-    "decor_newspapers",
-    "decor_teddy",
-    "decor_trashbin",
-    "decor_extinguisher"
-   ],
-   "Wall": [
-    "decor_elecbox",
-    "decor_poster_b",
-    "decor_switch",
-    "decor_vent"
-   ],
-   "FloorDensity": 0.12,
-   "WallDensity": 0.13
+   "FloorDensity": 0.22,
+   "WallDensity": 0.16,
+   "Themes": [
+    {
+     "Name": "살림집 거실",
+     "Floor": [
+      "decor_sofa",
+      "decor_tvstand",
+      "decor_smalltable",
+      "decor_plant",
+      "decor_vase",
+      "decor_slippers",
+      "decor_fan"
+     ],
+     "Wall": [
+      "decor_frame",
+      "decor_clock",
+      "decor_wallshelf",
+      "decor_aircon"
+     ]
+    },
+    {
+     "Name": "식구 많은 집",
+     "Floor": [
+      "decor_diningtable",
+      "decor_teddy",
+      "decor_ricecooker",
+      "decor_kettle",
+      "decor_pot",
+      "decor_bowl",
+      "decor_basket",
+      "decor_slippers"
+     ],
+     "Wall": [
+      "decor_calendar",
+      "decor_coathanger",
+      "decor_frame",
+      "decor_clock"
+     ]
+    },
+    {
+     "Name": "떠날 채비를 하던 집",
+     "Floor": [
+      "decor_suitcase",
+      "decor_handbag",
+      "decor_bag",
+      "decor_blanket",
+      "decor_newspapers",
+      "decor_shoes",
+      "decor_wallet",
+      "decor_keys",
+      "decor_umbrella"
+     ],
+     "Wall": [
+      "decor_coathanger",
+      "decor_calendar",
+      "decor_mirror"
+     ]
+    },
+    {
+     "Name": "숨어 버티던 집",
+     "Floor": [
+      "decor_sleepingbag",
+      "decor_candle",
+      "decor_canned",
+      "decor_bottle",
+      "decor_ramenbox",
+      "decor_lantern",
+      "decor_radio",
+      "decor_water",
+      "decor_bucket"
+     ],
+     "Wall": [
+      "decor_calendar",
+      "decor_cobweb",
+      "decor_clock"
+     ]
+    },
+    {
+     "Name": "오래 비운 집",
+     "Floor": [
+      "decor_plant_dead",
+      "decor_debris",
+      "decor_glass",
+      "decor_papers",
+      "decor_chair_fallen",
+      "decor_smalltable",
+      "decor_photo"
+     ],
+     "Wall": [
+      "decor_cobweb",
+      "decor_frame",
+      "decor_mirror",
+      "decor_socket"
+     ]
+    }
+   ]
   },
   {
    "Location": "LOC_SUBWAY",
@@ -1124,33 +1575,62 @@
     "decor_calendar",
     "decor_phone"
    ],
-   "FloorDensity": 0.12,
-   "WallDensity": 0.13
-  },
-  {
-   "Location": "LOC_SUBWAY",
-   "Template": "",
-   "Floor": [
-    "decor_bench",
-    "decor_turnstile",
-    "decor_vending",
-    "decor_trashbin",
-    "decor_newspapers",
-    "decor_cone",
-    "decor_wetfloor",
-    "decor_bag",
-    "decor_papers"
-   ],
-   "Wall": [
-    "decor_subway_map",
-    "decor_exitsign",
-    "decor_cctv",
-    "decor_poster_a",
-    "decor_evacmap",
-    "decor_phone"
-   ],
-   "FloorDensity": 0.13,
-   "WallDensity": 0.13
+   "FloorDensity": 0.18,
+   "WallDensity": 0.15,
+   "Themes": [
+    {
+     "Name": "역무실",
+     "Floor": [
+      "decor_stool",
+      "decor_newspapers",
+      "decor_trashbin",
+      "decor_fan",
+      "decor_radio",
+      "decor_helmet",
+      "decor_papers"
+     ],
+     "Wall": [
+      "decor_clock",
+      "decor_staffboard",
+      "decor_keycabinet",
+      "decor_phone",
+      "decor_schematic"
+     ]
+    },
+    {
+     "Name": "피난민이 머문 방",
+     "Floor": [
+      "decor_sleepingbag",
+      "decor_blanket",
+      "decor_suitcase",
+      "decor_bottle",
+      "decor_canned",
+      "decor_candle",
+      "decor_bag"
+     ],
+     "Wall": [
+      "decor_cobweb",
+      "decor_phone",
+      "decor_calendar"
+     ]
+    },
+    {
+     "Name": "청소 도구실",
+     "Floor": [
+      "decor_bucket",
+      "decor_pail",
+      "decor_broom",
+      "decor_wetfloor",
+      "decor_trashbin",
+      "decor_tissue"
+     ],
+     "Wall": [
+      "decor_elecbox",
+      "decor_switch",
+      "decor_vent"
+     ]
+    }
+   ]
   },
   {
    "Location": "LOC_MART",
@@ -1169,32 +1649,63 @@
     "decor_calendar",
     "decor_switch"
    ],
-   "FloorDensity": 0.12,
-   "WallDensity": 0.13
-  },
-  {
-   "Location": "LOC_MART",
-   "Template": "",
-   "Floor": [
-    "decor_cart",
-    "decor_baskets",
-    "decor_displayfreezer",
-    "decor_crates",
-    "decor_wetfloor",
-    "decor_water",
-    "decor_glass",
-    "decor_papers",
-    "decor_cone"
-   ],
-   "Wall": [
-    "decor_store_sign",
-    "decor_cctv",
-    "decor_exitsign",
-    "decor_aircon",
-    "decor_poster_a"
-   ],
-   "FloorDensity": 0.14,
-   "WallDensity": 0.12
+   "FloorDensity": 0.18,
+   "WallDensity": 0.14,
+   "Themes": [
+    {
+     "Name": "물류 창고",
+     "Floor": [
+      "decor_crates",
+      "decor_toolbox",
+      "decor_gascan",
+      "decor_rope",
+      "decor_bottlecrate",
+      "decor_ramenbox",
+      "decor_canned",
+      "decor_pail",
+      "decor_helmet"
+     ],
+     "Wall": [
+      "decor_elecbox",
+      "decor_warning",
+      "decor_safetyboard",
+      "decor_switch"
+     ]
+    },
+    {
+     "Name": "관리 사무실",
+     "Floor": [
+      "decor_stool",
+      "decor_papers",
+      "decor_fan",
+      "decor_register",
+      "decor_trashbin",
+      "decor_plant"
+     ],
+     "Wall": [
+      "decor_calendar",
+      "decor_staffboard",
+      "decor_keycabinet",
+      "decor_clock"
+     ]
+    },
+    {
+     "Name": "직원 휴게 공간",
+     "Floor": [
+      "decor_smalltable",
+      "decor_kettle",
+      "decor_ramenbox",
+      "decor_slippers",
+      "decor_newspapers",
+      "decor_bag"
+     ],
+     "Wall": [
+      "decor_calendar",
+      "decor_clock",
+      "decor_coathanger"
+     ]
+    }
+   ]
   },
   {
    "Location": "LOC_POLICE",
@@ -1211,29 +1722,58 @@
     "decor_police_board",
     "decor_switch"
    ],
-   "FloorDensity": 0.12,
-   "WallDensity": 0.13
-  },
-  {
-   "Location": "LOC_POLICE",
-   "Template": "",
-   "Floor": [
-    "decor_bench",
-    "decor_cone",
-    "decor_plant",
-    "decor_trashbin",
-    "decor_watercooler",
-    "decor_umbrella"
-   ],
-   "Wall": [
-    "decor_police_board",
-    "decor_clock",
-    "decor_cctv",
-    "decor_evacmap",
-    "decor_phone"
-   ],
-   "FloorDensity": 0.12,
-   "WallDensity": 0.13
+   "FloorDensity": 0.18,
+   "WallDensity": 0.15,
+   "Themes": [
+    {
+     "Name": "근무하던 사무실",
+     "Floor": [
+      "decor_stool",
+      "decor_papers",
+      "decor_newspapers",
+      "decor_fan",
+      "decor_watercooler",
+      "decor_trashbin"
+     ],
+     "Wall": [
+      "decor_police_board",
+      "decor_staffboard",
+      "decor_keycabinet",
+      "decor_calendar"
+     ]
+    },
+    {
+     "Name": "대기실",
+     "Floor": [
+      "decor_blanket",
+      "decor_bottle",
+      "decor_slippers",
+      "decor_helmet",
+      "decor_flashlight"
+     ],
+     "Wall": [
+      "decor_clock",
+      "decor_cctv",
+      "decor_warning"
+     ]
+    },
+    {
+     "Name": "뒤진 흔적",
+     "Floor": [
+      "decor_papers",
+      "decor_debris",
+      "decor_chair_fallen",
+      "decor_glass",
+      "decor_toolbox"
+     ],
+     "Wall": [
+      "decor_frame",
+      "decor_cobweb",
+      "decor_switch",
+      "decor_police_board"
+     ]
+    }
+   ]
   },
   {
    "Location": "LOC_WATERWORKS",
@@ -1250,6 +1790,266 @@
     "decor_elecbox",
     "decor_calendar"
    ],
+   "FloorDensity": 0.18,
+   "WallDensity": 0.15,
+   "Themes": [
+    {
+     "Name": "수질 실험실",
+     "Floor": [
+      "decor_stool",
+      "decor_bucket",
+      "decor_pail",
+      "decor_glove",
+      "decor_bottle",
+      "decor_papers"
+     ],
+     "Wall": [
+      "decor_warning",
+      "decor_schematic",
+      "decor_safetyboard",
+      "decor_clock"
+     ]
+    },
+    {
+     "Name": "정비실",
+     "Floor": [
+      "decor_toolbox",
+      "decor_gascan",
+      "decor_rope",
+      "decor_helmet",
+      "decor_tape",
+      "decor_spraycan",
+      "decor_valve"
+     ],
+     "Wall": [
+      "decor_elecbox",
+      "decor_schematic",
+      "decor_netcabinet",
+      "decor_calendar"
+     ]
+    },
+    {
+     "Name": "숙직하던 방",
+     "Floor": [
+      "decor_sleepingbag",
+      "decor_kettle",
+      "decor_canned",
+      "decor_radio",
+      "decor_slippers"
+     ],
+     "Wall": [
+      "decor_calendar",
+      "decor_clock",
+      "decor_coathanger"
+     ]
+    }
+   ]
+  },
+  {
+   "Location": "LOC_SCHOOL",
+   "Template": "",
+   "Floor": [
+    "decor_shoerack",
+    "decor_extinguisher",
+    "decor_trashbin",
+    "decor_plant_dead",
+    "decor_bucket",
+    "decor_chair_fallen",
+    "decor_books",
+    "decor_bag",
+    "decor_papers",
+    "decor_debris",
+    "decor_umbrella",
+    "decor_watercooler",
+    "decor_shoes",
+    "decor_barricade",
+    "decor_candle",
+    "decor_broom",
+    "decor_slippers"
+   ],
+   "Wall": [
+    "decor_noticeboard",
+    "decor_evacmap",
+    "decor_poster_safety",
+    "decor_poster_event",
+    "decor_clock",
+    "decor_speaker",
+    "decor_poster_a",
+    "decor_poster_b",
+    "decor_switch",
+    "decor_exitsign",
+    "decor_safetyboard"
+   ],
+   "FloorDensity": 0.12,
+   "WallDensity": 0.13
+  },
+  {
+   "Location": "LOC_TUTORIAL",
+   "Template": "",
+   "Floor": [
+    "decor_vaultbox",
+    "decor_ball",
+    "decor_cone",
+    "decor_shoerack",
+    "decor_extinguisher"
+   ],
+   "Wall": [
+    "decor_clock",
+    "decor_poster_event",
+    "decor_evacmap"
+   ],
+   "FloorDensity": 0.12,
+   "WallDensity": 0.1
+  },
+  {
+   "Location": "LOC_STORE",
+   "Template": "",
+   "Floor": [
+    "decor_baskets",
+    "decor_crates",
+    "decor_bottlecrate",
+    "decor_wetfloor",
+    "decor_trashbin",
+    "decor_water",
+    "decor_papers",
+    "decor_glass",
+    "decor_newspapers",
+    "decor_vending",
+    "decor_displayfreezer",
+    "decor_ramenbox"
+   ],
+   "Wall": [
+    "decor_store_sign",
+    "decor_poster_a",
+    "decor_cctv",
+    "decor_clock",
+    "decor_aircon"
+   ],
+   "FloorDensity": 0.14,
+   "WallDensity": 0.14
+  },
+  {
+   "Location": "LOC_PHARMACY",
+   "Template": "",
+   "Floor": [
+    "decor_plant",
+    "decor_sanitizer",
+    "decor_bench",
+    "decor_trashbin",
+    "decor_papers",
+    "decor_watercooler",
+    "decor_glass",
+    "decor_tissue"
+   ],
+   "Wall": [
+    "decor_poster_safety",
+    "decor_firstaid",
+    "decor_clock",
+    "decor_calendar",
+    "decor_cctv",
+    "decor_medposter"
+   ],
+   "FloorDensity": 0.12,
+   "WallDensity": 0.13
+  },
+  {
+   "Location": "LOC_RESIDENTIAL",
+   "Template": "",
+   "Floor": [
+    "decor_shoes",
+    "decor_umbrella",
+    "decor_plant_dead",
+    "decor_bag",
+    "decor_newspapers",
+    "decor_teddy",
+    "decor_trashbin",
+    "decor_extinguisher",
+    "decor_basket",
+    "decor_slippers"
+   ],
+   "Wall": [
+    "decor_elecbox",
+    "decor_poster_b",
+    "decor_switch",
+    "decor_vent",
+    "decor_cobweb"
+   ],
+   "FloorDensity": 0.12,
+   "WallDensity": 0.13
+  },
+  {
+   "Location": "LOC_SUBWAY",
+   "Template": "",
+   "Floor": [
+    "decor_bench",
+    "decor_turnstile",
+    "decor_vending",
+    "decor_trashbin",
+    "decor_newspapers",
+    "decor_cone",
+    "decor_wetfloor",
+    "decor_bag",
+    "decor_papers",
+    "decor_suitcase"
+   ],
+   "Wall": [
+    "decor_subway_map",
+    "decor_exitsign",
+    "decor_cctv",
+    "decor_poster_a",
+    "decor_evacmap",
+    "decor_phone",
+    "decor_cobweb"
+   ],
+   "FloorDensity": 0.13,
+   "WallDensity": 0.13
+  },
+  {
+   "Location": "LOC_MART",
+   "Template": "",
+   "Floor": [
+    "decor_cart",
+    "decor_baskets",
+    "decor_displayfreezer",
+    "decor_crates",
+    "decor_wetfloor",
+    "decor_water",
+    "decor_glass",
+    "decor_papers",
+    "decor_cone",
+    "decor_ramenbox"
+   ],
+   "Wall": [
+    "decor_store_sign",
+    "decor_cctv",
+    "decor_exitsign",
+    "decor_aircon",
+    "decor_poster_a",
+    "decor_safetyboard"
+   ],
+   "FloorDensity": 0.14,
+   "WallDensity": 0.12
+  },
+  {
+   "Location": "LOC_POLICE",
+   "Template": "",
+   "Floor": [
+    "decor_bench",
+    "decor_cone",
+    "decor_plant",
+    "decor_trashbin",
+    "decor_watercooler",
+    "decor_umbrella",
+    "decor_helmet"
+   ],
+   "Wall": [
+    "decor_police_board",
+    "decor_clock",
+    "decor_cctv",
+    "decor_evacmap",
+    "decor_phone",
+    "decor_staffboard"
+   ],
    "FloorDensity": 0.12,
    "WallDensity": 0.13
   },
@@ -1263,13 +2063,15 @@
     "decor_valve",
     "decor_cone",
     "decor_toolbox",
-    "decor_bucket"
+    "decor_bucket",
+    "decor_helmet"
    ],
    "Wall": [
     "decor_warning",
     "decor_elecbox",
     "decor_vent",
-    "decor_evacmap"
+    "decor_evacmap",
+    "decor_schematic"
    ],
    "FloorDensity": 0.13,
    "WallDensity": 0.12
@@ -1277,13 +2079,172 @@
  ],
  "Combat": {
   "ImpactAt": [
-   { "Weapon": "bat", "At": 0.5, "Fx": "fx_pfx_blunt_", "Frames": [0, 0, 0, 0, 1, 1, 2, 2, 3, 4, 5, 6, 7, 7, 7, 7, 7, 7, 7, 7] },
-   { "Weapon": "club", "At": 0.5, "Fx": "fx_pfx_blunt_", "Frames": [0, 0, 0, 0, 1, 1, 2, 2, 3, 4, 5, 6, 7, 7, 7, 7, 7, 7, 7, 7] },
-   { "Weapon": "club_taped", "At": 0.5, "Fx": "fx_pfx_blunt_", "Frames": [0, 0, 0, 0, 1, 1, 2, 2, 3, 4, 5, 6, 7, 7, 7, 7, 7, 7, 7, 7] },
-   { "Weapon": "club_rebar", "At": 0.5, "Fx": "fx_pfx_blunt_", "Frames": [0, 0, 0, 0, 1, 1, 2, 2, 3, 4, 5, 6, 7, 7, 7, 7, 7, 7, 7, 7] },
-   { "Weapon": "pipe", "At": 0.5, "Fx": "fx_pfx_blunt_", "Frames": [0, 0, 0, 0, 1, 1, 2, 2, 3, 4, 5, 6, 7, 7, 7, 7, 7, 7, 7, 7] },
-   { "Weapon": "baton", "At": 0.5, "Frames": [0, 0, 0, 0, 1, 1, 2, 2, 3, 4, 5, 6, 7, 7, 7, 7, 7, 7, 7, 7] },
-   { "Weapon": "mop", "At": 0.5, "Fx": "fx_pfx_poke_" }
+   {
+    "Weapon": "bat",
+    "At": 0.5,
+    "Fx": "fx_pfx_blunt_",
+    "Frames": [
+     0,
+     0,
+     0,
+     0,
+     1,
+     1,
+     2,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     7,
+     7,
+     7,
+     7,
+     7,
+     7,
+     7
+    ]
+   },
+   {
+    "Weapon": "club",
+    "At": 0.5,
+    "Fx": "fx_pfx_blunt_",
+    "Frames": [
+     0,
+     0,
+     0,
+     0,
+     1,
+     1,
+     2,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     7,
+     7,
+     7,
+     7,
+     7,
+     7,
+     7
+    ]
+   },
+   {
+    "Weapon": "club_taped",
+    "At": 0.5,
+    "Fx": "fx_pfx_blunt_",
+    "Frames": [
+     0,
+     0,
+     0,
+     0,
+     1,
+     1,
+     2,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     7,
+     7,
+     7,
+     7,
+     7,
+     7,
+     7
+    ]
+   },
+   {
+    "Weapon": "club_rebar",
+    "At": 0.5,
+    "Fx": "fx_pfx_blunt_",
+    "Frames": [
+     0,
+     0,
+     0,
+     0,
+     1,
+     1,
+     2,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     7,
+     7,
+     7,
+     7,
+     7,
+     7,
+     7
+    ]
+   },
+   {
+    "Weapon": "pipe",
+    "At": 0.5,
+    "Fx": "fx_pfx_blunt_",
+    "Frames": [
+     0,
+     0,
+     0,
+     0,
+     1,
+     1,
+     2,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     7,
+     7,
+     7,
+     7,
+     7,
+     7,
+     7
+    ]
+   },
+   {
+    "Weapon": "baton",
+    "At": 0.5,
+    "Frames": [
+     0,
+     0,
+     0,
+     0,
+     1,
+     1,
+     2,
+     2,
+     3,
+     4,
+     5,
+     6,
+     7,
+     7,
+     7,
+     7,
+     7,
+     7,
+     7,
+     7
+    ]
+   },
+   {
+    "Weapon": "mop",
+    "At": 0.5,
+    "Fx": "fx_pfx_poke_"
+   }
   ],
   "DefaultImpactAt": 0.5,
   "DefaultFx": "fx_hit_",
@@ -1295,14 +2256,42 @@
   "DizzyHeight": 1.3,
   "DizzyX": 0.1,
   "DizzyOffsets": [
-   { "Kind": "wanderer", "Height": 1.28, "X": 0.25 },
-   { "Kind": "listener", "Height": 1.39, "X": 0.13 },
-   { "Kind": "watcher", "Height": 1.46, "X": 0.1 },
-   { "Kind": "survivor", "Height": 1.28, "X": 0.08 },
-   { "Kind": "hiker", "Height": 1.5, "X": 0.05 },
-   { "Kind": "woman", "Height": 1.52, "X": 0.03 }
+   {
+    "Kind": "wanderer",
+    "Height": 1.28,
+    "X": 0.25
+   },
+   {
+    "Kind": "listener",
+    "Height": 1.39,
+    "X": 0.13
+   },
+   {
+    "Kind": "watcher",
+    "Height": 1.46,
+    "X": 0.1
+   },
+   {
+    "Kind": "survivor",
+    "Height": 1.28,
+    "X": 0.08
+   },
+   {
+    "Kind": "hiker",
+    "Height": 1.5,
+    "X": 0.05
+   },
+   {
+    "Kind": "woman",
+    "Height": 1.52,
+    "X": 0.03
+   }
   ]
  },
- "SurvivorLooks": ["survivor", "hiker", "woman"],
+ "SurvivorLooks": [
+  "survivor",
+  "hiker",
+  "woman"
+ ],
  "SurvivorStandAwareness": 0.15
 }

@@ -76,7 +76,7 @@ MonoBehaviour:
         Collapsed: 0
       Doors:
       - RoomId: ROOM_SUBWAY_OFFICE_1
-        TemplateId: ROOM_SUBWAY_OFFICE
+        TemplateId: ROOM_SUBWAY_OFFICE_L1
         Floor: 1
         X: 14
         Number: 1
@@ -308,6 +308,43 @@ MonoBehaviour:
           Once: 0
         DefaultLootTableId: LOOT_SUBWAY_VAULT
         WallDecor: 
+      - Id: ROOM_SUBWAY_OFFICE_L1
+        Width: 14
+        DoorXs:
+        - 1.2
+        Windows:
+        - X: 3
+          Width: 3.4
+        Containers:
+        - Id: OFFICE_LOCKER
+          Kind: 0
+          Floor: 0
+          X: 4.7
+          SearchSeconds: 3
+          LootTableId: 
+          SpriteKey: 
+          Guaranteed: 0
+          Once: 0
+        - Id: OFFICE_CABINET
+          Kind: 2
+          Floor: 0
+          X: 8.1
+          SearchSeconds: 3.5
+          LootTableId: 
+          SpriteKey: 
+          Guaranteed: 0
+          Once: 0
+        - Id: OFFICE_DESK
+          Kind: 1
+          Floor: 0
+          X: 11.5
+          SearchSeconds: 2
+          LootTableId: 
+          SpriteKey: 
+          Guaranteed: 0
+          Once: 0
+        DefaultLootTableId: LOOT_SUBWAY_OFFICE
+        WallDecor: 
       Containers:
       - Id: C_SUB_LOCKER_1
         Kind: 0
@@ -420,6 +457,7 @@ MonoBehaviour:
         Count: 10
         Spread: 6
         Dormant: 1
+        Fixed: 0
       - EnemyId: ENEMY_LISTENER
         Floor: 0
         RoomId: 
@@ -427,6 +465,7 @@ MonoBehaviour:
         Count: 2
         Spread: 1.5
         Dormant: 1
+        Fixed: 0
       - EnemyId: ENEMY_WANDERER
         Floor: 1
         RoomId: 
@@ -434,6 +473,7 @@ MonoBehaviour:
         Count: 3
         Spread: 2
         Dormant: 1
+        Fixed: 0
       - EnemyId: ENEMY_WANDERER
         Floor: 1
         RoomId: ROOM_SUBWAY_RESTROOM_1
@@ -441,6 +481,7 @@ MonoBehaviour:
         Count: 2
         Spread: 1
         Dormant: 1
+        Fixed: 0
       - EnemyId: ENEMY_WANDERER
         Floor: 1
         RoomId: 
@@ -448,6 +489,7 @@ MonoBehaviour:
         Count: 1
         Spread: 0
         Dormant: 0
+        Fixed: 0
       - EnemyId: ENEMY_WANDERER
         Floor: 2
         RoomId: 
@@ -455,6 +497,7 @@ MonoBehaviour:
         Count: 3
         Spread: 2
         Dormant: 1
+        Fixed: 0
       - EnemyId: ENEMY_LISTENER
         Floor: 3
         RoomId: 
@@ -462,6 +505,7 @@ MonoBehaviour:
         Count: 1
         Spread: 0
         Dormant: 0
+        Fixed: 0
       - EnemyId: ENEMY_WANDERER
         Floor: 2
         RoomId: ROOM_DEEP_SUB_1_B
@@ -469,6 +513,7 @@ MonoBehaviour:
         Count: 2
         Spread: 1
         Dormant: 1
+        Fixed: 0
       - EnemyId: ENEMY_WANDERER
         Floor: 3
         RoomId: ROOM_DEEP_SUB_2_B
@@ -476,6 +521,7 @@ MonoBehaviour:
         Count: 2
         Spread: 1
         Dormant: 1
+        Fixed: 0
       LockedRooms: []
       ForceableRooms:
       - ROOM_SUBWAY_OFFICE_1
@@ -585,6 +631,7 @@ MonoBehaviour:
         Count: 4
         Spread: 10
         Dormant: 0
+        Fixed: 0
       - EnemyId: ENEMY_WATCHER
         Floor: 0
         RoomId: 
@@ -592,6 +639,7 @@ MonoBehaviour:
         Count: 1
         Spread: 0
         Dormant: 0
+        Fixed: 0
       - EnemyId: ENEMY_WATCHER
         Floor: 1
         RoomId: 
@@ -599,6 +647,7 @@ MonoBehaviour:
         Count: 1
         Spread: 0
         Dormant: 0
+        Fixed: 0
       - EnemyId: ENEMY_WANDERER
         Floor: 1
         RoomId: 
@@ -606,6 +655,7 @@ MonoBehaviour:
         Count: 3
         Spread: 8
         Dormant: 0
+        Fixed: 0
       - EnemyId: ENEMY_WANDERER
         Floor: 2
         RoomId: 
@@ -613,6 +663,7 @@ MonoBehaviour:
         Count: 2
         Spread: 8
         Dormant: 0
+        Fixed: 0
       - EnemyId: ENEMY_LISTENER
         Floor: 3
         RoomId: 
@@ -620,6 +671,7 @@ MonoBehaviour:
         Count: 1
         Spread: 0
         Dormant: 0
+        Fixed: 0
       - EnemyId: ENEMY_WANDERER
         Floor: 2
         RoomId: ROOM_DEEP_SUB_1_B
@@ -627,6 +679,7 @@ MonoBehaviour:
         Count: 1
         Spread: 0
         Dormant: 0
+        Fixed: 0
       - EnemyId: ENEMY_WANDERER
         Floor: 3
         RoomId: ROOM_DEEP_SUB_2_B
@@ -634,6 +687,7 @@ MonoBehaviour:
         Count: 1
         Spread: 0
         Dormant: 0
+        Fixed: 0
       LockedRooms: []
       ForceableRooms:
       - ROOM_SUBWAY_OFFICE_1

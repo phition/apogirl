@@ -3659,7 +3659,8 @@ namespace ApoGirl.Exploration.Runtime
             }
 
             var spread = new SeededRandom(SeededRandom.CreateState(Request.Seed ^ 0x2B));
-            foreach (var spawn in variant.Spawns)
+            // 자리는 출정마다 다시 고른다 (수·종류·층은 정의 그대로)
+            foreach (var spawn in SpawnRules.Arrange(Location, variant, Request.Seed, _balance))
             {
                 var area = ResolveSpawnArea(spawn);
                 if (area == null)
@@ -3703,7 +3704,7 @@ namespace ApoGirl.Exploration.Runtime
             SpawnSurvivor(variant);
         }
 
-        /// <summary>적대적 생존자 1명 (요청의 성향이 있으면). 지정 위치 후보 중 하나, 없으면 출구에서 먼 복도.</summary>
+        /// <summary>적대적 생존자 (요청의 성향이 있으면). 한 층에 한 명씩 — 지정 위치 후보, 없으면 출구에서 먼 복도.</summary>
         private void SpawnSurvivor(LocationVariantDef variant)
         {
             if (Request.HostileTemperament <= 0)
@@ -3717,33 +3718,13 @@ namespace ApoGirl.Exploration.Runtime
             }
 
             var random = new SeededRandom(SeededRandom.CreateState(Request.Seed ^ 0x5A1));
-            ExplorationArea area;
-            float x;
-            var count = Math.Max(1, Request.HostileCount);
-            if (variant.HostileSpots.Count > 0)
-            {
-                var spot = variant.HostileSpots[random.Range(0, variant.HostileSpots.Count - 1)];
-                area = ResolveSpawnArea(spot) ?? _corridors[0];
-                x = spot.X;
-            }
-            else
-            {
-                var start = Location.Layout.Exits.Find(e => e.Kind == ExitKind.Main);
-                var outerFloors = Location.Layout.Floors;   // 깊은 곳에는 생존자를 두지 않는다
-                var floor = outerFloors > 1 ? random.Range(0, outerFloors - 1) : 0;
-                area = _corridors[floor];
-                var startNearLeft = start == null || start.Floor != floor || start.X < area.Width / 2f;
-                x = startNearLeft
-                    ? area.Width * (0.6f + 0.3f * (float)random.NextDouble())
-                    : area.Width * (0.1f + 0.3f * (float)random.NextDouble());
-            }
-
-            // 한 무리: 첫 사람 근처에 나머지가 선다. 겉모습은 사람마다 판 시드로 고른다 (무리면 섞인다)
+            // 한 층에 한 명씩 흩어져 선다 (층 수보다 많이 나오지 않는다). 겉모습은 사람마다 판 시드로 고른다
+            var places = SpawnRules.HostilePlaces(Location, variant, Math.Max(1, Request.HostileCount), Request.Seed);
             var looks = ExplorationArt.SurvivorLooks;
-            for (var i = 0; i < count; i++)
+            foreach (var place in places)
             {
-                var offset = i == 0 ? 0f : (i % 2 == 1 ? 1f : -1f) * (1.5f + 1.2f * (i / 2));
-                var unit = _threat.AddZombie(enemy, AreaId(area), x + offset);
+                var area = ResolveSpawnArea(place) ?? _corridors[Mathf.Clamp(place.Floor, 0, _corridors.Count - 1)];
+                var unit = _threat.AddZombie(enemy, AreaId(area), place.X);
                 var look = looks[random.Range(0, looks.Count - 1)];
                 var idleKey = ExplorationArt.HasPixel(look + "_idle_0") ? look + "_idle_0" : "survivor_idle";
                 var sprites = ExplorationArt.Get(idleKey) != null;

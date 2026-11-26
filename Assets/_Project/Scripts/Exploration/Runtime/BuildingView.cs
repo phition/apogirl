@@ -133,7 +133,16 @@ namespace ApoGirl.Exploration.Runtime
         /// <summary>뒷벽에 붙은 것(문 등)을 올려 그릴 높이: 1점 투시 방이면 뒤쪽 바닥 높이, 아니면 0.</summary>
         public static float BackWallOffset(RoomTemplateDef template, string locationId) => PerspectiveKind(template, locationId) != null ? BackFloorRise : 0f;
 
-        /// <summary>방 내부를 그린다 (같은 템플릿은 같은 모양).</summary>
+        private static void Tint(GameObject go, Color color)
+        {
+            var renderer = go != null ? go.GetComponent<SpriteRenderer>() : null;
+            if (renderer != null)
+            {
+                renderer.color = color;
+            }
+        }
+
+        /// <summary>방 내부를 그린다 (벽·소품 자리는 템플릿, 흩어 놓는 장식과 벽지 색조는 방마다 다르다).</summary>
         public void BuildRoom(ExplorationArea room, int colorIndex)
         {
             var root = new GameObject("Room_" + room.Door.RoomId).transform;
@@ -143,8 +152,15 @@ namespace ApoGirl.Exploration.Runtime
 
             var h = _layout.FloorHeight;
             Rect(root, "Void", new Vector2(-30f, -20f), new Vector2(room.Width + 60f, 40f), new Color(0.05f, 0.05f, 0.06f), -7);
-            ExplorationArt.Tiled(root, "Interior", ExplorationArt.InteriorWall(room.Template.Id, _locationId), new Vector2(0f, 0.15f), new Vector2(room.Width, h - 0.3f), -5,
+            var interiorKey = ExplorationArt.InteriorWall(room.Template.Id, _locationId);
+            var interior = ExplorationArt.Tiled(root, "Interior", interiorKey, new Vector2(0f, 0.15f), new Vector2(room.Width, h - 0.3f), -5,
                 RoomColors[colorIndex % RoomColors.Length]);
+            // 방마다 다른 벽지 색조 (그림 표 Interior 줄의 Tints): 벽 그림이 있을 때만 곱한다
+            var wallTint = ExplorationArt.InteriorTint(room.Template.Id, _locationId, StableHash(room.Door.RoomId + "/wall"));
+            if (ExplorationArt.Get(interiorKey) != null)
+            {
+                Tint(interior, wallTint);
+            }
             // 뒷벽 장식: 템플릿 WallDecor (양호실 적십자, 과학실 주기율표 등), 없으면 교실은 칠판
             // 1점 투시 방: 칠판·게시판은 옆벽 그림에 들어 있다 (뒷벽에는 문과 복도 쪽 창만)
             var perspective = PerspectiveKind(room.Template, _locationId);
@@ -167,7 +183,7 @@ namespace ApoGirl.Exploration.Runtime
             }
 
             // 흩어 놓는 장식 (그림 표의 Decor): 컨테이너·문·창·뒷벽 장식을 피해 바닥과 벽에
-            var roomRule = ExplorationArt.Decor(_locationId, room.Template.Id);
+            var roomRule = ExplorationArt.Decor(_locationId, room.Template.Id)?.For(StableHash(room.Door.RoomId + "/theme"));
             if (roomRule != null)
             {
                 var blockedFloor = new List<(float, float)>();
@@ -180,8 +196,13 @@ namespace ApoGirl.Exploration.Runtime
 
                 foreach (var container in room.Template.Containers)
                 {
-                    blockedFloor.Add((container.X - 1.1f, container.X + 1.1f));
-                    blockedWall.Add((container.X - 0.9f, container.X + 0.9f));
+                    // 소품 그림 폭만큼만 비운다. 벽 장식은 키 큰 소품(옷장·냉장고·사물함) 뒤만 피한다
+                    var size = ContainerBounds(room.Template.Id, container);
+                    blockedFloor.Add((container.X - size.x * 0.5f - 0.15f, container.X + size.x * 0.5f + 0.15f));
+                    if (size.y > 1.5f)
+                    {
+                        blockedWall.Add((container.X - size.x * 0.5f - 0.1f, container.X + size.x * 0.5f + 0.1f));
+                    }
                 }
 
                 foreach (var window in room.Template.Windows)
@@ -194,7 +215,7 @@ namespace ApoGirl.Exploration.Runtime
                     blockedWall.Add((decorSpan.Item1 - 0.3f, decorSpan.Item2 + 0.3f));
                 }
 
-                Scatter(root, roomRule, room.Width, 0f, blockedFloor, blockedWall, StableHash(room.Door.RoomId));
+                ScatterRoom(root, roomRule, room.Width, h, blockedFloor, blockedWall, StableHash(room.Door.RoomId));
             }
 
             for (var x = 2f; x < room.Width - 1f; x += 5f)
@@ -210,8 +231,8 @@ namespace ApoGirl.Exploration.Runtime
                 var color = RoomColors[colorIndex % RoomColors.Length];
                 ExplorationArt.Tiled(root, "PerspFloor", $"wall_floor_{perspective}", new Vector2(-SideWallWidth, 0.15f), new Vector2(room.Width + SideWallWidth * 2f, BackFloorRise), -4, color);
                 Rect(root, "PerspCeiling", new Vector2(-SideWallWidth, h - 0.15f - BackCeilingDrop), new Vector2(room.Width + SideWallWidth * 2f, BackCeilingDrop), new Color(0.2f, 0.19f, 0.18f), -4);
-                ExplorationArt.Place(root, "SideWallL", $"wall_side_{perspective}_l", new Vector2(-SideWallWidth, 0.15f), -3, Vector2.zero, Color.clear);
-                ExplorationArt.Place(root, "SideWallR", $"wall_side_{perspective}_r", new Vector2(room.Width, 0.15f), -3, Vector2.zero, Color.clear);
+                Tint(ExplorationArt.Place(root, "SideWallL", $"wall_side_{perspective}_l", new Vector2(-SideWallWidth, 0.15f), -3, Vector2.zero, Color.clear), wallTint);
+                Tint(ExplorationArt.Place(root, "SideWallR", $"wall_side_{perspective}_r", new Vector2(room.Width, 0.15f), -3, Vector2.zero, Color.clear), wallTint);
                 Rect(root, "WallL", new Vector2(-SideWallWidth - 0.3f, 0f), new Vector2(0.3f, h), new Color(0.1f, 0.1f, 0.11f), -3);
                 Rect(root, "WallR", new Vector2(room.Width + SideWallWidth, 0f), new Vector2(0.3f, h), new Color(0.1f, 0.1f, 0.11f), -3);
             }
@@ -718,6 +739,127 @@ namespace ApoGirl.Exploration.Runtime
             var random = new System.Random(seed);
             ScatterRow(parent, rule.Floor, rule.FloorDensity, width, baseY + 0.15f, 0f, -2, blockedFloor, random, blockedWall);
             ScatterRow(parent, rule.Wall, rule.WallDensity, width, baseY + 1.75f, 0.5f, -4, blockedWall, random);
+        }
+
+        /// <summary>그 방 소품의 그림 크기 (유닛). 그림이 없으면 넉넉한 기본값.</summary>
+        private Vector2 ContainerBounds(string templateId, ContainerDef container)
+        {
+            var key = ExplorationArt.Container(_locationId, templateId, container);
+            if (key == null && !string.IsNullOrEmpty(container.SpriteKey) && ExplorationArt.Get(container.SpriteKey) != null)
+            {
+                key = container.SpriteKey;
+            }
+
+            if (key == null)
+            {
+                switch (container.Kind)
+                {
+                    case ContainerKind.Locker: key = "prop_locker"; break;
+                    case ContainerKind.Desk: key = "prop_desk"; break;
+                    case ContainerKind.Cabinet: key = "prop_cabinet"; break;
+                    case ContainerKind.Fridge: key = "prop_fridge"; break;
+                    default: key = "prop_box"; break;
+                }
+            }
+
+            var sprite = ExplorationArt.Get(key);
+            return sprite != null ? (Vector2)sprite.bounds.size : new Vector2(2.2f, 2f);
+        }
+
+        /// <summary>
+        /// 방 장식: 소품·문 사이의 빈 자리를 찾아 거기 들어가는 장식을 채운다 (같은 방이면 늘 같은 자리).
+        /// 줄지어 건너뛰며 놓던 예전 방식은 소품이 많은 방에서 거의 아무것도 못 놓았다. 놓는 수 ≈ 밀도 × 방 폭.
+        /// </summary>
+        private static void ScatterRoom(Transform parent, ExplorationArt.DecorRule rule, float width, float height, List<(float, float)> blockedFloor, List<(float, float)> blockedWall, int seed)
+        {
+            var random = new System.Random(seed);
+            var wall = new List<(float, float)>(blockedWall);
+            Fill(parent, rule.Floor, Mathf.Max(2, Mathf.RoundToInt(rule.FloorDensity * width)), width, 0.15f, 0f, height, -2, blockedFloor, random, wall);
+            Fill(parent, rule.Wall, Mathf.Max(1, Mathf.RoundToInt(rule.WallDensity * width)), width, 1.75f, 0.4f, height, -4, wall, random, null);
+        }
+
+        private static void Fill(Transform parent, string[] keys, int target, float width, float y, float yJitter, float height, int order, List<(float, float)> blocked, System.Random random, List<(float, float)> tallBlocked)
+        {
+            if (keys == null || keys.Length == 0 || target <= 0)
+            {
+                return;
+            }
+
+            // 장식을 섞어 차례로 넣어 본다 (같은 장식은 한 방에 하나). 큰 것이 안 들어가면 다음 것으로 넘어간다
+            var order2 = new List<string>(new HashSet<string>(keys));
+            for (var i = order2.Count - 1; i > 0; i--)
+            {
+                var j = random.Next(i + 1);
+                (order2[i], order2[j]) = (order2[j], order2[i]);
+            }
+
+            var placed = 0;
+            foreach (var key in order2)
+            {
+                if (placed >= target)
+                {
+                    break;
+                }
+
+                var sprite = ExplorationArt.Get(key);
+                if (sprite == null)
+                {
+                    continue;
+                }
+
+                var half = sprite.bounds.size.x * 0.5f;
+                var tall = tallBlocked != null && sprite.bounds.size.y > 1.5f;
+
+                // 빈 자리: 막힌 구간을 뺀 나머지 중 이 그림이 들어가는 곳
+                var spans = new List<(float, float)>(blocked);
+                if (tall)
+                {
+                    spans.AddRange(tallBlocked);
+                }
+
+                spans.Sort((a, b) => a.Item1.CompareTo(b.Item1));
+                var gaps = new List<(float, float)>();
+                var cursor = 0.8f;
+                foreach (var (from, to) in spans)
+                {
+                    if (from - cursor >= half * 2f + 0.2f)
+                    {
+                        gaps.Add((cursor, from));
+                    }
+
+                    cursor = Mathf.Max(cursor, to);
+                }
+
+                if (width - 0.8f - cursor >= half * 2f + 0.2f)
+                {
+                    gaps.Add((cursor, width - 0.8f));
+                }
+
+                if (gaps.Count == 0)
+                {
+                    continue;
+                }
+
+                var (gapFrom, gapTo) = gaps[random.Next(gaps.Count)];
+                var x = gapFrom + half + 0.1f + (float)random.NextDouble() * (gapTo - gapFrom - half * 2f - 0.2f);
+                var py = y + (float)random.NextDouble() * yJitter;
+                if (yJitter > 0f)
+                {
+                    // 키 큰 벽 장식(옷걸이·게시판)은 천장 아래로 내려 건다
+                    py = Mathf.Max(1.2f, Mathf.Min(py, height - 0.7f - sprite.bounds.size.y));
+                }
+
+                var px = Mathf.Round(x * ExplorationArt.PixelsPerUnit) / ExplorationArt.PixelsPerUnit;
+                py = Mathf.Round(py * ExplorationArt.PixelsPerUnit) / ExplorationArt.PixelsPerUnit;
+                ExplorationArt.Place(parent, "Decor_" + key, key, new Vector2(px, py), order, Vector2.zero, Color.clear);
+                blocked.Add((x - half - 0.2f, x + half + 0.2f));
+                if (tall)
+                {
+                    tallBlocked.Add((x - half - 0.2f, x + half + 0.2f));
+                }
+
+                placed++;
+            }
         }
 
         private static void ScatterRow(Transform parent, string[] keys, float density, float width, float y, float yJitter, int order, List<(float, float)> blocked, System.Random random, List<(float, float)> tallBlocked = null)

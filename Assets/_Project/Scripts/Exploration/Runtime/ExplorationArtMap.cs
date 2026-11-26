@@ -19,6 +19,12 @@ namespace ApoGirl.Exploration.Runtime
             public string Location = "";
             public string Template = "";
             public string Key = "";
+
+            /// <summary>
+            /// 방마다 다른 벽지 색조 (#RRGGBB, 그림에 곱한다 — 흰색 = 그대로). 방 ID로 하나를 고른다: 같은 벽지 그림이라도
+            /// 어떤 집은 누렇게 바랬고 어떤 집은 푸르스름하다. 비면 그림 그대로. 방 안쪽 벽(Interior) 줄에서만 읽는다.
+            /// </summary>
+            public string[] Tints = Array.Empty<string>();
         }
 
         [Serializable]
@@ -68,6 +74,42 @@ namespace ApoGirl.Exploration.Runtime
             /// <summary>유닛당 놓을 확률에 가까운 값 (0.1 = 10유닛에 하나쯤).</summary>
             public float FloorDensity = 0.1f;
             public float WallDensity = 0.08f;
+
+            /// <summary>
+            /// 방마다 다른 분위기 (비면 위 목록 하나로): 방 ID로 하나를 골라 그 묶음의 장식만 쓴다 — 같은 지역·같은 템플릿이라도
+            /// 어떤 방은 살림집, 어떤 방은 피난 흔적처럼 달라 보인다. 묶음의 목록이 비면 위 목록을, 밀도가 0이면 위 밀도를 쓴다.
+            /// </summary>
+            public DecorTheme[] Themes = Array.Empty<DecorTheme>();
+
+            /// <summary>그 방(seed)에 쓸 규칙: 분위기 묶음이 있으면 하나를 골라 덮어쓴 사본.</summary>
+            public DecorRule For(int seed)
+            {
+                if (Themes == null || Themes.Length == 0)
+                {
+                    return this;
+                }
+
+                var theme = Themes[(seed & 0x7fffffff) % Themes.Length];
+                return new DecorRule
+                {
+                    Location = Location, Template = Template,
+                    Floor = theme.Floor != null && theme.Floor.Length > 0 ? theme.Floor : Floor,
+                    Wall = theme.Wall != null && theme.Wall.Length > 0 ? theme.Wall : Wall,
+                    FloorDensity = theme.FloorDensity > 0f ? theme.FloorDensity : FloorDensity,
+                    WallDensity = theme.WallDensity > 0f ? theme.WallDensity : WallDensity,
+                };
+            }
+        }
+
+        [Serializable]
+        public sealed class DecorTheme
+        {
+            /// <summary>표를 읽는 사람을 위한 이름 (코드는 쓰지 않는다).</summary>
+            public string Name = "";
+            public string[] Floor = Array.Empty<string>();
+            public string[] Wall = Array.Empty<string>();
+            public float FloorDensity;
+            public float WallDensity;
         }
 
         /// <summary>
@@ -312,6 +354,26 @@ namespace ApoGirl.Exploration.Runtime
             }
 
             return null;
+        }
+
+        /// <summary>그 방(seed)의 벽지 색조: 표의 Interior 줄 Tints 중 하나, 없으면 흰색(그대로).</summary>
+        public static Color InteriorTint(string templateId, string locationId, int seed)
+        {
+            foreach (var rule in Map.Interior)
+            {
+                if (Has(locationId, rule.Location) && Has(templateId, rule.Template) && Get(rule.Key) != null)
+                {
+                    if (rule.Tints == null || rule.Tints.Length == 0)
+                    {
+                        return Color.white;
+                    }
+
+                    var hex = rule.Tints[(seed & 0x7fffffff) % rule.Tints.Length];
+                    return ColorUtility.TryParseHtmlString(hex, out var color) ? color : Color.white;
+                }
+            }
+
+            return Color.white;
         }
 
         /// <summary>방 안쪽 벽: 표(방 템플릿·지역) → 예전 규칙.</summary>
