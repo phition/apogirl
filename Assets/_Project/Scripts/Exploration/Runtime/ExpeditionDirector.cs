@@ -848,7 +848,7 @@ namespace ApoGirl.Exploration.Runtime
                         }
                     }
 
-                    EmitNoise(CurrentArea, X, _balance.ShoveNoise);
+                    EmitNoise(CurrentArea, X, _balance.CrowbarDoorNoise);
                     Sfx("sfx_door_force");
                     _hud?.ShowMessage("exp.forced_open");
                     UseCrowbar();
@@ -911,7 +911,7 @@ namespace ApoGirl.Exploration.Runtime
                         {
                             target.Tint(new Color(0.35f, 0.6f, 0.38f));
                         }
-                        EmitNoise(CurrentArea, X, _balance.ShoveNoise);
+                        EmitNoise(CurrentArea, X, _balance.CrowbarDoorNoise);
                         Sfx("sfx_door_force");
                         _hud?.ShowMessage("exp.forced_open");
                     }
@@ -1438,7 +1438,9 @@ namespace ApoGirl.Exploration.Runtime
                 return false;
             }
 
-            _attackTimer = Mathf.Max(0.3f, _weapon.AttackCooldown);
+            // 호신술 숙련이 높을수록 다음 공격까지의 틈이 짧다
+            Request.ProficiencyLevels.TryGetValue(ProficiencyType.SelfDefense, out var selfDefense);
+            _attackTimer = Mathf.Max(0.3f, ExplorationRules.AttackCooldown(_weapon.AttackCooldown, selfDefense, _balance));
             _attackAnim = AttackAnimSeconds;
             EmitNoise(CurrentArea, X, _weapon.AttackNoise);
             Sfx("sfx_swing");
@@ -2353,9 +2355,12 @@ namespace ApoGirl.Exploration.Runtime
                     Nearest.SearchProgress += (IsDark && !FlashlightOn ? dt / _balance.DarkSearchMultiplier : dt) * searchRate;
                     if (!Nearest.Sighed && Nearest.SearchSeconds > Nearest.CalmSeconds + 0.01f && Nearest.SearchProgress >= Nearest.CalmSeconds)
                     {
-                        // 스트레스가 없었다면 끝났을 때: 짜증 섞인 한숨 (그만큼 더 걸린다)
+                        // 스트레스가 없었다면 끝났을 때: 가끔 짜증 섞인 한숨 (그만큼 더 걸린다). 상자 하나에 한 번만 굴린다 — 소리뿐이라 판 시드와 무관
                         Nearest.Sighed = true;
-                        Sfx(SighSound, 0.8f);
+                        if (UnityEngine.Random.value < _balance.SearchSighChance)
+                        {
+                            Sfx(SighSound, 0.8f);
+                        }
                     }
 
                     if (Nearest.SearchProgress >= Nearest.SearchSeconds)

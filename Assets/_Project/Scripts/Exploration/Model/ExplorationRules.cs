@@ -18,6 +18,15 @@ namespace ApoGirl.Exploration.Model
             return balance.BaseCarryWeight + strength * balance.CarryWeightPerStrength;
         }
 
+        /// <summary>
+        /// 무기를 다시 휘두르기까지의 대기: 전술·호신술 숙련이 오를수록 짧아진다 (하한 있음, 원래 더 짧은 무기는 그대로).
+        /// </summary>
+        public static float AttackCooldown(float weaponCooldown, int selfDefenseLevel, BalanceConfig balance)
+        {
+            var scale = Math.Max(0f, 1f - Math.Max(0, selfDefenseLevel) * balance.AttackCooldownPerSelfDefenseLevel);
+            return Math.Max(Math.Min(weaponCooldown, balance.AttackCooldownMin), weaponCooldown * scale);
+        }
+
         /// <summary>손재주가 높을수록 수색이 빠르다 (상한 있음).</summary>
         public static float SearchSeconds(float baseSeconds, IReadOnlyDictionary<StatType, int> stats, BalanceConfig balance)
         {

@@ -119,6 +119,49 @@ namespace ApoGirl.Tests.EditMode
         }
 
         [Test]
+        public void Crowd_SneakingPastWithoutPause_StirsFasterThanStopAndGo()
+        {
+            // 웅크려 곁에 머물기: 가만히 있을 때보다 쉬지 않고 움직일 때 뒤척임이 더 빨리 오른다 (그래도 서서 걷기보다는 낮다)
+            float StirAfter(bool keepMoving, bool crouch)
+            {
+                var sim = new ThreatSimulation(_balance, new SeededRandom(SeededRandom.CreateState(3)));
+                sim.SetAreaWidth(Corridor, 80f);
+                var crowd = sim.AddCrowd(Corridor, 40f);
+                sim.AddZombie(_walker, Corridor, 40f, crowd);
+                var x = 38f;
+                var direction = 1f;
+                for (var t = 0f; t < 8f; t += 0.1f)
+                {
+                    if (keepMoving)
+                    {
+                        x += direction * 0.1f;
+                        if (x > 42f || x < 38f) direction = -direction;
+                    }
+
+                    sim.Step(0.1f, Player(Corridor, x, crouch), _neutral);
+                }
+
+                return crowd.Stirring;
+            }
+
+            var still = StirAfter(false, true);
+            var moving = StirAfter(true, true);
+            var walking = StirAfter(false, false);
+            Assert.Greater(moving, still + 5f, "쉬지 않고 움직이면 더 빨리 오른다");
+            Assert.Less(moving, walking, "그래도 서 있는 것보다는 조용하다");
+
+            // 계수: 처음 0.5, 이어 움직인 만큼 오르고 상한에서 멈춘다. 잠깐 멈추면 처음으로
+            var probe = new ThreatSimulation(_balance, new SeededRandom(SeededRandom.CreateState(3)));
+            probe.SetAreaWidth(Corridor, 80f);
+            Assert.AreEqual(0.5f, probe.PresenceStirFactor(true), 1e-4f);
+            for (var i = 0; i < 100; i++) probe.Step(0.1f, Player(Corridor, 10f + i * 0.1f, true), _neutral);
+            Assert.AreEqual(0.5f * (1f + _balance.SneakStirMaxExtra), probe.PresenceStirFactor(true), 1e-3f, "상한");
+            for (var i = 0; i < 10; i++) probe.Step(0.1f, Player(Corridor, 20f, true), _neutral);
+            Assert.AreEqual(0.5f, probe.PresenceStirFactor(true), 1e-4f, "멈추면 처음으로");
+            Assert.AreEqual(1f, probe.PresenceStirFactor(false), 1e-4f);
+        }
+
+        [Test]
         public void WakingCrowd_ShakesNeighbourCrowd()
         {
             var first = _sim.AddCrowd(Corridor, 30f);

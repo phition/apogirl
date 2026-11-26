@@ -104,8 +104,11 @@ namespace ApoGirl.Core.State
         /// <summary>마지막으로 평판이 움직인 주 (멀어짐 계산).</summary>
         public int LastContactWeek { get; set; }
 
-        /// <summary>마지막 거래 주 (세력마다 주 1회).</summary>
+        /// <summary>이번 운반 주기가 시작된 주 (그 주기의 첫 거래 주). 주기는 세력의 TradeIntervalWeeks.</summary>
         public int LastTradeWeek { get; set; }
+
+        /// <summary>이번 운반 주기에 이미 한 거래 (거래 ID). 주기가 바뀌면 비운다. 옛 세이브는 비어 있어도 한 번 한 것으로 본다.</summary>
+        public List<string> WindowTrades { get; set; } = new List<string>();
 
         /// <summary>최근 일 (새것이 앞, 최대 FactionLogSize).</summary>
         public List<FactionLogEntry> Log { get; set; } = new List<FactionLogEntry>();

@@ -147,6 +147,13 @@ namespace ApoGirl.Tests.EditMode
             var balance = new BalanceConfig();
             var stats = new System.Collections.Generic.Dictionary<StatType, int> { { StatType.Strength, 20 }, { StatType.Craft, 50 } };
             Assert.AreEqual(10f, ExplorationRules.CarryCapacity(stats, balance), 1e-5f);
+
+            // 호신술 숙련: 단계마다 공격 대기 −8%, 하한 0.55초 (원래 더 짧은 무기는 그대로)
+            Assert.AreEqual(1f, ExplorationRules.AttackCooldown(1f, 0, balance), 1e-5f);
+            Assert.AreEqual(0.84f, ExplorationRules.AttackCooldown(1f, 2, balance), 1e-5f);
+            Assert.AreEqual(0.6f, ExplorationRules.AttackCooldown(1f, 5, balance), 1e-5f);
+            Assert.AreEqual(0.55f, ExplorationRules.AttackCooldown(0.8f, 5, balance), 1e-5f, "하한");
+            Assert.AreEqual(0.4f, ExplorationRules.AttackCooldown(0.4f, 5, balance), 1e-5f, "원래 짧은 무기는 그대로");
             Assert.AreEqual(2.55f * 0.7f, ExplorationRules.SearchSeconds(3f, stats, balance), 1e-5f);
             stats[StatType.Craft] = 999;
             Assert.AreEqual(2.1f * 0.7f, ExplorationRules.SearchSeconds(3f, stats, balance), 1e-5f);

@@ -184,10 +184,19 @@ namespace ApoGirl.Presentation.Screens
             row.AddToClassList("fac-trade-row");
             row.Add(Side(offer.Give, true));
             Add(row, "→", "fac-arrow");
-            row.Add(Side(offer.Get, false));
+            // 받는 양은 지금 평판에 따라 늘어난다 (가까울수록 같은 값에 더 받는다)
+            var standing = _session.State.Factions.TryGetValue(def.Id, out var factionState) ? factionState.Standing : 0;
+            var balance = _session.Definitions.Balance;
+            row.Add(Side(FactionRules.TradeGets(offer, standing, balance), false));
             card.Add(row);
 
             var notes = new List<string>();
+            var bonus = Mathf.RoundToInt((FactionRules.TradeGetMultiplier(standing, balance) - 1f) * 100f);
+            if (bonus > 0)
+            {
+                notes.Add(Loc.F("faction.trade.bonus", bonus));
+            }
+
             if (offer.Delayed)
             {
                 notes.Add(Loc.T("faction.trade.delayed"));

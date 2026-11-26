@@ -265,6 +265,46 @@ namespace ApoGirl.Exploration.Model
         private readonly List<DecoyUnit> _decoys = new List<DecoyUnit>();
         private List<NoiseEvent> _pendingNoise = new List<NoiseEvent>();
 
+        // 웅크려 쉬지 않고 움직인 시간 (잠든 무리 곁에서 뒤척임이 더 빨리 오른다)
+        private int _lastPlayerArea = -1;
+        private float _lastPlayerX;
+        private float _sneakSeconds;
+        private float _stillSeconds;
+
+        /// <summary>웅크려 쉬지 않고 움직인 시간 (초). 잠깐 멈추면 0으로 돌아간다.</summary>
+        public float SneakSeconds => _sneakSeconds;
+
+        /// <summary>근처 체류로 오르는 뒤척임에 곱하는 값: 서 있으면 1, 웅크리면 0.5에서 이어 움직일수록 조금씩 오른다.</summary>
+        public float PresenceStirFactor(bool crouching)
+        {
+            return crouching ? 0.5f * (1f + Math.Min(_balance.SneakStirMaxExtra, _sneakSeconds * _balance.SneakStirRampPerSecond)) : 1f;
+        }
+
+        private void TrackSneak(PlayerSnapshot player, float dt)
+        {
+            var moved = player.AreaId == _lastPlayerArea && Math.Abs(player.X - _lastPlayerX) > 0.05f * dt;
+            _lastPlayerArea = player.AreaId;
+            _lastPlayerX = player.X;
+            if (!player.Crouching || player.Hidden)
+            {
+                _sneakSeconds = 0f;
+                _stillSeconds = 0f;
+            }
+            else if (moved)
+            {
+                _sneakSeconds += dt;
+                _stillSeconds = 0f;
+            }
+            else
+            {
+                _stillSeconds += dt;
+                if (_stillSeconds >= _balance.SneakStirResetSeconds)
+                {
+                    _sneakSeconds = 0f;
+                }
+            }
+        }
+
         public ThreatSimulation(BalanceConfig balance, IRandomService random)
         {
             _balance = balance ?? throw new ArgumentNullException(nameof(balance));
@@ -555,6 +595,7 @@ namespace ApoGirl.Exploration.Model
                 Hear(noise, mods);
             }
 
+            TrackSneak(player, dt);
             foreach (var crowd in _crowds)
             {
                 if (crowd.Awake)
@@ -564,7 +605,7 @@ namespace ApoGirl.Exploration.Model
 
                 if (!player.Hidden && player.AreaId == crowd.AreaId && Math.Abs(player.X - crowd.X) <= _balance.PresenceRange)
                 {
-                    crowd.Stirring += _balance.PresenceStirPerSecond * mods.Stir * dt * (player.Crouching ? 0.5f : 1f);
+                    crowd.Stirring += _balance.PresenceStirPerSecond * mods.Stir * dt * PresenceStirFactor(player.Crouching);
                 }
 
                 // 임계 도달을 먼저 판정하고, 아니면 서서히 가라앉는다

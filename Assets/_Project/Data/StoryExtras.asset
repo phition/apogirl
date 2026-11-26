@@ -8090,8 +8090,28 @@ MonoBehaviour:
         Amount: -3
       WeeklyStress: 0
       TextKey: faction.FAC_SAGEORI.effect.truce
-    Trades: []
-    TradeIntervalWeeks: 1
+    Trades:
+    - Id: FOOD_MATERIALS
+      MinTier: 2
+      Give:
+      - Resource: 0
+        Amount: 6
+      Get:
+      - Resource: 5
+        Amount: 8
+      StandingChange: 1
+      Delayed: 0
+    - Id: MATERIALS_FOOD
+      MinTier: 2
+      Give:
+      - Resource: 5
+        Amount: 8
+      Get:
+      - Resource: 0
+        Amount: 4
+      StandingChange: 1
+      Delayed: 0
+    TradeIntervalWeeks: 2
     GoneFlag: 
     FlagReactions: []
   - Id: FAC_MART
@@ -8141,40 +8161,40 @@ MonoBehaviour:
       MinTier: 2
       Give:
       - Resource: 5
-        Amount: 4
+        Amount: 8
       Get:
       - Resource: 0
-        Amount: 3
+        Amount: 6
       StandingChange: 1
       Delayed: 0
     - Id: MEDICINE_FOOD
-      MinTier: 3
+      MinTier: 2
       Give:
       - Resource: 2
-        Amount: 1
+        Amount: 2
       Get:
       - Resource: 0
-        Amount: 4
+        Amount: 8
       StandingChange: 3
       Delayed: 0
     - Id: FOOD_FUEL
-      MinTier: 3
+      MinTier: 2
       Give:
       - Resource: 0
-        Amount: 4
+        Amount: 8
       Get:
       - Resource: 3
-        Amount: 2
+        Amount: 4
       StandingChange: 1
       Delayed: 0
     - Id: MATERIALS_WATER
-      MinTier: 4
+      MinTier: 2
       Give:
       - Resource: 5
-        Amount: 3
+        Amount: 6
       Get:
       - Resource: 1
-        Amount: 5
+        Amount: 10
       StandingChange: 1
       Delayed: 0
     TradeIntervalWeeks: 2
@@ -8223,23 +8243,23 @@ MonoBehaviour:
       TextKey: faction.FAC_UBC.effect.allied
     Trades:
     - Id: FUEL_MEDICINE
-      MinTier: 3
+      MinTier: 2
       Give:
       - Resource: 3
-        Amount: 2
+        Amount: 4
       Get:
       - Resource: 2
-        Amount: 1
+        Amount: 2
       StandingChange: 3
       Delayed: 1
     - Id: MATERIALS_INTEL
-      MinTier: 3
+      MinTier: 2
       Give:
       - Resource: 5
-        Amount: 3
+        Amount: 6
       Get:
       - Resource: 1
-        Amount: 4
+        Amount: 8
       StandingChange: 2
       Delayed: 1
     TradeIntervalWeeks: 2

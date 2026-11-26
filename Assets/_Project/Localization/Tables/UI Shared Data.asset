@@ -9071,6 +9071,30 @@ MonoBehaviour:
     m_Key: bbs.no_power
     m_Metadata:
       m_Items: []
+  - m_Id: 2690047429328896
+    m_Key: faction.trade.same
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2690047509020672
+    m_Key: faction.trade.bonus
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2691292227452928
+    m_Key: trade.FAC_SAGEORI.FOOD_MATERIALS
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2691292336504832
+    m_Key: trade.FAC_SAGEORI.FOOD_MATERIALS.log
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2691292336504833
+    m_Key: trade.FAC_SAGEORI.MATERIALS_FOOD
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2691292336504834
+    m_Key: trade.FAC_SAGEORI.MATERIALS_FOOD.log
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

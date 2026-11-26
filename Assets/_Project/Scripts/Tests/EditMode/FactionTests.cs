@@ -114,32 +114,71 @@ namespace ApoGirl.Tests.EditMode
             var state = NewState(db);
             var mart = state.Factions["FAC_MART"];
             mart.Known = true;
-            state.Base.SetResource(ResourceType.Medicine, 2);
+            state.Base.SetResource(ResourceType.Medicine, 4);
             state.Base.SetResource(ResourceType.Food, 0);
-            Assert.AreEqual("faction.trade.tier", FactionRules.TradeBlocker(state, db, "FAC_MART", "MEDICINE_FOOD"), "중립은 약품 거래 불가");
+            mart.Standing = -30;
+            Assert.AreEqual("faction.trade.tier", FactionRules.TradeBlocker(state, db, "FAC_MART", "MEDICINE_FOOD"), "사이가 나쁘면 거래 불가");
 
-            mart.Standing = 30;
+            // 중립부터 한 가지씩 거래한다 (수량은 예전의 2배: 의약품 2 → 식량 8)
+            mart.Standing = 0;
             Assert.IsTrue(FactionRules.Trade(state, db, "FAC_MART", "MEDICINE_FOOD", new StateDelta()));
-            Assert.AreEqual(1, state.Base.GetResource(ResourceType.Medicine));
-            Assert.AreEqual(4, state.Base.GetResource(ResourceType.Food));
-            Assert.AreEqual(33, mart.Standing);
-            Assert.AreEqual("faction.trade.weekly", FactionRules.TradeBlocker(state, db, "FAC_MART", "MEDICINE_FOOD"), "더불어 마트는 2주에 한 번");
+            Assert.AreEqual(2, state.Base.GetResource(ResourceType.Medicine));
+            Assert.AreEqual(8, state.Base.GetResource(ResourceType.Food));
+            Assert.AreEqual(3, mart.Standing);
+            Assert.AreEqual("faction.trade.same", FactionRules.TradeBlocker(state, db, "FAC_MART", "MEDICINE_FOOD"), "같은 물건은 다음 운반에");
+            Assert.AreEqual("faction.trade.weekly", FactionRules.TradeBlocker(state, db, "FAC_MART", "FOOD_FUEL"), "중립은 한 번에 한 가지");
             state.Calendar.Week++;
-            Assert.AreEqual("faction.trade.weekly", FactionRules.TradeBlocker(state, db, "FAC_MART", "MEDICINE_FOOD"));
+            Assert.AreEqual("faction.trade.weekly", FactionRules.TradeBlocker(state, db, "FAC_MART", "FOOD_FUEL"), "더불어 마트는 2주에 한 번");
             state.Calendar.Week++;
             Assert.IsNull(FactionRules.TradeBlocker(state, db, "FAC_MART", "MEDICINE_FOOD"), "2주 뒤에는 다시");
 
-            // UBC 무전 거래: 다음 주 정산 때 도착
+            // 가까울수록 더 받는다: 평판 30이면 ×1.5, 동맹(60)이면 ×2
+            Assert.AreEqual(1f, FactionRules.TradeGetMultiplier(-10, db.Balance), 1e-5f);
+            Assert.AreEqual(1.5f, FactionRules.TradeGetMultiplier(30, db.Balance), 1e-5f);
+            Assert.AreEqual(2f, FactionRules.TradeGetMultiplier(60, db.Balance), 1e-5f);
+            Assert.AreEqual(2f, FactionRules.TradeGetMultiplier(100, db.Balance), 1e-5f);
+
+            // 동맹: 한 번에 두 가지, 받는 양 2배
+            mart.Standing = 60;
+            state.Base.SetResource(ResourceType.Food, 8);
+            state.Base.SetResource(ResourceType.Materials, 6);
+            state.Base.SetResource(ResourceType.Fuel, 0);
+            state.Base.SetResource(ResourceType.Water, 0);
+            Assert.IsTrue(FactionRules.Trade(state, db, "FAC_MART", "FOOD_FUEL", new StateDelta()));
+            Assert.AreEqual(8, state.Base.GetResource(ResourceType.Fuel), "연료 4의 2배");
+            Assert.IsTrue(FactionRules.Trade(state, db, "FAC_MART", "MATERIALS_WATER", new StateDelta()), "동맹은 두 가지째도");
+            Assert.AreEqual(20, state.Base.GetResource(ResourceType.Water), "물 10의 2배");
+            Assert.AreEqual("faction.trade.weekly", FactionRules.TradeBlocker(state, db, "FAC_MART", "MEDICINE_FOOD"), "세 가지째는 안 된다");
+
+            // 옛 세이브(이번 주기 거래 기록이 비어 있음): 이미 한 번 한 것으로 본다
+            mart.Standing = 10;
+            mart.WindowTrades.Clear();
+            Assert.AreEqual("faction.trade.weekly", FactionRules.TradeBlocker(state, db, "FAC_MART", "MEDICINE_FOOD"));
+
+            // 사거리 파: 휴전(중립)부터 식량과 자재를 맞바꾼다
+            var sageori = state.Factions["FAC_SAGEORI"];
+            sageori.Known = true;
+            state.Base.SetResource(ResourceType.Food, 6);
+            state.Base.SetResource(ResourceType.Materials, 0);
+            Assert.AreEqual("faction.trade.tier", FactionRules.TradeBlocker(state, db, "FAC_SAGEORI", "FOOD_MATERIALS"), "경계 중에는 거래 불가");
+            sageori.Standing = 0;
+            Assert.IsTrue(FactionRules.Trade(state, db, "FAC_SAGEORI", "FOOD_MATERIALS", new StateDelta()));
+            Assert.AreEqual(0, state.Base.GetResource(ResourceType.Food));
+            Assert.AreEqual(8, state.Base.GetResource(ResourceType.Materials));
+            Assert.AreEqual("faction.trade.weekly", FactionRules.TradeBlocker(state, db, "FAC_SAGEORI", "MATERIALS_FOOD"));
+
+            // UBC 무전 거래: 다음 주 정산 때 도착 (평판 30이면 의약품 2 × 1.5 = 3)
             var ubc = state.Factions["FAC_UBC"];
             ubc.Known = true;
             ubc.Standing = 30;
-            state.Base.SetResource(ResourceType.Fuel, 1);
+            state.Base.SetResource(ResourceType.Medicine, 1);
+            state.Base.SetResource(ResourceType.Fuel, 3);
             Assert.AreEqual("faction.trade.short", FactionRules.TradeBlocker(state, db, "FAC_UBC", "FUEL_MEDICINE"));
-            state.Base.SetResource(ResourceType.Fuel, 2);
+            state.Base.SetResource(ResourceType.Fuel, 4);
             Assert.IsTrue(FactionRules.Trade(state, db, "FAC_UBC", "FUEL_MEDICINE", new StateDelta()));
             Assert.AreEqual(1, state.Base.GetResource(ResourceType.Medicine), "아직 안 왔다");
             FactionRules.ApplyWeekly(state, db, db.Balance, new StateDelta());
-            Assert.AreEqual(2, state.Base.GetResource(ResourceType.Medicine), "다음 주 도착");
+            Assert.AreEqual(4, state.Base.GetResource(ResourceType.Medicine), "다음 주 도착");
         }
 
         [Test]

@@ -399,7 +399,7 @@ namespace ApoGirl.Presentation.Screens
                     ready++;
                 }
 
-                weekly |= blocker == "faction.trade.weekly";
+                weekly |= blocker == "faction.trade.weekly" || blocker == "faction.trade.same";
                 shortOf |= blocker == "faction.trade.short";
                 planning |= blocker == "faction.trade.planning";
                 if (offer.MinTier < minTier)

@@ -875,6 +875,20 @@ namespace ApoGirl.Core.Definitions
             },
         };
 
+        // ── 세력 거래 (사용자 요청 2026-11-26) ──
+
+        /// <summary>한 운반 주기(세력의 TradeIntervalWeeks)에 거래할 수 있는 가짓수: 기본 / 동맹. 같은 물건을 두 번 하지는 못한다.</summary>
+        public int FactionTradesPerWindow = 1;
+        public int FactionTradesPerWindowAllied = 2;
+
+        /// <summary>
+        /// 가까울수록 같은 값에 더 받는다: 평판이 Start에서 Full(동맹 문턱)까지 오르는 동안 받는 양이 ×1 → ×(1 + Max)로 늘어난다.
+        /// 주는 양은 그대로. 받는 양은 내림.
+        /// </summary>
+        public int FactionTradeBonusStartStanding = 0;
+        public int FactionTradeBonusFullStanding = 60;
+        public float FactionTradeBonusMax = 1f;
+
         // ── 탐험마다 다른 적 배치 (SpawnRules) ──
 
         /// <summary>켜면 좀비 무리의 자리를 출정마다 다시 고른다 (수·종류·층은 그대로). 끄면 지역 정의의 자리 그대로.</summary>
@@ -1245,6 +1259,9 @@ namespace ApoGirl.Core.Definitions
         public float StressSearchThreshold = 60f;
         public float StressSearchMaxExtra = 0.5f;
 
+        /// <summary>스트레스로 수색이 늘어졌을 때 한숨을 쉴 확률 (상자 하나에 한 번 굴림). 매번 쉬면 거슬려서 셋에 한 번쯤 (사용자 요청 2026-11-26: 30~40%).</summary>
+        public float SearchSighChance = 0.35f;
+
         // ── 탐험 스태미너 (달리기·싸움) ──
         /// <summary>최대치 = StaminaBase + 체력 능력치 × StaminaPerStat.</summary>
         public float StaminaBase = 100f;
@@ -1303,6 +1320,9 @@ namespace ApoGirl.Core.Definitions
         public float DropNoise = 3f;
         public float ShoveNoise = 7f;
 
+        /// <summary>쇠지렛대로 잠긴 방·잠긴 출구를 비틀어 열 때의 소음 (달리기보다 크다 — 사용자 요청 2026-11-26: 7 → 12).</summary>
+        public float CrowbarDoorNoise = 12f;
+
         /// <summary>과적 시 이동 소음 배율 (금속 덜컹거림).</summary>
         public float OverweightNoiseMultiplier = 1.5f;
 
@@ -1312,6 +1332,15 @@ namespace ApoGirl.Core.Definitions
         public float StirPerNoiseUnit = 14f;
         public float PresenceStirPerSecond = 7f;
         public float PresenceRange = 4f;
+
+        /// <summary>
+        /// 잠든 무리 곁을 웅크려 지날 때 쉬지 않고 움직이면 뒤척임이 더 빨리 오른다 (사용자 요청 2026-11-26):
+        /// 이어서 움직인 1초마다 +SneakStirRampPerSecond, 최대 +SneakStirMaxExtra (웅크림 기본 ×0.5에 곱한다 — 최대여도 서서 걷기보다는 낮다).
+        /// SneakStirResetSeconds 이상 멈춰 있으면 처음부터 다시 센다 — 가다 서다 하며 지나가면 덜 깨운다.
+        /// </summary>
+        public float SneakStirRampPerSecond = 0.15f;
+        public float SneakStirMaxExtra = 0.6f;
+        public float SneakStirResetSeconds = 0.6f;
         public float ChainWakeRadius = 12f;
 
         public float SearchDuration = 6f;
@@ -1334,6 +1363,17 @@ namespace ApoGirl.Core.Definitions
         public float ShoveStunSeconds = 2.5f;
         public float ShovePush = 1.5f;
         public float ShoveCooldown = 1.5f;
+
+        // ── 호신술과 공격 속도 (사용자 요청 2026-11-26) ──
+
+        /// <summary>
+        /// 전술·호신술 숙련 1단계마다 무기를 다시 휘두르기까지의 대기(무기의 AttackCooldown)가 이만큼 줄어든다 (0.08 = 8%, 5단계 −40%).
+        /// 타격·소음·스태미너 소모는 그대로 — 빨리 휘두를 뿐 한 방이 세지지는 않는다.
+        /// </summary>
+        public float AttackCooldownPerSelfDefenseLevel = 0.08f;
+
+        /// <summary>줄어든 대기의 하한 (초). 휘두르는 동작(0.5초)이 끝나기 전에 다시 휘두르지 않게.</summary>
+        public float AttackCooldownMin = 0.55f;
 
         /// <summary>
         /// 좀비 손이 닿아 물린 순간: 다침 동작 시간(초) — 그동안 문 좀비는 그 자리에 멈췄다가 다시 다가온다.

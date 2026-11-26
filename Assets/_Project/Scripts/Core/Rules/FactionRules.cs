@@ -299,9 +299,18 @@ namespace ApoGirl.Core.Rules
                 return "faction.trade.tier";
             }
 
-            if (faction.LastTradeWeek > 0 && state.Calendar.Week - faction.LastTradeWeek < Math.Max(1, def.TradeIntervalWeeks))
+            // 이번 운반 주기에 이미 한 거래: 가짓수 한도(동맹은 둘)를 넘거나 같은 물건이면 다음 주기에
+            if (InTradeWindow(state, def, faction))
             {
-                return "faction.trade.weekly";
+                if (faction.WindowTrades.Contains(offerId))
+                {
+                    return "faction.trade.same";
+                }
+
+                if (Math.Max(1, faction.WindowTrades.Count) >= TradeLimit(faction.Standing, db.Balance))
+                {
+                    return "faction.trade.weekly";
+                }
             }
 
             foreach (var give in offer.Give)
@@ -313,6 +322,48 @@ namespace ApoGirl.Core.Rules
             }
 
             return null;
+        }
+
+        private static bool InTradeWindow(GameState state, FactionDef def, FactionState faction)
+        {
+            return faction.LastTradeWeek > 0 && state.Calendar.Week - faction.LastTradeWeek < Math.Max(1, def.TradeIntervalWeeks);
+        }
+
+        /// <summary>한 운반 주기에 거래할 수 있는 가짓수: 동맹이면 둘, 아니면 하나.</summary>
+        public static int TradeLimit(int standing, BalanceConfig balance)
+        {
+            if (balance == null)
+            {
+                return 1;
+            }
+
+            return Math.Max(1, TierOf(standing) >= FactionTier.Allied ? balance.FactionTradesPerWindowAllied : balance.FactionTradesPerWindow);
+        }
+
+        /// <summary>받는 양 배율: 평판이 오를수록 늘어 동맹 문턱에서 최대 (기본 ×2).</summary>
+        public static float TradeGetMultiplier(int standing, BalanceConfig balance)
+        {
+            if (balance == null)
+            {
+                return 1f;
+            }
+
+            var span = Math.Max(1f, balance.FactionTradeBonusFullStanding - balance.FactionTradeBonusStartStanding);
+            var t = Math.Min(1f, Math.Max(0f, (standing - balance.FactionTradeBonusStartStanding) / span));
+            return 1f + t * Math.Max(0f, balance.FactionTradeBonusMax);
+        }
+
+        /// <summary>지금 평판에서 그 거래로 실제 받는 양 (내림, 화면과 거래가 같이 쓴다).</summary>
+        public static List<ResourceAmount> TradeGets(TradeOfferDef offer, int standing, BalanceConfig balance)
+        {
+            var result = new List<ResourceAmount>();
+            var multiplier = TradeGetMultiplier(standing, balance);
+            foreach (var get in offer.Get)
+            {
+                result.Add(new ResourceAmount { Resource = get.Resource, Amount = (int)Math.Floor(get.Amount * multiplier + 1e-4f) });
+            }
+
+            return result;
         }
 
         public static bool Trade(GameState state, IDefinitionDatabase db, string factionId, string offerId, StateDelta delta)
@@ -330,7 +381,7 @@ namespace ApoGirl.Core.Rules
                 EffectApplier.ChangeResource(state, give.Resource, -give.Amount, delta);
             }
 
-            foreach (var get in offer.Get)
+            foreach (var get in TradeGets(offer, faction.Standing, db.Balance))
             {
                 if (offer.Delayed)
                 {
@@ -344,7 +395,18 @@ namespace ApoGirl.Core.Rules
                 }
             }
 
-            faction.LastTradeWeek = state.Calendar.Week;
+            if (!InTradeWindow(state, def, faction))
+            {
+                // 새 운반 주기: 이 거래가 첫 번째
+                faction.LastTradeWeek = state.Calendar.Week;
+                faction.WindowTrades.Clear();
+            }
+            else if (faction.WindowTrades.Count == 0)
+            {
+                faction.WindowTrades.Add("");   // 옛 세이브: 이번 주기에 이미 한 번 했다
+            }
+
+            faction.WindowTrades.Add(offerId);
             Change(state, factionId, offer.StandingChange, false, "trade." + factionId + "." + offer.Id + ".log", delta);
             return true;
         }
