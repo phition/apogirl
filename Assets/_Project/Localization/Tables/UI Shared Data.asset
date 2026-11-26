@@ -9103,6 +9103,34 @@ MonoBehaviour:
     m_Key: plan.slot_forced
     m_Metadata:
       m_Items: []
+  - m_Id: 2739017098739712
+    m_Key: bbs.write_sending
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2739017178431488
+    m_Key: bbs.write_offline
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2739017178431489
+    m_Key: bbs.write_refused
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2739017178431490
+    m_Key: bbs.write_blocked
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2739017178431491
+    m_Key: bbs.online_loading
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2739017178431492
+    m_Key: bbs.online_ok
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2739017178431493
+    m_Key: bbs.online_fail
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

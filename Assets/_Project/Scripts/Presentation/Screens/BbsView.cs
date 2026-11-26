@@ -136,6 +136,14 @@ namespace ApoGirl.Presentation.Screens
         private readonly Stack<Action> _back = new Stack<Action>();
         private Action _current;
 
+        // 온라인 게시판 (Firebase): 받아 둔 글과 지금 받는 중인지. 연결이 안 되면 내 컴퓨터의 글만 보인다
+        private BbsOnline _online;
+        private List<BbsConfig.Post> _onlinePosts;
+        private bool _onlineLoading;
+        private int _onlineToken;
+        private float _onlineFetchedAt = -1000f;
+        private const float OnlineRefreshSeconds = 20f;   // 목록을 드나들 때마다 다시 받지 않게
+
         public BbsView(VisualElement host, GameSession session)
         {
             _host = host;
@@ -539,9 +547,53 @@ namespace ApoGirl.Presentation.Screens
 
         private void ShowBoard()
         {
+            ShowBoardList();
+            _online ??= new BbsOnline();
+            if (!_online.Available || _onlineLoading || Time.realtimeSinceStartup - _onlineFetchedAt < OnlineRefreshSeconds)
+            {
+                return;
+            }
+
+            // 회선 너머의 글을 받아 온다. 다 받으면, 아직 게시판 목록을 보고 있을 때만 목록을 새로 그린다
+            _online.Register(YarnFunctions.Name());   // 이용자 기록 (첫 접속 시각·이름)
+            _onlineLoading = true;
+            var token = ++_onlineToken;
+            _notice = Loc.T("bbs.online_loading");
+            Render();
+            _online.Fetch(posts =>
+            {
+                _onlineLoading = false;
+                if (posts != null)
+                {
+                    _onlinePosts = posts;
+                    _onlineFetchedAt = Time.realtimeSinceStartup;
+                }
+
+                if (!IsOpen || token != _onlineToken || _raw != null || _current != (Action)ShowBoard)
+                {
+                    return;
+                }
+
+                var page = _page;
+                ShowBoardList();
+                _page = page;
+                _notice = posts != null ? Loc.F("bbs.online_ok", posts.Count) : Loc.T("bbs.online_fail");
+                Render();
+            });
+        }
+
+        /// <summary>게시판 목록: 처음부터 있던 글 → 회선 너머에서 받은 글 → 내 컴퓨터에만 있는 글.</summary>
+        private void ShowBoardList()
+        {
             var posts = new List<BbsConfig.Post>(_config.Posts);
+            if (_onlinePosts != null)
+            {
+                posts.AddRange(_onlinePosts);
+            }
+
             posts.AddRange(BbsStore.Load().Posts);
             ShowPosts(Loc.T("bbs.board"), posts, true);
+            _current = ShowBoard;   // P로 돌아오면 다시 받아 온다
         }
 
         private void StartWrite()
@@ -578,17 +630,62 @@ namespace ApoGirl.Presentation.Screens
                 var date = state != null
                     ? CalendarRules.DateOf(state.Calendar.Week, state.Calendar.Day, _session.Definitions.Balance)
                     : (Month: 1, Day: 1);
-                BbsStore.Add(new BbsConfig.Post
+                var post = new BbsConfig.Post
                 {
                     Title = title,
                     Author = YarnFunctions.Name(),
                     Date = Loc.F("bbs.post_date", date.Month, date.Day),
                     Body = new[] { text },
-                });
+                };
                 EndRaw();
-                ShowBoard();
-                _notice = Loc.T("bbs.write_done");
+                _online ??= new BbsOnline();
+                if (!_online.Available)
+                {
+                    // 온라인 게시판을 쓰지 않는 설정: 예전처럼 내 컴퓨터에만
+                    BbsStore.Add(post);
+                    ShowBoard();
+                    _notice = Loc.T("bbs.write_done");
+                    Render();
+                    return true;
+                }
+
+                if (BbsOnline.IsBlocked(title, _online.Config) || BbsOnline.IsBlocked(text, _online.Config))
+                {
+                    ShowBoardList();
+                    _notice = Loc.T("bbs.write_blocked");
+                    Render();
+                    return true;
+                }
+
+                // 회선 너머로 올린다. 안 되면 내 컴퓨터에만 남긴다
+                post.Title = BbsOnline.Clean(post.Title, _online.Config.MaxTitle, _online.Config);
+                post.Body = new[] { BbsOnline.Clean(text, _online.Config.MaxBody, _online.Config) };
+                ShowBoardList();
+                _notice = Loc.T("bbs.write_sending");
                 Render();
+                var token = ++_onlineToken;
+                _online.Send(post, ok =>
+                {
+                    if (ok)
+                    {
+                        // 목록에는 다른 사람 글처럼 이름(꼬리표)로 보인다
+                        post.Author = post.Author + (_online.MyTag.Length > 0 ? "(" + _online.MyTag + ")" : "");
+                        (_onlinePosts ??= new List<BbsConfig.Post>()).Add(post);
+                    }
+                    else
+                    {
+                        BbsStore.Add(post);
+                    }
+
+                    if (!IsOpen || token != _onlineToken || _raw != null || _current != (Action)ShowBoard)
+                    {
+                        return;
+                    }
+
+                    ShowBoardList();
+                    _notice = Loc.T(ok ? "bbs.write_done" : "bbs.write_refused");
+                    Render();
+                });
                 return true;
             };
             Render();

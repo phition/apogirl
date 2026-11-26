@@ -4,7 +4,7 @@
 
 - 기준: 마스터 프롬프트 12장 마일스톤(원본 `C:\Users\phiti\Desktop\MASTER_PROMPT.md`), 결정 기록 부록 C(D1~D26).
 - 작성: 2026-11-25. 커밋 828개(2026-11-18 ~ 2026-11-26), fablable UI(`ver-fablable0.1` 이후)·단면도 A안을 main에 병합(2026-11-26) — 앞으로 이 버전으로 작업한다.
-- EditMode 테스트: 522개 모두 통과 (2026-11-26, 배치 모드로).
+- EditMode 테스트: 523개 모두 통과 (2026-11-27, 배치 모드로).
 - 자세한 내용은 각 계획 문서에 있다. 이 문서는 한눈에 보는 요약이다.
 - **새 세션은 이 문서부터 읽는다.** 작업이 하나 끝날 때마다 고친다.
   - 해당 절을 고친다.
@@ -455,3 +455,4 @@ M6·M7과 함께 기획 확장(동료·CD·깊은 곳·고양이·동아리·방
 - 2026-11-26 · 계획 보드 고정 꼬리표를 글('고정') 대신 압정 그림으로(사용자 요청): `Resources/Art/UI/Paper/ui_paper_pin.png`, `Theme.uss` `.slot-pin`(24px, 고정한 칸은 또렷하게·아닌 칸은 마우스를 올렸을 때만 흐린 회색), 글은 툴팁으로.
 - 2026-11-26 · **탐험 상태판** (사용자 요청: 글자·숫자뿐인 체력·소음 표시를 직관적으로): 새 `ExpeditionVitalsView`(`Exploration/Runtime/ExpeditionVitals.cs`) — 왼쪽 아래 한 판에 체력(하트 + 막대 + 숫자, 50 이하 주황·30 이하 빨강)·스태미너(막대 + 깎인 최대치 붉은 칸)·무게(찬 가방 그림 + 막대 + 'n/최대', 넘치면 빨강) 게이지, 소음 계기(점에서 퍼지는 파동 넷을 `Painter2D`로 그림: 웅크림 1·걷기 2·문·수색·밀치기 3·달리기·쇠지렛대 4칸, 초록 → 노랑 → 주황 → 빨강), 어두운 곳의 손전등 표시(켜짐·꺼짐 알약). 오른쪽 위 시계에는 해·달 아이콘과 좀비 활동성 눈금 넷(휴면 1칸 ~ 사냥 4칸, 경계 주황·사냥 빨강). 예전 글줄(`vitals-label`·`weight-label`·`noise-label`·활동성 글·스태미너 줄)은 숨겼다. 아이콘은 있던 그림을 썼다(`art_map.json` Icons `exp.bag`·`exp.light`·`exp.threat`·`exp.day`·`exp.night` — PixelLab은 쓰지 않음), 모양은 `Expedition.uss` 끝 '상태판' 절(`Expedition.uss.add`에도). 확인 그림 `Docs/look/exp_hud_*.jpg`. EditMode 522·PlayMode 15 통과.
 - 2026-11-27 · 방 이름이 영문 키로 나오던 것 고침(사용자 제보): 소품 배치 사본 템플릿(`{Id}_L1~`)의 ID로 방 이름 문구(`roomname.{템플릿}`)를 찾아 키가 그대로 보였다. `RoomTemplateDef.BaseId`·`KindId`(사본이면 원래 템플릿 ID)를 두고 방 이름은 `KindId`로 찾는다(`ExpeditionDirector`), `LocationBuilder.Rearranged`가 `BaseId`를 채운다, 지역 에셋 다시 만듦. 테스트 `RoomLayoutCopy_KeepsKindOfRoom`.
+- 2026-11-27 · **PC통신 열린 게시판 온라인 연결** (사용자 요청, 게시판 먼저): Firebase 실시간 데이터베이스(프로젝트 `apogirl-7aa98`, 싱가포르)를 SDK 없이 REST로 — `BbsOnline`(`Presentation/Screens/BbsOnline.cs`): 익명 로그인(갱신 토큰 `persistentDataPath/BbsOnline.json`), 최근 40건을 서버 시각 차례로 받기(색인이 없으면 글 ID 차례 예비 경로), 글 + 마지막 글 시각을 한 번의 쓰기로 올리기, 이용자 기록(첫 접속·이름), 올린이는 이름(꼬리표 4글자 = UID에서 뽑음 `BbsOnline.Tag`), 금칙어·글꼴 태그·길이 거르기. `BbsView.ShowBoard`가 있던 글을 먼저 보이고 받은 글을 이어 붙인다(20초 안에는 다시 받지 않음), 올리기 실패·규칙 거절이면 내 컴퓨터(`Bbs.json`)에만. 설정 `Resources/Bbs/bbs_online.json`(`Enabled`·주소·웹 API 키·뿌리 경로 정식 `bbs/v1`/개발 `bbs/test`·한도·금칙어), 보안 규칙·콘솔에서 할 일·자료 모양은 [BBS_ONLINE](BBS_ONLINE.md) — 규칙: 로그인한 사람만, 새 글만, 글 사이 60초, 새 계정 2분 대기, 차단 목록. IP는 쓰지 않는다(사용자와 상의). 시험 경로에서 REST 흐름(로그인·쓰기·읽기) 확인 뒤 시험 글 삭제. **남은 일: 사용자가 콘솔에 보안 규칙 게시(지금은 시험 모드로 열려 있음) → 그 뒤 간격·대기·차단 동작 확인**, 대화방 온라인, 신고·관리 도구. 문구 `bbs.online_*`·`bbs.write_*`, 테스트 `BbsOnlineTests`(PlayMode 4), 위키 46. EditMode 523·PlayMode 19 통과.
