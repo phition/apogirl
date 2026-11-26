@@ -482,6 +482,20 @@ namespace ApoGirl.Presentation.Screens
         /// <summary>제작 탭 머리의 "설계도" 단추 (제작 P7, CraftTreeView).</summary>
         public Action OpenTree { get; set; }
 
+        // 카드 끌어다 놓기: 카드를 눌러 끌면 계획 칸에 바로 놓는다 (PlannerView.BeginCardDrag·MoveCardDrag·EndCardDrag에 잇는다).
+        // 시간대별로 놓일 행동(지역 카드는 낮·밤이 다르다), 끄는 그림, 이름.
+        public Action<Func<DayPhase, string>, UnityEngine.Texture2D, string> DragBegan { get; set; }
+        public Action<UnityEngine.Vector2> DragMoved { get; set; }
+
+        /// <summary>놓은 자리 (패널 좌표). 칸에 놓였으면 true.</summary>
+        public Func<UnityEngine.Vector2, bool> DragEnded { get; set; }
+
+        private const float CardDragThreshold = 8f;
+        private int _dragPointer = -1;
+        private UnityEngine.Vector2 _dragFrom;
+        private bool _cardDragging;
+        private bool _suppressClick;
+
         /// <summary>행동을 고른 상태로 (단면도에서 방의 행동을 눌렀을 때). 그 행동의 분류 탭으로 옮긴다.</summary>
         public void Select(string actionId)
         {
@@ -584,11 +598,19 @@ namespace ApoGirl.Presentation.Screens
             var preview = _session.Preview(action.Id);
             var card = new Button(() =>
             {
+                if (_suppressClick)
+                {
+                    // 끌다가 놓은 것은 누르기로 치지 않는다
+                    _suppressClick = false;
+                    return;
+                }
+
                 SelectedActionId = IsSelected(action) ? "" : action.Id;
                 Refresh();
             });
             card.AddToClassList("action-card");
             var locationRun = IsLocationRun(action);
+            BindDrag(card, action, locationRun);
             var night = locationRun ? Sibling(action, DayPhase.Night) : null;
             var day = locationRun ? Sibling(action, DayPhase.Day) : null;
             var tag = locationRun ? (day != null && night != null ? SlotTag.Both : day != null ? SlotTag.DayOnly : SlotTag.NightOnly) : action.SlotTag;
@@ -698,6 +720,83 @@ namespace ApoGirl.Presentation.Screens
             }
 
             return row;
+        }
+
+        /// <summary>
+        /// 카드 끌기: 누른 채 조금 움직이면 끌기가 시작되고, 계획 칸 위에서 놓으면 그 칸에 들어간다.
+        /// 단추의 누르기 처리보다 먼저 받도록 내려가는 단계(TrickleDown)에 건다 — 단추가 포인터를 잡고 있어 움직임·떼기는 카드로 온다.
+        /// </summary>
+        private void BindDrag(Button card, ActionDef action, bool locationRun)
+        {
+            card.RegisterCallback<PointerDownEvent>(evt =>
+            {
+                if (evt.button == 0 && _session.IsPlanning)
+                {
+                    _dragPointer = evt.pointerId;
+                    _dragFrom = evt.position;
+                    _cardDragging = false;
+                    _suppressClick = false;
+                }
+            }, TrickleDown.TrickleDown);
+
+            card.RegisterCallback<PointerMoveEvent>(evt =>
+            {
+                if (_dragPointer != evt.pointerId)
+                {
+                    return;
+                }
+
+                if (!_cardDragging)
+                {
+                    if (((UnityEngine.Vector2)evt.position - _dragFrom).magnitude < CardDragThreshold || DragBegan == null)
+                    {
+                        return;
+                    }
+
+                    _cardDragging = true;
+                    Func<DayPhase, string> actionFor;
+                    if (locationRun)
+                    {
+                        actionFor = phase => Sibling(action, phase)?.Id;
+                    }
+                    else
+                    {
+                        actionFor = phase => action.Id;
+                    }
+
+                    var icon = StoryArt.Icon("act." + action.Id) ?? StoryArt.Icon("cat." + action.Category);
+                    DragBegan(actionFor, icon, Loc.Action(action.Id, "short"));
+                }
+
+                DragMoved?.Invoke(evt.position);
+            }, TrickleDown.TrickleDown);
+
+            card.RegisterCallback<PointerUpEvent>(evt =>
+            {
+                if (_dragPointer != evt.pointerId)
+                {
+                    return;
+                }
+
+                _dragPointer = -1;
+                if (_cardDragging)
+                {
+                    _cardDragging = false;
+                    // 카드 위에서 놓으면 단추가 누르기로 받아들이니 한 번 걸러 낸다
+                    _suppressClick = card.worldBound.Contains(evt.position);
+                    DragEnded?.Invoke(evt.position);
+                }
+            }, TrickleDown.TrickleDown);
+
+            card.RegisterCallback<PointerCaptureOutEvent>(_ =>
+            {
+                if (_cardDragging)
+                {
+                    _cardDragging = false;
+                    _dragPointer = -1;
+                    DragEnded?.Invoke(new UnityEngine.Vector2(-1f, -1f));
+                }
+            });
         }
 
         private static Label Line(string text, string cssClass)
@@ -1041,6 +1140,116 @@ namespace ApoGirl.Presentation.Screens
             }
 
             _planner.Add(_dragGhost);
+        }
+
+        // ── 팔레트 카드를 끌어다 놓기 (PaletteView.DragBegan·DragMoved·DragEnded) ──
+
+        private Func<DayPhase, string> _cardAction;
+
+        /// <summary>카드 끌기 시작: 놓을 수 있는 칸을 초록으로, 못 놓는 칸을 흐리게, 끄는 그림은 화면 맨 위 겹에.</summary>
+        public void BeginCardDrag(Func<DayPhase, string> actionFor, UnityEngine.Texture2D icon, string label)
+        {
+            if (!_session.IsPlanning || _dragging)
+            {
+                return;
+            }
+
+            _dragging = true;
+            _press = -1;
+            _cardAction = actionFor;
+            _dropIds = new string[_cells.Length][];
+            for (var i = 0; i < _cells.Length; i++)
+            {
+                var id = actionFor(CalendarRules.PhaseOf(i));
+                _dropIds[i] = string.IsNullOrEmpty(id) ? null : _session.PreviewIds(-1, i, id);
+                _cells[i].EnableInClassList("drop-ok", _dropIds[i] != null);
+                _cells[i].EnableInClassList("drop-bad", _dropIds[i] == null && !_session.State.Plan.Slots[i].Locked);
+            }
+
+            _dragGhost = new VisualElement { pickingMode = PickingMode.Ignore };
+            _dragGhost.AddToClassList("slot-drag-ghost");
+            if (icon != null)
+            {
+                var image = new VisualElement { pickingMode = PickingMode.Ignore };
+                image.AddToClassList("slot-drag-icon");
+                StoryArt.SetContain(image, icon);
+                _dragGhost.Add(image);
+            }
+            else
+            {
+                _dragGhost.AddToClassList("text");
+                _dragGhost.Add(new Label(label) { pickingMode = PickingMode.Ignore });
+            }
+
+            // 카드 쪽(플래너 밖)에서도 보이게 화면 전체 겹에 올린다
+            GhostHost().Add(_dragGhost);
+        }
+
+        public void MoveCardDrag(UnityEngine.Vector2 position)
+        {
+            if (!_dragging || _cardAction == null || _dragGhost == null)
+            {
+                return;
+            }
+
+            var local = _dragGhost.parent.WorldToLocal(position);
+            _dragGhost.style.left = local.x - GhostHalf;
+            _dragGhost.style.top = local.y - GhostHalf;
+            var target = Array.FindIndex(_cells, c => c.worldBound.Contains(position));
+            if (target != _dropTarget)
+            {
+                if (_dropTarget >= 0) _cells[_dropTarget].RemoveFromClassList("drop-target");
+                _dropTarget = target;
+                if (target >= 0) _cells[target].AddToClassList("drop-target");
+                GhostChanged?.Invoke(target >= 0 ? _dropIds[target] : null);
+            }
+        }
+
+        /// <summary>카드를 놓았다. 칸 위였으면 그 칸에 넣고 true (못 넣으면 까닭을 알린다).</summary>
+        public bool EndCardDrag(UnityEngine.Vector2 position)
+        {
+            if (!_dragging || _cardAction == null)
+            {
+                return false;
+            }
+
+            var actionFor = _cardAction;
+            var to = Array.FindIndex(_cells, c => c.worldBound.Contains(position));
+            _cardAction = null;
+            EndDrag();
+            if (to < 0 || !_session.IsPlanning)
+            {
+                return false;
+            }
+
+            var phase = CalendarRules.PhaseOf(to);
+            var actionId = actionFor(phase);
+            if (string.IsNullOrEmpty(actionId))
+            {
+                // 지역 카드인데 그 시간대 탐험이 아직 열리지 않았다
+                _notify(Loc.T(phase == DayPhase.Night ? "plan.expedition_night_locked" : "plan.expedition_day_locked"));
+                return true;
+            }
+
+            var placed = _session.SetSlot(to, actionId);
+            if (placed == PlanEditResult.Ok)
+            {
+                Audio.Sound.Play("Sfx/ui_slot_place", Audio.SoundCategory.Ui);
+            }
+
+            Report(placed, to);
+            return true;
+        }
+
+        private VisualElement GhostHost()
+        {
+            var host = _planner;
+            while (host.parent != null && host.name != "screen")
+            {
+                host = host.parent;
+            }
+
+            return host;
         }
 
         private void EndDrag()

@@ -38,7 +38,9 @@
         },
         {
           "Flag": "SCARECROW_UP",
-          "NotFlags": ["SCARECROW_BELL"],
+          "NotFlags": [
+            "SCARECROW_BELL"
+          ],
           "Image": "UI/HubObj/hub_obj_scarecrow"
         },
         {
@@ -47,7 +49,10 @@
         },
         {
           "Flag": "CRAFTED_ACT_CRAFT_SCARECROW",
-          "NotFlags": ["SCARECROW_UP", "SCARECROW_BELL"],
+          "NotFlags": [
+            "SCARECROW_UP",
+            "SCARECROW_BELL"
+          ],
           "Image": "UI/HubObj/hub_obj_scarecrow_down"
         }
       ],
@@ -59,6 +64,11 @@
       "FloorTex": "wall_floor_corridor",
       "Always": true,
       "Props": [
+        {
+          "Key": "decor_exitsign",
+          "X": 30,
+          "Y": 88
+        },
         {
           "Key": "prop_exit_glass",
           "X": 30
@@ -91,12 +101,35 @@
       "Always": true,
       "Props": [
         {
+          "Key": "prop_ceiling_lamp",
+          "X": 80,
+          "Y": 106
+        },
+        {
+          "Key": "decor_elecbox",
+          "X": 76,
+          "Y": 60
+        },
+        {
+          "Key": "decor_cobweb",
+          "X": 143,
+          "Y": 79
+        },
+        {
           "Key": "prop_shelf",
           "X": 128
         },
         {
           "Key": "prop_box",
           "X": 96
+        },
+        {
+          "Key": "prop_supplybox",
+          "X": 76
+        },
+        {
+          "Key": "decor_broom",
+          "X": 152
         }
       ],
       "Built": [
@@ -139,12 +172,31 @@
       "Facility": "CAFETERIA",
       "Props": [
         {
+          "Key": "prop_ceiling_lamp",
+          "X": 60,
+          "Y": 106
+        },
+        {
+          "Key": "decor_clock",
+          "X": 96,
+          "Y": 76
+        },
+        {
+          "Key": "decor_calendar",
+          "X": 132,
+          "Y": 70
+        },
+        {
           "Key": "prop_kitchen",
           "X": 40
         },
         {
           "Key": "decor_diningtable",
           "X": 118
+        },
+        {
+          "Key": "decor_watercooler",
+          "X": 158
         }
       ],
       "Actions": []
@@ -165,12 +217,26 @@
       "Facility": "INFIRMARY",
       "Props": [
         {
+          "Key": "prop_ceiling_lamp",
+          "X": 112,
+          "Y": 106
+        },
+        {
+          "Key": "decor_eyechart",
+          "X": 46,
+          "Y": 48
+        },
+        {
           "Key": "prop_bed",
           "X": 46
         },
         {
           "Key": "prop_medcabinet",
           "X": 128
+        },
+        {
+          "Key": "decor_sanitizer",
+          "X": 90
         }
       ],
       "Actions": [
@@ -191,12 +257,31 @@
       "Facility": "STAFFROOM",
       "Props": [
         {
+          "Key": "decor_staffboard",
+          "X": 52,
+          "Y": 56
+        },
+        {
+          "Key": "decor_clock",
+          "X": 104,
+          "Y": 76
+        },
+        {
+          "Key": "prop_ceiling_lamp",
+          "X": 128,
+          "Y": 106
+        },
+        {
           "Key": "office_desk",
           "X": 52
         },
         {
           "Key": "prop_filecabinet",
           "X": 128
+        },
+        {
+          "Key": "decor_plant",
+          "X": 92
         }
       ],
       "Actions": [
@@ -266,12 +351,26 @@
       "Facility": "SCIENCE",
       "Props": [
         {
+          "Key": "decor_safetyboard",
+          "X": 62,
+          "Y": 56
+        },
+        {
+          "Key": "prop_ceiling_lamp",
+          "X": 138,
+          "Y": 106
+        },
+        {
           "Key": "prop_labbench",
           "X": 60
         },
         {
           "Key": "prop_chemshelf",
           "X": 138
+        },
+        {
+          "Key": "decor_extinguisher",
+          "X": 100
         }
       ],
       "Actions": [
@@ -292,6 +391,16 @@
       "Facility": "LIBRARY",
       "Props": [
         {
+          "Key": "decor_clock",
+          "X": 68,
+          "Y": 76
+        },
+        {
+          "Key": "decor_worldmap",
+          "X": 140,
+          "Y": 54
+        },
+        {
           "Key": "decor_bookshelf",
           "X": 44
         },
@@ -302,6 +411,10 @@
         {
           "Key": "decor_smalltable",
           "X": 146
+        },
+        {
+          "Key": "decor_stool",
+          "X": 166
         }
       ],
       "Actions": [
@@ -329,6 +442,16 @@
       "FloorTex": "wall_floor_homeec",
       "Flag": "SEARCHED_HOMEEC",
       "Props": [
+        {
+          "Key": "decor_utensilrack",
+          "X": 80,
+          "Y": 46
+        },
+        {
+          "Key": "decor_clock",
+          "X": 150,
+          "Y": 78
+        },
         {
           "Key": "prop_stove",
           "X": 40
@@ -375,12 +498,21 @@
       "CdJacketGap": 2,
       "Props": [
         {
+          "Key": "decor_speaker",
+          "X": 134,
+          "Y": 80
+        },
+        {
           "Key": "prop_console",
           "X": 56
         },
         {
           "Key": "decor_radio",
           "X": 118
+        },
+        {
+          "Key": "decor_stool",
+          "X": 96
         }
       ],
       "Actions": [
@@ -404,12 +536,26 @@
       "Flag": "SEARCHED_MUSIC",
       "Props": [
         {
+          "Key": "decor_composers",
+          "X": 62,
+          "Y": 66
+        },
+        {
+          "Key": "prop_ceiling_lamp",
+          "X": 128,
+          "Y": 106
+        },
+        {
           "Key": "prop_piano",
           "X": 52
         },
         {
           "Key": "prop_musicstand",
           "X": 128
+        },
+        {
+          "Key": "decor_guitar",
+          "X": 92
         }
       ],
       "Actions": [
@@ -428,6 +574,16 @@
       "FloorTex": "wall_floor_computer",
       "Flag": "SEARCHED_COMPUTER",
       "Props": [
+        {
+          "Key": "decor_aircon",
+          "X": 112,
+          "Y": 90
+        },
+        {
+          "Key": "decor_poster_b",
+          "X": 76,
+          "Y": 66
+        },
         {
           "Key": "prop_computer",
           "X": 44
@@ -456,6 +612,21 @@
       "Facility": "GYM",
       "Props": [
         {
+          "Key": "decor_clock",
+          "X": 62,
+          "Y": 76
+        },
+        {
+          "Key": "decor_hooks_pe",
+          "X": 108,
+          "Y": 46
+        },
+        {
+          "Key": "prop_window",
+          "X": 206,
+          "Y": 48
+        },
+        {
           "Key": "prop_matpile",
           "X": 60
         },
@@ -465,7 +636,11 @@
         },
         {
           "Key": "decor_basketball",
-          "X": 212
+          "X": 188
+        },
+        {
+          "Key": "decor_cones",
+          "X": 226
         }
       ],
       "Actions": [
@@ -501,6 +676,18 @@
         {
           "Key": "decor_laundry",
           "X": 600
+        },
+        {
+          "Key": "decor_bench",
+          "X": 300
+        },
+        {
+          "Key": "decor_vent",
+          "X": 352
+        },
+        {
+          "Key": "decor_acunits",
+          "X": 528
         }
       ],
       "Actions": [
@@ -518,13 +705,17 @@
         },
         {
           "Flag": "ROOF_GARDEN",
-          "NotFlags": ["GREENHOUSE"],
+          "NotFlags": [
+            "GREENHOUSE"
+          ],
           "Key": "hub_roof_garden",
           "X": 430
         },
         {
           "Flag": "GREENHOUSE",
-          "NotFlags": ["SPRINKLER"],
+          "NotFlags": [
+            "SPRINKLER"
+          ],
           "Key": "hub_roof_greenhouse",
           "X": 434
         },

@@ -407,7 +407,7 @@
     "cat.Expedition": "탐험",
     "cat.Daily": "일상",
     "cat.Craft": "제작",
-    "palette.hint": "행동을 고른 뒤 아래 칸을 클릭하세요. 우클릭은 비우기.",
+    "palette.hint": "행동을 골라 칸을 누르거나, 카드를 끌어다 칸에 놓으세요. 우클릭은 비우기.",
     "palette.chance": "성공 {0}%",
     "palette.no_check": "판정 없음",
     "palette.cost": "피로 {0} · 스트레스 {1}",

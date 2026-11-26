@@ -18,6 +18,7 @@
     /* 종이·잉크·나무 */
     --paper: #f3ead6;
     --paper-shade: #e4d8ba;
+    --paper-edge: #4a4035;
     --note: #f4e68a;
     --ink: #2a2620;
     --ink-dim: #6d6353;
@@ -1648,19 +1649,19 @@ Button.base-advice-line:hover { background-color: rgba(42, 38, 32, 0.12); color:
 .toast {
     background-color: var(--paper);
     color: var(--ink);
-    border-radius: 2px;
-    border-bottom-width: 3px;
-    border-color: var(--paper-shade);
+    border-radius: 3px;
+    border-width: 2px;
+    border-color: var(--paper-edge);
 }
 
 /* ── 카드: 테이프로 붙인 종이 한 장 ── */
 .overlay { background-color: rgba(8, 12, 10, 0.68); }
 .card {
+    /* 상아색 창은 모두 짙은 잉크색 외곽선 하나 (사용자 요청 2026-11-26) */
     background-color: var(--paper);
-    border-color: var(--paper-shade);
-    border-width: 1px;
-    border-bottom-width: 4px;
-    border-radius: 2px;
+    border-color: var(--paper-edge);
+    border-width: 2px;
+    border-radius: 3px;
     padding: 30px 32px 20px 32px;
 }
 .card-tape {
@@ -1712,9 +1713,9 @@ Button.base-advice-line:hover { background-color: rgba(42, 38, 32, 0.12); color:
     font-size: 22px;
     color: var(--ink);
     background-color: var(--paper);
-    border-radius: 2px;
-    border-bottom-width: 2px;
-    border-color: var(--paper-shade);
+    border-radius: 3px;
+    border-width: 2px;
+    border-color: var(--paper-edge);
     rotate: -1.2deg;
 }
 .dialogue-text { font-size: 20px; }
@@ -1787,10 +1788,9 @@ Button.base-advice-line:hover { background-color: rgba(42, 38, 32, 0.12); color:
 /* ── 단면도 방 패널·CD 상세: 벽에 붙인 종이 ── */
 .hub-room-panel, .hub-cd-detail {
     background-color: var(--paper);
-    border-color: var(--paper-shade);
-    border-width: 1px;
-    border-bottom-width: 3px;
-    border-radius: 2px;
+    border-color: var(--paper-edge);
+    border-width: 2px;
+    border-radius: 3px;
 }
 .hub-room-panel Label, .hub-cd-detail Label { color: var(--ink); }
 .hub-room-panel .hub-room-panel-title { color: var(--ink); font-size: 19px; }
@@ -1804,7 +1804,7 @@ Button.base-advice-line:hover { background-color: rgba(42, 38, 32, 0.12); color:
 .hub-room-panel .hub-cd-track.playing, .hub-cd-detail .hub-cd-detail-play.playing { background-color: var(--accent); color: var(--ink); }
 .hub-cd-slot.owned:hover { border-color: var(--accent); }
 .hub-room:hover > .hub-room-name { background-color: var(--accent); color: var(--ink); }
-.hub-bubble { background-color: var(--paper); color: var(--ink); border-color: var(--ink); border-radius: 10px; }
+.hub-bubble { background-color: var(--paper); color: var(--ink); border-color: var(--paper-edge); border-radius: 10px; }
 
 /* ── 갤러리·음악실 ── */
 .gallery-view { background-color: var(--bg); }

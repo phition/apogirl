@@ -111,6 +111,10 @@ namespace ApoGirl.Presentation.Screens
             _craftTree = new CraftTreeView(_root, _session) { Picked = id => _palette.Select(id) };
             _palette.OpenTree = _craftTree.Show;
             _planner = new PlannerView(_root, _session, _palette.ActionFor, ShowToast);
+            // 카드 끌어다 놓기: 팔레트 카드를 끌어 계획 칸에 놓는다
+            _palette.DragBegan = _planner.BeginCardDrag;
+            _palette.DragMoved = _planner.MoveCardDrag;
+            _palette.DragEnded = _planner.EndCardDrag;
             _planSide = new PlanSideView(_root, _session);
             _flow = new PlanFlowView(_root, _session);
             _pins = TeacherPinPrefs.Load(_session.Definitions.Balance);
