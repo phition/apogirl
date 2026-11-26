@@ -15,9 +15,9 @@ namespace ApoGirl.Exploration.Runtime
     {
         /// <summary>
         /// 새 판을 만들어 그 행동(예: ACT_EXP_DAY_MART)의 탐험을 바로 시작한다. 이미 탐험 중이면 먼저 끝내고 false (한 번 더 부른다).
-        /// slot: 0 = 1일 낮, 1 = 1일 밤.
+        /// slot: 0 = 1일 낮, 1 = 1일 밤. rear: 탈출로를 열어 둔 것으로 하고 후문으로 들어간다 (학교 밖 지역).
         /// </summary>
-        public static bool Start(string actionId, int slot = 0, string weapon = "", string armor = "", string bag = "", string tool = "", string tool2 = "")
+        public static bool Start(string actionId, int slot = 0, string weapon = "", string armor = "", string bag = "", string tool = "", string tool2 = "", bool rear = false)
         {
             var running = Object.FindAnyObjectByType<ExpeditionDirector>();
             if (running != null)
@@ -83,6 +83,13 @@ namespace ApoGirl.Exploration.Runtime
             {
                 Debug.LogWarning("ExpeditionDebug: 탐험이 시작되지 않았다 (" + actionId + ")");
                 return false;
+            }
+
+            if (rear)
+            {
+                session.State.Flags.Add(ApoGirl.Core.Rules.ExitRules.OpenFlag(outcome.ExpeditionRequest.LocationId));
+                outcome.ExpeditionRequest.Flags.Add(ApoGirl.Core.Rules.ExitRules.OpenFlag(outcome.ExpeditionRequest.LocationId));
+                outcome.ExpeditionRequest.RearEntry = true;
             }
 
             hub.GetComponent<UIDocument>().rootVisualElement.style.display = DisplayStyle.None;

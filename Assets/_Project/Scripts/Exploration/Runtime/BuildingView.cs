@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using ApoGirl.Core.Definitions;
 using UnityEngine;
 
@@ -248,6 +249,97 @@ namespace ApoGirl.Exploration.Runtime
 
             var h = _layout.FloorHeight;
             var w = area.Width;
+            var panorama = BuildPanorama(root, entry, w);
+            if (!panorama)
+            {
+                BuildSkyline(root, entry, w, h);
+            }
+
+            Rect(root, "Ground", new Vector2(-40f, -20f), new Vector2(w + 80f, 20f), new Color(0.03f, 0.03f, 0.04f), -5);
+            Rect(root, "Road", new Vector2(-40f, -0.15f), new Vector2(w + 80f, 0.3f), new Color(0.2f, 0.2f, 0.21f), -3);
+            Rect(root, "EdgeL", new Vector2(-40f, -20f), new Vector2(40f - 0.2f, 60f), new Color(0.02f, 0.02f, 0.03f, 0.55f), 40);
+            Rect(root, "EdgeR", new Vector2(w + 0.2f, -20f), new Vector2(40f, 60f), new Color(0.02f, 0.02f, 0.03f, 0.55f), 40);
+
+            var rule = ExplorationArt.Decor(_locationId, entry ? "OUT_ENTRY" : "OUT_ESCAPE");
+            if (rule != null)
+            {
+                if (panorama)
+                {
+                    // 전경 앞에는 벽이 없다: 벽에 거는 장식(게시물 등)은 빼고 바닥 장식만
+                    rule = new ExplorationArt.DecorRule { Location = rule.Location, Template = rule.Template, Floor = rule.Floor, FloorDensity = rule.FloorDensity, WallDensity = 0f };
+                }
+
+                Scatter(root, rule, w, 0f, new List<(float, float)>(blocked), new List<(float, float)>(blocked), StableHash(_locationId + (entry ? "entry" : "escape")));
+            }
+        }
+
+        /// <summary>
+        /// 바깥 길 전경 (exploration_art.json Outdoor): 길가 낮은 담벼락 너머로 하늘 + 투명 배경의 마을·도시 그림 겹을 가로로 이어 붙이고,
+        /// 먼 겹은 천천히 따라온다(ParallaxLayer). 규칙이 없거나 그림이 하나도 없으면 false (예전 벽·코드 건물 윤곽).
+        /// </summary>
+        private bool BuildPanorama(Transform root, bool entry, float w)
+        {
+            var rule = ExplorationArt.Outdoor(_locationId, entry);
+            if (rule == null || rule.Layers == null || !rule.Layers.Any(l => ExplorationArt.Get(l.Key) != null))
+            {
+                return false;
+            }
+
+            Rect(root, "Sky", new Vector2(-40f, -20f), new Vector2(w + 80f, 60f), ParseColor(rule.Sky, new Color(0.56f, 0.63f, 0.7f)), -10);
+            var hash = StableHash(_locationId + (entry ? "pano_entry" : "pano_escape"));
+            foreach (var layer in rule.Layers)
+            {
+                var sprite = ExplorationArt.Get(layer.Key);
+                if (sprite == null)
+                {
+                    continue;
+                }
+
+                // 지역·길마다 이음매 자리를 조금씩 다르게 (화소 격자에 맞춰)
+                var tile = sprite.bounds.size.x;
+                var offset = Mathf.Round(Mathf.Abs((hash + layer.Key.Length * 97) % 1000) / 1000f * tile * ExplorationArt.PixelsPerUnit) / ExplorationArt.PixelsPerUnit;
+                var go = ExplorationArt.Tiled(root, "Panorama", layer.Key, new Vector2(-40f - offset, layer.Y), new Vector2(w + 80f + tile, sprite.bounds.size.y), layer.Order,
+                    new Color(0.4f, 0.45f, 0.5f));
+                FromBottomLeft(go, sprite, ParseColor(layer.Tint, Color.white));
+
+                if (layer.Parallax > 0f)
+                {
+                    var parallax = go.AddComponent<ParallaxLayer>();
+                    parallax.Factor = Mathf.Clamp01(layer.Parallax);
+                    parallax.CenterX = w * 0.5f;
+                }
+            }
+
+            // 길가 담벼락: 전경 겹들 앞, 보도까지 한 그림
+            var wall = ExplorationArt.Get(rule.Wall);
+            if (wall != null)
+            {
+                var wallView = ExplorationArt.Tiled(root, "Backdrop", rule.Wall, new Vector2(-12f, rule.WallY), new Vector2(w + 24f, wall.bounds.size.y), -6, new Color(0.33f, 0.34f, 0.36f));
+                FromBottomLeft(wallView, wall, ParseColor(rule.WallTint, Color.white));
+            }
+
+            return true;
+        }
+
+        /// <summary>이어 붙인 그림은 그림의 기준점 둘레에 놓인다: 기준점이 왼쪽 아래가 아닌 그림(가운데 아래 등)도 왼쪽 아래에서 시작하게 옮기고 색을 입힌다.</summary>
+        private static void FromBottomLeft(GameObject go, Sprite sprite, Color tint)
+        {
+            var renderer = go.GetComponent<SpriteRenderer>();
+            if (renderer == null)
+            {
+                return;
+            }
+
+            renderer.color = tint;
+            var pivot = new Vector2(sprite.pivot.x / sprite.rect.width, sprite.pivot.y / sprite.rect.height);
+            go.transform.localPosition += new Vector3(renderer.size.x * pivot.x, renderer.size.y * pivot.y, 0f);
+        }
+
+        private static Color ParseColor(string hex, Color fallback) => ColorUtility.TryParseHtmlString(hex ?? "", out var c) ? c : fallback;
+
+        /// <summary>예전 바깥 길 뒤: 코드로 그린 먼 건물 윤곽 두 겹 + 거리·골목 벽 그림.</summary>
+        private void BuildSkyline(Transform root, bool entry, float w, float h)
+        {
             Rect(root, "Sky", new Vector2(-40f, -20f), new Vector2(w + 80f, 60f), new Color(0.56f, 0.63f, 0.7f), -9);
             // 먼 건물 윤곽: 너비·높이가 제각각인 건물을 두 겹으로 (지역·길마다 같은 모양)
             var skyline = new System.Random(StableHash(_locationId + (entry ? "sky_entry" : "sky_escape")));
@@ -274,16 +366,6 @@ namespace ApoGirl.Exploration.Runtime
 
             ExplorationArt.Tiled(root, "Backdrop", entry ? "wall_out_street" : "wall_out_alley", new Vector2(-12f, 0.15f), new Vector2(w + 24f, h - 0.3f), -6,
                 new Color(0.33f, 0.34f, 0.36f));
-            Rect(root, "Ground", new Vector2(-40f, -20f), new Vector2(w + 80f, 20f), new Color(0.03f, 0.03f, 0.04f), -5);
-            Rect(root, "Road", new Vector2(-40f, -0.15f), new Vector2(w + 80f, 0.3f), new Color(0.2f, 0.2f, 0.21f), -3);
-            Rect(root, "EdgeL", new Vector2(-40f, -20f), new Vector2(40f - 0.2f, 60f), new Color(0.02f, 0.02f, 0.03f, 0.55f), 40);
-            Rect(root, "EdgeR", new Vector2(w + 0.2f, -20f), new Vector2(40f, 60f), new Color(0.02f, 0.02f, 0.03f, 0.55f), 40);
-
-            var rule = ExplorationArt.Decor(_locationId, entry ? "OUT_ENTRY" : "OUT_ESCAPE");
-            if (rule != null)
-            {
-                Scatter(root, rule, w, 0f, new List<(float, float)>(blocked), new List<(float, float)>(blocked), StableHash(_locationId + (entry ? "entry" : "escape")));
-            }
         }
 
         /// <summary>창문 사이 빈 벽 중 가장 넓은 구간의 가운데 (needed 이상일 때만).</summary>

@@ -164,6 +164,7 @@ MonoBehaviour:
     BroadcastProgram: 
     MinFreePower: 0
     UpgradesPower: 0
+    WeeklyLimitGroup: OUTING
     Craft:
       Line: 
       Tier: 0

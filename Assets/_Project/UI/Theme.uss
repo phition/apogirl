@@ -910,6 +910,9 @@ Button.selected { border-color: var(--accent); background-color: var(--accent-so
 .exp-buttons { }
 .exp-depart { height: 60px; font-size: 22px; -unity-font-style: bold; background-color: var(--accent-soft); border-color: var(--accent); }
 .exp-dispatch { height: 40px; font-size: 16px; margin-top: 6px; }
+/* 정문·후문 진입 (열어 둔 탈출로가 있는 지역) */
+.exp-entry-row { flex-direction: row; margin: 2px 0 8px 0; }
+.exp-entry { flex-grow: 1; height: 38px; font-size: 16px; margin: 0 6px 0 0; }
 
 /* 단면도 방 패널의 방 그림 */
 .hub-room-art { height: 130px; margin: 2px 0 6px 0; border-radius: 4px; }

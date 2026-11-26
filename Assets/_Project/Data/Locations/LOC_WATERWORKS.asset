@@ -76,25 +76,25 @@ MonoBehaviour:
         Collapsed: 0
       - Kind: 0
         Floor: 3
-        X: 24
+        X: 22.6
         TargetFloor: 4
         TargetX: -1
         Collapsed: 0
       - Kind: 0
         Floor: 4
-        X: 22.6
+        X: 24
         TargetFloor: 3
         TargetX: -1
         Collapsed: 0
       - Kind: 0
         Floor: 4
-        X: 24
+        X: 22.6
         TargetFloor: 5
         TargetX: -1
         Collapsed: 0
       - Kind: 0
         Floor: 5
-        X: 22.6
+        X: 24
         TargetFloor: 4
         TargetX: -1
         Collapsed: 0

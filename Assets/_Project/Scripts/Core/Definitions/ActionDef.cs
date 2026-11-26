@@ -152,8 +152,11 @@ namespace ApoGirl.Core.Definitions
         /// <summary>배터리를 써서 발전 용량을 올리는 행동 (PowerRules.Upgrade, 비용은 공학 숙련에 따라).</summary>
         public bool UpgradesPower;
 
-        /// <summary>한 주 계획에 하나만 놓이는 묶음 (동아리·방송). 비어 있으면 제한 없음.</summary>
-        public string WeeklyGroup => IsClub ? "CLUB" : IsBroadcast ? "BROADCAST" : "";
+        /// <summary>데이터로 정하는 한 주 한 번 묶음 (특별 휴식 — 소풍·수학여행 "OUTING"). 비어 있으면 없음.</summary>
+        public string WeeklyLimitGroup = "";
+
+        /// <summary>한 주 계획에 하나만 놓이는 묶음 (동아리·방송·특별 휴식). 비어 있으면 제한 없음.</summary>
+        public string WeeklyGroup => IsClub ? "CLUB" : IsBroadcast ? "BROADCAST" : WeeklyLimitGroup ?? "";
 
         /// <summary>제작 레시피 (Docs/CRAFTING_PROPOSAL.md 4.2절). Work가 0이면 제작이 아니다 (Unity 직렬화는 null을 두지 않는다).</summary>
         public CraftDef Craft = new CraftDef();

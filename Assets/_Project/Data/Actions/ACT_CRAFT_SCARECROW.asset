@@ -164,6 +164,7 @@ MonoBehaviour:
     BroadcastProgram: 
     MinFreePower: 0
     UpgradesPower: 0
+    WeeklyLimitGroup: 
     Craft:
       Line: SCARECROW
       Tier: 1

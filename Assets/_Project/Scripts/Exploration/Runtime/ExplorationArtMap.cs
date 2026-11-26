@@ -70,9 +70,39 @@ namespace ApoGirl.Exploration.Runtime
             public float WallDensity = 0.08f;
         }
 
+        /// <summary>
+        /// 바깥 길(진입로·탈출로)의 전경 한 겹: 투명 배경이 있는 마을·도시 그림을 가로로 이어 붙인다 (왼쪽 아래 기준, 픽셀 아트 PPU 그대로).
+        /// Parallax: 0 = 길과 함께 움직임(가까움), 1 = 카메라에 붙어 안 움직임(아주 멂). Order가 클수록 앞.
+        /// </summary>
+        [Serializable]
+        public sealed class OutdoorLayer
+        {
+            public string Key = "";
+            public float Y;
+            public float Parallax;
+            public string Tint = "#FFFFFF";
+            public int Order = -8;
+        }
+
+        /// <summary>바깥 길 전경: Route "ENTRY"(진입로)·"ESCAPE"(탈출로), Location이 비면 모든 지역, 쉼표로 여럿 (위에서부터 맞는 첫 줄).</summary>
+        [Serializable]
+        public sealed class OutdoorRule
+        {
+            public string Location = "";
+            public string Route = "";
+            public string Sky = "#8FA0B0";
+            public OutdoorLayer[] Layers = Array.Empty<OutdoorLayer>();
+
+            /// <summary>길가 낮은 담벼락 그림 (보도 포함, 전경 겹들 앞). 비면 담벼락 없이.</summary>
+            public string Wall = "";
+            public float WallY = 0.15f;
+            public string WallTint = "#FFFFFF";
+        }
+
         [Serializable]
         private sealed class ArtMap
         {
+            public OutdoorRule[] Outdoor = Array.Empty<OutdoorRule>();
             public WallRule[] Interior = Array.Empty<WallRule>();
             public WallRule[] Corridor = Array.Empty<WallRule>();
             public WallRule[] RoomOutside = Array.Empty<WallRule>();
@@ -359,6 +389,23 @@ namespace ApoGirl.Exploration.Runtime
                 if (rule.Id == encounterId && Get(rule.Key) != null)
                 {
                     return rule.Key;
+                }
+            }
+
+            return null;
+        }
+
+        /// <summary>바깥 길 전경 규칙: 진입로(entry) 또는 탈출로. 맞는 첫 줄, 없으면 null (예전 벽·코드 건물 윤곽).</summary>
+        public static OutdoorRule Outdoor(string locationId, bool entry)
+        {
+            var route = entry ? "ENTRY" : "ESCAPE";
+            foreach (var rule in Map.Outdoor)
+            {
+                // Location은 쉼표로 여러 지역을 적을 수 있다 ("RESIDENTIAL,PHARMACY")
+                var place = string.IsNullOrEmpty(rule.Location) || Array.Exists(rule.Location.Split(','), part => Has(locationId, part.Trim()));
+                if (place && (string.IsNullOrEmpty(rule.Route) || rule.Route == route))
+                {
+                    return rule;
                 }
             }
 

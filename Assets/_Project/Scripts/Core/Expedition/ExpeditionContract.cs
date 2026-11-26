@@ -69,6 +69,9 @@ namespace ApoGirl.Core.Expedition
         /// <summary>깊은 곳의 일방 출구 위치를 안다 (유랑자 특기, 기획 B). 들어가면 출구 자리를 알려 주고, 헤드리스는 깊이 들어갈 확률이 오른다.</summary>
         public bool KnowsDeepExits;
 
+        /// <summary>후문 진입 (출정 준비에서 고름): 쇠지렛대로 열어 둔 탈출로 끝에서 시작한다 (ExitRules.CanEnterRear). 헤드리스는 보지 않는다.</summary>
+        public bool RearEntry;
+
         /// <summary>특성 배율 (키 = TraitModifierKind 이름: SearchSpeed, NoiseMultiplier, RunSpeed, StealthBonus).</summary>
         public Dictionary<string, float> Modifiers = new Dictionary<string, float>();
 

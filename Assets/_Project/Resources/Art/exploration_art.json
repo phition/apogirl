@@ -1,4 +1,16 @@
 {
+  "Outdoor": [
+    { "Location": "RESIDENTIAL,PHARMACY,STORE", "Route": "ENTRY", "Sky": "#9DB0C0", "Wall": "out_wall_street_low", "Layers": [
+      { "Key": "roof_town", "Y": 1.7, "Parallax": 0.6, "Tint": "#C9D2DA", "Order": -9 },
+      { "Key": "out_town_near", "Y": 1.0, "Parallax": 0.3, "Tint": "#E6E6E6", "Order": -7 } ] },
+    { "Location": "RESIDENTIAL,PHARMACY,STORE", "Route": "ESCAPE", "Sky": "#9DB0C0", "Wall": "out_wall_alley_low", "Layers": [
+      { "Key": "roof_town", "Y": 1.0, "Parallax": 0.45, "Tint": "#E0E4E8", "Order": -8 } ] },
+    { "Location": "", "Route": "ENTRY", "Sky": "#93A4B4", "Wall": "out_wall_street_low", "Layers": [
+      { "Key": "out_city_far", "Y": 2.1, "Parallax": 0.7, "Tint": "#B4C0CB", "Order": -9 },
+      { "Key": "out_town_near", "Y": 1.0, "Parallax": 0.3, "Tint": "#E0E0E0", "Order": -7 } ] },
+    { "Location": "", "Route": "ESCAPE", "Sky": "#93A4B4", "Wall": "out_wall_alley_low", "Layers": [
+      { "Key": "out_city_far", "Y": 1.2, "Parallax": 0.6, "Tint": "#C2CCD6", "Order": -9 } ] }
+  ],
  "Interior": [
   {
    "Location": "LOC_RESIDENTIAL",

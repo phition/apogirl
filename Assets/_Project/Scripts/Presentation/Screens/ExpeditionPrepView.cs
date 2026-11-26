@@ -106,6 +106,7 @@ namespace ApoGirl.Presentation.Screens
 
             // ── 단추 ──
             _buttons.Clear();
+            BuildEntry(request, disaster);
             var depart = new Button(() =>
             {
                 _session.RefreshPendingLoadout();
@@ -134,6 +135,48 @@ namespace ApoGirl.Presentation.Screens
 
         public void Hide() => _sheet.AddToClassList("hidden");
 
+        /// <summary>후문 진입을 고른 지역 (이번 실행 동안 기억, 저장하지 않음).</summary>
+        private static readonly HashSet<string> RearChoice = new HashSet<string>();
+
+        /// <summary>
+        /// 정문·후문 진입: 쇠지렛대로 열어 둔 탈출로가 있는 학교 밖 지역만 (ExitRules). 후문이면 탈출로 끝에서 시작한다.
+        /// 재해가 다시 막은 후문(폭설)은 고를 수 없다.
+        /// </summary>
+        private void BuildEntry(ExpeditionRequest request, DisasterDef disaster)
+        {
+            var state = _session.State;
+            request.RearEntry = false;
+            if (!ExitRules.IsOpened(state.Flags, request.LocationId) || !_session.Definitions.TryGetLocation(request.LocationId, out var plain)
+                || !ExitRules.CanEnterRear(ExitRules.RunMap(plain, state.Flags, disaster)))
+            {
+                return;
+            }
+
+            request.RearEntry = RearChoice.Contains(request.LocationId);
+            Add(_buttons, Loc.T("prep.entry"), "exp-quick-label");
+            var row = new VisualElement();
+            row.AddToClassList("exp-entry-row");
+            Button front = null;
+            Button rear = null;
+            void Pick(bool back)
+            {
+                request.RearEntry = back;
+                if (back) RearChoice.Add(request.LocationId);
+                else RearChoice.Remove(request.LocationId);
+                front.EnableInClassList("exp-quick-on", !back);
+                rear.EnableInClassList("exp-quick-on", back);
+            }
+
+            front = new Button(() => Pick(false)) { text = Loc.T("prep.entry_front"), tooltip = Loc.T("prep.entry_front_hint") };
+            rear = new Button(() => Pick(true)) { text = Loc.T("prep.entry_rear"), tooltip = Loc.T("prep.entry_rear_hint") };
+            front.AddToClassList("exp-entry");
+            rear.AddToClassList("exp-entry");
+            row.Add(front);
+            row.Add(rear);
+            _buttons.Add(row);
+            Pick(request.RearEntry);
+        }
+
         private void BuildLoadout()
         {
             _loadout.Clear();
@@ -154,12 +197,16 @@ namespace ApoGirl.Presentation.Screens
             _standing.React("determined", 600f);
         }
 
-        /// <summary>장비 한 칸 (◀ ▶로 고른다). other: 같은 종류 다른 칸에 찬 것 (도구 두 칸은 서로 다른 도구만).</summary>
+        /// <summary>
+        /// 장비 한 칸 (◀ ▶로 고른다). other: 같은 종류 다른 칸에 찬 것 (도구 두 칸은 서로 다른 도구만).
+        /// 같은 장비가 내구도별로 여럿이면 내구도마다 한 칸씩 고른다 (고르면 그 묶음을 창고 맨 앞으로, LoadoutRules.BringToFront).
+        /// </summary>
         private void AddSlot(string labelKey, EquipSlot slot, string current, Action<string> set, string other = "")
         {
-            var options = new List<string> { "" };
-            options.AddRange(Owned(slot).Select(o => o.ItemId).Where(id => string.IsNullOrEmpty(other) || id != other));
-            var index = Math.Max(0, options.IndexOf(current));
+            var options = new List<(string Id, int Left)> { ("", 0) };
+            options.AddRange(Choices(slot).Where(o => string.IsNullOrEmpty(other) || o.Id != other));
+            var currentLeft = CurrentLeft(current);
+            var index = Math.Max(0, options.FindIndex(o => o.Id == (current ?? "") && (o.Id.Length == 0 || o.Left == currentLeft)));
 
             var row = new VisualElement();
             row.AddToClassList("exp-slot");
@@ -187,7 +234,13 @@ namespace ApoGirl.Presentation.Screens
                     return;
                 }
 
-                set(options[(index + direction + options.Count) % options.Count]);
+                var pick = options[(index + direction + options.Count) % options.Count];
+                if (pick.Id.Length > 0 && _session.Definitions.TryGetItem(pick.Id, out var picked))
+                {
+                    LoadoutRules.BringToFront(_session.State, picked, pick.Left);
+                }
+
+                set(pick.Id);
                 LoadoutRules.Sanitize(_session.State);
                 BuildLoadout();
             }
@@ -261,20 +314,49 @@ namespace ApoGirl.Presentation.Screens
             _loadout.Add(row);
         }
 
-        private List<ItemStack> Owned(EquipSlot slot)
+        /// <summary>그 칸에 찰 수 있는 것: 장비 ID마다, 내구가 있으면 남은 내구도마다 하나 (많이 남은 것부터).</summary>
+        private List<(string Id, int Left)> Choices(EquipSlot slot)
         {
             var db = _session.Definitions;
-            return _session.State.Storage
-                .Where(s => s.Count > 0 && db.TryGetItem(s.ItemId, out var def) && def.Slot == slot)
-                .GroupBy(s => s.ItemId)
-                .Select(g => new ItemStack { ItemId = g.Key, Count = g.Sum(s => s.Count), Durability = g.First().Durability })
-                .ToList();
+            var result = new List<(string Id, int Left)>();
+            foreach (var group in _session.State.Storage
+                         .Where(s => s.Count > 0 && db.TryGetItem(s.ItemId, out var def) && def.Slot == slot)
+                         .GroupBy(s => s.ItemId))
+            {
+                db.TryGetItem(group.Key, out var item);
+                result.AddRange(group.Select(s => item.LeftOf(s.Durability)).Distinct().OrderByDescending(l => l).Select(l => (group.Key, l)));
+            }
+
+            return result;
+        }
+
+        /// <summary>찬 장비의 남은 내구 (그 ID의 맨 앞 묶음).</summary>
+        private int CurrentLeft(string itemId)
+        {
+            if (string.IsNullOrEmpty(itemId) || !_session.Definitions.TryGetItem(itemId, out var item))
+            {
+                return 0;
+            }
+
+            var stack = _session.State.Storage.Find(s => s.ItemId == itemId && s.Count > 0);
+            return item.LeftOf(stack?.Durability ?? 0);
         }
 
 
+        /// <summary>장비 이름 ×개수. 내구도가 다른 같은 장비가 있으면 지금 고른 내구도의 개수와 "다른 내구 n개".</summary>
         private string Label(string itemId)
         {
             var count = LoadoutRules.CountInStorage(_session.State, itemId);
+            if (count > 1 && _session.Definitions.TryGetItem(itemId, out var item) && item.MaxDurability > 0)
+            {
+                var left = CurrentLeft(itemId);
+                var same = _session.State.Storage.Where(s => s.ItemId == itemId && item.LeftOf(s.Durability) == left).Sum(s => s.Count);
+                if (same < count)
+                {
+                    return Loc.Item(itemId) + (same > 1 ? " ×" + same : "") + " " + Loc.F("prep.other_durability", count - same);
+                }
+            }
+
             return Loc.Item(itemId) + (count > 1 ? " ×" + count : "");
         }
 

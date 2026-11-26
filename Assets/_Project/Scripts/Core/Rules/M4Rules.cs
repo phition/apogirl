@@ -274,6 +274,29 @@ namespace ApoGirl.Core.Rules
             if (!string.IsNullOrEmpty(loadout.Armor)) yield return loadout.Armor;
         }
 
+        /// <summary>
+        /// 같은 장비가 내구도별로 여럿일 때 찰 것을 고른다: 창고에서 그 내구(남은 값 left)의 묶음을 그 ID의 맨 앞으로 옮긴다
+        /// (찬 장비 = 그 ID의 맨 앞 묶음). 그런 묶음이 없으면 false.
+        /// </summary>
+        public static bool BringToFront(GameState state, ItemDef item, int left)
+        {
+            var first = state.Storage.FindIndex(s => s.ItemId == item.Id && s.Count > 0);
+            var chosen = state.Storage.FindIndex(s => s.ItemId == item.Id && s.Count > 0 && item.LeftOf(s.Durability) == left);
+            if (chosen < 0)
+            {
+                return false;
+            }
+
+            if (chosen > first)
+            {
+                var stack = state.Storage[chosen];
+                state.Storage.RemoveAt(chosen);
+                state.Storage.Insert(first, stack);
+            }
+
+            return true;
+        }
+
         public static int CountInStorage(GameState state, string itemId)
         {
             var count = 0;

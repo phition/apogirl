@@ -613,7 +613,7 @@ namespace ApoGirl.Exploration.Runtime
             _standalone = GameApp.ActiveExpedition == null;
 
             _disaster = DisasterRules.Active(Request.Week, Request.WeatherId, _balance);
-            var plain = _db.GetLocation(Request.LocationId);
+            var plain = ExitRules.Apply(_db.GetLocation(Request.LocationId), Request.Flags);   // 쇠지렛대로 열어 둔 탈출로는 열린 채로
             Location = DisasterRules.Apply(plain, _disaster);   // 재해가 바꾼 지도 (사본)
             _disasterChanged = !ReferenceEquals(Location, plain);
             _floodedFloor = DisasterRules.FloodedFloor(Location.Layout, _disaster);
@@ -895,6 +895,11 @@ namespace ApoGirl.Exploration.Runtime
                     {
                         target.Locked = false;
                         UseCrowbar();
+                        if (target.Exit != null && target.Exit.Kind == ExitKind.Alternate)
+                        {
+                            _runFlags.Add(ExitRules.OpenFlag(Location.Id));   // 한 번 연 탈출로는 다음 탐험부터 열려 있다
+                        }
+
                         var exitRenderer = target.View != null ? target.View.GetComponent<SpriteRenderer>() : null;
                         var openSprite = ExplorationArt.Get(ExplorationArt.Exit(Location.Id, false));
                         if (exitRenderer != null && openSprite != null)
@@ -2739,7 +2744,15 @@ namespace ApoGirl.Exploration.Runtime
 
             CurrentArea = _corridors[start?.Floor ?? 0];
             X = start?.X ?? 1f;
-            if (startTarget != null && startTarget.LinkArea != null)
+            var rear = Request.RearEntry ? _targets.FirstOrDefault(t => t.Kind == TargetKind.Exit && t.Exit != null && t.Exit.Kind == ExitKind.Alternate && !t.Locked && t.LinkArea != null) : null;
+            if (rear != null)
+            {
+                // 후문 진입: 열어 둔 탈출로의 끝(학교에서 오는 길)에서 시작해 왼쪽으로 걸어 들어간다
+                CurrentArea = rear.LinkArea;
+                X = rear.LinkArea.Width - 2.2f;
+                _facingRight = false;
+            }
+            else if (startTarget != null && startTarget.LinkArea != null)
             {
                 // 학교 밖 지역은 진입로 끝(학교에서 오는 길)에서 시작해 걸어 들어간다
                 CurrentArea = startTarget.LinkArea;
@@ -2825,7 +2838,7 @@ namespace ApoGirl.Exploration.Runtime
         }
 
         /// <summary>학교 밖 지역(튜토리얼 제외)에는 바깥 길이 있다: 진입로와 탈출로.</summary>
-        private bool HasApproach => !Location.Id.Contains("SCHOOL") && !Location.Id.Contains("TUTORIAL");
+        private bool HasApproach => ExitRules.HasApproach(Location.Id);
 
         private readonly List<ExplorationArea> _outdoors = new List<ExplorationArea>();
         private readonly List<ExplorationTarget> _outdoorLinks = new List<ExplorationTarget>();
@@ -3256,6 +3269,7 @@ namespace ApoGirl.Exploration.Runtime
             var go = new GameObject("ExpeditionCamera");
             go.transform.SetParent(transform, false);
             _camera = go.AddComponent<Camera>();
+            ParallaxLayer.ViewCamera = _camera;
             _camera.orthographic = true;
             _camera.depth = 10;
             _camera.clearFlags = CameraClearFlags.SolidColor;

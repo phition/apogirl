@@ -40,13 +40,13 @@ MonoBehaviour:
         Collapsed: 0
       - Kind: 0
         Floor: 2
-        X: 44
+        X: 42.6
         TargetFloor: 3
         TargetX: -1
         Collapsed: 0
       - Kind: 0
         Floor: 3
-        X: 42.6
+        X: 44
         TargetFloor: 2
         TargetX: -1
         Collapsed: 0

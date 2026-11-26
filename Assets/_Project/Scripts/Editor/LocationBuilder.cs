@@ -74,9 +74,11 @@ namespace ApoGirl.EditorTools
             layout.DeepNameKey = "deep." + locationId;
             for (var level = 1; level < floors; level++)
             {
+                // 깊은 곳은 번호가 클수록 아래: 내려가는 계단(왼쪽 아래로 꺾임)이 왼쪽, 올라가는 계단이 오른쪽 —
+                // 겉 층(Stairs)과 같은 모양이 되도록 자리를 바꿔 둔다. 가운데 층(정수장 지하 2층)에서 두 그림이 stairsX − 0.7에서 맞붙는다
                 var upper = DeepFloor(layout, level);
-                layout.Connectors.Add(new ConnectorDef { Kind = ConnectorKind.Stairs, Floor = upper, X = stairsX, TargetFloor = upper + 1 });
-                layout.Connectors.Add(new ConnectorDef { Kind = ConnectorKind.Stairs, Floor = upper + 1, X = stairsX - 1.4f, TargetFloor = upper });
+                layout.Connectors.Add(new ConnectorDef { Kind = ConnectorKind.Stairs, Floor = upper, X = stairsX - 1.4f, TargetFloor = upper + 1 });
+                layout.Connectors.Add(new ConnectorDef { Kind = ConnectorKind.Stairs, Floor = upper + 1, X = stairsX, TargetFloor = upper });
             }
         }
 
