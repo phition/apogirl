@@ -70,6 +70,10 @@ namespace ApoGirl.Presentation.Screens
         public sealed class BuiltPropDef
         {
             public string Flag = "";
+
+            /// <summary>이 깃발 중 하나라도 있으면 숨긴다 (윗단계 설비가 이 그림을 바꿔 놓을 때: 텃밭 → 비닐하우스 → 스프링클러).</summary>
+            public string[] NotFlags = Array.Empty<string>();
+
             public int MinDefense;
             public string Key = "";
             public float X;
@@ -714,7 +718,8 @@ namespace ApoGirl.Presentation.Screens
         }
 
         private static bool BuiltShown(GameState state, HubSectionConfig.BuiltPropDef built) =>
-            (string.IsNullOrEmpty(built.Flag) || state.Flags.Contains(built.Flag)) && state.Base.Defense >= built.MinDefense;
+            (string.IsNullOrEmpty(built.Flag) || state.Flags.Contains(built.Flag)) && state.Base.Defense >= built.MinDefense
+            && (built.NotFlags == null || !built.NotFlags.Any(state.Flags.Contains));
 
         /// <summary>
         /// CD 벽 전시 (기획 A): 방송반 벽 가운데쯤에 자켓 자리 8개가 한 줄로 있고, 주운 CD는 그 자리에 표지(`cd.{ID}`)가 걸린다.

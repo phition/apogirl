@@ -518,8 +518,20 @@
         },
         {
           "Flag": "ROOF_GARDEN",
+          "NotFlags": ["GREENHOUSE"],
           "Key": "hub_roof_garden",
           "X": 430
+        },
+        {
+          "Flag": "GREENHOUSE",
+          "NotFlags": ["SPRINKLER"],
+          "Key": "hub_roof_greenhouse",
+          "X": 434
+        },
+        {
+          "Flag": "SPRINKLER",
+          "Key": "hub_roof_greenhouse_sprinkler",
+          "X": 434
         },
         {
           "Flag": "POWER_RESTORED",
