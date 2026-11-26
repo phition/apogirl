@@ -220,7 +220,7 @@ namespace ApoGirl.Presentation.Screens
             var yarnProject = Resources.Load<Yarn.Unity.YarnProject>(YarnProjectResource);
             if (yarnProject != null && yarnProject.Program != null)
             {
-                _dialoguePlayer = new EventDialoguePlayer(yarnProject, _dialogueView);
+                _dialoguePlayer = new EventDialoguePlayer(yarnProject, _dialogueView) { CommandHandler = HandleDialogueCommand };
             }
             else
             {
@@ -512,6 +512,19 @@ namespace ApoGirl.Presentation.Screens
                 _teacherShown = shown;
                 ShowTeacherNote();
             }
+        }
+
+        /// <summary>대본 명령. &lt;&lt;mock_exam&gt;&gt; = 수능날 모의고사 화면을 띄우고 끝날 때까지 기다린다 (점수는 대본 함수 exam_score()).</summary>
+        private async System.Threading.Tasks.Task HandleDialogueCommand(Yarn.Command command, System.Threading.CancellationToken token)
+        {
+            if (command.Text.Trim() == "mock_exam")
+            {
+                MockExamView.LastScore = -1;
+                await new MockExamView(_root.Q("screen") ?? _root).Run();
+                return;
+            }
+
+            Debug.LogWarning("[Yarn] 처리하지 않는 명령: " + command.Text);
         }
 
         /// <summary>한마디 쪽지를 펼치고, 잠시 뒤 뱃지만 남기고 접는다.</summary>

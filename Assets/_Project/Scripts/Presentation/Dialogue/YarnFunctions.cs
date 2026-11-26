@@ -40,6 +40,7 @@ namespace ApoGirl.Presentation.Dialogue
                 ["trait"] = p => Trait(Str(p, 0)),
                 ["profile"] = p => Profile_(Str(p, 0)),
                 ["hope_held"] = _ => HopeHeld(),
+                ["exam_score"] = _ => (float)ExamScore(),
             };
 
         private static GameState State => GameApp.Session?.State;
@@ -167,6 +168,10 @@ namespace ApoGirl.Presentation.Dialogue
         /// <summary>방금 고른 설득이 희망 덕에 통했는지 (위기 이탈, 프롤로그의 메아리 G).</summary>
         [YarnFunction("hope_held")]
         public static bool HopeHeld() => !string.IsNullOrEmpty(EventDialoguePlayer.LastChoiceResult?.HopeHeldNpcId);
+
+        /// <summary>방금 본 수능날 모의고사 점수 (0~100). 시험 화면을 거치지 않았으면 -1 (자동 진행 등).</summary>
+        [YarnFunction("exam_score")]
+        public static float ExamScore() => Screens.MockExamView.LastScore;
 
         private static string Str(IConvertible[] parameters, int index)
         {

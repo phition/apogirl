@@ -8407,6 +8407,86 @@ MonoBehaviour:
     m_Key: roomname.ROOM_HOUSE_NURSE
     m_Metadata:
       m_Items: []
+  - m_Id: 2628504243159040
+    m_Key: exam.kicker
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2628504310267904
+    m_Key: exam.period
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2628504310267905
+    m_Key: exam.area
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2628504310267906
+    m_Key: exam.subject.KOREAN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2628504310267907
+    m_Key: exam.subject.MATH
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2628504310267908
+    m_Key: exam.subject.ENGLISH
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2628504310267909
+    m_Key: exam.subject.SOCIAL
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2628504310267910
+    m_Key: exam.subject.SCIENCE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2628504310267911
+    m_Key: exam.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2628504310267912
+    m_Key: exam.notice
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2628504310267913
+    m_Key: exam.progress
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2628504310267914
+    m_Key: exam.next
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2628504310267915
+    m_Key: exam.submit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2628504310267916
+    m_Key: exam.result_title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2628504310267917
+    m_Key: exam.result_score
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2628504310267918
+    m_Key: exam.answer_tip
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2628504310267919
+    m_Key: exam.total
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2628504310267920
+    m_Key: exam.total_score
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2628504310267921
+    m_Key: exam.result_note
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2628504310267922
+    m_Key: exam.close
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

@@ -1840,3 +1840,71 @@ Button.base-advice-line:hover { background-color: rgba(42, 38, 32, 0.12); color:
 /* 얼굴 그림이 없을 때(선생님을 만나기 전 혼잣말): 접히면 이름표만 한 작은 쪽지 */
 .teacher-box.collapsed.no-avatar { width: auto; min-height: 0; padding: 6px 14px; background-color: var(--note); border-bottom-width: 3px; }
 .teacher-box.collapsed.no-avatar .teacher-name { display: flex; }
+
+/* ── 수능날 모의고사 (MockExamView): 책상 위 시험지 한 장. 답은 빨간 색연필 동그라미 ── */
+.exam-overlay { position: absolute; left: 0; top: 0; right: 0; bottom: 0; align-items: center; justify-content: center; background-color: rgb(92, 62, 36); }
+.exam-shade { position: absolute; left: 0; top: 0; right: 0; bottom: 0; background-color: rgba(0, 0, 0, 0.3); }
+.exam-paper {
+    width: 1180px; height: 92%;
+    padding: 36px 54px 22px 54px;
+    background-color: rgb(247, 243, 232);
+    border-width: 1px; border-color: rgb(196, 188, 166);
+    border-bottom-width: 4px; border-right-width: 3px;
+    rotate: -0.4deg;
+}
+.exam-paper Label { color: var(--ink); white-space: normal; }
+.exam-clip { position: absolute; top: -44px; left: 70px; width: 120px; height: 120px; rotate: 14deg; }
+.exam-head { flex-direction: row; align-items: flex-end; flex-shrink: 0; }
+.exam-titles { flex-grow: 1; }
+.exam-paper .exam-kicker { font-size: 16px; color: var(--ink-dim); letter-spacing: 3px; margin-bottom: 4px; }
+.exam-title-row { flex-direction: row; align-items: center; }
+.exam-period { font-size: 20px; padding: 3px 14px; margin-right: 16px; border-width: 2px; border-color: var(--ink); }
+.exam-subject { font-size: 40px; -unity-font-style: bold; }
+.exam-period, .exam-subject, .exam-result-title, .exam-result-subject, .exam-total-label { -unity-font-definition: url("Fonts/HakgyoansimEdge.ttf"); }
+.exam-namebox { flex-direction: row; border-width: 2px; border-color: var(--ink); }
+.exam-name-label { font-size: 16px; padding: 8px 14px; border-right-width: 1px; border-color: var(--ink); background-color: rgba(0, 0, 0, 0.06); }
+.exam-paper .exam-name-value { font-size: 24px; padding: 2px 26px; min-width: 150px; color: var(--ink-blue); -unity-text-align: middle-center; -unity-font-definition: url("Fonts/BusanDandiHand.ttf"); }
+.exam-rule { height: 5px; margin: 10px 0 8px 0; border-top-width: 2px; border-bottom-width: 1px; border-color: var(--ink); flex-shrink: 0; }
+.exam-paper .exam-notice { font-size: 15px; color: var(--ink-dim); margin-bottom: 8px; flex-shrink: 0; }
+.exam-body { flex-grow: 1; flex-shrink: 1; flex-basis: 0; }
+.exam-q { margin-bottom: 14px; padding-bottom: 10px; border-bottom-width: 1px; border-color: rgba(42, 38, 32, 0.18); }
+.exam-passage { font-size: 17px; padding: 10px 14px; margin: 2px 0 8px 0; border-width: 1px; border-color: var(--ink); background-color: rgba(255, 255, 255, 0.45); }
+.exam-stem-row { flex-direction: row; align-items: flex-start; margin-bottom: 4px; }
+.exam-number { width: 34px; flex-shrink: 0; font-size: 20px; -unity-font-style: bold; }
+.exam-stem { flex-grow: 1; flex-shrink: 1; font-size: 19px; }
+.exam-choices { margin-left: 30px; }
+.exam-paper .exam-choice {
+    flex-direction: row; align-items: center; justify-content: flex-start;
+    margin: 1px 0; padding: 2px 8px 2px 4px; min-height: 34px;
+    background-color: rgba(0, 0, 0, 0); border-width: 0; border-radius: 4px;
+}
+.exam-paper .exam-choice:hover { background-color: rgba(240, 207, 107, 0.4); }
+.exam-choice-number { width: 34px; flex-shrink: 0; font-size: 21px; -unity-text-align: middle-center; padding: 0; margin: 0; }
+.exam-choice-text { flex-grow: 1; flex-shrink: 1; font-size: 18px; -unity-text-align: middle-left; }
+.exam-mark {
+    position: absolute; left: 0; top: 50%; width: 42px; height: 42px; translate: 0 -50%;
+    background-image: url("../Resources/Art/UI/Paper/ui_mark_circle_red.png");
+    -unity-background-scale-mode: scale-to-fit;
+    display: none;
+}
+.exam-choice.selected .exam-mark { display: flex; }
+.exam-paper .exam-choice.selected .exam-choice-text { color: var(--ink-red); }
+.exam-foot { flex-direction: row; align-items: center; justify-content: space-between; margin-top: 10px; flex-shrink: 0; }
+.exam-paper .exam-progress { font-size: 16px; color: var(--ink-dim); }
+.exam-paper .exam-next { min-width: 220px; height: 46px; font-size: 18px; -unity-font-style: bold; background-color: var(--panel); border-color: var(--wood-dark); color: var(--text); }
+.exam-paper .exam-next:hover { background-color: #3a5046; border-color: var(--ink); }
+.exam-result-title { font-size: 40px; -unity-font-style: bold; }
+.exam-result-table { flex-grow: 1; justify-content: center; }
+.exam-result-row { flex-direction: row; align-items: center; min-height: 74px; border-bottom-width: 1px; border-color: rgba(42, 38, 32, 0.18); }
+.exam-paper .exam-result-period { width: 130px; font-size: 17px; color: var(--ink-dim); }
+.exam-result-subject { width: 190px; font-size: 28px; }
+.exam-result-marks { flex-direction: row; flex-grow: 1; }
+.exam-result-mark { width: 48px; height: 48px; margin-right: 18px; -unity-background-scale-mode: scale-to-fit; }
+.exam-result-mark.right { background-image: url("../Resources/Art/UI/Paper/ui_mark_circle_red.png"); }
+.exam-result-mark.wrong { background-image: url("../Resources/Art/UI/Paper/ui_mark_cross.png"); }
+.exam-result-score { font-size: 19px; -unity-text-align: middle-right; }
+.exam-total-row { flex-direction: row; align-items: flex-end; justify-content: flex-end; margin-top: 6px; }
+.exam-total-label { font-size: 26px; margin-bottom: 14px; }
+.exam-paper .exam-total { font-size: 64px; margin-left: 24px; color: var(--ink-red); -unity-font-definition: url("Fonts/BusanDandiHand.ttf"); }
+.exam-paper .exam-result-note { font-size: 14px; color: var(--ink-dim); margin-top: 4px; }
+.exam-stamp { position: absolute; left: 60px; bottom: 96px; width: 210px; height: 210px; rotate: -14deg; opacity: 0.85; }
