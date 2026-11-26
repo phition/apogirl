@@ -21,6 +21,8 @@
 - 도구: 생성 `code_temp/apogirl/tools/gen_craft_props.py`, 비교판 `craft_props_sheet.py`, 넣기 `install_craft_props.py`, 가방 미리보기 `craft_bag_preview.py`. 후보는 `code_temp/apogirl/pl_craft/`.
 - 미리보기: `Docs/anim_versions/craft_props/`(가방 4동작 × 하복·동복, 허수아비 크기 비교, 움직임 GIF).
 
+**몽둥이 3종 넣음 (2026-11-26, 4절 ③ 색 덧칠, PixelLab 안 씀):** `code_temp/apogirl/tools/club_recolor.py`가 방망이 프레임의 방망이 화소만 골라 다시 칠했다(옷 9벌 × 147장 × 3 + 허브 864장). 원래 방망이 그림 1배 옷 8벌 공격 10번의 어깨 위 잔상은 Aseprite로 지웠다. 토큰 `club`·`club_taped`·`club_rebar`, 비교판 `Docs/anim_versions/club_recolor/`. 5벌을 다시 받으면 `python club_recolor.py build <ExplorationPixel> <out>`(허브는 `Hub/` 따로)을 다시 돌린다.
+
 **끈 주머니 가방은 뺐다 (사용자 결정 2026-11-25):** 1단계 가방 레시피를 처음부터 **장바구니 만들기**(`ACT_CRAFT_BAG_TOTE` → 기존 `ITEM_BAG_TOTE`)로 바꾸고, 그림도 장바구니(`bag_tote`, 색 6벌)를 그대로 쓴다. `ITEM_BAG_SLING`은 없앴다(세이브 v15가 옛 이름을 바꾼다). 그래서 가방 요청은 2장이다.
 
 - 프롬프트 원안은 [PIXELLAB_CRAFTING.md](PIXELLAB_CRAFTING.md)(2026-11-24)에 있다. 이 문서는 그 뒤에 바뀐 것을 반영해 요청 범위를 정한다.

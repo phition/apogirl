@@ -403,6 +403,90 @@
   {
    "Key": "woman_*",
    "Ppu": 108
+  },
+  {
+   "Key": "player_summer_club_attack_*",
+   "Ppu": 72
+  },
+  {
+   "Key": "player_summer_club_taped_attack_*",
+   "Ppu": 72
+  },
+  {
+   "Key": "player_summer_club_rebar_attack_*",
+   "Ppu": 72
+  },
+  {
+   "Key": "player_summer_club_idle_*",
+   "Ppu": 72
+  },
+  {
+   "Key": "player_summer_club_taped_idle_*",
+   "Ppu": 72
+  },
+  {
+   "Key": "player_summer_club_rebar_idle_*",
+   "Ppu": 72
+  },
+  {
+   "Key": "player_summer_club_walk_*",
+   "Ppu": 72
+  },
+  {
+   "Key": "player_summer_club_taped_walk_*",
+   "Ppu": 72
+  },
+  {
+   "Key": "player_summer_club_rebar_walk_*",
+   "Ppu": 72
+  },
+  {
+   "Key": "player_summer_club_crouch_*",
+   "Ppu": 72
+  },
+  {
+   "Key": "player_summer_club_taped_crouch_*",
+   "Ppu": 72
+  },
+  {
+   "Key": "player_summer_club_rebar_crouch_*",
+   "Ppu": 72
+  },
+  {
+   "Key": "player_summer_club_hurt_*",
+   "Ppu": 72
+  },
+  {
+   "Key": "player_summer_club_taped_hurt_*",
+   "Ppu": 72
+  },
+  {
+   "Key": "player_summer_club_rebar_hurt_*",
+   "Ppu": 72
+  },
+  {
+   "Key": "player_summer_club_exhausted_*",
+   "Ppu": 72
+  },
+  {
+   "Key": "player_summer_club_taped_exhausted_*",
+   "Ppu": 72
+  },
+  {
+   "Key": "player_summer_club_rebar_exhausted_*",
+   "Ppu": 72
+  },
+  {
+   "Key": "player_summer_club_run_*",
+   "Ppu": 72
+  },
+  {
+   "Key": "player_summer_club_taped_run_*",
+   "Ppu": 72
+  },
+  {
+   "Key": "player_summer_club_rebar_run_*",
+   "Ppu": 72
   }
  ]
 }
