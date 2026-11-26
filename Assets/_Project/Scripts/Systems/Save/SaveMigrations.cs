@@ -25,6 +25,7 @@ namespace ApoGirl.Systems.Save
                 yield return new V12ToV13();
                 yield return new V13ToV14();
                 yield return new V14ToV15();
+                yield return new V15ToV16();
             }
         }
 
@@ -291,6 +292,24 @@ namespace ApoGirl.Systems.Save
         /// 아이템 ITEM_BAG_SLING → ITEM_BAG_TOTE, 깃발 CRAFTED_ACT_CRAFT_BAG_SLING → CRAFTED_ACT_CRAFT_BAG_TOTE.
         /// 계획·창고·장비·진행 중 제작·깃발 어디에 있든 문자열 값과 키 이름을 모두 바꾼다.
         /// </summary>
+        /// <summary>
+        /// v16: 식량 줄 (사용자 결정 2026-11-26). 살림 동료가 거둔 식량의 소수점 몫 Base.GardenCarry와
+        /// 이번 주 거두지 못한 밭 식량 Base.GardenUnpicked(둘 다 0)를 넣는다.
+        /// </summary>
+        private sealed class V15ToV16 : ISaveMigration
+        {
+            public int FromVersion => 15;
+
+            public void Migrate(JObject root)
+            {
+                if (root["Base"] is JObject baseState)
+                {
+                    if (baseState["GardenCarry"] == null) baseState["GardenCarry"] = 0f;
+                    if (baseState["GardenUnpicked"] == null) baseState["GardenUnpicked"] = 0f;
+                }
+            }
+        }
+
         private sealed class V14ToV15 : ISaveMigration
         {
             private static readonly (string From, string To)[] Renames =

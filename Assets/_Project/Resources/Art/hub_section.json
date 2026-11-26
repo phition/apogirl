@@ -506,7 +506,9 @@
       "Actions": [
         "ACT_DAILY_ROOFTOP",
         "ACT_SURV_RAIN_BARREL",
-        "ACT_SURV_GARDEN"
+        "ACT_SURV_GARDEN",
+        "ACT_CRAFT_GREENHOUSE",
+        "ACT_CRAFT_SPRINKLER"
       ],
       "BuiltProps": [
         {

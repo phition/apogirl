@@ -3,8 +3,8 @@
 〈마지막 학기 (가제)〉 — 마일스톤별 진행 기록, 남은 작업, 하면 좋을 작업, 하지 말아야 할 작업.
 
 - 기준: 마스터 프롬프트 12장 마일스톤(원본 `C:\Users\phiti\Desktop\MASTER_PROMPT.md`), 결정 기록 부록 C(D1~D26).
-- 작성: 2026-11-25. 커밋 826개(2026-11-18 ~ 2026-11-26), 마지막 커밋 `c0a50726` (그 뒤 이번 커밋).
-- EditMode 테스트: 499개 모두 통과 (2026-11-26, 실행 속도·하루 보고 뒤).
+- 작성: 2026-11-25. 커밋 828개(2026-11-18 ~ 2026-11-26), 마지막 커밋 `7f50cce5` (그 뒤 이번 커밋).
+- EditMode 테스트: 504개 모두 통과 (2026-11-26, 제작 식량 줄 뒤).
 - 자세한 내용은 각 계획 문서에 있다. 이 문서는 한눈에 보는 요약이다.
 - **새 세션은 이 문서부터 읽는다.** 작업이 하나 끝날 때마다 고친다.
   - 해당 절을 고친다.
@@ -196,6 +196,7 @@ M6·M7과 함께 기획 확장(동료·CD·깊은 곳·고양이·동아리·방
    - 전략 격차를 줄인다. NIGHT_ONLY·CARE 배드가 75%이고, 밤 탐험 감염 사망이 많다.
    - **밤 탐험 중 습격**(2026-11-26)이 새로 굴러 봇 배드·습격 횟수가 달라진다. 다음 봇 돌리기에서 습격 돌파·방어도 바닥 비율을 본다 (방어도 손실 3·10, 상한 30%).
    - 폭설 한파 `ForceChance`(0.8 → 0.6 검토)를 본다.
+   - **식량 줄**(#29): 살림 없이 주말에 거두는 몫 `GardenUnpickedRate` 0.7, 비닐하우스 해금(텃밭 + 작업대 Ⅰ), 스프링클러가 작업대 Ⅱ에 묶여 봇이 한 번도 못 지은 것을 본다.
    - 진실 단서·CD 수집률을 본다. 깊은 곳 특별한 방 안으로 옮겨 헤드리스에서 드물어졌다(`HeadlessDeepRoomChance` 0.5·`HeadlessDeepRoomEncounterChance` 0.6).
    - 장마 침수층의 실제 수확·위험을 플레이 기록으로 확인한다.
 4. **M8 시작 — `M8_PLAN.md` 결정 필요 7개를 사용자가 정한 뒤**
@@ -211,7 +212,7 @@ M6·M7과 함께 기획 확장(동료·CD·깊은 곳·고양이·동아리·방
   - 성격 E와 T의 효과가 같다(탐험 스트레스 −10%). 겹치는 게 싫으면 값을 나눈다.
   - 좋아하는 과목 첫 수업 대사·결과 한 줄(`edu.favorite`)은 아직 없다.
   - 마음 상태 갈래 장면을 실제 플레이로 한 번씩 읽어 본다(헤드리스 테스트는 대본 흐름을 읽지 않는다).
-- **제작 기획 ([CRAFTING_PROPOSAL](CRAFTING_PROPOSAL.md))**: C1~C10 결정 끝(2026-11-24, 7절), P1(제작 탭 뼈대 + 야간 작업 걷어 내기)·P2(헤드리스·봇 장비 반영, BOT_ENDING_LOG #19)·P3(제작 코어 `CraftRules`, 연속 칸 잠금, 세이브 v14, 작업대 Ⅰ·가방·무기·보호구 1~2단계·무기 손질)·P4(작업대 Ⅱ·3단계 세 줄·손전등 줄, 빛 거리·노출·겸용 도구)·P5(정수 줄 `PurifyRules`: 모래 필터·끓임 정수대·자동 정수기)·P6(허수아비 `ScarecrowRules`·미끼 `ThreatSimulation.AddDecoy`·출정 준비 "챙길 것" `LoadoutState.Carry`)·P7(설계도 `CraftTreeView`·단면도 작업대·끓임 정수대 그림·봇 `CRAFT` 묶음·밸런스 표 "제작" 탭, BOT_ENDING_LOG #21·#22 — 봇은 설비 칸에서 설비 먼저(사용자 결정 2026-11-25))·P8(짧은 장면 4편 `Craft.yarn`, 힉스필드 15차 문서) 끝 — 제작 기획 P1~P8 모두 끝. 제작은 낮·밤 어느 칸에서나 착수한다(C11, 사용자 결정 2026-11-24). 작업대는 시설 `WORKSHOP` 대신 깃발 `WORKBENCH`·`WORKBENCH_2`로 둔다(시설 화면에 끼어들지 않게, P4에서 정함). 새 장비 그림 빌리기 표 `ItemLooks`는 `standing_map.json`에 있다(어셈블리 참조 때문에 기획서의 `exploration_art.json` 대신). 새 장비 탐험 그림은 빌려 쓰고, PixelLab 프롬프트는 [PIXELLAB_CRAFTING](PIXELLAB_CRAFTING.md)(제출 안 함).
+- **제작 기획 ([CRAFTING_PROPOSAL](CRAFTING_PROPOSAL.md))**: C1~C10 결정 끝(2026-11-24, 7절), P1(제작 탭 뼈대 + 야간 작업 걷어 내기)·P2(헤드리스·봇 장비 반영, BOT_ENDING_LOG #19)·P3(제작 코어 `CraftRules`, 연속 칸 잠금, 세이브 v14, 작업대 Ⅰ·가방·무기·보호구 1~2단계·무기 손질)·P4(작업대 Ⅱ·3단계 세 줄·손전등 줄, 빛 거리·노출·겸용 도구)·P5(정수 줄 `PurifyRules`: 모래 필터·끓임 정수대·자동 정수기)·P6(허수아비 `ScarecrowRules`·미끼 `ThreatSimulation.AddDecoy`·출정 준비 "챙길 것" `LoadoutState.Carry`)·P7(설계도 `CraftTreeView`·단면도 작업대·끓임 정수대 그림·봇 `CRAFT` 묶음·밸런스 표 "제작" 탭, BOT_ENDING_LOG #21·#22 — 봇은 설비 칸에서 설비 먼저(사용자 결정 2026-11-25))·P8(짧은 장면 4편 `Craft.yarn`, 힉스필드 15차 문서) 끝 — 제작 기획 P1~P8 모두 끝. 제작은 낮·밤 어느 칸에서나 착수한다(C11, 사용자 결정 2026-11-24). 작업대는 시설 `WORKSHOP` 대신 깃발 `WORKBENCH`·`WORKBENCH_2`로 둔다(시설 화면에 끼어들지 않게, P4에서 정함). 새 장비 그림 빌리기 표 `ItemLooks`는 `standing_map.json`에 있다(어셈블리 참조 때문에 기획서의 `exploration_art.json` 대신). 새 장비 탐험 그림은 빌려 쓰고, PixelLab 프롬프트는 [PIXELLAB_CRAFTING](PIXELLAB_CRAFTING.md)(제출 안 함). 그 뒤 식량 줄(2026-11-26, 사용자 요청): 옥상 텃밭 → 비닐하우스 → 스프링클러, 살림 동료의 아침 수확·빗물 거르기 (`GardenRules`, 세이브 v16).
 - **기획 확장 1·3·4** (아직 안 만듦):
   - 1 깊은 곳 손그림 지도: 지나간 문·출구를 일기장 지도로 남긴다.
   - 3 즉석카메라·사진 앨범.
@@ -423,3 +424,4 @@ M6·M7과 함께 기획 확장(동료·CD·깊은 곳·고양이·동아리·방
 - 2026-11-26 · 습격 조정(사용자 요청): 방어도 손실 막으면 −3(`RaidRepelDefenseLoss`, 낮 침입도 같은 값)·뚫리면 −10(`RaidBreachDefenseLoss`), 습격 확률 상한 `RaidMaxChance` 0.30(코드 기본값만으로는 위협 100·방어 0에서 약 16%라 상한은 밸런스 표 덮어쓰기에서 걸린다 — 사용자의 로컬 `balance_overrides.json` 0.7도 0.3으로, 커밋 안 함). 밤 탐험 칸도 습격을 굴린다(예전엔 탐험 칸은 건너뜀): 주인공 전투력이 빠지고 방어도는 주인공 몫만 빠진다 — `DefenseRules.AbsenceDefenseFactor` = 1 − 1/거점 인원(주인공 + 합류한 사람, 고양이·외출 중 동료 제외, 4명이면 ×0.75, 혼자면 0), 주인공은 다치지 않고 대신 다침도 없다. 수학여행은 그대로 ×0.5(`RaidAbsence.Trip`). 결과 줄 `result.raid_while_out`, 결산 `settle.raid_held_out`·`_lost_out`(탐험 줄 다음에). 테스트 `RaidAbsenceTests` 5개(EditMode 494 통과).
 - 2026-11-26 · 출정·탐험 손질 다섯 가지(사용자 요청): ① 같은 장비가 여러 개면 출정 준비 장비 칸에서 내구도별로 고른다(`ExpeditionPrepView` 선택지 = (ID, 남은 내구), 고르면 `LoadoutRules.BringToFront`가 그 묶음을 창고 맨 앞으로 — 찬 장비 = 맨 앞 묶음, "(다른 내구 n개)"). ② 소풍 4종·수학여행은 한 주에 하나만(`ActionDef.WeeklyLimitGroup` "OUTING", `outings.json`). ③ 깊은 곳 계단 좌우 고침(`LocationBuilder.Deep`: 위층 내려가는 계단이 왼쪽 X−1.4, 아래층 올라가는 계단이 X — 정수장 지하 2층 등 5곳 다시 생성). ④ 탈출로를 쇠지렛대로 한 번 열면 깃발 `EXIT_OPEN_{지역}`이 남아 다음부터 열려 있고(`ExitRules`, 폭설에 파묻힌 1층 출구는 그래도 막힘), 출정 준비에 "정문 진입·후문 진입" 단추(열어 둔 지역만) → 후문이면 탈출로 끝에서 시작(`ExpeditionRequest.RearEntry`). ⑤ 진입로·탈출로 뒤 풍경: 낮은 담벼락(`out_wall_street_low`·`out_wall_alley_low`, 옛 담 아래쪽 + 갓돌) 너머로 마을(`out_town_near`·`roof_town`)과 도시 스카이라인(`out_city_far` — 허브 하늘 그림을 탐험용으로 복사)이 시차로 움직인다(`exploration_art.json` `Outdoor` 규칙, `BuildingView.BuildPanorama`, `ParallaxLayer`; 주택가·약국·편의점은 마을, 나머지는 도시 쪽, 규칙이 없으면 옛 스카이라인). 테스트 `ExitAndOutingTests` 5개(EditMode 499 통과).
 - 2026-11-26 · 실행 속도·글꼴(사용자 요청): 한 주 실행 속도 '보통'은 하루(낮·밤)가 끝날 때마다 그날 보고 확인창(`HubScreen.ShowDayReport` — 칸마다 결과 한 줄 내용 + 탐험 결과·습격·침입, 제목 "n주 d일 (요일) 보고", 확인을 눌러야 다음 날, 갇힌 날·끝난 판은 건너뜀), '빠름'은 예전 보통 빠르기(걷기 3초까지·칸 사이 1초, `ExecutionPacer.WalkSeconds`·`DailyReport`), 이벤트·결과 카드는 그대로. 인물 서랍(세력 덧판 포함)·주간 결산 일기장에 거점 서랍 글꼴(제목·이름·칸 머리 학교안심 엣지, 내용 부산단디손글씨, `Theme.uss` `#drawer-people`·`#settlement` 절, `SettlementView`는 `KoreanFont.ApplyDeep`을 뺌). 게임 화면에서는 아직 보지 않았다. EditMode 499 통과.
+- 2026-11-26 · 제작 식량 줄(사용자 요청, 결정: 살림이 없으면 주말에 70%만·비닐하우스 주 16 + 겨울에 반): 설계도 새 줄 "식량" — 옥상 텃밭 `ACT_SURV_GARDEN`(생존 → 제작으로 옮김, 1칸, 깃발 `ROOF_GARDEN`, 마음 회복 효과는 뺌) → 비닐하우스 `ACT_CRAFT_GREENHOUSE`(텃밭 + 작업대, 자재 5, 2칸, 생존 판정, `GREENHOUSE`) → 스프링클러 `ACT_CRAFT_SPRINKLER`(비닐하우스 + 발전기 복구 + 작업대 Ⅱ, 자재 4·배터리 1, 3칸, 공학 판정, `SPRINKLER` = 전기 기기 전력 2, 정수기 다음 차례). 규칙 `GardenRules`: 밭은 하루치(주 생산 ÷ 7: 텃밭 10·겨울 0, 비닐하우스 16·겨울 ×0.5)씩 자라고, 아침(자동 정수기 다음, 식사 전)에 ① 살림 동료가 빗물을 거르고(역할 보정 `RainPurify` 몫 1당 1, 0.75) ② 스프링클러가 켜져 있고 빗물이 있으면 빗물 1로 그날 ×1.5 ③ 살림 동료가 거둔다(`GardenHarvest`, 몫 상한 1.25, 소수점은 `Base.GardenCarry`). 거두지 못한 몫(`Base.GardenUnpicked`)은 주간 정산 때 주인공이 70%(`GardenUnpickedRate`)만 거둔다. 살림 동료가 외출하는 날은 하지 못한다. 세이브 v16. 거점 상황판 예상(`BaseForecast`)이 같은 식으로 아침마다 셈, 알림 "스프링클러가 멈췄다", 결과 한 줄(거른 물·거둔 식량·스프링클러·멈춤), 살림 역할 설명·방 효과 문구, 단면도 옥상 행동, 아이콘은 여분 `icon_act_garden`(비닐하우스·스프링클러 같이 빌림), 단면도 그림은 텃밭 그림 그대로. 수치 `BalanceConfig` 식량 줄 절·밸런스 표 "제작" 탭 8칸. 봇 `CRAFT` 묶음에 셋, 선생님 추천 다듬기 후보에 비닐하우스·스프링클러. 테스트 `GardenRulesTests` 5개, EditMode 504개 통과. 봇 #29: 배드 99 → 98%, EDUCATION 생존 2 → 10%(비닐하우스 35% 판), 스프링클러는 0판 · 이 커밋

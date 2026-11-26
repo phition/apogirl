@@ -9,7 +9,7 @@ namespace ApoGirl.Core.State
     public sealed class GameState
     {
         /// <summary>현재 세이브 포맷 버전. 마이그레이션 시 증가시킨다.</summary>
-        public const int CurrentSaveVersion = 15;
+        public const int CurrentSaveVersion = 16;
 
         public int SaveVersion { get; set; } = CurrentSaveVersion;
         public GameStatus Status { get; set; } = GameStatus.Playing;
@@ -311,6 +311,12 @@ namespace ApoGirl.Core.State
 
         /// <summary>교문 허수아비 남은 내구 (0 = 없음, 제작 P6). v14에서 추가.</summary>
         public int Scarecrow { get; set; }
+
+        /// <summary>식량 줄: 살림 동료가 거둔 식량의 소수점 몫 (다음 아침에 이어 쌓는다). v16에서 추가.</summary>
+        public float GardenCarry { get; set; }
+
+        /// <summary>식량 줄: 이번 주 아무도 거두지 못한 밭 식량 (주간 정산 때 GardenUnpickedRate만큼 거둔다). v16에서 추가.</summary>
+        public float GardenUnpicked { get; set; }
     }
 
     public sealed class ItemStack

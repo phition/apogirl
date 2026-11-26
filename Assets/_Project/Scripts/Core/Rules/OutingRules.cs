@@ -169,6 +169,9 @@ namespace ApoGirl.Core.Rules
             switch (kind)
             {
                 case TraitModifierKind.FoodSaving:
+                case TraitModifierKind.GardenHarvest:
+                case TraitModifierKind.RainPurify:
+                    // 아침에 하는 일: 그날 나가는 사람은 하지 못한다
                     return npc.OutingDays.Contains(state.Calendar.Day) ? 0f : 1f;
                 case TraitModifierKind.InfectionResist:
                 case TraitModifierKind.TeacherCare:

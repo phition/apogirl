@@ -66,6 +66,10 @@ namespace ApoGirl.Core.Simulation
         public int MorningPurified;
         public bool PurifierStopped;
 
+        /// <summary>식량 줄: 이 아침의 밭·빗물 (살림 동료가 거른 물·거둔 식량, 스프링클러). 낮 칸이 아니면 null. 스프링클러가 전기가 없어 멈췄는가.</summary>
+        public GardenMorning Garden;
+        public bool SprinklerStopped;
+
         /// <summary>낮 침입 대응 결과 (없으면 null).</summary>
         public IntrusionResult Intrusion;
 
@@ -219,6 +223,9 @@ namespace ApoGirl.Core.Simulation
                 // 자동 정수기 (제작 P5): 식사 전에 거른다 — 그날 아침 물로 바로 먹는다
                 outcome.MorningPurified = PurifyRules.ApplyMorning(_state, Balance, delta);
                 outcome.PurifierStopped = PurifyRules.PurifierStopped(_state, Balance);
+                // 식량 줄: 살림 동료가 빗물을 조금 거르고, 스프링클러가 물을 주고, 밭의 하루치를 거둔다 — 그날 아침에 바로 먹는다
+                outcome.Garden = GardenRules.ApplyMorning(_state, _db, delta);
+                outcome.SprinklerStopped = GardenRules.SprinklerStopped(_state, Balance);
                 var savingStep = (calendar.Week - 1) * (CalendarState.DaysPerWeek / 2) + calendar.Day / 2;
                 outcome.DietShort = UpkeepRules.ApplyMorning(
                     _state, Balance, delta, _random, TraitRules.Spread(TraitRules.Sum(_state, _db, TraitModifierKind.FoodSaving), savingStep));

@@ -7831,6 +7831,8 @@ MonoBehaviour:
       - ACT_DAILY_ROOFTOP
       - ACT_SURV_RAIN_BARREL
       - ACT_SURV_GARDEN
+      - ACT_CRAFT_GREENHOUSE
+      - ACT_CRAFT_SPRINKLER
     - Id: BROADCAST
       Always: 0
       Facility: BROADCAST
@@ -7863,6 +7865,12 @@ MonoBehaviour:
   - Id: HOUSE
     Modifiers:
     - Kind: 3
+      Key: 
+      Value: 1
+    - Kind: 13
+      Key: 
+      Value: 1
+    - Kind: 14
       Key: 
       Value: 1
     Rooms:

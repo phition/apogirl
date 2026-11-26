@@ -43,6 +43,14 @@ namespace ApoGirl.Core.Definitions
 
         /// <summary>주간 선생님 감염 진행 감소량 (정수).</summary>
         TeacherCare,
+
+        // ── 식량 줄 (살림 역할) ──
+
+        /// <summary>아침마다 텃밭·비닐하우스의 하루치를 거두는 몫 (1 = 전부).</summary>
+        GardenHarvest,
+
+        /// <summary>아침마다 빗물을 거른다 (1당 BalanceConfig.HouseRainPurifyDaily).</summary>
+        RainPurify,
     }
 
     [Serializable]

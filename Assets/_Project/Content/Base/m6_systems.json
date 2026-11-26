@@ -166,7 +166,9 @@
           "Actions": [
             "ACT_DAILY_ROOFTOP",
             "ACT_SURV_RAIN_BARREL",
-            "ACT_SURV_GARDEN"
+            "ACT_SURV_GARDEN",
+            "ACT_CRAFT_GREENHOUSE",
+            "ACT_CRAFT_SPRINKLER"
           ]
         },
         {
@@ -235,6 +237,14 @@
       "Modifiers": [
         {
           "Kind": "FoodSaving",
+          "Value": 1
+        },
+        {
+          "Kind": "GardenHarvest",
+          "Value": 1
+        },
+        {
+          "Kind": "RainPurify",
           "Value": 1
         }
       ]

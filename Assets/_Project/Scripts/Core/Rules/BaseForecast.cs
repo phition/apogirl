@@ -148,8 +148,20 @@ namespace ApoGirl.Core.Rules
             var stock = result.Now;
             var perDay = UpkeepRules.DietUnits(state.FoodDiet, balance) * UpkeepRules.Headcount(state, balance);
             var saving = TraitRules.Sum(state, db, TraitModifierKind.FoodSaving);
+            var raw = state.Base.GetResource(ResourceType.RawWater);
+            var carry = state.Base.GardenCarry;
+            var unpicked = state.Base.GardenUnpicked;
             foreach (var day in Mornings(state))
             {
+                // 식량 줄: 자동 정수기 → 살림 동료 정수·스프링클러·수확 (식사 전, WeekRunner 순서)
+                AutoPurify(state, balance, ref raw);
+                var garden = GardenOn(state, db, day, raw, carry, unpicked);
+                raw -= garden.RawUsed;
+                carry = garden.Carry;
+                unpicked = garden.Unpicked;
+                stock += garden.Food;
+                result.Garden += garden.Food;
+
                 var need = UpkeepRules.DailyFoodNeed(state.Calendar.Week, day, perDay, balance);
                 if (day % 2 == 0)
                 {
@@ -167,12 +179,10 @@ namespace ApoGirl.Core.Rules
                 stock -= Math.Min(stock, need);
             }
 
-            // 주간 정산: 텃밭(겨울 제외) → 부패 → 고양이 (WeekRunner.FinishWeek 순서)
-            if (state.Flags.Contains(UpkeepRules.FlagRoofGarden) && CalendarRules.GetSeason(state.Calendar.Week) != Season.Winter)
-            {
-                result.Garden = balance.RoofGardenFood;
-                stock += result.Garden;
-            }
+            // 주간 정산: 거두지 못한 밭 식량 → 부패 → 고양이 (WeekRunner.FinishWeek 순서)
+            var pick = GardenRules.WeeklyPick(unpicked, balance);
+            result.Garden += pick;
+            stock += pick;
 
             result.SpoilThreshold = balance.FoodSpoilageThreshold + PowerRules.FoodSpoilageBonus(state, balance);
             result.FridgeBonus = PowerRules.FoodSpoilageBonus(state, balance);
@@ -195,18 +205,20 @@ namespace ApoGirl.Core.Rules
             var result = new SupplyForecast { Now = state.Base.GetResource(ResourceType.Water), Raw = state.Base.GetResource(ResourceType.RawWater) };
             var stock = result.Now;
             var raw = result.Raw;
-            var purifier = state.Flags.Contains(PurifyRules.FlagAutoPurifier) && PowerRules.IsPowered(state, balance, PurifyRules.PurifierApplianceId);
+            var carry = state.Base.GardenCarry;
+            var unpicked = state.Base.GardenUnpicked;
             foreach (var day in Mornings(state))
             {
-                // 자동 정수기는 식사 전에 거른다 (PurifyRules.ApplyMorning)
-                if (purifier && raw > 0)
-                {
-                    var take = Math.Min(balance.AutoPurifyDaily, raw);
-                    var made = (int)Math.Round(take * balance.AutoPurifyRate, MidpointRounding.AwayFromZero);
-                    raw -= take;
-                    stock += made;
-                    result.Purified += made;
-                }
+                // 자동 정수기는 식사 전에 거른다 (PurifyRules.ApplyMorning), 그다음 살림 동료 정수·스프링클러 (GardenRules.ApplyMorning)
+                var made = AutoPurify(state, balance, ref raw);
+                stock += made;
+                result.Purified += made;
+                var garden = GardenOn(state, db, day, raw, carry, unpicked);
+                raw -= garden.RawUsed;
+                carry = garden.Carry;
+                unpicked = garden.Unpicked;
+                stock += garden.Water;
+                result.Purified += garden.Water;
 
                 var need = UpkeepRules.DailyWaterNeed(state, balance);
                 result.Use += need;
@@ -280,6 +292,11 @@ namespace ApoGirl.Core.Rules
                 alerts.Add("purifier");
             }
 
+            if (GardenRules.SprinklerStopped(state, balance))
+            {
+                alerts.Add("sprinkler");
+            }
+
             if (ScarecrowDown(state, balance))
             {
                 alerts.Add("scarecrow");
@@ -316,6 +333,37 @@ namespace ApoGirl.Core.Rules
         /// <summary>교문 허수아비를 세운 적이 있는데 지금 쓰러져 있다.</summary>
         public static bool ScarecrowDown(GameState state, BalanceConfig balance) =>
             state.Flags.Contains("CRAFTED_ACT_CRAFT_SCARECROW") && !ScarecrowRules.IsStanding(state);
+
+        /// <summary>자동 정수기 한 아침 (PurifyRules.ApplyMorning과 같은 식). 거른 식수.</summary>
+        private static int AutoPurify(GameState state, BalanceConfig balance, ref int raw)
+        {
+            if (raw <= 0 || !state.Flags.Contains(PurifyRules.FlagAutoPurifier) || !PowerRules.IsPowered(state, balance, PurifyRules.PurifierApplianceId))
+            {
+                return 0;
+            }
+
+            var take = Math.Min(balance.AutoPurifyDaily, raw);
+            raw -= take;
+            return (int)Math.Round(take * balance.AutoPurifyRate, MidpointRounding.AwayFromZero);
+        }
+
+        /// <summary>
+        /// 그날 아침의 밭·빗물 (GardenRules.Morning). 그날 외출하는 살림 동료는 하지 못하므로(OutingRules.AwayFactor) 달력의 날을 잠깐 그날로 두고 계산한 뒤 되돌린다.
+        /// </summary>
+        private static GardenMorning GardenOn(GameState state, IDefinitionDatabase db, int day, int raw, float carry, float unpicked)
+        {
+            var calendar = state.Calendar;
+            var saved = calendar.Day;
+            try
+            {
+                calendar.Day = day;
+                return GardenRules.Morning(state, db, raw, carry, unpicked, GardenRules.Step(calendar.Week, day));
+            }
+            finally
+            {
+                calendar.Day = saved;
+            }
+        }
 
         /// <summary>아직 먹지 않은 아침이 있는 날들 (낮 칸 시작에 먹는다).</summary>
         private static IEnumerable<int> Mornings(GameState state)

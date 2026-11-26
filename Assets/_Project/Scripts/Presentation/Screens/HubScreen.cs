@@ -1334,6 +1334,22 @@ namespace ApoGirl.Presentation.Screens
                 detail += "  · " + Loc.T("result.purifier_stopped");
             }
 
+            // 식량 줄: 살림 동료가 거른 물·거둔 밭 식량, 스프링클러
+            var garden = outcome.Garden;
+            if (garden != null && garden.Water > 0)
+            {
+                detail += "  · " + Loc.F("result.house_purify", garden.Water);
+            }
+
+            if (garden != null && garden.Food > 0)
+            {
+                detail += "  · " + Loc.F(garden.Sprinkled ? "result.garden_sprinkled" : "result.garden", garden.Food);
+            }
+            else if (outcome.SprinklerStopped)
+            {
+                detail += "  · " + Loc.T("result.sprinkler_stopped");
+            }
+
             foreach (var club in PeopleUi.ClubLines(outcome.Club))
             {
                 detail += "  · " + club;

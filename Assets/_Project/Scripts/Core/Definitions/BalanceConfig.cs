@@ -736,6 +736,7 @@ namespace ApoGirl.Core.Definitions
         {
             new ApplianceDef { Id = "FRIDGE", Power = 1, Flag = "SEARCHED_HOMEEC", FoodSpoilageBonus = 30 },
             new ApplianceDef { Id = "PURIFIER", Power = 1, Flag = "AUTO_PURIFIER" },   // 자동 정수기 (제작 P5): 냉장고 다음 차례
+            new ApplianceDef { Id = "SPRINKLER", Power = 2, Flag = "SPRINKLER" },      // 스프링클러 (식량 줄 3단계): 자동 정수기 다음 차례
         };
 
         // ── 방송반 송출 (확장 5) ──
@@ -950,8 +951,36 @@ namespace ApoGirl.Core.Definitions
         /// <summary>매주 학교 물탱크·화장실에서 받아 두는 생활용수 (RawWater, 정수해야 식수).</summary>
         public int WeeklyRawWater = 5;
 
-        /// <summary>옥상 텃밭 (플래그 ROOF_GARDEN): 겨울을 뺀 매주 식량.</summary>
+        // ── 식량 줄 (제작: 옥상 텃밭 → 비닐하우스 → 스프링클러, 사용자 결정 2026-11-26) ──
+        // 밭은 하루치(주 생산 ÷ 7)씩 자라고, 살림 동료(역할 보정 GardenHarvest)가 아침마다 거둔다.
+        // 거두지 못한 몫은 주간 정산 때 주인공이 GardenUnpickedRate만큼 거둔다 (나머지는 시든다).
+
+        /// <summary>옥상 텃밭 (플래그 ROOF_GARDEN): 겨울을 뺀 한 주 생산.</summary>
         public int RoofGardenFood = 10;
+
+        /// <summary>비닐하우스 (플래그 GREENHOUSE): 한 주 생산 (텃밭 대신).</summary>
+        public int GreenhouseFood = 16;
+
+        /// <summary>비닐하우스의 겨울 생산 비율 (텃밭은 겨울에 0).</summary>
+        public float GreenhouseWinterRatio = 0.5f;
+
+        /// <summary>살림 동료가 없어 주간 정산 때 주인공이 거두는 비율 (나머지는 시든다).</summary>
+        public float GardenUnpickedRate = 0.7f;
+
+        /// <summary>살림 동료가 하루치에서 거두는 몫의 상한 (적성·두 사람이면 1을 넘어 손끝으로 더 거둔다).</summary>
+        public float GardenHarvestCap = 1.25f;
+
+        /// <summary>스프링클러 (플래그 SPRINKLER, 전기 기기 SPRINKLER): 켜지고 빗물이 있는 날 수확 배율.</summary>
+        public float SprinklerYieldMultiplier = 1.5f;
+
+        /// <summary>스프링클러가 하루에 쓰는 빗물 (모자라면 그날은 물을 주지 못한다).</summary>
+        public int SprinklerRawWaterDaily = 1;
+
+        /// <summary>살림 동료가 아침마다 거르는 빗물 (역할 보정 RainPurify 1당).</summary>
+        public int HouseRainPurifyDaily = 1;
+
+        /// <summary>살림 동료가 거른 빗물이 식수가 되는 비율 (반올림).</summary>
+        public float HouseRainPurifyRate = 0.75f;
 
         // ── 거점 방어 작업 ──
 
@@ -1045,7 +1074,7 @@ namespace ApoGirl.Core.Definitions
         public string[] TeacherDevelopFallback =
         {
             "ACT_CRAFT_WORKBENCH", "ACT_SURV_RAIN_BARREL", "ACT_CRAFT_SAND_FILTER", "ACT_CRAFT_BOIL_STATION", "ACT_SURV_COVERS",
-            "ACT_CRAFT_WORKBENCH_2", "ACT_CRAFT_AUTO_PURIFIER", "ACT_SURV_CLEAN", "ACT_SURV_GARDEN",
+            "ACT_CRAFT_WORKBENCH_2", "ACT_CRAFT_AUTO_PURIFIER", "ACT_SURV_CLEAN", "ACT_SURV_GARDEN", "ACT_CRAFT_GREENHOUSE", "ACT_CRAFT_SPRINKLER",
         };
 
         public int TeacherCleanBelow = 50;

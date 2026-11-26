@@ -8319,6 +8319,66 @@ MonoBehaviour:
     m_Key: dayreport.intrusion_lost
     m_Metadata:
       m_Items: []
+  - m_Id: 2550340707958784
+    m_Key: craft.line.FOOD
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2550340775067648
+    m_Key: result.craft.done.ACT_SURV_GARDEN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2550340775067649
+    m_Key: settle.craft_done.ACT_SURV_GARDEN
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2550340775067650
+    m_Key: result.craft.done.ACT_CRAFT_GREENHOUSE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2550340775067651
+    m_Key: settle.craft_done.ACT_CRAFT_GREENHOUSE
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2550340775067652
+    m_Key: result.craft.done.ACT_CRAFT_SPRINKLER
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2550340775067653
+    m_Key: settle.craft_done.ACT_CRAFT_SPRINKLER
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2550340775067654
+    m_Key: result.house_purify
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2550340775067655
+    m_Key: result.garden
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2550340775067656
+    m_Key: result.garden_sprinkled
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2550340775067657
+    m_Key: result.sprinkler_stopped
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2550340775067658
+    m_Key: appliance.SPRINKLER
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2550340775067659
+    m_Key: facility.mod.GardenHarvest
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2550340775067660
+    m_Key: facility.mod.RainPurify
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2550340775067661
+    m_Key: base.alert.sprinkler
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

@@ -859,6 +859,22 @@ MonoBehaviour:
     m_Key: ACT_CRAFT_CROWBAR.short
     m_Metadata:
       m_Items: []
+  - m_Id: 2550339047014400
+    m_Key: ACT_CRAFT_GREENHOUSE.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2550339101540352
+    m_Key: ACT_CRAFT_GREENHOUSE.short
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2550339101540353
+    m_Key: ACT_CRAFT_SPRINKLER.name
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2550339101540354
+    m_Key: ACT_CRAFT_SPRINKLER.short
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

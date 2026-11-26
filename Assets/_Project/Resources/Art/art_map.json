@@ -1436,6 +1436,14 @@
       "Image": "icon_craft_garden_buckets"
     },
     {
+      "Key": "act.ACT_CRAFT_GREENHOUSE",
+      "Image": "icon_act_garden"
+    },
+    {
+      "Key": "act.ACT_CRAFT_SPRINKLER",
+      "Image": "icon_act_garden"
+    },
+    {
       "Key": "act.ACT_SURV_PURIFY_WATER",
       "Image": "icon_craft_water_filter"
     },

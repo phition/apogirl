@@ -216,7 +216,7 @@ namespace ApoGirl.Core.Rules
                 }
             }
 
-            // 거점 생산: 빗물통(비 오는 주), 옥상 텃밭(겨울 제외)
+            // 거점 생산: 빗물통(비 오는 주), 밭(거두지 못한 몫)
             // 생활용수: 물탱크·화장실에 남은 물 (그대로는 못 마신다)
             EffectApplier.ChangeResource(state, ResourceType.RawWater, balance.WeeklyRawWater, delta);
 
@@ -230,10 +230,8 @@ namespace ApoGirl.Core.Rules
             // 모래 필터 (제작 P5): 모인 빗물 조금을 저절로 거른다
             PurifyRules.ApplyWeeklyFilter(state, balance, delta);
 
-            if (state.Flags.Contains(FlagRoofGarden) && CalendarRules.GetSeason(state.Calendar.Week) != Season.Winter)
-            {
-                EffectApplier.ChangeResource(state, ResourceType.Food, balance.RoofGardenFood, delta);
-            }
+            // 식량 줄: 밭은 아침마다 하루치씩 자라 살림 동료가 거둔다 (GardenRules.ApplyMorning). 아무도 거두지 못한 몫은 여기서 주인공이 거둔다
+            GardenRules.ApplyWeekly(state, balance, delta);
 
             // M7-2: 보관량을 넘는 식량은 상한다
             var spoiled = SpoiledFood(state.Base.GetResource(ResourceType.Food), balance, PowerRules.FoodSpoilageBonus(state, balance));   // 냉장고가 켜져 있으면 덜 상한다

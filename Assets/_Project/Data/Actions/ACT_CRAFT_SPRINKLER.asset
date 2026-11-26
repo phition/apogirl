@@ -1,0 +1,187 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dae23a582c039304a81c2bdd418cbc38, type: 3}
+  m_Name: ACT_CRAFT_SPRINKLER
+  m_EditorClassIdentifier: ApoGirl.Data::ApoGirl.Data.ActionDefinitionAsset
+  _id: ACT_CRAFT_SPRINKLER
+  _definition:
+    Id: ACT_CRAFT_SPRINKLER
+    Category: 5
+    SlotTag: 0
+    ResourceCosts:
+    - Resource: 5
+      Amount: 4
+    - Resource: 9
+      Amount: 1
+    FatigueCost: 8
+    StressCost: 3
+    HasCheck: 1
+    Check:
+      BaseRate: 0.45
+      StatWeights:
+      - Stat: 4
+        Weight: 0.005
+      UsesProficiency: 1
+      Proficiency: 2
+      ProficiencyWeight: 0.08
+      UsesHope: 0
+    StatGains:
+    - Stat: 4
+      Amount: 2
+    - Stat: 3
+      Amount: 1
+    HasProficiency: 1
+    Proficiency: 2
+    ProficiencyXp: 2
+    Teaching: 0
+    OnSuccess:
+      Stats: []
+      Vitals: []
+      Resources: []
+      Hidden: []
+      SleepDebt: 0
+      Conscience: 0
+      SetFlags: []
+      ClearFlags: []
+      AddClues: []
+      EndingTags: []
+      Npcs: []
+      Items: []
+      Defense: 0
+      Threat: 0
+      Facilities: []
+      AddTraits: []
+      Proficiencies: []
+      TeacherMobility: 0
+      RestorePower: 0
+      TreatInjury: 0
+      CookDish: 0
+      PurifyWater: 0
+      PurifyRate: 1
+      RaidStrength: 0
+      TeacherReinfect: 0
+      TeacherInfection: 0
+      TraumaCare: 0
+      Traps: 0
+      IntrusionResponse: 
+      Factions: []
+    OnGreatSuccess:
+      Stats: []
+      Vitals: []
+      Resources: []
+      Hidden: []
+      SleepDebt: 0
+      Conscience: 0
+      SetFlags: []
+      ClearFlags: []
+      AddClues: []
+      EndingTags: []
+      Npcs: []
+      Items: []
+      Defense: 0
+      Threat: 0
+      Facilities: []
+      AddTraits: []
+      Proficiencies: []
+      TeacherMobility: 0
+      RestorePower: 0
+      TreatInjury: 0
+      CookDish: 0
+      PurifyWater: 0
+      PurifyRate: 1
+      RaidStrength: 0
+      TeacherReinfect: 0
+      TeacherInfection: 0
+      TraumaCare: 0
+      Traps: 0
+      IntrusionResponse: 
+      Factions: []
+    OnFailure:
+      Stats: []
+      Vitals: []
+      Resources: []
+      Hidden: []
+      SleepDebt: 0
+      Conscience: 0
+      SetFlags: []
+      ClearFlags: []
+      AddClues: []
+      EndingTags: []
+      Npcs: []
+      Items: []
+      Defense: 0
+      Threat: 0
+      Facilities: []
+      AddTraits: []
+      Proficiencies: []
+      TeacherMobility: 0
+      RestorePower: 0
+      TreatInjury: 0
+      CookDish: 0
+      PurifyWater: 0
+      PurifyRate: 1
+      RaidStrength: 0
+      TeacherReinfect: 0
+      TeacherInfection: 0
+      TraumaCare: 0
+      Traps: 0
+      IntrusionResponse: 
+      Factions: []
+    ExpeditionTime: 0
+    LocationId: 
+    Unlock:
+      WeekMin: 0
+      WeekMax: 0
+      Days: 
+      Phase: 0
+      Seasons: 
+      Month: 0
+      DayOfMonth: 0
+      ActionCategories: 
+      ActionIds: []
+      FlagsAll:
+      - GREENHOUSE
+      - POWER_RESTORED
+      - WORKBENCH_2
+      FlagsAny: []
+      FlagsNone:
+      - SPRINKLER
+      CluesAll: []
+      Checks: []
+      AnyChecks: []
+      NpcStatuses: []
+      IsBirthday: 0
+    RaidGuard: 0
+    BonusFacilityId: 
+    BonusPerLevel: 0
+    ThreatGain: 0
+    Confined: 0
+    LockNextSlots: 0
+    LockActionId: 
+    AwayFromBase: 0
+    ClubActivity: 
+    BroadcastProgram: 
+    MinFreePower: 0
+    UpgradesPower: 0
+    WeeklyLimitGroup: 
+    Craft:
+      Line: FOOD
+      Tier: 3
+      Work: 3
+      Product: 
+      Count: 1
+      ItemCosts: []
+      SetFlags:
+      - SPRINKLER
+      MaxOwned: 0
+      MaintainWeapon: 0
+      Next: 

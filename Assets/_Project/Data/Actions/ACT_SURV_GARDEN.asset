@@ -15,8 +15,8 @@ MonoBehaviour:
   _id: ACT_SURV_GARDEN
   _definition:
     Id: ACT_SURV_GARDEN
-    Category: 1
-    SlotTag: 1
+    Category: 5
+    SlotTag: 0
     ResourceCosts:
     - Resource: 5
       Amount: 2
@@ -41,15 +41,12 @@ MonoBehaviour:
     Teaching: 0
     OnSuccess:
       Stats: []
-      Vitals:
-      - Vital: 2
-        Amount: -4
+      Vitals: []
       Resources: []
       Hidden: []
       SleepDebt: 0
       Conscience: 0
-      SetFlags:
-      - ROOF_GARDEN
+      SetFlags: []
       ClearFlags: []
       AddClues: []
       EndingTags: []
@@ -174,13 +171,14 @@ MonoBehaviour:
     UpgradesPower: 0
     WeeklyLimitGroup: 
     Craft:
-      Line: 
-      Tier: 0
-      Work: 0
+      Line: FOOD
+      Tier: 1
+      Work: 1
       Product: 
       Count: 1
       ItemCosts: []
-      SetFlags: []
+      SetFlags:
+      - ROOF_GARDEN
       MaxOwned: 0
       MaintainWeapon: 0
-      Next: 
+      Next: ACT_CRAFT_GREENHOUSE

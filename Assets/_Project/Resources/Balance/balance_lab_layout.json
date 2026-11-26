@@ -209,8 +209,8 @@
           "Group": "거점 생산",
           "Name": "옥상 텃밭 식량",
           "Unit": "개/주",
-          "When": "NextWeek",
-          "Note": "겨울 제외"
+          "When": "Now",
+          "Note": "하루치(÷7)씩 자란다, 겨울 제외"
         },
         {
           "Field": "CatFoodPerWeek",
@@ -1196,6 +1196,66 @@
           "Field": "AutoPurifyRate",
           "Group": "정수",
           "Name": "자동 정수기 거름 비율",
+          "Unit": "비율",
+          "When": "Now"
+        },
+        {
+          "Field": "GreenhouseFood",
+          "Group": "식량 줄",
+          "Name": "비닐하우스 식량",
+          "Unit": "개/주",
+          "When": "Now",
+          "Note": "하루치(÷7)씩"
+        },
+        {
+          "Field": "GreenhouseWinterRatio",
+          "Group": "식량 줄",
+          "Name": "비닐하우스 겨울 비율",
+          "Unit": "비율",
+          "When": "Now"
+        },
+        {
+          "Field": "GardenUnpickedRate",
+          "Group": "식량 줄",
+          "Name": "살림 없이 주말에 거두는 몫",
+          "Unit": "비율",
+          "When": "Now",
+          "Note": "나머지는 시든다"
+        },
+        {
+          "Field": "GardenHarvestCap",
+          "Group": "식량 줄",
+          "Name": "살림 거두기 몫 상한",
+          "Unit": "배",
+          "When": "Now"
+        },
+        {
+          "Field": "SprinklerYieldMultiplier",
+          "Group": "식량 줄",
+          "Name": "스프링클러 수확 배율",
+          "Unit": "배",
+          "When": "Now",
+          "Note": "전력 2"
+        },
+        {
+          "Field": "SprinklerRawWaterDaily",
+          "Group": "식량 줄",
+          "Name": "스프링클러 하루 빗물",
+          "Unit": "/일",
+          "When": "Now"
+        },
+        {
+          "Field": "HouseRainPurifyDaily",
+          "Group": "식량 줄",
+          "Name": "살림 하루 거르는 빗물",
+          "Unit": "/일",
+          "When": "Now",
+          "Note": "역할 몫 1당"
+        },
+        {
+          "Field": "HouseRainPurifyRate",
+          "Group": "식량 줄",
+          "Name": "살림 거름 비율",
           "Unit": "비율",
           "When": "Now"
         },
