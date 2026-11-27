@@ -47,7 +47,7 @@
           "Effect": { "Stats": [ { "Stat": "Leadership", "Amount": 2 } ], "SetFlags": [ "MART_MEDIATED" ],
             "Factions": [ { "FactionId": "FAC_MART", "Standing": 10, "LogKey": "faction.FAC_MART.log.mediated" }, { "FactionId": "FAC_SAGEORI", "Standing": 5 } ] },
           "OnFailure": { "Vitals": [ { "Vital": "Stress", "Amount": 6 } ], "Factions": [ { "FactionId": "FAC_MART", "Standing": -5 } ] } },
-        { "Id": "STAY_OUT", "Effect": { "SetFlags": [ "MART_ABANDONED" ], "Hidden": [ { "Hidden": "Isolation", "Amount": 2 } ],
+        { "Id": "STAY_OUT", "Effect": { "Conscience": 1, "SetFlags": [ "MART_ABANDONED" ], "Hidden": [ { "Hidden": "Isolation", "Amount": 2 } ],
             "Factions": [ { "FactionId": "FAC_MART", "Standing": -12, "LogKey": "faction.FAC_MART.log.abandoned" } ] } }
       ] },
 
@@ -84,7 +84,7 @@
         { "Id": "FEED_AND_SEND", "Costs": [ { "Resource": "Food", "Amount": 2 } ],
           "Effect": { "SetFlags": [ "JUN_FED" ], "Hidden": [ { "Hidden": "Humanity", "Amount": 1 } ],
             "Factions": [ { "FactionId": "FAC_SAGEORI", "Standing": 8, "LogKey": "faction.FAC_SAGEORI.log.jun_fed" } ] } },
-        { "Id": "CHASE", "Effect": { "SetFlags": [ "JUN_CHASED" ], "Hidden": [ { "Hidden": "Isolation", "Amount": 1 } ],
+        { "Id": "CHASE", "Effect": { "Conscience": 1, "SetFlags": [ "JUN_CHASED" ], "Hidden": [ { "Hidden": "Isolation", "Amount": 1 } ],
             "Factions": [ { "FactionId": "FAC_SAGEORI", "Standing": -5 } ] } }
       ] },
 

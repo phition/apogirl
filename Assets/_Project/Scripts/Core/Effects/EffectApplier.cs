@@ -1,5 +1,6 @@
 using System;
 using ApoGirl.Core.Definitions;
+using ApoGirl.Core.Rules;
 using ApoGirl.Core.State;
 
 namespace ApoGirl.Core.Effects
@@ -59,7 +60,7 @@ namespace ApoGirl.Core.Effects
             }
 
             ChangeSleepDebt(state, effect.SleepDebt, balance, delta);
-            ChangeConscience(state, effect.Conscience, balance, delta);
+            ChangeConscience(state, effect.Conscience, balance, delta, ConscienceRules.CauseChoice);
 
             foreach (var flag in effect.SetFlags)
             {
@@ -369,12 +370,18 @@ namespace ApoGirl.Core.Effects
             return after - before;
         }
 
-        public static int ChangeConscience(GameState state, int amount, BalanceConfig balance, StateDelta delta)
+        /// <summary>양심의 무게를 바꾼다. 처음으로 오르면 ConscienceRules.NoteRise가 고해 장면 깃발과 원인(cause, 비면 선택지) 깃발을 켠다.</summary>
+        public static int ChangeConscience(GameState state, int amount, BalanceConfig balance, StateDelta delta, string cause = null)
         {
             var before = state.Player.Conscience;
             var after = Clamp(before + amount, 0, balance.ConscienceMax);
             state.Player.Conscience = after;
             delta.Conscience += after - before;
+            if (after > before)
+            {
+                ConscienceRules.NoteRise(state, cause, delta);
+            }
+
             return after - before;
         }
 

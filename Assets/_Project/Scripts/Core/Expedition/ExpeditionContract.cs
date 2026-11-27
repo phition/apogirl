@@ -146,6 +146,12 @@ namespace ApoGirl.Core.Expedition
         public int SleepDebtDelta;
 
         public int ConscienceDelta;
+
+        /// <summary>이번 탐험에서 쓰러뜨린 좀비 수 (적대적 생존자 제외). 한 번에 ConscienceFelledThreshold 이상이면 양심의 무게가 오른다.</summary>
+        public int ZombiesFelled;
+
+        /// <summary>사람이 살던 방(BalanceConfig.ConscienceOwnedRooms)의 상자를 뒤졌다.</summary>
+        public bool SearchedOwnedRoom;
         public List<string> Flags = new List<string>();
         public List<string> Clues = new List<string>();
         public float TimeSpent;

@@ -13,8 +13,8 @@ namespace ApoGirl.Core.Definitions
         public int StressMin = 10;
         public int StressMax = 10;
 
-        /// <summary>낮 탐험 도덕 선택으로 오르는 양심의 무게 최댓값 (0이면 변화 없음).</summary>
-        public int ConscienceMax;
+        /// <summary>헤드리스: 무사히 돌아온 탐험에서 사람이 살던 방의 상자를 뒤졌을 확률 (양심의 무게 +1, BalanceConfig 양심의 무게 절). 0이면 없음.</summary>
+        public float OwnedRoomChance;
 
         /// <summary>밤 탐험에서 새벽까지 버티게 될 확률 (수면 부채 +1, 다음 휴식 회복 감소).</summary>
         public float DawnReturnChance;

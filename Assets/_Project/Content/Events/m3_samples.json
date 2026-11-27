@@ -135,7 +135,7 @@
         },
         {
           "Id": "LEAVE",
-          "Effect": {
+          "Effect": { "Conscience": 1,
             "Hidden": [ { "Hidden": "Isolation", "Amount": 2 } ],
             "SetFlags": [ "SURVIVOR_A_IGNORED" ]
           }

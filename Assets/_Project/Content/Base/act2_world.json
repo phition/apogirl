@@ -115,7 +115,7 @@
         "Fatigue": 15,
         "StressMin": 11,
         "StressMax": 11,
-        "ConscienceMax": 3
+        "OwnedRoomChance": 0.5
       },
       "Night": {
         "Resources": [
@@ -172,7 +172,7 @@
         "Fatigue": 17,
         "StressMin": 13,
         "StressMax": 13,
-        "ConscienceMax": 1
+        "OwnedRoomChance": 0.1
       },
       "Night": {
         "Resources": [

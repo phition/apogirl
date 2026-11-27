@@ -760,7 +760,8 @@ namespace ApoGirl.Core.Simulation
             EffectApplier.ChangeVital(_state, VitalType.Stress, StressRules.Hit(_state, Balance, stress), Balance, delta);
             EffectApplier.ChangeVital(_state, VitalType.Hp, result.HpDelta, Balance, delta);
             EffectApplier.ChangeSleepDebt(_state, result.SleepDebtDelta, Balance, delta);
-            EffectApplier.ChangeConscience(_state, result.ConscienceDelta, Balance, delta);
+            // 양심의 무게: 쓰러뜨린 좀비 수·사람이 살던 방 (ConscienceRules)
+            ConscienceRules.ApplyExpedition(_state, result, Balance, delta);
             if (result.SleepDebtDelta > 0)
             {
                 player.ReducedNextRest = true;

@@ -81,10 +81,7 @@ namespace ApoGirl.Core.Expedition
                 }
             }
 
-            if (request.TimeOfDay == ExpeditionTime.Day && timeYield.ConscienceMax > 0)
-            {
-                result.ConscienceDelta = random.Range(0, timeYield.ConscienceMax);
-            }
+            RollConscience(request, timeYield, result);
 
             if (request.TimeOfDay == ExpeditionTime.Night && random.NextDouble() < timeYield.DawnReturnChance)
             {
@@ -158,6 +155,31 @@ namespace ApoGirl.Core.Expedition
 
                 result.OwnedDurability[id] = Math.Max(0, left);
             }
+        }
+
+        /// <summary>
+        /// 양심의 무게에 쓰는 기록 (사용자 결정 2026-11-27): 쓰러뜨린 좀비 수(무기가 없으면 적게)와 사람이 살던 방을 뒤졌는지.
+        /// 판 시드에서 따로 뽑은 난수를 써서 기존 굴림 순서(수확·조우·새벽 귀환)는 흔들지 않는다.
+        /// </summary>
+        private void RollConscience(ExpeditionRequest request, ExpeditionYield timeYield, ExpeditionResult result)
+        {
+            var balance = _db.Balance;
+            var random = new SeededRandom(SeededRandom.CreateState(request.Seed ^ 0x51A7E9));
+            var max = request.TimeOfDay == ExpeditionTime.Night ? balance.HeadlessFelledNightMax : balance.HeadlessFelledDayMax;
+            var felled = random.Range(0, Math.Max(0, max));
+            if (!HasWeapon(request))
+            {
+                felled = (int)Math.Floor(felled * balance.HeadlessFelledUnarmedRatio);
+            }
+
+            result.ZombiesFelled = felled;
+            result.SearchedOwnedRoom = timeYield.OwnedRoomChance > 0f && random.NextDouble() < timeYield.OwnedRoomChance;
+        }
+
+        private bool HasWeapon(ExpeditionRequest request)
+        {
+            var weaponId = request.Loadout?.MainWeapon;
+            return !string.IsNullOrEmpty(weaponId) && _db.TryGetItem(weaponId, out var weapon) && weapon.WeaponPower > 0;
         }
 
         /// <summary>

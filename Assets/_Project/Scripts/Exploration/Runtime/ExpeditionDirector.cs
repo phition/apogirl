@@ -102,6 +102,10 @@ namespace ApoGirl.Exploration.Runtime
         private readonly ItemDef[] _tools = new ItemDef[ToolSlotCount];
         private int _weaponDurability;
         private int _weaponWear;
+
+        /// <summary>양심의 무게 (ConscienceRules): 이번 탐험에서 쓰러뜨린 좀비 수(생존자 제외), 사람이 살던 방의 상자를 뒤졌는지.</summary>
+        private int _zombiesFelled;
+        private bool _ownedRoomSearched;
         private float _attackTimer;
         private readonly List<string> _usedItems = new List<string>();
 
@@ -1491,6 +1495,10 @@ namespace ApoGirl.Exploration.Runtime
             {
                 _ownedWeaponWear = _weaponWear;
             }
+            if (hit.IsDown && !hit.IsSurvivor)
+            {
+                _zombiesFelled++;
+            }
             SpawnHitFx(hit);
             React(hit, hit.IsDown && HasDownFrames(hit) ? "down_" : "hit_");
             Sfx("sfx_hit");
@@ -2372,6 +2380,10 @@ namespace ApoGirl.Exploration.Runtime
                         {
                             _searchedKeys.Add(Nearest.LootKey);
                         }
+                        if (!_ownedRoomSearched && ConscienceRules.IsOwnedRoom(_balance, CurrentArea?.Template?.KindId))
+                        {
+                            _ownedRoomSearched = true;   // 사람이 살던 방: 양심의 무게 (탐험 한 번에 한 번)
+                        }
                         _tutorialSearched = true;
                         OpenContainer = Nearest;
                     }
@@ -2518,6 +2530,8 @@ namespace ApoGirl.Exploration.Runtime
 
             ReportDurability();
             Result.SearchedContainers.AddRange(_searchedKeys);
+            Result.ZombiesFelled = _zombiesFelled;
+            Result.SearchedOwnedRoom = _ownedRoomSearched;
             HostileRules.Apply(Result, _hostileOutcome, _startHp, _balance);
             foreach (var flag in _runFlags)
             {

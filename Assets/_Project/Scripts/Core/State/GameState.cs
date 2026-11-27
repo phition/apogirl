@@ -409,6 +409,11 @@ namespace ApoGirl.Core.State
         public int Intrusions { get; set; }
         public int IntrusionsLost { get; set; }
 
+        /// <summary>쓰러뜨린 좀비 수 합계, 그중 한 탐험에 양심 문턱(ConscienceFelledThreshold)을 넘긴 탐험 수, 사람이 살던 방을 뒤진 탐험 수 (양심의 무게·기록 엔딩).</summary>
+        public int ZombiesFelled { get; set; }
+        public int HeavyFelledRuns { get; set; }
+        public int OwnedRoomRuns { get; set; }
+
         /// <summary>뒤진 상자 키 "지역ID/키" (DepletingContainers 지역만, 교실동 무한 파밍 방지).</summary>
         public HashSet<string> LootedContainers { get; set; } = new HashSet<string>();
     }

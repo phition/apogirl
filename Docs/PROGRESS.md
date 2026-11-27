@@ -3,7 +3,7 @@
 〈마지막 학기 (가제)〉 — 마일스톤별 진행 기록, 남은 작업, 하면 좋을 작업, 하지 말아야 할 작업.
 
 - 기준: 마스터 프롬프트 12장 마일스톤(원본 `C:\Users\phiti\Desktop\MASTER_PROMPT.md`), 결정 기록 부록 C(D1~D26).
-- 작성: 2026-11-25. 커밋 828개(2026-11-18 ~ 2026-11-26), fablable UI(`ver-fablable0.1` 이후)·단면도 A안을 main에 병합(2026-11-26) — 앞으로 이 버전으로 작업한다.
+- 작성: 2026-11-25, 고침 2026-11-27(양심의 무게). 커밋 828개(2026-11-18 ~ 2026-11-26), fablable UI(`ver-fablable0.1` 이후)·단면도 A안을 main에 병합(2026-11-26) — 앞으로 이 버전으로 작업한다.
 - EditMode 테스트: 523개 모두 통과 (2026-11-27, 배치 모드로).
 - 자세한 내용은 각 계획 문서에 있다. 이 문서는 한눈에 보는 요약이다.
 - **새 세션은 이 문서부터 읽는다.** 작업이 하나 끝날 때마다 고친다.
@@ -173,6 +173,7 @@ M6·M7과 함께 기획 확장(동료·CD·깊은 곳·고양이·동아리·방
 | 대화창 | 초상을 대화창 왼쪽 투명 액자에 넣었다 | — |
 | PC 전용 정리 (2026-11-23) | 안드로이드 빌드 메뉴·가상 패드·패드 문구·메타의 안드로이드 블록 제거 | — |
 | 프롤로그의 메아리 (2026-11-23) | 마음 상태 3갈래 이벤트 흐름·약속 "다음에"·성격 E(탐험 스트레스)·F(호감 비례 동료 스트레스 완화)·성적·좋아하는 과목(스트레스 −1·상승 +1)·동아리 대사·희망(의지·이탈 막기·말풍선·후일담) | [PROPOSAL_PROLOGUE_ECHOES](PROPOSAL_PROLOGUE_ECHOES.md) |
+| 양심의 무게 (2026-11-27, 사용자 결정) | 한 탐험에 좀비 5마리 이상 쓰러뜨림 +1 · 사람이 살던 방(빌라 집·지하철 대피소) 상자 +1 · 사람을 외면한 선택 5개 +1, 선생님과의 대화·사연 읽기 −1. 처음 무거워진 밤 윤 선생님께 고해 `EVT_CONSCIENCE_CONFESS`(−1). 규칙 `ConscienceRules`, 기록 `ExplorationStats.ZombiesFelled`·`HeavyFelledRuns`·`OwnedRoomRuns`, 헤드리스 무작위 양심(`ConscienceMax`) 폐지 → `OwnedRoomChance` | [PROPOSAL_ENDINGS_EXPANSION](PROPOSAL_ENDINGS_EXPANSION.md) 0.1 |
 | 논문·빌라 102호 (2026-11-26) | 낮 탐험이 황혼까지 가면 밤에만 열리던 방이 열림(102호 녹색 문), 102호에 박 선생님, 102호 논문(의학 수업 2번), 박 선생님 장면 뒤 지역 논문 9종(과목 수업 2번, 낮은 확률) | — |
 
 ---
@@ -180,6 +181,12 @@ M6·M7과 함께 기획 확장(동료·CD·깊은 곳·고양이·동아리·방
 ## 남은 작업 (해야 할 것)
 
 순서는 권하는 차례다.
+
+0. **양심의 무게 Unity 확인 (2026-11-27, 클라우드 세션에서 만들어 Unity로 돌려 보지 못함)**
+   - 메뉴 `ApoGirl/Content/Import Events`(새 `conscience_events.json`·`Conscience.yarn`, 지역 모델 `OwnedRoomChance`, 선택지·행동 효과) → `ApoGirl/Content/Sync Dialogue Table` → `ApoGirl/Balance/Sync Balance Asset`.
+   - 컴파일 확인 후 EditMode 전체(새 `ConscienceTests` 8개 포함). 새 파일 메타 4개는 손으로 만들었다(GUID 새로).
+   - 화면: 교실동 밤 탐험에서 좀비 5마리를 쓰러뜨리고 돌아와 결과 카드 "양심의 무게 +1" → 그날 밤 고해 장면 → 생활기록부 칸이 0으로. 빌라 집 상자 뒤지기도 한 번.
+   - 헤드리스 낮 탐험의 옛 무작위 양심 굴림을 없애 난수 순서가 바뀌었다(새 굴림은 따로 뽑은 난수). 다음 봇 돌리기 숫자는 이전과 다를 수 있다.
 
 1. **안드로이드 모듈 지우고 메타 되돌리기**
    - 사용자가 Unity Hub → Installs → 6000.6.8f1 → 모듈에서 Android Build Support를 지운다.
@@ -215,7 +222,7 @@ M6·M7과 함께 기획 확장(동료·CD·깊은 곳·고양이·동아리·방
   - 좋아하는 과목 첫 수업 대사·결과 한 줄(`edu.favorite`)은 아직 없다.
   - 마음 상태 갈래 장면을 실제 플레이로 한 번씩 읽어 본다(헤드리스 테스트는 대본 흐름을 읽지 않는다).
 - **제작 기획 ([CRAFTING_PROPOSAL](CRAFTING_PROPOSAL.md))**: C1~C10 결정 끝(2026-11-24, 7절), P1(제작 탭 뼈대 + 야간 작업 걷어 내기)·P2(헤드리스·봇 장비 반영, BOT_ENDING_LOG #19)·P3(제작 코어 `CraftRules`, 연속 칸 잠금, 세이브 v14, 작업대 Ⅰ·가방·무기·보호구 1~2단계·무기 손질)·P4(작업대 Ⅱ·3단계 세 줄·손전등 줄, 빛 거리·노출·겸용 도구)·P5(정수 줄 `PurifyRules`: 모래 필터·끓임 정수대·자동 정수기)·P6(허수아비 `ScarecrowRules`·미끼 `ThreatSimulation.AddDecoy`·출정 준비 "챙길 것" `LoadoutState.Carry`)·P7(설계도 `CraftTreeView`·단면도 작업대·끓임 정수대 그림·봇 `CRAFT` 묶음·밸런스 표 "제작" 탭, BOT_ENDING_LOG #21·#22 — 봇은 설비 칸에서 설비 먼저(사용자 결정 2026-11-25))·P8(짧은 장면 4편 `Craft.yarn`, 힉스필드 15차 문서) 끝 — 제작 기획 P1~P8 모두 끝. 제작은 낮·밤 어느 칸에서나 착수한다(C11, 사용자 결정 2026-11-24). 작업대는 시설 `WORKSHOP` 대신 깃발 `WORKBENCH`·`WORKBENCH_2`로 둔다(시설 화면에 끼어들지 않게, P4에서 정함). 새 장비 그림 빌리기 표 `ItemLooks`는 `standing_map.json`에 있다(어셈블리 참조 때문에 기획서의 `exploration_art.json` 대신). 새 장비 탐험 그림은 빌려 쓰고, PixelLab 프롬프트는 [PIXELLAB_CRAFTING](PIXELLAB_CRAFTING.md)(제출 안 함). 그 뒤 식량 줄(2026-11-26, 사용자 요청): 옥상 텃밭 → 비닐하우스 → 스프링클러, 살림 동료의 아침 수확·빗물 거르기 (`GardenRules`, 세이브 v16).
-- **엔딩 확장 (기획만, 결정 대기)**: [PROPOSAL_ENDINGS_EXPANSION](PROPOSAL_ENDINGS_EXPANSION.md) — 직업 엔딩 14종(능력치 × 숙련 × 행동 횟수) + 기록 엔딩 12종(좀비를 쓰러뜨린 수·들키지 않은 탐험·쓰러지지 않은 탐험·다녀온 지역·거래·굶주린 주 등)으로 22 → 48종. 등급 ① 지금 데이터로 13종 · ② 판정 종류(`Record`·`ActionCountPrefix`·`FlagCount`·`FacilityCount`·`VisitedLocations`, 모의고사 점수 깃발) 6종 · ③ 새 기록(세이브 v17: `ZombiesFelled`·`QuietRuns`·`InjuryCount`·`HungryWeeks`·`TradeCount`·`BbsSessions`·`DeepVisited`) 7종. 결정 E1~E7(묶음·우선순위·점수 정규화·놓친 길 표시·목표 비율·범위·그림), 단계 P1~P6. 봇 #22 특화 8%(목표 15~25)·기본 23%의 빈칸을 채우는 것이 목적.
+- **엔딩 확장 (기획만, 결정 대기, 2판 2026-11-27)**: [PROPOSAL_ENDINGS_EXPANSION](PROPOSAL_ENDINGS_EXPANSION.md) — 직업 엔딩 14종(능력치 × 숙련 × 행동 횟수) + 기록 엔딩 12종(좀비를 쓰러뜨린 수·들키지 않은 탐험·쓰러지지 않은 탐험·다녀온 지역·거래·굶주린 주 등) + 내면 엔딩 2종(「무게를 든 채로」·「매일 물을 긷는 사람」, 양심의 무게·스트레스 한계)으로 22 → 50종, 기존 엔딩 수정 5종(열린 문·아직 닫힌 문·멈춰 버린 시계 변형, 방위대·상담사에 고해 조건), 결정 E8~E10 추가. 아래는 1판 요약: 등급 ① 지금 데이터로 13종 · ② 판정 종류(`Record`·`ActionCountPrefix`·`FlagCount`·`FacilityCount`·`VisitedLocations`, 모의고사 점수 깃발) 6종 · ③ 새 기록(세이브 v17: `ZombiesFelled`·`QuietRuns`·`InjuryCount`·`HungryWeeks`·`TradeCount`·`BbsSessions`·`DeepVisited`) 7종. 결정 E1~E7(묶음·우선순위·점수 정규화·놓친 길 표시·목표 비율·범위·그림), 단계 P1~P6. 봇 #22 특화 8%(목표 15~25)·기본 23%의 빈칸을 채우는 것이 목적.
 - **기획 확장 1·3·4** (아직 안 만듦):
   - 1 깊은 곳 손그림 지도: 지나간 문·출구를 일기장 지도로 남긴다.
   - 3 즉석카메라·사진 앨범.
@@ -459,3 +466,4 @@ M6·M7과 함께 기획 확장(동료·CD·깊은 곳·고양이·동아리·방
 - 2026-11-27 · **PC통신 열린 게시판 온라인 연결** (사용자 요청, 게시판 먼저): Firebase 실시간 데이터베이스(프로젝트 `apogirl-7aa98`, 싱가포르)를 SDK 없이 REST로 — `BbsOnline`(`Presentation/Screens/BbsOnline.cs`): 익명 로그인(갱신 토큰 `persistentDataPath/BbsOnline.json`), 최근 40건을 서버 시각 차례로 받기(색인이 없으면 글 ID 차례 예비 경로), 글 + 마지막 글 시각을 한 번의 쓰기로 올리기, 이용자 기록(첫 접속·이름), 올린이는 이름(꼬리표 4글자 = UID에서 뽑음 `BbsOnline.Tag`), 금칙어·글꼴 태그·길이 거르기. `BbsView.ShowBoard`가 있던 글을 먼저 보이고 받은 글을 이어 붙인다(20초 안에는 다시 받지 않음), 올리기 실패·규칙 거절이면 내 컴퓨터(`Bbs.json`)에만. 설정 `Resources/Bbs/bbs_online.json`(`Enabled`·주소·웹 API 키·뿌리 경로 정식 `bbs/v1`/개발 `bbs/test`·한도·금칙어), 보안 규칙·콘솔에서 할 일·자료 모양은 [BBS_ONLINE](BBS_ONLINE.md) — 규칙: 로그인한 사람만, 새 글만, 글 사이 60초, 새 계정 2분 대기, 차단 목록. IP는 쓰지 않는다(사용자와 상의). 시험 경로에서 REST 흐름(로그인·쓰기·읽기) 확인 뒤 시험 글 삭제. **남은 일: 사용자가 콘솔에 보안 규칙 게시(지금은 시험 모드로 열려 있음) → 그 뒤 간격·대기·차단 동작 확인**, 대화방 온라인, 신고·관리 도구. 문구 `bbs.online_*`·`bbs.write_*`, 테스트 `BbsOnlineTests`(PlayMode 4), 위키 46. EditMode 523·PlayMode 19 통과.
 - 2026-11-27 · PC통신 온라인 게시판 보안 규칙 확인(사용자가 콘솔에 게시): 시험 경로에서 25가지(읽기 권한·새 글만·글 사이 60초·형식 검사·고치기와 지우기 거절 등)가 모두 기대대로. 정식 경로의 새 계정 2분 대기와 차단 목록 효과는 확인하지 않음 — [BBS_ONLINE](BBS_ONLINE.md) 4절.
 - 2026-11-27 · **엔딩 확장 기획서** (사용자 요청: 능력치·숙련 조합의 직업 엔딩, 게임 기록으로 보는 엔딩, 좀비를 많이 쓰러뜨려 군인이 되는 식으로 20가지 이상): [PROPOSAL_ENDINGS_EXPANSION](PROPOSAL_ENDINGS_EXPANSION.md) — 직업 14 + 기록 12 = 26종(엔딩마다 조건·점수 초안·기존 엔딩과 다른 점·잇는 콘텐츠·후일담 3컷 초안), 판정에 쓸 수 있는 데이터 점검(좀비 처치 수·들키지 않은 탐험·부상 횟수 등은 지금 기록하지 않음), 새 판정 종류·새 기록 설계, 우선순위 배치(기록 320 > 직업 300)와 점수 정규화 제안, 결정 E1~E7, 단계 P1~P6, 겹침 점검 표. 코드 변경 없음.
+- 2026-11-27 · **양심의 무게 다시 설계 + 엔딩 기획서 2판** (사용자 결정: 좀비를 치는 건 몸을 지키는 일이고 정당성은 스스로 붙이는 것): `ConscienceRules`(한 탐험 좀비 5마리 이상 +1, 사람이 살던 방 +1, 처음 오르면 `CONSCIENCE_FIRST`+원인 깃발), 실시간 `ExpeditionDirector`가 쓰러뜨린 수(생존자 제외)·사람이 살던 방을 세고 헤드리스는 따로 뽑은 난수로(`HeadlessFelled*`, 모델 `OwnedRoomChance` — 옛 `ConscienceMax` 무작위 폐지), 선택지 5개 +1(도현 문 앞 거절·선배 외면·유랑자 거절·준을 쫓아냄·마트를 두고 봄 — 하린에게 문을 닫는 것과 배식 선택은 넣지 않음), 선생님과의 대화·사연 읽기 −1, 고해 장면 `EVT_CONSCIENCE_CONFESS`(`conscience_events.json`·`Events/Conscience.yarn`, 원인별 대사·선택 2개 모두 −1), 테스트 `ConscienceTests`, 위키 몸 상태 9절 + `sync_wiki.py`, 밸런스 표 절. 엔딩 기획서 2판(내면 엔딩 2·기존 수정 5·E8~E10). Unity에서 돌려 보지 못함(남은 작업 0).

@@ -546,7 +546,7 @@
         },
         {
           "Id": "REFUSE",
-          "Effect": {
+          "Effect": { "Conscience": 1,
             "SetFlags": [
               "WANDERER_REFUSED"
             ],

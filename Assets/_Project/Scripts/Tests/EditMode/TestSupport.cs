@@ -145,7 +145,7 @@ namespace ApoGirl.Tests.EditMode
                     Fatigue = 15,
                     StressMin = 0,
                     StressMax = 12,
-                    ConscienceMax = 2,
+                    OwnedRoomChance = 0.5f,
                 },
                 Night = new ExpeditionYield
                 {

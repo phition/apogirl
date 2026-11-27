@@ -118,7 +118,7 @@
     { "Id": "EVT_DH_02_DOOR", "Kind": "Night", "Priority": 70, "Condition": { "Phase": "Night", "FlagsAll": [ "DH_HELPED" ], "FlagsNone": [ "DH_RESCUED" ] },
       "Choices": [
         { "Id": "ACCEPT", "Effect": { "SetFlags": [ "DH_RESCUED" ], "Npcs": [ { "NpcId": "NPC_DOHYEON", "SetStatus": "Joined", "Affinity": 8 } ], "Defense": 3, "Hidden": [ { "Hidden": "Humanity", "Amount": 2 } ] } },
-        { "Id": "REFUSE", "Effect": { "SetFlags": [ "DH_REFUSED" ], "Npcs": [ { "NpcId": "NPC_DOHYEON", "SetStatus": "Left", "Affinity": -5 } ], "Hidden": [ { "Hidden": "Humanity", "Amount": -4 }, { "Hidden": "Isolation", "Amount": 3 } ], "Resources": [ { "Resource": "Food", "Amount": 2 } ] } }
+        { "Id": "REFUSE", "Effect": { "Conscience": 1, "SetFlags": [ "DH_REFUSED" ], "Npcs": [ { "NpcId": "NPC_DOHYEON", "SetStatus": "Left", "Affinity": -5 } ], "Hidden": [ { "Hidden": "Humanity", "Amount": -4 }, { "Hidden": "Isolation", "Amount": 3 } ], "Resources": [ { "Resource": "Food", "Amount": 2 } ] } }
       ] },
 
     { "Id": "EVT_DH_03_NIGHTMARE", "Kind": "Night", "Priority": 35,

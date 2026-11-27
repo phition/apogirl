@@ -50,8 +50,7 @@
         "BaseDownChance": 0.14,
         "Fatigue": 20,
         "StressMin": 13,
-        "StressMax": 13,
-        "ConscienceMax": 1
+        "StressMax": 13
       },
       "Night": {
         "Resources": [

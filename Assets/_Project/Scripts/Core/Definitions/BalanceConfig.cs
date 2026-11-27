@@ -126,6 +126,26 @@ namespace ApoGirl.Core.Definitions
         /// <summary>동료로 합류하는 순간의 호감 바닥 (사용자 결정 2026-11-25): 그보다 낮으면 이 값으로 올리고, 합류 장면의 호감 변화는 그 위에 더한다.</summary>
         public int JoinAffinity = 30;
 
+        // ── 양심의 무게 ──
+
+        /// <summary>
+        /// 한 탐험에서 좀비를 이만큼 이상 쓰러뜨리면 양심의 무게가 ConscienceFelledAmount 오른다 (사용자 결정 2026-11-27).
+        /// 좀비를 치는 것은 몸을 지키는 일이지만, 그 정당성은 스스로 붙이는 것이라 무게가 남는다. 0이면 끈다.
+        /// </summary>
+        public int ConscienceFelledThreshold = 5;
+        public int ConscienceFelledAmount = 1;
+
+        /// <summary>사람이 살던 방(ConscienceOwnedRooms)의 상자를 뒤진 탐험마다 오르는 양 (탐험 한 번에 한 번).</summary>
+        public int ConscienceOwnedRoomAmount = 1;
+
+        /// <summary>사람이 살던 방의 종류 (RoomTemplateDef.KindId). 빌라의 집들과 지하철 깊은 층 대피소. 박 선생님이 숨은 102호(ROOM_HOUSE_NURSE)는 뺀다.</summary>
+        public string[] ConscienceOwnedRooms = { "ROOM_HOUSE", "ROOM_HOUSE_101", "ROOM_HOUSE_201", "ROOM_HOUSE_202", "ROOM_HOUSE_203", "ROOM_DEEP_SUB_SHELTER" };
+
+        /// <summary>헤드리스: 무사히 돌아온 탐험에서 쓰러뜨린 좀비 수 0~최댓값 (낮·밤). 무기가 없으면 × HeadlessFelledUnarmedRatio (밀치기는 거의 쓰러뜨리지 못한다).</summary>
+        public int HeadlessFelledDayMax = 3;
+        public int HeadlessFelledNightMax = 7;
+        public float HeadlessFelledUnarmedRatio = 0.3f;
+
         // ── 달력·이벤트 (M3) ──
 
         /// <summary>1주차 1일의 실제 날짜 (문서 4.1: 3월 셋째 주 무렵). 윤년은 쓰지 않는다.</summary>

@@ -40,6 +40,18 @@
       ]
     },
     {
+      "Title": "양심의 무게",
+      "Fields": [
+        "ConscienceFelledThreshold",
+        "ConscienceFelledAmount",
+        "ConscienceOwnedRoomAmount",
+        "ConscienceOwnedRooms",
+        "HeadlessFelledDayMax",
+        "HeadlessFelledNightMax",
+        "HeadlessFelledUnarmedRatio"
+      ]
+    },
+    {
       "Title": "달력·이벤트 (M3)",
       "Fields": [
         "StartMonth",

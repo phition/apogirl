@@ -1,0 +1,36 @@
+{
+  "Events": [
+    {
+      "Id": "EVT_CONSCIENCE_CONFESS",
+      "Kind": "Night",
+      "Priority": 75,
+      "Condition": {
+        "Phase": "Night",
+        "FlagsAll": [ "CONSCIENCE_FIRST" ],
+        "FlagsNone": [ "CONSCIENCE_CONFESSED", "TEACHER_ISOLATED", "TEACHER_LEFT_BEHIND" ]
+      },
+      "Choices": [
+        {
+          "Id": "AFRAID",
+          "Effect": {
+            "Conscience": -1,
+            "SetFlags": [ "CONSCIENCE_CONFESSED", "CONFESS_AFRAID" ],
+            "Vitals": [ { "Vital": "Stress", "Amount": -6 } ],
+            "Hidden": [ { "Hidden": "SelfAwareness", "Amount": 3 } ],
+            "Npcs": [ { "NpcId": "NPC_TEACHER", "Affinity": 2 } ]
+          }
+        },
+        {
+          "Id": "REASON",
+          "Effect": {
+            "Conscience": -1,
+            "SetFlags": [ "CONSCIENCE_CONFESSED", "CONFESS_REASON" ],
+            "Vitals": [ { "Vital": "Stress", "Amount": -6 } ],
+            "Hidden": [ { "Hidden": "Humanity", "Amount": 3 } ],
+            "Npcs": [ { "NpcId": "NPC_TEACHER", "Affinity": 2 } ]
+          }
+        }
+      ]
+    }
+  ]
+}

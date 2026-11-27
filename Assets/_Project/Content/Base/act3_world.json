@@ -87,8 +87,7 @@
         "BaseDownChance": 0.1,
         "Fatigue": 18,
         "StressMin": 13,
-        "StressMax": 13,
-        "ConscienceMax": 3
+        "StressMax": 13
       },
       "Night": {
         "Resources": [ { "Resource": "RawWater", "Min": 1, "Max": 3 }, { "Resource": "Food", "Min": 28, "Max": 40 }, { "Resource": "Water", "Min": 18, "Max": 28 }, { "Resource": "Fuel", "Min": 1, "Max": 3 }, { "Resource": "Medicine", "Min": 0, "Max": 2 }, { "Resource": "Battery", "Min": 2, "Max": 4 }, { "Resource": "Materials", "Min": 2, "Max": 4 } ],
@@ -107,8 +106,7 @@
         "BaseDownChance": 0.09,
         "Fatigue": 15,
         "StressMin": 11,
-        "StressMax": 11,
-        "ConscienceMax": 1
+        "StressMax": 11
       },
       "Night": {
         "Resources": [
