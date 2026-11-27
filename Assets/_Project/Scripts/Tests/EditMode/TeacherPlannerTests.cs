@@ -311,7 +311,7 @@ namespace ApoGirl.Tests.EditMode
             var db = ContentDb();
             // 이벤트·습격 없이 세 칸 넘게 흘러가는 주를 고른다 (판 진행이 바뀌어도 테스트가 흔들리지 않게)
             var checkedSlots = 0;
-            foreach (var week in new[] { 20, 18, 22, 24, 26, 16, 28 })
+            foreach (var week in new[] { 20, 18, 22, 24, 26, 16, 28, 30, 32, 34, 36, 38, 15, 17, 19, 21, 23 })
             {
                 checkedSlots = Math.Max(checkedSlots, RestfulWeekMatches(db, week));
                 if (checkedSlots > 2)

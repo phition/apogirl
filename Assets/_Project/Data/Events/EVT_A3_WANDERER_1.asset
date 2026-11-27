@@ -208,7 +208,7 @@ MonoBehaviour:
         - Hidden: 4
           Amount: 2
         SleepDebt: 0
-        Conscience: 0
+        Conscience: 1
         SetFlags:
         - WANDERER_REFUSED
         ClearFlags: []

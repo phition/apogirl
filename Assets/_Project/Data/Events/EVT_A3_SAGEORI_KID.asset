@@ -314,7 +314,7 @@ MonoBehaviour:
         - Hidden: 4
           Amount: 1
         SleepDebt: 0
-        Conscience: 0
+        Conscience: 1
         SetFlags:
         - JUN_CHASED
         ClearFlags: []

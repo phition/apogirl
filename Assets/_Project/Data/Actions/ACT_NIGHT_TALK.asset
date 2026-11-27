@@ -43,7 +43,7 @@ MonoBehaviour:
       Resources: []
       Hidden: []
       SleepDebt: 0
-      Conscience: 0
+      Conscience: -1
       SetFlags: []
       ClearFlags: []
       AddClues: []

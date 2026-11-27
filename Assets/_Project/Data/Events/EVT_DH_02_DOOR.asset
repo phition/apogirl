@@ -215,7 +215,7 @@ MonoBehaviour:
         - Hidden: 4
           Amount: 3
         SleepDebt: 0
-        Conscience: 0
+        Conscience: 1
         SetFlags:
         - DH_REFUSED
         ClearFlags: []

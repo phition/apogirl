@@ -36,7 +36,7 @@ MonoBehaviour:
       Fatigue: 15
       StressMin: 11
       StressMax: 11
-      ConscienceMax: 3
+      OwnedRoomChance: 0.5
       DawnReturnChance: 0
       HpLossOnDown: 30
       StressOnDown: 30
@@ -53,7 +53,7 @@ MonoBehaviour:
       Fatigue: 20
       StressMin: 14
       StressMax: 14
-      ConscienceMax: 0
+      OwnedRoomChance: 0
       DawnReturnChance: 0.2
       HpLossOnDown: 30
       StressOnDown: 30
