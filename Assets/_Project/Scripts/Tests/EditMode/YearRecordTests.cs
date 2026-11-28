@@ -315,6 +315,33 @@ namespace ApoGirl.Tests.EditMode
         }
 
         [Test]
+        public void Confession_CanBeLeftUnspoken_AndThatYearEndsBehindTheClosedDoor()
+        {
+            // 사용자 결정 2026-11-28: 고해 장면에 "말하지 않는다" — 꺼내지 않기로 한 것도 선택이다
+            var db = ShippedDb();
+            var confess = db.Events.First(e => e.Id == "EVT_CONSCIENCE_CONFESS");
+            CollectionAssert.AreEquivalent(new[] { "AFRAID", "REASON", "SILENT" }, confess.Choices.Select(c => c.Id).ToList());
+            var silent = confess.Choices.First(c => c.Id == "SILENT").Effect;
+            CollectionAssert.AreEqual(new[] { "CONFESS_SILENT" }, silent.SetFlags, "고해 깃발은 켜지 않는다");
+            Assert.AreEqual(0, silent.Conscience, "무게는 그대로다 (벌도 덜어짐도 없다)");
+            foreach (var spoken in confess.Choices.Where(c => c.Id != "SILENT"))
+            {
+                CollectionAssert.Contains(spoken.Effect.SetFlags, "CONSCIENCE_CONFESSED", spoken.Id);
+                Assert.AreEqual(-1, spoken.Effect.Conscience, spoken.Id);
+            }
+
+            var state = Rescued(db, s =>
+            {
+                s.Flags.Add("CONFESS_SILENT");
+                s.Player.Hidden.TraumaRecovery = 15;
+                s.Player.Conscience = 8;
+            });
+            var result = EndingResolver.Resolve(state, db);
+            Assert.AreEqual("ENDING_NARR_UNHEALED", result.PieceId(EndingAct.Reflection));
+            CollectionAssert.Contains(result.CutKeys, "ending.ENDING_NARR_UNHEALED.weight.cut1");
+        }
+
+        [Test]
         public void ShadowAndSoldier_NeverShareAYear()
         {
             var db = ShippedDb();

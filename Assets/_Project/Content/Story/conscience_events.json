@@ -29,6 +29,12 @@
             "Hidden": [ { "Hidden": "Humanity", "Amount": 3 } ],
             "Npcs": [ { "NpcId": "NPC_TEACHER", "Affinity": 2 } ]
           }
+        },
+        {
+          "Id": "SILENT",
+          "Effect": {
+            "SetFlags": [ "CONFESS_SILENT" ]
+          }
         }
       ]
     }
