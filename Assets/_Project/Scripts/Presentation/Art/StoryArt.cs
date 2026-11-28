@@ -51,6 +51,27 @@ namespace ApoGirl.Presentation.Art
         {
             public string Location = "";
             public string Image = "";
+
+            /// <summary>Image 그림이 아직 없을 때 대신 쓰는 그림 (새 그림 파일을 넣으면 표를 고치지 않아도 바뀐다).</summary>
+            public string Fallback = "";
+        }
+
+        /// <summary>
+        /// 출정 준비 화면 오른쪽(입상·장비 칸 뒤)의 준비하는 자리 그림. 깃발이 맞는 첫 줄 (빈 깃발 = 기본).
+        /// Image·Night가 아직 없으면 Fallback·FallbackNight(지금 있는 거처 배경)를 쓴다.
+        /// </summary>
+        [Serializable]
+        private sealed class PrepEntry
+        {
+            public string Flag = "";
+            public string Image = "";
+            public string Night = "";
+            public string Fallback = "";
+            public string FallbackNight = "";
+
+            /// <summary>가로로 넘치는 그림에서 보여 줄 자리 (0 = 왼쪽 끝, 1 = 오른쪽 끝). 대신 쓰는 그림은 FallbackFocusX.</summary>
+            public float FocusX = 0.5f;
+            public float FallbackFocusX = 0.5f;
         }
 
         [Serializable]
@@ -71,6 +92,9 @@ namespace ApoGirl.Presentation.Art
 
             /// <summary>세력 대표 얼굴 (Location 칸에 세력 ID, Image는 Resources/Art 아래 경로).</summary>
             public LocationEntry[] Factions = Array.Empty<LocationEntry>();
+
+            /// <summary>출정 준비 화면의 준비하는 자리 그림 (거처 깃발별).</summary>
+            public PrepEntry[] PrepScenes = Array.Empty<PrepEntry>();
         }
 
         private static ArtMap _map;
@@ -170,12 +194,41 @@ namespace ApoGirl.Presentation.Art
             {
                 if (entry.Location == locationId)
                 {
-                    return Story(entry.Image);
+                    return StoryOrNull(entry.Image) ?? StoryOrNull(entry.Fallback);
                 }
             }
 
             return null;
         }
+
+        /// <summary>
+        /// 출정 준비 화면의 준비하는 자리 그림 (art_map.json PrepScenes: 깃발이 맞는 첫 줄). 없으면 null.
+        /// nightArt: 밤 그림을 돌려줬는지 (false인데 밤이면 화면이 낮 그림을 어둡게 물들인다). focusX: 가로로 보여 줄 자리 0~1.
+        /// </summary>
+        public static Texture2D PrepScene(GameState state, bool night, out bool nightArt, out float focusX)
+        {
+            nightArt = false;
+            focusX = 0.5f;
+            foreach (var entry in Map.PrepScenes)
+            {
+                if (!string.IsNullOrEmpty(entry.Flag) && (state == null || !state.Flags.Contains(entry.Flag)))
+                {
+                    continue;
+                }
+
+                // 새 그림이 있으면 새 그림끼리(낮·밤), 없으면 빌린 그림끼리 — 낮·밤의 자리가 서로 어긋나지 않게
+                var day = StoryOrNull(entry.Image);
+                var dark = day != null ? StoryOrNull(entry.Night) : StoryOrNull(entry.FallbackNight);
+                focusX = Mathf.Clamp01(day != null ? entry.FocusX : entry.FallbackFocusX);
+                day = day ?? StoryOrNull(entry.Fallback);
+                nightArt = night && dark != null;
+                return nightArt ? dark : day ?? dark;
+            }
+
+            return null;
+        }
+
+        private static Texture2D StoryOrNull(string path) => string.IsNullOrEmpty(path) ? null : Story(path);
 
         /// <summary>
         /// UI 아이콘 (art_map.json의 Icons 표, 키 예: res.Food · cat.Education · stat.Stamina · npc.NPC_DOHYEON). 없으면 null.
@@ -314,6 +367,17 @@ namespace ApoGirl.Presentation.Art
             element.style.backgroundSize = new StyleBackgroundSize(new BackgroundSize(BackgroundSizeType.Cover));
             element.style.backgroundPositionX = new StyleBackgroundPosition(new BackgroundPosition(BackgroundPositionKeyword.Center));
             element.style.backgroundPositionY = new StyleBackgroundPosition(new BackgroundPosition(BackgroundPositionKeyword.Center));
+        }
+
+        /// <summary>SetCover + 가로로 넘치는 그림에서 보여 줄 자리 (0 = 그림 왼쪽 끝, 0.5 = 가운데, 1 = 오른쪽 끝).</summary>
+        public static void SetCover(VisualElement element, Texture2D texture, float focusX)
+        {
+            SetCover(element, texture);
+            if (element != null && texture != null)
+            {
+                element.style.backgroundPositionX = new StyleBackgroundPosition(
+                    new BackgroundPosition(BackgroundPositionKeyword.Left, Length.Percent(Mathf.Clamp01(focusX) * 100f)));
+            }
         }
 
         /// <summary>요소 배경을 그림으로 (비율 유지, 안에 맞춤).</summary>
