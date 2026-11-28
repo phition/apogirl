@@ -1400,7 +1400,32 @@
       "Night": "Backgrounds/bg_storage_night"
     }
   ],
+  "PrepScenes": [
+    {
+      "Flag": "CLASSROOM_MOVED_IN",
+      "Image": "Prep/prep_classroom",
+      "Night": "Prep/prep_classroom_night",
+      "Fallback": "Backgrounds/bg_classroom",
+      "FallbackNight": "Backgrounds/bg_classroom_night",
+      "FocusX": 0.5,
+      "FallbackFocusX": 0.0
+    },
+    {
+      "Flag": "",
+      "Image": "Prep/prep_storage",
+      "Night": "Prep/prep_storage_night",
+      "Fallback": "Backgrounds/bg_storage",
+      "FallbackNight": "Backgrounds/bg_storage_night",
+      "FocusX": 0.5,
+      "FallbackFocusX": 0.5
+    }
+  ],
   "Locations": [
+    {
+      "Location": "LOC_TUTORIAL",
+      "Image": "Locations/loc_tutorial",
+      "Fallback": "Locations/loc_school"
+    },
     {
       "Location": "LOC_SCHOOL_INTERIOR",
       "Image": "Locations/loc_school"

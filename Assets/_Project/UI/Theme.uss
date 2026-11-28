@@ -986,6 +986,15 @@ Button.selected { border-color: var(--accent); background-color: var(--accent-so
 .exp-warning { color: rgb(232, 120, 104); font-size: 18px; -unity-font-style: bold; margin-top: 12px; }
 .exp-side { width: 840px; flex-direction: row; background-color: rgb(22, 32, 28); border-left-width: 1px; border-color: var(--line); }
 .exp-standing { width: 380px; margin: 30px 0 30px 10px; }
+/* 준비하는 자리 그림 (입상·장비 칸 뒤, art_map.json PrepScenes): 그림이 있을 때만(.has-art) 보인다 */
+.exp-side-art, .exp-side-veil { position: absolute; left: 0; top: 0; right: 0; bottom: 0; display: none; }
+.exp-side.has-art .exp-side-art, .exp-side.has-art .exp-side-veil { display: flex; }
+.exp-side-art.tint-night { -unity-background-image-tint-color: rgb(120, 130, 170); }
+.exp-side.has-art .exp-quick-label { color: rgb(226, 222, 210); text-shadow: 0px 1px 3px rgba(0, 0, 0, 0.9); }
+/* 그림 위에 놓이는 단추는 장비 칸처럼 불투명하게 (반투명은 그림이 비쳐 글이 안 읽힌다) */
+.exp-side.has-art .exp-quick, .exp-side.has-art .exp-entry, .exp-side.has-art .exp-dispatch { background-color: rgb(34, 48, 42); }
+.exp-side.has-art .exp-quick:hover, .exp-side.has-art .exp-entry:hover, .exp-side.has-art .exp-dispatch:hover { background-color: rgb(58, 80, 70); }
+.exp-side.has-art .exp-quick.exp-quick-on, .exp-side.has-art .exp-entry.exp-quick-on { background-color: var(--accent-soft); }
 .exp-panel { flex-grow: 1; padding: 40px 24px 32px 12px; justify-content: space-between; }
 .exp-loadout { }
 .exp-slot { flex-direction: row; align-items: center; padding: 8px; margin-bottom: 8px; background-color: rgb(34, 48, 42); border-radius: 6px; border-width: 1px; border-color: var(--line); }

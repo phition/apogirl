@@ -137,6 +137,8 @@
                 <ui:VisualElement name="exp-info" class="exp-info" />
             </ui:VisualElement>
             <ui:VisualElement name="exp-side" class="exp-side">
+                <ui:VisualElement name="exp-side-art" class="exp-side-art" picking-mode="Ignore" />
+                <ui:VisualElement name="exp-side-veil" class="exp-side-veil" picking-mode="Ignore" />
                 <ui:VisualElement name="exp-standing" class="exp-standing" />
                 <ui:VisualElement name="exp-panel" class="exp-panel">
                     <ui:VisualElement name="exp-loadout" class="exp-loadout" />

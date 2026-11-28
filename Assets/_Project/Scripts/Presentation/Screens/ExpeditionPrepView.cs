@@ -15,6 +15,7 @@ namespace ApoGirl.Presentation.Screens
     /// <summary>
     /// 3겹 출정 준비 (문서 6.3.4-1, Docs/UI_REDESIGN_PROPOSAL.md): 왼쪽은 지역 그림 위에 목적지·시간대·예보·손실 경고,
     /// 오른쪽은 지금 차림의 주인공 입상과 장비 칸(배낭·주무기·도구·방어구, ◀ ▶로 바꾸기).
+    /// 오른쪽 뒤에는 준비하는 자리 그림(거처별, art_map.json PrepScenes)을 깔고 어둠 막으로 덮는다 — 그림이 없으면 예전 단색 판.
     /// 그 아래 "챙길 것"(제작 P6): 창고 소모품(붕대·허수아비 등)을 배낭에 미리 넣는다 (누르면 하나 더, 우클릭이면 하나 빼기).
     /// 장비를 바꾸면 입상도 바로 바뀐다.
     /// </summary>
@@ -23,6 +24,8 @@ namespace ApoGirl.Presentation.Screens
         private readonly GameSession _session;
         private readonly VisualElement _sheet;
         private readonly VisualElement _art;
+        private readonly VisualElement _side;
+        private readonly VisualElement _sideArt;
         private readonly VisualElement _info;
         private readonly VisualElement _loadout;
         private readonly VisualElement _buttons;
@@ -33,6 +36,8 @@ namespace ApoGirl.Presentation.Screens
             _session = session;
             _sheet = root.Q("expedition-sheet");
             _art = root.Q("exp-art");
+            _side = root.Q("exp-side");
+            _sideArt = root.Q("exp-side-art");
             _info = root.Q("exp-info");
             _loadout = root.Q("exp-loadout");
             _buttons = root.Q("exp-buttons");
@@ -51,7 +56,29 @@ namespace ApoGirl.Presentation.Screens
             shadeElement.style.backgroundImage = new StyleBackground(shade);
             // 1x64 그림을 요소 크기 그대로 늘린다 (Cover면 가운데만 확대돼 경계가 생긴다)
             shadeElement.style.backgroundSize = new StyleBackgroundSize(new BackgroundSize(Length.Percent(100), Length.Percent(100)));
+
+            // 준비하는 자리 그림 위의 어둠 막: 입상 쪽(왼쪽)은 옅게, 장비 칸 쪽(오른쪽)은 짙게
+            var veilElement = root.Q("exp-side-veil");
+            if (veilElement != null)
+            {
+                var veil = new UnityEngine.Texture2D(64, 1, UnityEngine.TextureFormat.RGBA32, false) { wrapMode = UnityEngine.TextureWrapMode.Clamp };
+                for (var x = 0; x < 64; x++)
+                {
+                    veil.SetPixel(x, 0, new UnityEngine.Color(0.05f, 0.075f, 0.065f, UnityEngine.Mathf.SmoothStep(VeilLeft, VeilRight, x / 63f)));
+                }
+
+                veil.Apply();
+                veilElement.style.backgroundImage = new StyleBackground(veil);
+                veilElement.style.backgroundSize = new StyleBackgroundSize(new BackgroundSize(Length.Percent(100), Length.Percent(100)));
+            }
         }
+
+        /// <summary>
+        /// 어둠 막의 짙기 (왼쪽 끝 → 오른쪽 끝). 선형 색공간에서 섞여 눈에 보이는 밝기는 (1 − 짙기)^0.45쯤이다
+        /// — 0.5면 그림이 70%, 0.87이면 40% 밝기로 보인다.
+        /// </summary>
+        private const float VeilLeft = 0.5f;
+        private const float VeilRight = 0.87f;
 
         public bool IsOpen => !_sheet.ClassListContains("hidden");
 
@@ -62,6 +89,12 @@ namespace ApoGirl.Presentation.Screens
             var day = request.TimeOfDay == ExpeditionTime.Day;
             StoryArt.SetCover(_art, StoryArt.Location(request.LocationId));
             _sheet.EnableInClassList("night", !day);
+
+            // 오른쪽 뒤: 준비하는 자리 (밤 그림이 없으면 낮 그림을 어둡게 물들인다)
+            var scene = StoryArt.PrepScene(state, !day, out var nightArt, out var focusX);
+            StoryArt.SetCover(_sideArt, scene, focusX);
+            _side?.EnableInClassList("has-art", scene != null && _sideArt != null);
+            _sideArt?.EnableInClassList("tint-night", !day && !nightArt);
 
             // ── 왼쪽: 목적지·예보 ──
             _info.Clear();
