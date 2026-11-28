@@ -190,6 +190,7 @@ namespace ApoGirl.Presentation.Screens
             _prompt.AddToClassList("bbs-prompt");
             _field = new TextField { maxLength = 60 };
             _field.AddToClassList("bbs-field");
+            GuardPaste(_field, RefusePaste);   // OnKey보다 먼저 건다 — 붙여넣기 글쇠는 여기서 끝난다
             _field.RegisterCallback<KeyDownEvent>(OnKey, TrickleDown.TrickleDown);
             line.Add(_prompt);
             line.Add(_field);
@@ -236,6 +237,52 @@ namespace ApoGirl.Presentation.Screens
         }
 
         // ── 입력 ──
+
+        /// <summary>붙여넣기 글쇠인가: Ctrl+V · Cmd+V · Shift+Insert.</summary>
+        public static bool IsPasteKey(KeyCode key, EventModifiers modifiers)
+        {
+            var control = (modifiers & (EventModifiers.Control | EventModifiers.Command)) != 0;
+            var shift = (modifiers & EventModifiers.Shift) != 0;
+            return (key == KeyCode.V && control) || (key == KeyCode.Insert && shift);
+        }
+
+        /// <summary>
+        /// 입력 칸이 붙여넣기를 받지 않게 한다 (사용자 요청 2026-11-28): 밖에서 써 둔 글을 통째로 넣지 못하게 — 글은 직접 쳐서 쓴다.
+        /// 붙여넣기 글쇠와 붙여넣기 명령(글쇠가 아닌 길로 온 것)을 칸 안의 글 편집기에 닿기 전에 멈춘다. 막을 때마다 refused를 부른다.
+        /// 글쇠를 대신 눌러 주는 도구(매크로)까지 막지는 못한다.
+        /// </summary>
+        public static void GuardPaste(TextField field, Action refused)
+        {
+            field.RegisterCallback<KeyDownEvent>(evt =>
+            {
+                if (IsPasteKey(evt.keyCode, evt.modifiers))
+                {
+                    evt.StopImmediatePropagation();
+                    refused?.Invoke();
+                }
+            }, TrickleDown.TrickleDown);
+            field.RegisterCallback<ValidateCommandEvent>(evt =>
+            {
+                if (evt.commandName == "Paste")
+                {
+                    evt.StopImmediatePropagation();
+                }
+            }, TrickleDown.TrickleDown);
+            field.RegisterCallback<ExecuteCommandEvent>(evt =>
+            {
+                if (evt.commandName == "Paste")
+                {
+                    evt.StopImmediatePropagation();
+                    refused?.Invoke();
+                }
+            }, TrickleDown.TrickleDown);
+        }
+
+        private void RefusePaste()
+        {
+            _notice = Loc.T("bbs.no_paste");
+            Render();
+        }
 
         private void OnKey(KeyDownEvent evt)
         {

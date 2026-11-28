@@ -9783,6 +9783,10 @@ MonoBehaviour:
     m_Key: bbs.report_offline
     m_Metadata:
       m_Items: []
+  - m_Id: 3388973711114240
+    m_Key: bbs.no_paste
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

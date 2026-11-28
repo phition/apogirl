@@ -9786,6 +9786,10 @@ MonoBehaviour:
     m_Localized: "\uD68C\uC120\uC774 \uBD88\uC548\uC815\uD569\uB2C8\uB2E4. \uC2E0\uACE0\uD558\uC9C0 \uBABB\uD588\uC2B5\uB2C8\uB2E4."
     m_Metadata:
       m_Items: []
+  - m_Id: 3388973711114240
+    m_Localized: "\uBD99\uC5EC \uB123\uC744 \uC218 \uC5C6\uC2B5\uB2C8\uB2E4. \uAE00\uC740 \uC9C1\uC811 \uCCD0\uC11C \uC501\uB2C8\uB2E4."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []
