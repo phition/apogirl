@@ -160,6 +160,32 @@ namespace ApoGirl.Systems.Session
             }
         }
 
+        /// <summary>
+        /// 디버그 "선택지 결과 미리 보기": 이 선택지를 고르면 바뀔 값. 세이브 직렬화로 만든 상태 사본에 적용해 보므로
+        /// 지금 상태와 난수는 바뀌지 않는다. extraFlags: 탐험 중 켜진 깃발 (현장 이벤트).
+        /// </summary>
+        public ChoicePreviewResult PreviewChoice(EventDef ev, string choiceId, IEnumerable<string> extraFlags = null)
+        {
+            var choice = ev?.Choices.Find(c => c.Id == choiceId);
+            if (State == null || choice == null)
+            {
+                return null;
+            }
+
+            var json = _snapshotSerializer.Serialize(State);
+            var flags = extraFlags?.ToList();
+            return ChoicePreview.Build(() =>
+            {
+                var copy = _snapshotSerializer.Deserialize(json);
+                foreach (var flag in flags ?? Enumerable.Empty<string>())
+                {
+                    copy.Flags.Add(flag);
+                }
+
+                return copy;
+            }, _db, ev, choice, _db.Balance);
+        }
+
         // ── 게임 시작·저장 ──
 
         /// <summary>다음 NewGame에 적용할 회차 시작 보너스 (타이틀에서 고른다). 적용 후 비운다.</summary>

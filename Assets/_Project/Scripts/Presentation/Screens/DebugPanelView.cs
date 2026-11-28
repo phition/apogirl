@@ -3,6 +3,7 @@ using System.Linq;
 using ApoGirl.Core.Expedition;
 using ApoGirl.Core.Simulation;
 using ApoGirl.Core.State;
+using ApoGirl.Presentation.App;
 using ApoGirl.Presentation.Text;
 using ApoGirl.Systems.Session;
 using UnityEngine.UIElements;
@@ -130,6 +131,14 @@ namespace ApoGirl.Presentation.Screens
                 Refresh();
             });
 
+            // 선택지 결과 미리 보기: 이벤트 선택지에 마우스를 올리면 고른 결과(수치 오르내림)를 보여 준다
+            Button previewToggle = null;
+            previewToggle = Add(PreviewKey(), () =>
+            {
+                ControlPrefs.ChoicePreview = !ControlPrefs.ChoicePreview;
+                previewToggle.text = Loc.T(PreviewKey());
+            });
+
             // 이벤트 강제 발생 (계획 단계에서만)
             var eventIds = _session.Definitions.Events.Select(e => e.Id).ToList();
             if (eventIds.Count > 0 && forceEvent != null)
@@ -189,11 +198,14 @@ namespace ApoGirl.Presentation.Screens
             }
         }
 
-        private void Add(string key, Action onClick)
+        private static string PreviewKey() => ControlPrefs.ChoicePreview ? "debug.choice_preview.on" : "debug.choice_preview.off";
+
+        private Button Add(string key, Action onClick)
         {
             var button = new Button(onClick) { text = Loc.T(key) };
             button.AddToClassList("small-button");
             _panel.Add(button);
+            return button;
         }
     }
 }

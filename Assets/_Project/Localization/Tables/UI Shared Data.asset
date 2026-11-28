@@ -9839,6 +9839,178 @@ MonoBehaviour:
     m_Key: chart.detail.item
     m_Metadata:
       m_Items: []
+  - m_Id: 3397788284239872
+    m_Key: debug.choice_preview.on
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3397788443623424
+    m_Key: debug.choice_preview.off
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3397788443623425
+    m_Key: preview.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3397788443623426
+    m_Key: preview.disabled
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3397788443623427
+    m_Key: preview.success
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3397788443623428
+    m_Key: preview.failure
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3397788443623429
+    m_Key: preview.none
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3397788443623430
+    m_Key: preview.defined
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3397788443623431
+    m_Key: preview.already
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3397788443623432
+    m_Key: preview.hidden
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3397788443623433
+    m_Key: preview.hidden.TraumaRecovery
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3397788443623434
+    m_Key: preview.hidden.SelfAwareness
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3397788443623435
+    m_Key: preview.hidden.Humanity
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3397788443623436
+    m_Key: preview.hidden.Hope
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3397788443623437
+    m_Key: preview.hidden.Isolation
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3397788443623438
+    m_Key: preview.traps
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3397788443623439
+    m_Key: preview.affinity
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3397788443623440
+    m_Key: preview.trust
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3397788443623441
+    m_Key: preview.npc_status
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3397788443623442
+    m_Key: preview.npc_role
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3397788443623443
+    m_Key: preview.faction
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3397788443623444
+    m_Key: preview.faction_known
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3397788443623445
+    m_Key: preview.faction_tier
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3397788443623446
+    m_Key: preview.items
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3397788443623447
+    m_Key: preview.items_lost
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3397788443623448
+    m_Key: preview.flags
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3397788443623449
+    m_Key: preview.clues
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3397788443623450
+    m_Key: preview.facility
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3397788443623451
+    m_Key: preview.traits
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3397788443623452
+    m_Key: preview.proficiency
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3397788443623453
+    m_Key: preview.ending_tags
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3397788443623454
+    m_Key: preview.teacher_mobility
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3397788443623455
+    m_Key: preview.teacher_infection
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3397788443623456
+    m_Key: preview.trauma_care
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3397788443623457
+    m_Key: preview.dish
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3397788443623458
+    m_Key: preview.raid
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3397788443623459
+    m_Key: preview.intrusion
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3397788443623460
+    m_Key: preview.game_over
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3397788443623461
+    m_Key: preview.next
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3397788443623462
+    m_Key: preview.next_show
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3397788443623463
+    m_Key: preview.field_note
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3397788443623464
+    m_Key: preview.encounter_stress
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3397788443623465
+    m_Key: preview.card_choice
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

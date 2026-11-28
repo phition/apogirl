@@ -9,5 +9,8 @@ namespace ApoGirl.Presentation.App
     public static class DebugAccess
     {
         public static bool Enabled => Application.isEditor || Debug.isDebugBuild;
+
+        /// <summary>"선택지 결과 미리 보기"를 쓰는가: 디버그를 쓸 수 있고 F1 패널에서 켰을 때만.</summary>
+        public static bool ChoicePreview => Enabled && ControlPrefs.ChoicePreview;
     }
 }

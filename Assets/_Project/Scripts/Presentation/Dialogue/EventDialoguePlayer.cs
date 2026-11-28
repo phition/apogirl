@@ -24,6 +24,9 @@ namespace ApoGirl.Presentation.Dialogue
 
         /// <summary>판정이 있는 선택지의 성공 확률 (없으면 null).</summary>
         public float? Chance;
+
+        /// <summary>디버그 "선택지 결과 미리 보기": 마우스를 올리면 보여 줄 글을 만든다 (꺼져 있으면 null).</summary>
+        public Func<string> Preview;
     }
 
     /// <summary>대화 화면. 줄 표시 후 플레이어가 넘길 때까지, 선택지는 고를 때까지 기다린다.</summary>
@@ -57,6 +60,12 @@ namespace ApoGirl.Presentation.Dialogue
 
         /// <summary>Yarn 명령 처리 (예: 프롤로그의 &lt;&lt;input name&gt;&gt;). null이면 경고만 남긴다.</summary>
         public Func<Command, CancellationToken, Task> CommandHandler { get; set; }
+
+        /// <summary>
+        /// 디버그 "선택지 결과 미리 보기": 선택지 ID(#choice:ID) → 고르면 바뀔 값의 글. null이면 미리 보기 없음.
+        /// 켜고 끄는 판단(DebugAccess.ChoicePreview)은 이 값을 넣는 쪽이 한다.
+        /// </summary>
+        public Func<string, string> ChoicePreview { get; set; }
         private Action<string> _onChoice;
 
         public EventDialoguePlayer(YarnProject project, IDialogueView view)
@@ -115,6 +124,12 @@ namespace ApoGirl.Presentation.Dialogue
             {
                 var choiceId = ChoiceTag(option.Line.ID);
                 var choice = new DialogueChoice { OptionId = option.ID, Text = Localize(option.Line).Text, Enabled = option.IsAvailable, ChoiceId = choiceId ?? "" };
+                var preview = ChoicePreview;
+                if (choiceId != null && preview != null)
+                {
+                    choice.Preview = () => preview(choiceId);
+                }
+
                 if (choiceId != null && _eventChoices != null)
                 {
                     var data = _eventChoices.FirstOrDefault(c => c.Id == choiceId);

@@ -916,6 +916,10 @@ namespace ApoGirl.Presentation.Screens
             {
                 _dialogueView.SetScene(StoryArt.EventImage(ev.Id, _session.State));
                 Sound.OnEvent(ev.Id);
+                // 디버그 "선택지 결과 미리 보기": 아직 고르기 전일 때만 (고른 뒤의 대사 분기에는 띄우지 않는다)
+                _dialoguePlayer.ChoicePreview = DebugAccess.ChoicePreview
+                    ? id => resolved || _session.PendingEvent != ev ? "" : ChoicePreviewText.Text(_session.PreviewChoice(ev, id))
+                    : null;
                 var task = _dialoguePlayer.Run(ev.Node, choices, Choose, destroyCancellationToken);
                 while (!task.IsCompleted)
                 {
@@ -1020,6 +1024,16 @@ namespace ApoGirl.Presentation.Screens
 
             var title = Loc.Lookup(Loc.UiTable, "event." + ev.Id + ".title") ?? ev.Id;
             var body = Loc.Lookup(Loc.UiTable, "event." + ev.Id + ".body") ?? "";
+            if (DebugAccess.ChoicePreview)
+            {
+                // 카드 이벤트(Yarn 대사 없음)는 마우스를 올릴 칸이 없어 본문 아래에 선택지별로 적는다
+                foreach (var choice in choices)
+                {
+                    var label = string.IsNullOrEmpty(choice.Def.TextKey) ? choice.Id : Loc.T(choice.Def.TextKey);
+                    body += "\n\n" + Loc.F("preview.card_choice", label) + "\n" + ChoicePreviewText.Text(_session.PreviewChoice(ev, choice.Id));
+                }
+            }
+
             _card.Show(title, body, true, buttons.ToArray());
         }
 
