@@ -1738,33 +1738,43 @@ Button.base-advice-line:hover { background-color: rgba(42, 38, 32, 0.12); color:
 .card .section-header { color: var(--ink-blue); }
 .card .action-gains { color: var(--ink-green); }
 .card .action-info { color: var(--ink-dim); }
-/* ── 능력치 막대 그래프 (StatGraph): 작은 칠판에 분필로 ──
-   종이 카드 위에서도 칠판이라 글자색을 .card Label(잉크) 위에 다시 정한다.
+/* ── 능력치 막대 그래프 (StatGraph): 분필 막대 ──
+   종이 카드 위에서는 작은 칠판이라 글자색을 .card Label(잉크) 위에 다시 정한다.
    계열 색은 시간 순서라 노란 분필 한 색의 옅음 → 짙음, 시작 막대는 테두리만. 같은 막은 늘 같은 색 (.s-act1~4). */
-/* 반투명은 선형 색공간에서 뒤 그림이 많이 비친다: 그래프 판은 불투명한 칠판 + 나무 테 */
-.stat-chart { border-radius: 4px; border-width: 3px; border-color: var(--wood); background-color: var(--bg); }
-.card .stat-chart { margin-top: 4px; }
-.stat-chart-legend-label, .card .stat-chart-legend-label { color: var(--text-dim); }
-.stat-chart-tick, .card .stat-chart-tick { color: var(--text-dim); }
+/* 엔딩 "1년의 기록": 판 없이 반투명 — 뒤의 엔딩 그림이 비치고 기록 칸의 글과 같은 톤 (사용자 요청 2026-11-28).
+   막 평가 카드(종이 위): 나무 테 두른 불투명한 작은 칠판 */
+.stat-chart { border-radius: 4px; background-color: rgba(0, 0, 0, 0.3); }
+/* 그림 위에서도 읽히게: 글자는 흰 분필 + 그림자, 눈금선은 조금 진하게 (칠판 카드에서는 아래 .card 줄이 되돌린다) */
+.stat-chart-legend-label, .stat-chart-tick, .stat-chart-detail { color: var(--text); }
+.stat-chart-legend-label, .stat-chart-tick, .stat-chart-detail, .stat-chart-value, .stat-chart-name, .stat-chart-delta { text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.85); }
+.stat-chart-grid { background-color: rgba(238, 236, 225, 0.2); }
+.stat-chart-grid.base { background-color: rgba(238, 236, 225, 0.6); }
+.card .stat-chart-grid { background-color: rgba(238, 236, 225, 0.10); }
+.card .stat-chart-grid.base { background-color: rgba(238, 236, 225, 0.45); }
+.card .stat-chart { margin-top: 4px; border-width: 3px; border-color: var(--wood); background-color: var(--bg); }
+.card .stat-chart-legend-label, .card .stat-chart-tick { color: var(--text-dim); }
 .stat-chart-value, .card .stat-chart-value { color: var(--text); }
 .stat-chart-name, .card .stat-chart-name { color: var(--text); }
-.stat-chart-detail, .card .stat-chart-detail { color: var(--text-dim); }
-.stat-chart.has-focus .stat-chart-detail { color: var(--text); }
+.card .stat-chart-detail { color: var(--text-dim); }
+.card .stat-chart.has-focus .stat-chart-detail { color: var(--text); }
 .stat-chart-delta.up, .card .stat-chart-delta.up { color: var(--ok); }
 .stat-chart-delta.down, .card .stat-chart-delta.down { color: var(--danger); }
 .stat-chart-delta.same, .card .stat-chart-delta.same { color: var(--text-dim); }
-.stat-chart-grid { background-color: rgba(238, 236, 225, 0.10); }
-.stat-chart-grid.base { background-color: rgba(238, 236, 225, 0.45); }
 .stat-chart-bar.s-start, .stat-chart-swatch.s-start {
-    background-color: rgba(238, 236, 225, 0.08);
-    border-width: 1px; border-bottom-width: 0; border-color: rgba(238, 236, 225, 0.6);
+    background-color: rgba(12, 16, 14, 0.45);
+    border-width: 1px; border-bottom-width: 0; border-color: rgba(238, 236, 225, 0.75);
 }
+.card .stat-chart-bar.s-start, .card .stat-chart-swatch.s-start { background-color: rgba(238, 236, 225, 0.08); border-color: rgba(238, 236, 225, 0.6); }
 .stat-chart-swatch.s-start { border-bottom-width: 1px; }
-.stat-chart-bar.s-act1, .stat-chart-swatch.s-act1 { background-color: #57533a; }
-.stat-chart-bar.s-act2, .stat-chart-swatch.s-act2 { background-color: #857944; }
-.stat-chart-bar.s-act3, .stat-chart-swatch.s-act3 { background-color: #b39b50; }
+/* 그림 위에 서는 막대라 가장 옅은 단계도 너무 어둡지 않게, 채운 막대마다 짙은 외곽선으로 뒤 그림과 가른다 */
+.stat-chart-bar.s-act1, .stat-chart-swatch.s-act1 { background-color: #7a7350; }
+.stat-chart-bar.s-act2, .stat-chart-swatch.s-act2 { background-color: #a09158; }
+.stat-chart-bar.s-act3, .stat-chart-swatch.s-act3 { background-color: #c6ae61; }
 .stat-chart-bar.s-act4, .stat-chart-swatch.s-act4,
 .stat-chart-bar.s-now, .stat-chart-swatch.s-now { background-color: var(--accent); }
+.stat-chart-bar.s-act1, .stat-chart-bar.s-act2, .stat-chart-bar.s-act3, .stat-chart-bar.s-act4, .stat-chart-bar.s-now {
+    border-width: 1px; border-bottom-width: 0; border-color: rgba(12, 16, 14, 0.7);
+}
 .stat-chart-swatch { border-radius: 2px; }
 /* 짚은 능력치: 그 묶음 뒤에 옅은 분필 띠, 이름은 노란 분필 */
 .stat-chart-column.focused { background-color: rgba(238, 236, 225, 0.03); }
