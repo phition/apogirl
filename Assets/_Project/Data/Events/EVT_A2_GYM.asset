@@ -19,15 +19,13 @@ MonoBehaviour:
     Condition:
       WeekMin: 0
       WeekMax: 0
-      Days: 
-      Phase: 0
+      Days: 07000000i
+      Phase: 1
       Seasons: 
       Month: 0
       DayOfMonth: 0
       ActionCategories: 
-      ActionIds:
-      - ACT_EXP_DAY_SCHOOL
-      - ACT_EXP_NIGHT_SCHOOL
+      ActionIds: []
       FlagsAll:
       - PLAN_GYM
       FlagsAny: []

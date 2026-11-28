@@ -54,10 +54,10 @@
         "FlagsAll": [
           "PLAN_CAFETERIA"
         ],
-        "ActionIds": [
-          "ACT_EXP_DAY_SCHOOL",
-          "ACT_EXP_NIGHT_SCHOOL"
+        "Days": [
+          7
         ],
+        "Phase": "Day",
         "Checks": [
           {
             "Kind": "Facility",
@@ -114,10 +114,10 @@
         "FlagsAll": [
           "PLAN_LIBRARY"
         ],
-        "ActionIds": [
-          "ACT_EXP_DAY_SCHOOL",
-          "ACT_EXP_NIGHT_SCHOOL"
+        "Days": [
+          7
         ],
+        "Phase": "Day",
         "Checks": [
           {
             "Kind": "Facility",
@@ -197,10 +197,10 @@
         "FlagsAll": [
           "PLAN_GYM"
         ],
-        "ActionIds": [
-          "ACT_EXP_DAY_SCHOOL",
-          "ACT_EXP_NIGHT_SCHOOL"
+        "Days": [
+          7
         ],
+        "Phase": "Day",
         "Checks": [
           {
             "Kind": "Facility",
