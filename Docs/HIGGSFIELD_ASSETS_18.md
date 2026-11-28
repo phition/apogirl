@@ -84,7 +84,7 @@ Setting: a small Korean city about ten years after a disaster, slowly rebuilt by
 | `{BANJANG_OLD}` | `char_banjang_sheet.png` | `Foreman Jung, the man in the attached reference sheet about ten years older: the same build, face and clothes as the sheet, hair turned grey` |
 | `{CAT_OLD}` | `ArtInbox/sprites12/ref/cat_illust_avatar.png` (12차의 고양이 생김새 기준) | `an old orange tabby cat (cheese-colored with darker stripes, cream chest and paws, one ear slightly notched), its muzzle and whiskers gone white with age, healthy and well fed, fast asleep` |
 
-**고칠 것 하나를 찾았다**: 좌석 선택 엔딩 문장(`ending.ENDING_HIDDEN_CURE.seat_senior.cut2`)은 급식이를 "삼색 고양이"라고 쓰는데, 그림(8차·12차·13차)은 모두 **치즈색** 고양이다. 이 문서는 그림 쪽(치즈색)을 따른다. 문장을 "치즈색"으로 고칠지는 사용자가 정한다.
+**고칠 것 하나를 찾았다**: 좌석 선택 엔딩 문장(`ending.ENDING_HIDDEN_CURE.seat_senior.cut2`)은 급식이를 "삼색 고양이"라고 쓰는데, 그림(8차·12차·13차)은 모두 **치즈색** 고양이다. 이 문서는 그림 쪽(치즈색)을 따른다. → **고쳤다 (2026-11-28, 사용자 결정)**: 그 엔딩 문장과 고양이가 나오는 대본 네 곳(`Act2Side.yarn`·`Cat.yarn`)을 모두 "치즈색"으로 맞췄다.
 
 **안전 (13장) — 이 문서에서 특히 지킬 것**
 - 주인공은 어른으로 나오지만 몸을 드러내거나 꾸민 차림은 넣지 않는다. 모두 일하는 옷이다.
