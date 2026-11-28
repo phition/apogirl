@@ -32,6 +32,7 @@ namespace ApoGirl.Presentation.Dialogue
         private readonly VisualElement _portrait;
         private readonly VisualElement _portraitFrame;
         private readonly VisualElement _box;
+        private readonly Label _preview;
 
         /// <summary>말하는 사람 → 초상화 (M6-5). 비거나 null을 돌려주면 초상화를 숨긴다.</summary>
         public Func<string, Texture2D> PortraitFor { get; set; }
@@ -72,6 +73,15 @@ namespace ApoGirl.Presentation.Dialogue
             _box.Add(_portraitFrame);
             _box.Add(body);
 
+            // 디버그 "선택지 결과 미리 보기": 선택지 위에 마우스가 오면 대화창 위에 뜨는 판.
+            // 칸마다가 아니라 선택지 묶음에서 받는다 — 고를 수 없는(비활성) 선택지 위에서도 뜨게.
+            _preview = new Label { name = "dialogue-preview", pickingMode = PickingMode.Ignore };
+            _preview.AddToClassList("dialogue-preview");
+            _preview.AddToClassList("hidden");
+            _layer.Add(_preview);
+            _options.RegisterCallback<PointerMoveEvent>(evt => HoverOptions(evt.position), TrickleDown.TrickleDown);
+            _options.RegisterCallback<PointerLeaveEvent>(_ => HidePreview());
+
             _autoButton = Tool(root, "dialogue-auto", Loc.T("dialogue.auto"), () =>
             {
                 _auto = !_auto;
@@ -94,9 +104,67 @@ namespace ApoGirl.Presentation.Dialogue
 
         public bool IsOpen => !_layer.ClassListContains("hidden");
 
+        /// <summary>지금 떠 있는 미리 보기 글 (없으면 "").</summary>
+        public string PreviewText => _preview.ClassListContains("hidden") ? "" : _preview.text;
+
+        /// <summary>마우스 자리(패널 좌표)에 있는 선택지의 미리 보기를 띄운다. 선택지 밖이거나 미리 보기가 없으면 숨긴다.</summary>
+        public void HoverOptions(Vector2 position)
+        {
+            foreach (var child in _options.Children())
+            {
+                if (child.userData is OptionPreview preview && child.worldBound.Contains(position))
+                {
+                    ShowPreview(preview);
+                    return;
+                }
+            }
+
+            HidePreview();
+        }
+
+        private void ShowPreview(OptionPreview preview)
+        {
+            if (preview.Text == null)
+            {
+                try
+                {
+                    preview.Text = preview.Make() ?? "";
+                }
+                catch (Exception exception)
+                {
+                    // 디버그 기능이 대화를 멈추게 하지 않는다
+                    Debug.LogWarning("[선택지 미리 보기] " + exception.Message);
+                    preview.Text = "";
+                }
+            }
+
+            if (preview.Text.Length == 0)
+            {
+                HidePreview();
+                return;
+            }
+
+            // 대화창 바로 위, 왼쪽 끝에 맞춘다
+            var box = _layer.WorldToLocal(_box.worldBound);
+            _preview.text = preview.Text;
+            _preview.style.left = box.xMin;
+            _preview.style.bottom = _layer.layout.height - box.yMin + 6f;
+            _preview.RemoveFromClassList("hidden");
+        }
+
+        private void HidePreview() => _preview.AddToClassList("hidden");
+
+        /// <summary>선택지 단추에 붙여 두는 미리 보기 (처음 마우스가 올 때 한 번 계산).</summary>
+        private sealed class OptionPreview
+        {
+            public Func<string> Make;
+            public string Text;
+        }
+
         public void Open()
         {
             _skip = false;
+            HidePreview();
             _options.Clear();
             _text.text = "";
             _speaker.text = "";
@@ -109,6 +177,7 @@ namespace ApoGirl.Presentation.Dialogue
         public void Close()
         {
             _typing?.Pause();
+            HidePreview();
             _layer.AddToClassList("hidden");
             ShowPortrait(null);
             SetScene(null);
@@ -155,6 +224,7 @@ namespace ApoGirl.Presentation.Dialogue
 
         public async Task ShowLine(string speaker, string text, CancellationToken token)
         {
+            HidePreview();
             _options.Clear();
             _speaker.text = speaker ?? "";
             _speaker.EnableInClassList("hidden", string.IsNullOrEmpty(speaker));
@@ -203,11 +273,17 @@ namespace ApoGirl.Presentation.Dialogue
                 var button = new Button(() =>
                 {
                     _history.Add("▶ " + text);
+                    HidePreview();
                     _options.Clear();
                     picked.TrySetResult(id);
                 }) { text = label };
                 button.AddToClassList("dialogue-option");
                 button.SetEnabled(choice.Enabled);
+                if (choice.Preview != null)
+                {
+                    button.userData = new OptionPreview { Make = choice.Preview };
+                }
+
                 _options.Add(button);
             }
 

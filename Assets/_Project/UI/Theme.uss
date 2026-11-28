@@ -1758,6 +1758,19 @@ Button.base-advice-line:hover { background-color: rgba(42, 38, 32, 0.12); color:
 .dialogue-log { border-radius: 4px; border-width: 1px; border-color: var(--chalk-line); }
 .dialogue-portrait { border-radius: 4px; border-color: var(--chalk-line); }
 .dialogue-portrait-image { border-radius: 2px; }
+/* 디버그 "선택지 결과 미리 보기": 선택지에 마우스를 올리면 대화창 위에 뜨는 판 (자리는 DialogueView가 잡는다) */
+.dialogue-preview {
+    position: absolute;
+    max-width: 640px;
+    padding: 8px 14px;
+    font-size: 15px;
+    white-space: normal;
+    color: var(--text);
+    background-color: rgb(20, 29, 26);
+    border-width: 1px;
+    border-color: var(--accent);
+    border-radius: 4px;
+}
 .prologue-input { border-width: 0; border-top-width: 4px; border-color: var(--wood); border-radius: 4px; }
 .prologue-axis.selected { background-color: var(--accent); border-color: var(--accent); color: var(--ink); }
 

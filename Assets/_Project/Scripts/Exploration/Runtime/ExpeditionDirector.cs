@@ -1961,7 +1961,9 @@ namespace ApoGirl.Exploration.Runtime
             var encounter = target.Encounter;
             var token = destroyCancellationToken;
             string picked = null;
-            var task = _fieldDialogue.Run(encounter.DialogueNode, encounter.SceneEventId, null, id => picked = id, token);
+            // 디버그 "선택지 결과 미리 보기": 조우 선택지는 정의값(깃발·단서·스트레스)
+            var task = _fieldDialogue.Run(encounter.DialogueNode, encounter.SceneEventId, null, id => picked = id, token,
+                DebugAccess.ChoicePreview ? id => ChoicePreviewText.Encounter(encounter.Choices.Find(c => c.Id == id)) : null);
             while (!task.IsCompleted)
             {
                 yield return null;
@@ -1990,7 +1992,11 @@ namespace ApoGirl.Exploration.Runtime
                 if (ev != null && _fieldDialogue.HasNode(ev.Node))
                 {
                     string chosen = null;
-                    task = _fieldDialogue.Run(ev.Node, ev.Id, choices, id => chosen = id, token);
+                    // 현장 이벤트는 귀환 때 적용된다 — 지금 상태 + 이번 탐험의 깃발로 미리 본다
+                    task = _fieldDialogue.Run(ev.Node, ev.Id, choices, id => chosen = id, token,
+                        DebugAccess.ChoicePreview
+                            ? id => ChoicePreviewText.Text(GameApp.Session.PreviewChoice(ev, id, _runFlags), Loc.T("preview.field_note"))
+                            : null);
                     while (!task.IsCompleted)
                     {
                         yield return null;

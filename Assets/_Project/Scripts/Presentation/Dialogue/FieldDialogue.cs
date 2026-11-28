@@ -44,9 +44,10 @@ namespace ApoGirl.Presentation.Dialogue
 
         /// <summary>
         /// 노드를 끝까지 보여 준다. choices가 있으면 그 이벤트의 선택지만(조건에 안 맞는 것은 숨김), null이면 노드의 선택지 그대로.
-        /// 고른 선택지 ID는 onChoice로 (한 번만).
+        /// 고른 선택지 ID는 onChoice로 (한 번만). preview: 디버그 "선택지 결과 미리 보기" (선택지 ID → 글, 끄면 null).
         /// </summary>
-        public Task Run(string node, string sceneEventId, IReadOnlyList<EventChoiceView> choices, Action<string> onChoice, CancellationToken token)
+        public Task Run(string node, string sceneEventId, IReadOnlyList<EventChoiceView> choices, Action<string> onChoice, CancellationToken token,
+            Func<string, string> preview = null)
         {
             if (!HasNode(node))
             {
@@ -61,6 +62,7 @@ namespace ApoGirl.Presentation.Dialogue
             }
 
             var picked = false;
+            _player.ChoicePreview = preview;
             return _player.Run(node, choices, id =>
             {
                 if (!picked)
