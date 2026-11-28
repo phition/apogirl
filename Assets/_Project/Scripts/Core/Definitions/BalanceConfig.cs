@@ -909,6 +909,10 @@ namespace ApoGirl.Core.Definitions
         /// </summary>
         public float EndingMarginCap = 2f;
 
+        /// <summary>수능날 모의고사 점수가 이 값 이상이면 깃발 EXAM_SCORE_80 · EXAM_SCORE_95를 남긴다 (연구자 엔딩, 기획서 8.3절). 깃발 이름은 그대로 두고 문턱만 고친다.</summary>
+        public int ExamHighScore = 80;
+        public int ExamTopScore = 95;
+
         // ── 세력 거래 (사용자 요청 2026-11-26) ──
 
         /// <summary>한 운반 주기(세력의 TradeIntervalWeeks)에 거래할 수 있는 가짓수: 기본 / 동맹. 같은 물건을 두 번 하지는 못한다.</summary>

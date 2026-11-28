@@ -1475,6 +1475,403 @@
       "Color": "#302C24"
     },
     {
+      "Id": "ENDING_RADIO_HOST",
+      "Category": "Specialized",
+      "Act": "Future",
+      "Priority": 300,
+      "Condition": {
+        "Checks": [
+          {
+            "Kind": "Stat",
+            "Key": "Leadership",
+            "Op": "GreaterOrEqual",
+            "Value": 70
+          },
+          {
+            "Kind": "Stat",
+            "Key": "Empathy",
+            "Op": "GreaterOrEqual",
+            "Value": 100
+          },
+          {
+            "Kind": "ActionCountPrefix",
+            "Key": "ACT_BROADCAST_",
+            "Op": "GreaterOrEqual",
+            "Value": 8
+          },
+          {
+            "Kind": "FactionKnown",
+            "Key": "FAC_UBC",
+            "Op": "GreaterOrEqual",
+            "Value": 1
+          },
+          {
+            "Kind": "FactionTier",
+            "Key": "FAC_UBC",
+            "Op": "GreaterOrEqual",
+            "Value": 3
+          }
+        ]
+      },
+      "Score": [
+        {
+          "Kind": "ActionCountPrefix",
+          "Key": "ACT_BROADCAST_",
+          "Weight": 5
+        },
+        {
+          "Kind": "Stat",
+          "Key": "Leadership",
+          "Weight": 1
+        },
+        {
+          "Kind": "Stat",
+          "Key": "Empathy",
+          "Weight": 1
+        }
+      ],
+      "CutKeys": [
+        "ending.ENDING_RADIO_HOST.cut1",
+        "ending.ENDING_RADIO_HOST.cut2",
+        "ending.ENDING_RADIO_HOST.cut3"
+      ],
+      "Color": "#22283A",
+      "Variants": [
+        {
+          "Id": "CD",
+          "Condition": {
+            "Checks": [
+              {
+                "Kind": "Record",
+                "Key": "CdCount",
+                "Op": "GreaterOrEqual",
+                "Value": 1
+              }
+            ]
+          },
+          "CutKeys": [
+            "ending.ENDING_RADIO_HOST.cut1",
+            "ending.ENDING_RADIO_HOST.cut2",
+            "ending.ENDING_RADIO_HOST.cd.cut3"
+          ]
+        }
+      ]
+    },
+    {
+      "Id": "ENDING_ARCHITECT",
+      "Category": "Specialized",
+      "Act": "Future",
+      "Priority": 300,
+      "Condition": {
+        "Checks": [
+          {
+            "Kind": "Proficiency",
+            "Key": "Engineering",
+            "Op": "GreaterOrEqual",
+            "Value": 3
+          },
+          {
+            "Kind": "Stat",
+            "Key": "Intellect",
+            "Op": "GreaterOrEqual",
+            "Value": 150
+          },
+          {
+            "Kind": "FacilityCount",
+            "Op": "GreaterOrEqual",
+            "Value": 7
+          },
+          {
+            "Kind": "ActionCountPrefix",
+            "Key": "ACT_SURV_BARRICADE|ACT_SURV_REINFORCE",
+            "Op": "GreaterOrEqual",
+            "Value": 4
+          }
+        ]
+      },
+      "Score": [
+        {
+          "Kind": "Proficiency",
+          "Key": "Engineering",
+          "Weight": 20
+        },
+        {
+          "Kind": "FacilityCount",
+          "Weight": 10
+        },
+        {
+          "Kind": "Stat",
+          "Key": "Intellect",
+          "Weight": 1
+        }
+      ],
+      "CutKeys": [
+        "ending.ENDING_ARCHITECT.cut1",
+        "ending.ENDING_ARCHITECT.cut2",
+        "ending.ENDING_ARCHITECT.cut3"
+      ],
+      "Color": "#2C2A26"
+    },
+    {
+      "Id": "ENDING_SCHOLAR",
+      "Category": "Specialized",
+      "Act": "Future",
+      "Priority": 300,
+      "Condition": {
+        "FlagsAll": [
+          "EXAM_SCORE_80"
+        ],
+        "Checks": [
+          {
+            "Kind": "Stat",
+            "Key": "Intellect",
+            "Op": "GreaterOrEqual",
+            "Value": 200
+          },
+          {
+            "Kind": "ActionCount",
+            "Key": "ACT_NIGHT_STUDY",
+            "Op": "GreaterOrEqual",
+            "Value": 10
+          }
+        ]
+      },
+      "Score": [
+        {
+          "Kind": "Stat",
+          "Key": "Intellect",
+          "Weight": 1
+        },
+        {
+          "Kind": "ActionCount",
+          "Key": "ACT_NIGHT_STUDY",
+          "Weight": 3
+        },
+        {
+          "Kind": "Flag",
+          "Key": "EXAM_SCORE_95",
+          "Weight": 30
+        }
+      ],
+      "CutKeys": [
+        "ending.ENDING_SCHOLAR.cut1",
+        "ending.ENDING_SCHOLAR.cut2",
+        "ending.ENDING_SCHOLAR.cut3"
+      ],
+      "Color": "#28263A"
+    },
+    {
+      "Id": "ENDING_SOLDIER",
+      "Category": "Record",
+      "Act": "Future",
+      "Priority": 320,
+      "Condition": {
+        "FlagsAll": [
+          "CONSCIENCE_CONFESSED"
+        ],
+        "Checks": [
+          {
+            "Kind": "Record",
+            "Key": "ZombiesFelled",
+            "Op": "GreaterOrEqual",
+            "Value": 150
+          },
+          {
+            "Kind": "Stat",
+            "Key": "Strength",
+            "Op": "GreaterOrEqual",
+            "Value": 45
+          },
+          {
+            "Kind": "Proficiency",
+            "Key": "SelfDefense",
+            "Op": "GreaterOrEqual",
+            "Value": 2
+          },
+          {
+            "Kind": "Record",
+            "Key": "RaidsRepelled",
+            "Op": "GreaterOrEqual",
+            "Value": 3
+          },
+          {
+            "Kind": "Conscience",
+            "Op": "LessOrEqual",
+            "Value": 6
+          }
+        ]
+      },
+      "Score": [
+        {
+          "Kind": "Record",
+          "Key": "ZombiesFelled",
+          "Weight": 0.33
+        },
+        {
+          "Kind": "Stat",
+          "Key": "Strength",
+          "Weight": 1
+        },
+        {
+          "Kind": "Proficiency",
+          "Key": "SelfDefense",
+          "Weight": 20
+        }
+      ],
+      "CutKeys": [
+        "ending.ENDING_SOLDIER.cut1",
+        "ending.ENDING_SOLDIER.cut2",
+        "ending.ENDING_SOLDIER.cut3"
+      ],
+      "Color": "#2E2422"
+    },
+    {
+      "Id": "ENDING_NIGHT_SCOUT",
+      "Category": "Record",
+      "Act": "Future",
+      "Priority": 320,
+      "Condition": {
+        "Checks": [
+          {
+            "Kind": "Expeditions",
+            "Key": "Night",
+            "Op": "GreaterOrEqual",
+            "Value": 25
+          },
+          {
+            "Kind": "NightRatio",
+            "Op": "GreaterOrEqual",
+            "Value": 70
+          },
+          {
+            "Kind": "Record",
+            "Key": "Downs",
+            "Op": "LessOrEqual",
+            "Value": 1
+          }
+        ]
+      },
+      "Score": [
+        {
+          "Kind": "Expeditions",
+          "Key": "Night",
+          "Weight": 2
+        },
+        {
+          "Kind": "Stat",
+          "Key": "Agility",
+          "Weight": 1
+        }
+      ],
+      "CutKeys": [
+        "ending.ENDING_NIGHT_SCOUT.cut1",
+        "ending.ENDING_NIGHT_SCOUT.cut2",
+        "ending.ENDING_NIGHT_SCOUT.cut3"
+      ],
+      "Color": "#1C2030"
+    },
+    {
+      "Id": "ENDING_KEEPER",
+      "Category": "Record",
+      "Act": "Future",
+      "Priority": 320,
+      "Condition": {
+        "Checks": [
+          {
+            "Kind": "Expeditions",
+            "Op": "LessOrEqual",
+            "Value": 6
+          },
+          {
+            "Kind": "FacilityCount",
+            "Op": "GreaterOrEqual",
+            "Value": 7
+          },
+          {
+            "Kind": "ActionCount",
+            "Key": "ACT_SURV_CLEAN",
+            "Op": "GreaterOrEqual",
+            "Value": 10
+          }
+        ]
+      },
+      "Score": [
+        {
+          "Kind": "FacilityCount",
+          "Weight": 10
+        },
+        {
+          "Kind": "ActionCount",
+          "Key": "ACT_SURV_CLEAN",
+          "Weight": 1
+        },
+        {
+          "Kind": "Stat",
+          "Key": "Craft",
+          "Weight": 1
+        }
+      ],
+      "CutKeys": [
+        "ending.ENDING_KEEPER.cut1",
+        "ending.ENDING_KEEPER.cut2",
+        "ending.ENDING_KEEPER.cut3"
+      ],
+      "Color": "#2A2C28"
+    },
+    {
+      "Id": "ENDING_SEEKER",
+      "Category": "Record",
+      "Act": "Future",
+      "Priority": 320,
+      "Condition": {
+        "Checks": [
+          {
+            "Kind": "FlagCount",
+            "Key": "DH_RESCUED|DH_MOTHER_FOUND|BULLY_RESCUED|JUN_SAVED|UBC_RUNNER_SAVED|WANDERER_SHELTERED|HR_WINTER_JOINED",
+            "Op": "GreaterOrEqual",
+            "Value": 4
+          }
+        ]
+      },
+      "Score": [
+        {
+          "Kind": "FlagCount",
+          "Key": "DH_RESCUED|DH_MOTHER_FOUND|BULLY_RESCUED|JUN_SAVED|UBC_RUNNER_SAVED|WANDERER_SHELTERED|HR_WINTER_JOINED",
+          "Weight": 20
+        },
+        {
+          "Kind": "Hidden",
+          "Key": "Humanity",
+          "Weight": 1
+        },
+        {
+          "Kind": "LeftBehind",
+          "Weight": 20
+        }
+      ],
+      "CutKeys": [
+        "ending.ENDING_SEEKER.cut1",
+        "ending.ENDING_SEEKER.cut2",
+        "ending.ENDING_SEEKER.cut3"
+      ],
+      "Color": "#2A2830",
+      "Variants": [
+        {
+          "Id": "MOTHER",
+          "Condition": {
+            "FlagsAll": [
+              "DH_MOTHER_FOUND"
+            ]
+          },
+          "CutKeys": [
+            "ending.ENDING_SEEKER.cut1",
+            "ending.ENDING_SEEKER.cut2",
+            "ending.ENDING_SEEKER.mother.cut3"
+          ]
+        }
+      ]
+    },
+    {
       "Id": "ENDING_TOGETHER",
       "Category": "Relationship",
       "Act": "Future",

@@ -534,6 +534,8 @@ namespace ApoGirl.Presentation.Screens
             {
                 MockExamView.LastScore = -1;
                 await new MockExamView(_root.Q("screen") ?? _root).Run();
+                // 높은 점수는 깃발로 남는다 (연구자 엔딩이 읽는다). 점수 자체는 수치에 쓰지 않는다
+                Core.Rules.ExamRules.Record(_session.State, MockExamView.LastScore, _session.Definitions.Balance);
                 return;
             }
 

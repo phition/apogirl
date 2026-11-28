@@ -112,8 +112,26 @@ namespace ApoGirl.Core.Definitions
         /// <summary>엔딩 판정 중에만: 앞 막에서 그 조각이 뽑혔는가 (Key = 엔딩 ID → 1/0). 판정 밖에서는 늘 0.</summary>
         EndingAct,
 
-        /// <summary>Key로 시작하는 행동들을 실행한 횟수의 합 (예: "ACT_TREAT_" = 부상 치료 + 감염 처치).</summary>
+        /// <summary>
+        /// Key로 시작하는 행동들을 실행한 횟수의 합 (예: "ACT_TREAT_" = 부상 치료 + 감염 처치).
+        /// 머리글이 다른 행동을 묶으려면 '|'로 잇는다 (예: "ACT_SURV_BARRICADE|ACT_SURV_REINFORCE").
+        /// </summary>
         ActionCountPrefix,
+
+        /// <summary>
+        /// 1년 동안 남은 기록 (Key = 기록 이름: Downs·Raids·RaidsRepelled·Intrusions·IntrusionsLost·HostileEvictions·HostileRobberies·HostileBeatings·
+        /// ZombiesFelled·HeavyFelledRuns·OwnedRoomRuns·CdCount). 기획서 8.1절.
+        /// </summary>
+        Record,
+
+        /// <summary>'|'로 이은 깃발 가운데 켜진 수 (예: "DH_RESCUED|JUN_SAVED").</summary>
+        FlagCount,
+
+        /// <summary>연 시설 수 (레벨 1 이상, Key 없음).</summary>
+        FacilityCount,
+
+        /// <summary>낮·밤 탐험을 한 번이라도 한 지역 수 (튜토리얼 제외, Key 없음).</summary>
+        VisitedLocations,
     }
 
     public enum CompareOp

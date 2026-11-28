@@ -9467,6 +9467,126 @@ MonoBehaviour:
     m_Key: ending.ENDING_VET.cut3
     m_Metadata:
       m_Items: []
+  - m_Id: 3282159115976704
+    m_Key: ending.ENDING_RADIO_HOST.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3282159661236224
+    m_Key: ending.ENDING_RADIO_HOST.cut1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3282159661236225
+    m_Key: ending.ENDING_RADIO_HOST.cut2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3282159661236226
+    m_Key: ending.ENDING_RADIO_HOST.cut3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3282159661236227
+    m_Key: ending.ENDING_RADIO_HOST.cd.cut3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3282159661236228
+    m_Key: ending.ENDING_ARCHITECT.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3282159661236229
+    m_Key: ending.ENDING_ARCHITECT.cut1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3282159661236230
+    m_Key: ending.ENDING_ARCHITECT.cut2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3282159661236231
+    m_Key: ending.ENDING_ARCHITECT.cut3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3282159661236232
+    m_Key: ending.ENDING_SCHOLAR.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3282159661236233
+    m_Key: ending.ENDING_SCHOLAR.cut1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3282159661236234
+    m_Key: ending.ENDING_SCHOLAR.cut2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3282159661236235
+    m_Key: ending.ENDING_SCHOLAR.cut3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3282159661236236
+    m_Key: ending.ENDING_SOLDIER.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3282159661236237
+    m_Key: ending.ENDING_SOLDIER.cut1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3282159661236238
+    m_Key: ending.ENDING_SOLDIER.cut2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3282159661236239
+    m_Key: ending.ENDING_SOLDIER.cut3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3282159661236240
+    m_Key: ending.ENDING_NIGHT_SCOUT.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3282159661236241
+    m_Key: ending.ENDING_NIGHT_SCOUT.cut1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3282159661236242
+    m_Key: ending.ENDING_NIGHT_SCOUT.cut2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3282159661236243
+    m_Key: ending.ENDING_NIGHT_SCOUT.cut3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3282159661236244
+    m_Key: ending.ENDING_KEEPER.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3282159661236245
+    m_Key: ending.ENDING_KEEPER.cut1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3282159661236246
+    m_Key: ending.ENDING_KEEPER.cut2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3282159661236247
+    m_Key: ending.ENDING_KEEPER.cut3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3282159661236248
+    m_Key: ending.ENDING_SEEKER.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3282159661236249
+    m_Key: ending.ENDING_SEEKER.cut1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3282159661236250
+    m_Key: ending.ENDING_SEEKER.cut2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3282159661236251
+    m_Key: ending.ENDING_SEEKER.cut3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3282159661236252
+    m_Key: ending.ENDING_SEEKER.mother.cut3
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

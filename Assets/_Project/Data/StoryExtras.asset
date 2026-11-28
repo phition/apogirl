@@ -8909,6 +8909,446 @@ MonoBehaviour:
     TailKeys: []
     Color: '#302C24'
     Variants: []
+  - Id: ENDING_RADIO_HOST
+    Category: 3
+    Act: 3
+    Priority: 300
+    EndCauses: []
+    Condition:
+      WeekMin: 0
+      WeekMax: 0
+      Days: 
+      Phase: 0
+      Seasons: 
+      Month: 0
+      DayOfMonth: 0
+      ActionCategories: 
+      ActionIds: []
+      FlagsAll: []
+      FlagsAny: []
+      FlagsNone: []
+      CluesAll: []
+      Checks:
+      - Kind: 0
+        Key: Leadership
+        Op: 0
+        Value: 70
+      - Kind: 0
+        Key: Empathy
+        Op: 0
+        Value: 100
+      - Kind: 42
+        Key: ACT_BROADCAST_
+        Op: 0
+        Value: 8
+      - Kind: 35
+        Key: FAC_UBC
+        Op: 0
+        Value: 1
+      - Kind: 36
+        Key: FAC_UBC
+        Op: 0
+        Value: 3
+      AnyChecks: []
+      NpcStatuses: []
+      IsBirthday: 0
+    Score:
+    - Kind: 42
+      Key: ACT_BROADCAST_
+      Weight: 5
+    - Kind: 0
+      Key: Leadership
+      Weight: 1
+    - Kind: 0
+      Key: Empathy
+      Weight: 1
+    CutKeys:
+    - ending.ENDING_RADIO_HOST.cut1
+    - ending.ENDING_RADIO_HOST.cut2
+    - ending.ENDING_RADIO_HOST.cut3
+    CodaKeys: []
+    FutureKeys: []
+    TailKeys: []
+    Color: '#22283A'
+    Variants:
+    - Id: CD
+      Condition:
+        WeekMin: 0
+        WeekMax: 0
+        Days: 
+        Phase: 0
+        Seasons: 
+        Month: 0
+        DayOfMonth: 0
+        ActionCategories: 
+        ActionIds: []
+        FlagsAll: []
+        FlagsAny: []
+        FlagsNone: []
+        CluesAll: []
+        Checks:
+        - Kind: 43
+          Key: CdCount
+          Op: 0
+          Value: 1
+        AnyChecks: []
+        NpcStatuses: []
+        IsBirthday: 0
+      CutKeys:
+      - ending.ENDING_RADIO_HOST.cut1
+      - ending.ENDING_RADIO_HOST.cut2
+      - ending.ENDING_RADIO_HOST.cd.cut3
+      CodaKeys: []
+      Image: 
+  - Id: ENDING_ARCHITECT
+    Category: 3
+    Act: 3
+    Priority: 300
+    EndCauses: []
+    Condition:
+      WeekMin: 0
+      WeekMax: 0
+      Days: 
+      Phase: 0
+      Seasons: 
+      Month: 0
+      DayOfMonth: 0
+      ActionCategories: 
+      ActionIds: []
+      FlagsAll: []
+      FlagsAny: []
+      FlagsNone: []
+      CluesAll: []
+      Checks:
+      - Kind: 1
+        Key: Engineering
+        Op: 0
+        Value: 3
+      - Kind: 0
+        Key: Intellect
+        Op: 0
+        Value: 150
+      - Kind: 45
+        Key: 
+        Op: 0
+        Value: 7
+      - Kind: 42
+        Key: ACT_SURV_BARRICADE|ACT_SURV_REINFORCE
+        Op: 0
+        Value: 4
+      AnyChecks: []
+      NpcStatuses: []
+      IsBirthday: 0
+    Score:
+    - Kind: 1
+      Key: Engineering
+      Weight: 20
+    - Kind: 45
+      Key: 
+      Weight: 10
+    - Kind: 0
+      Key: Intellect
+      Weight: 1
+    CutKeys:
+    - ending.ENDING_ARCHITECT.cut1
+    - ending.ENDING_ARCHITECT.cut2
+    - ending.ENDING_ARCHITECT.cut3
+    CodaKeys: []
+    FutureKeys: []
+    TailKeys: []
+    Color: '#2C2A26'
+    Variants: []
+  - Id: ENDING_SCHOLAR
+    Category: 3
+    Act: 3
+    Priority: 300
+    EndCauses: []
+    Condition:
+      WeekMin: 0
+      WeekMax: 0
+      Days: 
+      Phase: 0
+      Seasons: 
+      Month: 0
+      DayOfMonth: 0
+      ActionCategories: 
+      ActionIds: []
+      FlagsAll:
+      - EXAM_SCORE_80
+      FlagsAny: []
+      FlagsNone: []
+      CluesAll: []
+      Checks:
+      - Kind: 0
+        Key: Intellect
+        Op: 0
+        Value: 200
+      - Kind: 18
+        Key: ACT_NIGHT_STUDY
+        Op: 0
+        Value: 10
+      AnyChecks: []
+      NpcStatuses: []
+      IsBirthday: 0
+    Score:
+    - Kind: 0
+      Key: Intellect
+      Weight: 1
+    - Kind: 18
+      Key: ACT_NIGHT_STUDY
+      Weight: 3
+    - Kind: 31
+      Key: EXAM_SCORE_95
+      Weight: 30
+    CutKeys:
+    - ending.ENDING_SCHOLAR.cut1
+    - ending.ENDING_SCHOLAR.cut2
+    - ending.ENDING_SCHOLAR.cut3
+    CodaKeys: []
+    FutureKeys: []
+    TailKeys: []
+    Color: '#28263A'
+    Variants: []
+  - Id: ENDING_SOLDIER
+    Category: 7
+    Act: 3
+    Priority: 320
+    EndCauses: []
+    Condition:
+      WeekMin: 0
+      WeekMax: 0
+      Days: 
+      Phase: 0
+      Seasons: 
+      Month: 0
+      DayOfMonth: 0
+      ActionCategories: 
+      ActionIds: []
+      FlagsAll:
+      - CONSCIENCE_CONFESSED
+      FlagsAny: []
+      FlagsNone: []
+      CluesAll: []
+      Checks:
+      - Kind: 43
+        Key: ZombiesFelled
+        Op: 0
+        Value: 150
+      - Kind: 0
+        Key: Strength
+        Op: 0
+        Value: 45
+      - Kind: 1
+        Key: SelfDefense
+        Op: 0
+        Value: 2
+      - Kind: 43
+        Key: RaidsRepelled
+        Op: 0
+        Value: 3
+      - Kind: 6
+        Key: 
+        Op: 1
+        Value: 6
+      AnyChecks: []
+      NpcStatuses: []
+      IsBirthday: 0
+    Score:
+    - Kind: 43
+      Key: ZombiesFelled
+      Weight: 0.33
+    - Kind: 0
+      Key: Strength
+      Weight: 1
+    - Kind: 1
+      Key: SelfDefense
+      Weight: 20
+    CutKeys:
+    - ending.ENDING_SOLDIER.cut1
+    - ending.ENDING_SOLDIER.cut2
+    - ending.ENDING_SOLDIER.cut3
+    CodaKeys: []
+    FutureKeys: []
+    TailKeys: []
+    Color: '#2E2422'
+    Variants: []
+  - Id: ENDING_NIGHT_SCOUT
+    Category: 7
+    Act: 3
+    Priority: 320
+    EndCauses: []
+    Condition:
+      WeekMin: 0
+      WeekMax: 0
+      Days: 
+      Phase: 0
+      Seasons: 
+      Month: 0
+      DayOfMonth: 0
+      ActionCategories: 
+      ActionIds: []
+      FlagsAll: []
+      FlagsAny: []
+      FlagsNone: []
+      CluesAll: []
+      Checks:
+      - Kind: 17
+        Key: Night
+        Op: 0
+        Value: 25
+      - Kind: 19
+        Key: 
+        Op: 0
+        Value: 70
+      - Kind: 43
+        Key: Downs
+        Op: 1
+        Value: 1
+      AnyChecks: []
+      NpcStatuses: []
+      IsBirthday: 0
+    Score:
+    - Kind: 17
+      Key: Night
+      Weight: 2
+    - Kind: 0
+      Key: Agility
+      Weight: 1
+    CutKeys:
+    - ending.ENDING_NIGHT_SCOUT.cut1
+    - ending.ENDING_NIGHT_SCOUT.cut2
+    - ending.ENDING_NIGHT_SCOUT.cut3
+    CodaKeys: []
+    FutureKeys: []
+    TailKeys: []
+    Color: '#1C2030'
+    Variants: []
+  - Id: ENDING_KEEPER
+    Category: 7
+    Act: 3
+    Priority: 320
+    EndCauses: []
+    Condition:
+      WeekMin: 0
+      WeekMax: 0
+      Days: 
+      Phase: 0
+      Seasons: 
+      Month: 0
+      DayOfMonth: 0
+      ActionCategories: 
+      ActionIds: []
+      FlagsAll: []
+      FlagsAny: []
+      FlagsNone: []
+      CluesAll: []
+      Checks:
+      - Kind: 17
+        Key: 
+        Op: 1
+        Value: 6
+      - Kind: 45
+        Key: 
+        Op: 0
+        Value: 7
+      - Kind: 18
+        Key: ACT_SURV_CLEAN
+        Op: 0
+        Value: 10
+      AnyChecks: []
+      NpcStatuses: []
+      IsBirthday: 0
+    Score:
+    - Kind: 45
+      Key: 
+      Weight: 10
+    - Kind: 18
+      Key: ACT_SURV_CLEAN
+      Weight: 1
+    - Kind: 0
+      Key: Craft
+      Weight: 1
+    CutKeys:
+    - ending.ENDING_KEEPER.cut1
+    - ending.ENDING_KEEPER.cut2
+    - ending.ENDING_KEEPER.cut3
+    CodaKeys: []
+    FutureKeys: []
+    TailKeys: []
+    Color: '#2A2C28'
+    Variants: []
+  - Id: ENDING_SEEKER
+    Category: 7
+    Act: 3
+    Priority: 320
+    EndCauses: []
+    Condition:
+      WeekMin: 0
+      WeekMax: 0
+      Days: 
+      Phase: 0
+      Seasons: 
+      Month: 0
+      DayOfMonth: 0
+      ActionCategories: 
+      ActionIds: []
+      FlagsAll: []
+      FlagsAny: []
+      FlagsNone: []
+      CluesAll: []
+      Checks:
+      - Kind: 44
+        Key: DH_RESCUED|DH_MOTHER_FOUND|BULLY_RESCUED|JUN_SAVED|UBC_RUNNER_SAVED|WANDERER_SHELTERED|HR_WINTER_JOINED
+        Op: 0
+        Value: 4
+      AnyChecks: []
+      NpcStatuses: []
+      IsBirthday: 0
+    Score:
+    - Kind: 44
+      Key: DH_RESCUED|DH_MOTHER_FOUND|BULLY_RESCUED|JUN_SAVED|UBC_RUNNER_SAVED|WANDERER_SHELTERED|HR_WINTER_JOINED
+      Weight: 20
+    - Kind: 4
+      Key: Humanity
+      Weight: 1
+    - Kind: 40
+      Key: 
+      Weight: 20
+    CutKeys:
+    - ending.ENDING_SEEKER.cut1
+    - ending.ENDING_SEEKER.cut2
+    - ending.ENDING_SEEKER.cut3
+    CodaKeys: []
+    FutureKeys: []
+    TailKeys: []
+    Color: '#2A2830'
+    Variants:
+    - Id: MOTHER
+      Condition:
+        WeekMin: 0
+        WeekMax: 0
+        Days: 
+        Phase: 0
+        Seasons: 
+        Month: 0
+        DayOfMonth: 0
+        ActionCategories: 
+        ActionIds: []
+        FlagsAll:
+        - DH_MOTHER_FOUND
+        FlagsAny: []
+        FlagsNone: []
+        CluesAll: []
+        Checks: []
+        AnyChecks: []
+        NpcStatuses: []
+        IsBirthday: 0
+      CutKeys:
+      - ending.ENDING_SEEKER.cut1
+      - ending.ENDING_SEEKER.cut2
+      - ending.ENDING_SEEKER.mother.cut3
+      CodaKeys: []
+      Image: 
   - Id: ENDING_TOGETHER
     Category: 4
     Act: 3

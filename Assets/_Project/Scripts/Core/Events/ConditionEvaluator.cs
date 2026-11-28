@@ -231,13 +231,40 @@ namespace ApoGirl.Core.Events
                     var prefixed = 0;
                     if (!string.IsNullOrEmpty(key))
                     {
+                        var prefixes = key.Split('|');
                         foreach (var pair in state.Exploration.ActionCounts)
                         {
-                            if (pair.Key.StartsWith(key, StringComparison.Ordinal)) prefixed += pair.Value;
+                            // 행동 하나는 한 번만 센다 (머리글 여러 개에 걸려도)
+                            foreach (var prefix in prefixes)
+                            {
+                                if (prefix.Length > 0 && pair.Key.StartsWith(prefix, StringComparison.Ordinal))
+                                {
+                                    prefixed += pair.Value;
+                                    break;
+                                }
+                            }
                         }
                     }
 
                     return prefixed;
+                case ValueKind.Record: return RecordOf(state, key);
+                case ValueKind.FlagCount:
+                    var lit = 0;
+                    foreach (var flag in (key ?? "").Split('|'))
+                    {
+                        if (flag.Length > 0 && state.Flags.Contains(flag)) lit++;
+                    }
+
+                    return lit;
+                case ValueKind.FacilityCount:
+                    var opened = 0;
+                    foreach (var facility in state.Base.Facilities.Values)
+                    {
+                        if (facility >= 1) opened++;
+                    }
+
+                    return opened;
+                case ValueKind.VisitedLocations: return VisitedLocations(state);
                 case ValueKind.BloodCompatible:
                     return Enum.TryParse<BloodType>(key, out var recipient) && BloodRules.CanDonate(state.Player.Profile.BloodType, recipient) ? 1 : 0;
                 default: throw new ArgumentOutOfRangeException(nameof(kind), kind, null);
@@ -273,7 +300,11 @@ namespace ApoGirl.Core.Events
                 case ValueKind.Traps:
                 case ValueKind.BoardingCount:
                 case ValueKind.LeftBehind:
+                case ValueKind.FacilityCount:
+                case ValueKind.VisitedLocations:
                     return true;
+                case ValueKind.Record:
+                    return Array.IndexOf(RecordKeys, key) >= 0;
                 case ValueKind.CloseCompanions:
                     return int.TryParse(key, out _);
                 case ValueKind.Weather:
@@ -310,6 +341,55 @@ namespace ApoGirl.Core.Events
             }
 
             return result;
+        }
+
+        /// <summary>ValueKind.Record의 Key로 쓸 수 있는 기록 이름.</summary>
+        public static readonly string[] RecordKeys =
+        {
+            "Downs", "Raids", "RaidsRepelled", "Intrusions", "IntrusionsLost", "HostileEvictions", "HostileRobberies", "HostileBeatings",
+            "ZombiesFelled", "HeavyFelledRuns", "OwnedRoomRuns", "CdCount",
+        };
+
+        private static int RecordOf(GameState state, string key)
+        {
+            var stats = state.Exploration;
+            switch (key)
+            {
+                case "Downs": return stats.Downs;
+                case "Raids": return stats.Raids;
+                case "RaidsRepelled": return stats.RaidsRepelled;
+                case "Intrusions": return stats.Intrusions;
+                case "IntrusionsLost": return stats.IntrusionsLost;
+                case "HostileEvictions": return stats.HostileEvictions;
+                case "HostileRobberies": return stats.HostileRobberies;
+                case "HostileBeatings": return stats.HostileBeatings;
+                case "ZombiesFelled": return stats.ZombiesFelled;
+                case "HeavyFelledRuns": return stats.HeavyFelledRuns;
+                case "OwnedRoomRuns": return stats.OwnedRoomRuns;
+                case "CdCount": return state.CdWeeks.Count;
+                default: throw new ArgumentException($"없는 기록: '{key}'");
+            }
+        }
+
+        private const string DayRunPrefix = "ACT_EXP_DAY_";
+        private const string NightRunPrefix = "ACT_EXP_NIGHT_";
+
+        /// <summary>낮·밤 탐험 행동(ACT_EXP_DAY_x · ACT_EXP_NIGHT_x)을 한 번이라도 한 지역 수. 튜토리얼(ACT_EXP_TUTORIAL)은 머리글이 달라 빠진다.</summary>
+        private static int VisitedLocations(GameState state)
+        {
+            var seen = new HashSet<string>();
+            foreach (var pair in state.Exploration.ActionCounts)
+            {
+                if (pair.Value <= 0)
+                {
+                    continue;
+                }
+
+                if (pair.Key.StartsWith(DayRunPrefix, StringComparison.Ordinal)) seen.Add(pair.Key.Substring(DayRunPrefix.Length));
+                else if (pair.Key.StartsWith(NightRunPrefix, StringComparison.Ordinal)) seen.Add(pair.Key.Substring(NightRunPrefix.Length));
+            }
+
+            return seen.Count;
         }
 
         private static int ActionCountOf(GameState state, string actionId)

@@ -325,6 +325,13 @@ namespace ApoGirl.Tests.EditMode
         [TestCase("ENDING_REHAB")]
         [TestCase("ENDING_RECORD_SHOP")]
         [TestCase("ENDING_VET")]
+        [TestCase("ENDING_RADIO_HOST")]
+        [TestCase("ENDING_ARCHITECT")]
+        [TestCase("ENDING_SCHOLAR")]
+        [TestCase("ENDING_SOLDIER")]
+        [TestCase("ENDING_NIGHT_SCOUT")]
+        [TestCase("ENDING_KEEPER")]
+        [TestCase("ENDING_SEEKER")]
         public void Shipped_EndingIsReachable(string endingId)
         {
             var db = ShippedDb();
@@ -442,6 +449,48 @@ namespace ApoGirl.Tests.EditMode
                         s.Flags.Add("CAT_FED_2");
                         p.Stats[StatType.Empathy] = 95;
                         p.Proficiency[ProficiencyType.Medicine] = new ProficiencyState { Level = 1 };
+                        break;
+
+                    // ── P2 새 엔딩 7종 (새 판정 종류) ──
+                    case "ENDING_RADIO_HOST":
+                        p.Stats[StatType.Leadership] = 75;
+                        p.Stats[StatType.Empathy] = 105;
+                        s.Exploration.ActionCounts["ACT_BROADCAST_INFO"] = 5;
+                        s.Exploration.ActionCounts["ACT_BROADCAST_LETTER"] = 3;
+                        s.Factions["FAC_UBC"] = new FactionState { Known = true, Standing = 35 };
+                        break;
+                    case "ENDING_ARCHITECT":
+                        p.Proficiency[ProficiencyType.Engineering] = new ProficiencyState { Level = 3 };
+                        p.Stats[StatType.Intellect] = 155;
+                        OpenFacilities(s, 7);
+                        s.Exploration.ActionCounts["ACT_SURV_BARRICADE"] = 2;
+                        s.Exploration.ActionCounts["ACT_SURV_REINFORCE"] = 2;
+                        break;
+                    case "ENDING_SCHOLAR":
+                        p.Stats[StatType.Intellect] = 205;
+                        ApoGirl.Core.Rules.ExamRules.Record(s, 84, db.Balance);
+                        s.Exploration.ActionCounts["ACT_NIGHT_STUDY"] = 10;
+                        break;
+                    case "ENDING_SOLDIER":
+                        s.Exploration.ZombiesFelled = 160;
+                        s.Exploration.RaidsRepelled = 3;
+                        p.Stats[StatType.Strength] = 50;
+                        p.Proficiency[ProficiencyType.SelfDefense] = new ProficiencyState { Level = 2 };
+                        p.Conscience = 3;
+                        s.Flags.Add("CONSCIENCE_CONFESSED");
+                        break;
+                    case "ENDING_NIGHT_SCOUT":
+                        s.Exploration.NightExplorations = 26;
+                        s.Exploration.DayExplorations = 4;
+                        s.Exploration.Downs = 1;
+                        break;
+                    case "ENDING_KEEPER":
+                        s.Exploration.DayExplorations = 3;
+                        OpenFacilities(s, 7);
+                        s.Exploration.ActionCounts["ACT_SURV_CLEAN"] = 10;
+                        break;
+                    case "ENDING_SEEKER":
+                        foreach (var flag in new[] { "DH_RESCUED", "BULLY_RESCUED", "JUN_SAVED", "WANDERER_SHELTERED" }) s.Flags.Add(flag);
                         break;
                 }
             });
@@ -625,6 +674,162 @@ namespace ApoGirl.Tests.EditMode
             });
             Assert.AreEqual(5, ConditionEvaluator.ValueOf(state, ValueKind.ActionCountPrefix, "ACT_TREAT_"));
             Assert.AreEqual(0, ConditionEvaluator.ValueOf(state, ValueKind.ActionCountPrefix, ""));
+        }
+
+        private static readonly string[] FacilityIds = { "STORAGE", "CLASSROOM", "INFIRMARY", "ROOFTOP", "BROADCAST", "CAFETERIA", "LIBRARY", "SCIENCE", "GYM", "STAFFROOM" };
+
+        /// <summary>시설을 앞에서부터 count곳만 연 상태로 만든다.</summary>
+        private static void OpenFacilities(GameState state, int count)
+        {
+            for (var i = 0; i < FacilityIds.Length; i++)
+            {
+                state.Base.Facilities[FacilityIds[i]] = i < count ? 1 : 0;
+            }
+        }
+
+        // ── P2 판정 종류 (기획서 8.1절) ──
+
+        [Test]
+        public void Record_ReadsTheYearsNumbers()
+        {
+            var db = ShippedDb();
+            var state = ShippedRescued(db, s =>
+            {
+                s.Exploration.Downs = 2;
+                s.Exploration.RaidsRepelled = 4;
+                s.Exploration.ZombiesFelled = 37;
+                s.CdWeeks["CD_01"] = 5;
+                s.CdWeeks["CD_03"] = 9;
+            });
+            Assert.AreEqual(2, ConditionEvaluator.ValueOf(state, ValueKind.Record, "Downs"));
+            Assert.AreEqual(4, ConditionEvaluator.ValueOf(state, ValueKind.Record, "RaidsRepelled"));
+            Assert.AreEqual(37, ConditionEvaluator.ValueOf(state, ValueKind.Record, "ZombiesFelled"));
+            Assert.AreEqual(2, ConditionEvaluator.ValueOf(state, ValueKind.Record, "CdCount"));
+            foreach (var key in ConditionEvaluator.RecordKeys)
+            {
+                Assert.IsTrue(ConditionEvaluator.IsValidKey(ValueKind.Record, key), key);
+                Assert.DoesNotThrow(() => ConditionEvaluator.ValueOf(state, ValueKind.Record, key), key);
+            }
+
+            Assert.IsFalse(ConditionEvaluator.IsValidKey(ValueKind.Record, "Nope"));
+            Assert.Throws<ArgumentException>(() => ConditionEvaluator.ValueOf(state, ValueKind.Record, "Nope"));
+        }
+
+        [Test]
+        public void FlagCount_FacilityCount_VisitedLocations_AndGroupedActionCounts()
+        {
+            var db = ShippedDb();
+            var state = ShippedRescued(db, s =>
+            {
+                s.Flags.Add("DH_RESCUED");
+                s.Flags.Add("JUN_SAVED");
+                OpenFacilities(s, 4);
+                s.Exploration.ActionCounts["ACT_EXP_TUTORIAL"] = 1;
+                s.Exploration.ActionCounts["ACT_EXP_DAY_STORE"] = 3;
+                s.Exploration.ActionCounts["ACT_EXP_NIGHT_STORE"] = 2;
+                s.Exploration.ActionCounts["ACT_EXP_NIGHT_SUBWAY"] = 1;
+                s.Exploration.ActionCounts["ACT_EXP_DAY_MART"] = 0;
+                s.Exploration.ActionCounts["ACT_SURV_BARRICADE"] = 2;
+                s.Exploration.ActionCounts["ACT_SURV_REINFORCE"] = 3;
+                s.Exploration.ActionCounts["ACT_SURV_CLEAN"] = 9;
+            });
+            Assert.AreEqual(2, ConditionEvaluator.ValueOf(state, ValueKind.FlagCount, "DH_RESCUED|BULLY_RESCUED|JUN_SAVED"));
+            Assert.AreEqual(0, ConditionEvaluator.ValueOf(state, ValueKind.FlagCount, ""));
+            Assert.AreEqual(4, ConditionEvaluator.ValueOf(state, ValueKind.FacilityCount, ""));
+            Assert.AreEqual(2, ConditionEvaluator.ValueOf(state, ValueKind.VisitedLocations, ""), "편의점(낮·밤은 한 곳)과 지하철 — 튜토리얼과 0번 간 곳은 빼고");
+            Assert.AreEqual(5, ConditionEvaluator.ValueOf(state, ValueKind.ActionCountPrefix, "ACT_SURV_BARRICADE|ACT_SURV_REINFORCE"));
+            Assert.AreEqual(14, ConditionEvaluator.ValueOf(state, ValueKind.ActionCountPrefix, "ACT_SURV_|ACT_SURV_CLEAN"), "행동 하나는 한 번만 센다");
+        }
+
+        [Test]
+        public void Exam_HighScoresLeaveFlags()
+        {
+            var db = ShippedDb();
+            var state = ShippedRescued(db, null);
+            ApoGirl.Core.Rules.ExamRules.Record(state, -1, db.Balance);
+            Assert.IsFalse(state.Flags.Contains("EXAM_TAKEN"), "안 봤으면 아무것도 남지 않는다");
+
+            ApoGirl.Core.Rules.ExamRules.Record(state, 60, db.Balance);
+            Assert.IsTrue(state.Flags.Contains("EXAM_TAKEN"));
+            Assert.IsFalse(state.Flags.Contains("EXAM_SCORE_80"));
+
+            ApoGirl.Core.Rules.ExamRules.Record(state, 80, db.Balance);
+            Assert.IsTrue(state.Flags.Contains("EXAM_SCORE_80"));
+            Assert.IsFalse(state.Flags.Contains("EXAM_SCORE_95"));
+
+            ApoGirl.Core.Rules.ExamRules.Record(state, 96, db.Balance);
+            Assert.IsTrue(state.Flags.Contains("EXAM_SCORE_95"));
+        }
+
+        // ── P2 새 엔딩: 조건과 변형 ──
+
+        [Test]
+        public void Soldier_NeedsTheWeightSpokenAndCarried_NotJustTheCount()
+        {
+            var db = ShippedDb();
+            var state = ShippedRescued(db, s =>
+            {
+                s.Exploration.ZombiesFelled = 300;
+                s.Exploration.RaidsRepelled = 5;
+                s.Player.Stats[StatType.Strength] = 60;
+                s.Player.Proficiency[ProficiencyType.SelfDefense] = new ProficiencyState { Level = 3 };
+                s.Player.Conscience = 3;
+            });
+            Assert.AreNotEqual("ENDING_SOLDIER", EndingResolver.Resolve(state, db).Ending.Id, "쓰러뜨린 수만으로는 열리지 않는다 (고해 없음)");
+
+            state.Flags.Add("CONSCIENCE_CONFESSED");
+            Assert.AreEqual("ENDING_SOLDIER", EndingResolver.Resolve(state, db).Ending.Id);
+
+            state.Player.Conscience = 7;
+            Assert.AreNotEqual("ENDING_SOLDIER", EndingResolver.Resolve(state, db).Ending.Id, "지금 무게가 6을 넘으면 아니다");
+        }
+
+        [Test]
+        public void RadioHostAndSeeker_VariantsFollowWhatWasFound()
+        {
+            var db = ShippedDb();
+            var host = ShippedRescued(db, s =>
+            {
+                s.Player.Stats[StatType.Leadership] = 75;
+                s.Player.Stats[StatType.Empathy] = 105;
+                s.Exploration.ActionCounts["ACT_BROADCAST_INFO"] = 8;
+                s.Factions["FAC_UBC"] = new FactionState { Known = true, Standing = 35 };
+            });
+            CollectionAssert.Contains(EndingResolver.Resolve(host, db).CutKeys, "ending.ENDING_RADIO_HOST.cut3", "CD 없이 방송한 판");
+            host.CdWeeks["CD_02"] = 20;
+            CollectionAssert.Contains(EndingResolver.Resolve(host, db).CutKeys, "ending.ENDING_RADIO_HOST.cd.cut3");
+
+            var seeker = ShippedRescued(db, s =>
+            {
+                foreach (var flag in new[] { "DH_RESCUED", "BULLY_RESCUED", "JUN_SAVED", "WANDERER_SHELTERED" }) s.Flags.Add(flag);
+            });
+            CollectionAssert.Contains(EndingResolver.Resolve(seeker, db).CutKeys, "ending.ENDING_SEEKER.cut3");
+            seeker.Flags.Add("DH_MOTHER_FOUND");
+            CollectionAssert.Contains(EndingResolver.Resolve(seeker, db).CutKeys, "ending.ENDING_SEEKER.mother.cut3");
+        }
+
+        [Test]
+        public void KeeperAndNightScout_AreAboutHowTheYearWasPlayed()
+        {
+            var db = ShippedDb();
+            var keeper = ShippedRescued(db, s =>
+            {
+                s.Exploration.DayExplorations = 6;
+                OpenFacilities(s, 8);
+                s.Exploration.ActionCounts["ACT_SURV_CLEAN"] = 12;
+            });
+            Assert.AreEqual("ENDING_KEEPER", EndingResolver.Resolve(keeper, db).Ending.Id);
+            keeper.Exploration.DayExplorations = 7;
+            Assert.AreNotEqual("ENDING_KEEPER", EndingResolver.Resolve(keeper, db).Ending.Id, "탐험 7번이면 학교에 머문 판이 아니다");
+
+            var scout = ShippedRescued(db, s =>
+            {
+                s.Exploration.NightExplorations = 30;
+                s.Exploration.DayExplorations = 5;
+            });
+            Assert.AreEqual("ENDING_NIGHT_SCOUT", EndingResolver.Resolve(scout, db).Ending.Id);
+            scout.Exploration.Downs = 2;
+            Assert.AreNotEqual("ENDING_NIGHT_SCOUT", EndingResolver.Resolve(scout, db).Ending.Id, "두 번 쓰러졌으면 아니다");
         }
 
         // ── P1 새 엔딩: 막을 넘는 조건과 변형 ──

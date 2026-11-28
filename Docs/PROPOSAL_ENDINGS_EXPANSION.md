@@ -837,3 +837,32 @@
 
 - 테스트: 13종마다 조건을 채우면 제 막에서 뽑힌다, 문턱 대비 점수, `ActionCountPrefix`, 보건 교사(탑승)·재활(완치 변형)·상담사(고해 변형), 엔딩 문구가 모두 있는지.
 - **하지 않은 것**: 엔딩 그림(배경색만, P5) · ②·③ 등급 15종(P2·P3) · 봇 기록(P6, 스트레스 균형 뒤) · "다른 길도 있었다"(E4).
+
+### 12.4 P2 판정 종류 · 새 엔딩 7종 (2026-11-28)
+
+**판정 종류** (`ValueKind`, `ConditionEvaluator` — 이벤트 조건에서도 쓸 수 있다, 세이브 변경 없음)
+
+| 종류 | Key | 값 |
+|---|---|---|
+| `Record` | `Downs`·`Raids`·`RaidsRepelled`·`Intrusions`·`IntrusionsLost`·`HostileEvictions`·`HostileRobberies`·`HostileBeatings`·`ZombiesFelled`·`HeavyFelledRuns`·`OwnedRoomRuns`·`CdCount` (`ConditionEvaluator.RecordKeys`) | 그 숫자. P3의 새 기록도 여기에 이름을 더한다 |
+| `ActionCountPrefix` | 행동 머리글, 여러 개는 `\|`로 (예: `ACT_SURV_BARRICADE\|ACT_SURV_REINFORCE`) | 걸리는 행동 횟수의 합 (행동 하나는 한 번만) |
+| `FlagCount` | 깃발을 `\|`로 이은 것 | 켜진 깃발 수 |
+| `FacilityCount` | 없음 | 레벨 1 이상인 시설 수 (전체 10곳) |
+| `VisitedLocations` | 없음 | 낮·밤 탐험을 한 번이라도 한 지역 수 (튜토리얼 제외) — B5(P3)에서 쓴다 |
+
+**모의고사 점수** (8.3절): 시험이 끝나면 `ExamRules.Record`가 깃발을 남긴다 — 봤으면 `EXAM_TAKEN`, 80점 이상 `EXAM_SCORE_80`, 95점 이상 `EXAM_SCORE_95` (문턱 `BalanceConfig.ExamHighScore`·`ExamTopScore`). 허브 `HandleDialogueCommand`의 `mock_exam`이 부른다. 봇은 시험을 보지 않는다.
+
+**새 엔딩 7종** (막 Ⅲ, 도구 `code_temp/apogirl/tools/endings_p2_data.py`)
+- 직업 3종 (특화 300): 라디오 진행자 · 건축가 · 연구자.
+- 기록 4종 (기록 320): 재건 방위대 · 야간 수색대 · 학교 관리인 · 사람 찾기 센터.
+- 3·4절 초안에서 바꾼 것:
+
+| 엔딩 | 바꾼 것 | 이유 |
+|---|---|---|
+| 라디오 진행자 | UBC를 알아야 한다(`FactionKnown`). 3컷 기본은 "들리나요? 여기는 새벽고입니다", CD를 한 장이라도 주운 판만 "첫 곡은 진열장의 CD" | CD 없이도 정보·사연 방송은 할 수 있다 |
+| 방위대 | 수정 4 그대로: 고해함 + 지금 무게 6 이하. 막 Ⅱ가 「무게를 든 채로」일 때의 1컷 변형(7.5절)은 C1이 들어오는 P3에서 | — |
+| 사람 찾기 센터 | "남은 사람이 있으면 +20"은 점수 항목(`LeftBehind` ×20)으로 — 넘은 정도까지 같을 때만 가른다 | P0.5에서 점수 합이 동점 가르기로 내려갔다 |
+| 상담사 (수정 5) | P1에서 변형으로 넣었다 (12.3절) | — |
+
+- 테스트: 판정 종류마다 값, 모의고사 깃발, 7종마다 조건을 채우면 제 막에서 뽑힌다, 방위대(고해·무게), 학교 관리인(탐험 7번이면 아님), 야간 수색대(두 번 쓰러지면 아님), 변형(라디오 CD·사람 찾기 어머니).
+- **남은 것**: ③ 8종(A10·B3·B4·B5·B9·B12·C1·C2)과 수정 1~3은 P3 — 새 기록과 세이브 v17이 필요하다.
