@@ -83,14 +83,14 @@
     {
       "Id": "LOC_MART",
       "Day": {
-        "Resources": [ { "Resource": "RawWater", "Min": 1, "Max": 4 }, { "Resource": "Food", "Min": 20, "Max": 36 }, { "Resource": "Water", "Min": 14, "Max": 23 }, { "Resource": "Materials", "Min": 1, "Max": 3 }, { "Resource": "Battery", "Min": 1, "Max": 3 }, { "Resource": "Medicine", "Min": 1, "Max": 2 } ],
+        "Resources": [ { "Resource": "RawWater", "Min": 1, "Max": 4 }, { "Resource": "Food", "Min": 10, "Max": 20 }, { "Resource": "Water", "Min": 8, "Max": 16 }, { "Resource": "Materials", "Min": 1, "Max": 3 }, { "Resource": "Battery", "Min": 1, "Max": 3 }, { "Resource": "Medicine", "Min": 1, "Max": 2 } ],
         "BaseDownChance": 0.1,
         "Fatigue": 18,
         "StressMin": 13,
         "StressMax": 13
       },
       "Night": {
-        "Resources": [ { "Resource": "RawWater", "Min": 1, "Max": 3 }, { "Resource": "Food", "Min": 28, "Max": 40 }, { "Resource": "Water", "Min": 18, "Max": 28 }, { "Resource": "Fuel", "Min": 1, "Max": 3 }, { "Resource": "Medicine", "Min": 0, "Max": 2 }, { "Resource": "Battery", "Min": 2, "Max": 4 }, { "Resource": "Materials", "Min": 2, "Max": 4 } ],
+        "Resources": [ { "Resource": "RawWater", "Min": 1, "Max": 3 }, { "Resource": "Food", "Min": 4, "Max": 8 }, { "Resource": "Water", "Min": 12, "Max": 24 }, { "Resource": "Fuel", "Min": 1, "Max": 3 }, { "Resource": "Medicine", "Min": 0, "Max": 2 }, { "Resource": "Battery", "Min": 2, "Max": 4 }, { "Resource": "Materials", "Min": 2, "Max": 4 } ],
         "BaseDownChance": 0.17,
         "Fatigue": 22,
         "StressMin": 15,
@@ -102,35 +102,14 @@
     {
       "Id": "LOC_POLICE",
       "Day": {
-        "Resources": [ { "Resource": "RawWater", "Min": 1, "Max": 3 }, { "Resource": "Materials", "Min": 2, "Max": 5 }, { "Resource": "Medicine", "Min": 0, "Max": 3 } ],
+        "Resources": [ { "Resource": "RawWater", "Min": 1, "Max": 3 }, { "Resource": "Materials", "Min": 2, "Max": 4 }, { "Resource": "Medicine", "Min": 0, "Max": 3 }, { "Resource": "Food", "Min": 2, "Max": 4 } ],
         "BaseDownChance": 0.09,
         "Fatigue": 15,
         "StressMin": 11,
         "StressMax": 11
       },
       "Night": {
-        "Resources": [
-          {
-            "Resource": "RawWater",
-            "Min": 0,
-            "Max": 2
-          },
-          {
-            "Resource": "Materials",
-            "Min": 3,
-            "Max": 5
-          },
-          {
-            "Resource": "Medicine",
-            "Min": 1,
-            "Max": 2
-          },
-          {
-            "Resource": "Fuel",
-            "Min": 0,
-            "Max": 2
-          }
-        ],
+        "Resources": [ { "Resource": "RawWater", "Min": 0, "Max": 2 }, { "Resource": "Materials", "Min": 3, "Max": 6 }, { "Resource": "Medicine", "Min": 1, "Max": 2 }, { "Resource": "Fuel", "Min": 0, "Max": 2 }, { "Resource": "Water", "Min": 4, "Max": 4 } ],
         "BaseDownChance": 0.14,
         "Fatigue": 19,
         "StressMin": 14,

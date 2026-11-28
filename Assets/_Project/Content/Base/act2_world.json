@@ -84,33 +84,7 @@
     {
       "Id": "LOC_RESIDENTIAL",
       "Day": {
-        "Resources": [
-          {
-            "Resource": "RawWater",
-            "Min": 2,
-            "Max": 5
-          },
-          {
-            "Resource": "Food",
-            "Min": 14,
-            "Max": 23
-          },
-          {
-            "Resource": "Water",
-            "Min": 9,
-            "Max": 16
-          },
-          {
-            "Resource": "Materials",
-            "Min": 1,
-            "Max": 3
-          },
-          {
-            "Resource": "Medicine",
-            "Min": 0,
-            "Max": 1
-          }
-        ],
+        "Resources": [ { "Resource": "RawWater", "Min": 2, "Max": 5 }, { "Resource": "Food", "Min": 10, "Max": 15 }, { "Resource": "Water", "Min": 8, "Max": 16 }, { "Resource": "Materials", "Min": 1, "Max": 3 }, { "Resource": "Medicine", "Min": 0, "Max": 1 } ],
         "BaseDownChance": 0.07,
         "Fatigue": 15,
         "StressMin": 11,
@@ -118,18 +92,7 @@
         "OwnedRoomChance": 0.5
       },
       "Night": {
-        "Resources": [
-          {
-            "Resource": "RawWater",
-            "Min": 1,
-            "Max": 3
-          },
-          {
-            "Resource": "Food",
-            "Min": 6,
-            "Max": 14
-          }
-        ],
+        "Resources": [ { "Resource": "RawWater", "Min": 1, "Max": 3 }, { "Resource": "Food", "Min": 6, "Max": 12 }, { "Resource": "Medicine", "Min": 0, "Max": 2 }, { "Resource": "Materials", "Min": 2, "Max": 4 } ],
         "BaseDownChance": 0.16,
         "Fatigue": 20,
         "StressMin": 14,

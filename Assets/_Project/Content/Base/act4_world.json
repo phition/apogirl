@@ -30,51 +30,14 @@
     {
       "Id": "LOC_WATERWORKS",
       "Day": {
-        "Resources": [
-          {
-            "Resource": "RawWater",
-            "Min": 6,
-            "Max": 12
-          },
-          {
-            "Resource": "Water",
-            "Min": 18,
-            "Max": 31
-          },
-          {
-            "Resource": "Materials",
-            "Min": 1,
-            "Max": 3
-          }
-        ],
+        "Resources": [ { "Resource": "RawWater", "Min": 6, "Max": 12 }, { "Resource": "Water", "Min": 10, "Max": 20 }, { "Resource": "Materials", "Min": 1, "Max": 3 }, { "Resource": "Food", "Min": 2, "Max": 4 }, { "Resource": "Battery", "Min": 1, "Max": 2 } ],
         "BaseDownChance": 0.14,
         "Fatigue": 20,
         "StressMin": 13,
         "StressMax": 13
       },
       "Night": {
-        "Resources": [
-          {
-            "Resource": "RawWater",
-            "Min": 4,
-            "Max": 9
-          },
-          {
-            "Resource": "Medicine",
-            "Min": 2,
-            "Max": 4
-          },
-          {
-            "Resource": "Water",
-            "Min": 14,
-            "Max": 23
-          },
-          {
-            "Resource": "Materials",
-            "Min": 2,
-            "Max": 4
-          }
-        ],
+        "Resources": [ { "Resource": "RawWater", "Min": 4, "Max": 9 }, { "Resource": "Medicine", "Min": 2, "Max": 4 }, { "Resource": "Water", "Min": 15, "Max": 26 }, { "Resource": "Materials", "Min": 2, "Max": 4 }, { "Resource": "Battery", "Min": 1, "Max": 2 } ],
         "BaseDownChance": 0.2,
         "Fatigue": 24,
         "StressMin": 15,

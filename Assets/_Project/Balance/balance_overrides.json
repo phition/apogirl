@@ -1,5 +1,63 @@
 {
   "_설명": "밸런스 표가 쓰는 파일: BalanceConfig.cs 기본값과 다른 수치만. Sync Balance Asset이 기본값 위에 얹는다 (Docs/BALANCE_LAB_PROPOSAL.md).",
-  "Fields": {},
-  "Difficulties": {}
+  "Fields": {
+    "InjuryMedicineCost": 2,
+    "RaidBaseChance": 0.3,
+    "RaidChancePerPoint": 0.15,
+    "RaidRepelDefenseLoss": 1,
+    "RaidBreachHp": 20,
+    "RaidBreachFood": 6,
+    "RaidBreachDefenseLoss": 3,
+    "ThreatPerDayExpedition": 5,
+    "ThreatPerNightExpedition": 8,
+    "StressInjuredBonus": 0.3,
+    "StressPerConscience": 0.2,
+    "ViolationFatigue": 15,
+    "ViolationStress": 15,
+    "FoodSatietyPerUnit": 12,
+    "WaterHydrationPerUnit": 14,
+    "ExpeditionSatietyDrain": 6,
+    "ExpeditionHydrationDrain": 8,
+    "NourishMaxFloor": 0.65,
+    "NeglectWeeks": 4,
+    "NeglectAffinity": 5,
+    "CompanionStressedRoleMultiplier": 0.65,
+    "CrisisLeavePerWeek": 2,
+    "TogetherAffinity": 2,
+    "TogetherAptitudeBonus": 2,
+    "TogetherWeeklyCap": 4,
+    "OutingExtraChance": 0.4,
+    "OutingYieldShare": 0.4,
+    "OutingStress": 10,
+    "OutingInjuryChance": 0.35,
+    "OutingSevereShare": 0.4,
+    "CraftContinueFatigue": 10,
+    "CraftContinueStress": 5,
+    "ClubLikedAffinity": 8,
+    "BroadcastReplyChance": 0.42,
+    "BeatenStress": 20,
+    "RestockFraction": 0.6,
+    "IntrusionWeeklyChanceAct3": 0.25,
+    "IntrusionWeeklyChanceAct4": 0.35,
+    "RainBarrelWater": 6,
+    "RoofGardenFood": 8,
+    "TeacherMaxExpeditions": 2,
+    "TeacherMinDaily": 2,
+    "FoodSpoilageRate": 0.25,
+    "BiteChanceOnDownDay": 0.3,
+    "BiteChanceOnDownNight": 0.6,
+    "TeacherInfectionWeekly": 8,
+    "CollapseStress": 91
+  },
+  "Difficulties": {
+    "HARD": {
+      "Yield": 0.8
+    },
+    "STORY": {
+      "Yield": 1.2,
+      "FoodYield": 1.4,
+      "WaterYield": 1.4,
+      "MedicineYield": 1.4
+    }
+  }
 }
