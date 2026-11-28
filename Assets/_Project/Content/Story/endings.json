@@ -82,17 +82,44 @@
       "Color": "#22201E"
     },
     {
-      "Id": "ENDING_HIDDEN_CURE",
+      "Id": "ENDING_HIDDEN_STAY",
       "Category": "Hidden",
-      "Priority": 520,
+      "Act": "Rescue",
+      "Priority": 600,
       "Condition": {
         "FlagsAll": [
-          "TEACHER_CURED"
+          "CHOSE_TO_STAY"
+        ]
+      },
+      "CutKeys": [
+        "ending.ENDING_HIDDEN_STAY.cut1",
+        "ending.ENDING_HIDDEN_STAY.cut2"
+      ],
+      "FutureKeys": [
+        "ending.ENDING_HIDDEN_STAY.cut3"
+      ],
+      "Color": "#1A2024"
+    },
+    {
+      "Id": "ENDING_RESCUE_SEAT",
+      "Category": "Hidden",
+      "Act": "Rescue",
+      "Priority": 590,
+      "Condition": {
+        "FlagsAny": [
+          "SEAT_STAY_TEACHERS",
+          "SEAT_STAY_FRIEND",
+          "SEAT_STAY_RINGLEADER",
+          "SEAT_STAY_BYSTANDER",
+          "SEAT_STAY_SENIOR",
+          "SEAT_STAY_SELF"
         ]
       },
       "CutKeys": [
         "ending.ENDING_HIDDEN_CURE.cut1",
-        "ending.ENDING_HIDDEN_CURE.cut2",
+        "ending.ENDING_HIDDEN_CURE.cut2"
+      ],
+      "CodaKeys": [
         "ending.ENDING_HIDDEN_CURE.cut3"
       ],
       "Color": "#2A3040",
@@ -106,10 +133,12 @@
           },
           "CutKeys": [
             "ending.ENDING_HIDDEN_CURE.seat_teachers.cut1",
-            "ending.ENDING_HIDDEN_CURE.seat_teachers.cut2",
-            "ending.ENDING_HIDDEN_CURE.seat_teachers.cut3"
+            "ending.ENDING_HIDDEN_CURE.seat_teachers.cut2"
           ],
-          "Image": "ending_seat_teachers"
+          "Image": "ending_seat_teachers",
+          "CodaKeys": [
+            "ending.ENDING_HIDDEN_CURE.seat_teachers.cut3"
+          ]
         },
         {
           "Id": "SEAT_FRIEND",
@@ -120,10 +149,12 @@
           },
           "CutKeys": [
             "ending.ENDING_HIDDEN_CURE.seat_friend.cut1",
-            "ending.ENDING_HIDDEN_CURE.seat_friend.cut2",
-            "ending.ENDING_HIDDEN_CURE.seat_friend.cut3"
+            "ending.ENDING_HIDDEN_CURE.seat_friend.cut2"
           ],
-          "Image": "ending_seat_friend"
+          "Image": "ending_seat_friend",
+          "CodaKeys": [
+            "ending.ENDING_HIDDEN_CURE.seat_friend.cut3"
+          ]
         },
         {
           "Id": "SEAT_RINGLEADER",
@@ -134,10 +165,12 @@
           },
           "CutKeys": [
             "ending.ENDING_HIDDEN_CURE.seat_ringleader.cut1",
-            "ending.ENDING_HIDDEN_CURE.seat_ringleader.cut2",
-            "ending.ENDING_HIDDEN_CURE.seat_ringleader.cut3"
+            "ending.ENDING_HIDDEN_CURE.seat_ringleader.cut2"
           ],
-          "Image": "ending_seat_ringleader"
+          "Image": "ending_seat_ringleader",
+          "CodaKeys": [
+            "ending.ENDING_HIDDEN_CURE.seat_ringleader.cut3"
+          ]
         },
         {
           "Id": "SEAT_BYSTANDER",
@@ -148,10 +181,12 @@
           },
           "CutKeys": [
             "ending.ENDING_HIDDEN_CURE.seat_bystander.cut1",
-            "ending.ENDING_HIDDEN_CURE.seat_bystander.cut2",
-            "ending.ENDING_HIDDEN_CURE.seat_bystander.cut3"
+            "ending.ENDING_HIDDEN_CURE.seat_bystander.cut2"
           ],
-          "Image": "ending_seat_bystander"
+          "Image": "ending_seat_bystander",
+          "CodaKeys": [
+            "ending.ENDING_HIDDEN_CURE.seat_bystander.cut3"
+          ]
         },
         {
           "Id": "SEAT_SENIOR",
@@ -162,10 +197,12 @@
           },
           "CutKeys": [
             "ending.ENDING_HIDDEN_CURE.seat_senior.cut1",
-            "ending.ENDING_HIDDEN_CURE.seat_senior.cut2",
-            "ending.ENDING_HIDDEN_CURE.seat_senior.cut3"
+            "ending.ENDING_HIDDEN_CURE.seat_senior.cut2"
           ],
-          "Image": "ending_seat_senior"
+          "Image": "ending_seat_senior",
+          "CodaKeys": [
+            "ending.ENDING_HIDDEN_CURE.seat_senior.cut3"
+          ]
         },
         {
           "Id": "SEAT_SELF",
@@ -176,32 +213,89 @@
           },
           "CutKeys": [
             "ending.ENDING_HIDDEN_CURE.seat_self.cut1",
-            "ending.ENDING_HIDDEN_CURE.seat_self.cut2",
-            "ending.ENDING_HIDDEN_CURE.seat_self.cut3"
+            "ending.ENDING_HIDDEN_CURE.seat_self.cut2"
           ],
-          "Image": "ending_seat_self"
+          "Image": "ending_seat_self",
+          "CodaKeys": [
+            "ending.ENDING_HIDDEN_CURE.seat_self.cut3"
+          ]
         }
       ]
     },
     {
-      "Id": "ENDING_HIDDEN_STAY",
+      "Id": "ENDING_HIDDEN_CURE",
       "Category": "Hidden",
-      "Priority": 510,
+      "Act": "Rescue",
+      "Priority": 580,
       "Condition": {
         "FlagsAll": [
-          "CHOSE_TO_STAY"
+          "TEACHER_CURED"
         ]
       },
       "CutKeys": [
-        "ending.ENDING_HIDDEN_STAY.cut1",
-        "ending.ENDING_HIDDEN_STAY.cut2",
-        "ending.ENDING_HIDDEN_STAY.cut3"
+        "ending.ENDING_HIDDEN_CURE.cut1",
+        "ending.ENDING_HIDDEN_CURE.cut2"
       ],
-      "Color": "#1A2024"
+      "CodaKeys": [
+        "ending.ENDING_HIDDEN_CURE.cut3"
+      ],
+      "Color": "#2A3040"
+    },
+    {
+      "Id": "ENDING_RESCUE_CROWD",
+      "Category": "Normal",
+      "Act": "Rescue",
+      "Priority": 570,
+      "Condition": {
+        "Checks": [
+          {
+            "Kind": "Companions",
+            "Op": "GreaterOrEqual",
+            "Value": 4
+          }
+        ]
+      },
+      "CutKeys": [
+        "ending.ENDING_TOGETHER.cut1",
+        "ending.ENDING_RESCUE_CROWD.cut2"
+      ],
+      "Color": "#2A3030"
+    },
+    {
+      "Id": "ENDING_RESCUE_ALONE",
+      "Category": "Normal",
+      "Act": "Rescue",
+      "Priority": 560,
+      "Condition": {
+        "Checks": [
+          {
+            "Kind": "Companions",
+            "Op": "LessOrEqual",
+            "Value": 0
+          }
+        ]
+      },
+      "CutKeys": [
+        "ending.ENDING_RESCUE_ALONE.cut1",
+        "ending.ENDING_SURVIVOR.cut2"
+      ],
+      "Color": "#1E2428"
+    },
+    {
+      "Id": "ENDING_RESCUE_MORNING",
+      "Category": "Normal",
+      "Act": "Rescue",
+      "Priority": 500,
+      "CutKeys": [
+        "ending.ENDING_SURVIVOR.cut1",
+        "ending.ENDING_SURVIVOR.cut2"
+      ],
+      "Color": "#20283A"
     },
     {
       "Id": "ENDING_HIDDEN_TRUTH",
       "Category": "Hidden",
+      "Act": "Reflection",
       "Priority": 500,
       "Condition": {
         "Checks": [
@@ -215,6 +309,9 @@
       },
       "CutKeys": [
         "ending.ENDING_HIDDEN_TRUTH.cut1",
+        "ending.ENDING_HIDDEN_TRUTH.reflect"
+      ],
+      "CodaKeys": [
         "ending.ENDING_HIDDEN_TRUTH.cut2",
         "ending.ENDING_HIDDEN_TRUTH.cut3"
       ],
@@ -223,6 +320,7 @@
     {
       "Id": "ENDING_NARR_CONFRONT",
       "Category": "Narrative",
+      "Act": "Reflection",
       "Priority": 350,
       "Condition": {
         "FlagsAny": [
@@ -241,14 +339,14 @@
       },
       "CutKeys": [
         "ending.ENDING_NARR_CONFRONT.cut1",
-        "ending.ENDING_NARR_CONFRONT.cut2",
-        "ending.ENDING_NARR_CONFRONT.cut3"
+        "ending.ENDING_NARR_CONFRONT.cut2"
       ],
       "Color": "#2E2A30"
     },
     {
       "Id": "ENDING_NARR_OVERCOME",
       "Category": "Narrative",
+      "Act": "Reflection",
       "Priority": 340,
       "Condition": {
         "Checks": [
@@ -279,15 +377,109 @@
         }
       ],
       "CutKeys": [
-        "ending.ENDING_NARR_OVERCOME.cut1",
         "ending.ENDING_NARR_OVERCOME.cut2",
+        "ending.ENDING_NARR_OVERCOME.reflect"
+      ],
+      "CodaKeys": [
         "ending.ENDING_NARR_OVERCOME.cut3"
       ],
       "Color": "#283040"
     },
     {
+      "Id": "ENDING_NARR_UNHEALED",
+      "Category": "Narrative",
+      "Act": "Reflection",
+      "Priority": 150,
+      "Condition": {
+        "Checks": [
+          {
+            "Kind": "Hidden",
+            "Key": "TraumaRecovery",
+            "Op": "LessOrEqual",
+            "Value": 6
+          },
+          {
+            "Kind": "Hidden",
+            "Key": "Isolation",
+            "Op": "GreaterOrEqual",
+            "Value": 30
+          }
+        ]
+      },
+      "CutKeys": [
+        "ending.ENDING_NARR_UNHEALED.cut1",
+        "ending.ENDING_NARR_UNHEALED.cut2"
+      ],
+      "CodaKeys": [
+        "ending.ENDING_NARR_UNHEALED.cut3"
+      ],
+      "Color": "#1C2230"
+    },
+    {
+      "Id": "ENDING_REFLECT_DEFAULT",
+      "Category": "Narrative",
+      "Act": "Reflection",
+      "Priority": 100,
+      "CutKeys": [
+        "ending.ENDING_REFLECT_DEFAULT.cut1"
+      ],
+      "Color": "#20283A"
+    },
+    {
+      "Id": "ENDING_EDUCATOR",
+      "Category": "Specialized",
+      "Act": "Future",
+      "Priority": 305,
+      "Condition": {
+        "Checks": [
+          {
+            "Kind": "Proficiency",
+            "Key": "Humanities",
+            "Op": "GreaterOrEqual",
+            "Value": 3
+          },
+          {
+            "Kind": "Stat",
+            "Key": "Empathy",
+            "Op": "GreaterOrEqual",
+            "Value": 110
+          },
+          {
+            "Kind": "EndingTag",
+            "Key": "TAG_TEACHING",
+            "Op": "GreaterOrEqual",
+            "Value": 3
+          }
+        ]
+      },
+      "Score": [
+        {
+          "Kind": "Stat",
+          "Key": "Empathy",
+          "Weight": 1
+        },
+        {
+          "Kind": "Proficiency",
+          "Key": "Humanities",
+          "Weight": 20
+        },
+        {
+          "Kind": "EndingTag",
+          "Key": "TAG_TEACHING",
+          "Weight": 2
+        }
+      ],
+      "CutKeys": [
+        "ending.ENDING_EDUCATOR.cut1",
+        "ending.ENDING_EDUCATOR.cut2",
+        "ending.ENDING_EDUCATOR.cut3"
+      ],
+      "Color": "#26302A"
+    },
+    {
       "Id": "ENDING_DOCTOR",
       "Category": "Specialized",
+      "Act": "Future",
       "Priority": 300,
       "Condition": {
         "Checks": [
@@ -338,6 +530,7 @@
     {
       "Id": "ENDING_ENGINEER",
       "Category": "Specialized",
+      "Act": "Future",
       "Priority": 300,
       "Condition": {
         "Checks": [
@@ -377,6 +570,7 @@
     {
       "Id": "ENDING_GUARD",
       "Category": "Specialized",
+      "Act": "Future",
       "Priority": 300,
       "Condition": {
         "Checks": [
@@ -427,6 +621,7 @@
     {
       "Id": "ENDING_LEADER",
       "Category": "Specialized",
+      "Act": "Future",
       "Priority": 300,
       "Condition": {
         "Checks": [
@@ -475,6 +670,7 @@
     {
       "Id": "ENDING_WRITER",
       "Category": "Specialized",
+      "Act": "Future",
       "Priority": 300,
       "Condition": {
         "Checks": [
@@ -510,58 +706,9 @@
       "Color": "#302A22"
     },
     {
-      "Id": "ENDING_EDUCATOR",
-      "Category": "Specialized",
-      "Priority": 305,
-      "Condition": {
-        "Checks": [
-          {
-            "Kind": "Proficiency",
-            "Key": "Humanities",
-            "Op": "GreaterOrEqual",
-            "Value": 3
-          },
-          {
-            "Kind": "Stat",
-            "Key": "Empathy",
-            "Op": "GreaterOrEqual",
-            "Value": 110
-          },
-          {
-            "Kind": "EndingTag",
-            "Key": "TAG_TEACHING",
-            "Op": "GreaterOrEqual",
-            "Value": 3
-          }
-        ]
-      },
-      "Score": [
-        {
-          "Kind": "Stat",
-          "Key": "Empathy",
-          "Weight": 1
-        },
-        {
-          "Kind": "Proficiency",
-          "Key": "Humanities",
-          "Weight": 20
-        },
-        {
-          "Kind": "EndingTag",
-          "Key": "TAG_TEACHING",
-          "Weight": 2
-        }
-      ],
-      "CutKeys": [
-        "ending.ENDING_EDUCATOR.cut1",
-        "ending.ENDING_EDUCATOR.cut2",
-        "ending.ENDING_EDUCATOR.cut3"
-      ],
-      "Color": "#26302A"
-    },
-    {
       "Id": "ENDING_TOGETHER",
       "Category": "Relationship",
+      "Act": "Future",
       "Priority": 280,
       "Condition": {
         "Checks": [
@@ -596,8 +743,10 @@
         }
       ],
       "CutKeys": [
-        "ending.ENDING_TOGETHER.cut1",
         "ending.ENDING_TOGETHER.cut2",
+        "ending.ENDING_TOGETHER.cut3"
+      ],
+      "TailKeys": [
         "ending.ENDING_TOGETHER.cut3"
       ],
       "Color": "#2A3030"
@@ -605,6 +754,7 @@
     {
       "Id": "ENDING_LONE",
       "Category": "Relationship",
+      "Act": "Future",
       "Priority": 280,
       "Condition": {
         "Checks": [
@@ -633,11 +783,15 @@
         "ending.ENDING_LONE.cut2",
         "ending.ENDING_LONE.cut3"
       ],
+      "TailKeys": [
+        "ending.ENDING_LONE.cut3"
+      ],
       "Color": "#1E2428"
     },
     {
       "Id": "ENDING_BALANCED",
       "Category": "Balanced",
+      "Act": "Future",
       "Priority": 200,
       "Condition": {
         "Checks": [
@@ -667,39 +821,11 @@
       "Color": "#24303A"
     },
     {
-      "Id": "ENDING_NARR_UNHEALED",
-      "Category": "Narrative",
-      "Priority": 150,
-      "Condition": {
-        "Checks": [
-          {
-            "Kind": "Hidden",
-            "Key": "TraumaRecovery",
-            "Op": "LessOrEqual",
-            "Value": 6
-          },
-          {
-            "Kind": "Hidden",
-            "Key": "Isolation",
-            "Op": "GreaterOrEqual",
-            "Value": 30
-          }
-        ]
-      },
-      "CutKeys": [
-        "ending.ENDING_NARR_UNHEALED.cut1",
-        "ending.ENDING_NARR_UNHEALED.cut2",
-        "ending.ENDING_NARR_UNHEALED.cut3"
-      ],
-      "Color": "#1C2230"
-    },
-    {
       "Id": "ENDING_SURVIVOR",
       "Category": "Normal",
+      "Act": "Future",
       "Priority": 100,
       "CutKeys": [
-        "ending.ENDING_SURVIVOR.cut1",
-        "ending.ENDING_SURVIVOR.cut2",
         "ending.ENDING_SURVIVOR.cut3"
       ],
       "Color": "#20283A"
@@ -1039,6 +1165,120 @@
           }
         ]
       }
+    },
+    {
+      "Id": "BR_STAY",
+      "Kind": "EndingBridge",
+      "Group": "TO_REFLECTION",
+      "Priority": 30,
+      "TextKey": "line.bridge_stay",
+      "Condition": {
+        "Checks": [
+          {
+            "Kind": "EndingAct",
+            "Op": "Equal",
+            "Value": 1,
+            "Key": "ENDING_HIDDEN_STAY"
+          }
+        ]
+      }
+    },
+    {
+      "Id": "BR_ALONE",
+      "Kind": "EndingBridge",
+      "Group": "TO_REFLECTION",
+      "Priority": 20,
+      "TextKey": "line.bridge_alone",
+      "Condition": {
+        "Checks": [
+          {
+            "Kind": "EndingAct",
+            "Op": "Equal",
+            "Value": 1,
+            "Key": "ENDING_RESCUE_ALONE"
+          }
+        ]
+      }
+    },
+    {
+      "Id": "BR_SEAT",
+      "Kind": "EndingBridge",
+      "Group": "TO_REFLECTION",
+      "Priority": 12,
+      "TextKey": "line.bridge_left",
+      "Condition": {
+        "Checks": [
+          {
+            "Kind": "LeftBehind",
+            "Op": "GreaterOrEqual",
+            "Value": 1
+          }
+        ]
+      }
+    },
+    {
+      "Id": "BR_TEACHER",
+      "Kind": "EndingBridge",
+      "Group": "TO_REFLECTION",
+      "Priority": 10,
+      "TextKey": "line.bridge_left",
+      "Condition": {
+        "FlagsNone": [
+          "TEACHER_CURED",
+          "TEACHER_ISOLATED",
+          "TEACHER_EXPOSED",
+          "TEACHER_LEFT_BEHIND",
+          "TEACHER_LAST_LESSON"
+        ]
+      }
+    },
+    {
+      "Id": "BR_ALL",
+      "Kind": "EndingBridge",
+      "Group": "TO_REFLECTION",
+      "Priority": 0,
+      "TextKey": "line.bridge_all"
+    },
+    {
+      "Id": "BR_FUTURE_STAY",
+      "Kind": "EndingBridge",
+      "Group": "TO_FUTURE",
+      "Priority": 20,
+      "TextKey": "line.bridge_future_stay",
+      "Condition": {
+        "Checks": [
+          {
+            "Kind": "EndingAct",
+            "Op": "Equal",
+            "Value": 1,
+            "Key": "ENDING_HIDDEN_STAY"
+          }
+        ]
+      }
+    },
+    {
+      "Id": "BR_FUTURE_UNHEALED",
+      "Kind": "EndingBridge",
+      "Group": "TO_FUTURE",
+      "Priority": 10,
+      "TextKey": "line.bridge_future_unhealed",
+      "Condition": {
+        "Checks": [
+          {
+            "Kind": "EndingAct",
+            "Op": "Equal",
+            "Value": 1,
+            "Key": "ENDING_NARR_UNHEALED"
+          }
+        ]
+      }
+    },
+    {
+      "Id": "BR_FUTURE",
+      "Kind": "EndingBridge",
+      "Group": "TO_FUTURE",
+      "Priority": 0,
+      "TextKey": "line.bridge_future"
     }
   ]
 }

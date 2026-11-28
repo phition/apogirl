@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using ApoGirl.Core.Definitions;
 using ApoGirl.Core.Effects;
 using ApoGirl.Core.Rules;
@@ -24,6 +25,12 @@ namespace ApoGirl.Core.Events
     /// <summary><see cref="ConditionDef"/> 판정. 순수 함수 (상태를 바꾸지 않는다).</summary>
     public static class ConditionEvaluator
     {
+        /// <summary>
+        /// 엔딩 판정 중에 앞 막에서 뽑힌 조각 ID (EndingResolver가 판정하는 동안만 채운다, 스레드마다 따로 — 봇은 뒤 스레드에서 돈다).
+        /// ValueKind.EndingAct가 읽는다. 판정 밖에서는 null.
+        /// </summary>
+        [ThreadStatic] public static HashSet<string> EndingActs;
+
         public static bool IsMet(GameState state, ConditionDef condition, EventContext context, BalanceConfig balance)
         {
             if (condition == null)
@@ -217,6 +224,9 @@ namespace ApoGirl.Core.Events
                 case ValueKind.FactionTier:
                     return (int)Rules.FactionRules.TierOf(state.Factions.TryGetValue(key ?? "", out var tiered) ? tiered.Standing : 0);
                 case ValueKind.BoardingCount: return Rules.BoardingRules.CandidateCount(state);
+                case ValueKind.Boarded: return Rules.BoardingRules.Boarding(state).Contains(key ?? "") ? 1 : 0;
+                case ValueKind.LeftBehind: return Rules.BoardingRules.Stayers(state).Count;
+                case ValueKind.EndingAct: return EndingActs != null && EndingActs.Contains(key ?? "") ? 1 : 0;
                 case ValueKind.BloodCompatible:
                     return Enum.TryParse<BloodType>(key, out var recipient) && BloodRules.CanDonate(state.Player.Profile.BloodType, recipient) ? 1 : 0;
                 default: throw new ArgumentOutOfRangeException(nameof(kind), kind, null);
@@ -251,6 +261,7 @@ namespace ApoGirl.Core.Events
                 case ValueKind.WeeksToRescue:
                 case ValueKind.Traps:
                 case ValueKind.BoardingCount:
+                case ValueKind.LeftBehind:
                     return true;
                 case ValueKind.CloseCompanions:
                     return int.TryParse(key, out _);

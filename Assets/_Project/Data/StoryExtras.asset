@@ -2350,6 +2350,215 @@ MonoBehaviour:
     Priority: 60
     TextKey: tc.breakdown
     Group: 
+  - Id: BR_STAY
+    Kind: 9
+    Condition:
+      WeekMin: 0
+      WeekMax: 0
+      Days: 
+      Phase: 0
+      Seasons: 
+      Month: 0
+      DayOfMonth: 0
+      ActionCategories: 
+      ActionIds: []
+      FlagsAll: []
+      FlagsAny: []
+      FlagsNone: []
+      CluesAll: []
+      Checks:
+      - Kind: 41
+        Key: ENDING_HIDDEN_STAY
+        Op: 2
+        Value: 1
+      AnyChecks: []
+      NpcStatuses: []
+      IsBirthday: 0
+    Priority: 30
+    TextKey: line.bridge_stay
+    Group: TO_REFLECTION
+  - Id: BR_ALONE
+    Kind: 9
+    Condition:
+      WeekMin: 0
+      WeekMax: 0
+      Days: 
+      Phase: 0
+      Seasons: 
+      Month: 0
+      DayOfMonth: 0
+      ActionCategories: 
+      ActionIds: []
+      FlagsAll: []
+      FlagsAny: []
+      FlagsNone: []
+      CluesAll: []
+      Checks:
+      - Kind: 41
+        Key: ENDING_RESCUE_ALONE
+        Op: 2
+        Value: 1
+      AnyChecks: []
+      NpcStatuses: []
+      IsBirthday: 0
+    Priority: 20
+    TextKey: line.bridge_alone
+    Group: TO_REFLECTION
+  - Id: BR_SEAT
+    Kind: 9
+    Condition:
+      WeekMin: 0
+      WeekMax: 0
+      Days: 
+      Phase: 0
+      Seasons: 
+      Month: 0
+      DayOfMonth: 0
+      ActionCategories: 
+      ActionIds: []
+      FlagsAll: []
+      FlagsAny: []
+      FlagsNone: []
+      CluesAll: []
+      Checks:
+      - Kind: 40
+        Key: 
+        Op: 0
+        Value: 1
+      AnyChecks: []
+      NpcStatuses: []
+      IsBirthday: 0
+    Priority: 12
+    TextKey: line.bridge_left
+    Group: TO_REFLECTION
+  - Id: BR_TEACHER
+    Kind: 9
+    Condition:
+      WeekMin: 0
+      WeekMax: 0
+      Days: 
+      Phase: 0
+      Seasons: 
+      Month: 0
+      DayOfMonth: 0
+      ActionCategories: 
+      ActionIds: []
+      FlagsAll: []
+      FlagsAny: []
+      FlagsNone:
+      - TEACHER_CURED
+      - TEACHER_ISOLATED
+      - TEACHER_EXPOSED
+      - TEACHER_LEFT_BEHIND
+      - TEACHER_LAST_LESSON
+      CluesAll: []
+      Checks: []
+      AnyChecks: []
+      NpcStatuses: []
+      IsBirthday: 0
+    Priority: 10
+    TextKey: line.bridge_left
+    Group: TO_REFLECTION
+  - Id: BR_ALL
+    Kind: 9
+    Condition:
+      WeekMin: 0
+      WeekMax: 0
+      Days: 
+      Phase: 0
+      Seasons: 
+      Month: 0
+      DayOfMonth: 0
+      ActionCategories: 
+      ActionIds: []
+      FlagsAll: []
+      FlagsAny: []
+      FlagsNone: []
+      CluesAll: []
+      Checks: []
+      AnyChecks: []
+      NpcStatuses: []
+      IsBirthday: 0
+    Priority: 0
+    TextKey: line.bridge_all
+    Group: TO_REFLECTION
+  - Id: BR_FUTURE_STAY
+    Kind: 9
+    Condition:
+      WeekMin: 0
+      WeekMax: 0
+      Days: 
+      Phase: 0
+      Seasons: 
+      Month: 0
+      DayOfMonth: 0
+      ActionCategories: 
+      ActionIds: []
+      FlagsAll: []
+      FlagsAny: []
+      FlagsNone: []
+      CluesAll: []
+      Checks:
+      - Kind: 41
+        Key: ENDING_HIDDEN_STAY
+        Op: 2
+        Value: 1
+      AnyChecks: []
+      NpcStatuses: []
+      IsBirthday: 0
+    Priority: 20
+    TextKey: line.bridge_future_stay
+    Group: TO_FUTURE
+  - Id: BR_FUTURE_UNHEALED
+    Kind: 9
+    Condition:
+      WeekMin: 0
+      WeekMax: 0
+      Days: 
+      Phase: 0
+      Seasons: 
+      Month: 0
+      DayOfMonth: 0
+      ActionCategories: 
+      ActionIds: []
+      FlagsAll: []
+      FlagsAny: []
+      FlagsNone: []
+      CluesAll: []
+      Checks:
+      - Kind: 41
+        Key: ENDING_NARR_UNHEALED
+        Op: 2
+        Value: 1
+      AnyChecks: []
+      NpcStatuses: []
+      IsBirthday: 0
+    Priority: 10
+    TextKey: line.bridge_future_unhealed
+    Group: TO_FUTURE
+  - Id: BR_FUTURE
+    Kind: 9
+    Condition:
+      WeekMin: 0
+      WeekMax: 0
+      Days: 
+      Phase: 0
+      Seasons: 
+      Month: 0
+      DayOfMonth: 0
+      ActionCategories: 
+      ActionIds: []
+      FlagsAll: []
+      FlagsAny: []
+      FlagsNone: []
+      CluesAll: []
+      Checks: []
+      AnyChecks: []
+      NpcStatuses: []
+      IsBirthday: 0
+    Priority: 0
+    TextKey: line.bridge_future
+    Group: TO_FUTURE
   - Id: EP_SAGEORI_DEFAULT
     Kind: 8
     Condition:
@@ -6811,6 +7020,7 @@ MonoBehaviour:
   _endings:
   - Id: ENDING_BAD_EXPEDITION
     Category: 0
+    Act: 0
     Priority: 0
     EndCauses:
     - END_CAUSE_EXPEDITION
@@ -6837,10 +7047,14 @@ MonoBehaviour:
     - ending.ENDING_BAD_EXPEDITION.cut1
     - ending.ENDING_BAD_EXPEDITION.cut2
     - ending.ENDING_BAD_EXPEDITION.cut3
+    CodaKeys: []
+    FutureKeys: []
+    TailKeys: []
     Color: '#2A1E22'
     Variants: []
   - Id: ENDING_BAD_RAID
     Category: 0
+    Act: 0
     Priority: 0
     EndCauses:
     - END_CAUSE_RAID
@@ -6867,10 +7081,14 @@ MonoBehaviour:
     - ending.ENDING_BAD_RAID.cut1
     - ending.ENDING_BAD_RAID.cut2
     - ending.ENDING_BAD_RAID.cut3
+    CodaKeys: []
+    FutureKeys: []
+    TailKeys: []
     Color: '#241C1C'
     Variants: []
   - Id: ENDING_BAD_STARVATION
     Category: 0
+    Act: 0
     Priority: 0
     EndCauses:
     - END_CAUSE_STARVATION
@@ -6897,10 +7115,14 @@ MonoBehaviour:
     - ending.ENDING_BAD_STARVATION.cut1
     - ending.ENDING_BAD_STARVATION.cut2
     - ending.ENDING_BAD_STARVATION.cut3
+    CodaKeys: []
+    FutureKeys: []
+    TailKeys: []
     Color: '#262420'
     Variants: []
   - Id: ENDING_BAD_COLLAPSE
     Category: 0
+    Act: 0
     Priority: 0
     EndCauses:
     - END_CAUSE_COLLAPSE
@@ -6927,10 +7149,14 @@ MonoBehaviour:
     - ending.ENDING_BAD_COLLAPSE.cut1
     - ending.ENDING_BAD_COLLAPSE.cut2
     - ending.ENDING_BAD_COLLAPSE.cut3
+    CodaKeys: []
+    FutureKeys: []
+    TailKeys: []
     Color: '#1E2026'
     Variants: []
   - Id: ENDING_BAD_INFECTION
     Category: 0
+    Act: 0
     Priority: 0
     EndCauses:
     - END_CAUSE_INFECTION
@@ -6957,10 +7183,14 @@ MonoBehaviour:
     - ending.ENDING_BAD_INFECTION.cut1
     - ending.ENDING_BAD_INFECTION.cut2
     - ending.ENDING_BAD_INFECTION.cut3
+    CodaKeys: []
+    FutureKeys: []
+    TailKeys: []
     Color: '#22262A'
     Variants: []
   - Id: ENDING_BAD_WOUNDS
     Category: 0
+    Act: 0
     Priority: 0
     EndCauses: []
     Condition:
@@ -6986,11 +7216,15 @@ MonoBehaviour:
     - ending.ENDING_BAD_WOUNDS.cut1
     - ending.ENDING_BAD_WOUNDS.cut2
     - ending.ENDING_BAD_WOUNDS.cut3
+    CodaKeys: []
+    FutureKeys: []
+    TailKeys: []
     Color: '#22201E'
     Variants: []
-  - Id: ENDING_HIDDEN_CURE
+  - Id: ENDING_HIDDEN_STAY
     Category: 6
-    Priority: 520
+    Act: 1
+    Priority: 600
     EndCauses: []
     Condition:
       WeekMin: 0
@@ -7003,8 +7237,47 @@ MonoBehaviour:
       ActionCategories: 
       ActionIds: []
       FlagsAll:
-      - TEACHER_CURED
+      - CHOSE_TO_STAY
       FlagsAny: []
+      FlagsNone: []
+      CluesAll: []
+      Checks: []
+      AnyChecks: []
+      NpcStatuses: []
+      IsBirthday: 0
+    Score: []
+    CutKeys:
+    - ending.ENDING_HIDDEN_STAY.cut1
+    - ending.ENDING_HIDDEN_STAY.cut2
+    CodaKeys: []
+    FutureKeys:
+    - ending.ENDING_HIDDEN_STAY.cut3
+    TailKeys: []
+    Color: '#1A2024'
+    Variants: []
+  - Id: ENDING_RESCUE_SEAT
+    Category: 6
+    Act: 1
+    Priority: 590
+    EndCauses: []
+    Condition:
+      WeekMin: 0
+      WeekMax: 0
+      Days: 
+      Phase: 0
+      Seasons: 
+      Month: 0
+      DayOfMonth: 0
+      ActionCategories: 
+      ActionIds: []
+      FlagsAll: []
+      FlagsAny:
+      - SEAT_STAY_TEACHERS
+      - SEAT_STAY_FRIEND
+      - SEAT_STAY_RINGLEADER
+      - SEAT_STAY_BYSTANDER
+      - SEAT_STAY_SENIOR
+      - SEAT_STAY_SELF
       FlagsNone: []
       CluesAll: []
       Checks: []
@@ -7015,7 +7288,10 @@ MonoBehaviour:
     CutKeys:
     - ending.ENDING_HIDDEN_CURE.cut1
     - ending.ENDING_HIDDEN_CURE.cut2
+    CodaKeys:
     - ending.ENDING_HIDDEN_CURE.cut3
+    FutureKeys: []
+    TailKeys: []
     Color: '#2A3040'
     Variants:
     - Id: SEAT_TEACHERS
@@ -7041,6 +7317,7 @@ MonoBehaviour:
       CutKeys:
       - ending.ENDING_HIDDEN_CURE.seat_teachers.cut1
       - ending.ENDING_HIDDEN_CURE.seat_teachers.cut2
+      CodaKeys:
       - ending.ENDING_HIDDEN_CURE.seat_teachers.cut3
       Image: ending_seat_teachers
     - Id: SEAT_FRIEND
@@ -7066,6 +7343,7 @@ MonoBehaviour:
       CutKeys:
       - ending.ENDING_HIDDEN_CURE.seat_friend.cut1
       - ending.ENDING_HIDDEN_CURE.seat_friend.cut2
+      CodaKeys:
       - ending.ENDING_HIDDEN_CURE.seat_friend.cut3
       Image: ending_seat_friend
     - Id: SEAT_RINGLEADER
@@ -7091,6 +7369,7 @@ MonoBehaviour:
       CutKeys:
       - ending.ENDING_HIDDEN_CURE.seat_ringleader.cut1
       - ending.ENDING_HIDDEN_CURE.seat_ringleader.cut2
+      CodaKeys:
       - ending.ENDING_HIDDEN_CURE.seat_ringleader.cut3
       Image: ending_seat_ringleader
     - Id: SEAT_BYSTANDER
@@ -7116,6 +7395,7 @@ MonoBehaviour:
       CutKeys:
       - ending.ENDING_HIDDEN_CURE.seat_bystander.cut1
       - ending.ENDING_HIDDEN_CURE.seat_bystander.cut2
+      CodaKeys:
       - ending.ENDING_HIDDEN_CURE.seat_bystander.cut3
       Image: ending_seat_bystander
     - Id: SEAT_SENIOR
@@ -7141,6 +7421,7 @@ MonoBehaviour:
       CutKeys:
       - ending.ENDING_HIDDEN_CURE.seat_senior.cut1
       - ending.ENDING_HIDDEN_CURE.seat_senior.cut2
+      CodaKeys:
       - ending.ENDING_HIDDEN_CURE.seat_senior.cut3
       Image: ending_seat_senior
     - Id: SEAT_SELF
@@ -7166,11 +7447,13 @@ MonoBehaviour:
       CutKeys:
       - ending.ENDING_HIDDEN_CURE.seat_self.cut1
       - ending.ENDING_HIDDEN_CURE.seat_self.cut2
+      CodaKeys:
       - ending.ENDING_HIDDEN_CURE.seat_self.cut3
       Image: ending_seat_self
-  - Id: ENDING_HIDDEN_STAY
+  - Id: ENDING_HIDDEN_CURE
     Category: 6
-    Priority: 510
+    Act: 1
+    Priority: 580
     EndCauses: []
     Condition:
       WeekMin: 0
@@ -7183,7 +7466,7 @@ MonoBehaviour:
       ActionCategories: 
       ActionIds: []
       FlagsAll:
-      - CHOSE_TO_STAY
+      - TEACHER_CURED
       FlagsAny: []
       FlagsNone: []
       CluesAll: []
@@ -7193,13 +7476,121 @@ MonoBehaviour:
       IsBirthday: 0
     Score: []
     CutKeys:
-    - ending.ENDING_HIDDEN_STAY.cut1
-    - ending.ENDING_HIDDEN_STAY.cut2
-    - ending.ENDING_HIDDEN_STAY.cut3
-    Color: '#1A2024'
+    - ending.ENDING_HIDDEN_CURE.cut1
+    - ending.ENDING_HIDDEN_CURE.cut2
+    CodaKeys:
+    - ending.ENDING_HIDDEN_CURE.cut3
+    FutureKeys: []
+    TailKeys: []
+    Color: '#2A3040'
+    Variants: []
+  - Id: ENDING_RESCUE_CROWD
+    Category: 1
+    Act: 1
+    Priority: 570
+    EndCauses: []
+    Condition:
+      WeekMin: 0
+      WeekMax: 0
+      Days: 
+      Phase: 0
+      Seasons: 
+      Month: 0
+      DayOfMonth: 0
+      ActionCategories: 
+      ActionIds: []
+      FlagsAll: []
+      FlagsAny: []
+      FlagsNone: []
+      CluesAll: []
+      Checks:
+      - Kind: 21
+        Key: 
+        Op: 0
+        Value: 4
+      AnyChecks: []
+      NpcStatuses: []
+      IsBirthday: 0
+    Score: []
+    CutKeys:
+    - ending.ENDING_TOGETHER.cut1
+    - ending.ENDING_RESCUE_CROWD.cut2
+    CodaKeys: []
+    FutureKeys: []
+    TailKeys: []
+    Color: '#2A3030'
+    Variants: []
+  - Id: ENDING_RESCUE_ALONE
+    Category: 1
+    Act: 1
+    Priority: 560
+    EndCauses: []
+    Condition:
+      WeekMin: 0
+      WeekMax: 0
+      Days: 
+      Phase: 0
+      Seasons: 
+      Month: 0
+      DayOfMonth: 0
+      ActionCategories: 
+      ActionIds: []
+      FlagsAll: []
+      FlagsAny: []
+      FlagsNone: []
+      CluesAll: []
+      Checks:
+      - Kind: 21
+        Key: 
+        Op: 1
+        Value: 0
+      AnyChecks: []
+      NpcStatuses: []
+      IsBirthday: 0
+    Score: []
+    CutKeys:
+    - ending.ENDING_RESCUE_ALONE.cut1
+    - ending.ENDING_SURVIVOR.cut2
+    CodaKeys: []
+    FutureKeys: []
+    TailKeys: []
+    Color: '#1E2428'
+    Variants: []
+  - Id: ENDING_RESCUE_MORNING
+    Category: 1
+    Act: 1
+    Priority: 500
+    EndCauses: []
+    Condition:
+      WeekMin: 0
+      WeekMax: 0
+      Days: 
+      Phase: 0
+      Seasons: 
+      Month: 0
+      DayOfMonth: 0
+      ActionCategories: 
+      ActionIds: []
+      FlagsAll: []
+      FlagsAny: []
+      FlagsNone: []
+      CluesAll: []
+      Checks: []
+      AnyChecks: []
+      NpcStatuses: []
+      IsBirthday: 0
+    Score: []
+    CutKeys:
+    - ending.ENDING_SURVIVOR.cut1
+    - ending.ENDING_SURVIVOR.cut2
+    CodaKeys: []
+    FutureKeys: []
+    TailKeys: []
+    Color: '#20283A'
     Variants: []
   - Id: ENDING_HIDDEN_TRUTH
     Category: 6
+    Act: 2
     Priority: 500
     EndCauses: []
     Condition:
@@ -7227,12 +7618,17 @@ MonoBehaviour:
     Score: []
     CutKeys:
     - ending.ENDING_HIDDEN_TRUTH.cut1
+    - ending.ENDING_HIDDEN_TRUTH.reflect
+    CodaKeys:
     - ending.ENDING_HIDDEN_TRUTH.cut2
     - ending.ENDING_HIDDEN_TRUTH.cut3
+    FutureKeys: []
+    TailKeys: []
     Color: '#1A1E2A'
     Variants: []
   - Id: ENDING_NARR_CONFRONT
     Category: 5
+    Act: 2
     Priority: 350
     EndCauses: []
     Condition:
@@ -7264,11 +7660,14 @@ MonoBehaviour:
     CutKeys:
     - ending.ENDING_NARR_CONFRONT.cut1
     - ending.ENDING_NARR_CONFRONT.cut2
-    - ending.ENDING_NARR_CONFRONT.cut3
+    CodaKeys: []
+    FutureKeys: []
+    TailKeys: []
     Color: '#2E2A30'
     Variants: []
   - Id: ENDING_NARR_OVERCOME
     Category: 5
+    Act: 2
     Priority: 340
     EndCauses: []
     Condition:
@@ -7305,14 +7704,18 @@ MonoBehaviour:
       Key: SelfAwareness
       Weight: 1
     CutKeys:
-    - ending.ENDING_NARR_OVERCOME.cut1
     - ending.ENDING_NARR_OVERCOME.cut2
+    - ending.ENDING_NARR_OVERCOME.reflect
+    CodaKeys:
     - ending.ENDING_NARR_OVERCOME.cut3
+    FutureKeys: []
+    TailKeys: []
     Color: '#283040'
     Variants: []
-  - Id: ENDING_DOCTOR
-    Category: 3
-    Priority: 300
+  - Id: ENDING_NARR_UNHEALED
+    Category: 5
+    Act: 2
+    Priority: 150
     EndCauses: []
     Condition:
       WeekMin: 0
@@ -7329,183 +7732,31 @@ MonoBehaviour:
       FlagsNone: []
       CluesAll: []
       Checks:
-      - Kind: 1
-        Key: Medicine
-        Op: 0
-        Value: 4
-      - Kind: 0
-        Key: Intellect
-        Op: 0
-        Value: 190
       - Kind: 4
-        Key: Humanity
-        Op: 0
-        Value: 55
-      AnyChecks: []
-      NpcStatuses: []
-      IsBirthday: 0
-    Score:
-    - Kind: 1
-      Key: Medicine
-      Weight: 20
-    - Kind: 0
-      Key: Intellect
-      Weight: 1
-    - Kind: 4
-      Key: Humanity
-      Weight: 1
-    CutKeys:
-    - ending.ENDING_DOCTOR.cut1
-    - ending.ENDING_DOCTOR.cut2
-    - ending.ENDING_DOCTOR.cut3
-    Color: '#1E3036'
-    Variants: []
-  - Id: ENDING_ENGINEER
-    Category: 3
-    Priority: 300
-    EndCauses: []
-    Condition:
-      WeekMin: 0
-      WeekMax: 0
-      Days: 
-      Phase: 0
-      Seasons: 
-      Month: 0
-      DayOfMonth: 0
-      ActionCategories: 
-      ActionIds: []
-      FlagsAll: []
-      FlagsAny: []
-      FlagsNone: []
-      CluesAll: []
-      Checks:
-      - Kind: 1
-        Key: Engineering
-        Op: 0
-        Value: 2
-      - Kind: 0
-        Key: Craft
-        Op: 0
-        Value: 185
-      AnyChecks: []
-      NpcStatuses: []
-      IsBirthday: 0
-    Score:
-    - Kind: 1
-      Key: Engineering
-      Weight: 20
-    - Kind: 0
-      Key: Craft
-      Weight: 1
-    CutKeys:
-    - ending.ENDING_ENGINEER.cut1
-    - ending.ENDING_ENGINEER.cut2
-    - ending.ENDING_ENGINEER.cut3
-    Color: '#2A2E24'
-    Variants: []
-  - Id: ENDING_GUARD
-    Category: 3
-    Priority: 300
-    EndCauses: []
-    Condition:
-      WeekMin: 0
-      WeekMax: 0
-      Days: 
-      Phase: 0
-      Seasons: 
-      Month: 0
-      DayOfMonth: 0
-      ActionCategories: 
-      ActionIds: []
-      FlagsAll: []
-      FlagsAny: []
-      FlagsNone: []
-      CluesAll: []
-      Checks:
-      - Kind: 0
-        Key: Strength
-        Op: 0
-        Value: 35
-      - Kind: 0
-        Key: Agility
-        Op: 0
-        Value: 45
-      - Kind: 1
-        Key: SelfDefense
-        Op: 0
-        Value: 1
-      AnyChecks: []
-      NpcStatuses: []
-      IsBirthday: 0
-    Score:
-    - Kind: 0
-      Key: Strength
-      Weight: 1
-    - Kind: 0
-      Key: Agility
-      Weight: 1
-    - Kind: 1
-      Key: SelfDefense
-      Weight: 20
-    CutKeys:
-    - ending.ENDING_GUARD.cut1
-    - ending.ENDING_GUARD.cut2
-    - ending.ENDING_GUARD.cut3
-    Color: '#2C2420'
-    Variants: []
-  - Id: ENDING_LEADER
-    Category: 3
-    Priority: 300
-    EndCauses: []
-    Condition:
-      WeekMin: 0
-      WeekMax: 0
-      Days: 
-      Phase: 0
-      Seasons: 
-      Month: 0
-      DayOfMonth: 0
-      ActionCategories: 
-      ActionIds: []
-      FlagsAll: []
-      FlagsAny: []
-      FlagsNone: []
-      CluesAll: []
-      Checks:
-      - Kind: 0
-        Key: Leadership
-        Op: 0
-        Value: 85
-      - Kind: 21
-        Key: 
-        Op: 0
-        Value: 2
+        Key: TraumaRecovery
+        Op: 1
+        Value: 6
       - Kind: 4
-        Key: Humanity
+        Key: Isolation
         Op: 0
-        Value: 55
+        Value: 30
       AnyChecks: []
       NpcStatuses: []
       IsBirthday: 0
-    Score:
-    - Kind: 0
-      Key: Leadership
-      Weight: 1
-    - Kind: 21
-      Key: 
-      Weight: 10
-    - Kind: 4
-      Key: Humanity
-      Weight: 1
+    Score: []
     CutKeys:
-    - ending.ENDING_LEADER.cut1
-    - ending.ENDING_LEADER.cut2
-    - ending.ENDING_LEADER.cut3
-    Color: '#2A2636'
+    - ending.ENDING_NARR_UNHEALED.cut1
+    - ending.ENDING_NARR_UNHEALED.cut2
+    CodaKeys:
+    - ending.ENDING_NARR_UNHEALED.cut3
+    FutureKeys: []
+    TailKeys: []
+    Color: '#1C2230'
     Variants: []
-  - Id: ENDING_WRITER
-    Category: 3
-    Priority: 300
+  - Id: ENDING_REFLECT_DEFAULT
+    Category: 5
+    Act: 2
+    Priority: 100
     EndCauses: []
     Condition:
       WeekMin: 0
@@ -7521,33 +7772,21 @@ MonoBehaviour:
       FlagsAny: []
       FlagsNone: []
       CluesAll: []
-      Checks:
-      - Kind: 1
-        Key: Humanities
-        Op: 0
-        Value: 3
-      - Kind: 20
-        Key: 
-        Op: 0
-        Value: 40
+      Checks: []
       AnyChecks: []
       NpcStatuses: []
       IsBirthday: 0
-    Score:
-    - Kind: 1
-      Key: Humanities
-      Weight: 20
-    - Kind: 20
-      Key: 
-      Weight: 1
+    Score: []
     CutKeys:
-    - ending.ENDING_WRITER.cut1
-    - ending.ENDING_WRITER.cut2
-    - ending.ENDING_WRITER.cut3
-    Color: '#302A22'
+    - ending.ENDING_REFLECT_DEFAULT.cut1
+    CodaKeys: []
+    FutureKeys: []
+    TailKeys: []
+    Color: '#20283A'
     Variants: []
   - Id: ENDING_EDUCATOR
     Category: 3
+    Act: 3
     Priority: 305
     EndCauses: []
     Condition:
@@ -7594,10 +7833,270 @@ MonoBehaviour:
     - ending.ENDING_EDUCATOR.cut1
     - ending.ENDING_EDUCATOR.cut2
     - ending.ENDING_EDUCATOR.cut3
+    CodaKeys: []
+    FutureKeys: []
+    TailKeys: []
     Color: '#26302A'
+    Variants: []
+  - Id: ENDING_DOCTOR
+    Category: 3
+    Act: 3
+    Priority: 300
+    EndCauses: []
+    Condition:
+      WeekMin: 0
+      WeekMax: 0
+      Days: 
+      Phase: 0
+      Seasons: 
+      Month: 0
+      DayOfMonth: 0
+      ActionCategories: 
+      ActionIds: []
+      FlagsAll: []
+      FlagsAny: []
+      FlagsNone: []
+      CluesAll: []
+      Checks:
+      - Kind: 1
+        Key: Medicine
+        Op: 0
+        Value: 4
+      - Kind: 0
+        Key: Intellect
+        Op: 0
+        Value: 190
+      - Kind: 4
+        Key: Humanity
+        Op: 0
+        Value: 55
+      AnyChecks: []
+      NpcStatuses: []
+      IsBirthday: 0
+    Score:
+    - Kind: 1
+      Key: Medicine
+      Weight: 20
+    - Kind: 0
+      Key: Intellect
+      Weight: 1
+    - Kind: 4
+      Key: Humanity
+      Weight: 1
+    CutKeys:
+    - ending.ENDING_DOCTOR.cut1
+    - ending.ENDING_DOCTOR.cut2
+    - ending.ENDING_DOCTOR.cut3
+    CodaKeys: []
+    FutureKeys: []
+    TailKeys: []
+    Color: '#1E3036'
+    Variants: []
+  - Id: ENDING_ENGINEER
+    Category: 3
+    Act: 3
+    Priority: 300
+    EndCauses: []
+    Condition:
+      WeekMin: 0
+      WeekMax: 0
+      Days: 
+      Phase: 0
+      Seasons: 
+      Month: 0
+      DayOfMonth: 0
+      ActionCategories: 
+      ActionIds: []
+      FlagsAll: []
+      FlagsAny: []
+      FlagsNone: []
+      CluesAll: []
+      Checks:
+      - Kind: 1
+        Key: Engineering
+        Op: 0
+        Value: 2
+      - Kind: 0
+        Key: Craft
+        Op: 0
+        Value: 185
+      AnyChecks: []
+      NpcStatuses: []
+      IsBirthday: 0
+    Score:
+    - Kind: 1
+      Key: Engineering
+      Weight: 20
+    - Kind: 0
+      Key: Craft
+      Weight: 1
+    CutKeys:
+    - ending.ENDING_ENGINEER.cut1
+    - ending.ENDING_ENGINEER.cut2
+    - ending.ENDING_ENGINEER.cut3
+    CodaKeys: []
+    FutureKeys: []
+    TailKeys: []
+    Color: '#2A2E24'
+    Variants: []
+  - Id: ENDING_GUARD
+    Category: 3
+    Act: 3
+    Priority: 300
+    EndCauses: []
+    Condition:
+      WeekMin: 0
+      WeekMax: 0
+      Days: 
+      Phase: 0
+      Seasons: 
+      Month: 0
+      DayOfMonth: 0
+      ActionCategories: 
+      ActionIds: []
+      FlagsAll: []
+      FlagsAny: []
+      FlagsNone: []
+      CluesAll: []
+      Checks:
+      - Kind: 0
+        Key: Strength
+        Op: 0
+        Value: 35
+      - Kind: 0
+        Key: Agility
+        Op: 0
+        Value: 45
+      - Kind: 1
+        Key: SelfDefense
+        Op: 0
+        Value: 1
+      AnyChecks: []
+      NpcStatuses: []
+      IsBirthday: 0
+    Score:
+    - Kind: 0
+      Key: Strength
+      Weight: 1
+    - Kind: 0
+      Key: Agility
+      Weight: 1
+    - Kind: 1
+      Key: SelfDefense
+      Weight: 20
+    CutKeys:
+    - ending.ENDING_GUARD.cut1
+    - ending.ENDING_GUARD.cut2
+    - ending.ENDING_GUARD.cut3
+    CodaKeys: []
+    FutureKeys: []
+    TailKeys: []
+    Color: '#2C2420'
+    Variants: []
+  - Id: ENDING_LEADER
+    Category: 3
+    Act: 3
+    Priority: 300
+    EndCauses: []
+    Condition:
+      WeekMin: 0
+      WeekMax: 0
+      Days: 
+      Phase: 0
+      Seasons: 
+      Month: 0
+      DayOfMonth: 0
+      ActionCategories: 
+      ActionIds: []
+      FlagsAll: []
+      FlagsAny: []
+      FlagsNone: []
+      CluesAll: []
+      Checks:
+      - Kind: 0
+        Key: Leadership
+        Op: 0
+        Value: 85
+      - Kind: 21
+        Key: 
+        Op: 0
+        Value: 2
+      - Kind: 4
+        Key: Humanity
+        Op: 0
+        Value: 55
+      AnyChecks: []
+      NpcStatuses: []
+      IsBirthday: 0
+    Score:
+    - Kind: 0
+      Key: Leadership
+      Weight: 1
+    - Kind: 21
+      Key: 
+      Weight: 10
+    - Kind: 4
+      Key: Humanity
+      Weight: 1
+    CutKeys:
+    - ending.ENDING_LEADER.cut1
+    - ending.ENDING_LEADER.cut2
+    - ending.ENDING_LEADER.cut3
+    CodaKeys: []
+    FutureKeys: []
+    TailKeys: []
+    Color: '#2A2636'
+    Variants: []
+  - Id: ENDING_WRITER
+    Category: 3
+    Act: 3
+    Priority: 300
+    EndCauses: []
+    Condition:
+      WeekMin: 0
+      WeekMax: 0
+      Days: 
+      Phase: 0
+      Seasons: 
+      Month: 0
+      DayOfMonth: 0
+      ActionCategories: 
+      ActionIds: []
+      FlagsAll: []
+      FlagsAny: []
+      FlagsNone: []
+      CluesAll: []
+      Checks:
+      - Kind: 1
+        Key: Humanities
+        Op: 0
+        Value: 3
+      - Kind: 20
+        Key: 
+        Op: 0
+        Value: 40
+      AnyChecks: []
+      NpcStatuses: []
+      IsBirthday: 0
+    Score:
+    - Kind: 1
+      Key: Humanities
+      Weight: 20
+    - Kind: 20
+      Key: 
+      Weight: 1
+    CutKeys:
+    - ending.ENDING_WRITER.cut1
+    - ending.ENDING_WRITER.cut2
+    - ending.ENDING_WRITER.cut3
+    CodaKeys: []
+    FutureKeys: []
+    TailKeys: []
+    Color: '#302A22'
     Variants: []
   - Id: ENDING_TOGETHER
     Category: 4
+    Act: 3
     Priority: 280
     EndCauses: []
     Condition:
@@ -7638,13 +8137,17 @@ MonoBehaviour:
       Key: Humanity
       Weight: 1
     CutKeys:
-    - ending.ENDING_TOGETHER.cut1
     - ending.ENDING_TOGETHER.cut2
+    - ending.ENDING_TOGETHER.cut3
+    CodaKeys: []
+    FutureKeys: []
+    TailKeys:
     - ending.ENDING_TOGETHER.cut3
     Color: '#2A3030'
     Variants: []
   - Id: ENDING_LONE
     Category: 4
+    Act: 3
     Priority: 280
     EndCauses: []
     Condition:
@@ -7681,10 +8184,15 @@ MonoBehaviour:
     - ending.ENDING_LONE.cut1
     - ending.ENDING_LONE.cut2
     - ending.ENDING_LONE.cut3
+    CodaKeys: []
+    FutureKeys: []
+    TailKeys:
+    - ending.ENDING_LONE.cut3
     Color: '#1E2428'
     Variants: []
   - Id: ENDING_BALANCED
     Category: 2
+    Act: 3
     Priority: 200
     EndCauses: []
     Condition:
@@ -7721,47 +8229,14 @@ MonoBehaviour:
     - ending.ENDING_BALANCED.cut1
     - ending.ENDING_BALANCED.cut2
     - ending.ENDING_BALANCED.cut3
+    CodaKeys: []
+    FutureKeys: []
+    TailKeys: []
     Color: '#24303A'
-    Variants: []
-  - Id: ENDING_NARR_UNHEALED
-    Category: 5
-    Priority: 150
-    EndCauses: []
-    Condition:
-      WeekMin: 0
-      WeekMax: 0
-      Days: 
-      Phase: 0
-      Seasons: 
-      Month: 0
-      DayOfMonth: 0
-      ActionCategories: 
-      ActionIds: []
-      FlagsAll: []
-      FlagsAny: []
-      FlagsNone: []
-      CluesAll: []
-      Checks:
-      - Kind: 4
-        Key: TraumaRecovery
-        Op: 1
-        Value: 6
-      - Kind: 4
-        Key: Isolation
-        Op: 0
-        Value: 30
-      AnyChecks: []
-      NpcStatuses: []
-      IsBirthday: 0
-    Score: []
-    CutKeys:
-    - ending.ENDING_NARR_UNHEALED.cut1
-    - ending.ENDING_NARR_UNHEALED.cut2
-    - ending.ENDING_NARR_UNHEALED.cut3
-    Color: '#1C2230'
     Variants: []
   - Id: ENDING_SURVIVOR
     Category: 1
+    Act: 3
     Priority: 100
     EndCauses: []
     Condition:
@@ -7784,9 +8259,10 @@ MonoBehaviour:
       IsBirthday: 0
     Score: []
     CutKeys:
-    - ending.ENDING_SURVIVOR.cut1
-    - ending.ENDING_SURVIVOR.cut2
     - ending.ENDING_SURVIVOR.cut3
+    CodaKeys: []
+    FutureKeys: []
+    TailKeys: []
     Color: '#20283A'
     Variants: []
   _roles:

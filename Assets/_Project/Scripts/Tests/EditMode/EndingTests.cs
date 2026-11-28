@@ -98,7 +98,7 @@ namespace ApoGirl.Tests.EditMode
             var rescued = Ended(db, GameStatus.Rescued);
             rescued.Flags.Add("LESSON");
             var result = EndingResolver.Resolve(rescued, db);
-            CollectionAssert.AreEqual(new[] { "cut.RESCUE", "teacher.lesson", "friend.default" }, result.CutKeys, "엔딩 컷 → 선생님 → 친구 레이어 (각 하나)");
+            CollectionAssert.AreEqual(new[] { "teacher.lesson", "friend.default", "cut.RESCUE" }, result.CutKeys, "구조의 날(선생님 → 친구, 각 하나) → 그 뒤의 나(엔딩 컷)");
             CollectionAssert.AreEqual(new[] { "moment.door" }, result.MomentKeys);
 
             rescued.Flags.Add("CRUTCH_DONE");
@@ -360,7 +360,115 @@ namespace ApoGirl.Tests.EditMode
                 }
             });
 
-            Assert.AreEqual(endingId, EndingResolver.Resolve(state, db).Ending.Id);
+            // 세 막 엔딩: 그 엔딩이 제 막의 조각으로 뽑히면 된다 (구조 장면·회고 축·미래)
+            var result = EndingResolver.Resolve(state, db);
+            Assert.IsTrue(result.Acts.Exists(act => act.Piece.Id == endingId), endingId + " ← " + string.Join(", ", result.Acts.ConvertAll(act => act.Piece.Id)));
+        }
+
+        // ── 세 막 엔딩 (Docs/PROPOSAL_ENDINGS_EXPANSION 7절): 구조의 날 → 돌아보는 밤 → 그 뒤의 나 ──
+
+        [Test]
+        public void Acts_PlainRescue_PicksOnePiecePerAct_AndBridges()
+        {
+            var db = ShippedDb();
+            // 동료가 한 명 있는 평범한 판 (동료가 없으면 구조 장면이 "혼자 선 옥상"이 된다)
+            var result = EndingResolver.Resolve(ShippedRescued(db, s => s.Npcs["NPC_DOHYEON"] = new NpcState { Status = NpcStatus.Joined }), db);
+            Assert.AreEqual("ENDING_RESCUE_MORNING", result.PieceId(EndingAct.Rescue));
+            Assert.AreEqual("ENDING_RESCUE_ALONE", EndingResolver.Resolve(ShippedRescued(db, null), db).PieceId(EndingAct.Rescue), "동료가 없으면 혼자 선 옥상");
+            Assert.AreEqual("ENDING_REFLECT_DEFAULT", result.PieceId(EndingAct.Reflection));
+            Assert.AreEqual("ENDING_SURVIVOR", result.PieceId(EndingAct.Future));
+            Assert.AreEqual("ENDING_SURVIVOR", result.Ending.Id, "대표 엔딩은 그 뒤의 나");
+
+            // 화면 차례: 막 제목 셋, 그 사이의 컷. 구조 장면 컷이 맨 앞, 미래 본편 컷이 맨 뒤
+            Assert.AreEqual(3, result.Pages.FindAll(page => page.Kind == EndingPageKind.ActTitle).Count);
+            Assert.AreEqual(EndingPageKind.ActTitle, result.Pages[0].Kind);
+            Assert.AreEqual("ending.ENDING_SURVIVOR.cut1", result.CutKeys[0]);
+            Assert.AreEqual("ending.ENDING_SURVIVOR.cut3", result.CutKeys[result.CutKeys.Count - 1]);
+            CollectionAssert.Contains(result.CutKeys, "ending.ENDING_REFLECT_DEFAULT.cut1");
+            // 다리 문장: 선생님이 남았으니 "손을 흔드는 사람이 점이 될 때까지", 그리고 시간 건너뛰기 없는 기본 다리
+            CollectionAssert.Contains(result.CutKeys, "line.bridge_left");
+            CollectionAssert.Contains(result.CutKeys, "line.bridge_future");
+            Assert.Less(result.CutKeys.IndexOf("line.bridge_left"), result.CutKeys.IndexOf("ending.ENDING_REFLECT_DEFAULT.cut1"));
+            Assert.Less(result.CutKeys.IndexOf("ending.ENDING_REFLECT_DEFAULT.cut1"), result.CutKeys.IndexOf("line.bridge_future"));
+        }
+
+        [Test]
+        public void Acts_ChoseToStay_SkipsFuture_AndKeepsTheLastLesson()
+        {
+            var db = ShippedDb();
+            var result = EndingResolver.Resolve(ShippedRescued(db, s =>
+            {
+                s.Flags.Add("CHOSE_TO_STAY");
+                // 직업 조건을 채워도 남기로 한 판은 미래를 판정하지 않는다
+                s.Player.Proficiency[ProficiencyType.SelfDefense] = new ProficiencyState { Level = 3 };
+                s.Player.Stats[StatType.Strength] = 90;
+                s.Player.Stats[StatType.Agility] = 60;
+            }), db);
+            Assert.AreEqual("ENDING_HIDDEN_STAY", result.PieceId(EndingAct.Rescue));
+            Assert.AreEqual("", result.PieceId(EndingAct.Future));
+            Assert.AreEqual("ENDING_HIDDEN_STAY", result.Ending.Id);
+            Assert.AreEqual("ending.ENDING_HIDDEN_STAY.cut3", result.CutKeys[result.CutKeys.Count - 1], "두 사람의 수업이 계속되었다");
+            CollectionAssert.Contains(result.CutKeys, "line.bridge_stay");
+            CollectionAssert.Contains(result.CutKeys, "line.bridge_future_stay");
+        }
+
+        [Test]
+        public void Acts_ReflectionCodaClosesTheFuture_AndLaterActsReadEarlierOnes()
+        {
+            var db = ShippedDb();
+            // 아직 닫힌 문 + 직업 없음: 회고 꼬리(10년 후 상담실 문)가 맨 끝, 다리 문장도 그 축의 것
+            var result = EndingResolver.Resolve(ShippedRescued(db, s =>
+            {
+                s.Player.Hidden.TraumaRecovery = 0;
+                s.Player.Hidden.Isolation = 40;
+            }), db);
+            Assert.AreEqual("ENDING_NARR_UNHEALED", result.PieceId(EndingAct.Reflection));
+            Assert.AreEqual("ending.ENDING_NARR_UNHEALED.cut3", result.CutKeys[result.CutKeys.Count - 1]);
+            CollectionAssert.Contains(result.CutKeys, "line.bridge_future_unhealed", "뒤 막의 조건이 앞 막의 결과를 읽는다 (ValueKind.EndingAct)");
+            CollectionAssert.DoesNotContain(result.CutKeys, "line.bridge_future");
+
+            // 판정 밖에서는 EndingAct가 늘 0이다 (이벤트 조건에 잘못 써도 켜지지 않는다)
+            Assert.AreEqual(0, ConditionEvaluator.ValueOf(ShippedRescued(db, null), ValueKind.EndingAct, "ENDING_NARR_UNHEALED"));
+        }
+
+        [Test]
+        public void Acts_RosterShowsTopLines_RestGoToTheRecord()
+        {
+            var lines = new List<LineDef>();
+            for (var i = 0; i < 9; i++)
+            {
+                lines.Add(new LineDef { Id = "E" + i, Kind = LineKind.EndingEpilogue, Group = "G" + i, Priority = i, TextKey = "ep." + i });
+            }
+
+            lines.Add(new LineDef { Id = "MIND", Kind = LineKind.EndingEpilogue, Group = "MIND", TextKey = "ep.mind" });
+            var db = Db(new[] { Ending("RESCUE", EndingCategory.Normal, 100) }, lines.ToArray());
+            var result = EndingResolver.Resolve(Ended(db, GameStatus.Rescued), db);
+
+            Assert.AreEqual(db.Balance.EndingRosterMax, result.EpilogueKeys.Count);
+            CollectionAssert.AreEqual(new[] { "ep.3", "ep.4", "ep.5", "ep.6", "ep.7", "ep.8" }, result.EpilogueKeys, "우선순위가 높은 줄부터, 차례는 정의 순서");
+            CollectionAssert.AreEqual(new[] { "ep.0", "ep.1", "ep.2" }, result.MoreEpilogueKeys, "나머지는 1년의 기록에");
+            var roster = result.Pages.Find(page => page.Kind == EndingPageKind.Roster);
+            Assert.AreEqual(6, roster.Lines.Count);
+            CollectionAssert.Contains(result.CutKeys, "ep.mind", "마음 상태 줄은 명단이 아니라 돌아보는 밤에 놓인다");
+            CollectionAssert.DoesNotContain(result.EpilogueKeys, "ep.mind");
+        }
+
+        [Test]
+        public void Acts_BoardedAndLeftBehind_ReadTheSeatChoice()
+        {
+            var db = ShippedDb();
+            var state = ShippedRescued(db, s =>
+            {
+                s.Flags.Add("TEACHER_CURED");
+                s.Npcs["NPC_NURSE"] = new NpcState { Status = NpcStatus.Joined };
+            });
+            Assert.AreEqual(1, ConditionEvaluator.ValueOf(state, ValueKind.Boarded, "NPC_NURSE"));
+            Assert.AreEqual(1, ConditionEvaluator.ValueOf(state, ValueKind.Boarded, "NPC_TEACHER"));
+            Assert.AreEqual(0, ConditionEvaluator.ValueOf(state, ValueKind.LeftBehind, ""));
+
+            state.Flags.Add("SEAT_STAY_TEACHERS");
+            Assert.AreEqual(0, ConditionEvaluator.ValueOf(state, ValueKind.Boarded, "NPC_NURSE"), "두 선생님이 남았다");
+            Assert.AreEqual(2, ConditionEvaluator.ValueOf(state, ValueKind.LeftBehind, ""));
         }
     }
 }

@@ -119,18 +119,21 @@ namespace ApoGirl.Tests.EditMode
             state.Status = GameStatus.Rescued;
             state.Flags.Add(flag);
 
+            // 세 막 엔딩: 좌석 선택은 막 Ⅰ의 구조 장면 "비워 둔 자리"가 되고, 남은 사람에 따라 변형이 갈린다
             var result = EndingResolver.Resolve(state, db);
-            Assert.AreEqual("ENDING_HIDDEN_CURE", result.Ending.Id);
-            Assert.AreEqual(variantId, result.Variant?.Id);
+            var rescue = result.Of(EndingAct.Rescue);
+            Assert.AreEqual("ENDING_RESCUE_SEAT", rescue.Piece.Id);
+            Assert.AreEqual(variantId, rescue.Variant?.Id);
             Assert.AreEqual(image, result.ArtKey);
             Assert.IsTrue(result.CutKeys[0].Contains(".seat_"), "변형 컷이 기본 컷 대신 나온다");
+            Assert.IsTrue(result.CutKeys.Exists(k => k.Contains(".seat_") && k.EndsWith(".cut3")), "변형의 셋째 컷은 그 뒤의 나 꼬리로 간다");
 
             var plain = FullHouse(db.Balance);
             plain.Calendar.Week = CalendarState.TotalWeeks;
             plain.Status = GameStatus.Rescued;
             var basic = EndingResolver.Resolve(plain, db);
-            Assert.IsNull(basic.Variant);
-            Assert.AreEqual("ENDING_HIDDEN_CURE", basic.ArtKey);
+            Assert.AreEqual("ENDING_HIDDEN_CURE", basic.PieceId(EndingAct.Rescue), "좌석 선택이 없으면 '선생님과 함께' 장면");
+            Assert.IsNull(basic.Of(EndingAct.Rescue).Variant);
         }
     }
 }

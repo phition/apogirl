@@ -69,18 +69,46 @@ namespace ApoGirl.Presentation.Screens
             }
 
             _step++;
-            if (_step < _result.CutKeys.Count)
+            // 세 막 엔딩: 막 제목 카드 → 컷 → 명단 … 차례대로 (EndingResult.Pages). 배드 엔딩은 컷만
+            if (_step < _result.Pages.Count)
             {
-                ShowCut(_result.CutKeys[_step]);
-            }
-            else if (_step == _result.CutKeys.Count && _result.EpilogueKeys.Count > 0)
-            {
-                ShowEpilogue();
+                var page = _result.Pages[_step];
+                switch (page.Kind)
+                {
+                    case EndingPageKind.ActTitle:
+                        ShowActTitle(page);
+                        break;
+                    case EndingPageKind.Roster:
+                        ShowEpilogue(page.Lines);
+                        break;
+                    default:
+                        ShowCut(page.Key);
+                        break;
+                }
             }
             else
             {
                 ShowRecord();
             }
+        }
+
+        /// <summary>막 제목 카드: "구조의 날 / 돌아보는 밤 / 그 뒤의 나"와 그 막에서 고른 조각의 제목.</summary>
+        private void ShowActTitle(EndingPage page)
+        {
+            _stage.Clear();
+            var act = new Label(Loc.T(page.Key));
+            act.AddToClassList("ending-category");
+            _stage.Add(act);
+            var piece = _result.Of(page.Act)?.Piece;
+            if (piece != null)
+            {
+                var title = new Label(StoryText.T(piece.TitleKey, _state));
+                title.AddToClassList("ending-act-title");
+                _stage.Add(title);
+            }
+
+            KoreanFont.ApplyDeep(_stage);
+            FadeIn(_stage);
         }
 
         private void ShowTitle()
@@ -93,6 +121,14 @@ namespace ApoGirl.Presentation.Screens
             title.AddToClassList("ending-title");
             _stage.Add(category);
             _stage.Add(title);
+            var sub = SubTitle();
+            if (sub.Length > 0)
+            {
+                // 세 막 엔딩: 큰 제목(그 뒤의 나) 아래에 작게 회고 축 · 구조 장면
+                var small = new Label(sub);
+                small.AddToClassList("ending-subtitle");
+                _stage.Add(small);
+            }
             if (_isNew)
             {
                 var badge = new Label(Loc.T("ending.new"));
@@ -116,17 +152,34 @@ namespace ApoGirl.Presentation.Screens
             FadeIn(_stage);
         }
 
-        /// <summary>컷 수 + '그 뒤의 이야기' 한 장.</summary>
-        private int TotalPages => _result.CutKeys.Count + (_result.EpilogueKeys.Count > 0 ? 1 : 0);
+        /// <summary>넘기는 장 수 (막 제목·컷·명단).</summary>
+        private int TotalPages => _result.Pages.Count;
 
-        /// <summary>그 뒤의 이야기: 세력·동료 후일담을 한 장에 모아 보여 준다.</summary>
-        private void ShowEpilogue()
+        /// <summary>큰 제목 아래의 작은 줄: 회고 축 · 구조 장면 (대표 엔딩과 같은 조각은 뺀다). 배드 엔딩은 없다.</summary>
+        private string SubTitle()
+        {
+            var parts = new List<string>();
+            foreach (var act in new[] { EndingAct.Reflection, EndingAct.Rescue })
+            {
+                var piece = _result.Of(act)?.Piece;
+                if (piece != null && piece != _result.Ending)
+                {
+                    parts.Add(StoryText.T(piece.TitleKey, _state));
+                }
+            }
+
+            return string.Join(" · ", parts);
+        }
+
+        /// <summary>명단: 함께한 사람들과 세력의 '그 뒤'를 한 장에 모아 보여 준다.</summary>
+        private void ShowEpilogue(List<string> keys)
         {
             _stage.Clear();
-            var header = new Label(Loc.T("ending.epilogue"));
+            var header = new Label(Loc.T("ending.roster"));
             header.AddToClassList("ending-category");
+            header.style.marginBottom = 18;
             _stage.Add(header);
-            foreach (var key in _result.EpilogueKeys)
+            foreach (var key in keys)
             {
                 var line = new Label(StoryText.T(key, _state));
                 line.AddToClassList("ending-epilogue-line");
@@ -163,6 +216,15 @@ namespace ApoGirl.Presentation.Screens
                 AddLine(scroll, Loc.T("ending.cat." + ending.Category) + " · " + StoryText.T(ending.TitleKey, _state), "ending-record-ending");
             }
 
+            // 세 막 한 줄씩: 구조의 날 · 돌아보는 밤 · 그 뒤의 나
+            foreach (var act in _result.Acts)
+            {
+                if (act.Piece != null)
+                {
+                    AddLine(scroll, Loc.T("ending.act." + act.Act) + " — " + StoryText.T(act.Piece.TitleKey, _state), "ending-record-line");
+                }
+            }
+
             AddLine(scroll, Loc.F("ending.weeks", _state.Calendar.Week), "ending-record-line");
 
             // 능력치 그래프 (주간 기록)
@@ -182,10 +244,16 @@ namespace ApoGirl.Presentation.Screens
                 }
             }
 
-            if (_result.EpilogueKeys.Count > 0)
+            if (_result.EpilogueKeys.Count + _result.MoreEpilogueKeys.Count > 0)
             {
+                // 명단에 실은 줄과, 다 못 실은 나머지 소식
                 AddSection(scroll, Loc.T("ending.epilogue"));
                 foreach (var key in _result.EpilogueKeys)
+                {
+                    AddLine(scroll, "· " + StoryText.T(key, _state), "ending-record-line");
+                }
+
+                foreach (var key in _result.MoreEpilogueKeys)
                 {
                     AddLine(scroll, "· " + StoryText.T(key, _state), "ending-record-line");
                 }

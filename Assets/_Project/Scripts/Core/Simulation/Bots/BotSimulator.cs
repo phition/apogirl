@@ -96,6 +96,10 @@ namespace ApoGirl.Core.Simulation.Bots
         public string EndingId = "";
         public EndingCategory? EndingCategory;
 
+        /// <summary>세 막 엔딩: 구조 장면(막 Ⅰ)·회고 축(막 Ⅱ)의 조각 ID. EndingId는 대표 엔딩(막 Ⅲ, 배드는 그 엔딩).</summary>
+        public string RescueId = "";
+        public string ReflectionId = "";
+
         public int Raids;
         public int RaidsRepelled;
         public int Intrusions;
@@ -427,6 +431,8 @@ namespace ApoGirl.Core.Simulation.Bots
             result.EndCause = state.EndCause ?? "";
             result.EndingId = ending.Ending?.Id ?? "";
             result.EndingCategory = ending.Ending?.Category;
+            result.RescueId = ending.PieceId(EndingAct.Rescue);
+            result.ReflectionId = ending.PieceId(EndingAct.Reflection);
             result.Raids = state.Exploration.Raids;
             result.RaidsRepelled = state.Exploration.RaidsRepelled;
             result.Intrusions = state.Exploration.Intrusions;

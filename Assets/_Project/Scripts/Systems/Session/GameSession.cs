@@ -882,6 +882,19 @@ namespace ApoGirl.Systems.Session
 
             Ending = EndingResolver.Resolve(State, _db);
             EndingIsNew = Ending.Ending != null && Gallery != null && Gallery.Record(Ending.Ending.Id, State.Calendar.Week, Ending.Variant?.Id);
+            if (Gallery != null && Ending.Acts.Count > 0)
+            {
+                // 세 막 엔딩: 막마다 고른 조각(구조 장면·회고 축)도 갤러리에 남기고, 세 조각의 조합을 "보낸 1년" 하나로 센다
+                foreach (var act in Ending.Acts)
+                {
+                    if (act.Piece != null && act.Piece != Ending.Ending)
+                    {
+                        Gallery.Record(act.Piece.Id, State.Calendar.Week, act.Variant?.Id);
+                    }
+                }
+
+                Gallery.RecordCombo(Ending.PieceId(EndingAct.Rescue), Ending.PieceId(EndingAct.Reflection), Ending.PieceId(EndingAct.Future));
+            }
         }
 
         private void Attach(GameState state)

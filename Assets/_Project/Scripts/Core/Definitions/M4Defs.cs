@@ -143,6 +143,9 @@ namespace ApoGirl.Core.Definitions
 
         /// <summary>2~4막 보강: '그 뒤의 이야기' (세력·동료 후일담). 묶음(Group)마다 조건에 맞는 가장 높은 우선순위 하나.</summary>
         EndingEpilogue,
+
+        /// <summary>세 막 엔딩의 다리 문장: 막이 바뀌는 자리에 한 줄 (Group = TO_REFLECTION·TO_FUTURE, 조건에 맞는 가장 높은 우선순위 하나).</summary>
+        EndingBridge,
     }
 
     /// <summary>조건으로 고르는 한 줄 (가장 높은 Priority 중 첫 번째). 문장은 UI 키 TextKey.</summary>

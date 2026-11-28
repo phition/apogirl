@@ -45,6 +45,43 @@ namespace ApoGirl.Systems.Save
 
         public bool IsUnlocked(string endingId) => _entries.ContainsKey(endingId ?? "");
 
+        /// <summary>조합 기록의 ID 머리 (세 막 엔딩: 구조 장면·회고 축·미래 묶음). 엔딩 ID와 섞이지 않게 따로 둔다.</summary>
+        public const string ComboPrefix = "COMBO|";
+
+        /// <summary>지금까지 본 서로 다른 조합 수 ("지금까지 보낸 1년: n가지").</summary>
+        public int ComboCount
+        {
+            get
+            {
+                var count = 0;
+                foreach (var key in _entries.Keys)
+                {
+                    if (key.StartsWith(ComboPrefix, StringComparison.Ordinal)) count++;
+                }
+
+                return count;
+            }
+        }
+
+        /// <summary>엔딩 칸에 해당하는 기록인가 (조합 기록이 아닌 것).</summary>
+        public static bool IsEnding(string entryId) => !string.IsNullOrEmpty(entryId) && !entryId.StartsWith(ComboPrefix, StringComparison.Ordinal);
+
+        /// <summary>세 막의 조합을 본 것으로 남긴다. 처음 본 조합이면 true.</summary>
+        public bool RecordCombo(string rescueId, string reflectionId, string futureId)
+        {
+            var id = ComboPrefix + (rescueId ?? "") + "|" + (reflectionId ?? "") + "|" + (futureId ?? "");
+            var isNew = !_entries.TryGetValue(id, out var entry);
+            if (isNew)
+            {
+                entry = new GalleryEntry { EndingId = id, FirstWeek = 0, FirstSeenUtc = DateTime.UtcNow.ToString("o") };
+                _entries[id] = entry;
+            }
+
+            entry.Count++;
+            Save();
+            return isNew;
+        }
+
         /// <summary>엔딩을 봤다고 기록하고 저장한다. 처음 본 엔딩이면 true.</summary>
         public bool Record(string endingId, int week, string variantId = null)
         {

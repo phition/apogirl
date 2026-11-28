@@ -717,6 +717,10 @@ Button.selected { border-color: var(--accent); background-color: var(--accent-so
 }
 .ending-category { color: var(--text-dim); font-size: 20px; margin-bottom: 12px; }
 .ending-title { color: var(--text); font-size: 44px; -unity-font-style: bold; -unity-text-align: middle-center; }
+/* 세 막 엔딩: 큰 제목 아래 작은 줄(회고 축 · 구조 장면), 막 제목 카드의 조각 제목 */
+.ending-subtitle { color: var(--text-dim); font-size: 22px; margin-top: 10px; -unity-text-align: middle-center; }
+.ending-act-title { color: var(--text); font-size: 34px; -unity-font-style: bold; -unity-text-align: middle-center; }
+.gallery-section { margin-top: 14px; }
 .ending-new { color: var(--accent); font-size: 18px; margin-top: 18px; }
 .ending-cut {
     color: var(--text);

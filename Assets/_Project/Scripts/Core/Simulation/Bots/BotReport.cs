@@ -217,6 +217,25 @@ namespace ApoGirl.Core.Simulation.Bots
 
             sb.AppendLine();
 
+            // 세 막 엔딩: 위 표의 엔딩은 대표(막 Ⅲ 그 뒤의 나, 배드는 그 엔딩)다. 구조된 판의 막 Ⅰ·Ⅱ 분포는 따로 센다
+            var rescuedRuns = runs.Where(r => r.RescueId != "").ToList();
+            if (rescuedRuns.Count > 0)
+            {
+                foreach (var (title, pick) in new (string, Func<BotRunResult, string>)[] { ("구조 장면 (막 Ⅰ)", r => r.RescueId), ("회고 축 (막 Ⅱ)", r => r.ReflectionId) })
+                {
+                    sb.AppendLine("## " + title + " — 구조된 판 " + rescuedRuns.Count.ToString(Inv));
+                    sb.AppendLine();
+                    sb.AppendLine("| 조각 | 횟수 | 비율 |");
+                    sb.AppendLine("|---|---|---|");
+                    foreach (var g in rescuedRuns.GroupBy(pick).OrderByDescending(g => g.Count()))
+                    {
+                        sb.AppendLine($"| {(g.Key == "" ? "(없음)" : g.Key)} | {g.Count()} | {P(g.Count(), rescuedRuns.Count)} |");
+                    }
+
+                    sb.AppendLine();
+                }
+            }
+
             // 사망 원인
             var deaths = runs.Where(r => !r.Survived).ToList();
             sb.AppendLine("## 사망 원인과 주차");

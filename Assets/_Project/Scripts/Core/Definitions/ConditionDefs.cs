@@ -100,6 +100,17 @@ namespace ApoGirl.Core.Definitions
 
         /// <summary>호감이 Key(정수) 이상인 합류 동료 수 (선생님 제외, 기획 C.2 ⑤ 함께 엔딩).</summary>
         CloseCompanions,
+
+        // ── 세 막 엔딩 (Docs/PROPOSAL_ENDINGS_EXPANSION 7절) ──
+
+        /// <summary>구조 헬기에 탔는가 (Key = BoardingRules의 사람 ID: NPC_NURSE·NPC_TEACHER·FRIEND·JUN 등 → 1/0).</summary>
+        Boarded,
+
+        /// <summary>좌석 선택으로 남은 사람 수 (Key 없음).</summary>
+        LeftBehind,
+
+        /// <summary>엔딩 판정 중에만: 앞 막에서 그 조각이 뽑혔는가 (Key = 엔딩 ID → 1/0). 판정 밖에서는 늘 0.</summary>
+        EndingAct,
     }
 
     public enum CompareOp

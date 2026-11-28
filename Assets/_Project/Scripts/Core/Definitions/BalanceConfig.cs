@@ -895,6 +895,14 @@ namespace ApoGirl.Core.Definitions
             },
         };
 
+        // ── 세 막 엔딩 (Docs/PROPOSAL_ENDINGS_EXPANSION 7절) ──
+
+        /// <summary>'그 뒤의 이야기' 묶음 가운데 막 Ⅱ(돌아보는 밤)에 놓는 것. 나머지 묶음(동료·세력 등)은 막 Ⅰ의 명단에 놓인다.</summary>
+        public string[] EndingReflectionGroups = { "MIND", "HOPE" };
+
+        /// <summary>명단 한 장에 싣는 '그 뒤' 줄 수 (우선순위가 높은 줄부터). 나머지는 "1년의 기록" 화면에 둔다.</summary>
+        public int EndingRosterMax = 6;
+
         // ── 세력 거래 (사용자 요청 2026-11-26) ──
 
         /// <summary>한 운반 주기(세력의 TradeIntervalWeeks)에 거래할 수 있는 가짓수: 기본 / 동맹. 같은 물건을 두 번 하지는 못한다.</summary>
