@@ -312,6 +312,19 @@ namespace ApoGirl.Tests.EditMode
         [TestCase("ENDING_NARR_OVERCOME")]
         [TestCase("ENDING_HIDDEN_CURE")]
         [TestCase("ENDING_HIDDEN_STAY")]
+        [TestCase("ENDING_PARAMEDIC")]
+        [TestCase("ENDING_SCHOOL_NURSE")]
+        [TestCase("ENDING_CHEF")]
+        [TestCase("ENDING_FARMER")]
+        [TestCase("ENDING_WATER_SCIENTIST")]
+        [TestCase("ENDING_MUSICIAN")]
+        [TestCase("ENDING_COUNSELOR")]
+        [TestCase("ENDING_NEGOTIATOR")]
+        [TestCase("ENDING_ATHLETE")]
+        [TestCase("ENDING_JOURNALIST")]
+        [TestCase("ENDING_REHAB")]
+        [TestCase("ENDING_RECORD_SHOP")]
+        [TestCase("ENDING_VET")]
         public void Shipped_EndingIsReachable(string endingId)
         {
             var db = ShippedDb();
@@ -356,6 +369,79 @@ namespace ApoGirl.Tests.EditMode
                         break;
                     case "ENDING_HIDDEN_STAY":
                         s.Flags.Add("CHOSE_TO_STAY");
+                        break;
+
+                    // ── P1 새 엔딩 13종 (기획서 3·4절): 문턱을 조금 넘긴 상태 ──
+                    case "ENDING_PARAMEDIC":
+                        p.Proficiency[ProficiencyType.Medicine] = new ProficiencyState { Level = 3 };
+                        p.Stats[StatType.Stamina] = 55;
+                        p.Stats[StatType.Agility] = 44;
+                        s.Exploration.ActionCounts["ACT_TREAT_WOUND"] = 2;
+                        s.Exploration.ActionCounts["ACT_TREAT_INFECTION"] = 1;
+                        break;
+                    case "ENDING_SCHOOL_NURSE":
+                        p.Proficiency[ProficiencyType.Medicine] = new ProficiencyState { Level = 2 };
+                        p.Stats[StatType.Empathy] = 105;
+                        s.Npcs["NPC_NURSE"] = new NpcState { Status = NpcStatus.Joined, Affinity = 70 };
+                        break;
+                    case "ENDING_CHEF":
+                        p.Proficiency[ProficiencyType.Cooking] = new ProficiencyState { Level = 4 };
+                        p.Stats[StatType.Craft] = 150;
+                        p.Stats[StatType.Empathy] = 95;
+                        s.Exploration.ActionCounts["ACT_EDU_COOKING"] = 12;
+                        break;
+                    case "ENDING_FARMER":
+                        p.Proficiency[ProficiencyType.Survival] = new ProficiencyState { Level = 3 };
+                        p.Stats[StatType.Stamina] = 50;
+                        s.Flags.Add("GREENHOUSE");
+                        break;
+                    case "ENDING_WATER_SCIENTIST":
+                        p.Proficiency[ProficiencyType.Science] = new ProficiencyState { Level = 3 };
+                        p.Stats[StatType.Intellect] = 165;
+                        s.Flags.Add("AUTO_PURIFIER");
+                        break;
+                    case "ENDING_MUSICIAN":
+                        p.Proficiency[ProficiencyType.Music] = new ProficiencyState { Level = 3 };
+                        p.Stats[StatType.Empathy] = 115;
+                        s.Exploration.ActionCounts["ACT_CLUB_SINGING"] = 4;
+                        break;
+                    case "ENDING_COUNSELOR":
+                        p.Proficiency[ProficiencyType.Mind] = new ProficiencyState { Level = 3 };
+                        p.Stats[StatType.Empathy] = 115;
+                        p.Hidden.TraumaRecovery = 22;
+                        s.Exploration.ActionCounts["ACT_NIGHT_TALK"] = 10;
+                        break;
+                    case "ENDING_NEGOTIATOR":
+                        p.Stats[StatType.Leadership] = 85;
+                        p.Stats[StatType.Intellect] = 135;
+                        foreach (var id in new[] { "FAC_SAGEORI", "FAC_MART", "FAC_UBC" }) s.Factions[id] = new FactionState { Known = true, Standing = 5 };
+                        s.Flags.Add("MART_MEDIATED");
+                        break;
+                    case "ENDING_ATHLETE":
+                        p.Stats[StatType.Stamina] = 65;
+                        p.Stats[StatType.Agility] = 65;
+                        p.Traits.Add("TRAIT_SPRINTER");
+                        break;
+                    case "ENDING_JOURNALIST":
+                        p.Proficiency[ProficiencyType.Humanities] = new ProficiencyState { Level = 2 };
+                        p.Stats[StatType.Intellect] = 145;
+                        foreach (var clue in new[] { "TRUTH_A", "TRUTH_B", "TRUTH_C", "TRUTH_D" }) s.Clues.Add(clue);
+                        break;
+                    case "ENDING_REHAB":
+                        s.Exploration.ActionCounts["ACT_CARE_TEACHER"] = 25;
+                        s.Teacher.Affinity = 85;
+                        s.Flags.Add("CRUTCH_DONE");
+                        s.Flags.Add("PROSTHETIC_DONE");
+                        break;
+                    case "ENDING_RECORD_SHOP":
+                        s.Flags.Add("CD_SHELF_FULL");
+                        s.Exploration.ActionCounts["ACT_BROADCAST_SONG"] = 4;
+                        break;
+                    case "ENDING_VET":
+                        s.Flags.Add("CAT_HOME");
+                        s.Flags.Add("CAT_FED_2");
+                        p.Stats[StatType.Empathy] = 95;
+                        p.Proficiency[ProficiencyType.Medicine] = new ProficiencyState { Level = 1 };
                         break;
                 }
             });
@@ -469,6 +555,162 @@ namespace ApoGirl.Tests.EditMode
             state.Flags.Add("SEAT_STAY_TEACHERS");
             Assert.AreEqual(0, ConditionEvaluator.ValueOf(state, ValueKind.Boarded, "NPC_NURSE"), "두 선생님이 남았다");
             Assert.AreEqual(2, ConditionEvaluator.ValueOf(state, ValueKind.LeftBehind, ""));
+        }
+
+        // ── P0.5 점수: 같은 우선순위끼리는 '문턱을 넘은 정도'로 겨룬다 (기획서 9.2절 E3) ──
+
+        [Test]
+        public void Margin_ComparesByHowFarPastTheBar_NotByRawNumbers()
+        {
+            // 지력은 190대, 근력은 35대로 자란다 — 점수 합으로는 지력을 쓰는 엔딩이 늘 이긴다
+            var scholar = Ending("SCHOLAR", EndingCategory.Specialized, 300, StatAtLeast(StatType.Intellect, 190));
+            scholar.Score.Add(new EndingScoreTerm { Kind = ValueKind.Stat, Key = "Intellect" });
+            var guard = Ending("GUARD", EndingCategory.Specialized, 300, StatAtLeast(StatType.Strength, 35));
+            guard.Score.Add(new EndingScoreTerm { Kind = ValueKind.Stat, Key = "Strength" });
+            var db = Db(new[] { Ending("NORMAL", EndingCategory.Normal, 100), scholar, guard });
+
+            var state = Ended(db, GameStatus.Rescued);
+            state.Player.Stats[StatType.Intellect] = 200;   // 문턱의 1.05배
+            state.Player.Stats[StatType.Strength] = 60;     // 문턱의 1.71배 (점수 합은 200 > 60)
+            var result = EndingResolver.Resolve(state, db);
+            Assert.AreEqual("GUARD", result.Ending.Id, "문턱을 더 많이 넘은 쪽");
+            Assert.AreEqual(60f / 35f, result.Of(EndingAct.Future).Margin, 0.001f);
+
+            state.Player.Stats[StatType.Strength] = 500;
+            Assert.AreEqual(2f, EndingResolver.Margin(state, guard, db.Balance.EndingMarginCap), 0.001f, "한 조건이 넘은 정도는 상한 2");
+
+            // 넘은 정도가 같으면 점수 항목이 가른다
+            state.Player.Stats[StatType.Intellect] = 380;
+            state.Player.Stats[StatType.Strength] = 70;
+            Assert.AreEqual("SCHOLAR", EndingResolver.Resolve(state, db).Ending.Id, "둘 다 2배 → 점수 합 (380 > 70)");
+        }
+
+        [Test]
+        public void Margin_SkipsYesNoAndAtMostChecks_AndCountsAnyGroupOnce()
+        {
+            var ending = Ending("X", EndingCategory.Specialized, 300, new ConditionDef
+            {
+                Checks =
+                {
+                    new ValueCheck(ValueKind.Stat, "Stamina", CompareOp.GreaterOrEqual, 50),
+                    new ValueCheck(ValueKind.Flag, "DONE", CompareOp.GreaterOrEqual, 1),          // 예/아니오 → 빼고
+                    new ValueCheck(ValueKind.Companions, "", CompareOp.LessOrEqual, 3),            // '이하' → 빼고
+                },
+                AnyChecks =
+                {
+                    new ValueCheck(ValueKind.Trait, "TRAIT_SPRINTER", CompareOp.GreaterOrEqual, 1),
+                    new ValueCheck(ValueKind.ActionCount, "ACT_CLUB_SPORTS", CompareOp.GreaterOrEqual, 6),
+                },
+            });
+            var db = Db(new[] { ending });
+            var state = Ended(db, GameStatus.Rescued);
+            state.Player.Stats[StatType.Stamina] = 75;                                  // 1.5
+            state.Player.Traits.Add("TRAIT_SPRINTER");                                  // 묶음은 특성으로 채움 → 1
+            Assert.AreEqual((1.5f + 1f) / 2f, EndingResolver.Margin(state, ending, 2f), 0.001f);
+
+            state.Exploration.ActionCounts["ACT_CLUB_SPORTS"] = 9;                      // 묶음에서 가장 많이 넘은 것 1.5
+            Assert.AreEqual(1.5f, EndingResolver.Margin(state, ending, 2f), 0.001f);
+            Assert.AreEqual(1f, EndingResolver.Margin(state, Ending("PLAIN", EndingCategory.Normal, 100), 2f), "셀 조건이 없으면 1");
+        }
+
+        [Test]
+        public void ActionCountPrefix_SumsActionsStartingWithTheKey()
+        {
+            var db = ShippedDb();
+            var state = ShippedRescued(db, s =>
+            {
+                s.Exploration.ActionCounts["ACT_TREAT_WOUND"] = 2;
+                s.Exploration.ActionCounts["ACT_TREAT_INFECTION"] = 3;
+                s.Exploration.ActionCounts["ACT_EDU_COOKING"] = 7;
+            });
+            Assert.AreEqual(5, ConditionEvaluator.ValueOf(state, ValueKind.ActionCountPrefix, "ACT_TREAT_"));
+            Assert.AreEqual(0, ConditionEvaluator.ValueOf(state, ValueKind.ActionCountPrefix, ""));
+        }
+
+        // ── P1 새 엔딩: 막을 넘는 조건과 변형 ──
+
+        [Test]
+        public void SchoolNurse_NeedsTheNurseOnTheHelicopter()
+        {
+            var db = ShippedDb();
+            var state = ShippedRescued(db, s =>
+            {
+                s.Player.Proficiency[ProficiencyType.Medicine] = new ProficiencyState { Level = 2 };
+                s.Player.Stats[StatType.Empathy] = 105;
+                s.Npcs["NPC_NURSE"] = new NpcState { Status = NpcStatus.Joined, Affinity = 70 };
+                s.Flags.Add("TEACHER_CURED");
+            });
+            Assert.AreEqual("ENDING_SCHOOL_NURSE", EndingResolver.Resolve(state, db).PieceId(EndingAct.Future));
+
+            state.Flags.Add("SEAT_STAY_TEACHERS");
+            Assert.AreNotEqual("ENDING_SCHOOL_NURSE", EndingResolver.Resolve(state, db).PieceId(EndingAct.Future), "박 선생님이 남았으면 이 길은 없다");
+        }
+
+        [Test]
+        public void Rehab_DoesNotNeedTheCure_AndTheLastCutFollowsTheTeacher()
+        {
+            var db = ShippedDb();
+            var state = ShippedRescued(db, s =>
+            {
+                s.Exploration.ActionCounts["ACT_CARE_TEACHER"] = 30;
+                s.Teacher.Affinity = 90;
+                s.Flags.Add("CRUTCH_DONE");
+                s.Flags.Add("PROSTHETIC_DONE");
+            });
+            var stayed = EndingResolver.Resolve(state, db);
+            Assert.AreEqual("ENDING_REHAB", stayed.Ending.Id, "완치하지 못한 판에서도 나온다");
+            Assert.AreEqual(EndingCategory.Record, stayed.Ending.Category);
+            CollectionAssert.Contains(stayed.CutKeys, "ending.ENDING_REHAB.cut3", "선생님이 남은 판의 마지막 컷");
+
+            state.Flags.Add("TEACHER_CURED");
+            var cured = EndingResolver.Resolve(state, db);
+            Assert.AreEqual("ENDING_REHAB", cured.Ending.Id);
+            Assert.AreEqual("ENDING_HIDDEN_CURE", cured.PieceId(EndingAct.Rescue), "완치는 구조 장면으로 함께 나온다");
+            CollectionAssert.Contains(cured.CutKeys, "ending.ENDING_REHAB.cured.cut3");
+            CollectionAssert.DoesNotContain(cured.CutKeys, "ending.ENDING_REHAB.cut3");
+
+            state.Flags.Remove("TEACHER_CURED");
+            state.Flags.Add("TEACHER_LEFT_BEHIND");
+            Assert.AreNotEqual("ENDING_REHAB", EndingResolver.Resolve(state, db).Ending.Id, "선생님을 두고 돌아선 판은 아니다");
+        }
+
+        [Test]
+        public void Counselor_ConfessionChangesACut_ButIsNotRequired()
+        {
+            var db = ShippedDb();
+            var state = ShippedRescued(db, s =>
+            {
+                s.Player.Proficiency[ProficiencyType.Mind] = new ProficiencyState { Level = 3 };
+                s.Player.Stats[StatType.Empathy] = 115;
+                s.Player.Hidden.TraumaRecovery = 22;
+                s.Exploration.ActionCounts["ACT_NIGHT_TALK"] = 10;
+            });
+            var plain = EndingResolver.Resolve(state, db);
+            Assert.AreEqual("ENDING_COUNSELOR", plain.Ending.Id, "고해 장면이 없었던 판도 상담사가 될 수 있다");
+            CollectionAssert.Contains(plain.CutKeys, "ending.ENDING_COUNSELOR.cut2");
+
+            state.Flags.Add("CONFESS_AFRAID");
+            var afraid = EndingResolver.Resolve(state, db);
+            CollectionAssert.Contains(afraid.CutKeys, "ending.ENDING_COUNSELOR.afraid.cut2");
+            CollectionAssert.DoesNotContain(afraid.CutKeys, "ending.ENDING_COUNSELOR.cut2");
+        }
+
+        [Test]
+        public void Shipped_NewEndingTexts_AllExist()
+        {
+            var db = ShippedDb();
+            var ui = (JObject)JObject.Parse(File.ReadAllText("Assets/_Project/Localization/Source/ko.json"))["UI"];
+            foreach (var ending in db.Extras.Endings)
+            {
+                Assert.IsNotNull(ui[ending.TitleKey], ending.TitleKey);
+                foreach (var key in ending.CutKeys.Concat(ending.CodaKeys).Concat(ending.FutureKeys).Concat(ending.TailKeys)
+                             .Concat(ending.Variants.SelectMany(v => v.CutKeys.Concat(v.CodaKeys))))
+                {
+                    Assert.IsNotNull(ui[key], ending.Id + ": " + key);
+                }
+
+                Assert.IsNotNull(ui["ending.cat." + ending.Category], "구분 문구: " + ending.Category);
+            }
         }
     }
 }

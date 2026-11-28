@@ -35,6 +35,11 @@ namespace ApoGirl.Core.Endings
         public EndingAct Act;
         public EndingDef Piece;
         public EndingVariantDef Variant;
+
+        /// <summary>조건 문턱을 넘은 정도의 평균 (1 = 딱 맞춤). 같은 우선순위끼리는 이것이 큰 쪽.</summary>
+        public float Margin;
+
+        /// <summary>점수 항목의 합 (문턱을 넘은 정도까지 같을 때만 가른다).</summary>
         public float Score;
     }
 
@@ -301,10 +306,14 @@ namespace ApoGirl.Core.Endings
             }
         }
 
-        /// <summary>그 막의 조각 중 조건을 만족한 것에서 우선순위, 그다음 점수.</summary>
+        /// <summary>
+        /// 그 막의 조각 중 조건을 만족한 것에서 우선순위 → 문턱을 넘은 정도(Margin) → 점수.
+        /// 엔딩마다 쓰는 수치의 크기가 달라(지력 190대, 근력 35대) 점수 합으로는 큰 수치를 쓰는 엔딩이 늘 이긴다 — 그래서 문턱 대비 비율로 겨룬다.
+        /// </summary>
         private static EndingActResult Pick(GameState state, IDefinitionDatabase db, EventContext context, EndingAct act)
         {
             EndingDef best = null;
+            var bestMargin = float.MinValue;
             var bestScore = float.MinValue;
             foreach (var ending in db.Extras.Endings)
             {
@@ -315,17 +324,107 @@ namespace ApoGirl.Core.Endings
                     continue;
                 }
 
+                var margin = Margin(state, ending, db.Balance.EndingMarginCap);
                 var score = Score(state, ending);
-                if (best == null || ending.Priority > best.Priority || (ending.Priority == best.Priority && score > bestScore))
+                var better = best == null
+                    || ending.Priority > best.Priority
+                    || (ending.Priority == best.Priority && (margin > bestMargin + MarginEpsilon || (Math.Abs(margin - bestMargin) <= MarginEpsilon && score > bestScore)));
+                if (better)
                 {
                     best = ending;
+                    bestMargin = margin;
                     bestScore = score;
                 }
             }
 
             return best == null
                 ? null
-                : new EndingActResult { Act = act, Piece = best, Score = bestScore, Variant = VariantOf(state, best, context, db.Balance) };
+                : new EndingActResult { Act = act, Piece = best, Margin = bestMargin, Score = bestScore, Variant = VariantOf(state, best, context, db.Balance) };
+        }
+
+        private const float MarginEpsilon = 0.0001f;
+
+        /// <summary>
+        /// 조건 문턱을 넘은 정도 (기획서 9.2절 E3): '이상' 조건마다 값 ÷ 문턱(상한 cap)을 구해 평균을 낸다. 1 = 딱 맞춤.
+        /// 예/아니오 조건(깃발·특성·탑승 등)과 '이하' 조건은 얼마나 넘었는지 말할 수 없어 평균에 넣지 않는다.
+        /// '하나 이상' 묶음(AnyChecks)은 가장 많이 넘은 것 하나로 센다. 셀 조건이 없으면 1.
+        /// </summary>
+        public static float Margin(GameState state, EndingDef ending, float cap)
+        {
+            var condition = ending?.Condition;
+            if (condition == null)
+            {
+                return 1f;
+            }
+
+            var sum = 0f;
+            var count = 0;
+            foreach (var check in condition.Checks)
+            {
+                if (TryRatio(state, check, cap, out var ratio))
+                {
+                    sum += ratio;
+                    count++;
+                }
+            }
+
+            var any = 0f;
+            var anyCounted = false;
+            foreach (var check in condition.AnyChecks)
+            {
+                if (TryRatio(state, check, cap, out var ratio))
+                {
+                    any = Math.Max(any, ratio);
+                    anyCounted = true;
+                }
+            }
+
+            if (anyCounted)
+            {
+                // 묶음은 이미 만족했다 (수치 대신 깃발로 채웠을 수도 있다) → 적어도 1
+                sum += Math.Max(1f, any);
+                count++;
+            }
+
+            return count == 0 ? 1f : sum / count;
+        }
+
+        private static bool TryRatio(GameState state, ValueCheck check, float cap, out float ratio)
+        {
+            ratio = 0f;
+            if (check == null || check.Value <= 0 || IsYesNo(check.Kind)
+                || (check.Op != CompareOp.GreaterOrEqual && check.Op != CompareOp.Greater))
+            {
+                return false;
+            }
+
+            try
+            {
+                ratio = Math.Min(Math.Max(1f, cap), ConditionEvaluator.ValueOf(state, check.Kind, check.Key) / (float)check.Value);
+                return true;
+            }
+            catch (ArgumentException)
+            {
+                return false;   // 잘못된 키는 검증 도구가 잡는다
+            }
+        }
+
+        /// <summary>값이 1/0뿐이라 '얼마나 넘었는가'를 잴 수 없는 종류.</summary>
+        private static bool IsYesNo(ValueKind kind)
+        {
+            switch (kind)
+            {
+                case ValueKind.Flag:
+                case ValueKind.Trait:
+                case ValueKind.Weather:
+                case ValueKind.BloodCompatible:
+                case ValueKind.FactionKnown:
+                case ValueKind.Boarded:
+                case ValueKind.EndingAct:
+                    return true;
+                default:
+                    return false;
+            }
         }
 
         private static void Remember(EndingResult result, EndingActResult act)
@@ -474,7 +573,7 @@ namespace ApoGirl.Core.Endings
             result.Pages.Add(new EndingPage { Kind = EndingPageKind.Cut, Act = act, Key = key });
         }
 
-        /// <summary>점수 = Σ 값 × 가중치.</summary>
+        /// <summary>점수 = Σ 값 × 가중치 (문턱을 넘은 정도가 같을 때만 가른다).</summary>
         public static float Score(GameState state, EndingDef ending)
         {
             var score = 0f;

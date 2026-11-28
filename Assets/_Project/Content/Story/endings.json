@@ -706,6 +706,775 @@
       "Color": "#302A22"
     },
     {
+      "Id": "ENDING_PARAMEDIC",
+      "Category": "Specialized",
+      "Act": "Future",
+      "Priority": 300,
+      "Condition": {
+        "Checks": [
+          {
+            "Kind": "Proficiency",
+            "Key": "Medicine",
+            "Op": "GreaterOrEqual",
+            "Value": 3
+          },
+          {
+            "Kind": "Stat",
+            "Key": "Stamina",
+            "Op": "GreaterOrEqual",
+            "Value": 50
+          },
+          {
+            "Kind": "Stat",
+            "Key": "Agility",
+            "Op": "GreaterOrEqual",
+            "Value": 40
+          },
+          {
+            "Kind": "ActionCountPrefix",
+            "Key": "ACT_TREAT_",
+            "Op": "GreaterOrEqual",
+            "Value": 3
+          }
+        ]
+      },
+      "Score": [
+        {
+          "Kind": "Proficiency",
+          "Key": "Medicine",
+          "Weight": 20
+        },
+        {
+          "Kind": "Stat",
+          "Key": "Stamina",
+          "Weight": 1
+        },
+        {
+          "Kind": "ActionCountPrefix",
+          "Key": "ACT_TREAT_",
+          "Weight": 3
+        }
+      ],
+      "CutKeys": [
+        "ending.ENDING_PARAMEDIC.cut1",
+        "ending.ENDING_PARAMEDIC.cut2",
+        "ending.ENDING_PARAMEDIC.cut3"
+      ],
+      "Color": "#2E2426"
+    },
+    {
+      "Id": "ENDING_SCHOOL_NURSE",
+      "Category": "Specialized",
+      "Act": "Future",
+      "Priority": 300,
+      "Condition": {
+        "Checks": [
+          {
+            "Kind": "Proficiency",
+            "Key": "Medicine",
+            "Op": "GreaterOrEqual",
+            "Value": 2
+          },
+          {
+            "Kind": "Stat",
+            "Key": "Empathy",
+            "Op": "GreaterOrEqual",
+            "Value": 100
+          },
+          {
+            "Kind": "NpcAffinity",
+            "Key": "NPC_NURSE",
+            "Op": "GreaterOrEqual",
+            "Value": 60
+          },
+          {
+            "Kind": "Boarded",
+            "Key": "NPC_NURSE",
+            "Op": "Equal",
+            "Value": 1
+          }
+        ]
+      },
+      "Score": [
+        {
+          "Kind": "NpcAffinity",
+          "Key": "NPC_NURSE",
+          "Weight": 1
+        },
+        {
+          "Kind": "Stat",
+          "Key": "Empathy",
+          "Weight": 1
+        },
+        {
+          "Kind": "Proficiency",
+          "Key": "Medicine",
+          "Weight": 20
+        }
+      ],
+      "CutKeys": [
+        "ending.ENDING_SCHOOL_NURSE.cut1",
+        "ending.ENDING_SCHOOL_NURSE.cut2",
+        "ending.ENDING_SCHOOL_NURSE.cut3"
+      ],
+      "Color": "#243032"
+    },
+    {
+      "Id": "ENDING_CHEF",
+      "Category": "Specialized",
+      "Act": "Future",
+      "Priority": 300,
+      "Condition": {
+        "Checks": [
+          {
+            "Kind": "Proficiency",
+            "Key": "Cooking",
+            "Op": "GreaterOrEqual",
+            "Value": 4
+          },
+          {
+            "Kind": "Stat",
+            "Key": "Craft",
+            "Op": "GreaterOrEqual",
+            "Value": 140
+          },
+          {
+            "Kind": "Stat",
+            "Key": "Empathy",
+            "Op": "GreaterOrEqual",
+            "Value": 90
+          },
+          {
+            "Kind": "ActionCount",
+            "Key": "ACT_EDU_COOKING",
+            "Op": "GreaterOrEqual",
+            "Value": 12
+          }
+        ]
+      },
+      "Score": [
+        {
+          "Kind": "Proficiency",
+          "Key": "Cooking",
+          "Weight": 20
+        },
+        {
+          "Kind": "Stat",
+          "Key": "Craft",
+          "Weight": 1
+        },
+        {
+          "Kind": "ActionCount",
+          "Key": "ACT_EDU_COOKING",
+          "Weight": 2
+        }
+      ],
+      "CutKeys": [
+        "ending.ENDING_CHEF.cut1",
+        "ending.ENDING_CHEF.cut2",
+        "ending.ENDING_CHEF.cut3"
+      ],
+      "Color": "#33291F"
+    },
+    {
+      "Id": "ENDING_FARMER",
+      "Category": "Specialized",
+      "Act": "Future",
+      "Priority": 300,
+      "Condition": {
+        "FlagsAll": [
+          "GREENHOUSE"
+        ],
+        "Checks": [
+          {
+            "Kind": "Proficiency",
+            "Key": "Survival",
+            "Op": "GreaterOrEqual",
+            "Value": 3
+          },
+          {
+            "Kind": "Stat",
+            "Key": "Stamina",
+            "Op": "GreaterOrEqual",
+            "Value": 45
+          }
+        ]
+      },
+      "Score": [
+        {
+          "Kind": "Proficiency",
+          "Key": "Survival",
+          "Weight": 20
+        },
+        {
+          "Kind": "Stat",
+          "Key": "Stamina",
+          "Weight": 1
+        }
+      ],
+      "CutKeys": [
+        "ending.ENDING_FARMER.cut1",
+        "ending.ENDING_FARMER.cut2",
+        "ending.ENDING_FARMER.cut3"
+      ],
+      "Color": "#243022"
+    },
+    {
+      "Id": "ENDING_WATER_SCIENTIST",
+      "Category": "Specialized",
+      "Act": "Future",
+      "Priority": 300,
+      "Condition": {
+        "Checks": [
+          {
+            "Kind": "Proficiency",
+            "Key": "Science",
+            "Op": "GreaterOrEqual",
+            "Value": 3
+          },
+          {
+            "Kind": "Stat",
+            "Key": "Intellect",
+            "Op": "GreaterOrEqual",
+            "Value": 160
+          }
+        ],
+        "AnyChecks": [
+          {
+            "Kind": "ActionCount",
+            "Key": "ACT_SURV_PURIFY_WATER",
+            "Op": "GreaterOrEqual",
+            "Value": 10
+          },
+          {
+            "Kind": "Flag",
+            "Key": "AUTO_PURIFIER",
+            "Op": "GreaterOrEqual",
+            "Value": 1
+          }
+        ]
+      },
+      "Score": [
+        {
+          "Kind": "Proficiency",
+          "Key": "Science",
+          "Weight": 20
+        },
+        {
+          "Kind": "Stat",
+          "Key": "Intellect",
+          "Weight": 1
+        },
+        {
+          "Kind": "ActionCount",
+          "Key": "ACT_SURV_PURIFY_WATER",
+          "Weight": 1
+        }
+      ],
+      "CutKeys": [
+        "ending.ENDING_WATER_SCIENTIST.cut1",
+        "ending.ENDING_WATER_SCIENTIST.cut2",
+        "ending.ENDING_WATER_SCIENTIST.cut3"
+      ],
+      "Color": "#1F2C36",
+      "Variants": [
+        {
+          "Id": "CD",
+          "Condition": {
+            "FlagsAll": [
+              "CD_08"
+            ]
+          },
+          "CutKeys": [
+            "ending.ENDING_WATER_SCIENTIST.cut1",
+            "ending.ENDING_WATER_SCIENTIST.cd.cut2",
+            "ending.ENDING_WATER_SCIENTIST.cut3"
+          ]
+        }
+      ]
+    },
+    {
+      "Id": "ENDING_MUSICIAN",
+      "Category": "Specialized",
+      "Act": "Future",
+      "Priority": 300,
+      "Condition": {
+        "Checks": [
+          {
+            "Kind": "Proficiency",
+            "Key": "Music",
+            "Op": "GreaterOrEqual",
+            "Value": 3
+          },
+          {
+            "Kind": "Stat",
+            "Key": "Empathy",
+            "Op": "GreaterOrEqual",
+            "Value": 110
+          },
+          {
+            "Kind": "ActionCount",
+            "Key": "ACT_CLUB_SINGING",
+            "Op": "GreaterOrEqual",
+            "Value": 4
+          }
+        ]
+      },
+      "Score": [
+        {
+          "Kind": "Proficiency",
+          "Key": "Music",
+          "Weight": 20
+        },
+        {
+          "Kind": "Stat",
+          "Key": "Empathy",
+          "Weight": 1
+        },
+        {
+          "Kind": "ActionCount",
+          "Key": "ACT_CLUB_SINGING",
+          "Weight": 3
+        }
+      ],
+      "CutKeys": [
+        "ending.ENDING_MUSICIAN.cut1",
+        "ending.ENDING_MUSICIAN.cut2",
+        "ending.ENDING_MUSICIAN.cut3"
+      ],
+      "Color": "#2E2434"
+    },
+    {
+      "Id": "ENDING_COUNSELOR",
+      "Category": "Specialized",
+      "Act": "Future",
+      "Priority": 300,
+      "Condition": {
+        "Checks": [
+          {
+            "Kind": "Proficiency",
+            "Key": "Mind",
+            "Op": "GreaterOrEqual",
+            "Value": 3
+          },
+          {
+            "Kind": "Stat",
+            "Key": "Empathy",
+            "Op": "GreaterOrEqual",
+            "Value": 110
+          },
+          {
+            "Kind": "Hidden",
+            "Key": "TraumaRecovery",
+            "Op": "GreaterOrEqual",
+            "Value": 20
+          },
+          {
+            "Kind": "ActionCount",
+            "Key": "ACT_NIGHT_TALK",
+            "Op": "GreaterOrEqual",
+            "Value": 10
+          },
+          {
+            "Kind": "EndingAct",
+            "Key": "ENDING_NARR_UNHEALED",
+            "Op": "Equal",
+            "Value": 0
+          }
+        ]
+      },
+      "Score": [
+        {
+          "Kind": "Proficiency",
+          "Key": "Mind",
+          "Weight": 20
+        },
+        {
+          "Kind": "Stat",
+          "Key": "Empathy",
+          "Weight": 1
+        },
+        {
+          "Kind": "Hidden",
+          "Key": "TraumaRecovery",
+          "Weight": 1
+        }
+      ],
+      "CutKeys": [
+        "ending.ENDING_COUNSELOR.cut1",
+        "ending.ENDING_COUNSELOR.cut2",
+        "ending.ENDING_COUNSELOR.cut3"
+      ],
+      "Color": "#2A2C34",
+      "Variants": [
+        {
+          "Id": "AFRAID",
+          "Condition": {
+            "FlagsAll": [
+              "CONFESS_AFRAID"
+            ]
+          },
+          "CutKeys": [
+            "ending.ENDING_COUNSELOR.cut1",
+            "ending.ENDING_COUNSELOR.afraid.cut2",
+            "ending.ENDING_COUNSELOR.cut3"
+          ]
+        }
+      ]
+    },
+    {
+      "Id": "ENDING_NEGOTIATOR",
+      "Category": "Specialized",
+      "Act": "Future",
+      "Priority": 300,
+      "Condition": {
+        "FlagsAny": [
+          "SAGEORI_RESPECT",
+          "SAGEORI_TRUCE_LATE",
+          "MART_MEDIATED"
+        ],
+        "Checks": [
+          {
+            "Kind": "Stat",
+            "Key": "Leadership",
+            "Op": "GreaterOrEqual",
+            "Value": 80
+          },
+          {
+            "Kind": "Stat",
+            "Key": "Intellect",
+            "Op": "GreaterOrEqual",
+            "Value": 130
+          },
+          {
+            "Kind": "FactionKnown",
+            "Key": "FAC_SAGEORI",
+            "Op": "GreaterOrEqual",
+            "Value": 1
+          },
+          {
+            "Kind": "FactionKnown",
+            "Key": "FAC_MART",
+            "Op": "GreaterOrEqual",
+            "Value": 1
+          },
+          {
+            "Kind": "FactionKnown",
+            "Key": "FAC_UBC",
+            "Op": "GreaterOrEqual",
+            "Value": 1
+          },
+          {
+            "Kind": "FactionTier",
+            "Key": "FAC_SAGEORI",
+            "Op": "GreaterOrEqual",
+            "Value": 2
+          },
+          {
+            "Kind": "FactionTier",
+            "Key": "FAC_MART",
+            "Op": "GreaterOrEqual",
+            "Value": 2
+          },
+          {
+            "Kind": "FactionTier",
+            "Key": "FAC_UBC",
+            "Op": "GreaterOrEqual",
+            "Value": 2
+          }
+        ]
+      },
+      "Score": [
+        {
+          "Kind": "FactionTier",
+          "Key": "FAC_SAGEORI",
+          "Weight": 10
+        },
+        {
+          "Kind": "FactionTier",
+          "Key": "FAC_MART",
+          "Weight": 10
+        },
+        {
+          "Kind": "FactionTier",
+          "Key": "FAC_UBC",
+          "Weight": 10
+        },
+        {
+          "Kind": "Stat",
+          "Key": "Leadership",
+          "Weight": 1
+        },
+        {
+          "Kind": "Stat",
+          "Key": "Intellect",
+          "Weight": 1
+        }
+      ],
+      "CutKeys": [
+        "ending.ENDING_NEGOTIATOR.cut1",
+        "ending.ENDING_NEGOTIATOR.cut2",
+        "ending.ENDING_NEGOTIATOR.cut3"
+      ],
+      "Color": "#30281E"
+    },
+    {
+      "Id": "ENDING_ATHLETE",
+      "Category": "Specialized",
+      "Act": "Future",
+      "Priority": 300,
+      "Condition": {
+        "Checks": [
+          {
+            "Kind": "Stat",
+            "Key": "Stamina",
+            "Op": "GreaterOrEqual",
+            "Value": 60
+          },
+          {
+            "Kind": "Stat",
+            "Key": "Agility",
+            "Op": "GreaterOrEqual",
+            "Value": 60
+          }
+        ],
+        "AnyChecks": [
+          {
+            "Kind": "Trait",
+            "Key": "TRAIT_SPRINTER",
+            "Op": "GreaterOrEqual",
+            "Value": 1
+          },
+          {
+            "Kind": "ActionCount",
+            "Key": "ACT_CLUB_SPORTS",
+            "Op": "GreaterOrEqual",
+            "Value": 6
+          }
+        ]
+      },
+      "Score": [
+        {
+          "Kind": "Stat",
+          "Key": "Stamina",
+          "Weight": 1
+        },
+        {
+          "Kind": "Stat",
+          "Key": "Agility",
+          "Weight": 1
+        },
+        {
+          "Kind": "ActionCount",
+          "Key": "ACT_CLUB_SPORTS",
+          "Weight": 3
+        }
+      ],
+      "CutKeys": [
+        "ending.ENDING_ATHLETE.cut1",
+        "ending.ENDING_ATHLETE.cut2",
+        "ending.ENDING_ATHLETE.cut3"
+      ],
+      "Color": "#33261E"
+    },
+    {
+      "Id": "ENDING_JOURNALIST",
+      "Category": "Specialized",
+      "Act": "Future",
+      "Priority": 300,
+      "Condition": {
+        "Checks": [
+          {
+            "Kind": "Proficiency",
+            "Key": "Humanities",
+            "Op": "GreaterOrEqual",
+            "Value": 2
+          },
+          {
+            "Kind": "Stat",
+            "Key": "Intellect",
+            "Op": "GreaterOrEqual",
+            "Value": 140
+          },
+          {
+            "Kind": "ClueCount",
+            "Key": "TRUTH_",
+            "Op": "GreaterOrEqual",
+            "Value": 4
+          }
+        ]
+      },
+      "Score": [
+        {
+          "Kind": "ClueCount",
+          "Key": "TRUTH_",
+          "Weight": 10
+        },
+        {
+          "Kind": "Proficiency",
+          "Key": "Humanities",
+          "Weight": 20
+        },
+        {
+          "Kind": "Stat",
+          "Key": "Intellect",
+          "Weight": 1
+        }
+      ],
+      "CutKeys": [
+        "ending.ENDING_JOURNALIST.cut1",
+        "ending.ENDING_JOURNALIST.cut2",
+        "ending.ENDING_JOURNALIST.cut3"
+      ],
+      "Color": "#26282C"
+    },
+    {
+      "Id": "ENDING_REHAB",
+      "Category": "Record",
+      "Act": "Future",
+      "Priority": 320,
+      "Condition": {
+        "FlagsAll": [
+          "CRUTCH_DONE",
+          "PROSTHETIC_DONE"
+        ],
+        "FlagsNone": [
+          "TEACHER_LEFT_BEHIND"
+        ],
+        "Checks": [
+          {
+            "Kind": "ActionCount",
+            "Key": "ACT_CARE_TEACHER",
+            "Op": "GreaterOrEqual",
+            "Value": 25
+          },
+          {
+            "Kind": "TeacherAffinity",
+            "Op": "GreaterOrEqual",
+            "Value": 80
+          }
+        ]
+      },
+      "Score": [
+        {
+          "Kind": "ActionCount",
+          "Key": "ACT_CARE_TEACHER",
+          "Weight": 2
+        },
+        {
+          "Kind": "TeacherAffinity",
+          "Weight": 1
+        },
+        {
+          "Kind": "Stat",
+          "Key": "Craft",
+          "Weight": 1
+        }
+      ],
+      "CutKeys": [
+        "ending.ENDING_REHAB.cut1",
+        "ending.ENDING_REHAB.cut2",
+        "ending.ENDING_REHAB.cut3"
+      ],
+      "Color": "#2C2A22",
+      "Variants": [
+        {
+          "Id": "CURED",
+          "Condition": {
+            "FlagsAll": [
+              "TEACHER_CURED"
+            ]
+          },
+          "CutKeys": [
+            "ending.ENDING_REHAB.cut1",
+            "ending.ENDING_REHAB.cut2",
+            "ending.ENDING_REHAB.cured.cut3"
+          ]
+        }
+      ]
+    },
+    {
+      "Id": "ENDING_RECORD_SHOP",
+      "Category": "Record",
+      "Act": "Future",
+      "Priority": 320,
+      "Condition": {
+        "FlagsAll": [
+          "CD_SHELF_FULL"
+        ],
+        "Checks": [
+          {
+            "Kind": "ActionCount",
+            "Key": "ACT_BROADCAST_SONG",
+            "Op": "GreaterOrEqual",
+            "Value": 4
+          }
+        ]
+      },
+      "Score": [
+        {
+          "Kind": "ActionCount",
+          "Key": "ACT_BROADCAST_SONG",
+          "Weight": 5
+        },
+        {
+          "Kind": "Stat",
+          "Key": "Empathy",
+          "Weight": 1
+        }
+      ],
+      "CutKeys": [
+        "ending.ENDING_RECORD_SHOP.cut1",
+        "ending.ENDING_RECORD_SHOP.cut2",
+        "ending.ENDING_RECORD_SHOP.cut3"
+      ],
+      "Color": "#2A2238"
+    },
+    {
+      "Id": "ENDING_VET",
+      "Category": "Record",
+      "Act": "Future",
+      "Priority": 320,
+      "Condition": {
+        "FlagsAll": [
+          "CAT_HOME",
+          "CAT_FED_2"
+        ],
+        "Checks": [
+          {
+            "Kind": "Stat",
+            "Key": "Empathy",
+            "Op": "GreaterOrEqual",
+            "Value": 90
+          },
+          {
+            "Kind": "Proficiency",
+            "Key": "Medicine",
+            "Op": "GreaterOrEqual",
+            "Value": 1
+          }
+        ]
+      },
+      "Score": [
+        {
+          "Kind": "Stat",
+          "Key": "Empathy",
+          "Weight": 1
+        },
+        {
+          "Kind": "Proficiency",
+          "Key": "Medicine",
+          "Weight": 20
+        }
+      ],
+      "CutKeys": [
+        "ending.ENDING_VET.cut1",
+        "ending.ENDING_VET.cut2",
+        "ending.ENDING_VET.cut3"
+      ],
+      "Color": "#302C24"
+    },
+    {
       "Id": "ENDING_TOGETHER",
       "Category": "Relationship",
       "Act": "Future",

@@ -15,6 +15,9 @@ namespace ApoGirl.Core.Definitions
         Relationship,
         Narrative,
         Hidden,
+
+        /// <summary>기록 엔딩: 1년 동안 남은 플레이 기록으로 고른다 (Docs/PROPOSAL_ENDINGS_EXPANSION 4절). 값은 저장된 정의의 숫자라 끝에 더한다.</summary>
+        Record,
     }
 
     /// <summary>
@@ -35,7 +38,10 @@ namespace ApoGirl.Core.Definitions
         Future,
     }
 
-    /// <summary>점수 항목: 값 × 가중치. 같은 우선순위 후보끼리 점수가 높은 쪽이 이긴다.</summary>
+    /// <summary>
+    /// 점수 항목: 값 × 가중치. 같은 우선순위 후보끼리는 먼저 '문턱을 넘은 정도'(EndingResolver.Margin)로 겨루고,
+    /// 그것마저 같을 때만 이 점수가 가른다 (기획서 9.2절 E3).
+    /// </summary>
     [Serializable]
     public sealed class EndingScoreTerm
     {

@@ -9243,6 +9243,230 @@ MonoBehaviour:
     m_Key: gallery.act.Whole
     m_Metadata:
       m_Items: []
+  - m_Id: 3261802959093760
+    m_Key: ending.cat.Record
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3261803030396928
+    m_Key: ending.ENDING_PARAMEDIC.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3261803030396929
+    m_Key: ending.ENDING_PARAMEDIC.cut1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3261803030396930
+    m_Key: ending.ENDING_PARAMEDIC.cut2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3261803030396931
+    m_Key: ending.ENDING_PARAMEDIC.cut3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3261803030396932
+    m_Key: ending.ENDING_SCHOOL_NURSE.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3261803030396933
+    m_Key: ending.ENDING_SCHOOL_NURSE.cut1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3261803030396934
+    m_Key: ending.ENDING_SCHOOL_NURSE.cut2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3261803030396935
+    m_Key: ending.ENDING_SCHOOL_NURSE.cut3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3261803030396936
+    m_Key: ending.ENDING_CHEF.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3261803030396937
+    m_Key: ending.ENDING_CHEF.cut1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3261803030396938
+    m_Key: ending.ENDING_CHEF.cut2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3261803030396939
+    m_Key: ending.ENDING_CHEF.cut3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3261803030396940
+    m_Key: ending.ENDING_FARMER.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3261803030396941
+    m_Key: ending.ENDING_FARMER.cut1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3261803030396942
+    m_Key: ending.ENDING_FARMER.cut2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3261803030396943
+    m_Key: ending.ENDING_FARMER.cut3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3261803030396944
+    m_Key: ending.ENDING_WATER_SCIENTIST.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3261803030396945
+    m_Key: ending.ENDING_WATER_SCIENTIST.cut1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3261803030396946
+    m_Key: ending.ENDING_WATER_SCIENTIST.cut2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3261803030396947
+    m_Key: ending.ENDING_WATER_SCIENTIST.cd.cut2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3261803030396948
+    m_Key: ending.ENDING_WATER_SCIENTIST.cut3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3261803030396949
+    m_Key: ending.ENDING_MUSICIAN.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3261803030396950
+    m_Key: ending.ENDING_MUSICIAN.cut1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3261803030396951
+    m_Key: ending.ENDING_MUSICIAN.cut2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3261803030396952
+    m_Key: ending.ENDING_MUSICIAN.cut3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3261803030396953
+    m_Key: ending.ENDING_COUNSELOR.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3261803030396954
+    m_Key: ending.ENDING_COUNSELOR.cut1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3261803030396955
+    m_Key: ending.ENDING_COUNSELOR.cut2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3261803030396956
+    m_Key: ending.ENDING_COUNSELOR.afraid.cut2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3261803030396957
+    m_Key: ending.ENDING_COUNSELOR.cut3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3261803030396958
+    m_Key: ending.ENDING_NEGOTIATOR.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3261803030396959
+    m_Key: ending.ENDING_NEGOTIATOR.cut1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3261803030396960
+    m_Key: ending.ENDING_NEGOTIATOR.cut2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3261803030396961
+    m_Key: ending.ENDING_NEGOTIATOR.cut3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3261803030396962
+    m_Key: ending.ENDING_ATHLETE.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3261803030396963
+    m_Key: ending.ENDING_ATHLETE.cut1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3261803030396964
+    m_Key: ending.ENDING_ATHLETE.cut2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3261803030396965
+    m_Key: ending.ENDING_ATHLETE.cut3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3261803030396966
+    m_Key: ending.ENDING_JOURNALIST.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3261803030396967
+    m_Key: ending.ENDING_JOURNALIST.cut1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3261803030396968
+    m_Key: ending.ENDING_JOURNALIST.cut2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3261803030396969
+    m_Key: ending.ENDING_JOURNALIST.cut3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3261803030396970
+    m_Key: ending.ENDING_REHAB.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3261803030396971
+    m_Key: ending.ENDING_REHAB.cut1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3261803030396972
+    m_Key: ending.ENDING_REHAB.cut2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3261803030396973
+    m_Key: ending.ENDING_REHAB.cut3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3261803030396974
+    m_Key: ending.ENDING_REHAB.cured.cut3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3261803030396975
+    m_Key: ending.ENDING_RECORD_SHOP.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3261803030396976
+    m_Key: ending.ENDING_RECORD_SHOP.cut1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3261803030396977
+    m_Key: ending.ENDING_RECORD_SHOP.cut2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3261803030396978
+    m_Key: ending.ENDING_RECORD_SHOP.cut3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3261803030396979
+    m_Key: ending.ENDING_VET.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3261803030396980
+    m_Key: ending.ENDING_VET.cut1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3261803030396981
+    m_Key: ending.ENDING_VET.cut2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3261803030396982
+    m_Key: ending.ENDING_VET.cut3
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

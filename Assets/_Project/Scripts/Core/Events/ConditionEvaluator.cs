@@ -227,6 +227,17 @@ namespace ApoGirl.Core.Events
                 case ValueKind.Boarded: return Rules.BoardingRules.Boarding(state).Contains(key ?? "") ? 1 : 0;
                 case ValueKind.LeftBehind: return Rules.BoardingRules.Stayers(state).Count;
                 case ValueKind.EndingAct: return EndingActs != null && EndingActs.Contains(key ?? "") ? 1 : 0;
+                case ValueKind.ActionCountPrefix:
+                    var prefixed = 0;
+                    if (!string.IsNullOrEmpty(key))
+                    {
+                        foreach (var pair in state.Exploration.ActionCounts)
+                        {
+                            if (pair.Key.StartsWith(key, StringComparison.Ordinal)) prefixed += pair.Value;
+                        }
+                    }
+
+                    return prefixed;
                 case ValueKind.BloodCompatible:
                     return Enum.TryParse<BloodType>(key, out var recipient) && BloodRules.CanDonate(state.Player.Profile.BloodType, recipient) ? 1 : 0;
                 default: throw new ArgumentOutOfRangeException(nameof(kind), kind, null);

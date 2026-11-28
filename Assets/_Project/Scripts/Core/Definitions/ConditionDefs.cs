@@ -111,6 +111,9 @@ namespace ApoGirl.Core.Definitions
 
         /// <summary>엔딩 판정 중에만: 앞 막에서 그 조각이 뽑혔는가 (Key = 엔딩 ID → 1/0). 판정 밖에서는 늘 0.</summary>
         EndingAct,
+
+        /// <summary>Key로 시작하는 행동들을 실행한 횟수의 합 (예: "ACT_TREAT_" = 부상 치료 + 감염 처치).</summary>
+        ActionCountPrefix,
     }
 
     public enum CompareOp

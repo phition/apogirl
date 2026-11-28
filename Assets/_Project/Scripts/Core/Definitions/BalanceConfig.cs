@@ -903,6 +903,12 @@ namespace ApoGirl.Core.Definitions
         /// <summary>명단 한 장에 싣는 '그 뒤' 줄 수 (우선순위가 높은 줄부터). 나머지는 "1년의 기록" 화면에 둔다.</summary>
         public int EndingRosterMax = 6;
 
+        /// <summary>
+        /// 같은 우선순위의 엔딩끼리 겨룰 때, 조건 하나가 문턱을 넘은 정도(값 ÷ 문턱)의 상한 (기획서 9.2절 E3).
+        /// 한 조건만 크게 넘겨서 이기지 못하게 막는다.
+        /// </summary>
+        public float EndingMarginCap = 2f;
+
         // ── 세력 거래 (사용자 요청 2026-11-26) ──
 
         /// <summary>한 운반 주기(세력의 TradeIntervalWeeks)에 거래할 수 있는 가짓수: 기본 / 동맹. 같은 물건을 두 번 하지는 못한다.</summary>
