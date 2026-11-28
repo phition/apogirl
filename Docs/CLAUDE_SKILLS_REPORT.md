@@ -1,7 +1,7 @@
 # 클로드 코드 스킬 선별 보고서
 
 조사일 2026-11-28. 공개 스킬 순위에서 상위권을 훑고, 〈마지막 학기〉에 쓸모 있는 것만 골랐다.
-**아직 아무것도 설치하지 않았다.** 설치는 사용자가 고른 뒤에 한다.
+**3절의 6개는 2026-11-28에 설치했다** (사용자 결정). 결과는 3.1절.
 
 ## 1. 결론
 
@@ -68,6 +68,17 @@ npx skills add gamedev-skills/awesome-gamedev-agent-skills@unity-build-size
 ```powershell
 npx skills add gamedev-skills/awesome-gamedev-agent-skills@game-feel
 ```
+
+### 3.1 설치 결과 (2026-11-28)
+
+- 6개를 프로젝트 `.claude/skills/`에 넣었다 (전역 아님). 출처와 커밋은 저장소 뿌리의 `skills-lock.json`에 적힌다.
+- **`grilling`을 하나 더 넣었다.** `grill-me`는 본문이 "`grilling` 스킬을 불러라" 한 줄뿐인 껍데기라, 그것만으로는 돌지 않는다. 같은 저장소(mattpocock/skills)의 `grilling`이 실제 인터뷰 절차다.
+- `grill-me`는 사용자가 `/grill-me`로 부를 때만 돈다(`disable-model-invocation`). `grilling`은 "캐물어 줘" 같은 말에도 걸린다.
+- 넣기 전에 파일 전부의 외부 주소·명령을 훑었다. 주소는 공식 문서 링크뿐이고, 밖으로 보내는 명령은 없다.
+  - `unity-build-size/scripts/*.py`: 빌드 보고서·프로젝트 파일을 읽기만 하는 점검 도구.
+  - `systematic-debugging/find-polluter.sh`: npm 테스트용이라 우리 프로젝트에서는 쓸 일이 없다.
+- 새 세션부터 스킬 목록에 뜬다. 실제로 불러서 돌려 보지는 않았다.
+- 유의: `unity-build-size`·`save-systems`·`game-feel`은 유니티 6.3 LTS·고도 예제 기준이다. 우리는 6000.6이니 메뉴 이름·API는 그대로 믿지 말고 확인한다.
 
 ## 4. 때가 되면 넣을 것
 
