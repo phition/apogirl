@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using ApoGirl.Core.Rules;
 using ApoGirl.Presentation.App;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -24,7 +25,7 @@ namespace ApoGirl.Presentation.Screens
 
         /// <summary>
         /// 자료가 놓이는 뿌리 경로: 정식 빌드 / 에디터·개발 빌드 (시험 글이 정식 게시판에 섞이지 않게).
-        /// 그 아래 board(글)·users(이용자 기록: 이름·첫 접속·마지막 글 시각)·banned(차단, 콘솔에서만)가 놓인다.
+        /// 그 아래 board(글)·users(이용자 기록: 이름·첫 접속·마지막 글·마지막 신고 시각)·reports(신고)·banned(차단, 콘솔에서만)·filter(금칙어, 콘솔에서만)가 놓인다.
         /// </summary>
         public string RootPath = "bbs/v1";
         public string TestRootPath = "bbs/test";
@@ -45,8 +46,12 @@ namespace ApoGirl.Presentation.Screens
         public int PostIntervalSeconds = 60;
         public int NewAccountWaitSeconds = 120;
 
-        /// <summary>이 낱말이 들어간 글은 올리지 않고, 받은 글에서는 ○로 가린다 (소문자로 비교).</summary>
-        public string[] BlockedWords = Array.Empty<string>();
+        /// <summary>
+        /// 신고: 서로 다른 계정 이만큼이 신고한 글은 모두에게 가린다(0 = 가리지 않음). 신고 사이 간격(초) —
+        /// **보안 규칙의 30000과 같아야 한다** (막는 것은 규칙이고, 이 값은 "n초 뒤에 다시"를 알려 주는 데만 쓴다).
+        /// </summary>
+        public int ReportHideCount = 3;
+        public int ReportIntervalSeconds = 30;
 
         public static BbsOnlineConfig Load()
         {
@@ -68,10 +73,49 @@ namespace ApoGirl.Presentation.Screens
         }
     }
 
-    /// <summary>글 올리기 결과.</summary>
+    /// <summary>
+    /// 금칙어 목록 (Resources/Bbs/bbs_filter.json) → <see cref="BbsFilter"/>. 서버의 목록(bbs/{경로}/filter)이 이 위에 얹힌다.
+    /// </summary>
+    public sealed class BbsFilterData
+    {
+        public string Mask = "○";
+        public string[] Words = Array.Empty<string>();
+        public string[] Allow = Array.Empty<string>();
+
+        public static BbsFilter Load()
+        {
+            var asset = Resources.Load<TextAsset>("Bbs/bbs_filter");
+            if (asset == null)
+            {
+                return BbsFilter.Empty;
+            }
+
+            try
+            {
+                var data = JsonConvert.DeserializeObject<BbsFilterData>(asset.text) ?? new BbsFilterData();
+                var filter = new BbsFilter(data.Words, data.Allow, string.IsNullOrEmpty(data.Mask) ? BbsFilter.DefaultMask : data.Mask[0]);
+                if (filter.Invalid.Count > 0)
+                {
+                    Debug.LogWarning("PC통신 금칙어 목록에 쓸 수 없는 항목(숫자·기호): " + string.Join(", ", filter.Invalid));
+                }
+
+                return filter;
+            }
+            catch (Exception exception)
+            {
+                Debug.LogWarning("PC통신 금칙어 목록 읽기 실패: " + exception.Message);
+                return BbsFilter.Empty;
+            }
+        }
+    }
+
+    /// <summary>글 올리기·신고 결과.</summary>
     public enum BbsSendResult
     {
         Ok,
+
+        /// <summary>이미 신고한 글이다. 보내지 않았다.</summary>
+        Already,
 
         /// <summary>방금 글을 올렸다 (글 사이 간격). 보내지 않았다.</summary>
         TooSoon,
@@ -99,18 +143,31 @@ namespace ApoGirl.Presentation.Screens
         /// <summary>이 계정을 처음 등록한 때·마지막으로 글을 올린 때 (내 컴퓨터 시계, 유닉스 ms). "n초 뒤에 다시"를 알려 주는 데만 쓴다.</summary>
         private long _firstSeenMs;
         private long _lastPostMs;
+        private long _lastReportMs;
+
+        /// <summary>이번 접속에서 내가 신고한 글 (곧바로 내 화면에서 가린다. 다음 접속부터는 서버의 신고 기록으로 가려진다).</summary>
+        private readonly HashSet<string> _hidden = new HashSet<string>();
+
+        /// <summary>금칙어 필터: 게임에 든 목록으로 시작하고, 서버의 목록을 받으면 그것을 얹는다.</summary>
+        private readonly BbsFilter _baseFilter;
+        private bool _remoteFilterLoaded;
 
         /// <summary>
         /// identityPath: 계정 파일 자리 (비면 persistentDataPath/BbsOnline.json — 테스트는 다른 자리를 준다).
-        /// testPath: 시험 경로를 쓸지 (비면 에디터·개발 빌드에서만).
+        /// testPath: 시험 경로를 쓸지 (비면 에디터·개발 빌드에서만). filter: 금칙어 필터 (비면 게임에 든 목록).
         /// </summary>
-        public BbsOnline(BbsOnlineConfig config = null, string identityPath = null, bool? testPath = null)
+        public BbsOnline(BbsOnlineConfig config = null, string identityPath = null, bool? testPath = null, BbsFilter filter = null)
         {
             _config = config ?? BbsOnlineConfig.Load();
             _identityPath = string.IsNullOrEmpty(identityPath) ? System.IO.Path.Combine(Application.persistentDataPath, "BbsOnline.json") : identityPath;
             _testPath = testPath ?? DebugAccess.Enabled;
+            _baseFilter = filter ?? BbsFilterData.Load();
+            Filter = _baseFilter;
             LoadIdentity();
         }
+
+        /// <summary>지금 쓰는 금칙어 필터 (올릴 때 거절 · 보여 줄 때 가림).</summary>
+        public BbsFilter Filter { get; private set; }
 
         /// <summary>시험 경로(bbs/test)를 쓰는가. 시험 경로에는 새 계정 대기가 없다.</summary>
         public bool UsesTestPath => _testPath;
@@ -132,7 +189,7 @@ namespace ApoGirl.Presentation.Screens
         // ── 순수 함수 (테스트 대상) ──
 
         /// <summary>서버가 준 글 묶음(JSON 객체: 푸시 ID → 글)을 올린 차례대로 읽는다. 형식이 어긋난 글은 건너뛴다.</summary>
-        public static List<BbsConfig.Post> ParsePosts(string json, BbsOnlineConfig config)
+        public static List<BbsConfig.Post> ParsePosts(string json, BbsOnlineConfig config, BbsFilter filter = null)
         {
             var result = new List<BbsConfig.Post>();
             if (string.IsNullOrWhiteSpace(json) || json.Trim() == "null")
@@ -162,25 +219,161 @@ namespace ApoGirl.Presentation.Screens
 
             // 올린 차례 = 서버 시각 (같으면 글 ID)
             entries.Sort((a, b) => a.Time != b.Time ? a.Time.CompareTo(b.Time) : string.CompareOrdinal(a.Key, b.Key));
-            foreach (var (_, _, value) in entries)
+            foreach (var (_, key, value) in entries)
             {
-                var title = Clean(value.Value<string>("title"), config.MaxTitle, config);
-                var body = Clean(value.Value<string>("body"), config.MaxBody, config);
+                var title = Clean(Text(value, "title"), config.MaxTitle, filter);
+                var body = Clean(Text(value, "body"), config.MaxBody, filter);
                 if (title.Length == 0 || body.Length == 0)
                 {
                     continue;
                 }
 
+                var uid = Text(value, "uid");
                 result.Add(new BbsConfig.Post
                 {
                     Title = title,
                     Body = new[] { body },
-                    Author = AuthorWithTag(Clean(value.Value<string>("author"), config.MaxAuthor, config), value.Value<string>("uid")),
-                    Date = Clean(value.Value<string>("date"), 8, config),
+                    Author = AuthorWithTag(Clean(Text(value, "author"), config.MaxAuthor, filter), uid),
+                    Date = Clean(Text(value, "date"), 8, null),
+                    Id = key,
+                    Uid = uid,
                 });
             }
 
             return result;
+        }
+
+        /// <summary>글 칸 읽기: 글이 아닌 값(숫자·묶음)이 들어 있어도 넘어지지 않게.</summary>
+        private static string Text(JObject value, string key)
+        {
+            var token = value[key];
+            return token != null && token.Type == JTokenType.String ? token.Value<string>() : "";
+        }
+
+        /// <summary>서버의 신고 기록(JSON: 글 ID → { 신고한 계정: 시각 })을 글마다 신고한 계정들로 읽는다.</summary>
+        public static Dictionary<string, HashSet<string>> ParseReports(string json)
+        {
+            var result = new Dictionary<string, HashSet<string>>();
+            foreach (var property in Properties(json))
+            {
+                if (property.Value is JObject reporters)
+                {
+                    var set = new HashSet<string>();
+                    foreach (var reporter in reporters.Properties())
+                    {
+                        set.Add(reporter.Name);
+                    }
+
+                    result[property.Name] = set;
+                }
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// 서버의 묶음(JSON 객체)에 든 이름들 — 차단 목록({ 계정: true }). 값은 보지 않는다:
+        /// 보안 규칙이 항목이 있는지만 보므로(false로 두어도 차단이다) 게임도 똑같이 본다. 차단을 풀려면 항목을 지운다.
+        /// </summary>
+        public static HashSet<string> ParseKeys(string json)
+        {
+            var result = new HashSet<string>();
+            foreach (var property in Properties(json))
+            {
+                if (property.Value.Type != JTokenType.Null)
+                {
+                    result.Add(property.Name);
+                }
+            }
+
+            return result;
+        }
+
+        private static IEnumerable<JProperty> Properties(string json)
+        {
+            if (string.IsNullOrWhiteSpace(json) || json.Trim() == "null")
+            {
+                return Array.Empty<JProperty>();
+            }
+
+            try
+            {
+                return JToken.Parse(json) is JObject root ? root.Properties() : Array.Empty<JProperty>();
+            }
+            catch (JsonException)
+            {
+                return Array.Empty<JProperty>();
+            }
+        }
+
+        /// <summary>
+        /// 보여 줄 글만 남긴다: 차단된 계정의 글, 신고가 hideCount개 쌓인 글, 내가 신고한 글(서버 기록·이번 접속)은 뺀다.
+        /// 내 글도 신고가 쌓이면 똑같이 가려진다.
+        /// </summary>
+        public static List<BbsConfig.Post> Visible(List<BbsConfig.Post> posts, Dictionary<string, HashSet<string>> reports, HashSet<string> banned,
+            string myUid, int hideCount, ICollection<string> hidden)
+        {
+            var result = new List<BbsConfig.Post>();
+            foreach (var post in posts)
+            {
+                if (banned != null && !string.IsNullOrEmpty(post.Uid) && banned.Contains(post.Uid))
+                {
+                    continue;
+                }
+
+                if (hidden != null && hidden.Contains(post.Id))
+                {
+                    continue;
+                }
+
+                if (reports != null && reports.TryGetValue(post.Id ?? "", out var reporters)
+                                    && ((hideCount > 0 && reporters.Count >= hideCount) || (!string.IsNullOrEmpty(myUid) && reporters.Contains(myUid))))
+                {
+                    continue;
+                }
+
+                result.Add(post);
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// 서버의 금칙어 목록(JSON: words · remove · allow — 쉼표로 나눈 글 한 줄씩)을 기본 목록에 얹는다. 없거나 깨졌으면 기본 목록 그대로.
+        /// </summary>
+        public static BbsFilter MergeFilter(BbsFilter baseFilter, string json)
+        {
+            if (string.IsNullOrWhiteSpace(json) || json.Trim() == "null")
+            {
+                return baseFilter;
+            }
+
+            try
+            {
+                if (!(JToken.Parse(json) is JObject root))
+                {
+                    return baseFilter;
+                }
+
+                return baseFilter.With(BbsFilter.SplitList(Text(root, "words")), BbsFilter.SplitList(Text(root, "allow")), BbsFilter.SplitList(Text(root, "remove")));
+            }
+            catch (JsonException)
+            {
+                return baseFilter;
+            }
+        }
+
+        /// <summary>
+        /// 신고 요청의 본문: 신고 기록과 '마지막 신고 시각'을 한 번에 쓴다 (글 올리기와 같은 방식 — 규칙이 둘이 함께 올 때만 받아 준다).
+        /// </summary>
+        public static string BuildReport(string postId, string uid)
+        {
+            var update = new JObject
+            {
+                ["reports/" + postId + "/" + uid] = new JObject { [".sv"] = "timestamp" },
+                ["users/" + uid + "/lastReport"] = new JObject { [".sv"] = "timestamp" },
+            };
+            return update.ToString(Formatting.None);
         }
 
         /// <summary>
@@ -256,28 +449,8 @@ namespace ApoGirl.Presentation.Screens
             return body.ToString(Formatting.None);
         }
 
-        /// <summary>막아 둔 낱말이 들어 있는가 (올리기 전에 본다).</summary>
-        public static bool IsBlocked(string text, BbsOnlineConfig config)
-        {
-            if (string.IsNullOrEmpty(text) || config.BlockedWords == null)
-            {
-                return false;
-            }
-
-            var lower = text.ToLowerInvariant();
-            foreach (var word in config.BlockedWords)
-            {
-                if (!string.IsNullOrEmpty(word) && lower.Contains(word.ToLowerInvariant()))
-                {
-                    return true;
-                }
-            }
-
-            return false;
-        }
-
-        /// <summary>받은 글 다듬기: 줄바꿈·제어 문자를 빼고, 길이를 자르고, 막아 둔 낱말은 ○로 가린다.</summary>
-        public static string Clean(string text, int max, BbsOnlineConfig config)
+        /// <summary>받은 글 다듬기: 줄바꿈·제어 문자를 빼고, 길이를 자르고, 금칙어는 가린다 (filter가 비면 가리지 않는다).</summary>
+        public static string Clean(string text, int max, BbsFilter filter)
         {
             if (string.IsNullOrEmpty(text))
             {
@@ -291,25 +464,7 @@ namespace ApoGirl.Presentation.Screens
             }
 
             var cleaned = Trim(builder.ToString().Replace("<", "‹").Replace(">", "›"), max);   // 글꼴 태그로 장난치지 못하게
-            if (config.BlockedWords != null)
-            {
-                foreach (var word in config.BlockedWords)
-                {
-                    if (string.IsNullOrEmpty(word))
-                    {
-                        continue;
-                    }
-
-                    var index = cleaned.IndexOf(word, StringComparison.OrdinalIgnoreCase);
-                    while (index >= 0)
-                    {
-                        cleaned = cleaned.Substring(0, index) + new string('○', word.Length) + cleaned.Substring(index + word.Length);
-                        index = cleaned.IndexOf(word, index + word.Length, StringComparison.OrdinalIgnoreCase);
-                    }
-                }
-            }
-
-            return cleaned;
+            return filter != null ? filter.Mask(cleaned) : cleaned;
         }
 
         /// <summary>시계 차이·전송 시간을 봐서 조금 더 기다리게 한다 (초).</summary>
@@ -348,6 +503,23 @@ namespace ApoGirl.Presentation.Screens
             return gap > 0 ? (BbsSendResult.TooSoon, gap) : (BbsSendResult.Ok, 0);
         }
 
+        /// <summary>지금 신고할 수 있는가 (내 컴퓨터가 아는 만큼): 새 계정 대기 → 신고 사이 간격. 할 수 있으면 (Ok, 0).</summary>
+        public (BbsSendResult Result, int Seconds) ReportWait()
+        {
+            var now = NowMs();
+            if (!_testPath)
+            {
+                var fresh = WaitSeconds(now, _firstSeenMs, _config.NewAccountWaitSeconds);
+                if (fresh > 0)
+                {
+                    return (BbsSendResult.NewAccount, fresh);
+                }
+            }
+
+            var gap = WaitSeconds(now, _lastReportMs, _config.ReportIntervalSeconds);
+            return gap > 0 ? (BbsSendResult.TooSoon, gap) : (BbsSendResult.Ok, 0);
+        }
+
         private static long NowMs() => DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
 
         private static string Trim(string text, int max)
@@ -358,7 +530,11 @@ namespace ApoGirl.Presentation.Screens
 
         // ── 통신 ──
 
-        /// <summary>최근 글을 받아 온다. 실패하면 null을 돌려준다 (화면은 내 컴퓨터의 글만 보여 준다).</summary>
+        /// <summary>
+        /// 최근 글을 받아 온다. 실패하면 null을 돌려준다 (화면은 내 컴퓨터의 글만 보여 준다).
+        /// 글과 함께 신고 기록·차단 목록·(아직이면) 금칙어 목록을 받아, 가릴 글은 빼고 금칙어는 가려서 넘긴다.
+        /// 신고 기록·차단 목록·금칙어 목록을 못 받아도 글은 보여 준다 (그만큼 덜 가려질 뿐이다).
+        /// </summary>
         public void Fetch(Action<List<BbsConfig.Post>> done)
         {
             if (!Available)
@@ -375,19 +551,150 @@ namespace ApoGirl.Presentation.Screens
                     return;
                 }
 
-                // 올린 시각 차례로 최근 글. 시각 색인(.indexOn ts)이 규칙에 없으면 서버가 400을 주니, 그때는 글 ID 차례로라도 받는다
-                Get(BoardUrl + "?orderBy=%22ts%22&limitToLast=" + Mathf.Max(1, _config.ReadLimit) + "&auth=" + UnityWebRequest.EscapeURL(token), (text, code) =>
+                var auth = "auth=" + UnityWebRequest.EscapeURL(token);
+                string board = null, reports = null, banned = null;
+                var left = _remoteFilterLoaded ? 3 : 4;
+
+                void Finish()
                 {
-                    if (text != null || code != 400)
+                    if (--left > 0)
                     {
-                        done?.Invoke(text != null ? ParsePosts(text, _config) : null);
                         return;
                     }
 
-                    Get(BoardUrl + "?orderBy=%22%24key%22&limitToLast=" + Mathf.Max(1, _config.ReadLimit) + "&auth=" + UnityWebRequest.EscapeURL(token),
-                        (fallback, _) => done?.Invoke(fallback != null ? ParsePosts(fallback, _config) : null));
+                    done?.Invoke(board == null
+                        ? null
+                        : Visible(ParsePosts(board, _config, Filter), ParseReports(reports), ParseKeys(banned), _uid, _config.ReportHideCount, _hidden));
+                }
+
+                // 올린 시각 차례로 최근 글. 시각 색인(.indexOn ts)이 규칙에 없으면 서버가 400을 주니, 그때는 글 ID 차례로라도 받는다
+                Get(BoardUrl + "?orderBy=%22ts%22&limitToLast=" + Mathf.Max(1, _config.ReadLimit) + "&" + auth, (text, code) =>
+                {
+                    if (text != null || code != 400)
+                    {
+                        board = text;
+                        Finish();
+                        return;
+                    }
+
+                    Get(BoardUrl + "?orderBy=%22%24key%22&limitToLast=" + Mathf.Max(1, _config.ReadLimit) + "&" + auth, (fallback, _) =>
+                    {
+                        board = fallback;
+                        Finish();
+                    });
+                });
+                Get(RootUrl + "/reports.json?" + auth, (text, _) =>
+                {
+                    reports = text;
+                    Finish();
+                });
+                Get(RootUrl + "/banned.json?" + auth, (text, _) =>
+                {
+                    banned = text;
+                    Finish();
+                });
+                if (!_remoteFilterLoaded)
+                {
+                    Get(RootUrl + "/filter.json?" + auth, (text, _) =>
+                    {
+                        if (text != null)
+                        {
+                            // 받았으면(목록이 없어 null이어도) 이번 접속에서는 다시 받지 않는다
+                            Filter = MergeFilter(_baseFilter, text);
+                            _remoteFilterLoaded = true;
+                        }
+
+                        Finish();
+                    });
+                }
+            });
+        }
+
+        /// <summary>
+        /// 글을 신고한다. 결과와, 기다려야 하면 남은 초를 돌려준다. 신고한 글은 곧바로 내 화면에서 가려진다 (Ok·Already).
+        /// 차례는 글 올리기와 같다: 내 컴퓨터가 아는 대기면 보내지 않는다 → 이용자 기록이 올라간 뒤 → 신고 + 마지막 신고 시각을 한 번에.
+        /// 규칙이 막는 것: 없는 글, 내 글, 같은 글 두 번, 간격, 차단된 계정, 새 계정 대기.
+        /// </summary>
+        public void Report(BbsConfig.Post post, string name, Action<BbsSendResult, int> done)
+        {
+            var postId = post?.Id;
+            if (!Available || string.IsNullOrEmpty(postId))
+            {
+                done?.Invoke(BbsSendResult.Offline, 0);
+                return;
+            }
+
+            if (_hidden.Contains(postId))
+            {
+                done?.Invoke(BbsSendResult.Already, 0);
+                return;
+            }
+
+            var wait = ReportWait();
+            if (wait.Result != BbsSendResult.Ok)
+            {
+                done?.Invoke(wait.Result, wait.Seconds);
+                return;
+            }
+
+            Register(name, registered =>
+            {
+                if (!registered)
+                {
+                    done?.Invoke(BbsSendResult.Offline, 0);
+                    return;
+                }
+
+                wait = ReportWait();
+                if (wait.Result != BbsSendResult.Ok)
+                {
+                    done?.Invoke(wait.Result, wait.Seconds);
+                    return;
+                }
+
+                WithToken(token =>
+                {
+                    if (token == null)
+                    {
+                        done?.Invoke(BbsSendResult.Offline, 0);
+                        return;
+                    }
+
+                    Patch(BuildReport(postId, _uid), token, (ok, code) =>
+                    {
+                        if (ok)
+                        {
+                            _lastReportMs = NowMs();
+                            _hidden.Add(postId);
+                            SaveIdentity();
+                            done?.Invoke(BbsSendResult.Ok, 0);
+                        }
+                        else
+                        {
+                            done?.Invoke(code == 400 || code == 401 || code == 403 ? BbsSendResult.Refused : BbsSendResult.Offline, 0);
+                        }
+                    });
                 });
             });
+        }
+
+        /// <summary>뿌리 경로에 여러 자리를 한 번에 쓴다 (PATCH).</summary>
+        private void Patch(string json, string token, Action<bool, long> done)
+        {
+            var request = new UnityWebRequest(RootUrl + ".json?auth=" + UnityWebRequest.EscapeURL(token), "PATCH")
+            {
+                uploadHandler = new UploadHandlerRaw(Encoding.UTF8.GetBytes(json)),
+                downloadHandler = new DownloadHandlerBuffer(),
+                timeout = _config.TimeoutSeconds,
+            };
+            request.SetRequestHeader("Content-Type", "application/json");
+            request.SendWebRequest().completed += _ =>
+            {
+                var ok = request.result == UnityWebRequest.Result.Success;
+                var code = request.responseCode;
+                request.Dispose();
+                done?.Invoke(ok, code);
+            };
         }
 
         private void Get(string url, Action<string, long> done)
@@ -530,7 +837,7 @@ namespace ApoGirl.Presentation.Screens
                         return;
                     }
 
-                    Put(UserUrl("name"), JsonConvert.SerializeObject(Trim(name, _config.MaxAuthor)), token, (_, __) => FinishRegister(true));
+                    Put(UserUrl("name"), JsonConvert.SerializeObject(Trim(Filter.Mask(name ?? ""), _config.MaxAuthor)), token, (_, __) => FinishRegister(true));
                 });
             });
         }
@@ -680,6 +987,7 @@ namespace ApoGirl.Presentation.Screens
                     _registerState = 0;
                     _firstSeenMs = 0;
                     _lastPostMs = 0;
+                    _lastReportMs = 0;
                 }
 
                 _idToken = token;
@@ -707,6 +1015,7 @@ namespace ApoGirl.Presentation.Screens
             /// <summary>이 계정을 처음 등록한 때·마지막으로 글을 올린 때 (내 컴퓨터 시계, 유닉스 ms, 0 = 모름·오래됨).</summary>
             public long FirstSeenMs;
             public long LastPostMs;
+            public long LastReportMs;
         }
 
         private string IdentityPath => _identityPath;
@@ -722,6 +1031,7 @@ namespace ApoGirl.Presentation.Screens
                     _refreshToken = identity?.RefreshToken;
                     _firstSeenMs = identity?.FirstSeenMs ?? 0;
                     _lastPostMs = identity?.LastPostMs ?? 0;
+                    _lastReportMs = identity?.LastReportMs ?? 0;
                 }
             }
             catch (Exception exception)
@@ -736,7 +1046,7 @@ namespace ApoGirl.Presentation.Screens
             {
                 File.WriteAllText(IdentityPath, JsonUtility.ToJson(new Identity
                 {
-                    Uid = _uid ?? "", RefreshToken = _refreshToken ?? "", FirstSeenMs = _firstSeenMs, LastPostMs = _lastPostMs,
+                    Uid = _uid ?? "", RefreshToken = _refreshToken ?? "", FirstSeenMs = _firstSeenMs, LastPostMs = _lastPostMs, LastReportMs = _lastReportMs,
                 }));
             }
             catch (Exception exception)

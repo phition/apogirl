@@ -36,6 +36,10 @@ namespace ApoGirl.Presentation.Screens
             public string Date = "";
             public string Author = "";
             public string[] Body = Array.Empty<string>();
+
+            /// <summary>회선 너머에서 받은 글의 ID와 올린 계정 (신고·가리기에 쓴다. 파일에는 남기지 않는다).</summary>
+            [NonSerialized] public string Id = "";
+            [NonSerialized] public string Uid = "";
         }
 
         public string Service = "이제누리";
@@ -102,7 +106,7 @@ namespace ApoGirl.Presentation.Screens
 
     /// <summary>
     /// PC통신 '이제누리' (사용자 요청 2026-11-26): 파란 글자 화면(둥근모꼴), 명령을 타이핑해 쓴다.
-    /// 번호 = 메뉴·글, P = 앞 화면, T = 처음, N/B = 쪽 넘김, GO 이름, S 낱말(백과 찾기), W 글쓰기, H 도움말, X 끊기.
+    /// 번호 = 메뉴·글, P = 앞 화면, T = 처음, N/B = 쪽 넘김, GO 이름, S 낱말(백과 찾기), W 글쓰기, R 신고(글을 읽는 중), H 도움말, X 끊기.
     /// 컴퓨터 전력이 불안정해 한 주에 SessionSeconds만 버틴다 — 남은 시간은 보여 주지 않고, 다 쓰면 WentDown을 부른다.
     /// 내가 쓴 게시판 글은 persistentDataPath/Bbs.json에 남는다 (모든 판 공통).
     /// </summary>
@@ -529,12 +533,13 @@ namespace ApoGirl.Presentation.Screens
                 }
 
                 var post = posts[number - 1];
-                Go(() => ShowPost(title, post));
+                Go(() => ShowPost(title, post, board));
                 return true;
             });
         }
 
-        private void ShowPost(string board, BbsConfig.Post post)
+        /// <summary>글 읽기. 열린 게시판에서 회선 너머의 남의 글이면 R로 신고할 수 있다 (R → Y).</summary>
+        private void ShowPost(string board, BbsConfig.Post post, bool onBoard = false)
         {
             var lines = new List<string>
             {
@@ -543,7 +548,83 @@ namespace ApoGirl.Presentation.Screens
                 "",
             };
             lines.AddRange(post.Body);
-            Set(() => ShowPost(board, post), board, lines, Loc.T("bbs.hint.read"), null);
+            var canReport = onBoard && _online != null && _online.Available && !string.IsNullOrEmpty(post.Id) && post.Uid != _online.Uid;
+            Action self = null;
+            self = () => ShowPost(board, post, onBoard);
+            if (!canReport)
+            {
+                Set(self, board, lines, Loc.T("bbs.hint.read"), null);
+                return;
+            }
+
+            var asked = false;
+            Set(self, board, lines, Loc.T("bbs.hint.read_report"), command =>
+            {
+                if (command == "R")
+                {
+                    asked = true;
+                    _notice = Loc.T("bbs.report_ask");
+                    Render();
+                    return true;
+                }
+
+                if (command == "Y" && asked)
+                {
+                    asked = false;
+                    Report(post, self);
+                    return true;
+                }
+
+                asked = false;
+                return false;
+            });
+        }
+
+        /// <summary>글을 신고한다. 신고한 글은 내 목록에서 바로 빠지고, 아직 그 글을 보고 있으면 목록으로 돌아간다.</summary>
+        private void Report(BbsConfig.Post post, Action reading)
+        {
+            _notice = Loc.T("bbs.report_sending");
+            Render();
+            _online.Report(post, YarnFunctions.Name(), (result, seconds) =>
+            {
+                var gone = result == BbsSendResult.Ok || result == BbsSendResult.Already;
+                if (gone)
+                {
+                    _onlinePosts?.Remove(post);
+                }
+
+                if (!IsOpen || _raw != null || _current != reading)
+                {
+                    return;
+                }
+
+                if (gone)
+                {
+                    // P를 누른 것처럼 목록으로 (목록을 다시 받아 오지는 않는다 — 안내가 지워지지 않게)
+                    if (_back.Count > 0)
+                    {
+                        _back.Pop();
+                    }
+
+                    ShowBoardList();
+                }
+
+                _notice = ReportNotice(result, seconds);
+                Render();
+            });
+        }
+
+        private static string ReportNotice(BbsSendResult result, int seconds)
+        {
+            switch (result)
+            {
+                case BbsSendResult.Ok:
+                case BbsSendResult.Already: return Loc.T("bbs.report_done");
+                case BbsSendResult.TooSoon: return Loc.F("bbs.report_too_soon", seconds);
+                case BbsSendResult.NewAccount: return Loc.F("bbs.report_new_line", seconds);
+                case BbsSendResult.Refused: return Loc.T("bbs.report_refused");
+                default: return Loc.T("bbs.report_offline");
+            }
         }
 
         private void ShowBoard()
@@ -663,7 +744,8 @@ namespace ApoGirl.Presentation.Screens
                     return true;
                 }
 
-                if (BbsOnline.IsBlocked(title, _online.Config) || BbsOnline.IsBlocked(text, _online.Config))
+                // 금칙어가 든 글은 올리지 않는다 (내 컴퓨터에도 남기지 않는다). 이름에 든 것은 가려서 보낸다
+                if (_online.Filter.Hits(title) || _online.Filter.Hits(text))
                 {
                     ShowBoardList();
                     _notice = Loc.T("bbs.write_blocked");
@@ -672,8 +754,9 @@ namespace ApoGirl.Presentation.Screens
                 }
 
                 // 회선 너머로 올린다. 안 되면 내 컴퓨터에만 남긴다
-                post.Title = BbsOnline.Clean(post.Title, _online.Config.MaxTitle, _online.Config);
-                post.Body = new[] { BbsOnline.Clean(text, _online.Config.MaxBody, _online.Config) };
+                post.Title = BbsOnline.Clean(post.Title, _online.Config.MaxTitle, _online.Filter);
+                post.Body = new[] { BbsOnline.Clean(text, _online.Config.MaxBody, _online.Filter) };
+                post.Author = BbsOnline.Clean(post.Author, _online.Config.MaxAuthor, _online.Filter);
                 ShowBoardList();
                 _notice = Loc.T("bbs.write_sending");
                 Render();

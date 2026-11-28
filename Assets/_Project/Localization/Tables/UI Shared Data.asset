@@ -9751,6 +9751,38 @@ MonoBehaviour:
     m_Key: bbs.write_new_line
     m_Metadata:
       m_Items: []
+  - m_Id: 3382945057619968
+    m_Key: bbs.hint.read_report
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3382945367998464
+    m_Key: bbs.report_ask
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3382945367998465
+    m_Key: bbs.report_sending
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3382945367998466
+    m_Key: bbs.report_done
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3382945367998467
+    m_Key: bbs.report_too_soon
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3382945367998468
+    m_Key: bbs.report_new_line
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3382945367998469
+    m_Key: bbs.report_refused
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3382945367998470
+    m_Key: bbs.report_offline
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
