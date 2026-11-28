@@ -209,6 +209,10 @@ namespace ApoGirl.Presentation.Screens
                 WentDown = () => _card.ShowMessage(Loc.T("bbs.title"), Loc.T("bbs.down")),
             };
             _section.BbsRequested = OpenBbs;
+            if (Core.Rules.BbsRules.IsKnown(_session.State))
+            {
+                _bbs.Warm();   // 온라인 게시판의 이용자 기록을 미리 (새 계정 대기가 컴퓨터 앞에 앉기 전에 끝나게)
+            }
             _give = new GiveSheetView(_root, _session);
             _teacherBox.RegisterCallback<ClickEvent>(_ =>
             {

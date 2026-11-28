@@ -68,5 +68,101 @@ namespace ApoGirl.Tests.PlayMode
             Assert.IsFalse(BbsOnline.IsBlocked("잘 지내?", config));
             Assert.IsFalse(BbsOnline.IsBlocked("", config));
         }
+
+        // ── 글 사이 간격·새 계정 대기 (2026-11-28 다시 맞춤): 보내기 전에 "n초 뒤에 다시"를 알려 준다. 통신은 하지 않는다 ──
+
+        [Test]
+        public void WaitSeconds_CountsDownWithMargin_AndForgivesAClockThatWentBack()
+        {
+            const long now = 1_000_000_000L;
+            Assert.AreEqual(0, BbsOnline.WaitSeconds(now, 0, 60), "기록이 없으면 기다리지 않는다");
+            Assert.AreEqual(60 + BbsOnline.ClockMarginSeconds, BbsOnline.WaitSeconds(now, now, 60), "방금이면 간격 + 여유");
+            Assert.AreEqual(BbsOnline.ClockMarginSeconds + 1, BbsOnline.WaitSeconds(now, now - 59_000, 60));
+            Assert.AreEqual(0, BbsOnline.WaitSeconds(now, now - (60 + BbsOnline.ClockMarginSeconds) * 1000L, 60), "다 지났다");
+            Assert.AreEqual(60 + BbsOnline.ClockMarginSeconds, BbsOnline.WaitSeconds(now, now + 3_600_000, 60), "시계가 거꾸로 갔어도 가장 길어야 간격 + 여유");
+            Assert.AreEqual(0, BbsOnline.WaitSeconds(now, now, 0), "간격이 0이면 기다리지 않는다");
+        }
+
+        private static string IdentityFile(long firstSeenMs, long lastPostMs)
+        {
+            // 테스트는 사용자의 실제 계정 파일(persistentDataPath/BbsOnline.json)을 건드리지 않는다
+            var path = System.IO.Path.Combine(UnityEngine.Application.temporaryCachePath, "BbsOnlineTest_" + System.Guid.NewGuid().ToString("N") + ".json");
+            System.IO.File.WriteAllText(path, "{\"Uid\":\"uid-test\",\"RefreshToken\":\"r\",\"FirstSeenMs\":" + firstSeenMs + ",\"LastPostMs\":" + lastPostMs + "}");
+            return path;
+        }
+
+        private static BbsOnlineConfig Online() =>
+            new BbsOnlineConfig { Enabled = true, DatabaseUrl = "https://example.invalid", ApiKey = "k", PostIntervalSeconds = 60, NewAccountWaitSeconds = 120 };
+
+        [Test]
+        public void PostWait_NewAccountFirst_ThenTheGapBetweenPosts_TestPathSkipsTheNewAccountWait()
+        {
+            var now = System.DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
+            var fresh = IdentityFile(now, now);
+            try
+            {
+                var live = new BbsOnline(Online(), fresh, false);
+                Assert.AreEqual("uid-test", live.Uid);
+                Assert.AreEqual(BbsSendResult.NewAccount, live.PostWait().Result, "정식 경로: 새 계정 대기가 먼저");
+                Assert.Greater(live.PostWait().Seconds, 100);
+
+                var test = new BbsOnline(Online(), fresh, true);
+                Assert.IsTrue(test.UsesTestPath);
+                Assert.AreEqual(BbsSendResult.TooSoon, test.PostWait().Result, "시험 경로에는 새 계정 대기가 없다 — 글 사이 간격만");
+            }
+            finally
+            {
+                System.IO.File.Delete(fresh);
+            }
+
+            var old = IdentityFile(now - 3_600_000, now - 3_600_000);
+            try
+            {
+                Assert.AreEqual(BbsSendResult.Ok, new BbsOnline(Online(), old, false).PostWait().Result, "오래된 계정은 바로 올릴 수 있다");
+            }
+            finally
+            {
+                System.IO.File.Delete(old);
+            }
+
+            var legacy = IdentityFile(0, 0);
+            try
+            {
+                Assert.AreEqual(BbsSendResult.Ok, new BbsOnline(Online(), legacy, false).PostWait().Result, "시각 기록이 없는 옛 계정 파일도 올릴 수 있다");
+            }
+            finally
+            {
+                System.IO.File.Delete(legacy);
+            }
+        }
+
+        [Test]
+        public void Send_RightAfterAPost_AnswersTooSoonWithoutCallingTheServer()
+        {
+            var now = System.DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
+            var path = IdentityFile(now - 3_600_000, now - 5_000);
+            try
+            {
+                var online = new BbsOnline(Online(), path, false);
+                BbsSendResult? result = null;
+                var seconds = 0;
+                online.Send(new BbsConfig.Post { Title = "제목", Body = new[] { "내용" }, Author = "서진", Date = "03.16" }, (r, s) =>
+                {
+                    result = r;
+                    seconds = s;
+                });
+                Assert.AreEqual(BbsSendResult.TooSoon, result, "바로 답한다 (서버에 보내지 않는다)");
+                Assert.That(seconds, Is.InRange(50, 60));
+
+                var off = new BbsOnline(new BbsOnlineConfig { Enabled = false }, path, false);
+                BbsSendResult? offline = null;
+                off.Send(new BbsConfig.Post { Title = "제목", Body = new[] { "내용" } }, (r, _) => offline = r);
+                Assert.AreEqual(BbsSendResult.Offline, offline, "온라인을 꺼 두었으면 보내지 않는다");
+            }
+            finally
+            {
+                System.IO.File.Delete(path);
+            }
+        }
     }
 }

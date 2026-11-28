@@ -556,7 +556,7 @@ namespace ApoGirl.Presentation.Screens
             }
 
             // 회선 너머의 글을 받아 온다. 다 받으면, 아직 게시판 목록을 보고 있을 때만 목록을 새로 그린다
-            _online.Register(YarnFunctions.Name());   // 이용자 기록 (첫 접속 시각·이름)
+            Warm();   // 이용자 기록 (첫 접속 시각·이름)
             _onlineLoading = true;
             var token = ++_onlineToken;
             _notice = Loc.T("bbs.online_loading");
@@ -581,6 +581,19 @@ namespace ApoGirl.Presentation.Screens
                 _notice = posts != null ? Loc.F("bbs.online_ok", posts.Count) : Loc.T("bbs.online_fail");
                 Render();
             });
+        }
+
+        /// <summary>
+        /// 온라인 게시판의 이용자 기록을 미리 남긴다 (익명 로그인 + 첫 접속 시각). 새 계정은 얼마 동안 글을 못 쓰니,
+        /// PC통신을 알게 된 뒤 허브에 들어올 때 해 두면 컴퓨터 앞에 앉았을 때는 대개 대기가 끝나 있다.
+        /// </summary>
+        public void Warm()
+        {
+            _online ??= new BbsOnline();
+            if (_online.Available && _session.State != null)
+            {
+                _online.Register(YarnFunctions.Name());
+            }
         }
 
         /// <summary>게시판 목록: 처음부터 있던 글 → 회선 너머에서 받은 글 → 내 컴퓨터에만 있는 글.</summary>
@@ -665,8 +678,9 @@ namespace ApoGirl.Presentation.Screens
                 _notice = Loc.T("bbs.write_sending");
                 Render();
                 var token = ++_onlineToken;
-                _online.Send(post, ok =>
+                _online.Send(post, (result, seconds) =>
                 {
+                    var ok = result == BbsSendResult.Ok;
                     if (ok)
                     {
                         // 목록에는 다른 사람 글처럼 이름(꼬리표)로 보인다
@@ -684,12 +698,25 @@ namespace ApoGirl.Presentation.Screens
                     }
 
                     ShowBoardList();
-                    _notice = Loc.T(ok ? "bbs.write_done" : "bbs.write_refused");
+                    _notice = SendNotice(result, seconds);
                     Render();
                 });
                 return true;
             };
             Render();
+        }
+
+        /// <summary>글 올리기 결과 안내: 올라갔다 / n초 뒤에 다시(방금 올림·새 회선) / 받지 않았다 / 회선이 불안정하다.</summary>
+        private static string SendNotice(BbsSendResult result, int seconds)
+        {
+            switch (result)
+            {
+                case BbsSendResult.Ok: return Loc.T("bbs.write_done");
+                case BbsSendResult.TooSoon: return Loc.F("bbs.write_too_soon", seconds);
+                case BbsSendResult.NewAccount: return Loc.F("bbs.write_new_line", seconds);
+                case BbsSendResult.Refused: return Loc.T("bbs.write_refused");
+                default: return Loc.T("bbs.write_offline");
+            }
         }
 
         private void EndRaw()

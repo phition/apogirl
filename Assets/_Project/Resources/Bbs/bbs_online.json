@@ -10,5 +10,7 @@
   "MaxTitle": 30,
   "MaxBody": 120,
   "MaxAuthor": 12,
+  "PostIntervalSeconds": 60,
+  "NewAccountWaitSeconds": 120,
   "BlockedWords": ["씨발", "시발", "ㅅㅂ", "병신", "ㅂㅅ", "좆", "존나", "개새끼", "지랄", "fuck", "shit"]
 }

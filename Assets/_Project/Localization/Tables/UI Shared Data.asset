@@ -9743,6 +9743,14 @@ MonoBehaviour:
     m_Key: ending.record.trades
     m_Metadata:
       m_Items: []
+  - m_Id: 3340077777567744
+    m_Key: bbs.write_too_soon
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3340077857259520
+    m_Key: bbs.write_new_line
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
