@@ -1,0 +1,87 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e24ce4e6e4507494299ec76a5be73c10, type: 3}
+  m_Name: EVT_ROOM_SCIENCE_OPEN
+  m_EditorClassIdentifier: ApoGirl.Data::ApoGirl.Data.EventDefinitionAsset
+  _id: EVT_ROOM_SCIENCE_OPEN
+  _definition:
+    Id: EVT_ROOM_SCIENCE_OPEN
+    Kind: 0
+    Condition:
+      WeekMin: 2
+      WeekMax: 0
+      Days: 07000000i
+      Phase: 2
+      Seasons: 
+      Month: 0
+      DayOfMonth: 0
+      ActionCategories: 
+      ActionIds: []
+      FlagsAll:
+      - SEARCHED_SCIENCE
+      FlagsAny: []
+      FlagsNone:
+      - TEACHER_BEDRIDDEN
+      - TEACHER_ISOLATED
+      - TEACHER_LEFT_BEHIND
+      CluesAll: []
+      Checks:
+      - Kind: 12
+        Key: SCIENCE
+        Op: 2
+        Value: 0
+      AnyChecks: []
+      NpcStatuses: []
+      IsBirthday: 0
+    Priority: 58
+    Weight: 1
+    Once: 1
+    CooldownWeeks: 0
+    DialogueNode: 
+    OnShow:
+      Stats: []
+      Vitals: []
+      Resources: []
+      Hidden: []
+      SleepDebt: 0
+      Conscience: 0
+      SetFlags:
+      - SCIENCE_EARLY
+      ClearFlags: []
+      AddClues: []
+      EndingTags: []
+      Npcs: []
+      Items: []
+      Defense: 0
+      Threat: 0
+      Facilities:
+      - FacilityId: SCIENCE
+        Level: 1
+      AddTraits: []
+      Proficiencies: []
+      TeacherMobility: 0
+      RestorePower: 0
+      TreatInjury: 0
+      CookDish: 0
+      PurifyWater: 0
+      PurifyRate: 1
+      RaidStrength: 0
+      TeacherReinfect: 0
+      TeacherInfection: 0
+      TraumaCare: 0
+      Traps: 0
+      IntrusionResponse: 
+      Factions: []
+    ThenEventId: 
+    Choices: []
+    ReviewAct: 0
+    ReviewFromWeek: 1

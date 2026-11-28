@@ -287,6 +287,26 @@
       "Image": "Backgrounds/bg_broadcast"
     },
     {
+      "Event": "EVT_SYS_ROOM_OFFICE",
+      "Image": "Backgrounds/bg_staffroom"
+    },
+    {
+      "Event": "EVT_ROOM_SCIENCE_OPEN",
+      "Image": "Backgrounds/bg_science"
+    },
+    {
+      "Event": "EVT_ROOM_STAFFROOM_OPEN",
+      "Image": "Backgrounds/bg_staffroom"
+    },
+    {
+      "Event": "EVT_A2_SCIENCE_NOTE",
+      "Image": "Backgrounds/bg_science"
+    },
+    {
+      "Event": "EVT_A2_STAFFROOM_RECORDS",
+      "Image": "Events/evt_a2_staffroom"
+    },
+    {
       "Event": "EVT_SYS_CLASSROOM_NIGHT",
       "Image": "Events/evt_sys_classroom_night"
     },

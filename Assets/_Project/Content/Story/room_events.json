@@ -1,0 +1,32 @@
+{
+  "Events": [
+    { "Id": "EVT_SYS_ROOM_OFFICE", "Kind": "Story", "Priority": 30,
+      "Condition": { "WeekMax": 39, "FlagsNone": [ "TEACHER_BEDRIDDEN", "TEACHER_ISOLATED", "TEACHER_LEFT_BEHIND" ], "ActionIds": [ "ACT_EXP_DAY_SCHOOL", "ACT_EXP_NIGHT_SCHOOL" ], "FlagsAll": [ "SEARCHED_OFFICE" ] } },
+
+    { "Id": "EVT_ROOM_SCIENCE_OPEN", "Kind": "Story", "Priority": 58,
+      "Condition": { "WeekMin": 2, "Days": [ 7 ], "Phase": "Night", "FlagsAll": [ "SEARCHED_SCIENCE" ], "FlagsNone": [ "TEACHER_BEDRIDDEN", "TEACHER_ISOLATED", "TEACHER_LEFT_BEHIND" ],
+        "Checks": [ { "Kind": "Facility", "Key": "SCIENCE", "Op": "Equal", "Value": 0 } ] },
+      "OnShow": { "Facilities": [ { "FacilityId": "SCIENCE", "Level": 1 } ], "SetFlags": [ "SCIENCE_EARLY" ] } },
+
+    { "Id": "EVT_ROOM_STAFFROOM_OPEN", "Kind": "Story", "Priority": 57,
+      "Condition": { "WeekMin": 2, "Days": [ 7 ], "Phase": "Night", "FlagsAll": [ "SEARCHED_OFFICE" ], "FlagsNone": [ "TEACHER_BEDRIDDEN", "TEACHER_ISOLATED", "TEACHER_LEFT_BEHIND" ],
+        "Checks": [ { "Kind": "Facility", "Key": "STAFFROOM", "Op": "Equal", "Value": 0 } ] },
+      "OnShow": { "Facilities": [ { "FacilityId": "STAFFROOM", "Level": 1 } ], "SetFlags": [ "STAFFROOM_EARLY" ] } },
+
+    { "Id": "EVT_A2_SCIENCE_NOTE", "Kind": "Story", "Priority": 65, "DialogueNode": "EVT_A2_SCIENCE",
+      "Condition": { "WeekMin": 19, "Phase": "Day", "ActionCategories": [ "Education", "Survival", "Rest", "Daily", "Craft" ], "FlagsAll": [ "A2_STARTED", "SCIENCE_EARLY" ] },
+      "Choices": [
+        { "Id": "FILTER", "Effect": { "Resources": [ { "Resource": "Water", "Amount": 5 } ], "Stats": [ { "Stat": "Craft", "Amount": 1 } ] } },
+        { "Id": "NOTEBOOK", "Effect": { "AddClues": [ "TRUTH_SCIENCE_NOTE" ], "Stats": [ { "Stat": "Intellect", "Amount": 1 } ] } }
+      ] },
+
+    { "Id": "EVT_A2_STAFFROOM_RECORDS", "Kind": "Story", "Priority": 75, "DialogueNode": "EVT_A2_STAFFROOM",
+      "Condition": { "WeekMin": 20, "Phase": "Day", "ActionCategories": [ "Education", "Survival", "Rest", "Daily", "Craft" ], "FlagsAll": [ "A2_STARTED", "STAFFROOM_EARLY" ], "FlagsNone": [ "RECORDS_FOUND" ] },
+      "OnShow": { "SetFlags": [ "RECORDS_FOUND" ] },
+      "Choices": [
+        { "Id": "READ_OWN", "Effect": { "Vitals": [ { "Vital": "Stress", "Amount": 8 } ], "Hidden": [ { "Hidden": "SelfAwareness", "Amount": 2 } ] } },
+        { "Id": "GIVE_TEACHER", "Effect": { "SetFlags": [ "RECORDS_GIVEN" ], "Npcs": [ { "NpcId": "NPC_TEACHER", "Trust": 3 } ] } },
+        { "Id": "HIDE", "Effect": { "SetFlags": [ "RECORDS_HIDDEN" ], "Hidden": [ { "Hidden": "Isolation", "Amount": 4 } ] } }
+      ] }
+  ]
+}

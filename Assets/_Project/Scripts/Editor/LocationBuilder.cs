@@ -657,6 +657,8 @@ namespace ApoGirl.EditorTools
             {
                 { "ROOM_NURSE", "SEARCHED_NURSE" }, { "ROOM_HOMEEC", "SEARCHED_HOMEEC" }, { "ROOM_COMPUTER", "SEARCHED_COMPUTER" },
                 { "ROOM_SCIENCE", "SEARCHED_SCIENCE" }, { "ROOM_MUSIC", "SEARCHED_MUSIC" }, { "ROOM_BROADCAST", "SEARCHED_BROADCAST" },
+                // 교무실: 뒤지면 그 주 일요일 밤에 거점의 교무실이 열린다 (room_events.json의 EVT_ROOM_STAFFROOM_OPEN — 과학실도 같은 방식)
+                { "ROOM_OFFICE", "SEARCHED_OFFICE" },
             };
             foreach (var door in layout.Doors)
             {

@@ -93,7 +93,7 @@ MonoBehaviour:
         X: 6
         Number: 0
         LootTableId: 
-        SearchFlag: 
+        SearchFlag: SEARCHED_OFFICE
         Seal: 0
       - RoomId: ROOM_1F_ROOM_NURSE_1
         TemplateId: ROOM_NURSE

@@ -765,7 +765,7 @@ namespace ApoGirl.Systems.Session
             // 거처 선택별 해금(교실 / 창고)은 둘 다 켠다 — 디버그에서는 모든 거점 행동을 본다
             "CLASSROOM_MOVED_IN", "STAYED_STORAGE",
             // 교실동 특수실 발견 (단면도 방·수업이 열린다)
-            "SEARCHED_NURSE", "SEARCHED_HOMEEC", "SEARCHED_COMPUTER", "SEARCHED_SCIENCE", "SEARCHED_MUSIC", "SEARCHED_BROADCAST",
+            "SEARCHED_NURSE", "SEARCHED_HOMEEC", "SEARCHED_COMPUTER", "SEARCHED_SCIENCE", "SEARCHED_MUSIC", "SEARCHED_BROADCAST", "SEARCHED_OFFICE",
         };
 
         /// <summary>
