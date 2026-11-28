@@ -79,13 +79,14 @@ namespace ApoGirl.Tests.EditMode
         }
 
         [Test]
-        public void RestRelief_NightTen_DayHalf()
+        public void RestRelief_NightTwelve_DayHalf()
         {
+            // 스트레스 균형 A안 (사용자 결정 2026-11-28): 밤 휴식 12, 낮잠은 그 절반
             var balance = new BalanceConfig();
             var night = new ActionDef { Id = balance.NightRestActionId, Category = ActionCategory.Rest };
             var day = new ActionDef { Id = balance.DayRestActionId, Category = ActionCategory.Rest };
-            Assert.AreEqual(10, StressRules.RestRelief(balance, night));
-            Assert.AreEqual(5, StressRules.RestRelief(balance, day));
+            Assert.AreEqual(12, StressRules.RestRelief(balance, night));
+            Assert.AreEqual(6, StressRules.RestRelief(balance, day));
             Assert.AreEqual(0, StressRules.RestRelief(balance, new ActionDef { Id = "ACT_TRIP_NIGHT", Category = ActionCategory.Rest }), "소풍 등은 데이터 값 그대로");
 
             balance.NightRestStress = 16;

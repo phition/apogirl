@@ -199,9 +199,9 @@ namespace ApoGirl.Core.Definitions
         public int RaidBasePower = 20;
 
         /// <summary>습격 결과.</summary>
-        public int RaidRepelStress = 6;
+        public int RaidRepelStress = 3; // 2026-11-28 사용자(스트레스 균형 A안, BOT_ENDING_LOG #31·#32): 6 → 3 — 습격이 주 1.5번으로 늘어 한 번의 몫을 줄였다
         public int RaidRepelDefenseLoss = 3; // 2026-11-26 사용자: 1 → 3 (낮 침입도 같다)
-        public int RaidBreachStress = 18;
+        public int RaidBreachStress = 12; // 2026-11-28 사용자(스트레스 균형 A안, BOT_ENDING_LOG #31·#32): 18 → 12
         public int RaidBreachHp = 10;
         public int RaidBreachFood = 3;
         public int RaidBreachDefenseLoss = 10; // 2026-11-26 사용자: 3 → 10 (낮 침입도 같다)
@@ -315,8 +315,8 @@ namespace ApoGirl.Core.Definitions
         public int HydrationDailyDrain = 8;
 
         /// <summary>식량이나 물이 모자라 식단을 못 지킨 날, 주인공·동료마다 오르는 스트레스 (이 범위에서 무작위).</summary>
-        public int DietShortStressMin = 2;
-        public int DietShortStressMax = 5;
+        public int DietShortStressMin = 1; // 2026-11-28 사용자(스트레스 균형 A안, BOT_ENDING_LOG #31·#32): 2~5 → 1~3
+        public int DietShortStressMax = 3;
 
         /// <summary>주인공 탐험 한 번의 포만·수분 소모 (챙겨 먹으면 탐험을 다녀도 유지되게, 2026-11-23).</summary>
         public int ExpeditionSatietyDrain = 5;
@@ -1029,11 +1029,11 @@ namespace ApoGirl.Core.Definitions
         public float IntrusionHideAlarmBonus = 0.3f;
         public float IntrusionHidePerDefense = 0.004f;
 
-        public int IntrusionWinStress = 8;
+        public int IntrusionWinStress = 4; // 2026-11-28 사용자(스트레스 균형 A안, BOT_ENDING_LOG #31·#32): 8·15·10·6 → 4·10·6·3
         public int IntrusionLoseHp = 15;
-        public int IntrusionLoseStress = 15;
-        public int IntrusionYieldStress = 10;
-        public int IntrusionHideStress = 6;
+        public int IntrusionLoseStress = 10;
+        public int IntrusionYieldStress = 6;
+        public int IntrusionHideStress = 3;
 
         /// <summary>대비가 부족하면 학교에 있던 동료 한 명이 다쳐 이만큼 주 동안 역할을 못 한다.</summary>
         public int IntrusionInjuryWeeks = 2;
@@ -1275,7 +1275,7 @@ namespace ApoGirl.Core.Definitions
         public float ReducedRestMultiplier = 0.5f;
 
         /// <summary>밤 휴식이 내리는 스트레스. 낮잠은 그 DayRestStressRatio배 (반올림, 휴식 회복 배율은 그 뒤에 곱한다).</summary>
-        public int NightRestStress = 10;
+        public int NightRestStress = 12; // 2026-11-28 사용자(스트레스 균형 A안, BOT_ENDING_LOG #31·#32): 10 → 12 (낮잠은 6)
         public float DayRestStressRatio = 0.5f;
 
         /// <summary>쓰러짐 후 강제 요양 슬롯 수 (문서 6.3.6: 2일 = 4슬롯).</summary>

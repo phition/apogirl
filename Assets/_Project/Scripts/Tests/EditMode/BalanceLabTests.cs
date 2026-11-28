@@ -93,14 +93,14 @@ namespace ApoGirl.Tests.EditMode
             Assert.That(expedition.Night.StressMax, Is.EqualTo(99));
 
             // 밸런스 필드 짝 (…Min · …Max)
-            model.Field("DietShortStressMax").TrySet("1", out _);
-            Assert.That(db.Balance.DietShortStressMin, Is.EqualTo(1));
+            model.Field("DietShortStressMax").TrySet("0", out _);
+            Assert.That(db.Balance.DietShortStressMin, Is.EqualTo(0));
 
             Assert.That(model.Changed.Select(c => c.Key), Does.Contain("Model/" + id + "/Night/StressMax").And.Contain("DietShortStressMin"), "밀려 바뀐 짝도 바뀐 칸");
             var stressMax = model.ModelCell(id, true, "StressMax").Baseline;
             model.RevertAll();
             Assert.That(expedition.Night.StressMax, Is.EqualTo(stressMax), "되돌리면 짝도 원래 값");
-            Assert.That(db.Balance.DietShortStressMin, Is.EqualTo(2));
+            Assert.That(db.Balance.DietShortStressMin, Is.EqualTo(new BalanceConfig().DietShortStressMin));
         }
 
         [Test]
