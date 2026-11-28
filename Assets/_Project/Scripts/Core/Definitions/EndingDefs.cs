@@ -87,6 +87,13 @@ namespace ApoGirl.Core.Definitions
         public List<string> EndCauses = new List<string>();
 
         public ConditionDef Condition = new ConditionDef();
+
+        /// <summary>
+        /// '또는' 조건: Condition이 안 맞아도 이 가운데 하나가 맞으면 이 엔딩의 조건을 채운 것으로 본다
+        /// (예: 「아직 닫힌 문」 — 상처를 꺼내지 못했거나, 무게를 꺼내지 못했거나). 비면 Condition만 본다.
+        /// </summary>
+        public List<ConditionDef> AltConditions = new List<ConditionDef>();
+
         public List<EndingScoreTerm> Score = new List<EndingScoreTerm>();
 
         /// <summary>이 막에서 보여 주는 컷.</summary>

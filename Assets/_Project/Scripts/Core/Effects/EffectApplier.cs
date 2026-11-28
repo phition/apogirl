@@ -379,6 +379,7 @@ namespace ApoGirl.Core.Effects
             delta.Conscience += after - before;
             if (after > before)
             {
+                RecordRules.ConscienceRose(state, after - before);
                 ConscienceRules.NoteRise(state, cause, delta);
             }
 

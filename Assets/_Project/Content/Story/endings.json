@@ -54,7 +54,26 @@
         "ending.ENDING_BAD_COLLAPSE.cut2",
         "ending.ENDING_BAD_COLLAPSE.cut3"
       ],
-      "Color": "#1E2026"
+      "Color": "#1E2026",
+      "Variants": [
+        {
+          "Id": "WEIGHT",
+          "Condition": {
+            "Checks": [
+              {
+                "Kind": "Conscience",
+                "Op": "GreaterOrEqual",
+                "Value": 6
+              }
+            ]
+          },
+          "CutKeys": [
+            "ending.ENDING_BAD_COLLAPSE.cut1",
+            "ending.ENDING_BAD_COLLAPSE.weight.cut2",
+            "ending.ENDING_BAD_COLLAPSE.cut3"
+          ]
+        }
+      ]
     },
     {
       "Id": "ENDING_BAD_INFECTION",
@@ -344,6 +363,82 @@
       "Color": "#2E2A30"
     },
     {
+      "Id": "ENDING_NARR_BURDEN",
+      "Category": "Narrative",
+      "Act": "Reflection",
+      "Priority": 345,
+      "Condition": {
+        "FlagsAll": [
+          "CONSCIENCE_CONFESSED"
+        ],
+        "Checks": [
+          {
+            "Kind": "Record",
+            "Key": "ConscienceRaised",
+            "Op": "GreaterOrEqual",
+            "Value": 6
+          },
+          {
+            "Kind": "Conscience",
+            "Op": "LessOrEqual",
+            "Value": 4
+          },
+          {
+            "Kind": "Hidden",
+            "Key": "SelfAwareness",
+            "Op": "GreaterOrEqual",
+            "Value": 45
+          }
+        ]
+      },
+      "Score": [
+        {
+          "Kind": "Record",
+          "Key": "ConscienceRaised",
+          "Weight": 5
+        },
+        {
+          "Kind": "Hidden",
+          "Key": "SelfAwareness",
+          "Weight": 1
+        }
+      ],
+      "CutKeys": [
+        "ending.ENDING_NARR_BURDEN.cut1",
+        "ending.ENDING_NARR_BURDEN.cut2"
+      ],
+      "CodaKeys": [
+        "ending.ENDING_NARR_BURDEN.cut3"
+      ],
+      "Color": "#262430",
+      "Variants": [
+        {
+          "Id": "AFRAID",
+          "Condition": {
+            "FlagsAll": [
+              "CONFESS_AFRAID"
+            ]
+          },
+          "CutKeys": [
+            "ending.ENDING_NARR_BURDEN.cut1",
+            "ending.ENDING_NARR_BURDEN.afraid.cut2"
+          ]
+        },
+        {
+          "Id": "REASON",
+          "Condition": {
+            "FlagsAll": [
+              "CONFESS_REASON"
+            ]
+          },
+          "CutKeys": [
+            "ending.ENDING_NARR_BURDEN.cut1",
+            "ending.ENDING_NARR_BURDEN.reason.cut2"
+          ]
+        }
+      ]
+    },
+    {
       "Id": "ENDING_NARR_OVERCOME",
       "Category": "Narrative",
       "Act": "Reflection",
@@ -383,7 +478,28 @@
       "CodaKeys": [
         "ending.ENDING_NARR_OVERCOME.cut3"
       ],
-      "Color": "#283040"
+      "Color": "#283040",
+      "Variants": [
+        {
+          "Id": "BURDEN",
+          "Condition": {
+            "FlagsAll": [
+              "CONSCIENCE_CONFESSED"
+            ],
+            "Checks": [
+              {
+                "Kind": "Record",
+                "Key": "ConscienceRaised",
+                "Op": "GreaterOrEqual",
+                "Value": 4
+              }
+            ]
+          },
+          "CodaKeys": [
+            "ending.ENDING_NARR_OVERCOME.burden.cut3"
+          ]
+        }
+      ]
     },
     {
       "Id": "ENDING_NARR_UNHEALED",
@@ -413,7 +529,45 @@
       "CodaKeys": [
         "ending.ENDING_NARR_UNHEALED.cut3"
       ],
-      "Color": "#1C2230"
+      "Color": "#1C2230",
+      "AltConditions": [
+        {
+          "FlagsNone": [
+            "CONSCIENCE_CONFESSED"
+          ],
+          "Checks": [
+            {
+              "Kind": "Conscience",
+              "Op": "GreaterOrEqual",
+              "Value": 8
+            }
+          ]
+        }
+      ],
+      "Variants": [
+        {
+          "Id": "WEIGHT",
+          "Condition": {
+            "FlagsNone": [
+              "CONSCIENCE_CONFESSED"
+            ],
+            "Checks": [
+              {
+                "Kind": "Conscience",
+                "Op": "GreaterOrEqual",
+                "Value": 8
+              }
+            ]
+          },
+          "CutKeys": [
+            "ending.ENDING_NARR_UNHEALED.weight.cut1",
+            "ending.ENDING_NARR_UNHEALED.weight.cut2"
+          ],
+          "CodaKeys": [
+            "ending.ENDING_NARR_UNHEALED.weight.cut3"
+          ]
+        }
+      ]
     },
     {
       "Id": "ENDING_REFLECT_DEFAULT",
@@ -1872,6 +2026,283 @@
       ]
     },
     {
+      "Id": "ENDING_NETWORK",
+      "Category": "Specialized",
+      "Act": "Future",
+      "Priority": 300,
+      "Condition": {
+        "FlagsAll": [
+          "BBS_KNOWN",
+          "POWER_RESTORED"
+        ],
+        "Checks": [
+          {
+            "Kind": "Proficiency",
+            "Key": "Engineering",
+            "Op": "GreaterOrEqual",
+            "Value": 2
+          },
+          {
+            "Kind": "Stat",
+            "Key": "Intellect",
+            "Op": "GreaterOrEqual",
+            "Value": 150
+          },
+          {
+            "Kind": "Record",
+            "Key": "BbsSessions",
+            "Op": "GreaterOrEqual",
+            "Value": 6
+          }
+        ]
+      },
+      "Score": [
+        {
+          "Kind": "Record",
+          "Key": "BbsSessions",
+          "Weight": 5
+        },
+        {
+          "Kind": "Proficiency",
+          "Key": "Engineering",
+          "Weight": 20
+        },
+        {
+          "Kind": "Stat",
+          "Key": "Intellect",
+          "Weight": 1
+        }
+      ],
+      "CutKeys": [
+        "ending.ENDING_NETWORK.cut1",
+        "ending.ENDING_NETWORK.cut2",
+        "ending.ENDING_NETWORK.cut3"
+      ],
+      "Color": "#1E2A30"
+    },
+    {
+      "Id": "ENDING_SHADOW",
+      "Category": "Record",
+      "Act": "Future",
+      "Priority": 320,
+      "Condition": {
+        "Checks": [
+          {
+            "Kind": "Record",
+            "Key": "QuietRuns",
+            "Op": "GreaterOrEqual",
+            "Value": 20
+          },
+          {
+            "Kind": "Record",
+            "Key": "ZombiesFelled",
+            "Op": "LessOrEqual",
+            "Value": 15
+          },
+          {
+            "Kind": "Stat",
+            "Key": "Agility",
+            "Op": "GreaterOrEqual",
+            "Value": 50
+          }
+        ]
+      },
+      "Score": [
+        {
+          "Kind": "Record",
+          "Key": "QuietRuns",
+          "Weight": 3
+        },
+        {
+          "Kind": "Stat",
+          "Key": "Agility",
+          "Weight": 1
+        }
+      ],
+      "CutKeys": [
+        "ending.ENDING_SHADOW.cut1",
+        "ending.ENDING_SHADOW.cut2",
+        "ending.ENDING_SHADOW.cut3"
+      ],
+      "Color": "#1E2226"
+    },
+    {
+      "Id": "ENDING_UNSCATHED",
+      "Category": "Record",
+      "Act": "Future",
+      "Priority": 320,
+      "Condition": {
+        "Checks": [
+          {
+            "Kind": "Expeditions",
+            "Op": "GreaterOrEqual",
+            "Value": 30
+          },
+          {
+            "Kind": "Record",
+            "Key": "Downs",
+            "Op": "LessOrEqual",
+            "Value": 0
+          },
+          {
+            "Kind": "Record",
+            "Key": "InjuryCount",
+            "Op": "LessOrEqual",
+            "Value": 1
+          }
+        ]
+      },
+      "Score": [
+        {
+          "Kind": "Expeditions",
+          "Weight": 1
+        },
+        {
+          "Kind": "Stat",
+          "Key": "Willpower",
+          "Weight": 1
+        }
+      ],
+      "CutKeys": [
+        "ending.ENDING_UNSCATHED.cut1",
+        "ending.ENDING_UNSCATHED.cut2",
+        "ending.ENDING_UNSCATHED.cut3"
+      ],
+      "Color": "#26302C"
+    },
+    {
+      "Id": "ENDING_CARTOGRAPHER",
+      "Category": "Record",
+      "Act": "Future",
+      "Priority": 320,
+      "Condition": {
+        "Checks": [
+          {
+            "Kind": "VisitedLocations",
+            "Op": "GreaterOrEqual",
+            "Value": 8
+          },
+          {
+            "Kind": "Record",
+            "Key": "DeepVisited",
+            "Op": "GreaterOrEqual",
+            "Value": 4
+          }
+        ]
+      },
+      "Score": [
+        {
+          "Kind": "VisitedLocations",
+          "Weight": 10
+        },
+        {
+          "Kind": "Record",
+          "Key": "DeepVisited",
+          "Weight": 10
+        },
+        {
+          "Kind": "Proficiency",
+          "Key": "Survival",
+          "Weight": 20
+        }
+      ],
+      "CutKeys": [
+        "ending.ENDING_CARTOGRAPHER.cut1",
+        "ending.ENDING_CARTOGRAPHER.cut2",
+        "ending.ENDING_CARTOGRAPHER.cut3"
+      ],
+      "Color": "#2C2A20"
+    },
+    {
+      "Id": "ENDING_MERCHANT",
+      "Category": "Record",
+      "Act": "Future",
+      "Priority": 320,
+      "Condition": {
+        "Checks": [
+          {
+            "Kind": "Record",
+            "Key": "TradeCount",
+            "Op": "GreaterOrEqual",
+            "Value": 12
+          },
+          {
+            "Kind": "FactionKnown",
+            "Key": "FAC_MART",
+            "Op": "GreaterOrEqual",
+            "Value": 1
+          },
+          {
+            "Kind": "FactionTier",
+            "Key": "FAC_MART",
+            "Op": "GreaterOrEqual",
+            "Value": 3
+          }
+        ]
+      },
+      "Score": [
+        {
+          "Kind": "Record",
+          "Key": "TradeCount",
+          "Weight": 5
+        },
+        {
+          "Kind": "Stat",
+          "Key": "Leadership",
+          "Weight": 1
+        }
+      ],
+      "CutKeys": [
+        "ending.ENDING_MERCHANT.cut1",
+        "ending.ENDING_MERCHANT.cut2",
+        "ending.ENDING_MERCHANT.cut3"
+      ],
+      "Color": "#302820"
+    },
+    {
+      "Id": "ENDING_RATIONER",
+      "Category": "Record",
+      "Act": "Future",
+      "Priority": 320,
+      "Condition": {
+        "FlagsAll": [
+          "RATION_EQUAL"
+        ],
+        "Checks": [
+          {
+            "Kind": "Record",
+            "Key": "HungryWeeks",
+            "Op": "GreaterOrEqual",
+            "Value": 4
+          },
+          {
+            "Kind": "Hidden",
+            "Key": "Humanity",
+            "Op": "GreaterOrEqual",
+            "Value": 60
+          }
+        ]
+      },
+      "Score": [
+        {
+          "Kind": "Record",
+          "Key": "HungryWeeks",
+          "Weight": 10
+        },
+        {
+          "Kind": "Hidden",
+          "Key": "Humanity",
+          "Weight": 1
+        }
+      ],
+      "CutKeys": [
+        "ending.ENDING_RATIONER.cut1",
+        "ending.ENDING_RATIONER.cut2",
+        "ending.ENDING_RATIONER.cut3"
+      ],
+      "Color": "#2A2622"
+    },
+    {
       "Id": "ENDING_TOGETHER",
       "Category": "Relationship",
       "Act": "Future",
@@ -2418,6 +2849,23 @@
             "Op": "Equal",
             "Value": 1,
             "Key": "ENDING_HIDDEN_STAY"
+          }
+        ]
+      }
+    },
+    {
+      "Id": "BR_FUTURE_BURDEN",
+      "Kind": "EndingBridge",
+      "Group": "TO_FUTURE",
+      "Priority": 15,
+      "TextKey": "line.bridge_future_burden",
+      "Condition": {
+        "Checks": [
+          {
+            "Kind": "EndingAct",
+            "Key": "ENDING_NARR_BURDEN",
+            "Op": "Equal",
+            "Value": 1
           }
         ]
       }

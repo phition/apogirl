@@ -913,6 +913,20 @@ namespace ApoGirl.Core.Definitions
         public int ExamHighScore = 80;
         public int ExamTopScore = 95;
 
+        // ── 1년의 기록 (엔딩 판정용, 기획서 8.2절) ──
+
+        /// <summary>주간 정산 때 스트레스가 이 값 이상이면 '스트레스 한계로 마친 주'로 센다.</summary>
+        public int RecordHighStress = 80;
+
+        /// <summary>
+        /// 헤드리스: 무사히 돌아온 탐험이 '좀비에게 한 번도 쫓기지 않은 탐험'일 확률 = 낮·밤 기본 + 민첩 × HeadlessQuietPerAgility (상한 HeadlessQuietMax).
+        /// 한 탐험에 ConscienceFelledThreshold마리 이상 쓰러뜨렸으면 0. 플레이 기록으로 보정할 값이다.
+        /// </summary>
+        public float HeadlessQuietDayChance = 0.35f;
+        public float HeadlessQuietNightChance = 0.2f;
+        public float HeadlessQuietPerAgility = 0.004f;
+        public float HeadlessQuietMax = 0.8f;
+
         // ── 세력 거래 (사용자 요청 2026-11-26) ──
 
         /// <summary>한 운반 주기(세력의 TradeIntervalWeeks)에 거래할 수 있는 가짓수: 기본 / 동맹. 같은 물건을 두 번 하지는 못한다.</summary>

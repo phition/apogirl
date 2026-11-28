@@ -9587,6 +9587,162 @@ MonoBehaviour:
     m_Key: ending.ENDING_SEEKER.mother.cut3
     m_Metadata:
       m_Items: []
+  - m_Id: 3286804366376960
+    m_Key: ending.ENDING_NETWORK.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3286804504788992
+    m_Key: ending.ENDING_NETWORK.cut1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3286804504788993
+    m_Key: ending.ENDING_NETWORK.cut2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3286804504788994
+    m_Key: ending.ENDING_NETWORK.cut3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3286804504788995
+    m_Key: ending.ENDING_SHADOW.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3286804504788996
+    m_Key: ending.ENDING_SHADOW.cut1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3286804504788997
+    m_Key: ending.ENDING_SHADOW.cut2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3286804504788998
+    m_Key: ending.ENDING_SHADOW.cut3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3286804504788999
+    m_Key: ending.ENDING_UNSCATHED.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3286804504789000
+    m_Key: ending.ENDING_UNSCATHED.cut1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3286804504789001
+    m_Key: ending.ENDING_UNSCATHED.cut2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3286804504789002
+    m_Key: ending.ENDING_UNSCATHED.cut3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3286804504789003
+    m_Key: ending.ENDING_CARTOGRAPHER.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3286804504789004
+    m_Key: ending.ENDING_CARTOGRAPHER.cut1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3286804504789005
+    m_Key: ending.ENDING_CARTOGRAPHER.cut2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3286804504789006
+    m_Key: ending.ENDING_CARTOGRAPHER.cut3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3286804504789007
+    m_Key: ending.ENDING_MERCHANT.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3286804504789008
+    m_Key: ending.ENDING_MERCHANT.cut1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3286804504789009
+    m_Key: ending.ENDING_MERCHANT.cut2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3286804504789010
+    m_Key: ending.ENDING_MERCHANT.cut3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3286804504789011
+    m_Key: ending.ENDING_RATIONER.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3286804504789012
+    m_Key: ending.ENDING_RATIONER.cut1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3286804504789013
+    m_Key: ending.ENDING_RATIONER.cut2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3286804504789014
+    m_Key: ending.ENDING_RATIONER.cut3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3286804504789015
+    m_Key: ending.ENDING_NARR_BURDEN.title
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3286804504789016
+    m_Key: ending.ENDING_NARR_BURDEN.cut1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3286804504789017
+    m_Key: ending.ENDING_NARR_BURDEN.cut2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3286804504789018
+    m_Key: ending.ENDING_NARR_BURDEN.afraid.cut2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3286804504789019
+    m_Key: ending.ENDING_NARR_BURDEN.reason.cut2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3286804504789020
+    m_Key: ending.ENDING_NARR_BURDEN.cut3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3286804504789021
+    m_Key: line.bridge_future_burden
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3286804504789022
+    m_Key: ending.ENDING_NARR_OVERCOME.burden.cut3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3286804504789023
+    m_Key: ending.ENDING_NARR_UNHEALED.weight.cut1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3286804504789024
+    m_Key: ending.ENDING_NARR_UNHEALED.weight.cut2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3286804504789025
+    m_Key: ending.ENDING_NARR_UNHEALED.weight.cut3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3286804504789026
+    m_Key: ending.ENDING_BAD_COLLAPSE.weight.cut2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3286804504789027
+    m_Key: ending.record.quiet
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3286804504789028
+    m_Key: ending.record.deep
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3286804504789029
+    m_Key: ending.record.trades
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

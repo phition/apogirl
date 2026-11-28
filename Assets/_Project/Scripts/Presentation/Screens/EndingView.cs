@@ -233,6 +233,11 @@ namespace ApoGirl.Presentation.Screens
 
             var exploration = _state.Exploration;
             AddLine(scroll, Loc.F("ending.tendency", exploration.DayExplorations, exploration.NightExplorations, exploration.Downs), "ending-record-line");
+            // 1년의 기록: 들키지 않은 탐험, 깊은 층, 세력 거래 (있었던 것만)
+            var records = _state.Records;
+            if (records.QuietRuns > 0) AddLine(scroll, Loc.F("ending.record.quiet", records.QuietRuns), "ending-record-line");
+            if (records.DeepVisited.Count > 0) AddLine(scroll, Loc.F("ending.record.deep", records.DeepVisited.Count), "ending-record-line");
+            if (records.TradeCount > 0) AddLine(scroll, Loc.F("ending.record.trades", records.TradeCount), "ending-record-line");
             AddLine(scroll, Companions(), "ending-record-line");
 
             if (_result.MomentKeys.Count > 0)

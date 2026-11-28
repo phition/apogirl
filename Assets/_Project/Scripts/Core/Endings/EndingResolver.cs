@@ -166,7 +166,7 @@ namespace ApoGirl.Core.Endings
                     continue;
                 }
 
-                if (!IsMet(state, ending.Condition, context, db.Balance))
+                if (MetCondition(state, ending, context, db.Balance) == null)
                 {
                     continue;
                 }
@@ -273,7 +273,7 @@ namespace ApoGirl.Core.Endings
                 // 관계 꼬리: 본편으로 뽑히지 않았지만 조건이 맞는 미래의 한 줄 (함께한 사람들·혼자 걸은 길)
                 foreach (var ending in db.Extras.Endings)
                 {
-                    if (ending.Category != EndingCategory.Bad && ending.TailKeys.Count > 0 && ending != future?.Piece && IsMet(state, ending.Condition, context, balance))
+                    if (ending.Category != EndingCategory.Bad && ending.TailKeys.Count > 0 && ending != future?.Piece && MetCondition(state, ending, context, balance) != null)
                     {
                         tails.AddRange(ending.TailKeys);
                     }
@@ -319,12 +319,18 @@ namespace ApoGirl.Core.Endings
             {
                 // 막을 적지 않은(Whole) 구조 엔딩은 미래(막 Ⅲ)로 본다 — 세 막으로 나누기 전의 정의와 테스트용 정의
                 var endingAct = ending.Act == EndingAct.Whole ? EndingAct.Future : ending.Act;
-                if (endingAct != act || ending.Category == EndingCategory.Bad || !IsMet(state, ending.Condition, context, db.Balance))
+                if (endingAct != act || ending.Category == EndingCategory.Bad)
                 {
                     continue;
                 }
 
-                var margin = Margin(state, ending, db.Balance.EndingMarginCap);
+                var met = MetCondition(state, ending, context, db.Balance);
+                if (met == null)
+                {
+                    continue;
+                }
+
+                var margin = Margin(state, met, db.Balance.EndingMarginCap);
                 var score = Score(state, ending);
                 var better = best == null
                     || ending.Priority > best.Priority
@@ -349,9 +355,30 @@ namespace ApoGirl.Core.Endings
         /// 예/아니오 조건(깃발·특성·탑승 등)과 '이하' 조건은 얼마나 넘었는지 말할 수 없어 평균에 넣지 않는다.
         /// '하나 이상' 묶음(AnyChecks)은 가장 많이 넘은 것 하나로 센다. 셀 조건이 없으면 1.
         /// </summary>
-        public static float Margin(GameState state, EndingDef ending, float cap)
+        public static float Margin(GameState state, EndingDef ending, float cap) => Margin(state, ending?.Condition, cap);
+
+        /// <summary>엔딩의 조건 가운데 지금 맞은 것: Condition, 아니면 AltConditions의 첫 번째. 하나도 안 맞으면 null.</summary>
+        private static ConditionDef MetCondition(GameState state, EndingDef ending, EventContext context, BalanceConfig balance)
         {
-            var condition = ending?.Condition;
+            if (IsMet(state, ending.Condition, context, balance))
+            {
+                return ending.Condition ?? new ConditionDef();
+            }
+
+            foreach (var alt in ending.AltConditions)
+            {
+                if (alt != null && IsMet(state, alt, context, balance))
+                {
+                    return alt;
+                }
+            }
+
+            return null;
+        }
+
+        /// <summary>조건 하나의 문턱을 넘은 정도 (위와 같다).</summary>
+        public static float Margin(GameState state, ConditionDef condition, float cap)
+        {
             if (condition == null)
             {
                 return 1f;

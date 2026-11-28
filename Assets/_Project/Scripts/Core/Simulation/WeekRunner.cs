@@ -648,6 +648,7 @@ namespace ApoGirl.Core.Simulation
             }
 
             CheckBreakdown();
+            RecordRules.WeekEnd(_state, Balance);   // 1년의 기록: 스트레스 한계로 마친 주, 식량이 바닥난 주
 
             // M6: 감염 진행 (주인공 → 최대치면 감염 배드 엔딩, 선생님 → 병세 단계)
             if (InfectionRules.WeeklyPlayer(_state, _db, summary.Delta) && _state.Status == GameStatus.Playing)
@@ -762,6 +763,7 @@ namespace ApoGirl.Core.Simulation
             EffectApplier.ChangeSleepDebt(_state, result.SleepDebtDelta, Balance, delta);
             // 양심의 무게: 쓰러뜨린 좀비 수·사람이 살던 방 (ConscienceRules)
             ConscienceRules.ApplyExpedition(_state, result, Balance, delta);
+            RecordRules.ApplyExpedition(_state, action.LocationId, result);   // 1년의 기록: 들키지 않은 탐험, 깊은 층에 들어간 지역
             if (result.SleepDebtDelta > 0)
             {
                 player.ReducedNextRest = true;

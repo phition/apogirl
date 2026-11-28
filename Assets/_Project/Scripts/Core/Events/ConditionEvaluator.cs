@@ -348,6 +348,8 @@ namespace ApoGirl.Core.Events
         {
             "Downs", "Raids", "RaidsRepelled", "Intrusions", "IntrusionsLost", "HostileEvictions", "HostileRobberies", "HostileBeatings",
             "ZombiesFelled", "HeavyFelledRuns", "OwnedRoomRuns", "CdCount",
+            // 1년의 기록 (GameState.Records, v17)
+            "ConscienceRaised", "HighStressWeeks", "QuietRuns", "InjuryCount", "HungryWeeks", "TradeCount", "BbsSessions", "DeepVisited",
         };
 
         private static int RecordOf(GameState state, string key)
@@ -367,6 +369,14 @@ namespace ApoGirl.Core.Events
                 case "HeavyFelledRuns": return stats.HeavyFelledRuns;
                 case "OwnedRoomRuns": return stats.OwnedRoomRuns;
                 case "CdCount": return state.CdWeeks.Count;
+                case "ConscienceRaised": return state.Records.ConscienceRaised;
+                case "HighStressWeeks": return state.Records.HighStressWeeks;
+                case "QuietRuns": return state.Records.QuietRuns;
+                case "InjuryCount": return state.Records.InjuryCount;
+                case "HungryWeeks": return state.Records.HungryWeeks;
+                case "TradeCount": return state.Records.TradeCount;
+                case "BbsSessions": return state.Records.BbsSessions;
+                case "DeepVisited": return state.Records.DeepVisited.Count;
                 default: throw new ArgumentException($"없는 기록: '{key}'");
             }
         }

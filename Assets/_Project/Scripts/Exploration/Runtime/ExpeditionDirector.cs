@@ -106,6 +106,9 @@ namespace ApoGirl.Exploration.Runtime
         /// <summary>양심의 무게 (ConscienceRules): 이번 탐험에서 쓰러뜨린 좀비 수(생존자 제외), 사람이 살던 방의 상자를 뒤졌는지.</summary>
         private int _zombiesFelled;
         private bool _ownedRoomSearched;
+
+        /// <summary>좀비(생존자 제외)가 한 번이라도 추격 상태에 들어갔다 — 1년의 기록 '들키지 않은 탐험'.</summary>
+        private bool _everChased;
         private float _attackTimer;
         private readonly List<string> _usedItems = new List<string>();
 
@@ -2532,6 +2535,8 @@ namespace ApoGirl.Exploration.Runtime
             Result.SearchedContainers.AddRange(_searchedKeys);
             Result.ZombiesFelled = _zombiesFelled;
             Result.SearchedOwnedRoom = _ownedRoomSearched;
+            Result.Undetected = !_everChased;
+            Result.EnteredDeep = _deepSeconds > 0f;
             HostileRules.Apply(Result, _hostileOutcome, _startHp, _balance);
             foreach (var flag in _runFlags)
             {
@@ -4346,6 +4351,7 @@ namespace ApoGirl.Exploration.Runtime
                 }
 
                 _heardStates[unit.Id] = unit.State;
+                _everChased |= !view.Survivor && unit.State == ZombieState.Chase;
                 chased |= here && unit.State == ZombieState.Chase;
                 dormantNear |= here && unit.State == ZombieState.Dormant && Mathf.Abs(unit.X - X) < 14f;
             }

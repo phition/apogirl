@@ -120,7 +120,8 @@ namespace ApoGirl.Core.Definitions
 
         /// <summary>
         /// 1년 동안 남은 기록 (Key = 기록 이름: Downs·Raids·RaidsRepelled·Intrusions·IntrusionsLost·HostileEvictions·HostileRobberies·HostileBeatings·
-        /// ZombiesFelled·HeavyFelledRuns·OwnedRoomRuns·CdCount). 기획서 8.1절.
+        /// ZombiesFelled·HeavyFelledRuns·OwnedRoomRuns·CdCount, v17 기록 ConscienceRaised·HighStressWeeks·QuietRuns·InjuryCount·HungryWeeks·
+        /// TradeCount·BbsSessions·DeepVisited(지역 수)). 기획서 8.1·8.2절.
         /// </summary>
         Record,
 

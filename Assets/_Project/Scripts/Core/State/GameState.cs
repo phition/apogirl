@@ -9,7 +9,7 @@ namespace ApoGirl.Core.State
     public sealed class GameState
     {
         /// <summary>현재 세이브 포맷 버전. 마이그레이션 시 증가시킨다.</summary>
-        public const int CurrentSaveVersion = 16;
+        public const int CurrentSaveVersion = 17;
 
         public int SaveVersion { get; set; } = CurrentSaveVersion;
         public GameStatus Status { get; set; } = GameStatus.Playing;
@@ -36,6 +36,9 @@ namespace ApoGirl.Core.State
         public HashSet<string> Clues { get; set; } = new HashSet<string>();
         public Dictionary<string, int> EndingTags { get; set; } = new Dictionary<string, int>();
         public ExplorationStats Exploration { get; set; } = new ExplorationStats();
+
+        /// <summary>1년 동안 남는 기록 (엔딩 판정용, v17 — Docs/PROPOSAL_ENDINGS_EXPANSION 8.2절). 세는 곳은 RecordRules.</summary>
+        public YearRecords Records { get; set; } = new YearRecords();
 
         /// <summary>NPC ID → 관계 상태 (윤 선생님은 Teacher에 따로 둔다). 없으면 Unknown.</summary>
         public Dictionary<string, NpcState> Npcs { get; set; } = new Dictionary<string, NpcState>();
@@ -385,6 +388,38 @@ namespace ApoGirl.Core.State
     }
 
     /// <summary>탐험 성향 태그 (문서 8.1).</summary>
+    /// <summary>
+    /// 1년 동안 남는 기록 (v17). 게임 수치에는 쓰이지 않고 엔딩 조건(ValueKind.Record)과 "1년의 기록" 화면만 읽는다.
+    /// 옛 세이브는 0에서 시작한다.
+    /// </summary>
+    public sealed class YearRecords
+    {
+        /// <summary>1년 동안 오른 양심의 무게 합 (덜어진 것은 빼지 않는다).</summary>
+        public int ConscienceRaised { get; set; }
+
+        /// <summary>스트레스가 BalanceConfig.RecordHighStress 이상으로 끝난 주.</summary>
+        public int HighStressWeeks { get; set; }
+
+        /// <summary>좀비에게 한 번도 쫓기지 않고 돌아온 탐험.</summary>
+        public int QuietRuns { get; set; }
+
+        /// <summary>부상당한 횟수 (INJURED가 새로 붙은 횟수).</summary>
+        public int InjuryCount { get; set; }
+
+        /// <summary>식량이 바닥난 채 끝난 주.</summary>
+        public int HungryWeeks { get; set; }
+
+        /// <summary>세력과 거래한 횟수.</summary>
+        public int TradeCount { get; set; }
+
+        /// <summary>PC통신에 접속한 주의 수 (한 주에 한 번만 센다)와 마지막으로 센 주.</summary>
+        public int BbsSessions { get; set; }
+        public int BbsLastWeek { get; set; }
+
+        /// <summary>깊은 층에 들어가 본 지역 ID.</summary>
+        public HashSet<string> DeepVisited { get; set; } = new HashSet<string>();
+    }
+
     public sealed class ExplorationStats
     {
         public int DayExplorations { get; set; }

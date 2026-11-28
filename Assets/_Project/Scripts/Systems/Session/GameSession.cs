@@ -756,6 +756,15 @@ namespace ApoGirl.Systems.Session
             }
         }
 
+        /// <summary>PC통신에 접속했다 (1년의 기록, 한 주에 한 번만 센다).</summary>
+        public void BbsConnected()
+        {
+            if (State != null)
+            {
+                RecordRules.BbsConnected(State);
+            }
+        }
+
         public void DebugUnlockAll()
         {
             foreach (var flag in DebugUnlockExtraFlags)

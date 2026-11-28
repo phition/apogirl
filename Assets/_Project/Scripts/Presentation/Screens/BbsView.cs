@@ -164,6 +164,7 @@ namespace ApoGirl.Presentation.Screens
 
             _config = BbsConfig.Load();
             _wiki = BbsWiki.Load();
+            _session.BbsConnected();   // 1년의 기록: 접속한 주
             var week = _session.State.Calendar.Week;
             if (week != _budgetWeek)
             {

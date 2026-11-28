@@ -82,6 +82,7 @@ namespace ApoGirl.Core.Expedition
             }
 
             RollConscience(request, timeYield, result);
+            RollQuiet(request, result);
 
             if (request.TimeOfDay == ExpeditionTime.Night && random.NextDouble() < timeYield.DawnReturnChance)
             {
@@ -101,6 +102,7 @@ namespace ApoGirl.Core.Expedition
             ApplyLockedRooms(request, timeYield, result);
             ApplyRooftop(request, result);
             var deep = ApplyDeep(request, result, out var deepRoom);
+            result.EnteredDeep = deep;
             ApplyCollectibles(request, result, deep, deepRoom);
             ApplyDeepRoomEncounters(request, result, deepRoom);
             ApplyEquipmentWear(request, result);
@@ -174,6 +176,27 @@ namespace ApoGirl.Core.Expedition
 
             result.ZombiesFelled = felled;
             result.SearchedOwnedRoom = timeYield.OwnedRoomChance > 0f && random.NextDouble() < timeYield.OwnedRoomChance;
+        }
+
+        /// <summary>
+        /// 1년의 기록: 좀비에게 한 번도 쫓기지 않고 돌아온 탐험인가 (실시간에서는 추격 상태를 직접 본다).
+        /// 무사히 돌아온 탐험만, 낮·밤 기본 확률에 민첩을 더해 굴린다. 따로 뽑은 난수라 기존 굴림은 흔들리지 않는다.
+        /// </summary>
+        private void RollQuiet(ExpeditionRequest request, ExpeditionResult result)
+        {
+            var balance = _db.Balance;
+            if (result.Status != ExtractStatus.Extracted
+                || (balance.ConscienceFelledThreshold > 0 && result.ZombiesFelled >= balance.ConscienceFelledThreshold))
+            {
+                result.Undetected = false;
+                return;
+            }
+
+            request.Stats.TryGetValue(StatType.Agility, out var agility);
+            var chance = (request.TimeOfDay == ExpeditionTime.Night ? balance.HeadlessQuietNightChance : balance.HeadlessQuietDayChance)
+                         + agility * balance.HeadlessQuietPerAgility;
+            var random = new SeededRandom(SeededRandom.CreateState(request.Seed ^ 0x9A1E7));
+            result.Undetected = random.NextDouble() < Math.Min(balance.HeadlessQuietMax, chance);
         }
 
         private bool HasWeapon(ExpeditionRequest request)

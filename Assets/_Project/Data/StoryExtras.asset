@@ -2509,6 +2509,33 @@ MonoBehaviour:
     Priority: 20
     TextKey: line.bridge_future_stay
     Group: TO_FUTURE
+  - Id: BR_FUTURE_BURDEN
+    Kind: 9
+    Condition:
+      WeekMin: 0
+      WeekMax: 0
+      Days: 
+      Phase: 0
+      Seasons: 
+      Month: 0
+      DayOfMonth: 0
+      ActionCategories: 
+      ActionIds: []
+      FlagsAll: []
+      FlagsAny: []
+      FlagsNone: []
+      CluesAll: []
+      Checks:
+      - Kind: 41
+        Key: ENDING_NARR_BURDEN
+        Op: 2
+        Value: 1
+      AnyChecks: []
+      NpcStatuses: []
+      IsBirthday: 0
+    Priority: 15
+    TextKey: line.bridge_future_burden
+    Group: TO_FUTURE
   - Id: BR_FUTURE_UNHEALED
     Kind: 9
     Condition:
@@ -7042,6 +7069,7 @@ MonoBehaviour:
       AnyChecks: []
       NpcStatuses: []
       IsBirthday: 0
+    AltConditions: []
     Score: []
     CutKeys:
     - ending.ENDING_BAD_EXPEDITION.cut1
@@ -7076,6 +7104,7 @@ MonoBehaviour:
       AnyChecks: []
       NpcStatuses: []
       IsBirthday: 0
+    AltConditions: []
     Score: []
     CutKeys:
     - ending.ENDING_BAD_RAID.cut1
@@ -7110,6 +7139,7 @@ MonoBehaviour:
       AnyChecks: []
       NpcStatuses: []
       IsBirthday: 0
+    AltConditions: []
     Score: []
     CutKeys:
     - ending.ENDING_BAD_STARVATION.cut1
@@ -7144,6 +7174,7 @@ MonoBehaviour:
       AnyChecks: []
       NpcStatuses: []
       IsBirthday: 0
+    AltConditions: []
     Score: []
     CutKeys:
     - ending.ENDING_BAD_COLLAPSE.cut1
@@ -7153,7 +7184,36 @@ MonoBehaviour:
     FutureKeys: []
     TailKeys: []
     Color: '#1E2026'
-    Variants: []
+    Variants:
+    - Id: WEIGHT
+      Condition:
+        WeekMin: 0
+        WeekMax: 0
+        Days: 
+        Phase: 0
+        Seasons: 
+        Month: 0
+        DayOfMonth: 0
+        ActionCategories: 
+        ActionIds: []
+        FlagsAll: []
+        FlagsAny: []
+        FlagsNone: []
+        CluesAll: []
+        Checks:
+        - Kind: 6
+          Key: 
+          Op: 0
+          Value: 6
+        AnyChecks: []
+        NpcStatuses: []
+        IsBirthday: 0
+      CutKeys:
+      - ending.ENDING_BAD_COLLAPSE.cut1
+      - ending.ENDING_BAD_COLLAPSE.weight.cut2
+      - ending.ENDING_BAD_COLLAPSE.cut3
+      CodaKeys: []
+      Image: 
   - Id: ENDING_BAD_INFECTION
     Category: 0
     Act: 0
@@ -7178,6 +7238,7 @@ MonoBehaviour:
       AnyChecks: []
       NpcStatuses: []
       IsBirthday: 0
+    AltConditions: []
     Score: []
     CutKeys:
     - ending.ENDING_BAD_INFECTION.cut1
@@ -7211,6 +7272,7 @@ MonoBehaviour:
       AnyChecks: []
       NpcStatuses: []
       IsBirthday: 0
+    AltConditions: []
     Score: []
     CutKeys:
     - ending.ENDING_BAD_WOUNDS.cut1
@@ -7245,6 +7307,7 @@ MonoBehaviour:
       AnyChecks: []
       NpcStatuses: []
       IsBirthday: 0
+    AltConditions: []
     Score: []
     CutKeys:
     - ending.ENDING_HIDDEN_STAY.cut1
@@ -7284,6 +7347,7 @@ MonoBehaviour:
       AnyChecks: []
       NpcStatuses: []
       IsBirthday: 0
+    AltConditions: []
     Score: []
     CutKeys:
     - ending.ENDING_HIDDEN_CURE.cut1
@@ -7474,6 +7538,7 @@ MonoBehaviour:
       AnyChecks: []
       NpcStatuses: []
       IsBirthday: 0
+    AltConditions: []
     Score: []
     CutKeys:
     - ending.ENDING_HIDDEN_CURE.cut1
@@ -7511,6 +7576,7 @@ MonoBehaviour:
       AnyChecks: []
       NpcStatuses: []
       IsBirthday: 0
+    AltConditions: []
     Score: []
     CutKeys:
     - ending.ENDING_TOGETHER.cut1
@@ -7547,6 +7613,7 @@ MonoBehaviour:
       AnyChecks: []
       NpcStatuses: []
       IsBirthday: 0
+    AltConditions: []
     Score: []
     CutKeys:
     - ending.ENDING_RESCUE_ALONE.cut1
@@ -7579,6 +7646,7 @@ MonoBehaviour:
       AnyChecks: []
       NpcStatuses: []
       IsBirthday: 0
+    AltConditions: []
     Score: []
     CutKeys:
     - ending.ENDING_SURVIVOR.cut1
@@ -7615,6 +7683,7 @@ MonoBehaviour:
       AnyChecks: []
       NpcStatuses: []
       IsBirthday: 0
+    AltConditions: []
     Score: []
     CutKeys:
     - ending.ENDING_HIDDEN_TRUTH.cut1
@@ -7656,6 +7725,7 @@ MonoBehaviour:
       AnyChecks: []
       NpcStatuses: []
       IsBirthday: 0
+    AltConditions: []
     Score: []
     CutKeys:
     - ending.ENDING_NARR_CONFRONT.cut1
@@ -7665,6 +7735,109 @@ MonoBehaviour:
     TailKeys: []
     Color: '#2E2A30'
     Variants: []
+  - Id: ENDING_NARR_BURDEN
+    Category: 5
+    Act: 2
+    Priority: 345
+    EndCauses: []
+    Condition:
+      WeekMin: 0
+      WeekMax: 0
+      Days: 
+      Phase: 0
+      Seasons: 
+      Month: 0
+      DayOfMonth: 0
+      ActionCategories: 
+      ActionIds: []
+      FlagsAll:
+      - CONSCIENCE_CONFESSED
+      FlagsAny: []
+      FlagsNone: []
+      CluesAll: []
+      Checks:
+      - Kind: 43
+        Key: ConscienceRaised
+        Op: 0
+        Value: 6
+      - Kind: 6
+        Key: 
+        Op: 1
+        Value: 4
+      - Kind: 4
+        Key: SelfAwareness
+        Op: 0
+        Value: 45
+      AnyChecks: []
+      NpcStatuses: []
+      IsBirthday: 0
+    AltConditions: []
+    Score:
+    - Kind: 43
+      Key: ConscienceRaised
+      Weight: 5
+    - Kind: 4
+      Key: SelfAwareness
+      Weight: 1
+    CutKeys:
+    - ending.ENDING_NARR_BURDEN.cut1
+    - ending.ENDING_NARR_BURDEN.cut2
+    CodaKeys:
+    - ending.ENDING_NARR_BURDEN.cut3
+    FutureKeys: []
+    TailKeys: []
+    Color: '#262430'
+    Variants:
+    - Id: AFRAID
+      Condition:
+        WeekMin: 0
+        WeekMax: 0
+        Days: 
+        Phase: 0
+        Seasons: 
+        Month: 0
+        DayOfMonth: 0
+        ActionCategories: 
+        ActionIds: []
+        FlagsAll:
+        - CONFESS_AFRAID
+        FlagsAny: []
+        FlagsNone: []
+        CluesAll: []
+        Checks: []
+        AnyChecks: []
+        NpcStatuses: []
+        IsBirthday: 0
+      CutKeys:
+      - ending.ENDING_NARR_BURDEN.cut1
+      - ending.ENDING_NARR_BURDEN.afraid.cut2
+      CodaKeys: []
+      Image: 
+    - Id: REASON
+      Condition:
+        WeekMin: 0
+        WeekMax: 0
+        Days: 
+        Phase: 0
+        Seasons: 
+        Month: 0
+        DayOfMonth: 0
+        ActionCategories: 
+        ActionIds: []
+        FlagsAll:
+        - CONFESS_REASON
+        FlagsAny: []
+        FlagsNone: []
+        CluesAll: []
+        Checks: []
+        AnyChecks: []
+        NpcStatuses: []
+        IsBirthday: 0
+      CutKeys:
+      - ending.ENDING_NARR_BURDEN.cut1
+      - ending.ENDING_NARR_BURDEN.reason.cut2
+      CodaKeys: []
+      Image: 
   - Id: ENDING_NARR_OVERCOME
     Category: 5
     Act: 2
@@ -7696,6 +7869,7 @@ MonoBehaviour:
       AnyChecks: []
       NpcStatuses: []
       IsBirthday: 0
+    AltConditions: []
     Score:
     - Kind: 4
       Key: TraumaRecovery
@@ -7711,7 +7885,35 @@ MonoBehaviour:
     FutureKeys: []
     TailKeys: []
     Color: '#283040'
-    Variants: []
+    Variants:
+    - Id: BURDEN
+      Condition:
+        WeekMin: 0
+        WeekMax: 0
+        Days: 
+        Phase: 0
+        Seasons: 
+        Month: 0
+        DayOfMonth: 0
+        ActionCategories: 
+        ActionIds: []
+        FlagsAll:
+        - CONSCIENCE_CONFESSED
+        FlagsAny: []
+        FlagsNone: []
+        CluesAll: []
+        Checks:
+        - Kind: 43
+          Key: ConscienceRaised
+          Op: 0
+          Value: 4
+        AnyChecks: []
+        NpcStatuses: []
+        IsBirthday: 0
+      CutKeys: []
+      CodaKeys:
+      - ending.ENDING_NARR_OVERCOME.burden.cut3
+      Image: 
   - Id: ENDING_NARR_UNHEALED
     Category: 5
     Act: 2
@@ -7743,6 +7945,29 @@ MonoBehaviour:
       AnyChecks: []
       NpcStatuses: []
       IsBirthday: 0
+    AltConditions:
+    - WeekMin: 0
+      WeekMax: 0
+      Days: 
+      Phase: 0
+      Seasons: 
+      Month: 0
+      DayOfMonth: 0
+      ActionCategories: 
+      ActionIds: []
+      FlagsAll: []
+      FlagsAny: []
+      FlagsNone:
+      - CONSCIENCE_CONFESSED
+      CluesAll: []
+      Checks:
+      - Kind: 6
+        Key: 
+        Op: 0
+        Value: 8
+      AnyChecks: []
+      NpcStatuses: []
+      IsBirthday: 0
     Score: []
     CutKeys:
     - ending.ENDING_NARR_UNHEALED.cut1
@@ -7752,7 +7977,37 @@ MonoBehaviour:
     FutureKeys: []
     TailKeys: []
     Color: '#1C2230'
-    Variants: []
+    Variants:
+    - Id: WEIGHT
+      Condition:
+        WeekMin: 0
+        WeekMax: 0
+        Days: 
+        Phase: 0
+        Seasons: 
+        Month: 0
+        DayOfMonth: 0
+        ActionCategories: 
+        ActionIds: []
+        FlagsAll: []
+        FlagsAny: []
+        FlagsNone:
+        - CONSCIENCE_CONFESSED
+        CluesAll: []
+        Checks:
+        - Kind: 6
+          Key: 
+          Op: 0
+          Value: 8
+        AnyChecks: []
+        NpcStatuses: []
+        IsBirthday: 0
+      CutKeys:
+      - ending.ENDING_NARR_UNHEALED.weight.cut1
+      - ending.ENDING_NARR_UNHEALED.weight.cut2
+      CodaKeys:
+      - ending.ENDING_NARR_UNHEALED.weight.cut3
+      Image: 
   - Id: ENDING_REFLECT_DEFAULT
     Category: 5
     Act: 2
@@ -7776,6 +8031,7 @@ MonoBehaviour:
       AnyChecks: []
       NpcStatuses: []
       IsBirthday: 0
+    AltConditions: []
     Score: []
     CutKeys:
     - ending.ENDING_REFLECT_DEFAULT.cut1
@@ -7819,6 +8075,7 @@ MonoBehaviour:
       AnyChecks: []
       NpcStatuses: []
       IsBirthday: 0
+    AltConditions: []
     Score:
     - Kind: 0
       Key: Empathy
@@ -7873,6 +8130,7 @@ MonoBehaviour:
       AnyChecks: []
       NpcStatuses: []
       IsBirthday: 0
+    AltConditions: []
     Score:
     - Kind: 1
       Key: Medicine
@@ -7923,6 +8181,7 @@ MonoBehaviour:
       AnyChecks: []
       NpcStatuses: []
       IsBirthday: 0
+    AltConditions: []
     Score:
     - Kind: 1
       Key: Engineering
@@ -7974,6 +8233,7 @@ MonoBehaviour:
       AnyChecks: []
       NpcStatuses: []
       IsBirthday: 0
+    AltConditions: []
     Score:
     - Kind: 0
       Key: Strength
@@ -8028,6 +8288,7 @@ MonoBehaviour:
       AnyChecks: []
       NpcStatuses: []
       IsBirthday: 0
+    AltConditions: []
     Score:
     - Kind: 0
       Key: Leadership
@@ -8078,6 +8339,7 @@ MonoBehaviour:
       AnyChecks: []
       NpcStatuses: []
       IsBirthday: 0
+    AltConditions: []
     Score:
     - Kind: 1
       Key: Humanities
@@ -8133,6 +8395,7 @@ MonoBehaviour:
       AnyChecks: []
       NpcStatuses: []
       IsBirthday: 0
+    AltConditions: []
     Score:
     - Kind: 1
       Key: Medicine
@@ -8191,6 +8454,7 @@ MonoBehaviour:
       AnyChecks: []
       NpcStatuses: []
       IsBirthday: 0
+    AltConditions: []
     Score:
     - Kind: 8
       Key: NPC_NURSE
@@ -8249,6 +8513,7 @@ MonoBehaviour:
       AnyChecks: []
       NpcStatuses: []
       IsBirthday: 0
+    AltConditions: []
     Score:
     - Kind: 1
       Key: Cooking
@@ -8300,6 +8565,7 @@ MonoBehaviour:
       AnyChecks: []
       NpcStatuses: []
       IsBirthday: 0
+    AltConditions: []
     Score:
     - Kind: 1
       Key: Survival
@@ -8355,6 +8621,7 @@ MonoBehaviour:
         Value: 1
       NpcStatuses: []
       IsBirthday: 0
+    AltConditions: []
     Score:
     - Kind: 1
       Key: Science
@@ -8435,6 +8702,7 @@ MonoBehaviour:
       AnyChecks: []
       NpcStatuses: []
       IsBirthday: 0
+    AltConditions: []
     Score:
     - Kind: 1
       Key: Music
@@ -8497,6 +8765,7 @@ MonoBehaviour:
       AnyChecks: []
       NpcStatuses: []
       IsBirthday: 0
+    AltConditions: []
     Score:
     - Kind: 1
       Key: Mind
@@ -8600,6 +8869,7 @@ MonoBehaviour:
       AnyChecks: []
       NpcStatuses: []
       IsBirthday: 0
+    AltConditions: []
     Score:
     - Kind: 36
       Key: FAC_SAGEORI
@@ -8664,6 +8934,7 @@ MonoBehaviour:
         Value: 6
       NpcStatuses: []
       IsBirthday: 0
+    AltConditions: []
     Score:
     - Kind: 0
       Key: Stamina
@@ -8718,6 +8989,7 @@ MonoBehaviour:
       AnyChecks: []
       NpcStatuses: []
       IsBirthday: 0
+    AltConditions: []
     Score:
     - Kind: 25
       Key: TRUTH_
@@ -8771,6 +9043,7 @@ MonoBehaviour:
       AnyChecks: []
       NpcStatuses: []
       IsBirthday: 0
+    AltConditions: []
     Score:
     - Kind: 18
       Key: ACT_CARE_TEACHER
@@ -8844,6 +9117,7 @@ MonoBehaviour:
       AnyChecks: []
       NpcStatuses: []
       IsBirthday: 0
+    AltConditions: []
     Score:
     - Kind: 18
       Key: ACT_BROADCAST_SONG
@@ -8893,6 +9167,7 @@ MonoBehaviour:
       AnyChecks: []
       NpcStatuses: []
       IsBirthday: 0
+    AltConditions: []
     Score:
     - Kind: 0
       Key: Empathy
@@ -8952,6 +9227,7 @@ MonoBehaviour:
       AnyChecks: []
       NpcStatuses: []
       IsBirthday: 0
+    AltConditions: []
     Score:
     - Kind: 42
       Key: ACT_BROADCAST_
@@ -9039,6 +9315,7 @@ MonoBehaviour:
       AnyChecks: []
       NpcStatuses: []
       IsBirthday: 0
+    AltConditions: []
     Score:
     - Kind: 1
       Key: Engineering
@@ -9090,6 +9367,7 @@ MonoBehaviour:
       AnyChecks: []
       NpcStatuses: []
       IsBirthday: 0
+    AltConditions: []
     Score:
     - Kind: 0
       Key: Intellect
@@ -9153,6 +9431,7 @@ MonoBehaviour:
       AnyChecks: []
       NpcStatuses: []
       IsBirthday: 0
+    AltConditions: []
     Score:
     - Kind: 43
       Key: ZombiesFelled
@@ -9207,6 +9486,7 @@ MonoBehaviour:
       AnyChecks: []
       NpcStatuses: []
       IsBirthday: 0
+    AltConditions: []
     Score:
     - Kind: 17
       Key: Night
@@ -9258,6 +9538,7 @@ MonoBehaviour:
       AnyChecks: []
       NpcStatuses: []
       IsBirthday: 0
+    AltConditions: []
     Score:
     - Kind: 45
       Key: 
@@ -9304,6 +9585,7 @@ MonoBehaviour:
       AnyChecks: []
       NpcStatuses: []
       IsBirthday: 0
+    AltConditions: []
     Score:
     - Kind: 44
       Key: DH_RESCUED|DH_MOTHER_FOUND|BULLY_RESCUED|JUN_SAVED|UBC_RUNNER_SAVED|WANDERER_SHELTERED|HR_WINTER_JOINED
@@ -9349,6 +9631,319 @@ MonoBehaviour:
       - ending.ENDING_SEEKER.mother.cut3
       CodaKeys: []
       Image: 
+  - Id: ENDING_NETWORK
+    Category: 3
+    Act: 3
+    Priority: 300
+    EndCauses: []
+    Condition:
+      WeekMin: 0
+      WeekMax: 0
+      Days: 
+      Phase: 0
+      Seasons: 
+      Month: 0
+      DayOfMonth: 0
+      ActionCategories: 
+      ActionIds: []
+      FlagsAll:
+      - BBS_KNOWN
+      - POWER_RESTORED
+      FlagsAny: []
+      FlagsNone: []
+      CluesAll: []
+      Checks:
+      - Kind: 1
+        Key: Engineering
+        Op: 0
+        Value: 2
+      - Kind: 0
+        Key: Intellect
+        Op: 0
+        Value: 150
+      - Kind: 43
+        Key: BbsSessions
+        Op: 0
+        Value: 6
+      AnyChecks: []
+      NpcStatuses: []
+      IsBirthday: 0
+    AltConditions: []
+    Score:
+    - Kind: 43
+      Key: BbsSessions
+      Weight: 5
+    - Kind: 1
+      Key: Engineering
+      Weight: 20
+    - Kind: 0
+      Key: Intellect
+      Weight: 1
+    CutKeys:
+    - ending.ENDING_NETWORK.cut1
+    - ending.ENDING_NETWORK.cut2
+    - ending.ENDING_NETWORK.cut3
+    CodaKeys: []
+    FutureKeys: []
+    TailKeys: []
+    Color: '#1E2A30'
+    Variants: []
+  - Id: ENDING_SHADOW
+    Category: 7
+    Act: 3
+    Priority: 320
+    EndCauses: []
+    Condition:
+      WeekMin: 0
+      WeekMax: 0
+      Days: 
+      Phase: 0
+      Seasons: 
+      Month: 0
+      DayOfMonth: 0
+      ActionCategories: 
+      ActionIds: []
+      FlagsAll: []
+      FlagsAny: []
+      FlagsNone: []
+      CluesAll: []
+      Checks:
+      - Kind: 43
+        Key: QuietRuns
+        Op: 0
+        Value: 20
+      - Kind: 43
+        Key: ZombiesFelled
+        Op: 1
+        Value: 15
+      - Kind: 0
+        Key: Agility
+        Op: 0
+        Value: 50
+      AnyChecks: []
+      NpcStatuses: []
+      IsBirthday: 0
+    AltConditions: []
+    Score:
+    - Kind: 43
+      Key: QuietRuns
+      Weight: 3
+    - Kind: 0
+      Key: Agility
+      Weight: 1
+    CutKeys:
+    - ending.ENDING_SHADOW.cut1
+    - ending.ENDING_SHADOW.cut2
+    - ending.ENDING_SHADOW.cut3
+    CodaKeys: []
+    FutureKeys: []
+    TailKeys: []
+    Color: '#1E2226'
+    Variants: []
+  - Id: ENDING_UNSCATHED
+    Category: 7
+    Act: 3
+    Priority: 320
+    EndCauses: []
+    Condition:
+      WeekMin: 0
+      WeekMax: 0
+      Days: 
+      Phase: 0
+      Seasons: 
+      Month: 0
+      DayOfMonth: 0
+      ActionCategories: 
+      ActionIds: []
+      FlagsAll: []
+      FlagsAny: []
+      FlagsNone: []
+      CluesAll: []
+      Checks:
+      - Kind: 17
+        Key: 
+        Op: 0
+        Value: 30
+      - Kind: 43
+        Key: Downs
+        Op: 1
+        Value: 0
+      - Kind: 43
+        Key: InjuryCount
+        Op: 1
+        Value: 1
+      AnyChecks: []
+      NpcStatuses: []
+      IsBirthday: 0
+    AltConditions: []
+    Score:
+    - Kind: 17
+      Key: 
+      Weight: 1
+    - Kind: 0
+      Key: Willpower
+      Weight: 1
+    CutKeys:
+    - ending.ENDING_UNSCATHED.cut1
+    - ending.ENDING_UNSCATHED.cut2
+    - ending.ENDING_UNSCATHED.cut3
+    CodaKeys: []
+    FutureKeys: []
+    TailKeys: []
+    Color: '#26302C'
+    Variants: []
+  - Id: ENDING_CARTOGRAPHER
+    Category: 7
+    Act: 3
+    Priority: 320
+    EndCauses: []
+    Condition:
+      WeekMin: 0
+      WeekMax: 0
+      Days: 
+      Phase: 0
+      Seasons: 
+      Month: 0
+      DayOfMonth: 0
+      ActionCategories: 
+      ActionIds: []
+      FlagsAll: []
+      FlagsAny: []
+      FlagsNone: []
+      CluesAll: []
+      Checks:
+      - Kind: 46
+        Key: 
+        Op: 0
+        Value: 8
+      - Kind: 43
+        Key: DeepVisited
+        Op: 0
+        Value: 4
+      AnyChecks: []
+      NpcStatuses: []
+      IsBirthday: 0
+    AltConditions: []
+    Score:
+    - Kind: 46
+      Key: 
+      Weight: 10
+    - Kind: 43
+      Key: DeepVisited
+      Weight: 10
+    - Kind: 1
+      Key: Survival
+      Weight: 20
+    CutKeys:
+    - ending.ENDING_CARTOGRAPHER.cut1
+    - ending.ENDING_CARTOGRAPHER.cut2
+    - ending.ENDING_CARTOGRAPHER.cut3
+    CodaKeys: []
+    FutureKeys: []
+    TailKeys: []
+    Color: '#2C2A20'
+    Variants: []
+  - Id: ENDING_MERCHANT
+    Category: 7
+    Act: 3
+    Priority: 320
+    EndCauses: []
+    Condition:
+      WeekMin: 0
+      WeekMax: 0
+      Days: 
+      Phase: 0
+      Seasons: 
+      Month: 0
+      DayOfMonth: 0
+      ActionCategories: 
+      ActionIds: []
+      FlagsAll: []
+      FlagsAny: []
+      FlagsNone: []
+      CluesAll: []
+      Checks:
+      - Kind: 43
+        Key: TradeCount
+        Op: 0
+        Value: 12
+      - Kind: 35
+        Key: FAC_MART
+        Op: 0
+        Value: 1
+      - Kind: 36
+        Key: FAC_MART
+        Op: 0
+        Value: 3
+      AnyChecks: []
+      NpcStatuses: []
+      IsBirthday: 0
+    AltConditions: []
+    Score:
+    - Kind: 43
+      Key: TradeCount
+      Weight: 5
+    - Kind: 0
+      Key: Leadership
+      Weight: 1
+    CutKeys:
+    - ending.ENDING_MERCHANT.cut1
+    - ending.ENDING_MERCHANT.cut2
+    - ending.ENDING_MERCHANT.cut3
+    CodaKeys: []
+    FutureKeys: []
+    TailKeys: []
+    Color: '#302820'
+    Variants: []
+  - Id: ENDING_RATIONER
+    Category: 7
+    Act: 3
+    Priority: 320
+    EndCauses: []
+    Condition:
+      WeekMin: 0
+      WeekMax: 0
+      Days: 
+      Phase: 0
+      Seasons: 
+      Month: 0
+      DayOfMonth: 0
+      ActionCategories: 
+      ActionIds: []
+      FlagsAll:
+      - RATION_EQUAL
+      FlagsAny: []
+      FlagsNone: []
+      CluesAll: []
+      Checks:
+      - Kind: 43
+        Key: HungryWeeks
+        Op: 0
+        Value: 4
+      - Kind: 4
+        Key: Humanity
+        Op: 0
+        Value: 60
+      AnyChecks: []
+      NpcStatuses: []
+      IsBirthday: 0
+    AltConditions: []
+    Score:
+    - Kind: 43
+      Key: HungryWeeks
+      Weight: 10
+    - Kind: 4
+      Key: Humanity
+      Weight: 1
+    CutKeys:
+    - ending.ENDING_RATIONER.cut1
+    - ending.ENDING_RATIONER.cut2
+    - ending.ENDING_RATIONER.cut3
+    CodaKeys: []
+    FutureKeys: []
+    TailKeys: []
+    Color: '#2A2622'
+    Variants: []
   - Id: ENDING_TOGETHER
     Category: 4
     Act: 3
@@ -9384,6 +9979,7 @@ MonoBehaviour:
       AnyChecks: []
       NpcStatuses: []
       IsBirthday: 0
+    AltConditions: []
     Score:
     - Kind: 21
       Key: 
@@ -9431,6 +10027,7 @@ MonoBehaviour:
       AnyChecks: []
       NpcStatuses: []
       IsBirthday: 0
+    AltConditions: []
     Score:
     - Kind: 4
       Key: Isolation
@@ -9476,6 +10073,7 @@ MonoBehaviour:
       AnyChecks: []
       NpcStatuses: []
       IsBirthday: 0
+    AltConditions: []
     Score:
     - Kind: 23
       Key: 
@@ -9512,6 +10110,7 @@ MonoBehaviour:
       AnyChecks: []
       NpcStatuses: []
       IsBirthday: 0
+    AltConditions: []
     Score: []
     CutKeys:
     - ending.ENDING_SURVIVOR.cut3

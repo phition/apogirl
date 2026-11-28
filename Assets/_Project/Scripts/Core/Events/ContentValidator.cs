@@ -120,6 +120,10 @@ namespace ApoGirl.Core.Events
                 }
 
                 CheckCondition(db, ending.Id, ending.Condition, npcIds, issues);
+                foreach (var alt in ending.AltConditions)
+                {
+                    CheckCondition(db, ending.Id, alt, npcIds, issues);
+                }
                 foreach (var term in ending.Score)
                 {
                     if (!ConditionEvaluator.IsValidKey(term.Kind, term.Key))

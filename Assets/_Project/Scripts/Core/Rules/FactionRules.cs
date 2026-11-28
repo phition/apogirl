@@ -408,6 +408,7 @@ namespace ApoGirl.Core.Rules
 
             faction.WindowTrades.Add(offerId);
             Change(state, factionId, offer.StandingChange, false, "trade." + factionId + "." + offer.Id + ".log", delta);
+            RecordRules.Traded(state);
             return true;
         }
 

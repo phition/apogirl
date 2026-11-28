@@ -89,6 +89,7 @@ namespace ApoGirl.Core.Rules
             if (!string.IsNullOrEmpty(balance.InjuredFlag) && state.Flags.Add(balance.InjuredFlag))
             {
                 delta.FlagsSet.Add(balance.InjuredFlag);
+                RecordRules.Injured(state);
             }
 
             // 반환값은 '새로 다쳤다'는 표시로도 쓰므로 최소 1

@@ -26,6 +26,7 @@ namespace ApoGirl.Systems.Save
                 yield return new V13ToV14();
                 yield return new V14ToV15();
                 yield return new V15ToV16();
+                yield return new V16ToV17();
             }
         }
 
@@ -296,6 +297,20 @@ namespace ApoGirl.Systems.Save
         /// v16: 식량 줄 (사용자 결정 2026-11-26). 살림 동료가 거둔 식량의 소수점 몫 Base.GardenCarry와
         /// 이번 주 거두지 못한 밭 식량 Base.GardenUnpicked(둘 다 0)를 넣는다.
         /// </summary>
+        private sealed class V16ToV17 : ISaveMigration
+        {
+            public int FromVersion => 16;
+
+            public void Migrate(JObject root)
+            {
+                // v17: 1년의 기록 묶음 (엔딩 판정용). 옛 세이브는 모두 0에서 시작한다
+                if (root["Records"] == null)
+                {
+                    root["Records"] = new JObject();
+                }
+            }
+        }
+
         private sealed class V15ToV16 : ISaveMigration
         {
             public int FromVersion => 15;

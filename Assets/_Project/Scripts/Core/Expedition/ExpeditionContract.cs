@@ -152,6 +152,12 @@ namespace ApoGirl.Core.Expedition
 
         /// <summary>사람이 살던 방(BalanceConfig.ConscienceOwnedRooms)의 상자를 뒤졌다.</summary>
         public bool SearchedOwnedRoom;
+
+        /// <summary>좀비가 한 번도 추격 상태에 들어가지 않았다 (적대적 생존자는 치지 않는다). 무사히 돌아왔을 때만 기록에 센다.</summary>
+        public bool Undetected;
+
+        /// <summary>깊은 층에 들어갔다.</summary>
+        public bool EnteredDeep;
         public List<string> Flags = new List<string>();
         public List<string> Clues = new List<string>();
         public float TimeSpent;
