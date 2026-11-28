@@ -227,7 +227,7 @@ namespace ApoGirl.Presentation.Screens
 
             AddLine(scroll, Loc.F("ending.weeks", _state.Calendar.Week), "ending-record-line");
 
-            // 능력치 그래프 (주간 기록)
+            // 능력치 막대 그래프 (주간 기록에서 막이 끝날 때마다의 값)
             AddSection(scroll, Loc.T("ending.stats"));
             scroll.Add(new StatGraph(_state));
 

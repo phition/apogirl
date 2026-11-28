@@ -738,10 +738,31 @@ Button.selected { border-color: var(--accent); background-color: var(--accent-so
 .ending-record-section { color: var(--accent); font-size: 18px; -unity-font-style: bold; margin-top: 16px; margin-bottom: 6px; }
 .ending-record-line { color: var(--text); font-size: 17px; white-space: normal; margin: 2px 0; }
 .ending-record-diary { color: var(--text-dim); font-size: 15px; white-space: normal; margin: 1px 0; }
-.ending-graph-box { flex-direction: row; align-items: stretch; }
-.ending-graph { height: 220px; flex-grow: 1; background-color: rgba(0, 0, 0, 0.25); border-radius: 4px; }
-.ending-legend { width: 150px; margin-left: 12px; justify-content: center; }
-.ending-legend-item { font-size: 15px; margin: 1px 0; }
+/* 능력치 막대 그래프 (StatGraph): 막 평가 카드(.act)와 1년의 기록(.year)이 함께 쓴다. 재질·색은 맨 아래 fablable 절 */
+.stat-chart { flex-shrink: 0; padding: 10px 14px 8px 8px; }
+.stat-chart-legend { flex-direction: row; flex-wrap: wrap; justify-content: flex-end; margin-bottom: 4px; }
+.stat-chart-legend-item { flex-direction: row; align-items: center; margin-left: 14px; }
+.stat-chart-swatch { width: 12px; height: 12px; margin-right: 5px; }
+.stat-chart-legend-label { font-size: 14px; }
+/* 위 20px은 맨 위 눈금까지 찬 막대의 값 글자 자리 */
+.stat-chart-body { flex-direction: row; align-items: stretch; margin-top: 20px; }
+.stat-chart-axis { width: 40px; flex-shrink: 0; }
+.stat-chart-tick { position: absolute; right: 7px; translate: 0 50%; font-size: 13px; -unity-text-align: middle-right; margin: 0; padding: 0; }
+.stat-chart-plot { flex-grow: 1; height: 230px; }
+.stat-chart.act .stat-chart-plot { height: 150px; }
+.stat-chart-grid { position: absolute; left: 0; right: 0; height: 1px; }
+.stat-chart-columns { position: absolute; left: 0; top: 0; right: 0; bottom: 0; flex-direction: row; }
+.stat-chart-column { flex-grow: 1; flex-basis: 0; height: 100%; flex-direction: row; align-items: flex-end; justify-content: center; }
+/* 막대: 너비·사이 2px 틈, 위쪽만 둥글게, 바닥선에 붙는다. 0보다 크면 얇게라도 보인다 */
+.stat-chart-bar { width: 15px; margin: 0 1px; min-height: 2px; border-top-left-radius: 3px; border-top-right-radius: 3px; align-items: center; }
+.stat-chart.act .stat-chart-bar { width: 20px; }
+.stat-chart-bar.empty { min-height: 0; }
+.stat-chart-value { position: absolute; bottom: 100%; font-size: 14px; -unity-font-style: bold; margin: 0; padding: 0 0 1px 0; white-space: nowrap; }
+.stat-chart-names { flex-direction: row; margin-left: 40px; margin-top: 4px; }
+.stat-chart-name-cell { flex-grow: 1; flex-basis: 0; align-items: center; }
+.stat-chart-name { font-size: 15px; margin: 0; padding: 0; }
+.stat-chart-delta { font-size: 14px; -unity-font-style: bold; margin: 0; padding: 0; }
+.stat-chart-detail { margin: 6px 0 0 40px; padding: 0; font-size: 14px; white-space: normal; min-height: 18px; }
 .ending-button { margin-top: 14px; min-width: 200px; height: 40px; align-self: center; font-size: 17px; }
 
 .gallery-view {
@@ -1717,8 +1738,37 @@ Button.base-advice-line:hover { background-color: rgba(42, 38, 32, 0.12); color:
 .card .section-header { color: var(--ink-blue); }
 .card .action-gains { color: var(--ink-green); }
 .card .action-info { color: var(--ink-dim); }
-/* 종이 위 그래프는 작은 칠판에 */
-.card .ending-graph-box { background-color: var(--bg); padding: 8px; border-radius: 3px; }
+/* ── 능력치 막대 그래프 (StatGraph): 작은 칠판에 분필로 ──
+   종이 카드 위에서도 칠판이라 글자색을 .card Label(잉크) 위에 다시 정한다.
+   계열 색은 시간 순서라 노란 분필 한 색의 옅음 → 짙음, 시작 막대는 테두리만. 같은 막은 늘 같은 색 (.s-act1~4). */
+/* 반투명은 선형 색공간에서 뒤 그림이 많이 비친다: 그래프 판은 불투명한 칠판 + 나무 테 */
+.stat-chart { border-radius: 4px; border-width: 3px; border-color: var(--wood); background-color: var(--bg); }
+.card .stat-chart { margin-top: 4px; }
+.stat-chart-legend-label, .card .stat-chart-legend-label { color: var(--text-dim); }
+.stat-chart-tick, .card .stat-chart-tick { color: var(--text-dim); }
+.stat-chart-value, .card .stat-chart-value { color: var(--text); }
+.stat-chart-name, .card .stat-chart-name { color: var(--text); }
+.stat-chart-detail, .card .stat-chart-detail { color: var(--text-dim); }
+.stat-chart.has-focus .stat-chart-detail { color: var(--text); }
+.stat-chart-delta.up, .card .stat-chart-delta.up { color: var(--ok); }
+.stat-chart-delta.down, .card .stat-chart-delta.down { color: var(--danger); }
+.stat-chart-delta.same, .card .stat-chart-delta.same { color: var(--text-dim); }
+.stat-chart-grid { background-color: rgba(238, 236, 225, 0.10); }
+.stat-chart-grid.base { background-color: rgba(238, 236, 225, 0.45); }
+.stat-chart-bar.s-start, .stat-chart-swatch.s-start {
+    background-color: rgba(238, 236, 225, 0.08);
+    border-width: 1px; border-bottom-width: 0; border-color: rgba(238, 236, 225, 0.6);
+}
+.stat-chart-swatch.s-start { border-bottom-width: 1px; }
+.stat-chart-bar.s-act1, .stat-chart-swatch.s-act1 { background-color: #57533a; }
+.stat-chart-bar.s-act2, .stat-chart-swatch.s-act2 { background-color: #857944; }
+.stat-chart-bar.s-act3, .stat-chart-swatch.s-act3 { background-color: #b39b50; }
+.stat-chart-bar.s-act4, .stat-chart-swatch.s-act4,
+.stat-chart-bar.s-now, .stat-chart-swatch.s-now { background-color: var(--accent); }
+.stat-chart-swatch { border-radius: 2px; }
+/* 짚은 능력치: 그 묶음 뒤에 옅은 분필 띠, 이름은 노란 분필 */
+.stat-chart-column.focused { background-color: rgba(238, 236, 225, 0.03); }
+.stat-chart-name-cell.focused .stat-chart-name { color: var(--accent); }
 
 /* ── 대화: 그림을 가리지 않는 칠판 띠 + 종이 이름표 ── */
 .dialogue { background-color: rgba(0, 0, 0, 0.36); }

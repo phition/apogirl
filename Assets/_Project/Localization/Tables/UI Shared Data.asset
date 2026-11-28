@@ -9787,6 +9787,58 @@ MonoBehaviour:
     m_Key: bbs.no_paste
     m_Metadata:
       m_Items: []
+  - m_Id: 3399566719467520
+    m_Key: chart.series.act_start
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3399566786576384
+    m_Key: chart.series.now
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3399566786576385
+    m_Key: chart.series.first_week
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3399566786576386
+    m_Key: chart.series.act
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3399566786576387
+    m_Key: chart.series.last_day
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3399566786576388
+    m_Key: chart.delta.up
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3399566786576389
+    m_Key: chart.delta.down
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3399566786576390
+    m_Key: chart.delta.same
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3399566786576391
+    m_Key: chart.hint
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3399566786576392
+    m_Key: chart.hint_single
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3399566786576393
+    m_Key: chart.detail
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3399566786576394
+    m_Key: chart.detail_delta
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3399566786576395
+    m_Key: chart.detail.item
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

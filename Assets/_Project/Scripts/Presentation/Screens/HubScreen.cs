@@ -965,7 +965,9 @@ namespace ApoGirl.Presentation.Screens
         private void ShowReviewCard(ApoGirl.Core.Definitions.EventDef ev, System.Action onClosed)
         {
             var state = _session.State;
-            var top = StatGraph.TopGain(state, ev.ReviewFromWeek);
+            // 그래프와 "가장 많이 자란 것" 문장이 같은 값을 쓴다
+            var chart = StatGraph.Act(state, ev.ReviewFromWeek, ev.ReviewAct);
+            var top = chart.TopGain();
             var lines = new List<string> { Loc.F("review.weeks", ev.ReviewFromWeek, state.Calendar.Week) };
             if (top.Gain > 0)
             {
@@ -985,7 +987,7 @@ namespace ApoGirl.Presentation.Screens
                 _card.Hide();
                 onClosed();
             }));
-            _card.Extra.Add(new StatGraph(state, ev.ReviewFromWeek, 160f));
+            _card.Extra.Add(new StatGraph(chart));
             KoreanFont.ApplyDeep(_card.Extra);
         }
 
