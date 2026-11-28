@@ -46,6 +46,29 @@ namespace ApoGirl.EditorTools
             }
         }
 
+        /// <summary>
+        /// 배치 모드용 (-executeMethod): 난이도마다 돌려 환경 변수 BOTSIM_OUT 폴더 아래 {난이도}/에 쓴다.
+        /// 배치 Unity는 끝날 때 프로젝트의 Temp 폴더를 지우므로, Temp/BotSim에 쓰면 보고서가 남지 않는다.
+        /// </summary>
+        public static void RunBatchAllDifficulties()
+        {
+            var root = Environment.GetEnvironmentVariable("BOTSIM_OUT");
+            if (string.IsNullOrEmpty(root))
+            {
+                Debug.LogError("[BotSim] 환경 변수 BOTSIM_OUT(보고서를 쓸 폴더)이 없다");
+                return;
+            }
+
+            var balance = AssetDatabase.LoadAssetAtPath<DefinitionDatabaseAsset>(ContentPipeline.DatabasePath)?.Build().Balance;
+            foreach (var difficulty in balance?.Difficulties ?? new DifficultyDef[0])
+            {
+                if (Run(-1, difficulty.Id, Path.Combine(root, difficulty.Id)) == null)
+                {
+                    return;
+                }
+            }
+        }
+
         /// <summary>runsPerStrategy &lt; 0이면 설정값. 요약 문서 경로를 돌려준다 (취소·오류면 null).</summary>
         public static string Run(int runsPerStrategy, string difficulty = null, string outputFolder = null)
         {

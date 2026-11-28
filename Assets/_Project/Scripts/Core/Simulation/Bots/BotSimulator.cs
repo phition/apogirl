@@ -134,6 +134,12 @@ namespace ApoGirl.Core.Simulation.Bots
         /// <summary>M7-2 진단: 판이 끝났을 때 조건을 만족한 (배드 제외) 엔딩.</summary>
         public readonly List<string> EligibleEndings = new List<string>();
 
+        /// <summary>엔딩 P6: 배드를 뺀 모든 엔딩 조각 (ID, 막) — 봇 판에서 한 번도 조건을 채우지 못한 조각을 보고서가 찾는다.</summary>
+        public readonly List<(string Id, EndingAct Act)> EndingCatalog = new List<(string Id, EndingAct Act)>();
+
+        /// <summary>엔딩 P6: 끝났을 때의 1년의 기록 (ValueKind.Record의 이름 → 값). 일찍 끝난 판은 그때까지의 값이다.</summary>
+        public readonly Dictionary<string, int> Records = new Dictionary<string, int>();
+
         /// <summary>M7-2 진단: 끝났을 때 수치 ("Stat.Intellect", "Prof.Medicine", "Hidden.Humanity", "Companions", "DiaryCount", "Clues.CURE_" …).</summary>
         public readonly Dictionary<string, int> FinalValues = new Dictionary<string, int>();
 
@@ -463,10 +469,18 @@ namespace ApoGirl.Core.Simulation.Bots
             var context = EventContext.FromCalendar(state);
             foreach (var candidate in db.Extras.Endings.Where(e => e.Category != Definitions.EndingCategory.Bad))
             {
-                if (ConditionEvaluator.IsMet(state, candidate.Condition, context, db.Balance))
+                result.EndingCatalog.Add((candidate.Id, candidate.Act));
+                // '또는' 조건(AltConditions)도 조건을 채운 것으로 센다
+                if (ConditionEvaluator.IsMet(state, candidate.Condition, context, db.Balance)
+                    || candidate.AltConditions.Any(alt => ConditionEvaluator.IsMet(state, alt, context, db.Balance)))
                 {
                     result.EligibleEndings.Add(candidate.Id);
                 }
+            }
+
+            foreach (var key in ConditionEvaluator.RecordKeys)
+            {
+                result.Records[key] = ConditionEvaluator.ValueOf(state, ValueKind.Record, key);
             }
 
             foreach (var (name, kind, key) in TrackedValues())

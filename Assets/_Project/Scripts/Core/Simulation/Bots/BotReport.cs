@@ -291,6 +291,9 @@ namespace ApoGirl.Core.Simulation.Bots
 
             sb.AppendLine();
 
+            AppendEndingReach(sb, runs, rescued);
+            AppendRecords(sb, runs, rescued, strategies);
+
             // 끝났을 때 수치
             sb.AppendLine("## 끝났을 때 수치 평균 (구조된 판)");
             sb.AppendLine();
@@ -442,6 +445,79 @@ namespace ApoGirl.Core.Simulation.Bots
         /// 스트레스 (사용자 요청 2026-11-25): 막(13주)마다 주 끝·주 중 최고·칸 평균·한 주에 오른 합·내린 합 (살아 있는 판의 주 평균),
         /// 칸 종류별 한 칸 평균 변화 (그 칸 시작의 식사·저녁 허기 몫도 들어간다).
         /// </summary>
+        /// <summary>
+        /// 엔딩 P6 (Docs/PROPOSAL_ENDINGS_EXPANSION 11절): 막마다 조각이 몇 판에서 조건을 채웠고 몇 판에서 뽑혔나,
+        /// 그리고 봇 판에서 한 번도 조건을 채우지 못한 조각. 구조된 판만 본다 (엔딩 조건은 구조된 뒤에 판정한다).
+        /// </summary>
+        private static void AppendEndingReach(StringBuilder sb, IReadOnlyList<BotRunResult> runs, List<BotRunResult> rescued)
+        {
+            var catalog = runs.Select(r => r.EndingCatalog).FirstOrDefault(c => c.Count > 0);
+            if (catalog == null)
+            {
+                return;
+            }
+
+            sb.AppendLine("## 엔딩 조각 도달 (엔딩 P6) — 구조된 판 " + rescued.Count.ToString(Inv));
+            sb.AppendLine();
+            sb.AppendLine("막마다 조건을 채운 판과 실제로 뽑힌 판. 막을 적지 않은 조각은 그 뒤의 나로 센다. 뒤 막의 '앞 막 조건'(EndingAct)은 판정 밖이라 0으로 본다.");
+            sb.AppendLine();
+            foreach (var (act, title) in new[] { (EndingAct.Rescue, "Ⅰ 구조의 날"), (EndingAct.Reflection, "Ⅱ 돌아보는 밤"), (EndingAct.Future, "Ⅲ 그 뒤의 나") })
+            {
+                var pieces = catalog.Where(c => (c.Act == EndingAct.Whole ? EndingAct.Future : c.Act) == act).Select(c => c.Id).ToList();
+                int Eligible(string id) => rescued.Count(x => x.EligibleEndings.Contains(id));
+                int Picked(string id) => rescued.Count(x => act == EndingAct.Rescue ? x.RescueId == id : act == EndingAct.Reflection ? x.ReflectionId == id : x.EndingId == id);
+                var reached = pieces.Where(id => Eligible(id) > 0 || Picked(id) > 0).OrderByDescending(Eligible).ToList();
+                sb.AppendLine($"### {title} — {pieces.Count}조각 가운데 {reached.Count}조각이 조건을 채움");
+                sb.AppendLine();
+                if (reached.Count > 0)
+                {
+                    sb.AppendLine("| 조각 | 조건 충족 | 뽑힘 |");
+                    sb.AppendLine("|---|---|---|");
+                    foreach (var id in reached)
+                    {
+                        sb.AppendLine($"| {id} | {Eligible(id)} ({P(Eligible(id), rescued.Count)}) | {Picked(id)} ({P(Picked(id), rescued.Count)}) |");
+                    }
+
+                    sb.AppendLine();
+                }
+
+                var never = pieces.Where(id => !reached.Contains(id)).ToList();
+                sb.AppendLine("한 번도 조건을 채우지 못함 (" + never.Count.ToString(Inv) + "): " + (never.Count == 0 ? "없음" : string.Join(", ", never)));
+                sb.AppendLine();
+            }
+        }
+
+        /// <summary>엔딩 P6: 1년의 기록 평균 (엔딩 문턱을 잡을 때 본다). 전체 판은 일찍 끝난 판이 섞여 낮게 나온다.</summary>
+        private static void AppendRecords(StringBuilder sb, IReadOnlyList<BotRunResult> runs, List<BotRunResult> rescued, List<string> strategies)
+        {
+            var keys = runs.SelectMany(r => r.Records.Keys).Distinct().ToList();
+            if (keys.Count == 0)
+            {
+                return;
+            }
+
+            sb.AppendLine("## 1년의 기록 (엔딩 P3·P6)");
+            sb.AppendLine();
+            sb.AppendLine("끝났을 때의 값 평균. 전체 판에는 일찍 끝난 판이 섞여 있다. 구조된 판은 52주를 채운 값(최소·중앙·최대)이다.");
+            sb.AppendLine();
+            sb.AppendLine("| 기록 | 구조된 판 평균 (최소·중앙·최대) | 전체 판 평균 | " + string.Join(" | ", strategies) + " |");
+            sb.AppendLine("|---|---|---|" + string.Concat(strategies.Select(_ => "---|")));
+            foreach (var key in keys)
+            {
+                var all = runs.Where(x => x.Records.ContainsKey(key)).Select(x => x.Records[key]).ToList();
+                var done = rescued.Where(x => x.Records.ContainsKey(key)).Select(x => x.Records[key]).OrderBy(v => v).ToList();
+                var doneText = done.Count == 0 ? "-" : $"{F(done.Average())} ({done.First()}·{Percentile(done, 0.5f)}·{done.Last()})";
+                sb.AppendLine($"| {key} | {doneText} | {(all.Count == 0 ? "-" : F(all.Average()))} | " +
+                              string.Join(" | ", strategies.Select(st =>
+                              {
+                                  var list = runs.Where(x => x.StrategyId == st && x.Records.ContainsKey(key)).Select(x => x.Records[key]).ToList();
+                                  return list.Count == 0 ? "-" : F(list.Average());
+                              })) + " |");
+            }
+
+            sb.AppendLine();
+        }
+
         private static void AppendStress(StringBuilder sb, IReadOnlyList<BotRunResult> runs)
         {
             sb.AppendLine("## 스트레스 (주 중)");
