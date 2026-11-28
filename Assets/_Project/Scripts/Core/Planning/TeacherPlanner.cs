@@ -794,7 +794,26 @@ namespace ApoGirl.Core.Planning
                     return false;
                 }
 
-                return !action.IsCraft || (CraftRules.CheckStart(_state, _db, action) == CraftBlock.None && BotPlanner.CraftFits(_state, _db, action, slot));
+                return !action.IsCraft || (CraftRules.CheckStart(_state, _db, action) == CraftBlock.None && BotPlanner.CraftFits(_state, _db, action, slot) && CraftTailFree(action, slot));
+            }
+
+            /// <summary>
+            /// 여러 칸 제작의 뒤 칸이 비어 있는가 (이미 "제작 중"으로 잠긴 칸은 괜찮다).
+            /// 계획 규칙은 뒤 칸의 다른 행동을 덮어쓰게 두지만, 선생님은 자기가 먼저 넣은 칸(고정·휴식·일상)과 플레이어 칸을 덮지 않는다 —
+            /// 덮었다가 다듬기가 그 제작을 빼면 칸이 비어 일상이 사라진다.
+            /// </summary>
+            private bool CraftTailFree(ActionDef action, int slot)
+            {
+                for (var k = 1; k < action.Craft.Work; k++)
+                {
+                    var index = slot + k;
+                    if (index >= _slots.Count || !(Free(index) || _slots[index].CraftLocked))
+                    {
+                        return false;
+                    }
+                }
+
+                return true;
             }
 
             private bool Place(int slot, string id, TeacherNote note)

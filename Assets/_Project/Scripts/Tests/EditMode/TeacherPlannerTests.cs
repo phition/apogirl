@@ -110,6 +110,11 @@ namespace ApoGirl.Tests.EditMode
                                   && a.ResourceCosts.Count == 0)
                 .OrderBy(a => a.Id, StringComparer.Ordinal).Select(a => a.Id).First();
 
+        /// <summary>실패 메시지용: 그 주 편성표 (칸 = 행동, 고정 칸은 *), 날씨·스트레스.</summary>
+        private static string PlanText(GameState state, TeacherResult result) =>
+            string.Join(" ", state.Plan.Slots.Select((s, i) => TeacherPins.Key(i) + "=" + s.ActionId.Replace("ACT_", "") + (result.Pinned[i] ? "*" : "") + ":" + (result.Reasons[i]?.Key ?? "-").Replace("teacher.why.", "")))
+            + $" | 날씨 {state.Base.Weather} 스트레스 {state.Player.Vitals.Stress} 식량 {state.Base.GetResource(ResourceType.Food)} 물 {state.Base.GetResource(ResourceType.Water)}";
+
         private static bool IsExpedition(IDefinitionDatabase db, string id) => db.TryGetAction(id ?? "", out var a) && a.IsExpedition;
 
         private static bool IsRest(IDefinitionDatabase db, string id) => db.TryGetAction(id ?? "", out var a) && a.IsRest;
@@ -147,7 +152,7 @@ namespace ApoGirl.Tests.EditMode
             }
 
             var daily = Enumerable.Range(0, slots.Count).Count(i => !result.Pinned[i] && db.TryGetAction(slots[i].ActionId, out var a) && a.Category == ActionCategory.Daily);
-            Assert.GreaterOrEqual(daily, balance.TeacherMinDaily, $"{where}: 일상");
+            Assert.GreaterOrEqual(daily, balance.TeacherMinDaily, $"{where}: 일상 — " + PlanText(state, result));
             var dayRuns = Enumerable.Range(0, slots.Count).Any(i => IsExpedition(db, slots[i].ActionId) && CalendarRules.PhaseOf(i) == DayPhase.Day);
             var nightRuns = Enumerable.Range(0, slots.Count).Any(i => IsExpedition(db, slots[i].ActionId) && CalendarRules.PhaseOf(i) == DayPhase.Night);
             var shortage = result.Reasons.Any(r => r != null && (r.Key == "teacher.why.short" || r.Key == "teacher.why.tight"));
